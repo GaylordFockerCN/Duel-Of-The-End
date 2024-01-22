@@ -3,8 +3,8 @@ package com.gaboj1.hdl.item;
 
 import com.gaboj1.hdl.KeyMappingsTest;
 import com.gaboj1.hdl.entity.DesertEagleBulletEntity;
-import com.gaboj1.hdl.init.HDLModEntities;
-import com.gaboj1.hdl.init.HDLModSounds;
+import com.gaboj1.hdl.init.TCRModEntities;
+import com.gaboj1.hdl.init.TCRModSounds;
 import com.gaboj1.hdl.item.renderer.DesertEagleItemRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.commands.CommandSource;
@@ -46,7 +46,7 @@ import software.bernie.geckolib.util.RenderUtils;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static com.gaboj1.hdl.init.HDLModItems.DESERT_EAGLE_AMMO;
+import static com.gaboj1.hdl.init.TCRModItems.DESERT_EAGLE_AMMO;
 
 /**
  * 为了子沙鹰类做准备，省的写很多重复的代码
@@ -165,7 +165,7 @@ public class DesertEagleItem extends Item implements GeoItem {
                     if (world instanceof ServerLevel projectileLevel) {
                         Projectile _entityToSpawn =	new Object() {
                             public Projectile getArrow(Level level, Entity shooter, float damage, int knockBack, byte piercing) {
-                                AbstractArrow entityToSpawn = new DesertEagleBulletEntity(HDLModEntities.DESERT_EAGLE_BULLET.get(), level);
+                                AbstractArrow entityToSpawn = new DesertEagleBulletEntity(TCRModEntities.DESERT_EAGLE_BULLET.get(), level);
                                 entityToSpawn.setOwner(shooter);
                                 entityToSpawn.setNoGravity(true);
                                 entityToSpawn.setBaseDamage(damage);
@@ -190,7 +190,7 @@ public class DesertEagleItem extends Item implements GeoItem {
 
                     if (!world.isClientSide()) {
                         //播放音效
-                        world.playSound(null, BlockPos.containing(x, y, z), HDLModSounds.DESERTEAGLECRCFIRE.get(), SoundSource.PLAYERS, 1, 1);
+                        world.playSound(null, BlockPos.containing(x, y, z), TCRModSounds.DESERTEAGLECRCFIRE.get(), SoundSource.PLAYERS, 1, 1);
                     } else {
                         //实现抖动
                         double[] recoilTimer = {0}; // 后坐力计时器
@@ -417,7 +417,7 @@ public class DesertEagleItem extends Item implements GeoItem {
                         ((DesertEagleItem)handItemStake.getItem()).reloadAnim(serverLevel, player, handItemStake);
                         //播放音效
                         //serverLevel.playSound(player, x,y,z, HDLModSounds.DESERTEAGLECRCRELOAD.get(), SoundSource.HOSTILE, 1, 1);
-                        serverLevel.playSound(null, BlockPos.containing(x, y, z), HDLModSounds.DESERTEAGLECRCRELOAD.get(), SoundSource.PLAYERS, 1, 1);
+                        serverLevel.playSound(null, BlockPos.containing(x, y, z), TCRModSounds.DESERTEAGLECRCRELOAD.get(), SoundSource.PLAYERS, 1, 1);
                     }
 
                     Thread.sleep(DesertEagleItem.RELOAD_TIME);

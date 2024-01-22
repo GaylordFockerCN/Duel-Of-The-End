@@ -1,9 +1,9 @@
 package com.gaboj1.hdl;
 
-import com.gaboj1.hdl.init.HDLModEntities;
-import com.gaboj1.hdl.init.HDLModItemTabs;
-import com.gaboj1.hdl.init.HDLModItems;
-import com.gaboj1.hdl.init.HDLModSounds;
+import com.gaboj1.hdl.init.TCRModEntities;
+import com.gaboj1.hdl.init.TCRModItemTabs;
+import com.gaboj1.hdl.init.TCRModItems;
+import com.gaboj1.hdl.init.TCRModSounds;
 import com.mojang.logging.LogUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -29,10 +29,10 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(HDLMod.MOD_ID)
-public class HDLMod {
+@Mod(the_casket_of_reveries.MOD_ID)
+public class the_casket_of_reveries {
     // Define mod id in a common place for everything to reference
-    public static final String MOD_ID = "holydinglegend";
+    public static final String MOD_ID = "the_casket_of_reveries";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -40,13 +40,13 @@ public class HDLMod {
     public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(new ResourceLocation(MOD_ID, MOD_ID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
 
 
-    public HDLMod(){
+    public the_casket_of_reveries(){
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        HDLModSounds.REGISTRY.register(bus);
-        HDLModItems.REGISTRY.register(bus);
-        HDLModEntities.REGISTRY.register(bus);
-        HDLModItemTabs.REGISTRY.register(bus);
+        TCRModSounds.REGISTRY.register(bus);
+        TCRModItems.REGISTRY.register(bus);
+        TCRModEntities.REGISTRY.register(bus);
+        TCRModItemTabs.REGISTRY.register(bus);
         // Register the commonSetup method for modloading
         bus.addListener(this::commonSetup);
 

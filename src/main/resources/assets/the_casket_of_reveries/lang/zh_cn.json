@@ -4,7 +4,7 @@
   "item.simpledeserteagle.golden_desert_eagle": "黄金沙鹰",
   "item.simpledeserteagle.ak47": "AK47",
   "subtitles.deserteaglereload": "沙鹰换弹",
-  "item.holydinglegend.desert_eagle_ammo": "沙鹰弹药",
+  "item.the_casket_of_reveries.desert_eagle_ammo": "沙鹰弹药",
   "item.simpledeserteagle.desert_eagle_blaze": "沙漠之鹰-炽热之焰",
   "subtitles.deserteaglecrcreload": "沙鹰换弹",
   "item.simpledeserteagle.diamond_desert_eagle": "钻石沙鹰",
@@ -16,7 +16,7 @@
   "item.simpledeserteagle.copper_desert_eagle": "铜制沙鹰",
   "item.simpledeserteagle.desert_eagle_ammo_plus": "高级沙鹰弹药",
   "advancements.shoot_hundred_meters.title": "百步穿杨！",
-  "item.holydinglegend.desert_eagle": "沙漠之鹰",
+  "item.the_casket_of_reveries.desert_eagle": "沙漠之鹰",
   "info.simpledeserteagle.headshot": "爆头！",
   "info.simpledeserteagle.ammo_count": "剩余弹药数: ",
   "info.simpledeserteagle.ammo_damage": "伤害: ",
@@ -30,5 +30,6 @@
   "tips.simpledeserteagle.off_hand_ammo": "副手剩余弹药:",
   "tips.simpledeserteagle.main_ammo_full": "主手弹药充足！",
   "tips.simpledeserteagle.off_ammo_full": "副手弹药充足！",
-  "tips.simpledeserteagle.reloading": "您正在换弹！"
+  "tips.simpledeserteagle.reloading": "您正在换弹！",
+  "item.the_casket_of_reveries.builder_bar":"建筑棒子"
 }

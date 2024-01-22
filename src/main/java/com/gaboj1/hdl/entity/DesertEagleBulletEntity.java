@@ -3,8 +3,8 @@ package com.gaboj1.hdl.entity;
 
 import com.gaboj1.hdl.headshot.BoundingBoxManager;
 import com.gaboj1.hdl.headshot.IHeadshotBox;
-import com.gaboj1.hdl.init.HDLModEntities;
-import com.gaboj1.hdl.init.HDLModItems;
+import com.gaboj1.hdl.init.TCRModEntities;
+import com.gaboj1.hdl.init.TCRModItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.resources.language.I18n;
@@ -38,7 +38,7 @@ import java.util.Optional;
 @OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
 public class DesertEagleBulletEntity extends AbstractArrow implements ItemSupplier {
 	public DesertEagleBulletEntity(PlayMessages.SpawnEntity packet, Level world) {
-		super(HDLModEntities.DESERT_EAGLE_BULLET.get(), world);
+		super(TCRModEntities.DESERT_EAGLE_BULLET.get(), world);
 	}
 
 	public DesertEagleBulletEntity(EntityType<? extends DesertEagleBulletEntity> type, Level world) {
@@ -53,12 +53,12 @@ public class DesertEagleBulletEntity extends AbstractArrow implements ItemSuppli
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public ItemStack getItem() {
-		return new ItemStack(HDLModItems.DESERT_EAGLE_BULLET.get());
+		return new ItemStack(TCRModItems.DESERT_EAGLE_BULLET.get());
 	}
 
 	@Override
 	protected ItemStack getPickupItem() {
-		return new ItemStack(HDLModItems.DESERT_EAGLE_AMMO.get());
+		return new ItemStack(TCRModItems.DESERT_EAGLE_AMMO.get());
 	}
 
 	@Override

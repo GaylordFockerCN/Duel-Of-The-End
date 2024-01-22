@@ -22,7 +22,7 @@ public class KeyMappingsTest {
 			super.setDown(isDown);
 			if (isDownOld != isDown && isDown &&!isReloading) {
 				isReloading = true;
-				HDLMod.PACKET_HANDLER.sendToServer(new ReloadMessage(0, 0));
+				the_casket_of_reveries.PACKET_HANDLER.sendToServer(new ReloadMessage(0, 0));
 				ReloadMessage.pressAction(Minecraft.getInstance().player, 0);
 				new Thread(()->{
 					try {
