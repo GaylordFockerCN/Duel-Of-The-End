@@ -14,5 +14,5 @@ public class TCRModItems {
 	public static final RegistryObject<Item> DESERT_EAGLE_AMMO = REGISTRY.register("desert_eagle_ammo", () -> new DesertEagleAmmoItem());
 	public static final RegistryObject<Item> DESERT_EAGLE = REGISTRY.register("desert_eagle", () -> new DesertEagleItem());
 	public static final RegistryObject<Item> DESERT_EAGLE_BULLET = REGISTRY.register("desert_eagle_bullet", () -> new DesertEagleBulletItem());
-	public static final RegistryObject<Item> BUILDER_BAR = REGISTRY.register("builder_bar",()->new builder_bar());
+	//public static final RegistryObject<Item> BUILDER_BAR = REGISTRY.register("builder_bar",()->new builder_bar());
 }
