@@ -1,9 +1,6 @@
 package com.gaboj1.tcr;
 
-import com.gaboj1.tcr.init.TCRModEntities;
-import com.gaboj1.tcr.init.TCRModItemTabs;
-import com.gaboj1.tcr.init.TCRModItems;
-import com.gaboj1.tcr.init.TCRModSounds;
+import com.gaboj1.tcr.init.*;
 import com.mojang.logging.LogUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -35,7 +32,6 @@ public class TheCasketOfReveries {
     public static final String MOD_ID = "the_casket_of_reveries";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
-
     private static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(new ResourceLocation(MOD_ID, MOD_ID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
 
@@ -45,6 +41,7 @@ public class TheCasketOfReveries {
 
         TCRModSounds.REGISTRY.register(bus);
         TCRModItems.REGISTRY.register(bus);
+        TCRModBlocks.REGISTRY.register(bus);
         TCRModEntities.REGISTRY.register(bus);
         TCRModItemTabs.REGISTRY.register(bus);
         // Register the commonSetup method for modloading

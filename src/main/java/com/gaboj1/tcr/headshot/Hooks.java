@@ -1,4 +1,4 @@
-package com.gaboj1.tcr;
+package com.gaboj1.tcr.headshot;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;

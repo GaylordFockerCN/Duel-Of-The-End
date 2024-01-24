@@ -1,7 +1,7 @@
 
 package com.gaboj1.tcr.item;
 
-import com.gaboj1.tcr.KeyMappingsTest;
+import com.gaboj1.tcr.keymapping.KeyMappings;
 import com.gaboj1.tcr.entity.DesertEagleBulletEntity;
 import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.init.TCRModSounds;
@@ -245,7 +245,7 @@ public class DesertEagleItem extends Item implements GeoItem {
 //					DesertEagleReloadProcedure.execute(world, player);
                     if (world instanceof ServerLevel _level)
                         _level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
-                                "title @p actionbar \""+I18n.get("tips.simpledeserteagle.reloadbutton", KeyMappingsTest.RELOAD.saveString().toUpperCase())+"\"");
+                                "title @p actionbar \""+I18n.get("tips.simpledeserteagle.reloadbutton", KeyMappings.RELOAD.saveString().toUpperCase())+"\"");
 
                 }
             }

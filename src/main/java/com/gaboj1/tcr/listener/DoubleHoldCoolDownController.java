@@ -1,4 +1,4 @@
-package com.gaboj1.tcr;
+package com.gaboj1.tcr.listener;
 
 import com.gaboj1.tcr.item.DesertEagleItem;
 import net.minecraft.world.InteractionHand;

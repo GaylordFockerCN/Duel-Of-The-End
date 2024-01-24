@@ -1,5 +1,5 @@
 {
-  "item_group.simpledeserteagle.simple_desert_eagle": "Simple Desert Eagle",
+  "item_group.the_casket_of_reveries.the_casket_of_reveries": "The Casket of Reveries",
   "item.simpledeserteagle.desert_eagle_bullet": "Desert Eagel Bullet Effect",
   "item.simpledeserteagle.golden_desert_eagle": "Golden Desert Eagle",
   "item.simpledeserteagle.ak47": "AK47",
@@ -18,6 +18,9 @@
   "item.simpledeserteagle.desert_eagle_ammo_plus": "Desert Eagle Ammo Plus",
   "advancements.shoot_hundred_meters.title": "Shoot Hundred Meters",
   "item.the_casket_of_reveries.desert_eagle": "Desert Eagle",
+
+  "block.the_casket_of_reveries.better_structure_block": "Better Structure Block",
+
   "info.simpledeserteagle.headshot": "Head shot!",
   "info.simpledeserteagle.ammo_count": "Ammo: ",
   "info.simpledeserteagle.ammo_damage": "Damage: ",
@@ -25,6 +28,7 @@
   "info.simpledeserteagle.ammo_type": "Ammo type: ",
   "info.simpledeserteagle.ammo_type_common": "Common",
   "info.simpledeserteagle.ammo_type_advanced": "Advanced",
+
   "tips.simpledeserteagle.reloadbutton": "Please press '%s' to reload.",
   "tips.simpledeserteagle.no_ammo": "No Ammo!",
   "tips.simpledeserteagle.main_hand_ammo": "Main Hand Ammo:",

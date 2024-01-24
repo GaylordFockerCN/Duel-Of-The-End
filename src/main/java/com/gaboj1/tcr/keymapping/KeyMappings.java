@@ -1,5 +1,6 @@
-package com.gaboj1.tcr;
+package com.gaboj1.tcr.keymapping;
 
+import com.gaboj1.tcr.TheCasketOfReveries;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraftforge.fml.common.Mod;
@@ -12,7 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.KeyMapping;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = {Dist.CLIENT})
-public class KeyMappingsTest {
+public class KeyMappings {
 	public static final KeyMapping RELOAD = new KeyMapping("key.simpledeserteagle.reload", GLFW.GLFW_KEY_R, "key.categories.misc") {
 		private boolean isDownOld = false;
 		private boolean isReloading = false;
