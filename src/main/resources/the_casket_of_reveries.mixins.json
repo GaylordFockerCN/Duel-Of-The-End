@@ -9,6 +9,6 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "refmap": "hdl.mixin-refmap.json",
+  "refmap": "the_casket_of_reveries.mixin-refmap.json",
   "minVersion": "0.8"
 }

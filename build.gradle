@@ -34,7 +34,7 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            arg "-mixin.config=hdl.mixins.json"
+            arg "-mixin.config=the_casket_of_reveries.mixins.json"
             mods {
                 "${mod_id}" {
                     source sourceSets.main
@@ -44,7 +44,7 @@ minecraft {
 
         client {
             property 'forge.enabledGameTestNamespaces', mod_id
-            arg "-mixin.config=hdl.mixins.json"
+            arg "-mixin.config=the_casket_of_reveries.mixins.json"
         }
 
         server {
@@ -81,13 +81,13 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.20.1:4.2.2')
-    implementation fg.deobf('com.sk89q.worldedit:worldedit-forge-mc1.20:7.2.15')
-    implementation fg.deobf('com.sk89q.worldedit:worldedit-core:7.2.0')
+//    implementation fg.deobf('com.sk89q.worldedit:worldedit-forge-mc1.20:7.2.15')
+//    implementation fg.deobf('com.sk89q.worldedit:worldedit-core:7.2.0')
 }
 
 mixin {
-    add sourceSets.main, 'hdl.mixin-refmap.json'
-    config 'hdl.mixins.json'
+    add sourceSets.main, 'the_casket_of_reveries.mixin-refmap.json'
+    config 'the_casket_of_reveries.mixins.json'
 }
 
 tasks.named('processResources', ProcessResources).configure {
@@ -115,7 +115,7 @@ tasks.named('jar', Jar).configure {
                 'Implementation-Version'  : project.jar.archiveVersion,
                 'Implementation-Vendor'   : mod_authors,
                 'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs": "hdl.mixins.json"
+                "MixinConfigs": "the_casket_of_reveries.mixins.json"
         ])
     }
 
