@@ -2,6 +2,7 @@ package com.gaboj1.tcr.init;
 
 import com.gaboj1.tcr.TheCasketOfReveries;
 
+import net.minecraft.client.multiplayer.ClientRegistryLayer;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 

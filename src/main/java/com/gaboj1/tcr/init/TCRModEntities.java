@@ -1,8 +1,11 @@
 package com.gaboj1.tcr.init;
 
 import com.gaboj1.tcr.TheCasketOfReveries;
+import com.gaboj1.tcr.block.BetterStructureBlockEntity;
 import com.gaboj1.tcr.entity.DesertEagleBulletEntity;
 
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.DeferredRegister;

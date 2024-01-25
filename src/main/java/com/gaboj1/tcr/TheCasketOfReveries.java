@@ -42,12 +42,11 @@ public class TheCasketOfReveries {
         TCRModSounds.REGISTRY.register(bus);
         TCRModItems.REGISTRY.register(bus);
         TCRModBlocks.REGISTRY.register(bus);
+        TCRModBlockEntities.REGISTRY.register(bus);
         TCRModEntities.REGISTRY.register(bus);
         TCRModItemTabs.REGISTRY.register(bus);
-        // Register the commonSetup method for modloading
         bus.addListener(this::commonSetup);
 
-        // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
         // Register the item to a creative tab
