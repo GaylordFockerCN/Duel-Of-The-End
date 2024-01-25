@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.item.model;
 
+import com.gaboj1.tcr.TheCasketOfReveries;
 import com.gaboj1.tcr.item.DesertEagleItem;
 import software.bernie.geckolib.model.GeoModel;
 
@@ -14,17 +15,17 @@ public class DesertEagleItemModel extends GeoModel<DesertEagleItem> {
 
     @Override
     public ResourceLocation getAnimationResource(DesertEagleItem animatable) {
-        return new ResourceLocation("the_casket_of_reveries", "animations/deserteagle.animation.json");
+        return new ResourceLocation(TheCasketOfReveries.MOD_ID, "animations/deserteagle.animation.json");
     }
 
     @Override
     public ResourceLocation getModelResource(DesertEagleItem animatable) {
-        return new ResourceLocation("the_casket_of_reveries", "geo/deserteagle.geo.json");
+        return new ResourceLocation(TheCasketOfReveries.MOD_ID, "geo/deserteagle.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureResource(DesertEagleItem animatable) {
         //System.out.println("location"+textureResourceLocation);
-        return new ResourceLocation("the_casket_of_reveries", textureResourceLocation);
+        return new ResourceLocation(TheCasketOfReveries.MOD_ID, textureResourceLocation);
     }
 }

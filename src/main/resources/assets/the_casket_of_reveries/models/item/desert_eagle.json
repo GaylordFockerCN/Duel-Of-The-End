@@ -1,6 +1,6 @@
 {
-  "parent": "holydinglegend:displaysettings/deserteagle.item",
+  "parent": "the_casket_of_reveries:displaysettings/deserteagle.item",
   "textures": {
-    "layer0": "holydinglegend:item/texturecrc"
+    "layer0": "the_casket_of_reveries:item/texturecrc"
   }
 }

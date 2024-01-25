@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "holydinglegend:item/bullet"
+    "layer0": "the_casket_of_reveries:item/bullet"
   },
   "display": {
     "thirdperson_righthand": {
