@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.block;
+package com.gaboj1.tcr.block.entity;
 
 import com.gaboj1.tcr.init.TCRModBlockEntities;
 import com.gaboj1.tcr.init.TCRModBlocks;

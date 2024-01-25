@@ -1,5 +1,6 @@
-package com.gaboj1.tcr.block;
+package com.gaboj1.tcr.block.custom;
 
+import com.gaboj1.tcr.block.entity.BetterStructureBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.StructureBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
