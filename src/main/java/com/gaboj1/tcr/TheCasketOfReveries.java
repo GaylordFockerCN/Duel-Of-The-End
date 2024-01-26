@@ -1,7 +1,10 @@
 package com.gaboj1.tcr;
 
+import com.gaboj1.tcr.entity.client.TigerRenderer;
 import com.gaboj1.tcr.init.*;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -20,6 +23,7 @@ import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import org.slf4j.Logger;
+import software.bernie.geckolib.GeckoLib;
 
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -46,6 +50,7 @@ public class TheCasketOfReveries {
         TCRModEntities.REGISTRY.register(bus);
         TCRModItemTabs.REGISTRY.register(bus);
         bus.addListener(this::commonSetup);
+        GeckoLib.initialize();
 
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -80,6 +85,7 @@ public class TheCasketOfReveries {
     public static class ClientModEvents{
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event){
+            EntityRenderers.register(TCRModEntities.TIGER.get(), TigerRenderer::new);
         }
     }
 }

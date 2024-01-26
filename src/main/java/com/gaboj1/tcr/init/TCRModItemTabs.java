@@ -17,6 +17,7 @@ public class TCRModItemTabs {
 			() -> CreativeModeTab.builder().title(Component.translatable("item_group.the_casket_of_reveries."+TheCasketOfReveries.MOD_ID)).icon(() -> new ItemStack(TCRModItems.DESERT_EAGLE.get())).displayItems((parameters, tabData) -> {
 				tabData.accept(TCRModItems.DESERT_EAGLE_AMMO.get());
 				tabData.accept(TCRModItems.DESERT_EAGLE.get());
+				tabData.accept(TCRModItems.TIGER_SPAWN_EGG.get());
 				tabData.accept(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get());
 			}).build());
 }
