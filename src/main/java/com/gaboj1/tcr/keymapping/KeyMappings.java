@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.keymapping;
 
-import com.gaboj1.tcr.TheCasketOfReveries;
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraftforge.fml.common.Mod;
@@ -23,7 +23,7 @@ public class KeyMappings {
 			super.setDown(isDown);
 			if (isDownOld != isDown && isDown &&!isReloading) {
 				isReloading = true;
-				TheCasketOfReveries.PACKET_HANDLER.sendToServer(new ReloadMessage(0, 0));
+				TheCasketOfReveriesMod.PACKET_HANDLER.sendToServer(new ReloadMessage(0, 0));
 				ReloadMessage.pressAction(Minecraft.getInstance().player, 0);
 				new Thread(()->{
 					try {

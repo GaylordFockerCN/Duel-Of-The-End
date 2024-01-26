@@ -36,10 +36,10 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
         super(pPos, pBlockState);
     }
 
-//    @Override
-//    public BlockEntityType<?> getType() {
-//        return TCRModBlockEntities.BETTER_STRUCTURE_BLOCK_ENTITY.get();
-//    }
+    @Override
+    public BlockEntityType<?> getType() {
+        return TCRModBlockEntities.BETTER_STRUCTURE_BLOCK_ENTITY.get();
+    }
 
     @Override
     public boolean detectSize() {

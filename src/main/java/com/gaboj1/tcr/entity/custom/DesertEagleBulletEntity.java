@@ -1,5 +1,5 @@
 
-package com.gaboj1.tcr.entity;
+package com.gaboj1.tcr.entity.custom;
 
 import com.gaboj1.tcr.headshot.BoundingBoxManager;
 import com.gaboj1.tcr.headshot.IHeadshotBox;

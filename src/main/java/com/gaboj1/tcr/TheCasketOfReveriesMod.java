@@ -1,13 +1,14 @@
 package com.gaboj1.tcr;
 
+import com.gaboj1.tcr.block.renderer.BetterStructureBlockRenderer;
 import com.gaboj1.tcr.entity.client.TigerRenderer;
 import com.gaboj1.tcr.init.*;
 import com.mojang.logging.LogUtils;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -30,8 +31,8 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(TheCasketOfReveries.MOD_ID)
-public class TheCasketOfReveries {
+@Mod(TheCasketOfReveriesMod.MOD_ID)
+public class TheCasketOfReveriesMod {
     // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "the_casket_of_reveries";
     // Directly reference a slf4j logger
@@ -40,7 +41,7 @@ public class TheCasketOfReveries {
     public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(new ResourceLocation(MOD_ID, MOD_ID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
 
 
-    public TheCasketOfReveries(){
+    public TheCasketOfReveriesMod(){
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         TCRModSounds.REGISTRY.register(bus);
@@ -86,6 +87,12 @@ public class TheCasketOfReveries {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event){
             EntityRenderers.register(TCRModEntities.TIGER.get(), TigerRenderer::new);
+//            BlockEntityRenderers.register(TCRModBlockEntities.BETTER_STRUCTURE_BLOCK_ENTITY.get(), BetterStructureBlockRenderer::new);
+        }
+
+        @SubscribeEvent
+        public static void onRendererSetup(EntityRenderersEvent.RegisterRenderers event){
+            event.registerBlockEntityRenderer(TCRModBlockEntities.BETTER_STRUCTURE_BLOCK_ENTITY.get(), BetterStructureBlockRenderer::new);
         }
     }
 }

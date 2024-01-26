@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.entity.client;
 
-import com.gaboj1.tcr.TheCasketOfReveries;
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.custom.TigerEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -13,17 +13,17 @@ import software.bernie.geckolib.model.data.EntityModelData;
 public class TigerModel extends GeoModel<TigerEntity> {
     @Override
     public ResourceLocation getModelResource(TigerEntity animatable) {
-        return new ResourceLocation(TheCasketOfReveries.MOD_ID, "geo/tiger.geo.json");
+        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "geo/tiger.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureResource(TigerEntity animatable) {
-        return new ResourceLocation(TheCasketOfReveries.MOD_ID, "textures/entity/tiger.png");
+        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/tiger.png");
     }
 
     @Override
     public ResourceLocation getAnimationResource(TigerEntity animatable) {
-        return new ResourceLocation(TheCasketOfReveries.MOD_ID, "animations/tiger.animation.json");
+        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "animations/tiger.animation.json");
     }
 
     @Override

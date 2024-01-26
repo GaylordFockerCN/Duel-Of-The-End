@@ -2,7 +2,7 @@
 package com.gaboj1.tcr.item;
 
 import com.gaboj1.tcr.keymapping.KeyMappings;
-import com.gaboj1.tcr.entity.DesertEagleBulletEntity;
+import com.gaboj1.tcr.entity.custom.DesertEagleBulletEntity;
 import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.init.TCRModSounds;
 import com.gaboj1.tcr.item.renderer.DesertEagleItemRenderer;

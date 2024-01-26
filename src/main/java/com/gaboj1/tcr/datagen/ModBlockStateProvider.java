@@ -1,10 +1,8 @@
 package com.gaboj1.tcr.datagen;
 
-import com.gaboj1.tcr.TheCasketOfReveries;
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -12,7 +10,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModBlockStateProvider extends BlockStateProvider {
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
-        super(output, TheCasketOfReveries.MOD_ID, exFileHelper);
+        super(output, TheCasketOfReveriesMod.MOD_ID, exFileHelper);
     }
 
     @Override

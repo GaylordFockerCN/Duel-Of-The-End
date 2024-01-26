@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.entity.client;
 
-import com.gaboj1.tcr.TheCasketOfReveries;
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.custom.TigerEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -15,7 +15,7 @@ public class TigerRenderer extends GeoEntityRenderer<TigerEntity> {
 
     @Override
     public ResourceLocation getTextureLocation(TigerEntity animatable) {
-        return new ResourceLocation(TheCasketOfReveries.MOD_ID, "textures/entity/tiger.png");
+        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/tiger.png");
     }
 
     @Override

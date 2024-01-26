@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.init;
 
-import com.gaboj1.tcr.TheCasketOfReveries;
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.custom.BetterStructureBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 
 public class TCRModBlocks {
     public static final DeferredRegister<Block> REGISTRY =
-            DeferredRegister.create(ForgeRegistries.BLOCKS, TheCasketOfReveries.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.BLOCKS, TheCasketOfReveriesMod.MOD_ID);
 
     public static final RegistryObject<Block> BETTER_STRUCTURE_BLOCK = registerBlock("better_structure_block",
             ()-> new BetterStructureBlock(BlockBehaviour.Properties.copy(Blocks.STRUCTURE_BLOCK)));

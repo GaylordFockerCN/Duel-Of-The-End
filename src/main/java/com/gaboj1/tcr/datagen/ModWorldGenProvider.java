@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.datagen;
 
-import com.gaboj1.tcr.TheCasketOfReveries;
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.worldgen.ModConfiguredFeatures;
 import com.gaboj1.tcr.worldgen.ModPlacedFeatures;
 import net.minecraft.core.HolderLookup;
@@ -18,6 +18,6 @@ public class ModWorldGenProvider extends DatapackBuiltinEntriesProvider {
             .add(Registries.PLACED_FEATURE, ModPlacedFeatures::bootstrap);
 
     public ModWorldGenProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries, BUILDER, Set.of(TheCasketOfReveries.MOD_ID));
+        super(output, registries, BUILDER, Set.of(TheCasketOfReveriesMod.MOD_ID));
     }
 }

@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.datagen;
 
-import com.gaboj1.tcr.TheCasketOfReveries;
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -12,7 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModItemModelProvider extends ItemModelProvider {
     public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(output, TheCasketOfReveries.MOD_ID, existingFileHelper);
+        super(output, TheCasketOfReveriesMod.MOD_ID, existingFileHelper);
     }
 
     @Override
@@ -26,18 +26,18 @@ public class ModItemModelProvider extends ItemModelProvider {
     private ItemModelBuilder saplingItem(RegistryObject<Block> item) {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(TheCasketOfReveries.MOD_ID,"block/" + item.getId().getPath()));
+                new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"block/" + item.getId().getPath()));
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item) {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(TheCasketOfReveries.MOD_ID,"item/" + item.getId().getPath()));
+                new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"item/" + item.getId().getPath()));
     }
 
     private ItemModelBuilder handheldItem(RegistryObject<Item> item) {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/handheld")).texture("layer0",
-                new ResourceLocation(TheCasketOfReveries.MOD_ID,"item/" + item.getId().getPath()));
+                new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"item/" + item.getId().getPath()));
     }
 }

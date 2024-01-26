@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.block.renderer;
 
+import com.gaboj1.tcr.block.entity.BetterStructureBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -24,7 +25,7 @@ public class BetterStructureBlockRenderer extends StructureBlockRenderer {
         super(pContext);
     }
 
-    public void render(StructureBlockEntity pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, int pPackedOverlay) {
+    public void render(BetterStructureBlockEntity pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, int pPackedOverlay) {
         if (Minecraft.getInstance().player.canUseGameMasterBlocks() || Minecraft.getInstance().player.isSpectator()) {
             BlockPos $$6 = pBlockEntity.getStructurePos();
             Vec3i $$7 = pBlockEntity.getStructureSize();
@@ -97,11 +98,11 @@ public class BetterStructureBlockRenderer extends StructureBlockRenderer {
         }
     }
 
-    private void renderInvisibleBlocks(StructureBlockEntity pBlockEntity, VertexConsumer pConsumer, BlockPos pPos, PoseStack pPoseStack) {
+    private void renderInvisibleBlocks(BetterStructureBlockEntity pBlockEntity, VertexConsumer pConsumer, BlockPos pPos, PoseStack pPoseStack) {
         BlockGetter $$4 = pBlockEntity.getLevel();
         BlockPos $$5 = pBlockEntity.getBlockPos();
         BlockPos $$6 = $$5.offset(pPos);
-        Iterator var8 = BlockPos.betweenClosed($$6, $$6.offset(pBlockEntity.getStructureSize()).offset(-1, -1, -1)).iterator();
+        Iterator<BlockPos> var8 = BlockPos.betweenClosed($$6, $$6.offset(pBlockEntity.getStructureSize()).offset(-1, -1, -1)).iterator();
 
         while(true) {
             BlockPos $$7;
@@ -143,12 +144,8 @@ public class BetterStructureBlockRenderer extends StructureBlockRenderer {
         }
     }
 
-    public boolean shouldRenderOffScreen(StructureBlockEntity pBlockEntity) {
+    public boolean shouldRenderOffScreen(BetterStructureBlockEntity pBlockEntity) {
         return true;
-    }
-
-    public int getViewDistance() {
-        return 96;
     }
 
 }

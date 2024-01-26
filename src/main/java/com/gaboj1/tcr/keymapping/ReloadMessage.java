@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.keymapping;
 
-import com.gaboj1.tcr.TheCasketOfReveries;
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.item.DesertEagleItem;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -49,6 +49,6 @@ public class ReloadMessage {
 
 	@SubscribeEvent
 	public static void registerMessage(FMLCommonSetupEvent event) {
-		TheCasketOfReveries.addNetworkMessage(ReloadMessage.class, ReloadMessage::buffer, ReloadMessage::new, ReloadMessage::handler);
+		TheCasketOfReveriesMod.addNetworkMessage(ReloadMessage.class, ReloadMessage::buffer, ReloadMessage::new, ReloadMessage::handler);
 	}
 }
