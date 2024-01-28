@@ -17,6 +17,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     protected void generate() {
 
         this.dropSelf(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get());
+        this.dropSelf(TCRModBlocks.PORTAL_BED.get());
 
         this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get());
         this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get());

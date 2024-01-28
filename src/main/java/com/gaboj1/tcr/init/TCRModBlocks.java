@@ -3,10 +3,12 @@ package com.gaboj1.tcr.init;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.custom.BetterStructureBlock;
 import com.gaboj1.tcr.block.custom.FlammableRotatedPillarBlock;
+import com.gaboj1.tcr.block.custom.PortalBed;
 import com.gaboj1.tcr.worldgen.tree.DenseSpiritTreeGrower;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -74,6 +76,10 @@ public class TCRModBlocks {
 
     public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_TREE_SAPLING = registerBlock("dense_forest_spirit_tree_sapling",
             () -> new SaplingBlock(new DenseSpiritTreeGrower(), BlockBehaviour.Properties.copy(Blocks.JUNGLE_SAPLING)));
+
+    public static final RegistryObject<Block> PORTAL_BED = registerBlock("portal_bed",
+            () -> new PortalBed(DyeColor.WHITE,BlockBehaviour.Properties.copy(Blocks.WHITE_BED)));
+
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){
         RegistryObject<T> toReturn = REGISTRY.register(name, block);

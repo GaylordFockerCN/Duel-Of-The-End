@@ -18,6 +18,7 @@ public class TCRModItemTabs {
 				tabData.accept(TCRModItems.TIGER_SPAWN_EGG.get());
 
 				tabData.accept(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get());
+				tabData.accept(TCRModBlocks.PORTAL_BED.get());
 
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get());
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get());
