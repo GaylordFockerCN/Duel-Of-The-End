@@ -25,6 +25,7 @@ public class TCRModItemTabs {
 				tabData.accept(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get());
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get());
+				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SAPLING.get());
 
 			}).build());
 }

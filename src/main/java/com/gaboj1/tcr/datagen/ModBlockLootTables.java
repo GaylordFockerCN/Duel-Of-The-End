@@ -25,7 +25,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
 
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get(), block ->
-                createLeavesDrops(block, TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get(), NORMAL_LEAVES_SAPLING_CHANCES)); // TODO: Change to Sapling!
+                createLeavesDrops(block, TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+
+        this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SAPLING.get());
 
     }
 
