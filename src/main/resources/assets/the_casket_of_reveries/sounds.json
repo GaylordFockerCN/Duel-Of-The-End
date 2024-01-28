@@ -3,7 +3,7 @@
     "subtitle": "subtitles.deserteaglecrcfire",
     "sounds": [
       {
-        "name": "holydinglegend:fire",
+        "name": "the_casket_of_reveries:fire",
         "stream": false
       }
     ]
@@ -12,7 +12,7 @@
     "subtitle": "subtitles.deserteaglecrcreload",
     "sounds": [
       {
-        "name": "holydinglegend:reload",
+        "name": "the_casket_of_reveries:reload",
         "stream": false
       }
     ]
