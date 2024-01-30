@@ -18,6 +18,13 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
+
+        this.tag(BlockTags.LOGS)
+                .add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get())
+                .add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get())
+                .add(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get())
+                .add(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get());
+
         this.tag(BlockTags.LOGS_THAT_BURN)
                 .add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get())
                 .add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get())

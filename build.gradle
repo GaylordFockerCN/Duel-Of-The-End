@@ -70,10 +70,10 @@ repositories {
         name = 'GeckoLib'
         url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
     }
-    maven {
-        name = "worldeditapi"
-        url "https://maven.enginehub.org/repo/"
-    }
+//    maven {
+//        name = "worldeditapi"
+//        url "https://maven.enginehub.org/repo/"
+//    }
 
 }
 

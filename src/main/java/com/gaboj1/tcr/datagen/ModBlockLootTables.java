@@ -19,6 +19,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get());
         this.dropSelf(TCRModBlocks.PORTAL_BED.get());
 
+        this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
+        this.add(TCRModBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER.get(), createPotFlowerItemTable(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get()));
+
         this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get());
         this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get());
         this.dropSelf(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get());
@@ -26,9 +29,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
 
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get(), block ->
-                createLeavesDrops(block, TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+                createLeavesDrops(block, TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 
-        this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SAPLING.get());
+        this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING.get());
 
     }
 

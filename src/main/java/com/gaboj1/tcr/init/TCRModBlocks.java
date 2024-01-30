@@ -7,14 +7,12 @@ import com.gaboj1.tcr.block.custom.PortalBed;
 import com.gaboj1.tcr.worldgen.tree.DenseSpiritTreeGrower;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.block.SaplingBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.DeferredRegister;
@@ -23,12 +21,21 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
+
 public class TCRModBlocks {
     public static final DeferredRegister<Block> REGISTRY =
             DeferredRegister.create(ForgeRegistries.BLOCKS, TheCasketOfReveriesMod.MOD_ID);
 
     public static final RegistryObject<Block> BETTER_STRUCTURE_BLOCK = registerBlock("better_structure_block",
             ()-> new BetterStructureBlock(BlockBehaviour.Properties.copy(Blocks.STRUCTURE_BLOCK)));
+
+
+    public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_FLOWER = registerBlock("dense_forest_spirit_flower",
+            ()-> new FlowerBlock(() -> MobEffects.POISON, 5, BlockBehaviour.Properties.copy(Blocks.POPPY)));
+    public static final RegistryObject<Block> POTTED_DENSE_FOREST_SPIRIT_FLOWER = REGISTRY.register("potted_dense_forest_spirit_flower",
+            ()-> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER,
+                    BlockBehaviour.Properties.copy(Blocks.POTTED_POPPY).noOcclusion()));
+
 
     public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_TREE_LOG = registerBlock("dense_forest_spirit_tree_log",
             ()-> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_LOG).strength(3f)));
@@ -74,7 +81,7 @@ public class TCRModBlocks {
                 }
             });
 
-    public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_TREE_SAPLING = registerBlock("dense_forest_spirit_tree_sapling",
+    public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_SAPLING = registerBlock("dense_forest_spirit_sapling",
             () -> new SaplingBlock(new DenseSpiritTreeGrower(), BlockBehaviour.Properties.copy(Blocks.JUNGLE_SAPLING)));
 
     public static final RegistryObject<Block> PORTAL_BED = registerBlock("portal_bed",

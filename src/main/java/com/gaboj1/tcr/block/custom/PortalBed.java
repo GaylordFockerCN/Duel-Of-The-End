@@ -24,7 +24,7 @@ public class PortalBed extends BedBlock {
         if (pPlayer.canChangeDimensions()) {
             if (pPlayer.level() instanceof ServerLevel serverlevel && canSetSpawn(serverlevel) && !(Boolean)pState.getValue(OCCUPIED) ) {
 
-                pPlayer.startSleepInBed(pPos);//TODO: 不知道会不会报错
+//                pPlayer.startSleepInBed(pPos);//TODO: 不知道会不会报错
 
                 MinecraftServer minecraftserver = serverlevel.getServer();
                 ResourceKey<Level> resourcekey = pPlayer.level().dimension() == ModDimension.SKY_ISLAND_LEVEL_KEY ?

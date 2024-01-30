@@ -20,11 +20,20 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
 
+//        simpleBlockWithItem(TCRModBlocks.PORTAL_BED.get(), models().singleTexture((blockTexture(TCRModBlocks.PORTAL_BED.get()).getPath(),
+//                blockTexture(TCRModBlocks.PORTAL_BED.get())).renderType("cutout"));
+
+
+        simpleBlockWithItem(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get(), models().cross(blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get()).getPath(),
+                blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get())).renderType("cutout"));
+        simpleBlockWithItem(TCRModBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER.get(), models().singleTexture("potted_dense_forest_spirit_flower", new ResourceLocation("flower_pot_cross"), "plant",
+                blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get())).renderType("cutout"));
+
         logBlock(((RotatedPillarBlock) TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()));
         axisBlock(((RotatedPillarBlock) TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get()),blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()),blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()));
 
         axisBlock(((RotatedPillarBlock) TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get()), blockTexture(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get()),
-                new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "block/stripped_dense_forest_spirit_tree_log_top"));
+                new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "block/dense_forest_spirit_tree_log_top"));
         axisBlock(((RotatedPillarBlock) TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get()), blockTexture(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get()),
                 blockTexture(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get()));
 
@@ -34,7 +43,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockItem(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD);
         blockWithItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS);
         leavesBlock(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES);
-        saplingBlock(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SAPLING);
+        saplingBlock(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING);
 
     }
 
@@ -71,34 +80,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockItem(blockRegistryObject.get(), new ModelFile.UncheckedModelFile(TheCasketOfReveriesMod.MOD_ID +
                 ":block/" + ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath()));
     }
-
-//    public void makeStrawberryCrop(CropBlock block, String modelName, String textureName) {
-//        Function<BlockState, ConfiguredModel[]> function = state -> strawberryStates(state, block, modelName, textureName);
-//
-//        getVariantBuilder(block).forAllStates(function);
-//    }
-
-//    private ConfiguredModel[] strawberryStates(BlockState state, CropBlock block, String modelName, String textureName) {
-//        ConfiguredModel[] models = new ConfiguredModel[1];
-//        models[0] = new ConfiguredModel(models().crop(modelName + state.getValue(((StrawberryCropBlock) block).getAgeProperty()),
-//                new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "block/" + textureName + state.getValue(((StrawberryCropBlock) block).getAgeProperty()))).renderType("cutout"));
-//
-//        return models;
-//    }
-
-//    public void makeCornCrop(CropBlock block, String modelName, String textureName) {
-//        Function<BlockState, ConfiguredModel[]> function = state -> cornStates(state, block, modelName, textureName);
-//
-//        getVariantBuilder(block).forAllStates(function);
-//    }
-//
-//    private ConfiguredModel[] cornStates(BlockState state, CropBlock block, String modelName, String textureName) {
-//        ConfiguredModel[] models = new ConfiguredModel[1];
-//        models[0] = new ConfiguredModel(models().crop(modelName + state.getValue(((CornCropBlock) block).getAgeProperty()),
-//                new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "block/" + textureName + state.getValue(((CornCropBlock) block).getAgeProperty()))).renderType("cutout"));
-//
-//        return models;
-//    }
 
     private void blockWithItem(RegistryObject<Block> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));

@@ -4,6 +4,7 @@
   "item.simpledeserteagle.desert_eagle_bullet": "Desert Eagle Bullet Effect",
   "item.the_casket_of_reveries.desert_eagle": "Desert Eagle",
   "item.the_casket_of_reveries.desert_eagle_ammo": "Desert Eagle Ammo",
+  "item.the_casket_of_reveries.tiger_spawn_egg": "Tiger Spawn Egg",
 
   "subtitles.deserteaglereload": "Desert Eagle Reload",
   "subtitles.deserteagelfire": "Desert Eagle Fire",
@@ -23,6 +24,9 @@
 
 
   "block.the_casket_of_reveries.better_structure_block": "Better Structure Block",
+  "block.the_casket_of_reveries.portal_bed": "Reveries Bed",
+
+  "block.the_casket_of_reveries.dense_forest_spirit_flower": "Dense Forest Spirit Flower",
 
   "block.the_casket_of_reveries.dense_forest_spirit_tree_log": "Dense Forest Spirit Tree Log",
   "block.the_casket_of_reveries.dense_forest_spirit_tree_planks": "Dense Forest Spirit Tree Planks",

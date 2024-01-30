@@ -190,7 +190,7 @@ public class DesertEagleItem extends Item implements GeoItem {
 
                     if (!world.isClientSide()) {
                         //播放音效
-                        world.playSound(null, BlockPos.containing(x, y, z), TCRModSounds.DESERTEAGLECRCFIRE.get(), SoundSource.PLAYERS, 1, 1);
+                        world.playSound(null, BlockPos.containing(x, y, z), TCRModSounds.DESERT_EAGLE_FIRE.get(), SoundSource.PLAYERS, 1, 1);
                     } else {
                         //实现抖动
                         double[] recoilTimer = {0}; // 后坐力计时器
@@ -417,7 +417,7 @@ public class DesertEagleItem extends Item implements GeoItem {
                         ((DesertEagleItem)handItemStake.getItem()).reloadAnim(serverLevel, player, handItemStake);
                         //播放音效
                         //serverLevel.playSound(player, x,y,z, HDLModSounds.DESERTEAGLECRCRELOAD.get(), SoundSource.HOSTILE, 1, 1);
-                        serverLevel.playSound(null, BlockPos.containing(x, y, z), TCRModSounds.DESERTEAGLECRCRELOAD.get(), SoundSource.PLAYERS, 1, 1);
+                        serverLevel.playSound(null, BlockPos.containing(x, y, z), TCRModSounds.DESERT_EAGLE_RELOAD.get(), SoundSource.PLAYERS, 1, 1);
                     }
 
                     Thread.sleep(DesertEagleItem.RELOAD_TIME);

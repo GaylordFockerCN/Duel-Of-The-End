@@ -7,6 +7,8 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -26,6 +28,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
 
+import java.util.Locale;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -35,8 +38,10 @@ import java.util.function.Supplier;
 public class TheCasketOfReveriesMod {
     // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "the_casket_of_reveries";
+
+    public static final String REGISTRY_NAMESPACE = MOD_ID;
     // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
     private static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(new ResourceLocation(MOD_ID, MOD_ID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
 
@@ -69,6 +74,9 @@ public class TheCasketOfReveriesMod {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event){
+        event.enqueueWork(() -> {
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.getId(), TCRModBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER);
+        });
     }
 
     // Add the example block item to the building blocks tab
@@ -95,4 +103,14 @@ public class TheCasketOfReveriesMod {
             event.registerBlockEntityRenderer(TCRModBlockEntities.BETTER_STRUCTURE_BLOCK_ENTITY.get(), BetterStructureBlockRenderer::new);
         }
     }
+
+
+    public static ResourceLocation prefix(String name) {
+        return new ResourceLocation(MOD_ID, name.toLowerCase(Locale.ROOT));
+    }
+
+    public static ResourceLocation namedRegistry(String name) {
+        return new ResourceLocation(REGISTRY_NAMESPACE, name.toLowerCase(Locale.ROOT));
+    }
+
 }

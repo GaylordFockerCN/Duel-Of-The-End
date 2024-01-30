@@ -1,9 +1,12 @@
 package com.gaboj1.tcr.datagen;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.init.TCRModBlocks;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -21,26 +24,21 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
-//        oreSmelting(consumer, List.of(ModItems.RAW_BLACK_OPAL.get()), RecipeCategory.MISC,
-//                ModItems.BLACK_OPAL.get(), 0.7f, 200, "black_opal");
-//
-//        nineBlockStorageRecipes(consumer, RecipeCategory.BUILDING_BLOCKS, ModItems.BLACK_OPAL.get(), RecipeCategory.MISC,
-//                ModBlocks.BLACK_OPAL_BLOCK.get());
 
-        // ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.BLACK_OPAL.get())
-        //         .requires(ModBlocks.BLACK_OPAL_BLOCK.get())
-        //         .unlockedBy("has_black_opal_block", inventoryTrigger(ItemPredicate.Builder.item()
-        //                 .of(ModBlocks.BLACK_OPAL_BLOCK.get()).build()))
-        //         .save(consumer);
+         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get(),4)
+                 .requires(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get())
+                 .requires(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get())
+                 .unlockedBy(getHasName(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()), has(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()))
+                 .save(consumer);
 
-        // ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.BLACK_OPAL_BLOCK.get())
-        //         .define('B', ModItems.BLACK_OPAL.get())
-        //         .pattern("BBB")
-        //         .pattern("BBB")
-        //         .pattern("BBB")
-        //         .unlockedBy("has_black_opal", inventoryTrigger(ItemPredicate.Builder.item()
-        //                 .of(ModItems.BLACK_OPAL.get()).build()))
-        //         .save(consumer);
+         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TCRModBlocks.PORTAL_BED.get())
+                 .define('B', Items.WHITE_BED)
+                 .define('C', Items.WITHER_ROSE)
+                 .unlockedBy(getHasName(Items.WITHER_ROSE), has(Items.WITHER_ROSE))
+                 .pattern(" C ")
+                 .pattern(" B ")
+                 .pattern("   ")
+                 .save(consumer);
     }
 
     protected static void oreSmelting(Consumer<FinishedRecipe> p_250654_, List<ItemLike> p_250172_, RecipeCategory p_250588_, ItemLike p_251868_, float p_250789_, int p_252144_, String p_251687_) {

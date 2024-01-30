@@ -16,13 +16,13 @@ public class ModBiomeModifiers {
     public static final ResourceKey<BiomeModifier> ADD_DENSE_FOREST_SPIRIT_TREE = registerKey("add_dense_forest_spirit_tree");
 
     public static void bootstrap(BootstapContext<BiomeModifier> context) {
-        var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
-        var biomes = context.lookup(Registries.BIOME);
-
-        context.register(ADD_DENSE_FOREST_SPIRIT_TREE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(Tags.Biomes.IS_PLAINS),
-                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.DENSE_FOREST_SPIRIT_TREE_PLACED_KEY)),
-                GenerationStep.Decoration.VEGETAL_DECORATION));
+//        var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
+//        var biomes = context.lookup(Registries.BIOME);
+//
+//        context.register(ADD_DENSE_FOREST_SPIRIT_TREE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+//                biomes.getOrThrow(Tags.Biomes.IS_PLAINS),//TODO: 换成自己的群系
+//                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.DENSE_FOREST_SPIRIT_TREE_PLACED_KEY)),
+//                GenerationStep.Decoration.VEGETAL_DECORATION));
     }
 
     private static ResourceKey<BiomeModifier> registerKey(String name) {

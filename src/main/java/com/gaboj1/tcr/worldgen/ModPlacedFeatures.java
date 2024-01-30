@@ -22,8 +22,10 @@ public class ModPlacedFeatures {
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
         register(context, DENSE_FOREST_SPIRIT_TREE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.DENSE_FOREST_SPIRIT_TREE_KEY),
-                VegetationPlacements.treePlacement(PlacementUtils.countExtra(3, 0.1f, 2),//TODO: change to suitable value.
-                        TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SAPLING.get()));
+                //See VegetationPlacements
+                // first:how many we're placing second:the chance getting extra(the third param)
+                VegetationPlacements.treePlacement(PlacementUtils.countExtra(50, 0.1f, 1),//TODO: change to suitable value.
+                        TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING.get()));
     }
 
 

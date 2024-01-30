@@ -1,8 +1,7 @@
 package com.gaboj1.tcr.worldgen.dimension;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.worldgen.biome.ModBiomes;
-import com.mojang.datafixers.util.Pair;
+import com.gaboj1.tcr.worldgen.biome.*;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
@@ -18,7 +17,6 @@ import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 
-import java.util.List;
 import java.util.OptionalLong;
 
 public class ModDimension {
@@ -36,44 +34,51 @@ public class ModDimension {
                 true, // hasSkylight
                 false, // hasCeiling
                 false, // ultraWarm
-                false, // natural
+                true, // natural
                 1.0, // coordinateScale
                 true, // bedWorks
                 true, // respawnAnchorWorks
                 0, // minY
-                512, // height
-                512, // logicalHeight
+                256, // height
+                256, // logicalHeight
                 BlockTags.INFINIBURN_OVERWORLD, // infiniburn
                 BuiltinDimensionTypes.OVERWORLD_EFFECTS, // effectsLocation
-                1.0f, // ambientLight
+                0.0f, // ambientLight
                 new DimensionType.MonsterSettings(false, false, ConstantInt.of(0), 0)));
     }
 
     public static void bootstrapStem(BootstapContext<LevelStem> context) {
+
         HolderGetter<Biome> biomeRegistry = context.lookup(Registries.BIOME);
         HolderGetter<DimensionType> dimTypes = context.lookup(Registries.DIMENSION_TYPE);
         HolderGetter<NoiseGeneratorSettings> noiseGenSettings = context.lookup(Registries.NOISE_SETTINGS);
 
+//        HolderGetter<BiomeDensitySource> biomeDataRegistry = context.lookup(ModRegistries.Keys.BIOME_TERRAIN_DATA);
+
         NoiseBasedChunkGenerator wrappedChunkGenerator = new NoiseBasedChunkGenerator(
-                new FixedBiomeSource(biomeRegistry.getOrThrow(ModBiomes.DENSE_FOREST_BIOME)),
-                noiseGenSettings.getOrThrow(NoiseGeneratorSettings.AMPLIFIED));
+                new ModBiomeProvider(
+                        BiomeMaker.makeBiomeList(biomeRegistry, biomeRegistry.getOrThrow(ModBiomes.AIR)),
+                        -1.25F,
+                        2.5F,
+                        context.lookup(BiomeLayerStack.BIOME_STACK_KEY).getOrThrow(BiomeLayerStack.BIOMES_ALONG_STREAMS)
+                ),
+                noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS));
 
-        NoiseBasedChunkGenerator noiseBasedChunkGenerator = new NoiseBasedChunkGenerator(
-                MultiNoiseBiomeSource.createFromList(
-                        new Climate.ParameterList<>(List.of(Pair.of(
-                                        Climate.parameters(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F), biomeRegistry.getOrThrow(ModBiomes.DENSE_FOREST_BIOME)),
-                                Pair.of(
-                                        Climate.parameters(0.1F, 0.2F, 0.0F, 0.2F, 0.0F, 0.0F, 0.0F), biomeRegistry.getOrThrow(Biomes.BIRCH_FOREST)),
-                                Pair.of(
-                                        Climate.parameters(0.3F, 0.6F, 0.1F, 0.1F, 0.0F, 0.0F, 0.0F), biomeRegistry.getOrThrow(Biomes.OCEAN)),
-                                Pair.of(
-                                        Climate.parameters(0.4F, 0.3F, 0.2F, 0.1F, 0.0F, 0.0F, 0.0F), biomeRegistry.getOrThrow(Biomes.DARK_FOREST))
-
-                        ))),
-                noiseGenSettings.getOrThrow(NoiseGeneratorSettings.FLOATING_ISLANDS));
-
-        LevelStem stem = new LevelStem(dimTypes.getOrThrow(ModDimension.SKY_ISLAND_TYPE), noiseBasedChunkGenerator);
-
+        LevelStem stem = new LevelStem(dimTypes.getOrThrow(ModDimension.SKY_ISLAND_TYPE),wrappedChunkGenerator);
+//        new ChunkGeneratorTwilight(
+//                wrappedChunkGenerator,
+//                noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS),
+//                true,
+//                Optional.of(19),
+//                BiomeMaker.BIOME_FEATURES_SETS)
         context.register(SKY_ISLAND_KEY, stem);
+
+
+//        NoiseBasedChunkGenerator noiseBasedChunkGenerator = new NoiseBasedChunkGenerator(new ModBiomeProvider(biomeDataRegistry.getOrThrow(BiomeLayerStack.BIOME_GRID)),
+//                noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS));
+//
+//        LevelStem stem = new LevelStem(dimTypes.getOrThrow(ModDimension.SKY_ISLAND_TYPE), noiseBasedChunkGenerator);
+//
+//        context.register(SKY_ISLAND_KEY, stem);
     }
 }
