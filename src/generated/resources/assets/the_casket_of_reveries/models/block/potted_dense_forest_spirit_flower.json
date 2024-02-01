@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/flower_pot_cross",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "plant": "the_casket_of_reveries:block/dense_forest_spirit_flower"
+  }
+}

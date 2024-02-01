@@ -1,5 +1,7 @@
 package com.gaboj1.tcr.worldgen.biome;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import it.unimi.dsi.fastutil.floats.Float2ObjectAVLTreeMap;
 import it.unimi.dsi.fastutil.floats.Float2ObjectSortedMap;
 import net.minecraft.Util;
@@ -9,9 +11,24 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public final class BiomeMaker {
+
+//    public static final Map<ResourceKey<Biome>, ImmutableSet<TFLandmark>> BIOME_FEATURES_SETS = new ImmutableMap.Builder<ResourceKey<Biome>, ImmutableSet<TFLandmark>>()
+//            //.put(TFBiomes.DENSE_MUSHROOM_FOREST, Set.of(MUSHROOM_TOWER))
+//            .put(TFBiomes.ENCHANTED_FOREST, ImmutableSet.of(TFLandmark.QUEST_GROVE))
+//            //.put(TFBiomes.LAKE, ImmutableSet.of(TFLandmark.QUEST_ISLAND))
+//            .put(TFBiomes.SWAMP, ImmutableSet.of(TFLandmark.LABYRINTH))
+//            .put(TFBiomes.FIRE_SWAMP, ImmutableSet.of(TFLandmark.HYDRA_LAIR))
+//            .put(TFBiomes.DARK_FOREST, ImmutableSet.of(TFLandmark.KNIGHT_STRONGHOLD))
+//            .put(TFBiomes.DARK_FOREST_CENTER, ImmutableSet.of(TFLandmark.DARK_TOWER))
+//            .put(TFBiomes.SNOWY_FOREST, ImmutableSet.of(TFLandmark.YETI_CAVE))
+//            .put(TFBiomes.GLACIER, ImmutableSet.of(TFLandmark.ICE_TOWER))
+//            .put(TFBiomes.HIGHLANDS, ImmutableSet.of(TFLandmark.TROLL_CAVE))
+//            .put(TFBiomes.FINAL_PLATEAU, ImmutableSet.of(TFLandmark.FINAL_CASTLE))
+//            .build();
 
     public static List<TerrainColumn> makeBiomeList(HolderGetter<Biome> biomeRegistry, Holder<Biome> undergroundBiome) {
         return List.of(
@@ -44,7 +61,7 @@ public final class BiomeMaker {
         return makeColumn(noiseDepth, noiseScale, biomeHolder, treeMap -> {
             // This will put the transition boundary around Y-8
             treeMap.put(Math.min(noiseDepth - 1, -1), biomeHolder);
-            treeMap.put(Math.min(noiseDepth - 3, -3), undergroundBiome);
+//            treeMap.put(Math.min(noiseDepth - 3, -3), undergroundBiome);
         });
     }
 

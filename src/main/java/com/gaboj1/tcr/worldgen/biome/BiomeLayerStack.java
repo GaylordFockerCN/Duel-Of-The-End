@@ -9,8 +9,8 @@ import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraftforge.registries.DeferredRegister;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class BiomeLayerStack {
 
         Holder.Reference<BiomeLayerFactory> randomBiomes = context.register(RANDOM_FOREST_BIOMES, biomes);
 
-        BiomeLayerFactory riverLayer = new SeamLayer.Factory(1L, ModBiomes.AIR, List.of(ModBiomes.AIR), List.of(
+        BiomeLayerFactory riverLayer = new SeamLayer.Factory(1L, ModBiomes.AIR, List.of(ModBiomes.AIR2), List.of(
                 Pair.of(ModBiomes.PASTORAL_PLAINS, ModBiomes.DENSE_FOREST)
         ), randomBiomes);
         riverLayer = new SmoothLayer.Factory(7000L, Holder.direct(riverLayer));
@@ -53,17 +53,19 @@ public class BiomeLayerStack {
         context.register(BIOMES_ALONG_STREAMS, new FilteredBiomeLayer.Factory(100L, ModBiomes.AIR, Holder.direct(riverLayer), randomBiomes));
     }
 
-    @NotNull
     private static BiomeLayerFactory getBiomeLayerFactory() {
         BiomeLayerFactory biomes = new RandomBiomeLayer.Factory(1L, 15, ImmutableList.of(
-                ModBiomes.AIR
+                ModBiomes.AIR3
         ), ImmutableList.of(
-                ModBiomes.AIR
+                ModBiomes.AIR2
         ));
 
-        biomes = new KeyBiomesLayer.Factory(1000L, List.of(ModBiomes.DENSE_FOREST, ModBiomes.DENSE_FOREST, ModBiomes.DENSE_FOREST, ModBiomes.DENSE_FOREST), Holder.direct(biomes));
+        biomes = new KeyBiomesLayer.Factory(1000L, List.of(ModBiomes.DENSE_FOREST, Biomes.FOREST, Biomes.CHERRY_GROVE, Biomes.BAMBOO_JUNGLE), Holder.direct(biomes));
         biomes = new CompanionBiomesLayer.Factory(1000L, List.of(
-                Pair.of(ModBiomes.DENSE_FOREST, ModBiomes.PASTORAL_PLAINS)
+                Pair.of(ModBiomes.DENSE_FOREST, ModBiomes.PASTORAL_PLAINS),
+                Pair.of(Biomes.FOREST, Biomes.PLAINS),
+                Pair.of(Biomes.CHERRY_GROVE, Biomes.BEACH),
+                Pair.of(Biomes.BAMBOO_JUNGLE, Biomes.BADLANDS)
         ), Holder.direct(biomes));
         return biomes;
     }

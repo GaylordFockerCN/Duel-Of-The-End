@@ -3,8 +3,15 @@ package com.gaboj1.tcr;
 import com.gaboj1.tcr.block.renderer.BetterStructureBlockRenderer;
 import com.gaboj1.tcr.entity.client.TigerRenderer;
 import com.gaboj1.tcr.init.*;
+import com.gaboj1.tcr.worldgen.ChunkGeneratorTwilight;
+import com.gaboj1.tcr.worldgen.biome.BiomeLayerStack;
+import com.gaboj1.tcr.worldgen.biome.BiomeLayerTypes;
+import com.gaboj1.tcr.worldgen.biome.ModBiomeProvider;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
@@ -12,6 +19,7 @@ import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -25,6 +33,9 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.registries.DataPackRegistryEvent;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
 
@@ -39,7 +50,7 @@ public class TheCasketOfReveriesMod {
     // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "the_casket_of_reveries";
 
-    public static final String REGISTRY_NAMESPACE = MOD_ID;
+    public static final String REGISTRY_NAMESPACE = "tcr";
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
     private static final String PROTOCOL_VERSION = "1";
@@ -55,12 +66,17 @@ public class TheCasketOfReveriesMod {
         TCRModBlockEntities.REGISTRY.register(bus);
         TCRModEntities.REGISTRY.register(bus);
         TCRModItemTabs.REGISTRY.register(bus);
+
+        BiomeLayerTypes.BIOME_LAYER_TYPES.register(bus);
+        BiomeLayerStack.BIOME_LAYER_STACKS.register(bus);
+
         bus.addListener(this::commonSetup);
+        bus.addListener(this::registerExtraStuff);
+        bus.addListener(this::setRegistriesForDatapack);
+
         GeckoLib.initialize();
 
         MinecraftForge.EVENT_BUS.register(this);
-
-        // Register the item to a creative tab
         bus.addListener(this::addCreative);
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
@@ -82,6 +98,23 @@ public class TheCasketOfReveriesMod {
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event){
 
+    }
+
+    public void setRegistriesForDatapack(DataPackRegistryEvent.NewRegistry event) {
+        event.dataPackRegistry(BiomeLayerStack.BIOME_STACK_KEY, BiomeLayerStack.DISPATCH_CODEC);
+    }
+
+    public void registerExtraStuff(RegisterEvent evt) {
+        if (evt.getRegistryKey().equals(Registries.BIOME_SOURCE)) {
+            Registry.register(BuiltInRegistries.BIOME_SOURCE, TheCasketOfReveriesMod.prefix("tcr_biomes"), ModBiomeProvider.TCR_CODEC);
+        }else if (evt.getRegistryKey().equals(Registries.CHUNK_GENERATOR)) {
+            Registry.register(BuiltInRegistries.CHUNK_GENERATOR, TheCasketOfReveriesMod.prefix("structure_locating_wrapper"), ChunkGeneratorTwilight.CODEC);
+        }
+//        else if (evt.getRegistryKey().equals(Registries.CHUNK_GENERATOR)) {
+////            Registry.register(BuiltInRegistries.CHUNK_GENERATOR, TheCasketOfReveriesMod.prefix("structure_locating_wrapper"), ChunkGeneratorTwilight.CODEC);
+//        } else if (evt.getRegistryKey().equals(ForgeRegistries.Keys.RECIPE_SERIALIZERS)) {
+////            CraftingHelper.register(UncraftingTableCondition.Serializer.INSTANCE);
+//        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

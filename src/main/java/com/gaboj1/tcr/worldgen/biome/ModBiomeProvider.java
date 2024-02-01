@@ -6,6 +6,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
@@ -21,7 +22,7 @@ import java.util.stream.Stream;
 
 @Deprecated // Pending rename
 public class ModBiomeProvider extends BiomeSource {
-    public static final Codec<ModBiomeProvider> TF_CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+    public static final Codec<ModBiomeProvider> TCR_CODEC = RecordCodecBuilder.create((instance) -> instance.group(
             TerrainColumn.CODEC.listOf().fieldOf("biome_landscape").xmap(l -> l.stream().collect(Collectors.toMap(TerrainColumn::getResourceKey, Function.identity())), m -> m.values().stream().sorted(Comparator.comparing(TerrainColumn::getResourceKey)).toList()).forGetter(o -> o.biomeList),
             Codec.FLOAT.fieldOf("base_offset").forGetter(o -> o.baseOffset),
             Codec.FLOAT.fieldOf("base_factor").forGetter(o -> o.baseFactor),
@@ -36,6 +37,7 @@ public class ModBiomeProvider extends BiomeSource {
     private final Supplier<LazyArea> genBiomes;
 
     public ModBiomeProvider(List<TerrainColumn> list, float offset, float factor, Holder<BiomeLayerFactory> biomeLayerFactory) {
+
         this(list.stream().collect(Collectors.toMap(TerrainColumn::getResourceKey, Function.identity())), offset, factor, biomeLayerFactory);
     }
 
@@ -59,7 +61,7 @@ public class ModBiomeProvider extends BiomeSource {
 
     @Override
     protected Codec<? extends BiomeSource> codec() {
-        return TF_CODEC;
+        return TCR_CODEC;
     }
 
     public float getBaseOffset() {

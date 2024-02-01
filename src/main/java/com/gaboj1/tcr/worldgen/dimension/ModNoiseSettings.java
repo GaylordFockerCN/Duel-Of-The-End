@@ -14,7 +14,7 @@ import net.minecraft.world.level.levelgen.synth.NormalNoise;
  * @author the Aether
  */
 public class ModNoiseSettings {
-    public static final ResourceKey<NoiseGeneratorSettings> SKY_ISLANDS = createKey("sky_islands");
+    public static final ResourceKey<NoiseGeneratorSettings> SKY_ISLANDS = createKey("sky_islands_noise_gen");
 
     private static ResourceKey<NoiseGeneratorSettings> createKey(String name) {
         return ResourceKey.create(Registries.NOISE_SETTINGS, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name));

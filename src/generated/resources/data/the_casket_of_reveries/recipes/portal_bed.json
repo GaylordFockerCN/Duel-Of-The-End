@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:white_bed"
+    },
+    "C": {
+      "item": "minecraft:wither_rose"
+    }
+  },
+  "pattern": [
+    " C ",
+    " B ",
+    "   "
+  ],
+  "result": {
+    "item": "the_casket_of_reveries:portal_bed"
+  },
+  "show_notification": true
+}
