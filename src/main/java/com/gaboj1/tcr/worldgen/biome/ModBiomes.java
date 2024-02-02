@@ -12,9 +12,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class ModBiomes {
-
 
     public static final ResourceKey<Biome> AIR = createBiomeKey("air_biome");
     public static final ResourceKey<Biome> AIR2 = createBiomeKey("air2_biome");
@@ -24,6 +24,18 @@ public class ModBiomes {
     public static final ResourceKey<Biome> PASTORAL_PLAINS = createBiomeKey("pastoral_plains_biome");
     public static final ResourceKey<Biome> DENSE_FOREST = createBiomeKey("dense_forest_biome");
 
+    public static final ResourceKey<Biome> biomeVOID = Biomes.THE_VOID;
+
+    public static final ResourceKey<Biome> biome1 = ModBiomes.PASTORAL_PLAINS;
+    public static final ResourceKey<Biome> biome2 = ModBiomes.PASTORAL_PLAINS;
+    public static final ResourceKey<Biome> biome3 = ModBiomes.PASTORAL_PLAINS;
+    public static final ResourceKey<Biome> biome4 = ModBiomes.PASTORAL_PLAINS;
+
+    public static final ResourceKey<Biome> biome1Center = ModBiomes.DENSE_FOREST;
+    public static final ResourceKey<Biome> biome2Center = ModBiomes.DENSE_FOREST;
+    public static final ResourceKey<Biome> biome3Center = ModBiomes.DENSE_FOREST;
+    public static final ResourceKey<Biome> biome4Center = ModBiomes.DENSE_FOREST;
+    public static final ResourceKey<Biome> biomeBorder = Biomes.THE_VOID;
 
 
     public static ResourceKey<Biome> createBiomeKey(String name){
@@ -76,22 +88,10 @@ public class ModBiomes {
 
     public static Biome createPastoralPlainsBiome(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
-        spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(TCRModEntities.TIGER.get(), 5, 4, 4));
+        spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(TCRModEntities.TIGER.get(), 5, 1, 4));
 
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
-        //we need to follow the same order as vanilla biomes for the BiomeDefaultFeatures
-//        globalOverworldGeneration(biomeBuilder);
-//        BiomeDefaultFeatures.addMossyStoneBlock(biomeBuilder);
-//        BiomeDefaultFeatures.addForestFlowers(biomeBuilder);
-//        BiomeDefaultFeatures.addFerns(biomeBuilder);
-//        BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
-//        BiomeDefaultFeatures.addExtraGold(biomeBuilder);
-
-//        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.TREES_PLAINS);
-
-//        BiomeDefaultFeatures.addDefaultMushrooms(biomeBuilder);
-//        BiomeDefaultFeatures.addDefaultExtraVegetation(biomeBuilder);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, TreePlacements.CHERRY_CHECKED);
 
         return new Biome.BiomeBuilder()
@@ -103,7 +103,7 @@ public class ModBiomes {
                 .specialEffects((new BiomeSpecialEffects.Builder())
                         .waterColor(0x25faf2)
                         .waterFogColor(0x1b8bbf)
-                        .grassColorOverride(0x4e7dae)
+                        .grassColorOverride(0x76b373)
                         .foliageColorOverride(0xd203fc)
                         .fogColor(0x22a1e6)
                         .skyColor(0xcbf2ff)
@@ -133,7 +133,7 @@ public class ModBiomes {
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.DENSE_FOREST_SPIRIT_TREE_PLACED_KEY);
 
         return new Biome.BiomeBuilder()
-                .hasPrecipitation(true)
+                .hasPrecipitation(false)
                 .downfall(0.8f)
                 .temperature(0.7f)
                 .generationSettings(biomeBuilder.build())

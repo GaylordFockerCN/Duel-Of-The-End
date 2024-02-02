@@ -4,9 +4,9 @@ import com.gaboj1.tcr.block.renderer.BetterStructureBlockRenderer;
 import com.gaboj1.tcr.entity.client.TigerRenderer;
 import com.gaboj1.tcr.init.*;
 import com.gaboj1.tcr.worldgen.ChunkGeneratorTwilight;
-import com.gaboj1.tcr.worldgen.biome.BiomeLayerStack;
-import com.gaboj1.tcr.worldgen.biome.BiomeLayerTypes;
-import com.gaboj1.tcr.worldgen.biome.ModBiomeProvider;
+import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
+import com.gaboj1.tcr.worldgen.tf.BiomeLayerStack;
+import com.gaboj1.tcr.worldgen.tf.BiomeLayerTypes;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.Registry;
@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -34,7 +33,6 @@ import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.DataPackRegistryEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
@@ -106,7 +104,9 @@ public class TheCasketOfReveriesMod {
 
     public void registerExtraStuff(RegisterEvent evt) {
         if (evt.getRegistryKey().equals(Registries.BIOME_SOURCE)) {
-            Registry.register(BuiltInRegistries.BIOME_SOURCE, TheCasketOfReveriesMod.prefix("tcr_biomes"), ModBiomeProvider.TCR_CODEC);
+//            Registry.register(BuiltInRegistries.BIOME_SOURCE, TheCasketOfReveriesMod.prefix("tcr_biomes"), ModBiomeProvider.TCR_CODEC);
+            Registry.register(BuiltInRegistries.BIOME_SOURCE, TheCasketOfReveriesMod.prefix("tcr_biomes"), TCRBiomeProvider.TCR_CODEC);
+
         }else if (evt.getRegistryKey().equals(Registries.CHUNK_GENERATOR)) {
             Registry.register(BuiltInRegistries.CHUNK_GENERATOR, TheCasketOfReveriesMod.prefix("structure_locating_wrapper"), ChunkGeneratorTwilight.CODEC);
         }

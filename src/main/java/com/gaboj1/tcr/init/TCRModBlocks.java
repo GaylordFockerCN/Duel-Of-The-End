@@ -29,6 +29,8 @@ public class TCRModBlocks {
     public static final RegistryObject<Block> BETTER_STRUCTURE_BLOCK = registerBlock("better_structure_block",
             ()-> new BetterStructureBlock(BlockBehaviour.Properties.copy(Blocks.STRUCTURE_BLOCK)));
 
+    public static final RegistryObject<Block> PORTAL_BED = registerBlock("portal_bed",
+            () -> new PortalBed(DyeColor.WHITE,BlockBehaviour.Properties.copy(Blocks.WHITE_BED)));
 
     public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_FLOWER = registerBlock("dense_forest_spirit_flower",
             ()-> new FlowerBlock(() -> MobEffects.POISON, 5, BlockBehaviour.Properties.copy(Blocks.POPPY)));
@@ -83,9 +85,6 @@ public class TCRModBlocks {
 
     public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_SAPLING = registerBlock("dense_forest_spirit_sapling",
             () -> new SaplingBlock(new DenseSpiritTreeGrower(), BlockBehaviour.Properties.copy(Blocks.JUNGLE_SAPLING)));
-
-    public static final RegistryObject<Block> PORTAL_BED = registerBlock("portal_bed",
-            () -> new PortalBed(DyeColor.WHITE,BlockBehaviour.Properties.copy(Blocks.WHITE_BED)));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){

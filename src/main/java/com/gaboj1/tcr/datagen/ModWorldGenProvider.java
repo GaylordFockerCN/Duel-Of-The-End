@@ -1,21 +1,19 @@
 package com.gaboj1.tcr.datagen;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.worldgen.ModBiomeModifiers;
 import com.gaboj1.tcr.worldgen.ModConfiguredFeatures;
 import com.gaboj1.tcr.worldgen.ModPlacedFeatures;
-import com.gaboj1.tcr.worldgen.biome.BiomeLayerStack;
+import com.gaboj1.tcr.worldgen.tf.BiomeLayerStack;
 import com.gaboj1.tcr.worldgen.biome.ModBiomes;
-import com.gaboj1.tcr.worldgen.dimension.ModDensityFunctions;
+import com.gaboj1.tcr.worldgen.tf.ModDensityFunctions;
 import com.gaboj1.tcr.worldgen.dimension.ModDimension;
-import com.gaboj1.tcr.worldgen.dimension.ModNoiseSettings;
-import com.gaboj1.tcr.worldgen.dimension.ModNoises;
+import com.gaboj1.tcr.worldgen.noise.ModNoiseSettings;
+import com.gaboj1.tcr.worldgen.noise.ModNoises;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
