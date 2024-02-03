@@ -55,35 +55,8 @@ public class TCRDimension {
         HolderGetter<DimensionType> dimTypes = context.lookup(Registries.DIMENSION_TYPE);
         HolderGetter<NoiseGeneratorSettings> noiseGenSettings = context.lookup(Registries.NOISE_SETTINGS);
 
-//        HolderGetter<BiomeDensitySource> biomeDataRegistry = context.lookup(ModRegistries.Keys.BIOME_TERRAIN_DATA);
-
-//        NoiseBasedChunkGenerator wrappedChunkGenerator = new NoiseBasedChunkGenerator(
-//                new TCRBiomeProvider(HolderBiomeMaker.getHolderBiomeList(biomeRegistry),1),
-//                noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS));
-//
-//        LevelStem stem = new LevelStem(dimTypes.getOrThrow(ModDimension.SKY_ISLAND_TYPE),new ChunkGeneratorTwilight(
-//                wrappedChunkGenerator,
-//                noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS),
-//                true,
-//                Optional.of(19)));
-//
-//        context.register(SKY_ISLAND_KEY, stem);
-
-
-//        NoiseBasedChunkGenerator noiseBasedChunkGenerator = new NoiseBasedChunkGenerator(new ModBiomeProvider(biomeDataRegistry.getOrThrow(BiomeLayerStack.BIOME_GRID)),
-//                noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS));
-//
-//        LevelStem stem = new LevelStem(dimTypes.getOrThrow(ModDimension.SKY_ISLAND_TYPE), noiseBasedChunkGenerator);
-//
-//        context.register(SKY_ISLAND_KEY, stem);
-
-//        NoiseBasedChunkGenerator wrappedChunkGenerator = new NoiseBasedChunkGenerator(
-//                new TCRBiomeProvider(HolderBiomeMaker.getHolderBiomeList(biomeRegistry),1),
-//                noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS));
-
-
         NoiseBasedChunkGenerator wrappedChunkGenerator = new TCRChunkGenerator(
-                TCRBiomeProvider.create(new Random().nextInt(100),biomeRegistry),//TODO 换成世界种子
+                TCRBiomeProvider.create(new Random().nextInt(100),biomeRegistry),//TODO 换成世界种子，如果不能换的话要把seed从这里去掉否则图都一样了
                 noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS));
 
         LevelStem stem = new LevelStem(dimTypes.getOrThrow(TCRDimension.SKY_ISLAND_TYPE), wrappedChunkGenerator);

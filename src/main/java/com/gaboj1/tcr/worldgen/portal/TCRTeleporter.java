@@ -39,9 +39,10 @@ public class TCRTeleporter implements ITeleporter {
 
         //出生在第一群系
         BlockPos destinationPos = new BlockPos(thisPos.getX(), y, thisPos.getZ());
-        Predicate<Holder<Biome>> destinationBiome = biomeHolder -> biomeHolder.is(TCRBiomes.biome1);
-        BlockPos pos = destinationWorld.findClosestBiome3d(destinationBiome,destinationPos,1000,1000,1000).getFirst();
-        destinationPos.offset(pos);
+//        Predicate<Holder<Biome>> destinationBiome = biomeHolder -> biomeHolder.is(TCRBiomes.biome1);
+//        BlockPos pos = destinationWorld.findClosestBiome3d(destinationBiome,destinationPos,1000,1000,1000).getFirst();
+//        destinationPos.offset(pos);
+
         int tries = 0;
         while ((destinationWorld.getBlockState(destinationPos).getBlock() != Blocks.AIR) &&
                 !destinationWorld.getBlockState(destinationPos).canBeReplaced(Fluids.WATER) &&

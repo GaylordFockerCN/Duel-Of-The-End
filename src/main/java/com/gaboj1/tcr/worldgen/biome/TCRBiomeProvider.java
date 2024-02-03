@@ -22,7 +22,7 @@ public class TCRBiomeProvider extends BiomeSource {
 
     public static final Codec<TCRBiomeProvider> TCR_CODEC = RecordCodecBuilder.create((instance) -> instance.group(
             Codec.INT.fieldOf("seed").forGetter((o) -> o.seed),
-            RegistryOps.retrieveElement(TCRBiomes.biomeVOID),
+            RegistryOps.retrieveElement(TCRBiomes.finalBiome),
             RegistryOps.retrieveElement(TCRBiomes.biome1),
             RegistryOps.retrieveElement(TCRBiomes.biome2),
             RegistryOps.retrieveElement(TCRBiomes.biome3),
@@ -56,7 +56,7 @@ public class TCRBiomeProvider extends BiomeSource {
     public static TCRBiomeProvider create(int seed, HolderGetter<Biome> pBiomeGetter) {
 
         return new TCRBiomeProvider(seed,
-                pBiomeGetter.getOrThrow(TCRBiomes.biomeVOID),
+                pBiomeGetter.getOrThrow(TCRBiomes.finalBiome),
                 pBiomeGetter.getOrThrow(TCRBiomes.biome1),
                 pBiomeGetter.getOrThrow(TCRBiomes.biome2),
                 pBiomeGetter.getOrThrow(TCRBiomes.biome3),
@@ -103,7 +103,7 @@ public class TCRBiomeProvider extends BiomeSource {
         generator.setSeed(seed);
         generator.setLength(SIZE);
         generator.setWidth(SIZE);
-        generator.setLacunarity(4);
+        generator.setLacunarity(20);//TODO 调整合适大小
         generator.setOctaves(8);
         map = generator.generateNoiseMap();
         map = NoiseMapGenerator.divide(map);

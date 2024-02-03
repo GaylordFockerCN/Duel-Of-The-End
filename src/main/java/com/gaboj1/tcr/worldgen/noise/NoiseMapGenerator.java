@@ -265,8 +265,8 @@ public class NoiseMapGenerator {
         double[][] aRandom = generator.generateNoiseMap();
 
         //centerR即偏移量
-        for(int i = aCenter.x - centerR ,a = 0; i < aCenter.x + centerR && a < centerR ; i++,a++){
-            for(int j = aCenter.y - centerR ,b = 0; j < aCenter.y + centerR && b < centerR; j++,b++){
+        for(int i = aCenter.x - centerR/2 ,a = 0; i < aCenter.x + centerR/2 && a < centerR ; i++,a++){
+            for(int j = aCenter.y - centerR/2 ,b = 0; j < aCenter.y + centerR/2 && b < centerR; j++,b++){
                 if(i > 0 && j > 0 && aRandom[a][b] != 0)
                     map[i][j] = tag;
             }
@@ -350,7 +350,8 @@ public class NoiseMapGenerator {
         noiseMapGenerator.setSeed(99);
         noiseMapGenerator.setLength(size);
         noiseMapGenerator.setWidth(size);
-        noiseMapGenerator.setLacunarity(4);
+        noiseMapGenerator.setLacunarity(20);
+        noiseMapGenerator.setPersistence(0.5);
         noiseMapGenerator.setOctaves(8);
         double map[][] = noiseMapGenerator.generateNoiseMap();
         noiseMapGenerator.divideTest(map);
