@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 public class TCRBiomeProvider extends BiomeSource {
 
     public static final Codec<TCRBiomeProvider> TCR_CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-            Codec.INT.fieldOf("seed").forGetter((o) -> o.seed),
+            Codec.INT.fieldOf("seed").forGetter((o) -> o.seed),//FIXME 把种子改成随机生成，或者获取世界种子，如果编码进去的话地图会固定住！
             RegistryOps.retrieveElement(TCRBiomes.finalBiome),
             RegistryOps.retrieveElement(TCRBiomes.biome1),
             RegistryOps.retrieveElement(TCRBiomes.biome2),
