@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.worldgen.tf;
+package com.gaboj1.tcr.worldgen.noise;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import net.minecraft.core.registries.Registries;
@@ -16,11 +16,13 @@ public class ModDensityFunctions {
     }
 
     public static void bootstrap(BootstapContext<DensityFunction> context) {
-        context.register(BASE_3D_NOISE_AETHER, BlendedNoise.createUnseeded(
-                0.25, // xz scale
-                0.25, // y scale
-                80.0, // xz factor
-                160.0, // y factor
-                8.0)); // smear scale multiplier, capped at 8
+        context.register(BASE_3D_NOISE_AETHER, BlendedNoise.createUnseeded(0.25, 0.25, 80.0, 160.0, 8.0)
+//                BlendedNoise.createUnseeded(
+//                0.25, // xz scale
+//                0.25, // y scale
+//                80.0, // xz factor
+//                160.0, // y factor
+//                8.0)
+        ); // smear scale multiplier, capped at 8
     }
 }

@@ -16,12 +16,12 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 
 import java.util.List;
 
-public class ModPlacedFeatures {
+public class TCRPlacedFeatures {
     public static final ResourceKey<PlacedFeature> DENSE_FOREST_SPIRIT_TREE_PLACED_KEY = createKey("dense_forest_spirit_tree_placed");
 
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
-        register(context, DENSE_FOREST_SPIRIT_TREE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.DENSE_FOREST_SPIRIT_TREE_KEY),
+        register(context, DENSE_FOREST_SPIRIT_TREE_PLACED_KEY, configuredFeatures.getOrThrow(TCRConfiguredFeatures.DENSE_FOREST_SPIRIT_TREE_KEY),
                 //See VegetationPlacements
                 // first:how many we're placing second:the chance getting extra(the third param)
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(50, 0.1f, 1),//TODO: change to suitable value.

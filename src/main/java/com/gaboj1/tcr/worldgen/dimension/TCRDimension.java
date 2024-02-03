@@ -2,6 +2,7 @@ package com.gaboj1.tcr.worldgen.dimension;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.worldgen.biome.*;
+import com.gaboj1.tcr.worldgen.noise.ModNoiseSettings;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
@@ -20,7 +21,7 @@ import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import java.util.OptionalLong;
 import java.util.Random;
 
-public class ModDimension {
+public class TCRDimension {
     public static final ResourceKey<LevelStem> SKY_ISLAND_KEY = ResourceKey.create(Registries.LEVEL_STEM,
             new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "sky_island"));
     public static final ResourceKey<Level> SKY_ISLAND_LEVEL_KEY = ResourceKey.create(Registries.DIMENSION,
@@ -81,11 +82,11 @@ public class ModDimension {
 //                noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS));
 
 
-        NoiseBasedChunkGenerator wrappedChunkGenerator = new NoiseBasedChunkGenerator(
+        NoiseBasedChunkGenerator wrappedChunkGenerator = new TCRChunkGenerator(
                 TCRBiomeProvider.create(new Random().nextInt(100),biomeRegistry),//TODO 换成世界种子
-                noiseGenSettings.getOrThrow(NoiseGeneratorSettings.OVERWORLD));
+                noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS));
 
-        LevelStem stem = new LevelStem(dimTypes.getOrThrow(ModDimension.SKY_ISLAND_TYPE), wrappedChunkGenerator);
+        LevelStem stem = new LevelStem(dimTypes.getOrThrow(TCRDimension.SKY_ISLAND_TYPE), wrappedChunkGenerator);
 
         context.register(SKY_ISLAND_KEY, stem);
 

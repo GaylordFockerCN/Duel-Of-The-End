@@ -3,10 +3,8 @@ package com.gaboj1.tcr;
 import com.gaboj1.tcr.block.renderer.BetterStructureBlockRenderer;
 import com.gaboj1.tcr.entity.client.TigerRenderer;
 import com.gaboj1.tcr.init.*;
-import com.gaboj1.tcr.worldgen.ChunkGeneratorTwilight;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
-import com.gaboj1.tcr.worldgen.tf.BiomeLayerStack;
-import com.gaboj1.tcr.worldgen.tf.BiomeLayerTypes;
+import com.gaboj1.tcr.worldgen.dimension.TCRChunkGenerator;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.Registry;
@@ -65,9 +63,6 @@ public class TheCasketOfReveriesMod {
         TCRModEntities.REGISTRY.register(bus);
         TCRModItemTabs.REGISTRY.register(bus);
 
-        BiomeLayerTypes.BIOME_LAYER_TYPES.register(bus);
-        BiomeLayerStack.BIOME_LAYER_STACKS.register(bus);
-
         bus.addListener(this::commonSetup);
         bus.addListener(this::registerExtraStuff);
         bus.addListener(this::setRegistriesForDatapack);
@@ -99,7 +94,6 @@ public class TheCasketOfReveriesMod {
     }
 
     public void setRegistriesForDatapack(DataPackRegistryEvent.NewRegistry event) {
-        event.dataPackRegistry(BiomeLayerStack.BIOME_STACK_KEY, BiomeLayerStack.DISPATCH_CODEC);
     }
 
     public void registerExtraStuff(RegisterEvent evt) {
@@ -108,13 +102,8 @@ public class TheCasketOfReveriesMod {
             Registry.register(BuiltInRegistries.BIOME_SOURCE, TheCasketOfReveriesMod.prefix("tcr_biomes"), TCRBiomeProvider.TCR_CODEC);
 
         }else if (evt.getRegistryKey().equals(Registries.CHUNK_GENERATOR)) {
-            Registry.register(BuiltInRegistries.CHUNK_GENERATOR, TheCasketOfReveriesMod.prefix("structure_locating_wrapper"), ChunkGeneratorTwilight.CODEC);
+//            Registry.register(BuiltInRegistries.CHUNK_GENERATOR, TheCasketOfReveriesMod.prefix("structure_locating_wrapper"), TCRChunkGenerator.CODEC);
         }
-//        else if (evt.getRegistryKey().equals(Registries.CHUNK_GENERATOR)) {
-////            Registry.register(BuiltInRegistries.CHUNK_GENERATOR, TheCasketOfReveriesMod.prefix("structure_locating_wrapper"), ChunkGeneratorTwilight.CODEC);
-//        } else if (evt.getRegistryKey().equals(ForgeRegistries.Keys.RECIPE_SERIALIZERS)) {
-////            CraftingHelper.register(UncraftingTableCondition.Serializer.INSTANCE);
-//        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

@@ -2,7 +2,7 @@ package com.gaboj1.tcr.worldgen.biome;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.init.TCRModEntities;
-import com.gaboj1.tcr.worldgen.ModPlacedFeatures;
+import com.gaboj1.tcr.worldgen.TCRPlacedFeatures;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.data.worldgen.BootstapContext;
@@ -12,30 +12,29 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
-public class ModBiomes {
+public class TCRBiomes {
 
     public static final ResourceKey<Biome> AIR = createBiomeKey("air_biome");
-    public static final ResourceKey<Biome> AIR2 = createBiomeKey("air2_biome");
-    public static final ResourceKey<Biome> AIR3 = createBiomeKey("air3_biome");
+
+    public static final ResourceKey<Biome> FINAL = createBiomeKey("final_biome");
 
     //Pastoral Plains & the aging forest
     public static final ResourceKey<Biome> PASTORAL_PLAINS = createBiomeKey("pastoral_plains_biome");
     public static final ResourceKey<Biome> DENSE_FOREST = createBiomeKey("dense_forest_biome");
 
-    public static final ResourceKey<Biome> biomeVOID = Biomes.THE_VOID;
+    public static final ResourceKey<Biome> biomeVOID = TCRBiomes.FINAL;
 
-    public static final ResourceKey<Biome> biome1 = ModBiomes.PASTORAL_PLAINS;
-    public static final ResourceKey<Biome> biome2 = ModBiomes.PASTORAL_PLAINS;
-    public static final ResourceKey<Biome> biome3 = ModBiomes.PASTORAL_PLAINS;
-    public static final ResourceKey<Biome> biome4 = ModBiomes.PASTORAL_PLAINS;
+    public static final ResourceKey<Biome> biome1 = TCRBiomes.PASTORAL_PLAINS;
+    public static final ResourceKey<Biome> biome2 = TCRBiomes.PASTORAL_PLAINS;
+    public static final ResourceKey<Biome> biome3 = TCRBiomes.PASTORAL_PLAINS;
+    public static final ResourceKey<Biome> biome4 = TCRBiomes.PASTORAL_PLAINS;
 
-    public static final ResourceKey<Biome> biome1Center = ModBiomes.DENSE_FOREST;
-    public static final ResourceKey<Biome> biome2Center = ModBiomes.DENSE_FOREST;
-    public static final ResourceKey<Biome> biome3Center = ModBiomes.DENSE_FOREST;
-    public static final ResourceKey<Biome> biome4Center = ModBiomes.DENSE_FOREST;
-    public static final ResourceKey<Biome> biomeBorder = Biomes.THE_VOID;
+    public static final ResourceKey<Biome> biome1Center = TCRBiomes.DENSE_FOREST;
+    public static final ResourceKey<Biome> biome2Center = TCRBiomes.DENSE_FOREST;
+    public static final ResourceKey<Biome> biome3Center = TCRBiomes.DENSE_FOREST;
+    public static final ResourceKey<Biome> biome4Center = TCRBiomes.DENSE_FOREST;
+    public static final ResourceKey<Biome> biomeBorder = TCRBiomes.AIR;
 
 
     public static ResourceKey<Biome> createBiomeKey(String name){
@@ -45,9 +44,8 @@ public class ModBiomes {
 
     public static void boostrap(BootstapContext<Biome> context) {
 
+        context.register(FINAL, createAirBiome(context));
         context.register(AIR, createAirBiome(context));
-        context.register(AIR2, createAirBiome(context));
-        context.register(AIR3, createAirBiome(context));
         context.register(PASTORAL_PLAINS, createPastoralPlainsBiome(context));
         context.register(DENSE_FOREST, createDenseForestBiome(context));
 
@@ -55,6 +53,7 @@ public class ModBiomes {
 
     public static void globalOverworldGeneration(BiomeGenerationSettings.Builder builder) {
         BiomeDefaultFeatures.addDefaultCarversAndLakes(builder);
+
 //        BiomeDefaultFeatures.addDefaultCrystalFormations(builder);
 //        BiomeDefaultFeatures.addDefaultMonsterRoom(builder);
 //        BiomeDefaultFeatures.addDefaultUndergroundVariety(builder);
@@ -75,12 +74,12 @@ public class ModBiomes {
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects((new BiomeSpecialEffects.Builder())
-                        .waterColor(0x25faf2)
+                        .waterColor(0x000000)
                         .waterFogColor(0x1b8bbf)
-                        .grassColorOverride(0x4e7dae)
+                        .grassColorOverride(0x000000)
                         .foliageColorOverride(0xd203fc)
                         .fogColor(0x22a1e6)
-                        .skyColor(0xcbf2ff)
+                        .skyColor(0x000000)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
                         .build())
                 .build();
@@ -130,7 +129,7 @@ public class ModBiomes {
 
 //        BiomeDefaultFeatures.addDefaultMushrooms(biomeBuilder);
 //        BiomeDefaultFeatures.addDefaultExtraVegetation(biomeBuilder);
-        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.DENSE_FOREST_SPIRIT_TREE_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, TCRPlacedFeatures.DENSE_FOREST_SPIRIT_TREE_PLACED_KEY);
 
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(false)
@@ -144,7 +143,7 @@ public class ModBiomes {
                         .grassColorOverride(0x4e7dae)
                         .foliageColorOverride(0xd203fc)
                         .fogColor(0x22a1e6)
-                        .skyColor(0xcbf2ff)
+                        .skyColor(0x000000)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
                         .build())
                 .build();

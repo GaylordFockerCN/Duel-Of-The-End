@@ -11,7 +11,7 @@
       "sound": "minecraft:ambient.cave",
       "tick_delay": 6000
     },
-    "sky_color": 13366015,
+    "sky_color": 0,
     "water_color": 2489074,
     "water_fog_color": 1805247
   },
@@ -29,7 +29,7 @@
       "the_casket_of_reveries:dense_forest_spirit_tree_placed"
     ]
   ],
-  "has_precipitation": true,
+  "has_precipitation": false,
   "spawn_costs": {},
   "spawners": {
     "ambient": [],

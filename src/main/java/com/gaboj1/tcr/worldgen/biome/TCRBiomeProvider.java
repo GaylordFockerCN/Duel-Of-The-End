@@ -22,16 +22,16 @@ public class TCRBiomeProvider extends BiomeSource {
 
     public static final Codec<TCRBiomeProvider> TCR_CODEC = RecordCodecBuilder.create((instance) -> instance.group(
             Codec.INT.fieldOf("seed").forGetter((o) -> o.seed),
-            RegistryOps.retrieveElement(ModBiomes.biomeVOID),
-            RegistryOps.retrieveElement(ModBiomes.biome1),
-            RegistryOps.retrieveElement(ModBiomes.biome2),
-            RegistryOps.retrieveElement(ModBiomes.biome3),
-            RegistryOps.retrieveElement(ModBiomes.biome4),
-            RegistryOps.retrieveElement(ModBiomes.biome1Center),
-            RegistryOps.retrieveElement(ModBiomes.biome2Center),
-            RegistryOps.retrieveElement(ModBiomes.biome3Center),
-            RegistryOps.retrieveElement(ModBiomes.biome4Center),
-            RegistryOps.retrieveElement(ModBiomes.biomeBorder)
+            RegistryOps.retrieveElement(TCRBiomes.biomeVOID),
+            RegistryOps.retrieveElement(TCRBiomes.biome1),
+            RegistryOps.retrieveElement(TCRBiomes.biome2),
+            RegistryOps.retrieveElement(TCRBiomes.biome3),
+            RegistryOps.retrieveElement(TCRBiomes.biome4),
+            RegistryOps.retrieveElement(TCRBiomes.biome1Center),
+            RegistryOps.retrieveElement(TCRBiomes.biome2Center),
+            RegistryOps.retrieveElement(TCRBiomes.biome3Center),
+            RegistryOps.retrieveElement(TCRBiomes.biome4Center),
+            RegistryOps.retrieveElement(TCRBiomes.biomeBorder)
     ).apply(instance, instance.stable(TCRBiomeProvider::new)));
 
     private double[][] map;
@@ -54,17 +54,18 @@ public class TCRBiomeProvider extends BiomeSource {
     private final List<Holder<Biome>> biomeList;
 
     public static TCRBiomeProvider create(int seed, HolderGetter<Biome> pBiomeGetter) {
+
         return new TCRBiomeProvider(seed,
-                pBiomeGetter.getOrThrow(ModBiomes.biomeVOID),
-                pBiomeGetter.getOrThrow(ModBiomes.biome1),
-                pBiomeGetter.getOrThrow(ModBiomes.biome2),
-                pBiomeGetter.getOrThrow(ModBiomes.biome3),
-                pBiomeGetter.getOrThrow(ModBiomes.biome4),
-                pBiomeGetter.getOrThrow(ModBiomes.biome1Center),
-                pBiomeGetter.getOrThrow(ModBiomes.biome2Center),
-                pBiomeGetter.getOrThrow(ModBiomes.biome3Center),
-                pBiomeGetter.getOrThrow(ModBiomes.biome4Center),
-                pBiomeGetter.getOrThrow(ModBiomes.biomeBorder)
+                pBiomeGetter.getOrThrow(TCRBiomes.biomeVOID),
+                pBiomeGetter.getOrThrow(TCRBiomes.biome1),
+                pBiomeGetter.getOrThrow(TCRBiomes.biome2),
+                pBiomeGetter.getOrThrow(TCRBiomes.biome3),
+                pBiomeGetter.getOrThrow(TCRBiomes.biome4),
+                pBiomeGetter.getOrThrow(TCRBiomes.biome1Center),
+                pBiomeGetter.getOrThrow(TCRBiomes.biome2Center),
+                pBiomeGetter.getOrThrow(TCRBiomes.biome3Center),
+                pBiomeGetter.getOrThrow(TCRBiomes.biome4Center),
+                pBiomeGetter.getOrThrow(TCRBiomes.biomeBorder)
                 );
     }
 
@@ -92,6 +93,7 @@ public class TCRBiomeProvider extends BiomeSource {
         biomeList.add(biomeHolder8);
         biomeList.add(biomeHolder9);
 
+
     }
 
     @Override
@@ -104,14 +106,22 @@ public class TCRBiomeProvider extends BiomeSource {
         generator.setLacunarity(4);
         generator.setOctaves(8);
         map = generator.generateNoiseMap();
-        NoiseMapGenerator.divide(map);
-        generator.addCenter(map);
+        map = NoiseMapGenerator.divide(map);
+        map = generator.addCenter(map);
 
         //生成缩小版预览
         int size = 180;
         generator.setLength(size);
         generator.setWidth(size);
-        NoiseMapGenerator.divideTest(generator.generateNoiseMap());
+        double[][] sMap = generator.generateNoiseMap();
+        sMap = NoiseMapGenerator.divideTest(sMap);
+        sMap =  generator.addCenter(sMap);
+        for(int i = 0 ; i < size ; i++){
+            for(int j = 0 ; j < size ; j++){
+                System.out.print(String.format("%.0f ",sMap[i][j]));
+            }
+            System.out.println();
+        }
 
         return Stream.of(biomeHolder0,biomeHolder1,biomeHolder2,biomeHolder3,biomeHolder4,biomeHolder5,biomeHolder6,biomeHolder7,biomeHolder8,biomeHolder9);
     }
@@ -132,8 +142,8 @@ public class TCRBiomeProvider extends BiomeSource {
     @Override
     public Holder<Biome> getNoiseBiome(int x, int y, int z, Climate.Sampler sampler) {
 
-        x*=0.1;
-        z*=0.1;//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图有点方。。
+        x*=0.2;
+        z*=0.2;//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
         if(0 <= x+R && x+R <map.length && 0 <= z+R && z+R < map[0].length ){
             int index = (int)map[x+R][z+R];
             if(index < biomeList.size())

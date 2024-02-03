@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class BetterStructureBlock extends StructureBlock {
 
     public BetterStructureBlock(Properties pProperties) {
-        super(BlockBehaviour.Properties.of());
+        super(pProperties);
     }
 
     @Override

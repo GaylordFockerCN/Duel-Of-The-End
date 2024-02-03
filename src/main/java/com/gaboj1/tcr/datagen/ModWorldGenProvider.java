@@ -1,12 +1,11 @@
 package com.gaboj1.tcr.datagen;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.worldgen.ModConfiguredFeatures;
-import com.gaboj1.tcr.worldgen.ModPlacedFeatures;
-import com.gaboj1.tcr.worldgen.tf.BiomeLayerStack;
-import com.gaboj1.tcr.worldgen.biome.ModBiomes;
-import com.gaboj1.tcr.worldgen.tf.ModDensityFunctions;
-import com.gaboj1.tcr.worldgen.dimension.ModDimension;
+import com.gaboj1.tcr.worldgen.TCRConfiguredFeatures;
+import com.gaboj1.tcr.worldgen.TCRPlacedFeatures;
+import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
+import com.gaboj1.tcr.worldgen.noise.ModDensityFunctions;
+import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import com.gaboj1.tcr.worldgen.noise.ModNoiseSettings;
 import com.gaboj1.tcr.worldgen.noise.ModNoises;
 import net.minecraft.core.HolderLookup;
@@ -21,16 +20,14 @@ import java.util.concurrent.CompletableFuture;
 public class ModWorldGenProvider extends DatapackBuiltinEntriesProvider {
 
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
-            .add(Registries.CONFIGURED_FEATURE, ModConfiguredFeatures::bootstrap)
-            .add(Registries.PLACED_FEATURE, ModPlacedFeatures::bootstrap)
-//            .add(ForgeRegistries.Keys.BIOME_MODIFIERS, ModBiomeModifiers::bootstrap)
+            .add(Registries.CONFIGURED_FEATURE, TCRConfiguredFeatures::bootstrap)
+            .add(Registries.PLACED_FEATURE, TCRPlacedFeatures::bootstrap)
             .add(Registries.DENSITY_FUNCTION, ModDensityFunctions::bootstrap)
             .add(Registries.NOISE, ModNoises::bootstrap)
             .add(Registries.NOISE_SETTINGS, ModNoiseSettings::bootstrap)
-            .add(BiomeLayerStack.BIOME_STACK_KEY, BiomeLayerStack::bootstrap)
-            .add(Registries.BIOME, ModBiomes::boostrap)
-            .add(Registries.LEVEL_STEM, ModDimension::bootstrapStem)
-            .add(Registries.DIMENSION_TYPE, ModDimension::bootstrapType);
+            .add(Registries.BIOME, TCRBiomes::boostrap)
+            .add(Registries.LEVEL_STEM, TCRDimension::bootstrapStem)
+            .add(Registries.DIMENSION_TYPE, TCRDimension::bootstrapType);
 
     public ModWorldGenProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, BUILDER, Set.of(TheCasketOfReveriesMod.MOD_ID));

@@ -11,7 +11,6 @@ public class TCRModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> REGISTRY =
             DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, TheCasketOfReveriesMod.MOD_ID);
 
-    //加了会导致无法限制，不加不知到会有什么bug,,,
     public static final RegistryObject<BlockEntityType<BetterStructureBlockEntity>> BETTER_STRUCTURE_BLOCK_ENTITY =
             REGISTRY.register("better_structure_block_entity", () ->
                     BlockEntityType.Builder.of(BetterStructureBlockEntity::new,

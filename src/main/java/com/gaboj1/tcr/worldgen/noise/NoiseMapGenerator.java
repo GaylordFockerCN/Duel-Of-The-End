@@ -16,6 +16,8 @@ public class NoiseMapGenerator {
     private double persistence = 0.5;//default 0.5
     private double lacunarity = 2;//default 2.0
     private int seed = 2;
+    private static final double scaleOfCenterR = 0.05;//相对宽度width的比例，中心空岛半径即为width*scaleOfCenterR
+    private static final double scaleOfaCenterR = 0.5;//相对各个中心到整体中心的距离的比例， 各群系的中心群系的噪声半径 即 center.distance(aCenter)*scaleOfaCenterR
     private Random random;
     private Point centerPoint = new Point(length/2,width/2);
     public void setLength(int length) {
@@ -102,8 +104,9 @@ public class NoiseMapGenerator {
         return skyIsland;
     }
 
-    public static void divideTest(double [][]map) {
+    public static double [][] divideTest(double [][]map1) {
 
+        double[][] map = map1.clone();
         int width = map.length; // 假设生成的数组大小为100x100
         int length = map[0].length;
 // 生成噪声地图数组 map
@@ -121,7 +124,9 @@ public class NoiseMapGenerator {
         int centerX = center.x;
         int centerY = center.y;
 
-        int centerR = width/12;//TODO: 调整合适大小
+        int centerR = (int) (width * scaleOfCenterR);//TODO: 调整合适大小
+
+//        int centerR = 16;
 
         //TODO: 调整合适大小
         for (int y = 0; y < width; y++) {
@@ -162,12 +167,13 @@ public class NoiseMapGenerator {
             }
             System.out.println();
         }
-
+        return map;
     }
 
     //不输出信息版
-    public static void divide(double [][]map) {
+    public static double [][] divide(double [][]map1) {
 
+        double[][] map = map1.clone();
         int width = map.length;
         int length = map[0].length;
 
@@ -184,7 +190,7 @@ public class NoiseMapGenerator {
         int centerX = center.x;
         int centerY = center.y;
 
-        int centerR = width/8;
+        int centerR = (int) (width * scaleOfCenterR);//TODO:调整合适大小
 
 
         for (int y = 0; y < width; y++) {
@@ -212,45 +218,46 @@ public class NoiseMapGenerator {
                 }
             }
         }
-
+        return map;
     }
 
 
     //给四个扇形分别添加中心群系
-    public void addCenter(double[][] map){
+    public double[][] addCenter(double[][] map){
+        double[][] map1 = map.clone();
         //保存各个群系所含有的点来计算重心
         List<Point> aPoints = new ArrayList<>();
         List<Point> bPoints = new ArrayList<>();
         List<Point> cPoints = new ArrayList<>();
         List<Point> dPoints = new ArrayList<>();
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[0].length; j++) {
-                if (map[i][j] == 1) {
+        for (int i = 0; i < map1.length; i++) {
+            for (int j = 0; j < map1[0].length; j++) {
+                if (map1[i][j] == 1) {
                     aPoints.add(new Point(j, i));
-                } else if (map[i][j] == 2) {
+                } else if (map1[i][j] == 2) {
                     bPoints.add(new Point(j, i));
-                } else if (map[i][j] == 3) {
+                } else if (map1[i][j] == 3) {
                     cPoints.add(new Point(j, i));
-                } else if (map[i][j] == 4) {
+                } else if (map1[i][j] == 4) {
                     dPoints.add(new Point(j, i));
                 }
             }
         }
 
         //生成各个群系的中心群系位置并应用到原地图
-        copyMap(aPoints,map,5);
-        copyMap(bPoints,map,6);
-        copyMap(cPoints,map,7);
-        copyMap(dPoints,map,8);
+        copyMap(aPoints,map1,5);
+        copyMap(bPoints,map1,6);
+        copyMap(cPoints,map1,7);
+        copyMap(dPoints,map1,8);
+        return map1;
     }
 
     //生成中心并且把中心复制到各个区域
     public void copyMap(List<Point> aPoints,double map[][],double tag){
         //再以各个点为中心生成噪声图，比较自然一点~
         Point aCenter = computeCenter(aPoints);
-        int centerR = ((int) aCenter.distance(centerPoint)) / 4;
+        int centerR = (int)( aCenter.distance(centerPoint) * scaleOfaCenterR);
         NoiseMapGenerator generator = new NoiseMapGenerator();
-        generator.setLacunarity(4);
         generator.setWidth(centerR);
         generator.setLength(centerR);
         generator.setLacunarity(4);
@@ -346,7 +353,7 @@ public class NoiseMapGenerator {
         noiseMapGenerator.setLacunarity(4);
         noiseMapGenerator.setOctaves(8);
         double map[][] = noiseMapGenerator.generateNoiseMap();
-        noiseMapGenerator.divide(map);
+        noiseMapGenerator.divideTest(map);
         noiseMapGenerator.addCenter(map);
 
         for(int i = 0 ; i < size ; i++){

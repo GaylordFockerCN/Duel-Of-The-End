@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.block.custom;
 
-import com.gaboj1.tcr.worldgen.dimension.ModDimension;
-import com.gaboj1.tcr.worldgen.portal.ModTeleporter;
+import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
+import com.gaboj1.tcr.worldgen.portal.TCRTeleporter;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.core.BlockPos;
@@ -27,15 +27,15 @@ public class PortalBed extends BedBlock {
 //                pPlayer.startSleepInBed(pPos);//TODO: 不知道会不会报错
 
                 MinecraftServer minecraftserver = serverlevel.getServer();
-                ResourceKey<Level> resourcekey = pPlayer.level().dimension() == ModDimension.SKY_ISLAND_LEVEL_KEY ?
-                        Level.OVERWORLD : ModDimension.SKY_ISLAND_LEVEL_KEY;
+                ResourceKey<Level> resourcekey = pPlayer.level().dimension() == TCRDimension.SKY_ISLAND_LEVEL_KEY ?
+                        Level.OVERWORLD : TCRDimension.SKY_ISLAND_LEVEL_KEY;
 
                 ServerLevel portalDimension = minecraftserver.getLevel(resourcekey);
                 if (portalDimension != null && !pPlayer.isPassenger()) {
-                    if(resourcekey == ModDimension.SKY_ISLAND_LEVEL_KEY) {
-                        pPlayer.changeDimension(portalDimension, new ModTeleporter(pPos, true));
+                    if(resourcekey == TCRDimension.SKY_ISLAND_LEVEL_KEY) {
+                        pPlayer.changeDimension(portalDimension, new TCRTeleporter(pPos, true));
                     } else {
-                        pPlayer.changeDimension(portalDimension, new ModTeleporter(pPos, false));
+                        pPlayer.changeDimension(portalDimension, new TCRTeleporter(pPos, false));
                     }
                 }
             }
