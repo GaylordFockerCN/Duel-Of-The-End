@@ -16,10 +16,17 @@ public class NoiseMapGenerator {
     private double persistence = 0.5;//default 0.5
     private double lacunarity = 2;//default 2.0
     private int seed = 2;
-    private static final double scaleOfCenterR = 0.05;//相对宽度width的比例，中心空岛半径即为width*scaleOfCenterR
-    private static final double scaleOfaCenterR = 0.5;//相对各个中心到整体中心的距离的比例， 各群系的中心群系的噪声半径 即 center.distance(aCenter)*scaleOfaCenterR
+
+    private List<Point> aPoints = new ArrayList<>();
+    private List<Point> bPoints = new ArrayList<>();
+    private List<Point> cPoints = new ArrayList<>();
+    private List<Point> dPoints = new ArrayList<>();
+
+    public static final double CURVE_INTENSITY = 0.1;
+    public static final double SCALE_OF_CENTER_R = 0.05;//相对宽度width的比例，中心空岛半径即为width*scaleOfCenterR
+    public final double scaleOfaCenterR = 0.5;//相对各个中心到整体中心的距离的比例， 各群系的中心群系的噪声半径 即 center.distance(aCenter)*scaleOfaCenterR
     private Random random;
-    private Point centerPoint = new Point(length/2,width/2);
+    public final Point centerPoint = new Point(length/2,width/2);
     public void setLength(int length) {
         this.length = length;
         centerPoint.x = length/2;
@@ -104,7 +111,7 @@ public class NoiseMapGenerator {
         return skyIsland;
     }
 
-    public static double [][] divideTest(double [][]map1) {
+    public double [][] divideTest(double [][]map1) {
 
         double[][] map = map1.clone();
         int width = map.length; // 假设生成的数组大小为100x100
@@ -124,8 +131,7 @@ public class NoiseMapGenerator {
         int centerX = center.x;
         int centerY = center.y;
 
-        int centerR = (int) (width * scaleOfCenterR);//TODO: 调整合适大小
-
+        int centerR = (int) (width * SCALE_OF_CENTER_R);//TODO: 调整合适大小
 //        int centerR = 16;
 
         //TODO: 调整合适大小
@@ -138,6 +144,25 @@ public class NoiseMapGenerator {
                     // 计算当前位置相对于中心点的角度
                     double angle = Math.atan2(y - centerY, x - centerX);
                     double distance = Math.sqrt((y - centerY) * (y - centerY) + (x - centerX) * (x - centerX));
+
+                    // 根据角度划分区域并旋转45度
+//                    angle += Math.PI / 4;  // 添加旋转角度的偏移量
+
+                    // 将角度限制在 -PI 到 PI 之间
+                    while (angle < -Math.PI) {
+                        angle += 2 * Math.PI;
+                    }
+                    while (angle >= Math.PI) {
+                        angle -= 2 * Math.PI;
+                    }
+
+                    // 使用曲线函数调整角度
+//                    double curveValue = Math.exp(-CURVE_INTENSITY * distance); // 根据距离计算曲线值
+//                    angle += curveValue; // 添加曲线值到角度
+
+                    // 使用 S 型曲线函数调整角度
+                    angle = getSigmoidAngle(distance, angle);
+
                     // 根据角度划分区域
                     if(distance <= centerR){
                         //中间挖个空
@@ -171,7 +196,7 @@ public class NoiseMapGenerator {
     }
 
     //不输出信息版
-    public static double [][] divide(double [][]map1) {
+    public double [][] divide(double [][]map1) {
 
         double[][] map = map1.clone();
         int width = map.length;
@@ -190,8 +215,12 @@ public class NoiseMapGenerator {
         int centerX = center.x;
         int centerY = center.y;
 
-        int centerR = (int) (width * scaleOfCenterR);//TODO:调整合适大小
+        int centerR = (int) (width * SCALE_OF_CENTER_R);//TODO:调整合适大小
 
+//        // 定义曲线参数
+//        double sigmoidIntensityA = 0.1; // 曲线强度A
+//        double sigmoidIntensityB = 0.2; // 曲线强度B
+//        Random random = new Random();
 
         for (int y = 0; y < width; y++) {
             for (int x = 0; x < length; x++) {
@@ -199,21 +228,44 @@ public class NoiseMapGenerator {
                 if (value != 0) {
                     double angle = Math.atan2(y - centerY, x - centerX);
                     double distance = Math.sqrt((y - centerY) * (y - centerY) + (x - centerX) * (x - centerX));
+
+                    // 根据角度划分区域并旋转45度
+//                    angle += Math.PI / 4;  // 添加旋转角度的偏移量
+
+                    // 将角度限制在 -PI 到 PI 之间
+                    while (angle < -Math.PI) {
+                        angle += 2 * Math.PI;
+                    }
+                    while (angle >= Math.PI) {
+                        angle -= 2 * Math.PI;
+                    }
+
+//                    // 使用曲线函数调整角度
+//                    double curveValue = Math.exp(-CURVE_INTENSITY * distance); // 根据距离计算曲线值
+//                    angle += curveValue; // 添加曲线值到角度
+
+                    // 使用 S 型曲线函数调整角度
+                    angle = getSigmoidAngle(distance, angle);
+
                     // 根据角度划分区域
                     if(distance <= centerR){
                         map[y][x] = 0;
                     } else if (angle >= 0 && angle < Math.PI / 2) {
                         // 区域A
                         map[y][x] = 1;
+                        aPoints.add(new Point(y, x));//保存各个群系所含有的点来计算重心
                     } else if (angle >= Math.PI / 2 && angle < Math.PI) {
                         // 区域B
                         map[y][x] = 2;
+                        bPoints.add(new Point(y, x));
                     } else if (angle >= -Math.PI / 2 && angle < 0) {
                         // 区域C
                         map[y][x] = 3;
+                        cPoints.add(new Point(y, x));
                     } else {
                         // 区域D
                         map[y][x] = 4;
+                        dPoints.add(new Point(y, x));
                     }
                 }
             }
@@ -221,28 +273,23 @@ public class NoiseMapGenerator {
         return map;
     }
 
+    //TODO 调整合适数值
+    private double getSigmoidAngle(double distance, double angle) {
+        // 定义曲线参数
+        double sigmoidIntensityA = 0.1; // 曲线强度A
+        double sigmoidIntensityB = 0.2; // 曲线强度B
+        double sigmoidValue = 1 / (1 + Math.exp(-sigmoidIntensityA * (distance *0.75))); // Sigmoid 曲线值 A
+        if (angle >= 0 && angle < Math.PI / 2) {
+            sigmoidValue = 1 / (1 + Math.exp(-sigmoidIntensityB * (distance *0.75))); // Sigmoid 曲线值 B
+        }
+        double randomOffset = random.nextDouble() * 0.1 - 0.05; // 随机偏移值
+        angle += sigmoidValue + randomOffset; // 添加 S 型曲线值和随机偏移值到角度
+        return angle;
+    }
 
     //给四个扇形分别添加中心群系
     public double[][] addCenter(double[][] map){
         double[][] map1 = map.clone();
-        //保存各个群系所含有的点来计算重心
-        List<Point> aPoints = new ArrayList<>();
-        List<Point> bPoints = new ArrayList<>();
-        List<Point> cPoints = new ArrayList<>();
-        List<Point> dPoints = new ArrayList<>();
-        for (int i = 0; i < map1.length; i++) {
-            for (int j = 0; j < map1[0].length; j++) {
-                if (map1[i][j] == 1) {
-                    aPoints.add(new Point(j, i));
-                } else if (map1[i][j] == 2) {
-                    bPoints.add(new Point(j, i));
-                } else if (map1[i][j] == 3) {
-                    cPoints.add(new Point(j, i));
-                } else if (map1[i][j] == 4) {
-                    dPoints.add(new Point(j, i));
-                }
-            }
-        }
 
         //生成各个群系的中心群系位置并应用到原地图
         copyMap(aPoints,map1,5);
@@ -256,18 +303,20 @@ public class NoiseMapGenerator {
     public void copyMap(List<Point> aPoints,double map[][],double tag){
         //再以各个点为中心生成噪声图，比较自然一点~
         Point aCenter = computeCenter(aPoints);
-        int centerR = (int)( aCenter.distance(centerPoint) * scaleOfaCenterR);
         NoiseMapGenerator generator = new NoiseMapGenerator();
+
+        //生成中心群系
+        int centerR = (int)( aCenter.distance(centerPoint) * scaleOfaCenterR);
         generator.setWidth(centerR);
         generator.setLength(centerR);
-        generator.setLacunarity(4);
+        generator.setLacunarity(12);
         generator.setOctaves(8);
-        double[][] aRandom = generator.generateNoiseMap();
+        double[][] aCenterBiomeMap = generator.generateNoiseMap();
 
         //centerR即偏移量
         for(int i = aCenter.x - centerR/2 ,a = 0; i < aCenter.x + centerR/2 && a < centerR ; i++,a++){
             for(int j = aCenter.y - centerR/2 ,b = 0; j < aCenter.y + centerR/2 && b < centerR; j++,b++){
-                if(i > 0 && j > 0 && aRandom[a][b] != 0)
+                if(i > 0 && j > 0 && aCenterBiomeMap[a][b] != 0)
                     map[i][j] = tag;
             }
         }
@@ -345,24 +394,40 @@ public class NoiseMapGenerator {
 
     public static void main(String args[]){
         int size = 180;
+        double[][] map = getDoubles(size);
+
+        for(int i = 0 ; i < size ; i++){
+            for(int j = 0 ; j < size ; j++){
+//                System.out.print(String.format("%.0f ",map[i][j]));
+                if(map[i][j] == 1){
+                    System.out.print("@ ");
+                }else if(map[i][j] == 2){
+                    System.out.print("# ");
+                }else if(map[i][j] == 3){
+                    System.out.print("^ ");
+                }else if(map[i][j] == 4){
+                    System.out.print("* ");
+                }else {
+                    System.out.print("- ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    private static double[][] getDoubles(int size) {
         NoiseMapGenerator noiseMapGenerator = new NoiseMapGenerator();
-//        noiseMapGenerator.setSeed(new Random().nextInt());
-        noiseMapGenerator.setSeed(99);
+        noiseMapGenerator.setSeed(new Random().nextInt(100));
+//        noiseMapGenerator.setSeed(99);
         noiseMapGenerator.setLength(size);
         noiseMapGenerator.setWidth(size);
         noiseMapGenerator.setLacunarity(20);
         noiseMapGenerator.setPersistence(0.5);
         noiseMapGenerator.setOctaves(8);
         double map[][] = noiseMapGenerator.generateNoiseMap();
-        noiseMapGenerator.divideTest(map);
-        noiseMapGenerator.addCenter(map);
-
-        for(int i = 0 ; i < size ; i++){
-            for(int j = 0 ; j < size ; j++){
-                System.out.print(String.format("%.0f",map[i][j]));
-            }
-            System.out.println();
-        }
+        map = noiseMapGenerator.divide(map);
+        map = noiseMapGenerator.addCenter(map);
+        return map;
     }
 
 }
