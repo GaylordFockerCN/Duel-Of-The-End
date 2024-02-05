@@ -12,6 +12,7 @@ import net.minecraft.world.level.biome.Climate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Stream;
 
 /**
@@ -21,7 +22,7 @@ import java.util.stream.Stream;
 public class TCRBiomeProvider extends BiomeSource {
 
     public static final Codec<TCRBiomeProvider> TCR_CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-            Codec.INT.fieldOf("seed").forGetter((o) -> o.seed),//FIXME 把种子改成随机生成，或者获取世界种子，如果编码进去的话地图会固定住！
+//            Codec.INT.fieldOf("seed").forGetter((o) -> o.seed),//如果编码进去的话地图会固定住
             RegistryOps.retrieveElement(TCRBiomes.finalBiome),
             RegistryOps.retrieveElement(TCRBiomes.biome1),
             RegistryOps.retrieveElement(TCRBiomes.biome2),
@@ -53,9 +54,9 @@ public class TCRBiomeProvider extends BiomeSource {
 
     private final List<Holder<Biome>> biomeList;
 
-    public static TCRBiomeProvider create(int seed, HolderGetter<Biome> pBiomeGetter) {
+    public static TCRBiomeProvider create(HolderGetter<Biome> pBiomeGetter) {
 
-        return new TCRBiomeProvider(seed,
+        return new TCRBiomeProvider(
                 pBiomeGetter.getOrThrow(TCRBiomes.finalBiome),
                 pBiomeGetter.getOrThrow(TCRBiomes.biome1),
                 pBiomeGetter.getOrThrow(TCRBiomes.biome2),
@@ -69,8 +70,7 @@ public class TCRBiomeProvider extends BiomeSource {
                 );
     }
 
-    public TCRBiomeProvider(int seed, Holder<Biome> biomeHolder0, Holder<Biome> biomeHolder1, Holder<Biome> biomeHolder2, Holder<Biome> biomeHolder3, Holder<Biome> biomeHolder4, Holder<Biome> biomeHolder5, Holder<Biome> biomeHolder6, Holder<Biome> biomeHolder7, Holder<Biome> biomeHolder8, Holder<Biome> biomeHolder9) {
-        this.seed = seed;
+    public TCRBiomeProvider( Holder<Biome> biomeHolder0, Holder<Biome> biomeHolder1, Holder<Biome> biomeHolder2, Holder<Biome> biomeHolder3, Holder<Biome> biomeHolder4, Holder<Biome> biomeHolder5, Holder<Biome> biomeHolder6, Holder<Biome> biomeHolder7, Holder<Biome> biomeHolder8, Holder<Biome> biomeHolder9) {
         this.biomeHolder0 = biomeHolder0;
         this.biomeHolder1 = biomeHolder1;
         this.biomeHolder2 = biomeHolder2;
@@ -100,13 +100,14 @@ public class TCRBiomeProvider extends BiomeSource {
     protected Stream<Holder<Biome>> collectPossibleBiomes() {
         //不在这里生成的话map会被清空，但是这里生成不知道有什么bug...
         NoiseMapGenerator generator = new NoiseMapGenerator();
+        seed = new Random().nextInt(100);//TODO: 改成世界种子
         generator.setSeed(seed);
         generator.setLength(SIZE);
         generator.setWidth(SIZE);
         generator.setLacunarity(20);//TODO 调整合适大小
         generator.setOctaves(8);
         map = generator.generateNoiseMap();
-        map = NoiseMapGenerator.divide(map);
+        map = generator.divide(map);
         map = generator.addCenter(map);
 
         //生成缩小版预览
@@ -114,7 +115,7 @@ public class TCRBiomeProvider extends BiomeSource {
         generator.setLength(size);
         generator.setWidth(size);
         double[][] sMap = generator.generateNoiseMap();
-        sMap = NoiseMapGenerator.divideTest(sMap);
+        sMap = generator.divideTest(sMap);
         sMap =  generator.addCenter(sMap);
         for(int i = 0 ; i < size ; i++){
             for(int j = 0 ; j < size ; j++){
