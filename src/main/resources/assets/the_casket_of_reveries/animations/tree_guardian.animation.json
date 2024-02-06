@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.treeguardian - Converted.move": {
+		"animation.tree_guardian - Converted.move": {
 			"animation_length": 0.75,
 			"bones": {
 				"group6": {
@@ -58,7 +58,7 @@
 				}
 			}
 		},
-		"animation.treeguardian - Converted.attack1": {
+		"animation.tree_guardian - Converted.attack1": {
 			"animation_length": 0.5,
 			"bones": {
 				"bone7": {
@@ -102,7 +102,7 @@
 				}
 			}
 		},
-		"animation.treeguardian - Converted.attack2": {
+		"animation.tree_guardian - Converted.attack2": {
 			"animation_length": 0.25,
 			"bones": {
 				"bone11": {
@@ -117,7 +117,7 @@
 				}
 			}
 		},
-		"animation.treeguardian - Converted.attack3": {
+		"animation.tree_guardian - Converted.attack3": {
 			"loop": true,
 			"animation_length": 0.5,
 			"bones": {

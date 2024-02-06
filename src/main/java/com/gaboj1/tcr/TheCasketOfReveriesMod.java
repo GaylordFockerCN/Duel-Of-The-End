@@ -2,6 +2,7 @@ package com.gaboj1.tcr;
 
 import com.gaboj1.tcr.block.renderer.BetterStructureBlockRenderer;
 import com.gaboj1.tcr.entity.client.MiddleTreeMonsterRenderer;
+import com.gaboj1.tcr.entity.client.SmallTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.TreeGuardianRenderer;
 import com.gaboj1.tcr.init.*;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
@@ -118,6 +119,7 @@ public class TheCasketOfReveriesMod {
         public static void onClientSetup(FMLClientSetupEvent event){
             EntityRenderers.register(TCRModEntities.MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterRenderer::new);
             EntityRenderers.register(TCRModEntities.TREE_GUARDIAN.get(), TreeGuardianRenderer::new);
+            EntityRenderers.register(TCRModEntities.SMALL_TREE_MONSTER.get(), SmallTreeMonsterRenderer::new);
 //            BlockEntityRenderers.register(TCRModBlockEntities.BETTER_STRUCTURE_BLOCK_ENTITY.get(), BetterStructureBlockRenderer::new);
         }
 
