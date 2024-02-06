@@ -1,10 +1,11 @@
 package com.gaboj1.tcr;
 
 import com.gaboj1.tcr.block.renderer.BetterStructureBlockRenderer;
-import com.gaboj1.tcr.entity.client.TigerRenderer;
+import com.gaboj1.tcr.entity.client.MiddleTreeMonsterRenderer;
+import com.gaboj1.tcr.entity.client.SmallTreeMonsterRenderer;
+import com.gaboj1.tcr.entity.client.TreeGuardianRenderer;
 import com.gaboj1.tcr.init.*;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
-import com.gaboj1.tcr.worldgen.dimension.TCRChunkGenerator;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.Registry;
@@ -116,7 +117,9 @@ public class TheCasketOfReveriesMod {
     public static class ClientModEvents{
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event){
-            EntityRenderers.register(TCRModEntities.TIGER.get(), TigerRenderer::new);
+            EntityRenderers.register(TCRModEntities.MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterRenderer::new);
+            EntityRenderers.register(TCRModEntities.TREE_GUARDIAN.get(), TreeGuardianRenderer::new);
+            EntityRenderers.register(TCRModEntities.SMALL_TREE_MONSTER.get(), SmallTreeMonsterRenderer::new);
 //            BlockEntityRenderers.register(TCRModBlockEntities.BETTER_STRUCTURE_BLOCK_ENTITY.get(), BetterStructureBlockRenderer::new);
         }
 
