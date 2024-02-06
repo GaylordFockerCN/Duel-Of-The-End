@@ -4,6 +4,7 @@ import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.custom.DesertEagleBulletEntity;
 
 import com.gaboj1.tcr.entity.custom.MiddleTreeMonsterEntity;
+import com.gaboj1.tcr.entity.custom.TreeGuardianEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -24,6 +25,11 @@ public class TCRModEntities {
 							.sized(3f, 3.5f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "middle_tree_monster").toString()));
 
+	public static final RegistryObject<EntityType<TreeGuardianEntity>> TREE_GUARDIAN =
+			REGISTRY.register("tree_guardian",
+					() -> EntityType.Builder.of(TreeGuardianEntity::new, MobCategory.CREATURE)
+							.sized(1.5f, 1.75f)
+							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "tree_guardian").toString()));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
