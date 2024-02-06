@@ -36,7 +36,6 @@ public class TCRBiomeProvider extends BiomeSource {
     ).apply(instance, instance.stable(TCRBiomeProvider::new)));
 
     private double[][] map;
-    private int seed;
     private final int SIZE = 320;
     private final int R = SIZE/2;
 
@@ -100,8 +99,7 @@ public class TCRBiomeProvider extends BiomeSource {
     protected Stream<Holder<Biome>> collectPossibleBiomes() {
         //不在这里生成的话map会被清空，但是这里生成不知道有什么bug...
         NoiseMapGenerator generator = new NoiseMapGenerator();
-        seed = new Random().nextInt(100);//TODO: 改成世界种子
-        generator.setSeed(seed);
+        generator.setSeed(new Random().nextInt(100));//TODO: 改成世界种子
         generator.setLength(SIZE);
         generator.setWidth(SIZE);
         generator.setLacunarity(20);//TODO 调整合适大小
@@ -115,11 +113,22 @@ public class TCRBiomeProvider extends BiomeSource {
         generator.setLength(size);
         generator.setWidth(size);
         double[][] sMap = generator.generateNoiseMap();
-        sMap = generator.divideTest(sMap);
+        sMap = generator.divide(sMap);
         sMap =  generator.addCenter(sMap);
         for(int i = 0 ; i < size ; i++){
             for(int j = 0 ; j < size ; j++){
-                System.out.print(String.format("%.0f ",sMap[i][j]));
+//                System.out.print(String.format("%.0f ",map[i][j]));
+                if(sMap[i][j] == 1){
+                    System.out.print("@ ");
+                }else if(sMap[i][j] == 2){
+                    System.out.print("# ");
+                }else if(sMap[i][j] == 3){
+                    System.out.print("^ ");
+                }else if(sMap[i][j] == 4){
+                    System.out.print("* ");
+                }else {
+                    System.out.print("- ");
+                }
             }
             System.out.println();
         }

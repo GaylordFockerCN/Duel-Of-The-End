@@ -55,11 +55,13 @@ public class TCRDimension {
         HolderGetter<DimensionType> dimTypes = context.lookup(Registries.DIMENSION_TYPE);
         HolderGetter<NoiseGeneratorSettings> noiseGenSettings = context.lookup(Registries.NOISE_SETTINGS);
 
-        NoiseBasedChunkGenerator wrappedChunkGenerator = new TCRChunkGenerator(
+        NoiseBasedChunkGenerator wrappedChunkGenerator = new NoiseBasedChunkGenerator(
                 TCRBiomeProvider.create(biomeRegistry),//TODO 换成世界种子，如果不能换的话要把seed从这里去掉否则图都一样了
                 noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS));
 
-        LevelStem stem = new LevelStem(dimTypes.getOrThrow(TCRDimension.SKY_ISLAND_TYPE), wrappedChunkGenerator);
+        TCRChunkGenerator chunkGenerator = new TCRChunkGenerator(wrappedChunkGenerator,noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS));
+
+        LevelStem stem = new LevelStem(dimTypes.getOrThrow(TCRDimension.SKY_ISLAND_TYPE), chunkGenerator);
 
         context.register(SKY_ISLAND_KEY, stem);
 

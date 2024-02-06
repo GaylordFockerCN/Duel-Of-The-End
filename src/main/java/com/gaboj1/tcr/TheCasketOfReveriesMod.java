@@ -6,6 +6,7 @@ import com.gaboj1.tcr.entity.client.SmallTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.TreeGuardianRenderer;
 import com.gaboj1.tcr.init.*;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
+import com.gaboj1.tcr.worldgen.dimension.TCRChunkGenerator;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.Registry;
@@ -99,11 +100,10 @@ public class TheCasketOfReveriesMod {
 
     public void registerExtraStuff(RegisterEvent evt) {
         if (evt.getRegistryKey().equals(Registries.BIOME_SOURCE)) {
-//            Registry.register(BuiltInRegistries.BIOME_SOURCE, TheCasketOfReveriesMod.prefix("tcr_biomes"), ModBiomeProvider.TCR_CODEC);
             Registry.register(BuiltInRegistries.BIOME_SOURCE, TheCasketOfReveriesMod.prefix("tcr_biomes"), TCRBiomeProvider.TCR_CODEC);
 
         }else if (evt.getRegistryKey().equals(Registries.CHUNK_GENERATOR)) {
-//            Registry.register(BuiltInRegistries.CHUNK_GENERATOR, TheCasketOfReveriesMod.prefix("structure_locating_wrapper"), TCRChunkGenerator.CODEC);
+            Registry.register(BuiltInRegistries.CHUNK_GENERATOR, TheCasketOfReveriesMod.prefix("structure_locating_wrapper"), TCRChunkGenerator.CODEC);
         }
     }
 

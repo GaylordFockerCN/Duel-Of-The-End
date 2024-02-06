@@ -1,5 +1,7 @@
 package com.gaboj1.tcr.worldgen.noise;
 
+import org.spongepowered.noise.module.source.Perlin;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -316,7 +318,7 @@ public class NoiseMapGenerator {
         //centerR即偏移量
         for(int i = aCenter.x - centerR/2 ,a = 0; i < aCenter.x + centerR/2 && a < centerR ; i++,a++){
             for(int j = aCenter.y - centerR/2 ,b = 0; j < aCenter.y + centerR/2 && b < centerR; j++,b++){
-                if(i > 0 && j > 0 && aCenterBiomeMap[a][b] != 0)
+                if(i > 0 && j > 0 && i<map.length && j<map[0].length && aCenterBiomeMap[a][b] != 0)
                     map[i][j] = tag;
             }
         }
@@ -393,26 +395,41 @@ public class NoiseMapGenerator {
     }
 
     public static void main(String args[]){
-        int size = 180;
-        double[][] map = getDoubles(size);
+//        int size = 180;
+//        double[][] map = getDoubles(size);
+//
+//        for(int i = 0 ; i < size ; i++){
+//            for(int j = 0 ; j < size ; j++){
+////                System.out.print(String.format("%.0f ",map[i][j]));
+//                if(map[i][j] == 1){
+//                    System.out.print("@ ");
+//                }else if(map[i][j] == 2){
+//                    System.out.print("# ");
+//                }else if(map[i][j] == 3){
+//                    System.out.print("^ ");
+//                }else if(map[i][j] == 4){
+//                    System.out.print("* ");
+//                }else {
+//                    System.out.print("- ");
+//                }
+//            }
+//            System.out.println();
+//        }
 
-        for(int i = 0 ; i < size ; i++){
-            for(int j = 0 ; j < size ; j++){
-//                System.out.print(String.format("%.0f ",map[i][j]));
-                if(map[i][j] == 1){
-                    System.out.print("@ ");
-                }else if(map[i][j] == 2){
-                    System.out.print("# ");
-                }else if(map[i][j] == 3){
-                    System.out.print("^ ");
-                }else if(map[i][j] == 4){
-                    System.out.print("* ");
-                }else {
-                    System.out.print("- ");
-                }
+        NoiseMapGenerator generator = new NoiseMapGenerator();
+        Perlin perlin = new Perlin();
+        perlin.setLacunarity(2);
+        perlin.setPersistence(0.5);
+        perlin.setOctaveCount(6);
+        for(int i = 0;i<100;i++){
+            for (int j = 0;j<100;j++){
+                double x = perlin.get(i*0.1,0,j*0.1);
+                System.out.print(String.format("%.1f ",x));
             }
             System.out.println();
         }
+
+
     }
 
     private static double[][] getDoubles(int size) {

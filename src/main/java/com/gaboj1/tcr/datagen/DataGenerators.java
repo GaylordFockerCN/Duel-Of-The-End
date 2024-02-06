@@ -30,7 +30,6 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ModItemTagGenerator(output, lookupProvider, blockTagGenerator.contentsGetter(), helper));
         generator.addProvider(event.includeClient(), new ModLangGenerator(output));
         DatapackBuiltinEntriesProvider datapackProvider = new ModWorldGenProvider(output, lookupProvider);
-//        CompletableFuture<HolderLookup.Provider> lookupProvider2 = datapackProvider.getRegistryProvider();
         generator.addProvider(event.includeServer(), datapackProvider);
     }
 }
