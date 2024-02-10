@@ -35,8 +35,7 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
     @Override
     public void buildSurface(WorldGenRegion pLevel, StructureManager pStructureManager, RandomState pRandom, ChunkAccess pChunk) {
         super.buildSurface(pLevel, pStructureManager, pRandom, pChunk);
-//        fixPrimerSurface(pLevel);
-
+        fixPrimerSurface(pLevel);
     }
 
     private void fixPrimerSurface(WorldGenRegion primer){
@@ -51,30 +50,34 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
         BlockState air = Blocks.AIR.defaultBlockState();
         for (int z = 0; z < 16; z++) {
             for (int x = 0; x < 16; x++) {
-                Optional<ResourceKey<Biome>> biome = primer.getBiome(primer.getCenter().getWorldPosition().offset(x, 0, z)).unwrapKey();
+                BlockPos pos = primer.getCenter().getWorldPosition().offset(x, 0, z);
+                Optional<ResourceKey<Biome>> biome = primer.getBiome(pos).unwrapKey();
                 if (biome.isEmpty() ||
                         TCRBiomes.AIR.location().equals(biome.get().location()) ||
                             TCRBiomes.FINAL.location().equals(biome.get().location())) continue;
                 // 寻找最顶的方块
                 int gBase = 75;
-                for (int y = 80; y >= gBase+1; y--) {
-                    BlockPos old1 = primer.getCenter().getWorldPosition().offset(x, 0, z);
-                    Block currentBlock = primer.getBlockState(old1.atY(y)).getBlock();
+                for (int y = 80; y > gBase; y--) {
+                    Block currentBlock = primer.getBlockState(pos.atY(y)).getBlock();
                     if (currentBlock != Blocks.AIR) {
                         gBase = y;
-                        primer.setBlock(old1.atY(y), grassTop, 3);
                         break;
                     }
                 }
-                BlockPos old = primer.getCenter().getWorldPosition().offset(x, 0, z);
-                double perlinValue = perlin.get(x*0.1,0,z*0.1);
-                int height = perlinValue==1?1:(perlinValue>1?0:2);
 
-                int y;
-                for (y = gBase; y > gBase-height; y--) {
-                    primer.setBlock(old.atY(y), air, 3);
+                if(gBase == 75)
+//                    continue;
+                    gBase = 78;
+
+                //获取对应噪声值并填补地形
+                double scale = 0.01;
+                double perlinValue = perlin.get(pos.getX()*scale,0,pos.getZ()*scale);
+                int height = perlinValue==1 ? 1 : (perlinValue > 1 ? 2 : 0);
+                int i;
+                for(i = 0; i < height-1; i++){
+                    primer.setBlock(pos.atY(gBase+i), grass, 3);
                 }
-                primer.setBlock(old.atY(y), grassTop, 3);
+                primer.setBlock(pos.atY(gBase+i), grassTop, 3);
             }
         }
     }
