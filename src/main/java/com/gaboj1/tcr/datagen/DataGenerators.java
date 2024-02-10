@@ -28,6 +28,7 @@ public class DataGenerators {
         ModBlockTagGenerator blockTagGenerator = generator.addProvider(event.includeServer(),
                 new ModBlockTagGenerator(output, lookupProvider, helper));
         generator.addProvider(event.includeServer(), new ModItemTagGenerator(output, lookupProvider, blockTagGenerator.contentsGetter(), helper));
+        generator.addProvider(event.includeServer(), new ModBiomeTagGenerator(output, lookupProvider, helper));
         generator.addProvider(event.includeClient(), new ModLangGenerator(output));
         DatapackBuiltinEntriesProvider datapackProvider = new ModWorldGenProvider(output, lookupProvider);
         generator.addProvider(event.includeServer(), datapackProvider);
