@@ -5,7 +5,11 @@ import com.gaboj1.tcr.init.TCRModBlocks;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.StructureTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
@@ -34,11 +38,11 @@ public class TCRTeleporter implements ITeleporter {
             y = thisPos.getY();
         }
 
-
-        //destinationWorld.findNearestMapStructure();//TODO 出生在第一群系村庄
+        //TODO 出生在第一群系村庄
+        BlockPos destinationPos = new BlockPos(thisPos.getX(), y, thisPos.getZ());
+//        destinationPos = destinationWorld.findNearestMapStructure(TagKey.create(Registries.STRUCTURE,new ResourceLocation("flower_altar")),destinationPos,3000,false);
 
         //出生在第一群系
-        BlockPos destinationPos = new BlockPos(thisPos.getX(), y, thisPos.getZ());
 //        Predicate<Holder<Biome>> destinationBiome = biomeHolder -> biomeHolder.is(TCRBiomes.biome1);
 //        BlockPos pos = destinationWorld.findClosestBiome3d(destinationBiome,destinationPos,1000,1000,1000).getFirst();
 //        destinationPos.offset(pos);

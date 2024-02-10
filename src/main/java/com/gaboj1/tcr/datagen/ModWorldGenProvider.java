@@ -8,6 +8,7 @@ import com.gaboj1.tcr.worldgen.noise.ModDensityFunctions;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import com.gaboj1.tcr.worldgen.noise.ModNoiseSettings;
 import com.gaboj1.tcr.worldgen.noise.ModNoises;
+//import com.gaboj1.tcr.worldgen.structure.TCRStructures;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
@@ -20,6 +21,7 @@ import java.util.concurrent.CompletableFuture;
 public class ModWorldGenProvider extends DatapackBuiltinEntriesProvider {
 
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
+//            .add(Registries.STRUCTURE, TCRStructures::bootstrap)
             .add(Registries.CONFIGURED_FEATURE, TCRConfiguredFeatures::bootstrap)
             .add(Registries.PLACED_FEATURE, TCRPlacedFeatures::bootstrap)
             .add(Registries.DENSITY_FUNCTION, ModDensityFunctions::bootstrap)

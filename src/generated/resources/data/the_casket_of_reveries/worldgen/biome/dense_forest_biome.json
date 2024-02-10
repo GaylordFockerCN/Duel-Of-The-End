@@ -36,7 +36,7 @@
     "axolotls": [],
     "creature": [
       {
-        "type": "the_casket_of_reveries:tiger",
+        "type": "the_casket_of_reveries:middle_tree_monster",
         "maxCount": 4,
         "minCount": 4,
         "weight": 5
