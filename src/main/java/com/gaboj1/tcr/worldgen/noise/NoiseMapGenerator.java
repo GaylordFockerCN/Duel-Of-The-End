@@ -26,7 +26,7 @@ public class NoiseMapGenerator {
 
     public static final double CURVE_INTENSITY = 0.1;
     public static final double SCALE_OF_CENTER_R = 0.05;//相对宽度width的比例，中心空岛半径即为width*scaleOfCenterR
-    public final double scaleOfaCenterR = 0.5;//相对各个中心到整体中心的距离的比例， 各群系的中心群系的噪声半径 即 center.distance(aCenter)*scaleOfaCenterR
+    public final double scaleOfaCenterR = 0.8;//相对各个中心到整体中心的距离的比例， 各群系的中心群系的噪声半径 即 center.distance(aCenter)*scaleOfaCenterR
     private Random random;
     public final Point centerPoint = new Point(length/2,width/2);
     public void setLength(int length) {
@@ -219,11 +219,6 @@ public class NoiseMapGenerator {
 
         int centerR = (int) (width * SCALE_OF_CENTER_R);//TODO:调整合适大小
 
-//        // 定义曲线参数
-//        double sigmoidIntensityA = 0.1; // 曲线强度A
-//        double sigmoidIntensityB = 0.2; // 曲线强度B
-//        Random random = new Random();
-
         for (int y = 0; y < width; y++) {
             for (int x = 0; x < length; x++) {
                 double value = map[y][x];
@@ -276,23 +271,52 @@ public class NoiseMapGenerator {
     }
 
     //TODO 调整合适数值
+    //FIXME 有一条边会残留直线
     private double getSigmoidAngle(double distance, double angle) {
+
         // 定义曲线参数
-        double sigmoidIntensityA = 0.1; // 曲线强度A
-        double sigmoidIntensityB = 0.2; // 曲线强度B
-        double sigmoidValue = 1 / (1 + Math.exp(-sigmoidIntensityA * (distance *0.75))); // Sigmoid 曲线值 A
-        if (angle >= 0 && angle < Math.PI / 2) {
-            sigmoidValue = 1 / (1 + Math.exp(-sigmoidIntensityB * (distance *0.75))); // Sigmoid 曲线值 B
-        }
-        double randomOffset = random.nextDouble() * 0.1 - 0.05; // 随机偏移值
-        angle += sigmoidValue + randomOffset; // 添加 S 型曲线值和随机偏移值到角度
+        double amplitude = 0.3; // 振幅
+        double frequency = 0.1; // 频率
+
+        // 计算曲线值
+        double curveValue = amplitude * Math.sin(frequency * distance);
+        angle += curveValue + random.nextDouble() * 0.1 - 0.05;
+
         return angle;
+
+//        int numSections = 8; // 大区间数
+//        int numSubSections = 5; // 每个大区间细分为的小区间数
+//        double[] sigmoidIntensity = {0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45}; // 曲线强度数组
+//        double[] sigmoidOffset = {-0.1, -0.05, 0, 0, 0, 0, 0.05, 0.1}; // 曲线偏移量数组
+//
+//        // 计算当前角度所在的大区间和小区间
+//        double sectionSize = Math.PI / numSections;
+//        int sectionIndex = (int) ((angle + Math.PI) / sectionSize) % numSections;
+//        int subSectionIndex = (int) ((angle + Math.PI) / (sectionSize / numSubSections)) % numSubSections;
+//
+//        // 计算 sigmoid 值
+//        double sigmoidValue = 1 / (1 + Math.exp(-sigmoidIntensity[sectionIndex] * (distance * 0.5)));
+//        double randomOffset = random.nextDouble() * 0.1 - 0.05 + sigmoidOffset[sectionIndex];
+//        angle += sigmoidValue + randomOffset;
+//
+//        return angle;
+
+//        // 定义曲线参数
+//        double sigmoidIntensityA = 0.1; // 曲线强度A
+//        double sigmoidIntensityB = 0.2; // 曲线强度B
+//        double sigmoidValue = 1 / (1 + Math.exp(-sigmoidIntensityA * (distance *0.5))); // Sigmoid 曲线值 A
+//        if (angle >= 0 && angle < Math.PI / 2) {
+//            sigmoidValue = 1 / (1 + Math.exp(-sigmoidIntensityB * (distance *0.5))); // Sigmoid 曲线值 B
+//        }
+//        double randomOffset = random.nextDouble() * 0.1 - 0.05; // 随机偏移值
+//        angle += sigmoidValue + randomOffset; // 添加 S 型曲线值和随机偏移值到角度
+//        return angle;
     }
 
     //给四个扇形分别添加中心群系
     public double[][] addCenter(double[][] map){
         double[][] map1 = map.clone();
-
+//        double[][] map1 = new double[map.length][map[0].length];
         //生成各个群系的中心群系位置并应用到原地图
         copyMap(aPoints,map1,5);
         copyMap(bPoints,map1,6);
@@ -309,6 +333,21 @@ public class NoiseMapGenerator {
 
         //生成中心群系
         int centerR = (int)( aCenter.distance(centerPoint) * scaleOfaCenterR);
+
+//        centerR*=2.5;
+//        generator.setWidth(centerR);
+//        generator.setLength(centerR);
+//        generator.setLacunarity(12);
+//        generator.setOctaves(8);
+//        double[][] pCenterBiomeMap = generator.generateNoiseMap();
+//        for(int i = aCenter.x - centerR/2 ,a = 0; i < aCenter.x + centerR/2 && a < centerR ; i++,a++){
+//            for(int j = aCenter.y - centerR/2 ,b = 0; j < aCenter.y + centerR/2 && b < centerR; j++,b++){
+//                if(i > 0 && j > 0 && i<map.length && j<map[0].length && pCenterBiomeMap[a][b] != 0)
+//                    map[i][j] = tag-4;
+//            }
+//        }
+//        centerR/=2.5;
+
         generator.setWidth(centerR);
         generator.setLength(centerR);
         generator.setLacunarity(12);
@@ -395,39 +434,47 @@ public class NoiseMapGenerator {
     }
 
     public static void main(String args[]){
-//        int size = 180;
-//        double[][] map = getDoubles(size);
-//
-//        for(int i = 0 ; i < size ; i++){
-//            for(int j = 0 ; j < size ; j++){
-////                System.out.print(String.format("%.0f ",map[i][j]));
-//                if(map[i][j] == 1){
-//                    System.out.print("@ ");
-//                }else if(map[i][j] == 2){
-//                    System.out.print("# ");
-//                }else if(map[i][j] == 3){
-//                    System.out.print("^ ");
-//                }else if(map[i][j] == 4){
-//                    System.out.print("* ");
-//                }else {
-//                    System.out.print("- ");
-//                }
-//            }
-//            System.out.println();
-//        }
+        int size = 180;
+        double[][] map = getDoubles(size);
 
-        NoiseMapGenerator generator = new NoiseMapGenerator();
-        Perlin perlin = new Perlin();
-        perlin.setLacunarity(2);
-        perlin.setPersistence(0.5);
-        perlin.setOctaveCount(6);
-        for(int i = 0;i<100;i++){
-            for (int j = 0;j<100;j++){
-                double x = perlin.get(i*0.1,0,j*0.1);
-                System.out.print(String.format("%.1f ",x));
+        for(int i = 0 ; i < size ; i++){
+            for(int j = 0 ; j < size ; j++){
+//                System.out.print(String.format("%.0f ",map[i][j]));
+                if(map[i][j] == 1){
+                    System.out.print("@ ");
+                }else if(map[i][j] == 2){
+                    System.out.print("# ");
+                }else if(map[i][j] == 3){
+                    System.out.print("^ ");
+                }else if(map[i][j] == 4){
+                    System.out.print("* ");
+                }else if(map[i][j] == 5){
+                    System.out.print("1 ");
+                }else if(map[i][j] == 6){
+                    System.out.print("1 ");
+                }else if(map[i][j] == 7){
+                    System.out.print("1 ");
+                }else if(map[i][j] == 8){
+                    System.out.print("1 ");
+                }else {
+                    System.out.print("- ");
+                }
             }
             System.out.println();
         }
+
+//        NoiseMapGenerator generator = new NoiseMapGenerator();
+//        Perlin perlin = new Perlin();
+//        perlin.setLacunarity(2);
+//        perlin.setPersistence(0.5);
+//        perlin.setOctaveCount(6);
+//        for(int i = 0;i<100;i++){
+//            for (int j = 0;j<100;j++){
+//                double x = perlin.get(i*0.1,0,j*0.1);
+//                System.out.print(String.format("%.1f ",x));
+//            }
+//            System.out.println();
+//        }
 
 
     }
@@ -438,7 +485,7 @@ public class NoiseMapGenerator {
 //        noiseMapGenerator.setSeed(99);
         noiseMapGenerator.setLength(size);
         noiseMapGenerator.setWidth(size);
-        noiseMapGenerator.setLacunarity(20);
+        noiseMapGenerator.setLacunarity(12);
         noiseMapGenerator.setPersistence(0.5);
         noiseMapGenerator.setOctaves(8);
         double map[][] = noiseMapGenerator.generateNoiseMap();
