@@ -102,36 +102,36 @@ public class TCRBiomeProvider extends BiomeSource {
         generator.setSeed(new Random().nextInt(100));//TODO: 改成世界种子
         generator.setLength(SIZE);
         generator.setWidth(SIZE);
-        generator.setLacunarity(20);//TODO 调整合适大小
+        generator.setLacunarity(12);//TODO 调整合适大小
         generator.setOctaves(8);
         map = generator.generateNoiseMap();
         map = generator.divide(map);
         map = generator.addCenter(map);
 
-        //生成缩小版预览
-        int size = 180;
-        generator.setLength(size);
-        generator.setWidth(size);
-        double[][] sMap = generator.generateNoiseMap();
-        sMap = generator.divide(sMap);
-        sMap =  generator.addCenter(sMap);
-        for(int i = 0 ; i < size ; i++){
-            for(int j = 0 ; j < size ; j++){
-//                System.out.print(String.format("%.0f ",map[i][j]));
-                if(sMap[i][j] == 1){
-                    System.out.print("@ ");
-                }else if(sMap[i][j] == 2){
-                    System.out.print("# ");
-                }else if(sMap[i][j] == 3){
-                    System.out.print("^ ");
-                }else if(sMap[i][j] == 4){
-                    System.out.print("* ");
-                }else {
-                    System.out.print("- ");
-                }
-            }
-            System.out.println();
-        }
+//        //生成缩小版预览
+//        int size = 180;
+//        generator.setLength(size);
+//        generator.setWidth(size);
+//        double[][] sMap = generator.generateNoiseMap();
+//        sMap = generator.divide(sMap);
+//        sMap =  generator.addCenter(sMap);
+//        for(int i = 0 ; i < size ; i++){
+//            for(int j = 0 ; j < size ; j++){
+////                System.out.print(String.format("%.0f ",map[i][j]));
+//                if(sMap[i][j] == 1){
+//                    System.out.print("@ ");
+//                }else if(sMap[i][j] == 2){
+//                    System.out.print("# ");
+//                }else if(sMap[i][j] == 3){
+//                    System.out.print("^ ");
+//                }else if(sMap[i][j] == 4){
+//                    System.out.print("* ");
+//                }else {
+//                    System.out.print("- ");
+//                }
+//            }
+//            System.out.println();
+//        }
 
         return Stream.of(biomeHolder0,biomeHolder1,biomeHolder2,biomeHolder3,biomeHolder4,biomeHolder5,biomeHolder6,biomeHolder7,biomeHolder8,biomeHolder9);
     }
