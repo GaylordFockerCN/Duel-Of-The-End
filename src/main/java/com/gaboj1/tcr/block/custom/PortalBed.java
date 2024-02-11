@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.block.custom;
 
+import com.gaboj1.tcr.block.entity.PortalBedEntity;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import com.gaboj1.tcr.worldgen.portal.TCRTeleporter;
 import net.minecraft.world.item.DyeColor;
@@ -12,6 +13,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 public class PortalBed extends BedBlock {
@@ -43,6 +45,11 @@ public class PortalBed extends BedBlock {
         } else {
             return InteractionResult.CONSUME;
         }
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new PortalBedEntity(pos, state);
     }
 
 }
