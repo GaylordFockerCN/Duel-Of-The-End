@@ -1,7 +1,5 @@
 package com.gaboj1.tcr.worldgen.noise;
 
-import org.spongepowered.noise.module.source.Perlin;
-
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,17 +24,17 @@ public class NoiseMapGenerator {
 
     public static final double CURVE_INTENSITY = 0.1;
     public static final double SCALE_OF_CENTER_R = 0.05;//相对宽度width的比例，中心空岛半径即为width*scaleOfCenterR
-    public final double scaleOfaCenterR = 0.8;//相对各个中心到整体中心的距离的比例， 各群系的中心群系的噪声半径 即 center.distance(aCenter)*scaleOfaCenterR
+    public final double scaleOfaCenterR = 1.2;//相对各个中心到整体中心的距离的比例， 各群系的中心群系的噪声半径 即 center.distance(aCenter)*scaleOfaCenterR
     private Random random;
-    public final Point centerPoint = new Point(length/2,width/2);
+    public Point centerPoint = new Point();
     public void setLength(int length) {
         this.length = length;
-        centerPoint.x = length/2;
+        centerPoint.x=length/2;
     }
 
     public void setWidth(int width) {
         this.width = width;
-        centerPoint.y = width/2;
+        centerPoint.y=width/2;
     }
 
     public void setMaxHeight(int maxHeight) {
@@ -129,9 +127,9 @@ public class NoiseMapGenerator {
                 }
             }
         }
-        Point center = computeCenter(points);
-        int centerX = center.x;
-        int centerY = center.y;
+        centerPoint = computeCenter(points);
+        int centerX = centerPoint.x;
+        int centerY = centerPoint.y;
 
         int centerR = (int) (width * SCALE_OF_CENTER_R);//TODO: 调整合适大小
 //        int centerR = 16;
@@ -213,9 +211,9 @@ public class NoiseMapGenerator {
                 }
             }
         }
-        Point center = computeCenter(points);
-        int centerX = center.x;
-        int centerY = center.y;
+        centerPoint = computeCenter(points);
+        int centerX = centerPoint.x;
+        int centerY = centerPoint.y;
 
         int centerR = (int) (width * SCALE_OF_CENTER_R);//TODO:调整合适大小
 
@@ -227,7 +225,7 @@ public class NoiseMapGenerator {
                     double distance = Math.sqrt((y - centerY) * (y - centerY) + (x - centerX) * (x - centerX));
 
                     // 根据角度划分区域并旋转45度
-//                    angle += Math.PI / 4;  // 添加旋转角度的偏移量
+                    angle += Math.PI / 4;  // 添加旋转角度的偏移量
 
                     // 将角度限制在 -PI 到 PI 之间
                     while (angle < -Math.PI) {
@@ -326,13 +324,16 @@ public class NoiseMapGenerator {
     }
 
     //生成中心并且把中心复制到各个区域
+    int aCenterR = 0;//统一半径，否则有的中心群系过大
     public void copyMap(List<Point> aPoints,double map[][],double tag){
         //再以各个点为中心生成噪声图，比较自然一点~
         Point aCenter = computeCenter(aPoints);
         NoiseMapGenerator generator = new NoiseMapGenerator();
 
         //生成中心群系
-        int centerR = (int)( aCenter.distance(centerPoint) * scaleOfaCenterR);
+        if(aCenterR == 0){
+            aCenterR = (int)( aCenter.distance(centerPoint) * scaleOfaCenterR);
+        }
 
 //        centerR*=2.5;
 //        generator.setWidth(centerR);
@@ -348,19 +349,32 @@ public class NoiseMapGenerator {
 //        }
 //        centerR/=2.5;
 
-        generator.setWidth(centerR);
-        generator.setLength(centerR);
+        generator.setWidth(aCenterR);
+        generator.setLength(aCenterR);
         generator.setLacunarity(12);
         generator.setOctaves(8);
+        generator.setSeed(getDifferRandom());
         double[][] aCenterBiomeMap = generator.generateNoiseMap();
 
         //centerR即偏移量
-        for(int i = aCenter.x - centerR/2 ,a = 0; i < aCenter.x + centerR/2 && a < centerR ; i++,a++){
-            for(int j = aCenter.y - centerR/2 ,b = 0; j < aCenter.y + centerR/2 && b < centerR; j++,b++){
+        for(int i = aCenter.x - aCenterR /2, a = 0; i < aCenter.x + aCenterR /2 && a < aCenterR; i++,a++){
+            for(int j = aCenter.y - aCenterR /2, b = 0; j < aCenter.y + aCenterR /2 && b < aCenterR; j++,b++){
                 if(i > 0 && j > 0 && i<map.length && j<map[0].length && aCenterBiomeMap[a][b] != 0)
                     map[i][j] = tag;
             }
         }
+    }
+
+    //确保四个群系获得不一样的种子，具体待定 FIXME 在0-4内生成的图像差不多。。
+    ArrayList<Integer> last = new ArrayList<>();//确保每一个都不一样（虽然收效甚微）
+    public int getDifferRandom(){
+        int a = random.nextInt(5);
+        if(last.isEmpty())
+            last.add(a);
+        if(last.contains(a))
+            return getDifferRandom();
+        last.add(a);
+        return a;
     }
 
     //计算重心（所有x之和除以2即为重心的x，所有y之和除以2即为重心的y）
@@ -463,26 +477,12 @@ public class NoiseMapGenerator {
             System.out.println();
         }
 
-//        NoiseMapGenerator generator = new NoiseMapGenerator();
-//        Perlin perlin = new Perlin();
-//        perlin.setLacunarity(2);
-//        perlin.setPersistence(0.5);
-//        perlin.setOctaveCount(6);
-//        for(int i = 0;i<100;i++){
-//            for (int j = 0;j<100;j++){
-//                double x = perlin.get(i*0.1,0,j*0.1);
-//                System.out.print(String.format("%.1f ",x));
-//            }
-//            System.out.println();
-//        }
-
-
     }
 
     private static double[][] getDoubles(int size) {
         NoiseMapGenerator noiseMapGenerator = new NoiseMapGenerator();
-        noiseMapGenerator.setSeed(new Random().nextInt(100));
-//        noiseMapGenerator.setSeed(99);
+        noiseMapGenerator.setSeed(new Random().nextInt(3));
+//        noiseMapGenerator.setSeed(1000);
         noiseMapGenerator.setLength(size);
         noiseMapGenerator.setWidth(size);
         noiseMapGenerator.setLacunarity(12);

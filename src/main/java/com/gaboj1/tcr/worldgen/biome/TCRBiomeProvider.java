@@ -36,8 +36,8 @@ public class TCRBiomeProvider extends BiomeSource {
     ).apply(instance, instance.stable(TCRBiomeProvider::new)));
 
     private double[][] map;
-    private final int SIZE = 320;
-    private final int R = SIZE/2;
+//    private final int SIZE = 320;
+    private int R;
 
     private final Holder<Biome> biomeHolder0;
     private final Holder<Biome> biomeHolder1;
@@ -98,16 +98,8 @@ public class TCRBiomeProvider extends BiomeSource {
     @Override
     protected Stream<Holder<Biome>> collectPossibleBiomes() {
         //不在这里生成的话map会被清空，但是这里生成不知道有什么bug...
-        NoiseMapGenerator generator = new NoiseMapGenerator();
-        generator.setSeed(new Random().nextInt(100));//TODO: 改成世界种子
-        generator.setLength(SIZE);
-        generator.setWidth(SIZE);
-        generator.setLacunarity(12);//TODO 调整合适大小
-        generator.setOctaves(8);
-        map = generator.generateNoiseMap();
-        map = generator.divide(map);
-        map = generator.addCenter(map);
-
+        map = BiomeMap.createImageMap();
+        R = map[0].length/2;
 //        //生成缩小版预览
 //        int size = 180;
 //        generator.setLength(size);

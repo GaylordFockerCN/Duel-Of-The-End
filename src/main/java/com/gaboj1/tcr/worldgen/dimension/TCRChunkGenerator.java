@@ -66,8 +66,8 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
                 }
 
                 if(gBase == 75)
-//                    continue;
-                    gBase = 78;
+//                    continue;//不填坑
+                    gBase = 77;//TODO 填坑，但是数值有待调
 
                 //获取对应噪声值并填补地形
                 double scale = 0.01;
@@ -80,11 +80,6 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
                 primer.setBlock(pos.atY(gBase+i), grassTop, 3);
             }
         }
-    }
-
-    private boolean inCircle(int r,int x,int y){
-        double d = Math.sqrt(Math.pow((x - r), 2) + Math.pow((y - r), 2));
-        return d <= r;
     }
 
     @Override
