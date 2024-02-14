@@ -3,6 +3,7 @@
 
   "_comment": " This biome tag can specify the biome directly. Or specify another biome tag by starting with # ",
   "values": [
-    "the_casket_of_reveries:pastoral_plains_biome"
+//    "the_casket_of_reveries:pastoral_plains_biome"\dense_forest_biome
+    "the_casket_of_reveries:dense_forest_biome"
   ]
 }

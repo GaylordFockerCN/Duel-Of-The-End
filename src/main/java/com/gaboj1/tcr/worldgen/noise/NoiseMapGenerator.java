@@ -22,11 +22,33 @@ public class NoiseMapGenerator {
     private List<Point> cPoints = new ArrayList<>();
     private List<Point> dPoints = new ArrayList<>();
 
+
+    public Point getCenter1() {
+        return center1;
+    }
+
+    public Point getCenter2() {
+        return center2;
+    }
+
+    public Point getCenter3() {
+        return center3;
+    }
+
+    public Point getCenter4() {
+        return center4;
+    }
+
+    public Point getCenter() {
+        return centerPoint;
+    }
+
+    private Point center1, center2, center3, center4;
     public static final double CURVE_INTENSITY = 0.1;
     public static final double SCALE_OF_CENTER_R = 0.05;//相对宽度width的比例，中心空岛半径即为width*scaleOfCenterR
     public final double scaleOfaCenterR = 1.2;//相对各个中心到整体中心的距离的比例， 各群系的中心群系的噪声半径 即 center.distance(aCenter)*scaleOfaCenterR
     private Random random;
-    public Point centerPoint = new Point();
+    private Point centerPoint = new Point();
     public void setLength(int length) {
         this.length = length;
         centerPoint.x=length/2;
@@ -316,18 +338,21 @@ public class NoiseMapGenerator {
         double[][] map1 = map.clone();
 //        double[][] map1 = new double[map.length][map[0].length];
         //生成各个群系的中心群系位置并应用到原地图
-        copyMap(aPoints,map1,5);
-        copyMap(bPoints,map1,6);
-        copyMap(cPoints,map1,7);
-        copyMap(dPoints,map1,8);
+        center1 = computeCenter(aPoints);//center1以后有用
+        copyMap(center1,map1,5);
+        center2 = computeCenter(bPoints);
+        copyMap(center2,map1,6);
+        center3 = computeCenter(cPoints);
+        copyMap(center3,map1,7);
+        center4 = computeCenter(dPoints);
+        copyMap(center4,map1,8);
         return map1;
     }
 
     //生成中心并且把中心复制到各个区域
     int aCenterR = 0;//统一半径，否则有的中心群系过大
-    public void copyMap(List<Point> aPoints,double map[][],double tag){
+    public void copyMap(Point aCenter,double map[][],double tag){
         //再以各个点为中心生成噪声图，比较自然一点~
-        Point aCenter = computeCenter(aPoints);
         NoiseMapGenerator generator = new NoiseMapGenerator();
 
         //生成中心群系

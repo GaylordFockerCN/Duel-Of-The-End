@@ -10,9 +10,9 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Stream;
 
 /**
@@ -39,6 +39,8 @@ public class TCRBiomeProvider extends BiomeSource {
 //    private final int SIZE = 320;
     private int R;
 
+    public static final double SCALE = 0.2;
+
     private final Holder<Biome> biomeHolder0;
     private final Holder<Biome> biomeHolder1;
     private final Holder<Biome> biomeHolder2;
@@ -50,6 +52,28 @@ public class TCRBiomeProvider extends BiomeSource {
     private final Holder<Biome> biomeHolder8;
     //TODO：边境之地
     private final Holder<Biome> biomeHolder9;
+
+    public Point getCenter1() {
+        return center1;
+    }
+
+    public Point getCenter2() {
+        return center2;
+    }
+
+    public Point getCenter3() {
+        return center3;
+    }
+
+    public Point getCenter4() {
+        return center4;
+    }
+
+    public Point getMainCenter() {
+        return mainCenter;
+    }
+
+    private Point center1, center2, center3, center4, mainCenter;
 
     private final List<Holder<Biome>> biomeList;
 
@@ -98,8 +122,17 @@ public class TCRBiomeProvider extends BiomeSource {
     @Override
     protected Stream<Holder<Biome>> collectPossibleBiomes() {
         //不在这里生成的话map会被清空，但是这里生成不知道有什么bug...
-        map = BiomeMap.createImageMap();
+//        map = BiomeMap.createImageMap();
+        NoiseMapGenerator generator = new NoiseMapGenerator();
+        BiomeMap biomeMap = new BiomeMap();
+        map = biomeMap.createImageMap(generator);
         R = map[0].length/2;
+        //以便获取主建筑摆放位置
+        center1 = generator.getCenter1();
+        center2 = generator.getCenter2();
+        center3 = generator.getCenter3();
+        center4 = generator.getCenter4();
+        mainCenter = generator.getCenter();
 //        //生成缩小版预览
 //        int size = 180;
 //        generator.setLength(size);
@@ -143,15 +176,19 @@ public class TCRBiomeProvider extends BiomeSource {
      */
     @Override
     public Holder<Biome> getNoiseBiome(int x, int y, int z, Climate.Sampler sampler) {
-
-        x*=0.2;
-        z*=0.2;//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
-        if(0 <= x+R && x+R <map.length && 0 <= z+R && z+R < map[0].length ){
-            int index = (int)map[x+R][z+R];
+        x = getCorrectValue(x);
+        z = getCorrectValue(z);
+        if(0 <= x && x <map.length && 0 <= z && z < map[0].length ){
+            int index = (int)map[x][z];
             if(index < biomeList.size())
-                return biomeList.get((int)map[x+R][z+R]);
+                return biomeList.get((int)map[x][z]);
         }
         return biomeHolder0;
+    }
+    
+    public int getCorrectValue(int x){
+        x *= SCALE;//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
+        return x+R;
     }
 
 }

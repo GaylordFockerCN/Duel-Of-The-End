@@ -25,12 +25,15 @@ public class DataGenerators {
         generator.addProvider(true, ModLootTableProvider.create(output));
         generator.addProvider(true, new ModBlockStateProvider(output, helper));
         generator.addProvider(true, new ModItemModelProvider(output, helper));
+
         ModBlockTagGenerator blockTagGenerator = generator.addProvider(event.includeServer(),
                 new ModBlockTagGenerator(output, lookupProvider, helper));
         generator.addProvider(event.includeServer(), new ModItemTagGenerator(output, lookupProvider, blockTagGenerator.contentsGetter(), helper));
-        generator.addProvider(event.includeServer(), new ModBiomeTagGenerator(output, lookupProvider, helper));
         generator.addProvider(event.includeClient(), new ModLangGenerator(output));
+
         DatapackBuiltinEntriesProvider datapackProvider = new ModWorldGenProvider(output, lookupProvider);
+        CompletableFuture<HolderLookup.Provider> provider = datapackProvider.getRegistryProvider();
+        generator.addProvider(event.includeServer(), new ModBiomeTagGenerator(output, provider, helper));
         generator.addProvider(event.includeServer(), datapackProvider);
     }
 }

@@ -1,0 +1,14 @@
+{
+  "type": "the_casket_of_reveries:sky_island_type",
+  "generator": {
+    "type": "the_casket_of_reveries:structure_locating_wrapper",
+    "noise_generation_settings": "the_casket_of_reveries:sky_islands_noise_gen",
+    "wrapped_generator": {
+      "type": "minecraft:noise",
+      "biome_source": {
+        "type": "the_casket_of_reveries:tcr_biomes"
+      },
+      "settings": "the_casket_of_reveries:sky_islands_noise_gen"
+    }
+  }
+}

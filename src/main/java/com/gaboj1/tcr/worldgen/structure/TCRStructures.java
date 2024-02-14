@@ -16,7 +16,6 @@ public class TCRStructures {
         return ResourceKey.create(Registries.STRUCTURE, TheCasketOfReveriesMod.prefix(name));
     }
 
-    @SuppressWarnings("deprecation")
     public static void bootstrap(BootstapContext<Structure> context) {
             context.register(FLOWER_ALTAR, FlowerAltarStructure.buildStructureConfig(context));
     }

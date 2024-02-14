@@ -2,6 +2,8 @@ package com.gaboj1.tcr.worldgen.structure.other;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.datagen.ModBiomeTagGenerator;
+import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
+import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import com.gaboj1.tcr.worldgen.structure.DecorationClearance;
 import com.gaboj1.tcr.worldgen.structure.TCRStructureTypes;
 import com.mojang.serialization.Codec;
@@ -9,6 +11,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.entity.MobCategory;
@@ -24,6 +27,10 @@ import java.util.stream.Collectors;
 
 public class FlowerAltarStructure extends Structure implements DecorationClearance {
 
+    public static final Codec<FlowerAltarStructure> CODEC = RecordCodecBuilder.create(instance -> instance
+            .group(Structure.settingsCodec(instance))
+            .apply(instance, FlowerAltarStructure::new));
+    int seed = 0;
     public FlowerAltarStructure(StructureSettings structureSettings) {
         super(structureSettings);
     }

@@ -20,10 +20,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
 
-
-//        simpleBlockWithItem(TCRModBlocks.PORTAL_BED.get(), models().cross(blockTexture(TCRModBlocks.PORTAL_BED.get()).getPath(),
-//                blockTexture(TCRModBlocks.PORTAL_BED.get())).renderType("cutout"));
-
         simpleBlockWithItem(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get(), models().cross(blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get()).getPath(),
                 blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get())).renderType("cutout"));
         simpleBlockWithItem(TCRModBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER.get(), models().singleTexture("potted_dense_forest_spirit_flower", new ResourceLocation("flower_pot_cross"), "plant",
