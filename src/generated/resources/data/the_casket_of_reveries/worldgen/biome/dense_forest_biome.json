@@ -1,9 +1,8 @@
 {
   "carvers": {},
-  "downfall": 0.8,
+  "downfall": 0.2,
   "effects": {
-    "fog_color": 2269670,
-    "foliage_color": 13763580,
+    "fog_color": 0,
     "grass_color": 5143982,
     "mood_sound": {
       "block_search_extent": 8,
@@ -26,7 +25,9 @@
     [],
     [],
     [
-      "the_casket_of_reveries:dense_forest_spirit_tree_placed"
+      "minecraft:forest_flowers",
+      "the_casket_of_reveries:dense_forest_spirit_tree_placed",
+      "the_casket_of_reveries:dense_forest_spirit_flower_placed"
     ]
   ],
   "has_precipitation": false,
@@ -36,10 +37,22 @@
     "axolotls": [],
     "creature": [
       {
-        "type": "the_casket_of_reveries:middle_tree_monster",
-        "maxCount": 4,
-        "minCount": 4,
+        "type": "the_casket_of_reveries:small_tree_monster",
+        "maxCount": 1,
+        "minCount": 1,
         "weight": 5
+      },
+      {
+        "type": "the_casket_of_reveries:middle_tree_monster",
+        "maxCount": 2,
+        "minCount": 1,
+        "weight": 3
+      },
+      {
+        "type": "the_casket_of_reveries:tree_guardian",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 1
       }
     ],
     "misc": [],
@@ -48,5 +61,5 @@
     "water_ambient": [],
     "water_creature": []
   },
-  "temperature": 0.7
+  "temperature": 0.8
 }
