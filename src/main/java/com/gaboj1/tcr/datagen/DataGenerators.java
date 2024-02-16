@@ -21,15 +21,20 @@ public class DataGenerators {
         ExistingFileHelper helper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-        generator.addProvider(true, new ModRecipeProvider(output));
-        generator.addProvider(true, ModLootTableProvider.create(output));
-        generator.addProvider(true, new ModBlockStateProvider(output, helper));
-        generator.addProvider(true, new ModItemModelProvider(output, helper));
+        //Client
+        generator.addProvider(event.includeClient(), new ModBlockStateProvider(output, helper));
+        generator.addProvider(event.includeClient(), new ModItemModelProvider(output, helper));
+        generator.addProvider(event.includeClient(), new ModLangGenerator(output));
+        //TODO:Sound
+
+        //Server
+        generator.addProvider(event.includeServer(), new ModRecipeProvider(output));
+        generator.addProvider(event.includeServer(), ModLootTableProvider.create(output));
+        generator.addProvider(event.includeServer(), new ModAdvancementData(output, lookupProvider, helper));
 
         ModBlockTagGenerator blockTagGenerator = generator.addProvider(event.includeServer(),
                 new ModBlockTagGenerator(output, lookupProvider, helper));
         generator.addProvider(event.includeServer(), new ModItemTagGenerator(output, lookupProvider, blockTagGenerator.contentsGetter(), helper));
-        generator.addProvider(event.includeClient(), new ModLangGenerator(output));
 
         DatapackBuiltinEntriesProvider datapackProvider = new ModWorldGenProvider(output, lookupProvider);
         CompletableFuture<HolderLookup.Provider> provider = datapackProvider.getRegistryProvider();
