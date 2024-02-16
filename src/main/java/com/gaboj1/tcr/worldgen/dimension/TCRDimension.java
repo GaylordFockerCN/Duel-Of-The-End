@@ -22,12 +22,14 @@ import java.util.OptionalLong;
 import java.util.Random;
 
 public class TCRDimension {
+    
+    //Realm of the Dream 梦之域 TODO:变量名懒得改了，翻译别忘了
     public static final ResourceKey<LevelStem> SKY_ISLAND_KEY = ResourceKey.create(Registries.LEVEL_STEM,
-            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "sky_island"));
+            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "realm_of_the_dream"));
     public static final ResourceKey<Level> SKY_ISLAND_LEVEL_KEY = ResourceKey.create(Registries.DIMENSION,
-            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "sky_island"));
+            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "realm_of_the_dream"));
     public static final ResourceKey<DimensionType> SKY_ISLAND_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
-            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "sky_island_type"));
+            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "realm_of_the_dream_type"));
 
 
     public static void bootstrapType(BootstapContext<DimensionType> context) {

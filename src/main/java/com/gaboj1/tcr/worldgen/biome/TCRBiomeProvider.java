@@ -23,7 +23,7 @@ public class TCRBiomeProvider extends BiomeSource {
 
     public static final Codec<TCRBiomeProvider> TCR_CODEC = RecordCodecBuilder.create((instance) -> instance.group(
 //            Codec.INT.fieldOf("seed").forGetter((o) -> o.seed),//如果编码进去的话地图会固定住
-            RegistryOps.retrieveElement(TCRBiomes.finalBiome),
+            RegistryOps.retrieveElement(TCRBiomes.biomeBorder),
             RegistryOps.retrieveElement(TCRBiomes.biome1),
             RegistryOps.retrieveElement(TCRBiomes.biome2),
             RegistryOps.retrieveElement(TCRBiomes.biome3),
@@ -32,7 +32,7 @@ public class TCRBiomeProvider extends BiomeSource {
             RegistryOps.retrieveElement(TCRBiomes.biome2Center),
             RegistryOps.retrieveElement(TCRBiomes.biome3Center),
             RegistryOps.retrieveElement(TCRBiomes.biome4Center),
-            RegistryOps.retrieveElement(TCRBiomes.biomeBorder)
+            RegistryOps.retrieveElement(TCRBiomes.finalBiome)
     ).apply(instance, instance.stable(TCRBiomeProvider::new)));
 
     private double[][] map;
@@ -80,7 +80,7 @@ public class TCRBiomeProvider extends BiomeSource {
     public static TCRBiomeProvider create(HolderGetter<Biome> pBiomeGetter) {
 
         return new TCRBiomeProvider(
-                pBiomeGetter.getOrThrow(TCRBiomes.finalBiome),
+                pBiomeGetter.getOrThrow(TCRBiomes.biomeBorder),
                 pBiomeGetter.getOrThrow(TCRBiomes.biome1),
                 pBiomeGetter.getOrThrow(TCRBiomes.biome2),
                 pBiomeGetter.getOrThrow(TCRBiomes.biome3),
@@ -89,7 +89,7 @@ public class TCRBiomeProvider extends BiomeSource {
                 pBiomeGetter.getOrThrow(TCRBiomes.biome2Center),
                 pBiomeGetter.getOrThrow(TCRBiomes.biome3Center),
                 pBiomeGetter.getOrThrow(TCRBiomes.biome4Center),
-                pBiomeGetter.getOrThrow(TCRBiomes.biomeBorder)
+                pBiomeGetter.getOrThrow(TCRBiomes.finalBiome)
                 );
     }
 
