@@ -189,7 +189,7 @@ public class NoiseMapGenerator {
                     if(distance <= centerR){
                         //中间挖个空
                         System.out.print("- ");
-                        map[y][x] = 0;
+                        map[y][x] = 9;
                     } else if (angle >= 0 && angle < Math.PI / 2) {
                         // 区域A
                         System.out.print("A ");
