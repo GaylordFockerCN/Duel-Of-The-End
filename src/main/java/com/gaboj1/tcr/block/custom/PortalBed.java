@@ -3,6 +3,8 @@ package com.gaboj1.tcr.block.custom;
 import com.gaboj1.tcr.block.entity.PortalBedEntity;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import com.gaboj1.tcr.worldgen.portal.TCRTeleporter;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.core.BlockPos;
@@ -16,6 +18,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+
 public class PortalBed extends BedBlock {
     public PortalBed(DyeColor pColor, Properties pProperties) {
         super(pColor, pProperties);
@@ -44,6 +50,21 @@ public class PortalBed extends BedBlock {
             return InteractionResult.SUCCESS;
         } else {
             return InteractionResult.CONSUME;
+        }
+    }
+
+    //TODO 抄凋零玫瑰的，到时候换自己的特效
+    @Override
+    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
+        VoxelShape $$4 = this.getShape(pState, pLevel, pPos, CollisionContext.empty());
+        Vec3 $$5 = $$4.bounds().getCenter();
+        double $$6 = (double)pPos.getX() + $$5.x;
+        double $$7 = (double)pPos.getZ() + $$5.z;
+
+        for(int $$8 = 0; $$8 < 3; ++$$8) {
+            if (pRandom.nextBoolean()) {
+                pLevel.addParticle(ParticleTypes.PORTAL, $$6 + pRandom.nextDouble() / 5.0, (double)pPos.getY() + (0.5 - pRandom.nextDouble()), $$7 + pRandom.nextDouble() / 5.0, 0.0, 0.0, 0.0);
+            }
         }
     }
 
