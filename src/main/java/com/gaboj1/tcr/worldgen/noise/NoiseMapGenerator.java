@@ -340,6 +340,7 @@ public class NoiseMapGenerator {
         //生成各个群系的中心群系位置并应用到原地图
         center1 = computeCenter(aPoints);//center1以后有用
         center1=copyMap(center1,map1,5,false);
+//        copyMap(center1,map1,5,false);
         center2 = computeCenter(bPoints);
         center2=copyMap(center2,map1,6,false);
         center3 = computeCenter(cPoints);

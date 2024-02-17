@@ -122,7 +122,7 @@ public class TreeGuardianEntity extends IronGolem implements GeoEntity , Neutral
             return PlayState.CONTINUE;
         }
 
-        tAnimationState.getController().setAnimation(RawAnimation.begin().then(null, Animation.LoopType.LOOP));
+        tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.tree_guardian - Converted.move", Animation.LoopType.LOOP));
         return PlayState.STOP;//停
     }
 

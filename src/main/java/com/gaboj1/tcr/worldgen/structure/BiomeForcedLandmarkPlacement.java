@@ -18,7 +18,7 @@ public class BiomeForcedLandmarkPlacement extends StructurePlacement {
             Codec.INT.fieldOf("structure").forGetter(p -> p.structure)//对不起太菜了只能用数字枚举然后一个个判断
     ).apply(inst, BiomeForcedLandmarkPlacement::new));
 
-    private final int structure;
+    public final int structure;
 
     public BiomeForcedLandmarkPlacement(int structure) {
         super(Vec3i.ZERO, FrequencyReductionMethod.DEFAULT, 1f, 0, Optional.empty()); // None of these params matter except for possibly flat-world or whatever
@@ -33,8 +33,10 @@ public class BiomeForcedLandmarkPlacement extends StructurePlacement {
             int correctZ = provider.getCorrectValue(chunkZ << 2);
 
             if(this.structure == EnumStructures.CHURCH.ordinal() && correctX == provider.getCenter1().x && correctZ == provider.getCenter1().y){
+                System.out.println("OK");
                 return true;
             }
+
         }
 
 
@@ -47,7 +49,7 @@ public class BiomeForcedLandmarkPlacement extends StructurePlacement {
 
         return false;
     }
-    
+
     @Override
     public StructurePlacementType<?> type() {
         return TCRStructurePlacementTypes.FORCED_LANDMARK_PLACEMENT_TYPE.get();

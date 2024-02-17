@@ -1,7 +1,9 @@
 package com.gaboj1.tcr.worldgen.dimension;
 
+import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import com.gaboj1.tcr.worldgen.structure.BiomeForcedLandmarkPlacement;
+import com.gaboj1.tcr.worldgen.structure.EnumStructures;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -33,8 +35,12 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.noise.module.source.Perlin;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.function.Predicate;
+
+import static com.gaboj1.tcr.worldgen.structure.EnumStructures.CHURCH;
 
 public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
 
@@ -200,27 +206,25 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
                 }
             }
         }
-
-//        if (placementSetMap.isEmpty()) return nearest;
-//
-//        double distance = nearest == null ? Double.MAX_VALUE : nearest.getFirst().distSqr(pos);
-//
-//        for (BlockPos landmarkCenterPosition : LegacyLandmarkPlacements.landmarkCenterScanner(pos, Mth.ceil(Mth.sqrt(searchRadius)))) {
-//            for (Map.Entry<BiomeForcedLandmarkPlacement, Set<Holder<Structure>>> landmarkPlacement : placementSetMap.entrySet()) {
-//                if (!landmarkPlacement.getKey().isTFPlacementChunk(this, state, landmarkCenterPosition.getX() >> 4, landmarkCenterPosition.getZ() >> 4)) continue;
-//
-//                for (Holder<Structure> targetStructure : targetStructures) {
-//                    if (landmarkPlacement.getValue().contains(targetStructure)) {
-//                        final double newDistance = landmarkCenterPosition.distToLowCornerSqr(pos.getX(), landmarkCenterPosition.getY(), pos.getZ());
-//
-//                        if (newDistance < distance) {
-//                            nearest = new Pair<>(landmarkCenterPosition, targetStructure);
-//                            distance = newDistance;
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        if (placementSetMap.isEmpty()) return nearest;
+        if(this.getBiomeSource() instanceof TCRBiomeProvider provider){
+            for (Map.Entry<BiomeForcedLandmarkPlacement, Set<Holder<Structure>>> landmarkPlacement : placementSetMap.entrySet()) {
+                BiomeForcedLandmarkPlacement placement = landmarkPlacement.getKey();
+                int structure = placement.structure;
+                Point p = new Point(0,0);
+                switch (structure){
+                    case 1: p = provider.getCenter1(); break;
+                }
+                int chunkX = provider.deCorrectValue(p.x)>>2;
+                int chunkZ = provider.deCorrectValue(p.y)>>2;
+                BlockPos pos1 = new BlockPos(chunkX<<4, pos.getY(),chunkZ<<4);
+                for (Holder<Structure> targetStructure : targetStructures) {
+                    if (landmarkPlacement.getValue().contains(targetStructure)) {
+                        nearest = new Pair<>(pos1, targetStructure);
+                    }
+                }
+            }
+        }
 
         return nearest;
     }

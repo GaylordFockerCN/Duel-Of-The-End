@@ -12,6 +12,7 @@ import net.minecraft.resources.RegistryOps;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
+import net.minecraftforge.server.ServerLifecycleHooks;
 
 import java.awt.*;
 import java.io.*;
@@ -125,9 +126,10 @@ public class TCRBiomeProvider extends BiomeSource {
     @Override
     protected Stream<Holder<Biome>> collectPossibleBiomes() {
 
-        String levelName = Minecraft.getInstance().getLevelSource().getName();
+
+        String levelName = ServerLifecycleHooks.getCurrentServer().getServerDirectory().getName();//FIXME
         //不在这里生成的话map会被清空，但是这里生成不知道有什么bug...
-        File mapFile = new File(BiomeMap.DIR + levelName + "/map.dat");
+        File mapFile = new File(BiomeMap.DIR + levelName+"Map.dat");
         boolean mapExist = mapFile.exists();
 
         //后续从文件直接读取数组较快，否则每次进世界都得加载，地图大的话很慢
@@ -167,6 +169,7 @@ public class TCRBiomeProvider extends BiomeSource {
         mainCenter = generator.getCenter();
 
         try {
+            new File(BiomeMap.DIR).mkdir();
             mapFile.createNewFile();
             FileOutputStream fos = new FileOutputStream(mapFile);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -214,6 +217,14 @@ public class TCRBiomeProvider extends BiomeSource {
             x *= SCALE * map.length / BiomeMap.SIZE;//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
         }
         return x+R;
+    }
+
+    //还原回去
+    public int deCorrectValue(int x){
+        if(!isImage || TCRConfig.ENABLE_SCALING.get()){
+            x /= SCALE * map.length / BiomeMap.SIZE;//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
+        }
+        return x-R;
     }
 
 }
