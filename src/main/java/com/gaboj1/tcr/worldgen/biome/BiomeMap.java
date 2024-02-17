@@ -20,8 +20,9 @@ public class BiomeMap {
 
     public static final int SIZE = 320;
 
-    public static final String DIR = "config/"+TheCasketOfReveriesMod.MOD_ID;
+    boolean isImage;
 
+    public static final String DIR = "config/"+TheCasketOfReveriesMod.MOD_ID;
     public static final String README = DIR+"/图片请命名为“map.png”，近透明或白色为空域其余为大陆。建议地图大小320x320。图片不存在则按默认预设生成地图";
     public static final String FILE = DIR+"/map.png";
 
@@ -62,6 +63,7 @@ public class BiomeMap {
 
             map = generator.divide(map);
             map = generator.addCenter(map);
+            isImage = true;
             return map;
 
         } catch (Exception e) {
@@ -69,6 +71,7 @@ public class BiomeMap {
             System.out.println("维度地图图片\""+FILE+"\"文件异常！将以默认预设生成地图");
             if(!GraphicsEnvironment.isHeadless())
                 JOptionPane.showMessageDialog(null,"维度地图图片\""+FILE+"\"文件异常！将以默认预设生成地图","The Casket Of Reveries：提示",JOptionPane.INFORMATION_MESSAGE);
+            isImage = false;
             return createNoiseMap();
         }
     }
@@ -106,7 +109,7 @@ public class BiomeMap {
             double[][] map = new double[height][width];
             for(int i = 0;i < height; i++){
                 for(int j = 0;j < width; j++){
-                    map[i][j] = (image.getRGB(i,j) == 0xffffff || ((image.getRGB(i,j)>>24)&0xff) < 50 ? 0 : 1);//白色或近透明则为空域
+                    map[i][j] = ((image.getRGB(i,j) == 0xffffff || ((image.getRGB(i,j)>>24)&0xff) < 50) ? 0 : 1);//白色或近透明则为空域
                 }
             }
 

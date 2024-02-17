@@ -1,5 +1,7 @@
 package com.gaboj1.tcr.worldgen.biome;
 
+import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -11,6 +13,7 @@ import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
 
 import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -36,10 +39,9 @@ public class TCRBiomeProvider extends BiomeSource {
     ).apply(instance, instance.stable(TCRBiomeProvider::new)));
 
     private double[][] map;
-//    private final int SIZE = 320;
     private int R;
-
     public static final double SCALE = 0.2;
+    private boolean isImage = true;
 
     private final Holder<Biome> biomeHolder0;
     private final Holder<Biome> biomeHolder1;
@@ -122,41 +124,44 @@ public class TCRBiomeProvider extends BiomeSource {
     @Override
     protected Stream<Holder<Biome>> collectPossibleBiomes() {
         //不在这里生成的话map会被清空，但是这里生成不知道有什么bug...
-//        map = BiomeMap.createImageMap();
-        NoiseMapGenerator generator = new NoiseMapGenerator();
-        BiomeMap biomeMap = new BiomeMap();
-        map = biomeMap.createImageMap(generator);
-        R = map[0].length/2;
-        //以便获取主建筑摆放位置
-        center1 = generator.getCenter1();
-        center2 = generator.getCenter2();
-        center3 = generator.getCenter3();
-        center4 = generator.getCenter4();
-        mainCenter = generator.getCenter();
-//        //生成缩小版预览
-//        int size = 180;
-//        generator.setLength(size);
-//        generator.setWidth(size);
-//        double[][] sMap = generator.generateNoiseMap();
-//        sMap = generator.divide(sMap);
-//        sMap =  generator.addCenter(sMap);
-//        for(int i = 0 ; i < size ; i++){
-//            for(int j = 0 ; j < size ; j++){
-////                System.out.print(String.format("%.0f ",map[i][j]));
-//                if(sMap[i][j] == 1){
-//                    System.out.print("@ ");
-//                }else if(sMap[i][j] == 2){
-//                    System.out.print("# ");
-//                }else if(sMap[i][j] == 3){
-//                    System.out.print("^ ");
-//                }else if(sMap[i][j] == 4){
-//                    System.out.print("* ");
-//                }else {
-//                    System.out.print("- ");
-//                }
-//            }
-//            System.out.println();
-//        }
+        File mapFile = new File(BiomeMap.DIR+"map.txt");
+        boolean mapExist = mapFile.exists();
+
+        //后续从文件直接读取数组较快，否则每次进世界都得加载，地图大的话很慢
+        if(mapExist){
+            try {
+                FileInputStream fis = new FileInputStream(mapFile);
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                map = (double[][]) ois.readObject();
+                ois.close();
+                fis.close();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }else {
+            NoiseMapGenerator generator = new NoiseMapGenerator();
+            BiomeMap biomeMap = new BiomeMap();
+            map = biomeMap.createImageMap(generator);
+            isImage = biomeMap.isImage;
+            R = map[0].length / 2;
+            //以便获取主建筑摆放位置
+            center1 = generator.getCenter1();
+            center2 = generator.getCenter2();
+            center3 = generator.getCenter3();
+            center4 = generator.getCenter4();
+            mainCenter = generator.getCenter();
+
+            try {
+                FileOutputStream fos = new FileOutputStream(mapFile);
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(map);
+                oos.close();
+                fos.close();
+                System.out.println("Map Array saved to file successfully.");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         return Stream.of(biomeHolder0,biomeHolder1,biomeHolder2,biomeHolder3,biomeHolder4,biomeHolder5,biomeHolder6,biomeHolder7,biomeHolder8,biomeHolder9);
     }
@@ -187,7 +192,9 @@ public class TCRBiomeProvider extends BiomeSource {
     }
     
     public int getCorrectValue(int x){
-        x *= SCALE;//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
+        if(!isImage || TCRConfig.ENABLE_SCALING.get()){
+            x *= SCALE * map.length / BiomeMap.SIZE;//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
+        }
         return x+R;
     }
 

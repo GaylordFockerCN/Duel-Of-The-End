@@ -1,5 +1,7 @@
 package com.gaboj1.tcr.worldgen.noise;
 
+import com.gaboj1.tcr.worldgen.biome.BiomeMap;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -296,11 +298,12 @@ public class NoiseMapGenerator {
 
         // 定义曲线参数
         double amplitude = 0.3; // 振幅
-        double frequency = 0.1; // 频率
+        double frequency = 0.1 * 180 / width; // 频率
+
 
         // 计算曲线值
         double curveValue = amplitude * Math.sin(frequency * distance);
-        angle += curveValue + random.nextDouble() * 0.1 - 0.05;
+        angle += curveValue + (random.nextDouble() * 0.1 - 0.05);
 
         return angle;
 
@@ -339,19 +342,19 @@ public class NoiseMapGenerator {
 //        double[][] map1 = new double[map.length][map[0].length];
         //生成各个群系的中心群系位置并应用到原地图
         center1 = computeCenter(aPoints);//center1以后有用
-        copyMap(center1,map1,5);
+        copyMap(center1,map1,5,true);
         center2 = computeCenter(bPoints);
-        copyMap(center2,map1,6);
+        copyMap(center2,map1,6,false);
         center3 = computeCenter(cPoints);
-        copyMap(center3,map1,7);
+        copyMap(center3,map1,7,true);
         center4 = computeCenter(dPoints);
-        copyMap(center4,map1,8);
+        copyMap(center4,map1,8,false);
         return map1;
     }
 
     //生成中心并且把中心复制到各个区域
     int aCenterR = 0;//统一半径，否则有的中心群系过大
-    public void copyMap(Point aCenter,double map[][],double tag){
+    public void copyMap(Point aCenter,double map[][],double tag, boolean rotate){
         //再以各个点为中心生成噪声图，比较自然一点~
         NoiseMapGenerator generator = new NoiseMapGenerator();
 
@@ -381,6 +384,15 @@ public class NoiseMapGenerator {
         generator.setSeed(getDifferRandom());
         double[][] aCenterBiomeMap = generator.generateNoiseMap();
 
+        if(rotate){
+            for(int i = aCenter.x - aCenterR /2, a = 0; i < aCenter.x + aCenterR /2 && a < aCenterR; i++,a++){
+                for(int j = aCenter.y - aCenterR /2, b = 0; j < aCenter.y + aCenterR /2 && b < aCenterR; j++,b++){
+                    if(i > 0 && j > 0 && i<map.length && j<map[0].length && aCenterBiomeMap[a][b] != 0)
+                        map[j][i] = tag;//旋转，增加多样性
+                }
+            }
+            return;
+        }
         //centerR即偏移量
         for(int i = aCenter.x - aCenterR /2, a = 0; i < aCenter.x + aCenterR /2 && a < aCenterR; i++,a++){
             for(int j = aCenter.y - aCenterR /2, b = 0; j < aCenter.y + aCenterR /2 && b < aCenterR; j++,b++){
@@ -388,6 +400,7 @@ public class NoiseMapGenerator {
                     map[i][j] = tag;
             }
         }
+
     }
 
     //确保四个群系获得不一样的种子，具体待定 FIXME 在0-4内生成的图像差不多。。
@@ -473,7 +486,7 @@ public class NoiseMapGenerator {
     }
 
     public static void main(String args[]){
-        int size = 180;
+        int size = 1000;
         double[][] map = getDoubles(size);
 
         for(int i = 0 ; i < size ; i++){
