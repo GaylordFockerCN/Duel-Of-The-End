@@ -1,0 +1,29 @@
+{
+  "parent": "the_casket_of_reveries:the_casket_of_reveries",
+  "criteria": {
+    "wow": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.tcr.wow.desc"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "the_casket_of_reveries:dense_forest_spirit_tree_wood"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.tcr.wow"
+    }
+  },
+  "requirements": [
+    [
+      "wow"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
