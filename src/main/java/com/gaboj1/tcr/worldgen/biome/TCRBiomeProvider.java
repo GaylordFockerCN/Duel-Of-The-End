@@ -5,6 +5,7 @@ import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.resources.RegistryOps;
@@ -123,8 +124,10 @@ public class TCRBiomeProvider extends BiomeSource {
 
     @Override
     protected Stream<Holder<Biome>> collectPossibleBiomes() {
+
+        String levelName = Minecraft.getInstance().getLevelSource().getName();
         //不在这里生成的话map会被清空，但是这里生成不知道有什么bug...
-        File mapFile = new File(BiomeMap.DIR+"map.txt");
+        File mapFile = new File(BiomeMap.DIR + levelName + "/map.dat");
         boolean mapExist = mapFile.exists();
 
         //后续从文件直接读取数组较快，否则每次进世界都得加载，地图大的话很慢
@@ -133,37 +136,52 @@ public class TCRBiomeProvider extends BiomeSource {
                 FileInputStream fis = new FileInputStream(mapFile);
                 ObjectInputStream ois = new ObjectInputStream(fis);
                 map = (double[][]) ois.readObject();
+                center1 = (Point) ois.readObject();
+                center2 = (Point) ois.readObject();
+                center3 = (Point) ois.readObject();
+                center4 = (Point) ois.readObject();
+                mainCenter = (Point) ois.readObject();
                 ois.close();
                 fis.close();
             } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+                createBiomeMap(mapFile);
             }
         }else {
-            NoiseMapGenerator generator = new NoiseMapGenerator();
-            BiomeMap biomeMap = new BiomeMap();
-            map = biomeMap.createImageMap(generator);
-            isImage = biomeMap.isImage;
-            R = map[0].length / 2;
-            //以便获取主建筑摆放位置
-            center1 = generator.getCenter1();
-            center2 = generator.getCenter2();
-            center3 = generator.getCenter3();
-            center4 = generator.getCenter4();
-            mainCenter = generator.getCenter();
-
-            try {
-                FileOutputStream fos = new FileOutputStream(mapFile);
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                oos.writeObject(map);
-                oos.close();
-                fos.close();
-                System.out.println("Map Array saved to file successfully.");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            createBiomeMap(mapFile);
         }
 
         return Stream.of(biomeHolder0,biomeHolder1,biomeHolder2,biomeHolder3,biomeHolder4,biomeHolder5,biomeHolder6,biomeHolder7,biomeHolder8,biomeHolder9);
+    }
+
+    private void createBiomeMap(File mapFile){
+        NoiseMapGenerator generator = new NoiseMapGenerator();
+        BiomeMap biomeMap = new BiomeMap();
+        map = biomeMap.createImageMap(generator);
+        isImage = biomeMap.isImage;
+        R = map[0].length / 2;
+        //以便获取主建筑摆放位置
+        center1 = generator.getCenter1();
+        center2 = generator.getCenter2();
+        center3 = generator.getCenter3();
+        center4 = generator.getCenter4();
+        mainCenter = generator.getCenter();
+
+        try {
+            mapFile.createNewFile();
+            FileOutputStream fos = new FileOutputStream(mapFile);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(map);
+            oos.writeObject(center1);
+            oos.writeObject(center2);
+            oos.writeObject(center3);
+            oos.writeObject(center4);
+            oos.writeObject(mainCenter);
+            oos.close();
+            fos.close();
+            System.out.println("Map Array saved to file successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

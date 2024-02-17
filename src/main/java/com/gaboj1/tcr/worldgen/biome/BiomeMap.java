@@ -2,6 +2,7 @@ package com.gaboj1.tcr.worldgen.biome;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
+import net.minecraft.client.Minecraft;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -22,9 +23,9 @@ public class BiomeMap {
 
     boolean isImage;
 
-    public static final String DIR = "config/"+TheCasketOfReveriesMod.MOD_ID;
-    public static final String README = DIR+"/图片请命名为“map.png”，近透明或白色为空域其余为大陆。建议地图大小320x320。图片不存在则按默认预设生成地图";
-    public static final String FILE = DIR+"/map.png";
+    public static final String DIR = "config/"+TheCasketOfReveriesMod.MOD_ID+"/";
+    public static final String README = DIR+"图片请命名为“map.png”，近透明或白色为空域其余为大陆。建议地图大小320x320。图片不存在则按默认预设生成地图";
+    public static final String FILE = DIR+"map.png";
 
     public double[][] createNoiseMap(NoiseMapGenerator generator){
         generator.setSeed(new Random().nextInt(3));//TODO: 改成世界种子
@@ -40,6 +41,7 @@ public class BiomeMap {
     }
 
     public double[][] createImageMap(NoiseMapGenerator generator){
+
         try {
             File dir = new File(DIR);
             if(!dir.exists()){
@@ -60,7 +62,8 @@ public class BiomeMap {
                     map[i][j] = (image.getRGB(i,j) == 0xffffff || ((image.getRGB(i,j)>>24)&0xff) < 50 ? 0 : 1);//白色或近透明则为空域
                 }
             }
-
+            generator.setLength(height);
+            generator.setWidth(width);
             map = generator.divide(map);
             map = generator.addCenter(map);
             isImage = true;
