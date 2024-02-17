@@ -127,7 +127,7 @@ public class TCRBiomeProvider extends BiomeSource {
     protected Stream<Holder<Biome>> collectPossibleBiomes() {
 
 
-        String levelName = ServerLifecycleHooks.getCurrentServer().getServerDirectory().getName();//FIXME
+        String levelName = ServerLifecycleHooks.getCurrentServer().getServerDirectory().getName();//FIXME 换成存档名字
         //不在这里生成的话map会被清空，但是这里生成不知道有什么bug...
         File mapFile = new File(BiomeMap.DIR + levelName+"Map.dat");
         boolean mapExist = mapFile.exists();

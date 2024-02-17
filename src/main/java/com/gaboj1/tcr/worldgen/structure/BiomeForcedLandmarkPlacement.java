@@ -32,13 +32,17 @@ public class BiomeForcedLandmarkPlacement extends StructurePlacement {
             int correctX = provider.getCorrectValue(chunkX << 2);
             int correctZ = provider.getCorrectValue(chunkZ << 2);
 
-            if(this.structure == EnumStructures.CHURCH.ordinal() && correctX == provider.getCenter1().x && correctZ == provider.getCenter1().y){
-                System.out.println("OK");
+//            if(this.structure == EnumStructures.CHURCH.ordinal() && correctX == provider.getCenter1().x && correctZ == provider.getCenter1().y){
+//                return true;
+//            }
+            //存在误差，所以用一个范围好
+            if(this.structure == EnumStructures.CHURCH.ordinal()
+                    && correctX >= provider.getCenter1().x - 1 && correctZ >= provider.getCenter1().y-1
+                        && correctX <= provider.getCenter1().x + 1 && correctZ <= provider.getCenter1().y+1){
                 return true;
             }
 
         }
-
 
         return false;
     }
