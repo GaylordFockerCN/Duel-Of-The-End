@@ -1,6 +1,0 @@
-{
-  "parent": "block/bed",
-  "textures": {
-    "layer0": "the_casket_of_reveries:block/portal_bed"
-  }
-}

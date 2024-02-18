@@ -32,7 +32,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                  .save(consumer);
 
          ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TCRModBlocks.PORTAL_BED.get())
-                 .define('B', Items.WHITE_BED)
+                 .define('B', Items.BLACK_BED)
                  .define('C', Items.WITHER_ROSE)
                  .unlockedBy(getHasName(Items.WITHER_ROSE), has(Items.WITHER_ROSE))
                  .pattern(" C ")

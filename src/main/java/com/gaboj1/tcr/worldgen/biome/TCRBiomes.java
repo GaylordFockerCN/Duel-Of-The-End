@@ -7,6 +7,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.placement.TreePlacements;
+import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.MobCategory;
@@ -75,8 +76,8 @@ public class TCRBiomes {
         context.register(GALLERY_OF_SERENE, createTestBiome(context,0xffffff));
         context.register(AZURE_SKIES, createTestBiome(context,0x6fffbd));
 
-        context.register(SAKURA, createTestBiome(context,0xffb9f6));
-        context.register(DARK_SAKURA, createTestBiome(context,0xa5559b));
+        context.register(SAKURA, createSakuraBiome(context));
+        context.register(DARK_SAKURA, createDarkSakuraBiome(context));
 
         context.register(AQUATIC_MAJESTY, createTestBiome(context,0x5490f3));
         context.register(ATLANTIS, createTestBiome(context,0x0060ff));
@@ -103,17 +104,16 @@ public class TCRBiomes {
 
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(true)
-                .downfall(0.8f)
-                .temperature(0.7f)
+                .downfall(0.2f)
+                .temperature(0.8f)
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects((new BiomeSpecialEffects.Builder())
-                        .waterColor(0x000000)
-                        .waterFogColor(0x1b8bbf)
                         .grassColorOverride(pGrassColorOverride)
-                        .foliageColorOverride(0xd203fc)
-                        .fogColor(0x22a1e6)
-                        .skyColor(0x000000)
+                        .waterColor(4159204)
+                        .waterFogColor(329011)
+                        .fogColor(12638463)
+                        .skyColor(7907327)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
                         .build())
                 .build();
@@ -127,8 +127,8 @@ public class TCRBiomes {
 
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(true)
-                .downfall(0.8f)
-                .temperature(0.7f)
+                .downfall(0.2f)
+                .temperature(0.8f)
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects((new BiomeSpecialEffects.Builder())
@@ -145,25 +145,26 @@ public class TCRBiomes {
 
     public static Biome createPastoralPlainsBiome(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
-        spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(TCRModEntities.MIDDLE_TREE_MONSTER.get(), 5, 1, 4));
+//        spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(TCRModEntities.MIDDLE_TREE_MONSTER.get(), 5, 1, 4));
 
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
-        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, TreePlacements.CHERRY_CHECKED);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_TALL_GRASS_2);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.FLOWER_PLAINS);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_GRASS_PLAIN);
 
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(true)
-                .downfall(0.8f)
-                .temperature(0.7f)
+                .downfall(0.2f)
+                .temperature(0.8f)
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects((new BiomeSpecialEffects.Builder())
-                        .waterColor(0x25faf2)
-                        .waterFogColor(0x1b8bbf)
                         .grassColorOverride(0x76b373)
-                        .foliageColorOverride(0xd203fc)
-                        .fogColor(0x22a1e6)
-                        .skyColor(0xcbf2ff)
+                        .waterColor(4159204)
+                        .waterFogColor(329011)
+                        .fogColor(12638463)
+                        .skyColor(7907327)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
                         .build())
                 .build();
@@ -171,39 +172,82 @@ public class TCRBiomes {
 
     public static Biome createDenseForestBiome(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
-        spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(TCRModEntities.MIDDLE_TREE_MONSTER.get(), 5, 4, 4));
+        spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(TCRModEntities.SMALL_TREE_MONSTER.get(), 5, 1, 1));
+        spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(TCRModEntities.MIDDLE_TREE_MONSTER.get(), 3, 1, 2));
+        spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(TCRModEntities.TREE_GUARDIAN.get(), 1, 1, 1));
 
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
-        //we need to follow the same order as vanilla biomes for the BiomeDefaultFeatures
-//        globalOverworldGeneration(biomeBuilder);
-//        BiomeDefaultFeatures.addMossyStoneBlock(biomeBuilder);
-//        BiomeDefaultFeatures.addForestFlowers(biomeBuilder);
-//        BiomeDefaultFeatures.addFerns(biomeBuilder);
-//        BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
-//        BiomeDefaultFeatures.addExtraGold(biomeBuilder);
+        BiomeDefaultFeatures.addForestFlowers(biomeBuilder);
 
-//        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.TREES_PLAINS);
-
-//        BiomeDefaultFeatures.addDefaultMushrooms(biomeBuilder);
-//        BiomeDefaultFeatures.addDefaultExtraVegetation(biomeBuilder);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, TCRPlacedFeatures.DENSE_FOREST_SPIRIT_TREE_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, TCRPlacedFeatures.DENSE_FOREST_SPIRIT_FLOWER_PLACED_KEY);
 
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(false)
-                .downfall(0.8f)
-                .temperature(0.7f)
+                .downfall(0.2f)
+                .temperature(0.8f)
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects((new BiomeSpecialEffects.Builder())
                         .waterColor(0x25faf2)
                         .waterFogColor(0x1b8bbf)
                         .grassColorOverride(0x4e7dae)
-                        .foliageColorOverride(0xd203fc)
-                        .fogColor(0x22a1e6)
+                        .fogColor(0x000000)
                         .skyColor(0x000000)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
                         .build())
                 .build();
     }
+
+    public static Biome createSakuraBiome(BootstapContext<Biome> context) {
+        MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
+
+        BiomeGenerationSettings.Builder biomeBuilder =
+                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.FLOWER_PLAINS);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.FLOWER_CHERRY);
+
+        return new Biome.BiomeBuilder()
+                .hasPrecipitation(true)
+                .downfall(0.2f)
+                .temperature(0.8f)
+                .generationSettings(biomeBuilder.build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .specialEffects((new BiomeSpecialEffects.Builder())
+                        .grassColorOverride(11983713)
+                        .waterColor(4159204)
+                        .waterFogColor(329011)
+                        .fogColor(12638463)
+                        .skyColor(7907327)
+                        .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                        .build())
+                .build();
+    }
+
+    public static Biome createDarkSakuraBiome(BootstapContext<Biome> context) {
+        MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
+
+        BiomeGenerationSettings.Builder biomeBuilder =
+                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.FLOWER_PLAINS);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.FLOWER_CHERRY);
+
+        return new Biome.BiomeBuilder()
+                .hasPrecipitation(true)
+                .downfall(0.2f)
+                .temperature(0.8f)
+                .generationSettings(biomeBuilder.build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .specialEffects((new BiomeSpecialEffects.Builder())
+                        .grassColorOverride(11983713)
+                        .waterColor(0x25faf2)
+                        .waterFogColor(0x1b8bbf)
+                        .fogColor(0x22a1e6)
+                        .skyColor(0xcbf2ff)
+                        .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                        .build())
+                .build();
+    }
+
 }

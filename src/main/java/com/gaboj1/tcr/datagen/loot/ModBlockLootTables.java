@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.datagen;
+package com.gaboj1.tcr.datagen.loot;
 
 import com.gaboj1.tcr.init.TCRModBlocks;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -17,7 +17,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     protected void generate() {
 
         this.dropSelf(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get());
-        this.dropSelf(TCRModBlocks.PORTAL_BED.get());
+        this.dropSelf(TCRModBlocks.PORTAL_BED.get());//FIXME 打破会掉俩
 
         this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
         this.add(TCRModBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER.get(), createPotFlowerItemTable(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get()));

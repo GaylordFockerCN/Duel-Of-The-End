@@ -66,9 +66,14 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    mavenCentral()
     maven {
         name = 'GeckoLib'
         url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+    }
+
+    maven {
+        url "https://repo.spongepowered.org/repository/maven-public/"
     }
 //    maven {
 //        name = "worldeditapi"
@@ -77,13 +82,25 @@ repositories {
 
 }
 
+jarJar.enable()
+//jarJar.fromRuntimeConfiguration()
+tasks.named('jarJar') {
+
+}
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.20.1:4.2.2')
+    jarJar(group: 'org.spongepowered', name: 'noise', version: '[1.0,3.0)'){
+        jarJar.pin(it, '2.0.0-SNAPSHOT')
+    }
+    minecraftLibrary ("org.spongepowered:noise:2.0.0-SNAPSHOT")
+
 //    implementation fg.deobf('com.sk89q.worldedit:worldedit-forge-mc1.20:7.2.15')
 //    implementation fg.deobf('com.sk89q.worldedit:worldedit-core:7.2.0')
 }
+
+
 
 mixin {
     add sourceSets.main, 'the_casket_of_reveries.mixin-refmap.json'

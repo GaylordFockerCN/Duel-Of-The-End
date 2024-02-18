@@ -1,0 +1,2 @@
+图片请命名为“map.png”，近透明或白色为空域其余为大陆。建议地图大小320x320。图片不存在则按默认预设生成地图。
+Please name the image "map. png", with near transparent or white indicating airspace and the rest indicating mainland. Suggest a map size of 320x320. If the image does not exist, generate a map according to the default preset.

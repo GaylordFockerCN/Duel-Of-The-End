@@ -10,8 +10,8 @@ import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
 import org.jetbrains.annotations.Nullable;
-public class FlammableRotatedPillarBlock extends RotatedPillarBlock {
-    public FlammableRotatedPillarBlock(Properties pProperties) {
+public class DenseForestTreeBlock extends RotatedPillarBlock {
+    public DenseForestTreeBlock(Properties pProperties) {
         super(pProperties);
     }
 

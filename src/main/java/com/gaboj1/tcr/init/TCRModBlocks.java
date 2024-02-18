@@ -2,7 +2,8 @@ package com.gaboj1.tcr.init;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.custom.BetterStructureBlock;
-import com.gaboj1.tcr.block.custom.FlammableRotatedPillarBlock;
+import com.gaboj1.tcr.block.custom.DenseForestSpiritFlower;
+import com.gaboj1.tcr.block.custom.DenseForestTreeBlock;
 import com.gaboj1.tcr.block.custom.PortalBed;
 import com.gaboj1.tcr.worldgen.tree.DenseSpiritTreeGrower;
 import net.minecraft.core.BlockPos;
@@ -33,20 +34,20 @@ public class TCRModBlocks {
             () -> new PortalBed(DyeColor.WHITE,BlockBehaviour.Properties.copy(Blocks.WHITE_BED)));
 
     public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_FLOWER = registerBlock("dense_forest_spirit_flower",
-            ()-> new FlowerBlock(() -> MobEffects.POISON, 5, BlockBehaviour.Properties.copy(Blocks.POPPY)));
+            ()-> new DenseForestSpiritFlower(() -> MobEffects.POISON, 5, BlockBehaviour.Properties.copy(Blocks.WITHER_ROSE)));
     public static final RegistryObject<Block> POTTED_DENSE_FOREST_SPIRIT_FLOWER = REGISTRY.register("potted_dense_forest_spirit_flower",
             ()-> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_POPPY).noOcclusion()));
 
 
     public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_TREE_LOG = registerBlock("dense_forest_spirit_tree_log",
-            ()-> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_LOG).strength(3f)));
+            ()-> new DenseForestTreeBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_LOG).strength(3f)));
         public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_TREE_WOOD = registerBlock("dense_forest_spirit_tree_wood",
-            ()-> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_WOOD).strength(3f)));
+            ()-> new DenseForestTreeBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_WOOD).strength(3f)));
     public static final RegistryObject<Block> STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG = registerBlock("stripped_dense_forest_spirit_tree_log",
-            ()-> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_JUNGLE_LOG).strength(3f)));
+            ()-> new DenseForestTreeBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_JUNGLE_LOG).strength(3f)));
     public static final RegistryObject<Block> STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD = registerBlock("stripped_dense_forest_spirit_tree_wood",
-            ()-> new FlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_JUNGLE_WOOD).strength(3f)));
+            ()-> new DenseForestTreeBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_JUNGLE_WOOD).strength(3f)));
 
     public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_TREE_PLANKS = registerBlock("dense_forest_spirit_tree_planks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.JUNGLE_PLANKS)) {
