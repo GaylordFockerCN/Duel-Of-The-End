@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.security.Provider;
 
+//粒子框架，还没具体应用，需要等材质再调试
 public class MyParticles extends TextureSheetParticle {
 
     protected MyParticles(ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
