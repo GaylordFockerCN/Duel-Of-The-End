@@ -5,8 +5,12 @@ import com.gaboj1.tcr.entity.client.MiddleTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.SmallTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.TreeGuardianRenderer;
 import com.gaboj1.tcr.init.*;
+import com.gaboj1.tcr.particle.custom.MyParticles;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.ParticleEngine;
+import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -17,6 +21,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -63,6 +68,7 @@ public class TheCasketOfReveriesMod {
         TCRModBlockEntities.REGISTRY.register(bus);
         TCRModEntities.REGISTRY.register(bus);
         TCRModItemTabs.REGISTRY.register(bus);
+        TCRModParticles.REGISTRY.register(bus);
 
         bus.addListener(this::commonSetup);
         bus.addListener(this::registerExtraStuff);
@@ -97,6 +103,8 @@ public class TheCasketOfReveriesMod {
     public void setRegistriesForDatapack(DataPackRegistryEvent.NewRegistry event) {
     }
 
+
+
     public void registerExtraStuff(RegisterEvent evt) {
         if (evt.getRegistryKey().equals(Registries.BIOME_SOURCE)) {
 //            Registry.register(BuiltInRegistries.BIOME_SOURCE, TheCasketOfReveriesMod.prefix("tcr_biomes"), ModBiomeProvider.TCR_CODEC);
@@ -121,6 +129,12 @@ public class TheCasketOfReveriesMod {
             EntityRenderers.register(TCRModEntities.TREE_GUARDIAN.get(), TreeGuardianRenderer::new);
             EntityRenderers.register(TCRModEntities.SMALL_TREE_MONSTER.get(), SmallTreeMonsterRenderer::new);
 //            BlockEntityRenderers.register(TCRModBlockEntities.BETTER_STRUCTURE_BLOCK_ENTITY.get(), BetterStructureBlockRenderer::new);
+        }
+
+        @SubscribeEvent
+        public static void registerParticleFactories(final RegisterParticleProvidersEvent event){
+            Minecraft.getInstance().particleEngine.register(TCRModParticles.MY_PARTICLE.get(),
+                    MyParticles.Provider::new);
         }
 
         @SubscribeEvent
