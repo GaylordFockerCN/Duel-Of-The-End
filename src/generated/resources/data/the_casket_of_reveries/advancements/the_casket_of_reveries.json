@@ -11,7 +11,7 @@
     "announce_to_chat": false,
     "background": "the_casket_of_reveries:textures/block/dense_forest_dirt.png",
     "description": {
-      "translate": "advancement.tcr.the_casket_of_reveries.desc"
+      "translate": "advancement.the_casket_of_reveriesthe_casket_of_reveries.desc"
     },
     "frame": "task",
     "hidden": false,
@@ -20,7 +20,7 @@
     },
     "show_toast": false,
     "title": {
-      "translate": "advancement.tcr.the_casket_of_reveries"
+      "translate": "advancement.the_casket_of_reveriesthe_casket_of_reveries"
     }
   },
   "requirements": [

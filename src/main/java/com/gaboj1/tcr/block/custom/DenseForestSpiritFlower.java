@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.block.custom;
 
+import com.gaboj1.tcr.datagen.ModEntityTagGenerator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
@@ -40,6 +41,9 @@ public class DenseForestSpiritFlower extends FlowerBlock {
 
     @Override
     public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
+        if(pEntity.getTags().contains(ModEntityTagGenerator.MOB_IN_DENSE_FOREST)){
+            return;
+        }
         if (!pLevel.isClientSide && pLevel.getDifficulty() != Difficulty.PEACEFUL) {
             if (pEntity instanceof LivingEntity) {
                 LivingEntity $$4 = (LivingEntity)pEntity;

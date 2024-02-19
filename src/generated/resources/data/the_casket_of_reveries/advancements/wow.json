@@ -8,7 +8,7 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancement.tcr.wow.desc"
+      "translate": "advancement.the_casket_of_reverieswow.desc"
     },
     "frame": "goal",
     "hidden": true,
@@ -17,7 +17,7 @@
     },
     "show_toast": true,
     "title": {
-      "translate": "advancement.tcr.wow"
+      "translate": "advancement.the_casket_of_reverieswow"
     }
   },
   "requirements": [

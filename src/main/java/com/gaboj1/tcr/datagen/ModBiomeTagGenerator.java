@@ -6,16 +6,13 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BiomeTagsProvider;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
 public class ModBiomeTagGenerator extends BiomeTagsProvider {
-
     public static final TagKey<Biome> IS_TCR = TagKey.create(Registries.BIOME, TheCasketOfReveriesMod.prefix("in_tcr"));
     public static final TagKey<Biome> VALID_BIOME1 = TagKey.create(Registries.BIOME, TheCasketOfReveriesMod.prefix("valid_biome1"));
 
