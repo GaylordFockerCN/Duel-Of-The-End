@@ -169,6 +169,7 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
         });
     }
 
+    int tries = 5;//太多怕爆栈
     private boolean tryGenerateStructure(StructureSet.StructureSelectionEntry pStructureSelectionEntry, StructureManager pStructureManager, RegistryAccess pRegistryAccess, RandomState pRandom, StructureTemplateManager pStructureTemplateManager, long pSeed, ChunkAccess pChunk, ChunkPos pChunkPos, SectionPos pSectionPos) {
         Structure $$9 = pStructureSelectionEntry.structure().value();
         int $$10 = fetchReferences(pStructureManager, pChunk, pSectionPos, $$9);
@@ -182,7 +183,8 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
         } else {
             //NOTE: 非常之危险，但是应该可以保证生成率？
             System.out.println("Try Again");
-            tryGenerateStructure(pStructureSelectionEntry,pStructureManager,pRegistryAccess,pRandom,pStructureTemplateManager,pSeed,pChunk,pChunkPos,pSectionPos);
+            if(tries-->0)
+                tryGenerateStructure(pStructureSelectionEntry,pStructureManager,pRegistryAccess,pRandom,pStructureTemplateManager,pSeed,pChunk,new ChunkPos(pChunkPos.x+1,pChunkPos.z), pSectionPos);
             return false;
         }
     }
