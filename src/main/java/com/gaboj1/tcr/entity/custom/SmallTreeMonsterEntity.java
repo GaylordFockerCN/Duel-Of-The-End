@@ -94,7 +94,7 @@ public class SmallTreeMonsterEntity extends TamableAnimal implements GeoEntity ,
             return PlayState.CONTINUE;
         }
 
-        //tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.treeguardian.idle", Animation.LoopType.LOOP));
+        tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
 

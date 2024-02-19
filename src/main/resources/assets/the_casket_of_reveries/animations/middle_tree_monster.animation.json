@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.m_tree_monster - Converted.move": {
+		"animation.m_treemonster - Converted.move": {
 			"animation_length": 0.5,
 			"bones": {
 				"group4": {
@@ -58,7 +58,7 @@
 				}
 			}
 		},
-		"animation.m_tree_monster - Converted.attack1": {
+		"animation.m_treemonster - Converted.attack1": {
 			"animation_length": 0.5,
 			"bones": {
 				"group2": {
@@ -95,7 +95,7 @@
 				}
 			}
 		},
-		"animation.m_tree_monster - Converted.attack2": {
+		"animation.m_treemonster - Converted.attack2": {
 			"animation_length": 0.5,
 			"bones": {
 				"group8": {
@@ -125,6 +125,9 @@
 					}
 				}
 			}
+		},
+		"animation.m_treemonster - Converted.idle": {
+			"animation_length": 1
 		}
 	},
 	"geckolib_format_version": 2

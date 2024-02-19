@@ -113,7 +113,7 @@ public class MiddleTreeMonsterEntity extends TamableAnimal implements GeoEntity 
             return PlayState.CONTINUE;
         }
 
-        //tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.treeguardian.idle", Animation.LoopType.LOOP));
+        tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.m_treemonster - Converted.idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
 
