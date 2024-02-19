@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.datagen;
+package com.gaboj1.tcr.datagen.lang;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import net.minecraft.data.PackOutput;

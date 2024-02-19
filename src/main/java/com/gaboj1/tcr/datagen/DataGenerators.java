@@ -1,6 +1,9 @@
 package com.gaboj1.tcr.datagen;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.datagen.lang.ModLangGenerator;
+import com.gaboj1.tcr.datagen.loot.ModLootTableProvider;
+import com.gaboj1.tcr.datagen.sound.SoundGenerator;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;

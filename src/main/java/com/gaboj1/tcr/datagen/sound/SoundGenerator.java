@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.datagen;
+package com.gaboj1.tcr.datagen.sound;
 
 import com.gaboj1.tcr.init.TCRModSounds;
 import net.minecraft.data.PackOutput;
