@@ -6,6 +6,7 @@ import com.gaboj1.tcr.entity.client.SmallTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.TreeGuardianRenderer;
 import com.gaboj1.tcr.init.*;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
+import com.gaboj1.tcr.worldgen.structure.TCRStructurePlacementTypes;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.Registry;
@@ -63,6 +64,7 @@ public class TheCasketOfReveriesMod {
         TCRModBlockEntities.REGISTRY.register(bus);
         TCRModEntities.REGISTRY.register(bus);
         TCRModItemTabs.REGISTRY.register(bus);
+        TCRStructurePlacementTypes.STRUCTURE_PLACEMENT_TYPES.register(bus);
 
         bus.addListener(this::commonSetup);
         bus.addListener(this::registerExtraStuff);

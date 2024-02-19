@@ -25,7 +25,7 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), new ModBlockStateProvider(output, helper));
         generator.addProvider(event.includeClient(), new ModItemModelProvider(output, helper));
         generator.addProvider(event.includeClient(), new ModLangGenerator(output));
-        //TODO:Sound
+        generator.addProvider(event.includeClient(), new SoundGenerator(output, helper));
 
         //Server
         generator.addProvider(event.includeServer(), new ModRecipeProvider(output));
