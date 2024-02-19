@@ -128,10 +128,11 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
             }
 
             //此处加一行判断即可，其他全是抄原版的
-            if ((structurePlacement instanceof BiomeForcedLandmarkPlacement biomeForcedLandmarkPlacement && biomeForcedLandmarkPlacement.isTCRPlacementChunk(this,pStructureState,pos.x,pos.z)) || structurePlacement.isStructureChunk(pStructureState, pos.x, pos.z)) {
+            if ((structurePlacement instanceof BiomeForcedLandmarkPlacement biomeForcedLandmarkPlacement && biomeForcedLandmarkPlacement.isTCRPlacementChunk(this,pChunk,pos.x,pos.z)) || structurePlacement.isStructureChunk(pStructureState, pos.x, pos.z)) {
+                System.out.println("Ok"+pos+" "+sectionPos);
                 if (iterator.size() == 1) {
                     this.tryGenerateStructure(iterator.get(0), pStructureManager, pRegistryAccess, randomState, pStructureTemplateManager, pStructureState.getLevelSeed(), pChunk, pos, sectionPos);
-                } else {
+             } else {
                     ArrayList<StructureSet.StructureSelectionEntry> list = new ArrayList(iterator.size());
                     list.addAll(iterator);
                     WorldgenRandom worldgenRandom = new WorldgenRandom(new LegacyRandomSource(0L));
@@ -159,7 +160,6 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
                         if (this.tryGenerateStructure(selectionEntry, pStructureManager, pRegistryAccess, randomState, pStructureTemplateManager, pStructureState.getLevelSeed(), pChunk, pos, sectionPos)) {
                             return;
                         }
-
                         list.remove($$18);
                         i -= selectionEntry.weight();
                     }
@@ -180,6 +180,9 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
             pStructureManager.setStartForStructure(pSectionPos, $$9, $$13, pChunk);
             return true;
         } else {
+            //NOTE: 非常之危险，但是应该可以保证生成率？
+            System.out.println("Try Again");
+            tryGenerateStructure(pStructureSelectionEntry,pStructureManager,pRegistryAccess,pRandom,pStructureTemplateManager,pSeed,pChunk,pChunkPos,pSectionPos);
             return false;
         }
     }

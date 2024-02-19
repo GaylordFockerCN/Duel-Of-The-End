@@ -18,6 +18,6 @@ public class TCRStructureSets {
 
     public static void bootstrap(BootstapContext<StructureSet> context) {
         HolderGetter<Structure> structures = context.lookup(Registries.STRUCTURE);
-        context.register(FLOWER_ALTAR, new StructureSet(structures.getOrThrow(TCRStructures.FLOWER_ALTAR), new BiomeForcedLandmarkPlacement(EnumStructures.FLOWER_ALTAR.ordinal())));
+//        context.register(FLOWER_ALTAR, new StructureSet(structures.getOrThrow(TCRStructures.FLOWER_ALTAR), new BiomeForcedLandmarkPlacement(EnumStructures.FLOWER_ALTAR.ordinal(),false)));
     }
 }

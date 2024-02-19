@@ -21,6 +21,7 @@
 //    // The kind of placement to use. The other kind is ring based like strongholds use.
 //    "type": "minecraft:random_spread"
     "type": "the_casket_of_reveries:forced_landmark",
-    "structure": 1
+    "structure": 1,
+    "hasGenerated": false
   }
 }
