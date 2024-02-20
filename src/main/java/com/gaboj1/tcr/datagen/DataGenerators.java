@@ -31,7 +31,7 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), new SoundGenerator(output, helper));
 
         //Server
-        generator.addProvider(event.includeServer(), new ModRecipeProvider(output));
+        generator.addProvider(event.includeServer(), new ModRecipeGenerator(output));
         generator.addProvider(event.includeServer(), ModLootTableProvider.create(output));
         generator.addProvider(event.includeServer(), new ModAdvancementData(output, lookupProvider, helper));
         generator.addProvider(event.includeServer(), new ModEntityTagGenerator(output, lookupProvider, helper));

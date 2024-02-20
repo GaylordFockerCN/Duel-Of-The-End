@@ -1,23 +1,19 @@
 package com.gaboj1.tcr.datagen;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.init.TCRModBlocks;
-import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
+public class ModRecipeProvider extends RecipeProvider {
     public ModRecipeProvider(PackOutput output) {
         super(output);
     }
@@ -25,20 +21,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
 
-         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get(),4)
-                 .requires(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get())
-                 .requires(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get())
-                 .unlockedBy(getHasName(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()), has(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()))
-                 .save(consumer);
-
-         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TCRModBlocks.PORTAL_BED.get())
-                 .define('B', Items.BLACK_BED)
-                 .define('C', Items.WITHER_ROSE)
-                 .unlockedBy(getHasName(Items.WITHER_ROSE), has(Items.WITHER_ROSE))
-                 .pattern(" C ")
-                 .pattern(" B ")
-                 .pattern("   ")
-                 .save(consumer);
     }
 
     protected static void oreSmelting(Consumer<FinishedRecipe> p_250654_, List<ItemLike> p_250172_, RecipeCategory p_250588_, ItemLike p_251868_, float p_250789_, int p_252144_, String p_251687_) {
@@ -52,16 +34,27 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         }
     }
 
-    protected static void nineBlockStorageRecipes(Consumer<FinishedRecipe> p_249580_, RecipeCategory p_251203_, ItemLike p_251689_, RecipeCategory p_251376_, ItemLike p_248771_) {
-        nineBlockStorageRecipes(p_249580_, p_251203_, p_251689_, p_251376_, p_248771_, getSimpleRecipeName(p_248771_), (String)null, getSimpleRecipeName(p_251689_), (String)null);
+    protected static void nineBlockStorageRecipes(Consumer<FinishedRecipe> consumer, RecipeCategory category, ItemLike itemLike, RecipeCategory category1, ItemLike itemLike1) {
+        nineBlockStorageRecipes(consumer, category, itemLike, category1, itemLike1, getSimpleRecipeName(itemLike1), (String)null, getSimpleRecipeName(itemLike), (String)null);
     }
 
-    protected static void nineBlockStorageRecipes(Consumer<FinishedRecipe> p_250423_, RecipeCategory p_250083_, ItemLike p_250042_,
-                                                  RecipeCategory p_248977_, ItemLike p_251911_, String p_250475_, @Nullable String p_248641_,
+    protected static void nineBlockStorageRecipes(Consumer<FinishedRecipe> consumer, RecipeCategory category, ItemLike itemLike,
+                                                  RecipeCategory category1, ItemLike itemLike1, String p_250475_, @Nullable String p_248641_,
                                                   String p_252237_, @Nullable String p_250414_) {
-        ShapelessRecipeBuilder.shapeless(p_250083_, p_250042_, 9).requires(p_251911_).group(p_250414_).unlockedBy(getHasName(p_251911_), has(p_251911_))
-                .save(p_250423_, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, p_252237_));
-        ShapedRecipeBuilder.shaped(p_248977_, p_251911_).define('#', p_250042_).pattern("###").pattern("###").pattern("###").group(p_248641_)
-                .unlockedBy(getHasName(p_250042_), has(p_250042_)).save(p_250423_, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, p_250475_));
+        ShapelessRecipeBuilder.shapeless(category, itemLike, 9).requires(itemLike1).group(p_250414_).unlockedBy(getHasName(itemLike1), has(itemLike1))
+                .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, p_252237_));
+        ShapedRecipeBuilder.shaped(category1, itemLike1).define('#', itemLike).pattern("###").pattern("###").pattern("###").group(p_248641_)
+                .unlockedBy(getHasName(itemLike), has(itemLike)).save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, p_250475_));
     }
+
+    protected static void woodBlockStorageRecipes(Consumer<FinishedRecipe> consumer, RecipeCategory category, ItemLike itemLike, ItemLike itemLike1) {
+        woodBlockStorageRecipes(consumer, category, itemLike, itemLike1, getSimpleRecipeName(itemLike), (String)null);
+    }
+
+    protected static void woodBlockStorageRecipes(Consumer<FinishedRecipe> consumer, RecipeCategory category, ItemLike itemLike,
+                                                   ItemLike itemLike1,String p_252237_, @Nullable String p_250414_) {
+        ShapelessRecipeBuilder.shapeless(category, itemLike, 4).requires(itemLike1).group(p_250414_).unlockedBy(getHasName(itemLike1), has(itemLike1))
+                .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, p_252237_));
+    }
+
 }
