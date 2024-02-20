@@ -23,6 +23,7 @@ public class BasicResin extends Item {
         //otherHandItem.getItem() != null &&
         if(otherHandItem.isRepairable()){
             otherHandItem.setDamageValue(otherHandItem.getDamageValue()-repairValue);
+            pPlayer.getItemInHand(pUsedHand).shrink(1);
         }
 
         return super.use(pLevel, pPlayer, pUsedHand);
