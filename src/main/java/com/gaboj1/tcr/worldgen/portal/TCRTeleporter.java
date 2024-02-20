@@ -68,7 +68,7 @@ public class TCRTeleporter implements ITeleporter {
                 }
             }
             if (doSetBlock) {
-                destinationWorld.setBlock(destinationPos, TCRModBlocks.PORTAL_BED.get().defaultBlockState(), 3);//TODO: 要不要在传送过去后生成传回来的床
+                destinationWorld.setBlock(destinationPos, Blocks.GRASS_BLOCK.defaultBlockState(), 3);
             }
         }
 

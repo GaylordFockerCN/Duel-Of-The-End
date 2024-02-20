@@ -28,10 +28,11 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
 
     public static class AetherAdvancements implements AdvancementGenerator {
 
-        public final String pre = "advancement."+TheCasketOfReveriesMod.MOD_ID;
+        public final String pre = "advancement."+TheCasketOfReveriesMod.MOD_ID+".";
         @SuppressWarnings("unused")
         @Override
         public void generate(HolderLookup.Provider provider, Consumer<Advancement> consumer, ExistingFileHelper existingFileHelper) {
+
             Advancement theCasketOfReveries = Advancement.Builder.advancement()
                     .display(TCRModBlocks.PORTAL_BED.get(),
                             Component.translatable(pre+TheCasketOfReveriesMod.MOD_ID),
@@ -52,15 +53,27 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
                     .rewards(new AdvancementRewards(0, new ResourceLocation[]{TCRLoot.ENTER_REALM_OF_THE_DREAM}, new ResourceLocation[0], CommandFunction.CacheableFunction.NONE))
                     .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "enter_realm_of_the_dream"), existingFileHelper);
 
+            String name = "wow";
             Advancement wow = Advancement.Builder.advancement()
-                    .parent(theCasketOfReveries)
+                    .parent(enterRealmOfTheDream)
                     .display(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get(),//TODO:换成小树怪图标
-                            Component.translatable(pre+"wow"),
-                            Component.translatable(pre+"wow.desc"),
+                            Component.translatable(pre+name),
+                            Component.translatable(pre+name+".desc"),
                             null,
                             FrameType.GOAL, true, true, true)
-                    .addCriterion("wow", new ImpossibleTrigger.TriggerInstance())
-                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "wow"), existingFileHelper);
+                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
+                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
+
+            name = "try_wake_up";
+            Advancement tryWakeUp = Advancement.Builder.advancement()
+                    .parent(enterRealmOfTheDream)
+                    .display(TCRModBlocks.PORTAL_BED.get(),
+                            Component.translatable(pre+name),
+                            Component.translatable(pre+name+".desc"),
+                            null,
+                            FrameType.GOAL, true, true, true)
+                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
+                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
 
 
         }

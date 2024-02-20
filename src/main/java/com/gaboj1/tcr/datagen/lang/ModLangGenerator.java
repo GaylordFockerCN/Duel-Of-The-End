@@ -42,6 +42,8 @@ public class ModLangGenerator extends TCRLangProvider{
         this.addAdvancement(TheCasketOfReveriesMod.MOD_ID,"远梦之棺","> <");
         this.addAdvancement("enter_realm_of_the_dream","梦之领域","进入梦之领域");
         this.addAdvancement("wow","嘿！","砍伐密林灵木时小树妖突然出现！");
+        this.addAdvancement("try_wake_up","梦中梦？","尝试在梦之领域使用灵梦床");
+        this.addAdvancement("shoot_hundred_meters","百步穿杨！","射中一百米外的玻璃或者生物实体");
 
         this.addBiome(TCRBiomes.PASTORAL_PLAINS,"牧歌原野");
         this.addBiome(TCRBiomes.DENSE_FOREST,"回溯密林");

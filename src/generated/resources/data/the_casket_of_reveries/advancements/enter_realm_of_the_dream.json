@@ -11,7 +11,7 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancement.the_casket_of_reveriesenter_realm_of_the_dream.desc"
+      "translate": "advancement.the_casket_of_reveries.enter_realm_of_the_dream.desc"
     },
     "frame": "task",
     "hidden": false,
@@ -20,7 +20,7 @@
     },
     "show_toast": true,
     "title": {
-      "translate": "advancement.the_casket_of_reveriesenter_realm_of_the_dream"
+      "translate": "advancement.the_casket_of_reveries.enter_realm_of_the_dream"
     }
   },
   "requirements": [
