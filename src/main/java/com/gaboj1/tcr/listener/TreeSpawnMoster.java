@@ -8,7 +8,6 @@ import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LevelAccessor;
@@ -42,7 +41,8 @@ public class TreeSpawnMoster {
             if(level instanceof ServerLevel serverLevel && player instanceof ServerPlayer serverPlayer && 1 == r.nextInt(10)){// 1/10概率
 
                 //生成树怪并获得成就
-                TCRModEntities.SMALL_TREE_MONSTER.get().spawn(serverLevel,event.getPos(), MobSpawnType.NATURAL).hurt(((ServerLevel) level).damageSources().playerAttack(player),0.1f);//直接激怒哈哈 FIXME 没法激怒。。？
+//                TCRModEntities.SMALL_TREE_MONSTER.get().spawn(serverLevel,event.getPos(), MobSpawnType.NATURAL).hurt(((ServerLevel) level).damageSources().playerAttack(player),0.1f);//直接激怒哈哈 FIXME 没法激怒。。？
+                TCRModEntities.SMALL_TREE_MONSTER.get().spawn(serverLevel,event.getPos(), MobSpawnType.NATURAL).setPersistentAngerTarget(player.getUUID());//TODO 测试激怒
 
                 Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"wow"));
                 AdvancementProgress _ap = serverPlayer.getAdvancements().getOrStartProgress(_adv);

@@ -24,6 +24,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.add(TCRModItems.DESERT_EAGLE.get(),"沙漠之鹰");
         this.add(TCRModItems.DESERT_EAGLE_AMMO.get(),"沙鹰弹药");
 
+        this.add(TCRModItems.TREE_SPIRIT_WAND.get(),"树灵法杖");
         this.add(TCRModItems.COPY_RESIN.get(),"复制树脂");
         this.add(TCRModItems.BASIC_RESIN.get(),"初级树脂");
         this.add(TCRModItems.INTERMEDIATE_RESIN.get(),"中级树脂");
@@ -53,6 +54,8 @@ public class ModLangGenerator extends ModLangProvider {
         this.addAdvancement("wow","嘿！","砍伐密林灵木时小树妖突然出现！");
         this.addAdvancement("try_wake_up","梦中梦？","尝试在梦之领域使用灵梦床");
         this.addAdvancement("shoot_hundred_meters","百步穿杨！","射中一百米外的玻璃或者生物实体");
+        this.addAdvancement("melee_mage","近战法师！","使用树灵法杖近战攻击");
+        this.addAdvancement("mass_production","量产！","使用复制树脂成功复制一件物品");
 
         this.addBiome(TCRBiomes.PASTORAL_PLAINS,"牧歌原野");
         this.addBiome(TCRBiomes.DENSE_FOREST,"回溯密林");

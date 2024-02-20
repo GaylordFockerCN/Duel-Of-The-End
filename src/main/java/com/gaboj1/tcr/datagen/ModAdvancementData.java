@@ -2,6 +2,7 @@ package com.gaboj1.tcr.datagen;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.init.TCRModBlocks;
+import com.gaboj1.tcr.init.TCRModItems;
 import com.gaboj1.tcr.loot.TCRLoot;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import net.minecraft.advancements.Advancement;
@@ -68,6 +69,28 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
             Advancement tryWakeUp = Advancement.Builder.advancement()
                     .parent(enterRealmOfTheDream)
                     .display(TCRModBlocks.PORTAL_BED.get(),
+                            Component.translatable(pre+name),
+                            Component.translatable(pre+name+".desc"),
+                            null,
+                            FrameType.GOAL, true, true, true)
+                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
+                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
+
+            name = "melee_mage";
+            Advancement melee_mage = Advancement.Builder.advancement()
+                    .parent(enterRealmOfTheDream)//TODO 换成打过树妖后
+                    .display(TCRModItems.TREE_SPIRIT_WAND.get(),
+                            Component.translatable(pre+name),
+                            Component.translatable(pre+name+".desc"),
+                            null,
+                            FrameType.GOAL, true, true, true)
+                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
+                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
+
+            name = "mass_production";
+            Advancement mass_production = Advancement.Builder.advancement()
+                    .parent(enterRealmOfTheDream)//TODO 换成打过树妖后
+                    .display(TCRModItems.COPY_RESIN.get(),
                             Component.translatable(pre+name),
                             Component.translatable(pre+name+".desc"),
                             null,

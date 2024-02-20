@@ -20,12 +20,21 @@ public class BasicResin extends Item {
 
         InteractionHand otherHand = pUsedHand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         ItemStack otherHandItem =  pPlayer.getItemInHand(otherHand);
-        //otherHandItem.getItem() != null &&
+        ItemStack handItem = pPlayer.getItemInHand(pUsedHand);
+        int _repairValue = this.repairValue;
+        //只能用高级树脂修复法宝，并且会有折扣
+        if(otherHandItem.getItem() instanceof TreeSpiritWand){
+            if(! (handItem.getItem() instanceof SuperResin)){
+                return InteractionResultHolder.fail(handItem);
+            }
+            _repairValue /= 9;
+        }
+        //otherHandItem.getItem() != null &&//TODO 测试空手会不会消耗
         if(otherHandItem.isRepairable()){
-            otherHandItem.setDamageValue(otherHandItem.getDamageValue()-repairValue);
-            pPlayer.getItemInHand(pUsedHand).shrink(1);
+            otherHandItem.setDamageValue(otherHandItem.getDamageValue()-_repairValue);
+            handItem.shrink(1);
         }
 
-        return super.use(pLevel, pPlayer, pUsedHand);
+        return InteractionResultHolder.success(handItem);
     }
 }
