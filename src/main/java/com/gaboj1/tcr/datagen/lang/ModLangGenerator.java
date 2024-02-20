@@ -1,7 +1,6 @@
 package com.gaboj1.tcr.datagen.lang;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.datagen.ModEntityTagGenerator;
 import com.gaboj1.tcr.init.TCRModBlocks;
 import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.init.TCRModItems;
@@ -9,7 +8,7 @@ import com.gaboj1.tcr.init.TCRModSounds;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import net.minecraft.data.PackOutput;
 
-public class ModLangGenerator extends TCRLangProvider{
+public class ModLangGenerator extends ModLangProvider {
     public ModLangGenerator(PackOutput output) {
         super(output);
     }
@@ -17,11 +16,21 @@ public class ModLangGenerator extends TCRLangProvider{
     @Override
     protected void addTranslations() {
 
-        this.add("","");
+        this.addConfig("is_white","是否属于白方");
+        this.addConfig("enable_scaling","是否启用地图缩放。若启用，则无论用何种尺寸的图片生成的地图大小固定");
+        this.addConfig("repair_value","基础树脂的修理值");
 
         this.add("item_group.the_casket_of_reveries.the_casket_of_reveries","远梦之棺");
         this.add(TCRModItems.DESERT_EAGLE.get(),"沙漠之鹰");
         this.add(TCRModItems.DESERT_EAGLE_AMMO.get(),"沙鹰弹药");
+
+        this.add(TCRModItems.COPY_RESIN.get(),"复制树脂");
+        this.add(TCRModItems.BASIC_RESIN.get(),"初级树脂");
+        this.add(TCRModItems.INTERMEDIATE_RESIN.get(),"中级树脂");
+        this.add(TCRModItems.ADVANCED_RESIN.get(),"高级树脂");
+        this.add(TCRModItems.SUPER_RESIN.get(),"超级树脂");
+
+
 
         this.add(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get(),"更好的结构方块");
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get(),"密林灵叶");

@@ -1,5 +1,5 @@
 package com.gaboj1.tcr.listener;
-import com.gaboj1.tcr.item.DesertEagleItem;
+import com.gaboj1.tcr.item.custom.DesertEagleItem;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;

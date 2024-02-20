@@ -14,14 +14,18 @@ public class TCRConfig
 
     //阵营判断
     public static final ForgeConfigSpec.BooleanValue IS_WHITE = BUILDER
-            .translation("config.tcr.is_white")
+            .translation("config."+TheCasketOfReveriesMod.MOD_ID+".is_white")
             .define("isWhite", true);
 
 
     //是否启用自定义地图生成时缩放
     public static final ForgeConfigSpec.BooleanValue ENABLE_SCALING = BUILDER
-            .translation("config.tcr.enable_scaling")
+            .translation("config."+TheCasketOfReveriesMod.MOD_ID+".enable_scaling")
             .define("enableScaling", false);
+
+    public static final ForgeConfigSpec.IntValue REPAIR_VALUE = BUILDER
+            .translation("config."+TheCasketOfReveriesMod.MOD_ID+".repair_value")
+            .defineInRange("repairValue",1,1, Integer.MAX_VALUE);
 
     static final ForgeConfigSpec SPEC = BUILDER.build();
 

@@ -17,6 +17,12 @@ public class TCRModItemTabs {
 
 				tabData.accept(TCRModItems.TIGER_SPAWN_EGG.get());
 
+				tabData.accept(TCRModItems.BASIC_RESIN.get());
+				tabData.accept(TCRModItems.INTERMEDIATE_RESIN.get());
+				tabData.accept(TCRModItems.ADVANCED_RESIN.get());
+				tabData.accept(TCRModItems.SUPER_RESIN.get());
+				tabData.accept(TCRModItems.COPY_RESIN.get());
+
 				tabData.accept(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get());
 				tabData.accept(TCRModBlocks.PORTAL_BED.get());
 

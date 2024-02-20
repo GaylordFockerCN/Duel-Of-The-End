@@ -9,15 +9,14 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.structure.Structure;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.registries.RegistryObject;
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.util.function.Supplier;
 
-public abstract class TCRLangProvider extends LanguageProvider {
-    public TCRLangProvider(PackOutput output) {
+public abstract class ModLangProvider extends LanguageProvider {
+    public ModLangProvider(PackOutput output) {
         super(output, TheCasketOfReveriesMod.MOD_ID, "en_us");
     }
 
@@ -153,6 +152,10 @@ public abstract class TCRLangProvider extends LanguageProvider {
 
     public void addScreenMessage(String key, String name) {
         this.add("gui."+TheCasketOfReveriesMod.MOD_ID+"." + key, name);
+    }
+
+    public void addConfig(String key, String name) {
+        this.add("config."+TheCasketOfReveriesMod.MOD_ID+"." + key, name);
     }
 
 }

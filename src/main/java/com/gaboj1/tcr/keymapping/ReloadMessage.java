@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.keymapping;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.item.DesertEagleItem;
+import com.gaboj1.tcr.item.custom.DesertEagleItem;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.common.Mod;

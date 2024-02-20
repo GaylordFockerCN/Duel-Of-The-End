@@ -1,5 +1,5 @@
 
-package com.gaboj1.tcr.item;
+package com.gaboj1.tcr.item.custom;
 
 import com.gaboj1.tcr.keymapping.KeyMappings;
 import com.gaboj1.tcr.entity.custom.DesertEagleBulletEntity;

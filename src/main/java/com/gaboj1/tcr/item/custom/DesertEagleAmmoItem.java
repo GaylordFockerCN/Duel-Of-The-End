@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.item;
+package com.gaboj1.tcr.item.custom;
 
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.Item;
