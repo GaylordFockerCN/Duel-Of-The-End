@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.datagen.lang;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.datagen.ModEntityTagGenerator;
 import com.gaboj1.tcr.init.TCRModBlocks;
 import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.init.TCRModItems;
@@ -15,6 +16,8 @@ public class ModLangGenerator extends TCRLangProvider{
 
     @Override
     protected void addTranslations() {
+
+        this.add("","");
 
         this.add("item_group.the_casket_of_reveries.the_casket_of_reveries","远梦之棺");
         this.add(TCRModItems.DESERT_EAGLE.get(),"沙漠之鹰");

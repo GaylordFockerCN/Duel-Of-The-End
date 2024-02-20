@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.block.custom;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.datagen.ModEntityTagGenerator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -10,6 +11,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,7 +21,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.function.Supplier;
 
-public class DenseForestSpiritFlower extends FlowerBlock {
+public class  DenseForestSpiritFlower extends FlowerBlock {
     public DenseForestSpiritFlower(Supplier<MobEffect> effectSupplier, int p_53513_, Properties p_53514_) {
         super(effectSupplier, p_53513_, p_53514_);
     }
@@ -41,11 +43,12 @@ public class DenseForestSpiritFlower extends FlowerBlock {
 
     @Override
     public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
-        if(pEntity.getTags().contains(ModEntityTagGenerator.MOB_IN_DENSE_FOREST)){
-            return;
-        }
+//        if(pEntity.getTags().contains(ModEntityTagGenerator.MOB_IN_DENSE_FOREST)){//FIXME 生物防毒
+//            return;
+//        }
         if (!pLevel.isClientSide && pLevel.getDifficulty() != Difficulty.PEACEFUL) {
-            if (pEntity instanceof LivingEntity) {
+//            if (pEntity instanceof LivingEntity) {
+            if (pEntity instanceof Player) {
                 LivingEntity $$4 = (LivingEntity)pEntity;
                 if (!$$4.isInvulnerableTo(pLevel.damageSources().wither())) {
                     $$4.addEffect(new MobEffectInstance(MobEffects.POISON, 200));

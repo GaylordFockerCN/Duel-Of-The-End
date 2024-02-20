@@ -31,7 +31,7 @@ public class TCRModBlocks {
             ()-> new BetterStructureBlock(BlockBehaviour.Properties.copy(Blocks.STRUCTURE_BLOCK)));
 
     public static final RegistryObject<Block> PORTAL_BED = registerBlock("portal_bed",
-            () -> new PortalBed(DyeColor.WHITE,BlockBehaviour.Properties.copy(Blocks.WHITE_BED)));
+            () -> new PortalBed(DyeColor.WHITE,BlockBehaviour.Properties.copy(Blocks.BLACK_BED)));
 
     public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_FLOWER = registerBlock("dense_forest_spirit_flower",
             ()-> new DenseForestSpiritFlower(() -> MobEffects.POISON, 5, BlockBehaviour.Properties.copy(Blocks.WITHER_ROSE)));

@@ -12,6 +12,13 @@ public class TCRConfig
 {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
+    //阵营判断
+    public static final ForgeConfigSpec.BooleanValue IS_WHITE = BUILDER
+            .translation("config.tcr.is_white")
+            .define("isWhite", true);
+
+
+    //是否启用自定义地图生成时缩放
     public static final ForgeConfigSpec.BooleanValue ENABLE_SCALING = BUILDER
             .translation("config.tcr.enable_scaling")
             .define("enableScaling", false);
