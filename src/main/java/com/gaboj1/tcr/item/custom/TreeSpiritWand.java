@@ -45,7 +45,7 @@ public class TreeSpiritWand extends MagicWeapon {
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         FoodData foodData = pPlayer.getFoodData();
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
-        if(foodData.getFoodLevel()==0){
+        if(foodData.getFoodLevel()==0  || pPlayer.getHealth() == pPlayer.getMaxHealth()){
             return InteractionResultHolder.fail(itemStack);
         }
         foodData.setFoodLevel(foodData.getFoodLevel()-TCRConfig.tree_spirit_wand_hungry_consume.get());
