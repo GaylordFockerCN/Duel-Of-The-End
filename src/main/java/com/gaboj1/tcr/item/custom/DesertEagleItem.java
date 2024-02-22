@@ -171,6 +171,10 @@ public class DesertEagleItem extends Item implements GeoItem {
                             entityToSpawn.setOwner(shooter);
                             entityToSpawn.setNoGravity(true);
                             entityToSpawn.setBaseDamage(damage);
+                            //双持伤害翻倍。不发射两发是因为有霸体时间..
+                            if(player.getItemInHand((hand == InteractionHand.MAIN_HAND?InteractionHand.OFF_HAND:InteractionHand.MAIN_HAND)).getItem() instanceof DesertEagleItem){
+                                entityToSpawn.setBaseDamage(damage*2);
+                            }
                             entityToSpawn.setKnockback(knockBack);
                             entityToSpawn.setSilent(true);
                             entityToSpawn.setPierceLevel(piercing);
@@ -182,26 +186,7 @@ public class DesertEagleItem extends Item implements GeoItem {
                     _entityToSpawn.shoot(player.getViewVector(1).x, player.getViewVector(1).y, player.getViewVector(1).z, handItem.getPower(), 0);
                     projectileLevel.addFreshEntity(_entityToSpawn);
 
-                    //双持双发..
-                    if(player.getItemInHand((hand == InteractionHand.MAIN_HAND?InteractionHand.OFF_HAND:InteractionHand.MAIN_HAND)).getItem() instanceof DesertEagleItem){
-                        Projectile _entityToSpawn2 = new Object() {
-                            public Projectile getArrow(Level level, Entity shooter, float damage, int knockBack, byte piercing) {
-                                AbstractArrow entityToSpawn = new DesertEagleBulletEntity(TCRModEntities.DESERT_EAGLE_BULLET.get(), level);
-                                entityToSpawn.setOwner(shooter);
-                                entityToSpawn.setNoGravity(true);
-                                entityToSpawn.setBaseDamage(damage);
-                                entityToSpawn.setKnockback(knockBack);
-                                entityToSpawn.setSilent(true);
-                                entityToSpawn.setPierceLevel(piercing);
-                                entityToSpawn.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
-                                return entityToSpawn;
-                            }
-                        }.getArrow(projectileLevel, player, handItem.getFireDamage(), 1, (byte) 5);
-                        _entityToSpawn2.setPos(x, player.getEyeY() - (double)0.15F, z);
-                        _entityToSpawn2.shoot(player.getViewVector(1).x, player.getViewVector(1).y, player.getViewVector(1).z, handItem.getPower(), 0);
-                        projectileLevel.addFreshEntity(_entityToSpawn2);
-                        projectileLevel.addFreshEntity(_entityToSpawn2);
-                    }
+
                 }
 
                 if (world instanceof ServerLevel serverLevel) {
