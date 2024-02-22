@@ -158,4 +158,8 @@ public abstract class ModLangProvider extends LanguageProvider {
         this.add("config."+TheCasketOfReveriesMod.MOD_ID+"." + key, name);
     }
 
+    public void addItemInfo(Item item, String key, String name) {
+        this.add(item.getDescriptionId()+"." + key, name);
+    }
+
 }

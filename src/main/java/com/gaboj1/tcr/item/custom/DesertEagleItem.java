@@ -6,6 +6,7 @@ import com.gaboj1.tcr.entity.custom.DesertEagleBulletEntity;
 import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.init.TCRModSounds;
 import com.gaboj1.tcr.item.renderer.DesertEagleItemRenderer;
+import com.gaboj1.tcr.util.ItemUtil;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
@@ -404,7 +405,7 @@ public class DesertEagleItem extends Item implements GeoItem {
                     need = DesertEagleItem.MAX_AMMO;
                 }else need = bullet.getDamageValue();
                 Player player = (Player)entity;
-                int total = searchItem(player,ammo,need);
+                int total = ItemUtil.searchAndConsumeItem(player,ammo,need);
                 if(total>0){
                     DesertEagleItem handItem = (DesertEagleItem) handItemStake.getItem();
                     handItem.isReloading = true;//限制同时换弹
@@ -451,40 +452,6 @@ public class DesertEagleItem extends Item implements GeoItem {
             }
 
         }).start();
-    }
-
-    //递归搜索物品栈
-    private static int searchItem(Player player, Item ammo,int need){
-        int total = 0;
-        ItemStack stack = ItemStack.EMPTY;
-        if(ammo == player.getMainHandItem().getItem()){
-            stack = player.getMainHandItem();
-        }else if(ammo == player.getOffhandItem().getItem()){
-            stack = player.getOffhandItem();
-        }else {
-            for (int i = 0; i < player.getInventory().items.size(); i++) {
-                ItemStack teststack = player.getInventory().items.get(i);
-                if (teststack != null && teststack.getItem() == ammo ) {
-                    stack = teststack;
-                    break;
-                }
-            }
-        }
-
-        if (stack != ItemStack.EMPTY) {
-            if (stack.getCount() >= need) {
-                stack.shrink(need);
-                return need;
-            } else {
-                int cnt = stack.getCount();
-                stack.shrink(cnt);
-                total += cnt;
-                total += searchItem(player,ammo,need - cnt);
-                return total;
-            }
-        }else{
-            return 0;
-        }
     }
 
     private static int getBulletCount(ItemStack stack){

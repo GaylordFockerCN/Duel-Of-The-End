@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.item.custom;
 
+import com.gaboj1.tcr.TCRConfig;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -9,7 +10,7 @@ import net.minecraft.world.level.Level;
 
 public class BasicResin extends Item {
 
-    protected int repairValue = 1;
+    protected int repairValue = TCRConfig.REPAIR_VALUE.get();
 
     public BasicResin(Properties pProperties) {
         super(pProperties);
@@ -29,8 +30,7 @@ public class BasicResin extends Item {
             }
             _repairValue /= 9;
         }
-        //otherHandItem.getItem() != null &&//TODO 测试空手会不会消耗
-        if(otherHandItem.isRepairable()){
+        if(otherHandItem.isRepairable() && otherHandItem.getDamageValue()!=otherHandItem.getMaxDamage()){
             otherHandItem.setDamageValue(otherHandItem.getDamageValue()-_repairValue);
             handItem.shrink(1);
         }

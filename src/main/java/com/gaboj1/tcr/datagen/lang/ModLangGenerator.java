@@ -19,6 +19,9 @@ public class ModLangGenerator extends ModLangProvider {
         this.addConfig("is_white","是否属于白方");
         this.addConfig("enable_scaling","是否启用地图缩放。若启用，则无论用何种尺寸的图片生成的地图大小固定");
         this.addConfig("repair_value","基础树脂的修理值");
+        this.addConfig("tree_spirit_wand_hungry_consume","树灵法杖回血时的饥饿值消耗");
+        this.addConfig("tree_spirit_wand_heal","树灵法杖回血量");
+        this.addConfig("spirit_log_consume","树灵法杖召唤小树妖时消耗的原木数");
 
         this.add("item_group.the_casket_of_reveries.the_casket_of_reveries","远梦之棺");
         this.add(TCRModItems.DESERT_EAGLE.get(),"沙漠之鹰");
@@ -70,5 +73,8 @@ public class ModLangGenerator extends ModLangProvider {
 
         this.addSubtitle(TCRModSounds.DESERT_EAGLE_FIRE,"沙鹰开火");
         this.addSubtitle(TCRModSounds.DESERT_EAGLE_RELOAD,"沙鹰换弹");
+
+        //说明内容
+        this.addItemInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"no_spirit_tree","密林灵树原木不足，无法召唤小树妖");
     }
 }

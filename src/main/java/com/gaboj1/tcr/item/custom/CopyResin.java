@@ -21,6 +21,9 @@ public class CopyResin extends Item {
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         InteractionHand otherHand = pUsedHand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         ItemStack otherHandItem =  pPlayer.getItemInHand(otherHand);
+        if(otherHandItem.isEmpty()){
+            return InteractionResultHolder.fail(otherHandItem);
+        }
         pPlayer.getItemInHand(pUsedHand).shrink(1);
         pPlayer.addItem(otherHandItem.copyWithCount(1));
         Advancement _adv = pPlayer.getServer().getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"mass_production"));
@@ -30,6 +33,6 @@ public class CopyResin extends Item {
                 ((ServerPlayer) pPlayer).getAdvancements().award(_adv, criteria);
         }
 
-        return super.use(pLevel, pPlayer, pUsedHand);
+        return InteractionResultHolder.success(otherHandItem);
     }
 }
