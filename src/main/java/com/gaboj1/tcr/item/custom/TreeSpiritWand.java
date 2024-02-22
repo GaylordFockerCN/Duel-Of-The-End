@@ -43,7 +43,8 @@ public class TreeSpiritWand extends MagicWeapon {
         }
         foodData.setFoodLevel(foodData.getFoodLevel()-TCRConfig.tree_spirit_wand_hungry_consume.get());
         pPlayer.heal(TCRConfig.tree_spirit_wand_heal.get());
-        itemStack.setDamageValue(itemStack.getDamageValue()+1);
+        if(!pPlayer.isCreative())
+            itemStack.setDamageValue(itemStack.getDamageValue()+1);
         return InteractionResultHolder.success(itemStack);
     }
 
@@ -68,11 +69,11 @@ public class TreeSpiritWand extends MagicWeapon {
                 }
             }
 
-            TCRModEntities.SMALL_TREE_MONSTER.get().spawn(((ServerLevel) level), pos.above(), MobSpawnType.SPAWN_EGG)
-                    .setInLove(player);//TODO 测试是否驯服过
+            TCRModEntities.SMALL_TREE_MONSTER.get().spawn(((ServerLevel) level), pos.above(), MobSpawnType.SPAWN_EGG).tame(player);
 
             ItemStack itemStack = player.getItemInHand(pContext.getHand());
-            itemStack.setDamageValue(itemStack.getDamageValue()+1);
+            if(!player.isCreative())
+                itemStack.setDamageValue(itemStack.getDamageValue()+1);
         }
 
         return InteractionResult.sidedSuccess(level.isClientSide);
@@ -83,5 +84,6 @@ public class TreeSpiritWand extends MagicWeapon {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage1"));
         pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage2"));
+        pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage3"));
     }
 }
