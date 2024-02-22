@@ -15,6 +15,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeAdvancementProvider;
 
@@ -101,7 +102,7 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
             name = "so_rich";
             Advancement so_rich = Advancement.Builder.advancement()
                     .parent(enterRealmOfTheDream)//TODO 换成打过树妖后
-                    .display(TCRModItems.COPY_RESIN.get(),
+                    .display(Items.AIR,
                             Component.translatable(pre+name),
                             Component.translatable(pre+name+".desc"),
                             null,
@@ -112,7 +113,7 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
             name = "die_for_summon";
             Advancement die_for_summon = Advancement.Builder.advancement()
                     .parent(enterRealmOfTheDream)//TODO 换成打过树妖后
-                    .display(TCRModItems.COPY_RESIN.get(),
+                    .display(TCRModItems.TREE_SPIRIT_WAND.get(),
                             Component.translatable(pre+name),
                             Component.translatable(pre+name+".desc"),
                             null,
@@ -123,7 +124,7 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
             name = "day_dreamer";
             Advancement day_dreamer = Advancement.Builder.advancement()
                     .parent(enterRealmOfTheDream)
-                    .display(TCRModItems.COPY_RESIN.get(),
+                    .display(TCRModItems.DESERT_EAGLE.get(),
                             Component.translatable(pre+name),
                             Component.translatable(pre+name+".desc"),
                             null,
@@ -134,7 +135,7 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
             name = "can_double_hold";
             Advancement can_double_hold = Advancement.Builder.advancement()
                     .parent(day_dreamer)
-                    .display(TCRModItems.COPY_RESIN.get(),
+                    .display(TCRModItems.DESERT_EAGLE.get(),
                             Component.translatable(pre+name),
                             Component.translatable(pre+name+".desc"),
                             null,

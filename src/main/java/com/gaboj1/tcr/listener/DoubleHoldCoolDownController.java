@@ -41,13 +41,6 @@ public class DoubleHoldCoolDownController {
 			if (offHandStack.getItem().getClass() == mainHandStack.getItem().getClass())return;
 			if(mainHandStack.getItem() instanceof DesertEagleItem mainHandItem&& offHandStack.getItem() instanceof DesertEagleItem offHandItem){
 
-				Advancement _adv = ((ServerPlayer) player).getServer().getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"can_double_hold"));
-				AdvancementProgress _ap = ((ServerPlayer) player).getAdvancements().getOrStartProgress(_adv);
-				if (!_ap.isDone()) {
-					for (String criteria : _ap.getRemainingCriteria())
-						((ServerPlayer) player).getAdvancements().award(_adv, criteria);
-				}
-
 				if(event.getHand() == InteractionHand.MAIN_HAND){
 					if(!player.getCooldowns().isOnCooldown(offHandItem)&& !mainHandItem.isReloading){
 						player.getCooldowns().addCooldown(offHandItem,1);
