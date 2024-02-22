@@ -4,7 +4,7 @@ public class AdvancedResin extends BasicResin {
 
     public AdvancedResin(Properties pProperties) {
         super(pProperties);
-        scale = 9;
+        scale = 9*9;
     }
 
 }
