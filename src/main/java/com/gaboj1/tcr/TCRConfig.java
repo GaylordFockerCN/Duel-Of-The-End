@@ -35,7 +35,7 @@ public class TCRConfig
             .defineInRange("tree_spirit_wand_hungry_consume",2,1, Integer.MAX_VALUE);
     public static final ForgeConfigSpec.IntValue tree_spirit_wand_heal = BUILDER
             .translation("config."+TheCasketOfReveriesMod.MOD_ID+".tree_spirit_wand_heal")
-            .defineInRange("tree_spirit_wand_heal",2,1, Integer.MAX_VALUE);
+            .defineInRange("tree_spirit_wand_heal",5,1, Integer.MAX_VALUE);
 
     public static final ForgeConfigSpec.IntValue spirit_log_consume = BUILDER
             .translation("config."+TheCasketOfReveriesMod.MOD_ID+".spirit_log_consume")

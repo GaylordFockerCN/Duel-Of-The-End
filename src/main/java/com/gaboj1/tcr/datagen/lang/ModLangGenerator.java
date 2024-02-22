@@ -25,16 +25,31 @@ public class ModLangGenerator extends ModLangProvider {
 
         this.add("item_group.the_casket_of_reveries.the_casket_of_reveries","远梦之棺");
         this.add(TCRModItems.DESERT_EAGLE.get(),"沙漠之鹰");
+        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"headshot","爆头！");
+        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"ammo_count","剩余弹药数：");
+        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"ammo_cooldown","冷却时间: ");
+        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"reloadbutton","请按 %s 键换弹");
+        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"no_ammo","无后备弹药!");
+        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"main_hand_ammo","主手剩余弹药:");
+        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"off_hand_ammo","副手剩余弹药:");
+        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"main_ammo_full","主手弹药充足！");
+        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"off_ammo_full","副手弹药充足！");
+        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"reloading","您正在换弹！");
         this.add(TCRModItems.DESERT_EAGLE_AMMO.get(),"沙鹰弹药");
 
         this.add(TCRModItems.TREE_SPIRIT_WAND.get(),"树灵法杖");
+        this.addItemInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"no_spirit_tree","密林灵树原木不足，无法召唤小树妖");
+        this.addItemUsageInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"右键地面消耗密林原木和生命值召唤小树妖",1);
+        this.addItemUsageInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"右键空气消耗饥饿值回血",2);
+
         this.add(TCRModItems.COPY_RESIN.get(),"复制树脂");
+        this.addItemUsageInfo(TCRModItems.COPY_RESIN.get(),"右键消耗以复制另一只手的物品",2);
+
         this.add(TCRModItems.BASIC_RESIN.get(),"初级树脂");
+        this.addItemUsageInfo(TCRModItems.BASIC_RESIN.get(),"右键消耗以修复另一只手的物品，每次修复 %d 点耐久度");
         this.add(TCRModItems.INTERMEDIATE_RESIN.get(),"中级树脂");
         this.add(TCRModItems.ADVANCED_RESIN.get(),"高级树脂");
         this.add(TCRModItems.SUPER_RESIN.get(),"超级树脂");
-
-
 
         this.add(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get(),"更好的结构方块");
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get(),"密林灵叶");
@@ -59,6 +74,10 @@ public class ModLangGenerator extends ModLangProvider {
         this.addAdvancement("shoot_hundred_meters","百步穿杨！","射中一百米外的玻璃或者生物实体");
         this.addAdvancement("melee_mage","近战法师！","使用树灵法杖近战攻击");
         this.addAdvancement("mass_production","量产！","使用复制树脂成功复制一件物品");
+        this.addAdvancement("so_rich","有钱真好","使用复制树脂成功复制一份空气");
+        this.addAdvancement("die_for_summon","一命换一命","用生命值召唤小树妖而死");
+        this.addAdvancement("day_dreamer","白日梦想家","通过村民帮助获得火铳");
+        this.addAdvancement("can_double_hold","原来这也行？","双持火铳");
 
         this.addBiome(TCRBiomes.PASTORAL_PLAINS,"牧歌原野");
         this.addBiome(TCRBiomes.DENSE_FOREST,"回溯密林");
@@ -74,7 +93,6 @@ public class ModLangGenerator extends ModLangProvider {
         this.addSubtitle(TCRModSounds.DESERT_EAGLE_FIRE,"沙鹰开火");
         this.addSubtitle(TCRModSounds.DESERT_EAGLE_RELOAD,"沙鹰换弹");
 
-        //说明内容
-        this.addItemInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"no_spirit_tree","密林灵树原木不足，无法召唤小树妖");
+
     }
 }

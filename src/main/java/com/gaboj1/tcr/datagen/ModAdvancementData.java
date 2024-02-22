@@ -98,6 +98,49 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
                     .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
 
+            name = "so_rich";
+            Advancement so_rich = Advancement.Builder.advancement()
+                    .parent(enterRealmOfTheDream)//TODO 换成打过树妖后
+                    .display(TCRModItems.COPY_RESIN.get(),
+                            Component.translatable(pre+name),
+                            Component.translatable(pre+name+".desc"),
+                            null,
+                            FrameType.GOAL, true, true, true)
+                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
+                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
+
+            name = "die_for_summon";
+            Advancement die_for_summon = Advancement.Builder.advancement()
+                    .parent(enterRealmOfTheDream)//TODO 换成打过树妖后
+                    .display(TCRModItems.COPY_RESIN.get(),
+                            Component.translatable(pre+name),
+                            Component.translatable(pre+name+".desc"),
+                            null,
+                            FrameType.GOAL, true, true, true)
+                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
+                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
+
+            name = "day_dreamer";
+            Advancement day_dreamer = Advancement.Builder.advancement()
+                    .parent(enterRealmOfTheDream)
+                    .display(TCRModItems.COPY_RESIN.get(),
+                            Component.translatable(pre+name),
+                            Component.translatable(pre+name+".desc"),
+                            null,
+                            FrameType.GOAL, true, true, true)
+                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
+                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
+
+            name = "can_double_hold";
+            Advancement can_double_hold = Advancement.Builder.advancement()
+                    .parent(day_dreamer)
+                    .display(TCRModItems.COPY_RESIN.get(),
+                            Component.translatable(pre+name),
+                            Component.translatable(pre+name+".desc"),
+                            null,
+                            FrameType.GOAL, true, true, true)
+                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
+                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
 
         }
     }

@@ -134,11 +134,8 @@ public class DesertEagleBulletEntity extends AbstractArrow implements ItemSuppli
 						}else {
 							setBaseDamage(getBaseDamage()*2);
 						}
-
-						if(level() instanceof ServerLevel level){
-							level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, this.getOwner().position(), Vec2.ZERO, level, 4, "", Component.literal(""), level.getServer(), null).withSuppressedOutput(),
-									"title @p actionbar \"§c§l"+I18n.get("info.simpledeserteagle.headshot") +"\"");
-
+						if(this.getOwner() instanceof Player player){
+							player.displayClientMessage(Component.literal("§c§l").append(Component.translatable(TCRModItems.DESERT_EAGLE.get().getDescriptionId()+".headshot")),true);
 						}
 					}
 				}

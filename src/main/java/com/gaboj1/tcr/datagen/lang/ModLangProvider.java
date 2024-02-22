@@ -162,4 +162,11 @@ public abstract class ModLangProvider extends LanguageProvider {
         this.add(item.getDescriptionId()+"." + key, name);
     }
 
+    public void addItemUsageInfo(Item item, String name) {
+        this.add(item.getDescriptionId()+".usage", name);
+    }
+    public void addItemUsageInfo(Item item, String name, int index) {
+        this.add(item.getDescriptionId()+".usage"+index, name);
+    }
+
 }
