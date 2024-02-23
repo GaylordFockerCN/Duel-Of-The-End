@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.gui.screen;
 
 import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.entity.custom.TreeGuardianEntity;
 import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.gui.screen.component.DialogueAnswerComponent;
 import com.gaboj1.tcr.gui.screen.component.DialogueChoiceComponent;
@@ -19,11 +20,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 
+/**
+ * 改编自theAether 的 ValkyrieQueenDialogueScreen
+ * 搬运了相关类
+ */
 public class PastoralPlainVillagerElderDialogueScreen extends Screen {
     private final DialogueAnswerComponent dialogueAnswer;
-    private final PastoralPlainVillagerElder elder;
+    private final TreeGuardianEntity elder;//TODO 改回去
 
-    public PastoralPlainVillagerElderDialogueScreen(PastoralPlainVillagerElder elder) {
+    public PastoralPlainVillagerElderDialogueScreen(TreeGuardianEntity elder) {
         super(elder.getDisplayName());
         this.dialogueAnswer = new DialogueAnswerComponent(this.buildDialogueAnswerName(elder.getDisplayName().copy().withStyle(ChatFormatting.YELLOW)));
         this.elder = elder;
@@ -45,7 +50,7 @@ public class PastoralPlainVillagerElderDialogueScreen extends Screen {
                                         new DialogueChoiceComponent(this.buildDialogueChoice(1), button2 -> {// 嗯？
                                             this.setDialogueAnswer(this.buildDialogueDialog(3));//有些事情还无法言喻，有的则不便言喻。但你什么也不必担心。在某种意义上，村子和密林都是公平的。关于你所需要你所应该知道的，村子和密林以后将一一在你面前提示出来。
                                             this.setupDialogueChoices(
-                                                new DialogueChoiceComponent(this.buildDialogueChoice(1), button3 -> this.finishChat((byte) 0))
+                                                new DialogueChoiceComponent(this.buildDialogueChoice(2), button3 -> this.finishChat((byte) 0))
                                             );
                                         })
                                     );
@@ -143,19 +148,21 @@ public class PastoralPlainVillagerElderDialogueScreen extends Screen {
         return Component.translatable(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get()+".choice." + key);
     }
     public MutableComponent buildDialogueChoice(int i) {
-        return Component.translatable(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get()+".choice." + i);
+        return Component.translatable(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get()+".choice" + i);
     }
     public MutableComponent buildDialogueDialog(int i) {
         Component component = Component.translatable(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get()+".dialog"+i);
         Player player = elder.getConversingPlayer();
-        player.sendSystemMessage(Component.literal("[").append(player.getCustomName().copy().withStyle(TCRConfig.IS_WHITE.get()?ChatFormatting.YELLOW:ChatFormatting.BLACK)).append("]: ").append(component));
+        if(player!=null)
+            player.sendSystemMessage(Component.literal("[").append(player.getCustomName().copy().withStyle(TCRConfig.IS_WHITE.get()?ChatFormatting.YELLOW:ChatFormatting.BLACK)).append("]: ").append(component));
         return component.copy();
     }
 
     public MutableComponent buildDialogueDialog(int i, String s) {
         Component component = Component.translatable(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get()+".dialog"+i,s);
         Player player = elder.getConversingPlayer();
-        player.sendSystemMessage(Component.literal("[").append(player.getCustomName().copy().withStyle(TCRConfig.IS_WHITE.get()?ChatFormatting.YELLOW:ChatFormatting.BLACK)).append("]: ").append(component));
+        if(player!=null)
+            player.sendSystemMessage(Component.literal("[").append(player.getCustomName().copy().withStyle(TCRConfig.IS_WHITE.get()?ChatFormatting.YELLOW:ChatFormatting.BLACK)).append("]: ").append(component));
         return component.copy();
     }
 

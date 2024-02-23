@@ -69,7 +69,8 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     @Override
     @OnlyIn(Dist.CLIENT)
     public void openDialogueScreen() {
-        Minecraft.getInstance().setScreen(new PastoralPlainVillagerElderDialogueScreen(this));
+        //TODO 以下用来测试，记得复原
+//        Minecraft.getInstance().setScreen(new PastoralPlainVillagerElderDialogueScreen(this));
     }
 
     @Override
