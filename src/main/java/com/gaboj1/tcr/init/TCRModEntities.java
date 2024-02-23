@@ -1,11 +1,10 @@
 package com.gaboj1.tcr.init;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.entity.custom.DesertEagleBulletEntity;
+import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillagerElder;
+import com.gaboj1.tcr.entity.custom.*;
 
-import com.gaboj1.tcr.entity.custom.MiddleTreeMonsterEntity;
-import com.gaboj1.tcr.entity.custom.SmallTreeMonsterEntity;
-import com.gaboj1.tcr.entity.custom.TreeGuardianEntity;
+import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -38,6 +37,17 @@ public class TCRModEntities {
 							.sized(1.5f, 1.75f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "tree_guardian").toString()));
 
+	public static final RegistryObject<EntityType<PastoralPlainVillager>> PASTORAL_PLAIN_VILLAGER =
+			REGISTRY.register("pastoral_plain_villager",
+					() -> EntityType.Builder.of(PastoralPlainVillager::new, MobCategory.CREATURE)
+							.sized(1.5f, 1.75f)
+							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "pastoral_plain_villager").toString()));
+
+	public static final RegistryObject<EntityType<PastoralPlainVillagerElder>> PASTORAL_PLAIN_VILLAGER_ELDER =
+			REGISTRY.register("pastoral_plain_villager_elder",
+					() -> EntityType.Builder.of(PastoralPlainVillagerElder::new, MobCategory.CREATURE)
+							.sized(1.5f, 1.75f)
+							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "pastoral_plain_villager_elder").toString()));
 
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {

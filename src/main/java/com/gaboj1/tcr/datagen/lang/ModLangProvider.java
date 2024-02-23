@@ -116,6 +116,18 @@ public abstract class ModLangProvider extends LanguageProvider {
         this.add("item."+TheCasketOfReveriesMod.MOD_ID+"." + entity.getId().getPath() + "_spawn_egg", name + " Spawn Egg");
     }
 
+    public void addVillagerChat(RegistryObject<? extends EntityType<?>> villager, int index, boolean isFWord, String text) {
+        this.add(villager.get()+(isFWord?".fuck_chat":".chat")+index, text);
+    }
+
+    public void addDialog(RegistryObject<? extends EntityType<?>> entity, int i, String text) {
+        this.add(entity.get()+".dialog" + i, text);
+    }
+
+    public void addDialogChoice(RegistryObject<? extends EntityType<?>> entity, String choice, String text) {
+        this.add(entity.get()+".choice." + choice, text);
+    }
+
     public void addSubtitle(RegistryObject<SoundEvent> sound, String name) {
         String[] splitSoundName  = sound.getId().getPath().split("\\.", 3);
         this.add("subtitles."+TheCasketOfReveriesMod.MOD_ID+"." + splitSoundName[0] + "." + splitSoundName[2], name);
