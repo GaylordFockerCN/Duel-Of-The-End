@@ -81,6 +81,7 @@ public class TCRVillager extends Villager implements GeoEntity {
         pVillagerBrain.setActiveActivityIfPossible(Activity.IDLE);
         pVillagerBrain.updateActivityFromSchedule(this.level().getDayTime(), this.level().getGameTime());
     }
+
     @Override
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);

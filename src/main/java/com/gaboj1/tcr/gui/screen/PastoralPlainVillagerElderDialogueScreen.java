@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.gui.screen;
 
 import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.custom.TreeGuardianEntity;
 import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.gui.screen.component.DialogueAnswerComponent;
@@ -16,6 +17,7 @@ import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,6 +27,7 @@ import net.minecraftforge.common.MinecraftForge;
  * 搬运了相关类
  */
 public class PastoralPlainVillagerElderDialogueScreen extends Screen {
+    public static final ResourceLocation MY_BACKGROUND_LOCATION = new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"textures/gui/background.png");
     private final DialogueAnswerComponent dialogueAnswer;
     private final TreeGuardianEntity elder;//TODO 改回去
 
@@ -109,13 +112,13 @@ public class PastoralPlainVillagerElderDialogueScreen extends Screen {
      */
     private void positionDialogue() {
         // Dialogue answer.
-        this.dialogueAnswer.reposition(this.width, this.height);
+        this.dialogueAnswer.reposition(this.width, this.height *5/4);//相较于天堂的下移了一点
         // Dialogue choices.
         int lineNumber = this.dialogueAnswer.height / 12 + 1;
         for (Renderable renderable : this.renderables) {
             if (renderable instanceof DialogueChoiceComponent option) {
                 option.setX(this.width / 2 - option.getWidth() / 2);
-                option.setY(this.height / 2 + 12 * lineNumber);
+                option.setY(this.height / 2 *5/4 + 12 * lineNumber);//调低一点
                 lineNumber++;
             }
         }
@@ -195,6 +198,7 @@ public class PastoralPlainVillagerElderDialogueScreen extends Screen {
     @Override
     public void renderBackground(GuiGraphics guiGraphics) {
         if (this.getMinecraft().level != null) {
+//            guiGraphics.blit(MY_BACKGROUND_LOCATION, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, 214, 252);
             MinecraftForge.EVENT_BUS.post(new ScreenEvent.BackgroundRendered(this, guiGraphics));
         }
     }

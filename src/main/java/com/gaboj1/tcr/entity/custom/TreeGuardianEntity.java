@@ -2,6 +2,7 @@ package com.gaboj1.tcr.entity.custom;
 
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.entity.NpcDialogue;
+import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.gui.screen.PastoralPlainVillagerElderDialogueScreen;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
@@ -68,6 +69,14 @@ public class TreeGuardianEntity extends IronGolem implements GeoEntity , Neutral
         * 避开水体随机移动WaterAvoidingRandomStrollGoal
         * 随意查看四周RandomLookAroundGoal
         */
+
+
+
+            this.goalSelector.addGoal(1, new NpcDialogueGoal<>(this));
+
+
+
+
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.2D, false));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));

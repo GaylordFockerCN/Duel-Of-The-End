@@ -69,7 +69,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addEntityAndEgg(TCRModEntities.TREE_GUARDIAN,"森林守护者");
         this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,"牧歌原野-长老");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,0,"勇者啊，我所期盼的勇者啊你终于来了。你可知我这十年来的心在仇恨的尖刀上是如何滴血的么。密林中的魔物危害着这个村子呵。恳请您前去剿除。");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,1,"密林，就在 s% 你要睁大眼睛侧起耳朵开动脑筋来揣度密林中提示之物的含义。你要是有心，那么就趁有心之时让它发挥作用。对了，尊敬的勇者……");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,1,"密林，就在 %s 你要睁大眼睛侧起耳朵开动脑筋来揣度密林中提示之物的含义。你要是有心，那么就趁有心之时让它发挥作用。对了，尊敬的勇者……");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,2,"算了，有的东西不过很久，是不可能理解的。 有的东西等到理解了，又为时已晚。 大多时候，我们不得不在尚未清楚认识自己的心的情况下选择行动，因而感到迷惘和困惑，因而悲伤不已。");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,3,"有些事情还无法言喻，有的则不便言喻。但你什么也不必担心。在某种意义上，村子和密林都是公平的。关于你所需要你所应该知道的，村子和密林以后将一一在你面前提示出来。");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,0,"我的命运与密林也不无关系。请你告诉我前往密林的路径，到了密林我自然会听从我的心做出我的行动。自然，我的心已经听到了你的声音。");
