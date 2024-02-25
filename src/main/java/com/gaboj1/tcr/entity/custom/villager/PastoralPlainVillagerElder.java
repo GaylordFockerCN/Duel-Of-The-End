@@ -25,13 +25,14 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     @Nullable
     private Player conversingPlayer;
 
-    public PastoralPlainVillagerElder(EntityType<? extends Villager> pEntityType, Level pLevel) {
+    public PastoralPlainVillagerElder(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
     @Override
     public String getResourceName() {
-        return "pastoral_plain_villager_elder";
+//        return "pastoral_plain_villager_elder";
+        return "pastoral_plain_villager";
     }
 
     @Override
@@ -39,11 +40,6 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         if (hand == InteractionHand.MAIN_HAND) {
             if ( !this.level().isClientSide()) {
                 if (TCRConfig.IS_WHITE.get()) {
-//                    if(TCRConfig.KILLED_BOSS1.get()){
-//                        talk(player,Component.translatable(this.getDisplayName()+".hello1"));
-//                    }else {
-//                        talk(player,Component.translatable(this.getDisplayName()+".hello1"));
-//                    }
                     this.lookAt(player, 180.0F, 180.0F);
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (this.getConversingPlayer() == null) {
@@ -60,17 +56,11 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         return InteractionResult.PASS;
     }
 
-//    @Override
-//    public void talkFuck(Player player) {
-//        player.sendSystemMessage(Component.translatable(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get().getDescriptionId()+".fuck_chat"));
-//    }
-
-
     @Override
     @OnlyIn(Dist.CLIENT)
     public void openDialogueScreen() {
         //TODO 以下用来测试，记得复原
-//        Minecraft.getInstance().setScreen(new PastoralPlainVillagerElderDialogueScreen(this));
+        Minecraft.getInstance().setScreen(new PastoralPlainVillagerElderDialogueScreen(this));
     }
 
     @Override
@@ -88,42 +78,6 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
             case 3: //黑方 击败boss
                 this.chat(Component.translatable("3"));
                 break;
-
-
-//            case 0: // Responds to the player's question of where they are.
-//                this.chat(player, Component.translatable("gui.aether.queen.dialog.answer"));
-//                break;
-//            case 1: // Tells the players nearby to ready up for a fight.
-//                if (this.level().getDifficulty() == Difficulty.PEACEFUL) { // Check for peaceful mode.
-//                    this.chat(player, Component.translatable("gui.aether.queen.dialog.peaceful"));
-//                } else {
-//                    if (player.getInventory().countItem(AetherItems.VICTORY_MEDAL.get()) >= 10) { // Checks for Victory Medals.
-//                        this.readyUp();
-//                        int count = 10;
-//                        for (ItemStack item : player.inventoryMenu.getItems()) {
-//                            if (item.is(AetherItems.VICTORY_MEDAL.get())) {
-//                                if (item.getCount() > count) {
-//                                    item.shrink(count);
-//                                    break;
-//                                } else {
-//                                    count -= item.getCount();
-//                                    item.setCount(0);
-//                                }
-//                            }
-//                            if (count <= 0) break;
-//                        }
-//                    } else {
-//                        this.chat(player, Component.translatable("gui.aether.queen.dialog.no_medals"));
-//                    }
-//                }
-//                break;
-//            case 2: // Deny fight.
-//                this.chat(player, Component.translatable("gui.aether.queen.dialog.deny_fight"));
-//                break;
-//            case 3:
-//            default: // Goodbye.
-//                this.chat(player, Component.translatable("gui.aether.queen.dialog.goodbye"));
-//                break;
         }
         this.setConversingPlayer(null);
     }

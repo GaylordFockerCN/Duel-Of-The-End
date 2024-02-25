@@ -13,7 +13,9 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.VillagerGoalPackages;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
@@ -26,6 +28,7 @@ import net.minecraft.world.entity.schedule.Schedule;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -35,32 +38,39 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.Random;
 
-public class TCRVillager extends Villager implements GeoEntity {
-    public TCRVillager(EntityType<? extends Villager> pEntityType, Level pLevel) {
+public class TCRVillager extends TamableAnimal implements GeoEntity {
+    public TCRVillager(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
+
+    @Nullable
+    @Override
+    public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
+        return null;
+    }
+
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     boolean canTalk = true;
 
     Random r = new Random();
     int whatCanISay = 0;
-    @Override
-    protected Brain<?> makeBrain(Dynamic<?> pDynamic) {
-        Brain<Villager> brain = this.brainProvider().makeBrain(pDynamic);
-        this.registerBrainGoals(brain);
-        return brain;
-    }
-    @Override
-    public void refreshBrain(ServerLevel pServerLevel) {
-        Brain<Villager> brain = this.getBrain();
-        brain.stopAll(pServerLevel, this);
-        this.brain = brain.copyWithoutBehaviors();
-        this.registerBrainGoals(this.getBrain());
-    }
+//    @Override
+//    protected Brain<?> makeBrain(Dynamic<?> pDynamic) {
+//        Brain<Villager> brain = this.brainProvider().makeBrain(pDynamic);
+//        this.registerBrainGoals(brain);
+//        return brain;
+//    }
+//    @Override
+//    public void refreshBrain(ServerLevel pServerLevel) {
+//        Brain<Villager> brain = this.getBrain();
+//        brain.stopAll(pServerLevel, this);
+//        this.brain = brain.copyWithoutBehaviors();
+//        this.registerBrainGoals(this.getBrain());
+//    }
 
     private void registerBrainGoals(Brain<Villager> pVillagerBrain) {
-        VillagerProfession villagerprofession = this.getVillagerData().getProfession();
+//        VillagerProfession villagerprofession = this.getVillagerData().getProfession();
         if (this.isBaby()) {
             pVillagerBrain.setSchedule(Schedule.VILLAGER_BABY);
             pVillagerBrain.addActivity(Activity.PLAY, VillagerGoalPackages.getPlayPackage(0.5F));
@@ -68,14 +78,14 @@ public class TCRVillager extends Villager implements GeoEntity {
 
         //删除工作目标，其他和原版一致
 
-        pVillagerBrain.addActivity(Activity.CORE, VillagerGoalPackages.getCorePackage(villagerprofession, 0.5F));
-        pVillagerBrain.addActivityWithConditions(Activity.MEET, VillagerGoalPackages.getMeetPackage(villagerprofession, 0.5F), ImmutableSet.of(Pair.of(MemoryModuleType.MEETING_POINT, MemoryStatus.VALUE_PRESENT)));
-        pVillagerBrain.addActivity(Activity.REST, VillagerGoalPackages.getRestPackage(villagerprofession, 0.5F));
-        pVillagerBrain.addActivity(Activity.IDLE, VillagerGoalPackages.getIdlePackage(villagerprofession, 0.5F));
-        pVillagerBrain.addActivity(Activity.PANIC, VillagerGoalPackages.getPanicPackage(villagerprofession, 0.5F));
-        pVillagerBrain.addActivity(Activity.PRE_RAID, VillagerGoalPackages.getPreRaidPackage(villagerprofession, 0.5F));
-        pVillagerBrain.addActivity(Activity.RAID, VillagerGoalPackages.getRaidPackage(villagerprofession, 0.5F));
-        pVillagerBrain.addActivity(Activity.HIDE, VillagerGoalPackages.getHidePackage(villagerprofession, 0.5F));
+//        pVillagerBrain.addActivity(Activity.CORE, VillagerGoalPackages.getCorePackage(villagerprofession, 0.5F));
+//        pVillagerBrain.addActivityWithConditions(Activity.MEET, VillagerGoalPackages.getMeetPackage(villagerprofession, 0.5F), ImmutableSet.of(Pair.of(MemoryModuleType.MEETING_POINT, MemoryStatus.VALUE_PRESENT)));
+//        pVillagerBrain.addActivity(Activity.REST, VillagerGoalPackages.getRestPackage(villagerprofession, 0.5F));
+//        pVillagerBrain.addActivity(Activity.IDLE, VillagerGoalPackages.getIdlePackage(villagerprofession, 0.5F));
+//        pVillagerBrain.addActivity(Activity.PANIC, VillagerGoalPackages.getPanicPackage(villagerprofession, 0.5F));
+//        pVillagerBrain.addActivity(Activity.PRE_RAID, VillagerGoalPackages.getPreRaidPackage(villagerprofession, 0.5F));
+//        pVillagerBrain.addActivity(Activity.RAID, VillagerGoalPackages.getRaidPackage(villagerprofession, 0.5F));
+//        pVillagerBrain.addActivity(Activity.HIDE, VillagerGoalPackages.getHidePackage(villagerprofession, 0.5F));
         pVillagerBrain.setCoreActivities(ImmutableSet.of(Activity.CORE));
         pVillagerBrain.setDefaultActivity(Activity.IDLE);
         pVillagerBrain.setActiveActivityIfPossible(Activity.IDLE);
@@ -85,12 +95,12 @@ public class TCRVillager extends Villager implements GeoEntity {
     @Override
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
-        if (itemstack.getItem() != Items.VILLAGER_SPAWN_EGG && this.isAlive() && !this.isTrading() && !this.isSleeping() && !pPlayer.isSecondaryUseActive()) {
+        if (itemstack.getItem() != Items.VILLAGER_SPAWN_EGG && this.isAlive()/* && !this.isTrading()*/ && !this.isSleeping() && !pPlayer.isSecondaryUseActive()) {
             if (this.isBaby()) {
                 this.setUnhappy();
                 return InteractionResult.sidedSuccess(this.level().isClientSide);
             } else {
-                boolean flag = this.getOffers().isEmpty();
+                boolean flag = true;//this.getOffers().isEmpty();
                 if (pHand == InteractionHand.MAIN_HAND) {
                     if (flag && !this.level().isClientSide) {
                         this.setUnhappy();
@@ -108,7 +118,7 @@ public class TCRVillager extends Villager implements GeoEntity {
 
                     return InteractionResult.sidedSuccess(this.level().isClientSide);
                 } else {
-                    if (!this.level().isClientSide && !this.offers.isEmpty()) {
+                    if (!this.level().isClientSide/* && !this.offers.isEmpty()*/) {
 //                        this.startTrading(pPlayer);
                     }
 
@@ -136,7 +146,7 @@ public class TCRVillager extends Villager implements GeoEntity {
     }
 
     private void setUnhappy() {
-        this.setUnhappyCounter(40);
+//        this.setUnhappyCounter(40);
         if (!this.level().isClientSide()) {
             this.playSound(SoundEvents.VILLAGER_NO, this.getSoundVolume(), this.getVoicePitch());//TODO 替换音效
         }

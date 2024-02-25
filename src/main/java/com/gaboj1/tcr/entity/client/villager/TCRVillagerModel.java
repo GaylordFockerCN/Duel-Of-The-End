@@ -18,6 +18,6 @@ public class TCRVillagerModel extends GeoModel<TCRVillager> {
 
     @Override
     public ResourceLocation getAnimationResource(TCRVillager animatable) {
-        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "animations/"+animatable.getResourceName()+".animation.json");
+        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, animatable.getResourceName()+".animation.json");
     }
 }

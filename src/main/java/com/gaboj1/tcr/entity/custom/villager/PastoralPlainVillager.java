@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level;
 
 public class PastoralPlainVillager extends TCRVillager {
 
-    public PastoralPlainVillager(EntityType<? extends Villager> pEntityType, Level pLevel) {
+    public PastoralPlainVillager(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         whatCanISay = 3;
     }
