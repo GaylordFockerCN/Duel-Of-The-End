@@ -26,4 +26,13 @@ public class TCRModItems {
 			() -> new ForgeSpawnEggItem(TCRModEntities.MIDDLE_TREE_MONSTER, 0xD57E36, 0x1D0D00,
 					new Item.Properties()));
 
+	public static final RegistryObject<Item> SMALL_TREE_MONSTER_SPAWN_EGG = REGISTRY.register("small_tree_monster_spawn_egg",
+			() -> new ForgeSpawnEggItem(TCRModEntities.SMALL_TREE_MONSTER, 0xD57E36, 0x1D0D00,
+					new Item.Properties()));
+
+	public static final RegistryObject<Item> TREE_GUARDIAN_SPAWN_EGG = REGISTRY.register("tree_guardian_spawn_egg",
+			() -> new ForgeSpawnEggItem(TCRModEntities.TREE_GUARDIAN, 0xD57E36, 0x1D0D00,
+					new Item.Properties()));
+
+
 }
