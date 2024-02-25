@@ -5,6 +5,7 @@ import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 
+//TODO 换成animatable.getResourceName()
 public class TCRVillagerModel extends GeoModel<TCRVillager> {
     @Override
     public ResourceLocation getModelResource(TCRVillager animatable) {
@@ -13,6 +14,7 @@ public class TCRVillagerModel extends GeoModel<TCRVillager> {
 
     @Override
     public ResourceLocation getTextureResource(TCRVillager animatable) {
+//        System.out.println(animatable.getResourceName());
         return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/pastoral_plain_villager.png");
     }
 

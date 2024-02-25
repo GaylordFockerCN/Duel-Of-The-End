@@ -46,7 +46,6 @@ public class TCRModEntities {
 	public static final RegistryObject<EntityType<PastoralPlainVillagerElder>> PASTORAL_PLAIN_VILLAGER_ELDER =
 			REGISTRY.register("pastoral_plain_villager_elder",
 					() -> EntityType.Builder.of(PastoralPlainVillagerElder::new, MobCategory.CREATURE)
-							.sized(1.5f, 1.75f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "pastoral_plain_villager_elder").toString()));
 
 

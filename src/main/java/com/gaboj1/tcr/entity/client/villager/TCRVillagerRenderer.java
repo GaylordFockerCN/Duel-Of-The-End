@@ -19,10 +19,4 @@ public class TCRVillagerRenderer extends GeoEntityRenderer<TCRVillager> {
         return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/pastoral_plain_villager.png");
     }
 
-    @Override
-    public void render(TCRVillager entity, float entityYaw, float partialTick, PoseStack poseStack,
-                       MultiBufferSource bufferSource, int packedLight) {
-        poseStack.scale(2f, 2f, 2f);
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-    }
 }

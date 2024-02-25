@@ -2,17 +2,20 @@ package com.gaboj1.tcr.entity.custom.villager;
 
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.entity.NpcDialogue;
+import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.gui.screen.PastoralPlainVillagerElderDialogueScreen;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.PacketRelay;
-import com.gaboj1.tcr.network.packet.PastoralPlainVillagerElderDialoguePacket;
+import com.gaboj1.tcr.network.packet.NPCDialoguePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
@@ -35,6 +38,20 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         return "pastoral_plain_villager";
     }
 
+    public static AttributeSupplier setAttributes() {//生物属性
+        return Animal.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 100.0D)//最大血量
+                .add(Attributes.ATTACK_DAMAGE, 6.0f)//单次攻击伤害
+                .add(Attributes.ATTACK_SPEED, 1.0f)//攻速
+                .add(Attributes.MOVEMENT_SPEED, 0.4f)//移速
+                .build();
+    }
+
+    protected void registerGoals() {
+        this.goalSelector.addGoal(1, new NpcDialogueGoal<>(this));//防乱跑
+        super.registerGoals();
+    }
+
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (hand == InteractionHand.MAIN_HAND) {
@@ -43,7 +60,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     this.lookAt(player, 180.0F, 180.0F);
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (this.getConversingPlayer() == null) {
-                            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PastoralPlainVillagerElderDialoguePacket(this.getId()), serverPlayer);
+                            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId()), serverPlayer);
                             this.setConversingPlayer(serverPlayer);
                         }
                     }
@@ -59,7 +76,6 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     @Override
     @OnlyIn(Dist.CLIENT)
     public void openDialogueScreen() {
-        //TODO 以下用来测试，记得复原
         Minecraft.getInstance().setScreen(new PastoralPlainVillagerElderDialogueScreen(this));
     }
 

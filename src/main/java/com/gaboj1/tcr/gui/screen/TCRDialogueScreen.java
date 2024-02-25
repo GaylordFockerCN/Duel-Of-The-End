@@ -3,11 +3,9 @@ package com.gaboj1.tcr.gui.screen;
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.NpcDialogue;
-import com.gaboj1.tcr.entity.custom.TreeGuardianEntity;
 import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.gui.screen.component.DialogueAnswerComponent;
 import com.gaboj1.tcr.gui.screen.component.DialogueChoiceComponent;
-import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.NpcPlayerInteractPacket;
@@ -32,21 +30,21 @@ import net.minecraftforge.common.MinecraftForge;
 public class TCRDialogueScreen extends Screen {
     public static final ResourceLocation MY_BACKGROUND_LOCATION = new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"textures/gui/background.png");
     protected final DialogueAnswerComponent dialogueAnswer;
-    protected final Entity elder;//TODO 改回去
+    protected final Entity entity;//TODO 改回去
 
     EntityType<?> entityType;
 
-    public TCRDialogueScreen(Entity elder, EntityType<?> entityType) {
-        super(elder.getDisplayName());
-        this.dialogueAnswer = new DialogueAnswerComponent(this.buildDialogueAnswerName(elder.getDisplayName().copy().withStyle(ChatFormatting.YELLOW)));
-        this.elder = elder;
+    public TCRDialogueScreen(Entity entity, EntityType<?> entityType) {
+        super(entity.getDisplayName());
+        this.dialogueAnswer = new DialogueAnswerComponent(this.buildDialogueAnswerName(entity.getDisplayName().copy().withStyle(ChatFormatting.YELLOW)));
+        this.entity = entity;
         this.entityType = entityType;
     }
 
     /**
      * 在这里实现对话逻辑调用
      * @see PastoralPlainVillagerElderDialogueScreen#init()
-    */
+     */
     @Override
     protected void init() {}
 
@@ -84,10 +82,10 @@ public class TCRDialogueScreen extends Screen {
      * @param component The message {@link Component}.
      */
     protected void setDialogueAnswer(Component component) {
-        if(elder instanceof NpcDialogue npc){
+        if(entity instanceof NpcDialogue npc){
             npc.chat(component);//左下角重复一下，方便回看
         }
-        this.dialogueAnswer.updateDialogue(this.buildDialogueAnswerName(this.elder.getDisplayName()).append(": ").append(component));
+        this.dialogueAnswer.updateDialogue(this.buildDialogueAnswerName(this.entity.getDisplayName()).append(": ").append(component));
     }
 
     /**
@@ -113,7 +111,7 @@ public class TCRDialogueScreen extends Screen {
     public MutableComponent buildDialogueDialog(int i) {
         Component component = Component.translatable(entityType+".dialog"+i);
 
-        if(elder instanceof NpcDialogue npc) {
+        if(entity instanceof NpcDialogue npc) {
             Player player = npc.getConversingPlayer();
             if (player != null)
                 player.sendSystemMessage(Component.literal("[").append(player.getCustomName().copy().withStyle(TCRConfig.IS_WHITE.get() ? ChatFormatting.YELLOW : ChatFormatting.BLACK)).append("]: ").append(component));
@@ -123,7 +121,7 @@ public class TCRDialogueScreen extends Screen {
 
     public MutableComponent buildDialogueDialog(int i, String s) {
         Component component = Component.translatable(entityType+".dialog"+i,s);
-        if(elder instanceof NpcDialogue npc) {
+        if(entity instanceof NpcDialogue npc) {
             Player player = npc.getConversingPlayer();
             if (player != null)
                 player.sendSystemMessage(Component.literal("[").append(player.getCustomName().copy().withStyle(TCRConfig.IS_WHITE.get() ? ChatFormatting.YELLOW : ChatFormatting.BLACK)).append("]: ").append(component));
@@ -142,7 +140,7 @@ public class TCRDialogueScreen extends Screen {
      * @see PastoralPlainVillagerElder#handleNpcInteraction(Player, byte)
      */
     protected void finishChat(byte interactionID) {
-        PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new NpcPlayerInteractPacket(this.elder.getId(), interactionID));
+        PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new NpcPlayerInteractPacket(this.entity.getId(), interactionID));
         super.onClose();
     }
 

@@ -3,7 +3,7 @@ package com.gaboj1.tcr.network;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.network.packet.BasePacket;
 import com.gaboj1.tcr.network.packet.NpcPlayerInteractPacket;
-import com.gaboj1.tcr.network.packet.PastoralPlainVillagerElderDialoguePacket;
+import com.gaboj1.tcr.network.packet.NPCDialoguePacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
@@ -22,7 +22,7 @@ public class TCRPacketHandler {
 
     public static synchronized void register() {
         // CLIENTBOUND
-         register(PastoralPlainVillagerElderDialoguePacket.class, PastoralPlainVillagerElderDialoguePacket::decode);
+         register(NPCDialoguePacket.class, NPCDialoguePacket::decode);
 
 
         // SERVERBOUND
