@@ -28,28 +28,31 @@ public class ModEntityLootTables extends EntityLootSubProvider {
     @Override
     public void generate() {
 
-        add(TCRModEntities.DESERT_EAGLE_BULLET.get(), emptyLootTable());
+        add(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(), emptyLootTable());
+        add(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), emptyLootTable());
 
         add(TCRModEntities.SMALL_TREE_MONSTER.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(1, 4))
+                                .setRolls(UniformGenerator.between(0, 4))
                                 .add(LootItem.lootTableItem(TCRModItems.BASIC_RESIN.get())))
         );
 
         add(TCRModEntities.MIDDLE_TREE_MONSTER.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(1, 2))
+                                .setRolls(UniformGenerator.between(0, 2))
                                 .add(LootItem.lootTableItem(TCRModItems.BASIC_RESIN.get())))
                         .withPool(LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(2, 3))
-                                .add(LootItem.lootTableItem(TCRModItems.BASIC_RESIN.get()).setWeight(1))
-                                .add(LootItem.lootTableItem(TCRModItems.INTERMEDIATE_RESIN.get()).setWeight(3)))
+                                .setRolls(UniformGenerator.between(0, 2))
+                                .add(LootItem.lootTableItem(TCRModItems.INTERMEDIATE_RESIN.get())))
         );
 
         add(TCRModEntities.TREE_GUARDIAN.get(),
                 LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(0, 2))
+                                .add(LootItem.lootTableItem(TCRModItems.INTERMEDIATE_RESIN.get())))
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(1, 2))
                                 .add(LootItem.lootTableItem(TCRModItems.INTERMEDIATE_RESIN.get()).setWeight(1))

@@ -22,7 +22,7 @@ public class TCRModItems {
 	public static final RegistryObject<Item> COPY_RESIN = REGISTRY.register("copy_resin", () -> new CopyResin(new Item.Properties().setNoRepair().stacksTo(64).rarity(Rarity.EPIC)));
 	public static final RegistryObject<Item> TREE_SPIRIT_WAND = REGISTRY.register("tree_spirit_wand",() ->  new TreeSpiritWand());
 
-	public static final RegistryObject<Item> TIGER_SPAWN_EGG = REGISTRY.register("tiger_spawn_egg",
+	public static final RegistryObject<Item> MIDDLE_TREE_MONSTER_SPAWN_EGG = REGISTRY.register("middle_tree_monster_spawn_egg",
 			() -> new ForgeSpawnEggItem(TCRModEntities.MIDDLE_TREE_MONSTER, 0xD57E36, 0x1D0D00,
 					new Item.Properties()));
 

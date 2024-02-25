@@ -102,7 +102,7 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
             name = "so_rich";
             Advancement so_rich = Advancement.Builder.advancement()
                     .parent(enterRealmOfTheDream)//TODO 换成打过树妖后
-                    .display(Items.AIR,
+                    .display(Items.GLASS_BOTTLE,
                             Component.translatable(pre+name),
                             Component.translatable(pre+name+".desc"),
                             null,

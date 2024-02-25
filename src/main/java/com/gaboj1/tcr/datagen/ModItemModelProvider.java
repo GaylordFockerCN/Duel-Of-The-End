@@ -21,7 +21,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
 
-        withExistingParent(TCRModItems.TIGER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(TCRModItems.MIDDLE_TREE_MONSTER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
         simpleBlockItemBlockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER);
         saplingItem(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING);
