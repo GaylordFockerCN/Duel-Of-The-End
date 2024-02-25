@@ -5,6 +5,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
@@ -16,6 +17,7 @@ public class TCRModItemTabs {
 	//方块
 	public static final RegistryObject<CreativeModeTab> BLOCK = REGISTRY.register("block",
 			() -> CreativeModeTab.builder()
+					.withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
 					.withTabsAfter(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "spawn_egg"))
 					.title(Component.translatable("item_group.the_casket_of_reveries.block"))
 					.icon(() -> new ItemStack(TCRModBlocks.PORTAL_BED.get()))
@@ -24,9 +26,7 @@ public class TCRModItemTabs {
 
 				tabData.accept(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get());
 				tabData.accept(TCRModBlocks.PORTAL_BED.get());
-
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
-
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get());
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get());
 				tabData.accept(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get());
@@ -47,9 +47,9 @@ public class TCRModItemTabs {
 					.title(Component.translatable("item_group.the_casket_of_reveries.spawn_egg"))
 					.icon(() -> new ItemStack(TCRModItems.MIDDLE_TREE_MONSTER_SPAWN_EGG.get()))
 					.displayItems((parameters, tabData) -> {
-
-				tabData.accept(TCRModItems.MIDDLE_TREE_MONSTER_SPAWN_EGG.get());
-
+						tabData.accept(TCRModItems.SMALL_TREE_MONSTER_SPAWN_EGG.get());
+						tabData.accept(TCRModItems.MIDDLE_TREE_MONSTER_SPAWN_EGG.get());
+						tabData.accept(TCRModItems.TREE_GUARDIAN_SPAWN_EGG.get());
 			}).build());
 
 	//战利品
