@@ -23,7 +23,10 @@ public class ModLangGenerator extends ModLangProvider {
         this.addConfig("tree_spirit_wand_heal","树灵法杖回血量");
         this.addConfig("spirit_log_consume","树灵法杖召唤小树妖时消耗的原木数");
 
-        this.add("item_group.the_casket_of_reveries.the_casket_of_reveries","远梦之棺");
+        this.add("item_group.the_casket_of_reveries.block","远梦之棺-方块");
+        this.add("item_group.the_casket_of_reveries.spawn_egg","远梦之棺-生物蛋");
+        this.add("item_group.the_casket_of_reveries.loot","远梦之棺-战利品");
+
         this.add(TCRModItems.DESERT_EAGLE.get(),"沙漠之鹰");
         this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"headshot","爆头！");
         this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"ammo_count","剩余弹药数：");
