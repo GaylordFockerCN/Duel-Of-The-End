@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.datagen;
+package com.gaboj1.tcr.datagen.tags;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.init.TCRModEntities;

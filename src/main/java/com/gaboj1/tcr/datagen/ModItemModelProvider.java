@@ -21,8 +21,11 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         withExistingParent(TCRModItems.SMALL_TREE_MONSTER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
-        withExistingParent(TCRModItems.MIDDLE_TREE_MONSTER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));//模型文件
+        withExistingParent(TCRModItems.MIDDLE_TREE_MONSTER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(TCRModItems.TREE_GUARDIAN_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(TCRModItems.PASTORAL_PLAIN_VILLAGER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(TCRModItems.PASTORAL_PLAIN_VILLAGER_ELDER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+
         simpleBlockItemBlockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER);
         saplingItem(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING);
     }

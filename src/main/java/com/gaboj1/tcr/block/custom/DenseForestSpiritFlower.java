@@ -1,7 +1,5 @@
 package com.gaboj1.tcr.block.custom;
 
-import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.datagen.ModEntityTagGenerator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
