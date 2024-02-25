@@ -14,8 +14,9 @@ public class TCRModItemTabs {
 	public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, TheCasketOfReveriesMod.MOD_ID);
 
 	//方块
-	public static final RegistryObject<CreativeModeTab> MODE_TAB = REGISTRY.register("block",
+	public static final RegistryObject<CreativeModeTab> BLOCK = REGISTRY.register("block",
 			() -> CreativeModeTab.builder()
+					.withTabsAfter(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "spawn_egg"))
 					.title(Component.translatable("item_group.the_casket_of_reveries.block"))
 					.icon(() -> new ItemStack(TCRModBlocks.PORTAL_BED.get()))
 					.displayItems((parameters, tabData) -> {
