@@ -17,9 +17,12 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.behavior.VillagerGoalPackages;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.player.Player;
@@ -68,6 +71,8 @@ public class TCRVillager extends TamableAnimal implements GeoEntity {
 //        this.brain = brain.copyWithoutBehaviors();
 //        this.registerBrainGoals(this.getBrain());
 //    }
+
+
 
     private void registerBrainGoals(Brain<Villager> pVillagerBrain) {
 //        VillagerProfession villagerprofession = this.getVillagerData().getProfession();

@@ -72,7 +72,6 @@ public class TreeGuardianEntity extends IronGolem implements GeoEntity , Neutral
         */
 
 
-
             this.goalSelector.addGoal(1, new NpcDialogueGoal<>(this));
 
 

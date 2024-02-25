@@ -8,16 +8,16 @@ import software.bernie.geckolib.model.GeoModel;
 public class TCRVillagerModel extends GeoModel<TCRVillager> {
     @Override
     public ResourceLocation getModelResource(TCRVillager animatable) {
-        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "geo/"+animatable.getResourceName()+".geo.json");
+        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "geo/pastoral_plain_villager.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureResource(TCRVillager animatable) {
-        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/"+animatable.getResourceName()+".png");
+        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/pastoral_plain_villager.png");
     }
 
     @Override
     public ResourceLocation getAnimationResource(TCRVillager animatable) {
-        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, animatable.getResourceName()+".animation.json");
+        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "animations/pastoral_plain_villager.animation.json");
     }
 }
