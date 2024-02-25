@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.entity;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -31,4 +32,7 @@ public interface NpcDialogue {
      */
     @Nullable
     Player getConversingPlayer();
+    @Nullable
+    void chat(Component component);
+
 }
