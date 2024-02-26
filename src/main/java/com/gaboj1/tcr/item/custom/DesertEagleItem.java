@@ -100,7 +100,7 @@ public class DesertEagleItem extends Item implements GeoItem {
                 if(this.renderer == null){
                     renderer = new DesertEagleItemRenderer();
                 }
-                return this.renderer;//MCreator写final害我调半天...
+                return this.renderer;
             }
         });
     }

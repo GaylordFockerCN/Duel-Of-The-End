@@ -82,6 +82,7 @@ public class BoundingBoxManager
         registerHeadshotBox(EntityType.HOGLIN, new RotatedHeadshotBox<>(14.0, 16.0, 7.0, 19.0, false, true));
         registerHeadshotBox(EntityType.ZOGLIN, new RotatedHeadshotBox<>(14.0, 16.0, 7.0, 19.0, false, true));
         registerHeadshotBox(EntityType.PIGLIN, new ChildHeadshotBox<>(8.0, 24.0, 0.75, 0.5));
+        //TODO 添加模组生物
     }
 
     /**

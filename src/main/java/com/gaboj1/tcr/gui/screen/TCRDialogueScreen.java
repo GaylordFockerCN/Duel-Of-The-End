@@ -9,6 +9,7 @@ import com.gaboj1.tcr.gui.screen.component.DialogueChoiceComponent;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.NpcPlayerInteractPacket;
+import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -114,7 +115,7 @@ public class TCRDialogueScreen extends Screen {
         if(entity instanceof NpcDialogue npc) {
             Player player = npc.getConversingPlayer();
             if (player != null)
-                player.sendSystemMessage(Component.literal("[").append(player.getCustomName().copy().withStyle(TCRConfig.IS_WHITE.get() ? ChatFormatting.YELLOW : ChatFormatting.BLACK)).append("]: ").append(component));
+                player.sendSystemMessage(Component.literal("[").append(player.getCustomName().copy().withStyle(DataManager.isWhite.getBool(player) ? ChatFormatting.YELLOW : ChatFormatting.BLACK)).append("]: ").append(component));
         }
         return component.copy();
     }
@@ -124,7 +125,7 @@ public class TCRDialogueScreen extends Screen {
         if(entity instanceof NpcDialogue npc) {
             Player player = npc.getConversingPlayer();
             if (player != null)
-                player.sendSystemMessage(Component.literal("[").append(player.getCustomName().copy().withStyle(TCRConfig.IS_WHITE.get() ? ChatFormatting.YELLOW : ChatFormatting.BLACK)).append("]: ").append(component));
+                player.sendSystemMessage(Component.literal("[").append(player.getCustomName().copy().withStyle(DataManager.isWhite.getBool(player) ? ChatFormatting.YELLOW : ChatFormatting.BLACK)).append("]: ").append(component));
         }
         return component.copy();
     }
