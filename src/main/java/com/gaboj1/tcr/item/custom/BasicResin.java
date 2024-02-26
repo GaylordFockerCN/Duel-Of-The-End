@@ -17,11 +17,14 @@ import java.util.List;
 
 public class BasicResin extends Item {
 
-    protected int scale = 1;
+    private int scale = 1;
+    public static final int INTERMEDIATE_RESIN = 9;
+    public static final int ADVANCED_RESIN = 9*9;
+    public static final int SUPER_RESIN = 9*9*9;
 
-    public BasicResin(Properties pProperties) {
+    public BasicResin(Properties pProperties, int scale) {
         super(pProperties);
-//        this.repairValue = TCRConfig.REPAIR_VALUE.get();//不能在Config还没初始化就调用。。
+        this.scale = scale;
     }
 
     @Override
@@ -32,8 +35,8 @@ public class BasicResin extends Item {
         ItemStack handItem = pPlayer.getItemInHand(pUsedHand);
         int _repairValue = this.scale * TCRConfig.REPAIR_VALUE.get();
         //只能用高级树脂修复法宝，并且会有折扣
-        if(otherHandItem.getItem() instanceof TreeSpiritWand){
-            if(! (handItem.getItem() instanceof SuperResin)){
+        if(otherHandItem.getItem() instanceof MagicWeapon){
+            if(! (scale == SUPER_RESIN)){
                 return InteractionResultHolder.fail(handItem);
             }
             _repairValue /= 9;

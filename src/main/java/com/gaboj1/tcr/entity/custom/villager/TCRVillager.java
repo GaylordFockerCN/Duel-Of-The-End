@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.entity.custom.villager;
 
 import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.util.DataManager;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Dynamic;
@@ -113,7 +114,7 @@ public class TCRVillager extends Villager implements GeoEntity {
                 }
 
                 if (flag && canTalk) {
-                    if(TCRConfig.IS_WHITE.get()){//新增对话，其他和原版一样
+                    if(DataManager.isWhite.getBool(pPlayer)){//新增对话，其他和原版一样
                         talk(pPlayer);
                     }else {
                         talkFuck(pPlayer);
@@ -163,7 +164,13 @@ public class TCRVillager extends Villager implements GeoEntity {
     @Override
     public void die(DamageSource pCause) {
         super.die(pCause);
-        TCRConfig.IS_WHITE.set(false);//设为黑方
+        if(pCause.getEntity() instanceof Player player) {
+            if(!DataManager.isWhite.isLocked()){
+                DataManager.isWhite.putData(player, false);
+                DataManager.isWhite.lock();
+            }
+        }
+//        this.getServer().getSingleplayerProfile().getProperties();
     }
 
     //TODO 补全音效
@@ -178,8 +185,9 @@ public class TCRVillager extends Villager implements GeoEntity {
 //    }
 //
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        if(pDamageSource.getEntity() instanceof Player player)
+        if(pDamageSource.getEntity() instanceof Player player) {
             talkFuck(player);
+        }
         return SoundEvents.VILLAGER_HURT;
     }
 //

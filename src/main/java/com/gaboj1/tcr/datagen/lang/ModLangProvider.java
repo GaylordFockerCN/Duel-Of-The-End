@@ -113,7 +113,7 @@ public abstract class ModLangProvider extends LanguageProvider {
 
     public void addEntityAndEgg(RegistryObject<? extends EntityType<?>> entity, String name) {
         this.addEntityType(entity, name);
-        this.add("item."+TheCasketOfReveriesMod.MOD_ID+"." + entity.getId().getPath() + "_spawn_egg", name + " Spawn Egg");
+        this.add("item."+TheCasketOfReveriesMod.MOD_ID+"." + entity.getId().getPath() + "_spawn_egg", name + "刷怪蛋");
     }
 
     public void addVillagerChat(RegistryObject<? extends EntityType<?>> villager, int index, boolean isFWord, String text) {

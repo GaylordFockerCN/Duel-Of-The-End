@@ -12,15 +12,6 @@ public class TCRConfig
 {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
-    //阵营判断
-    public static final ForgeConfigSpec.BooleanValue IS_WHITE = BUILDER
-            .translation("config."+TheCasketOfReveriesMod.MOD_ID+".is_white")
-            .define("is_white", true);
-
-    public static final ForgeConfigSpec.BooleanValue KILLED_BOSS1 = BUILDER
-            .translation("config."+TheCasketOfReveriesMod.MOD_ID+".killed_boss1")
-            .define("killed_boss1", false);
-
     //是否启用自定义地图生成时缩放
     public static final ForgeConfigSpec.BooleanValue ENABLE_SCALING = BUILDER
             .translation("config."+TheCasketOfReveriesMod.MOD_ID+".enable_scaling")

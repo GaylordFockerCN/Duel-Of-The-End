@@ -28,7 +28,11 @@ public class ModEntityLootTables extends EntityLootSubProvider {
     @Override
     public void generate() {
 
-        add(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(), emptyLootTable());
+        add(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(ConstantValue.exactly(1))
+                                .add(LootItem.lootTableItem(TCRModItems.ELDER_STAFF.get()))));
         add(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), emptyLootTable());
 
         add(TCRModEntities.SMALL_TREE_MONSTER.get(),

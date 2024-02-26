@@ -23,7 +23,6 @@ public class TCRModItemTabs {
 					.icon(() -> new ItemStack(TCRModBlocks.PORTAL_BED.get()))
 					.displayItems((parameters, tabData) -> {
 
-
 				tabData.accept(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get());
 				tabData.accept(TCRModBlocks.PORTAL_BED.get());
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
@@ -72,6 +71,9 @@ public class TCRModItemTabs {
 				tabData.accept(TCRModItems.ADVANCED_RESIN.get());
 				tabData.accept(TCRModItems.SUPER_RESIN.get());
 				tabData.accept(TCRModItems.COPY_RESIN.get());
+
+
+				tabData.accept(TCRModItems.ELDER_STAFF.get());
 
 				//法宝
 				tabData.accept(TCRModItems.TREE_SPIRIT_WAND.get());

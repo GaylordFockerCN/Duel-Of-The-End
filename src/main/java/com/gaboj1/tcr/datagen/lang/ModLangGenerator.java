@@ -40,6 +40,8 @@ public class ModLangGenerator extends ModLangProvider {
         this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"reloading","您正在换弹！");
         this.add(TCRModItems.DESERT_EAGLE_AMMO.get(),"沙鹰弹药");
 
+        this.add(TCRModItems.ELDER_STAFF.get(),"长老的拐杖");
+        this.addItemUsageInfo(TCRModItems.ELDER_STAFF.get(),"长老生前用过的拐杖，上面还带着点血迹。");
         this.add(TCRModItems.TREE_SPIRIT_WAND.get(),"树灵法杖");
         this.addItemInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"no_spirit_tree","密林灵树原木不足，无法召唤小树妖");
         this.addItemUsageInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"右键地面消耗密林原木和生命值召唤小树妖",1);
