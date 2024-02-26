@@ -1,6 +1,5 @@
 package com.gaboj1.tcr.gui.screen;
 
-import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillagerElder;
@@ -15,6 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -113,8 +113,8 @@ public class TCRDialogueScreen extends Screen {
         Component component = Component.translatable(entityType+".dialog"+i);
 
         if(entity instanceof NpcDialogue npc) {
-            Player player = npc.getConversingPlayer();
-            if (player != null)
+            Player player1 = npc.getConversingPlayer();
+            if (player1 instanceof LocalPlayer player)
                 player.sendSystemMessage(Component.literal("[").append(player.getCustomName().copy().withStyle(DataManager.isWhite.getBool(player) ? ChatFormatting.YELLOW : ChatFormatting.BLACK)).append("]: ").append(component));
         }
         return component.copy();
@@ -123,8 +123,8 @@ public class TCRDialogueScreen extends Screen {
     public MutableComponent buildDialogueDialog(int i, String s) {
         Component component = Component.translatable(entityType+".dialog"+i,s);
         if(entity instanceof NpcDialogue npc) {
-            Player player = npc.getConversingPlayer();
-            if (player != null)
+            Player player1 = npc.getConversingPlayer();
+            if (player1 instanceof LocalPlayer player)
                 player.sendSystemMessage(Component.literal("[").append(player.getCustomName().copy().withStyle(DataManager.isWhite.getBool(player) ? ChatFormatting.YELLOW : ChatFormatting.BLACK)).append("]: ").append(component));
         }
         return component.copy();

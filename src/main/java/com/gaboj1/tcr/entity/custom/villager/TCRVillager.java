@@ -6,8 +6,10 @@ import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
@@ -113,8 +115,8 @@ public class TCRVillager extends Villager implements GeoEntity {
                     pPlayer.awardStat(Stats.TALKED_TO_VILLAGER);
                 }
 
-                if (flag && canTalk) {
-                    if(DataManager.isWhite.getBool(pPlayer)){//新增对话，其他和原版一样
+                if (flag && canTalk && pPlayer instanceof LocalPlayer player) {
+                    if(DataManager.isWhite.getBool(player)){//新增对话，其他和原版一样
                         talk(pPlayer);
                     }else {
                         talkFuck(pPlayer);
@@ -166,8 +168,8 @@ public class TCRVillager extends Villager implements GeoEntity {
         super.die(pCause);
         if(pCause.getEntity() instanceof Player player) {
             if(!DataManager.isWhite.isLocked()){
-                DataManager.isWhite.putData(player, false);
-                DataManager.isWhite.lock();
+                DataManager.isWhite.putBool(player, false);
+                DataManager.isWhite.lock(player);
             }
         }
 //        this.getServer().getSingleplayerProfile().getProperties();

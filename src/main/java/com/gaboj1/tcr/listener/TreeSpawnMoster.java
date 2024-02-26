@@ -2,7 +2,9 @@ package com.gaboj1.tcr.listener;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.custom.DenseForestTreeBlock;
+import com.gaboj1.tcr.entity.custom.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.init.TCRModEntities;
+import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.resources.ResourceLocation;
@@ -12,6 +14,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -41,8 +44,9 @@ public class TreeSpawnMoster {
             if(level instanceof ServerLevel serverLevel && player instanceof ServerPlayer serverPlayer && 1 == r.nextInt(10)){// 1/10概率
 
                 //生成树怪并获得成就
-                TCRModEntities.SMALL_TREE_MONSTER.get().spawn(serverLevel,event.getPos(), MobSpawnType.NATURAL).hurt(((ServerLevel) level).damageSources().playerAttack(player),1f);
-                TCRModEntities.SMALL_TREE_MONSTER.get().spawn(serverLevel,event.getPos(), MobSpawnType.NATURAL).setPersistentAngerTarget(player.getUUID());
+                SmallTreeMonsterEntity entity =  TCRModEntities.SMALL_TREE_MONSTER.get().spawn(serverLevel,event.getPos(), MobSpawnType.NATURAL);
+                entity.hurt(((ServerLevel) level).damageSources().playerAttack(player),1f);
+                entity.setTarget(player);
 
                 Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"wow"));
                 AdvancementProgress _ap = serverPlayer.getAdvancements().getOrStartProgress(_adv);
@@ -52,5 +56,6 @@ public class TreeSpawnMoster {
                 }
             }
         }
+
     }
 }

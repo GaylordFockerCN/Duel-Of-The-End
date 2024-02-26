@@ -57,7 +57,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (hand == InteractionHand.MAIN_HAND) {
             if ( !this.level().isClientSide()) {
-                if (DataManager.isWhite.getBool(player)) {
+//                if (DataManager.isWhite.getBool((ServerPlayer)player)) {
                     this.lookAt(player, 180.0F, 180.0F);
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (this.getConversingPlayer() == null) {
@@ -65,9 +65,9 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                             this.setConversingPlayer(serverPlayer);
                         }
                     }
-                } else {
-                    talk(player,Component.translatable(""));
-                }
+//                } else {
+//                    talk(player,Component.translatable(""));
+//                }
                 return InteractionResult.SUCCESS;
             }
         }

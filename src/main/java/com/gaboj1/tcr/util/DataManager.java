@@ -25,68 +25,141 @@ public class DataManager {
     }
 
     //阵营判断
-    public static Data isWhite =  new Data("is_white",true);
-    public static Data boss1Defeated =  new Data("boss1_defeated",false);
+    public static BoolData isWhite =  new BoolData("is_white",true);
+    public static BoolData boss1Defeated =  new BoolData("boss1_defeated",false);
 
-    public static class Data{
-        private String key;
+    //给予初始值
+    public static void init(Player player){
+        if(player == null)
+            return;
+        System.out.println("inited");
+        isWhite.init(player);
+        boss1Defeated.init(player);
+    }
 
-        private boolean isLocked = false;//增加一个锁
+    public static class Data {
 
-        //Default 不知道怎么用上..
-        private boolean defaultBool = false;
-        private int defaultInt = 0;
+        protected String key;
+        protected boolean isLocked = false;//增加一个锁
 
         public Data(String key){
             this.key = key;
         }
 
-        public Data(String key, boolean defaultBool){
-            this.key = key;
-            this.defaultBool = defaultBool;
-        }
+        public void init(Player player){
+            isLocked = player.getPersistentData().getBoolean(key+"isLocked");
 
-        public Data(String key, int defaultInt){
-            this.key = key;
-            this.defaultInt = defaultInt;
         }
 
         public boolean isLocked() {
             return isLocked;
         }
 
-        public void lock() {
+        public void lock(Player player) {
+            player.getPersistentData().putBoolean(key+"isLocked",true);
             isLocked = true;
         }
 
-        public void unLock() {
+        public void unLock(Player player) {
+            player.getPersistentData().putBoolean(key+"isLocked",false);
             isLocked = false;
         }
 
+//        public void putData(Player player, int value){
+//            if(!isLocked)
+//                player.getPersistentData().putInt(key, value);
+//        }
+//        public void putData(Player player, String value){
+//            if(!isLocked)
+//                player.getPersistentData().putString(key, value);
+//        }
+//        public void putData(Player player, boolean value){
+//            if(!isLocked)
+//                player.getPersistentData().putBoolean(key, value);
+//        }
+//
+//        public boolean getBool(Player player){
+//            return player.getPersistentData().getBoolean(key);
+//        }
+//        public int getInt(Player player){
+//            return player.getPersistentData().getInt(key);
+//        }
+//        public String getString(Player player){
+//            return player.getPersistentData().getString(key);
+//        }
 
-        public void putData(Player player, int value){
-            if(!isLocked)
-                player.getPersistentData().putInt(key, value);
+    }
+
+    public static class StringData extends Data {
+
+        protected boolean isLocked = false;//增加一个锁
+        protected String defaultString = "";
+
+        public StringData(String key, String defaultString){
+            super(key);
+            this.defaultString = defaultString;
         }
-        public void putData(Player player, String value){
+
+        @Override
+        public void init(Player player) {
+            putString(player,defaultString);
+        }
+
+        public void putString(Player player, String value){
             if(!isLocked)
                 player.getPersistentData().putString(key, value);
         }
-        public void putData(Player player, boolean value){
+
+        public String getString(Player player){
+           return player.getPersistentData().getString(key);
+        }
+
+    }
+    public static class IntData extends Data {
+
+        private int defaultInt = 0;
+
+        public IntData(String key, int defaultInt) {
+            super(key);
+            this.defaultInt = defaultInt;
+        }
+
+        public void init(Player player){
+            isLocked = player.getPersistentData().getBoolean(key+"isLocked");
+            putInt(player,defaultInt);
+        }
+
+        public void putInt(Player player, int value){
+            if(!isLocked)
+                player.getPersistentData().putInt(key, value);
+        }
+
+        public int getInt(Player player){
+            return player.getPersistentData().getInt(key);
+        }
+
+    }
+    public static class BoolData extends Data {
+
+        boolean defaultBool = false;
+        public BoolData(String key, boolean defaultBool) {
+            super(key);
+            this.defaultBool = defaultBool;
+        }
+
+        public void init(Player player){
+            isLocked = player.getPersistentData().getBoolean(key+"isLocked");
+            putBool(player,defaultBool);
+        }
+
+        public void putBool(Player player, boolean value){
             if(!isLocked)
                 player.getPersistentData().putBoolean(key, value);
         }
 
         public boolean getBool(Player player){
-            boolean re = player.getPersistentData().getBoolean(key);
-
+            System.out.println(key+"local"+player.isLocalPlayer()+player.getPersistentData().getBoolean(key));
             return player.getPersistentData().getBoolean(key);
-        }
-        public int getInt(Player player){
-            return player.getPersistentData().getInt(key);
-        }
-        public String getString(Player player){
-           return player.getPersistentData().getString(key);
         }
 
     }
