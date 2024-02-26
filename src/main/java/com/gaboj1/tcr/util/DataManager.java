@@ -17,14 +17,14 @@ public class DataManager {
         player.getPersistentData().putBoolean(key, value);
     }
 
-    public static void getBool(Player player, String key){
-        player.getPersistentData().getBoolean(key);
+    public static boolean getBool(Player player, String key){
+        return player.getPersistentData().getBoolean(key);
     }
-    public static void getInt(Player player, String key){
-        player.getPersistentData().getInt(key);
+    public static int getInt(Player player, String key){
+        return player.getPersistentData().getInt(key);
     }
-    public static void getString(Player player, String key){
-        player.getPersistentData().getString(key);
+    public static String getString(Player player, String key){
+        return player.getPersistentData().getString(key);
     }
 
     //阵营判断
