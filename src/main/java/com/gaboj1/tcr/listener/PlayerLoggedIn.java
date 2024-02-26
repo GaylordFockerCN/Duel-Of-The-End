@@ -27,14 +27,5 @@ public class PlayerLoggedIn {
             DataManager.init(event.getEntity());
         }
 
-        /**
-         * FIXME 没办法，只有这里可以获取客户端玩家。。。。不知道别的哪里可以初始
-         */
-        @SubscribeEvent
-        public static void initClientPlayerPersistentData(ClientPlayerNetworkEvent event) {
-            DataManager.init(event.getPlayer());
-        }
-
-
     }
 }

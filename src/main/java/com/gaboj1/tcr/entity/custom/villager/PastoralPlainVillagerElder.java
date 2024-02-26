@@ -9,6 +9,7 @@ import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.packet.NPCDialoguePacket;
 import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.client.Minecraft;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -61,7 +62,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     this.lookAt(player, 180.0F, 180.0F);
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (this.getConversingPlayer() == null) {
-                            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId()), serverPlayer);
+                            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(),serverPlayer.getPersistentData().copy()), serverPlayer);
                             this.setConversingPlayer(serverPlayer);
                         }
                     }
@@ -76,8 +77,8 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void openDialogueScreen() {
-        Minecraft.getInstance().setScreen(new PastoralPlainVillagerElderDialogueScreen(this));
+    public void openDialogueScreen(CompoundTag serverPlayerData) {
+        Minecraft.getInstance().setScreen(new PastoralPlainVillagerElderDialogueScreen(this, serverPlayerData));
     }
 
     @Override

@@ -103,7 +103,7 @@ public class MiddleTreeMonsterEntity extends TamableAnimal implements GeoEntity 
     //@SubscribeEvent
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
         if(tAnimationState.isMoving()) {
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.m_tree_monster - Converted.move", Animation.LoopType.LOOP));
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.m_treemonster - Converted.move", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         LivingEntity target = this.getTarget();

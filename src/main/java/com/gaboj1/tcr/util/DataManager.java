@@ -1,6 +1,9 @@
 package com.gaboj1.tcr.util;
 
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
 public class DataManager {
 
@@ -25,14 +28,14 @@ public class DataManager {
     }
 
     //阵营判断
-    public static BoolData isWhite =  new BoolData("is_white",true);
-    public static BoolData boss1Defeated =  new BoolData("boss1_defeated",false);
+    //TODO 用命令来修改这些变量
+    public static BoolData isWhite =  new BoolData("is_white",true,1);
+    public static BoolData boss1Defeated =  new BoolData("boss1_defeated",false,2);
 
     //给予初始值
     public static void init(Player player){
         if(player == null)
             return;
-        System.out.println("inited");
         isWhite.init(player);
         boss1Defeated.init(player);
     }
@@ -41,9 +44,14 @@ public class DataManager {
 
         protected String key;
         protected boolean isLocked = false;//增加一个锁
-
-        public Data(String key){
+        protected int id;
+        public Data(String key, int id){
             this.key = key;
+            this.id = id;
+        }
+
+        public String getKey(){
+            return key;
         }
 
         public void init(Player player){
@@ -95,8 +103,8 @@ public class DataManager {
         protected boolean isLocked = false;//增加一个锁
         protected String defaultString = "";
 
-        public StringData(String key, String defaultString){
-            super(key);
+        public StringData(String key, String defaultString, int id){
+            super(key,id);
             this.defaultString = defaultString;
         }
 
@@ -119,8 +127,8 @@ public class DataManager {
 
         private int defaultInt = 0;
 
-        public IntData(String key, int defaultInt) {
-            super(key);
+        public IntData(String key, int defaultInt, int id) {
+            super(key,id);
             this.defaultInt = defaultInt;
         }
 
@@ -142,8 +150,9 @@ public class DataManager {
     public static class BoolData extends Data {
 
         boolean defaultBool = false;
-        public BoolData(String key, boolean defaultBool) {
-            super(key);
+        final int maxNum = 10;
+        public BoolData(String key, boolean defaultBool,int id) {
+            super(key, id);
             this.defaultBool = defaultBool;
         }
 
@@ -153,12 +162,44 @@ public class DataManager {
         }
 
         public void putBool(Player player, boolean value){
-            if(!isLocked)
-                player.getPersistentData().putBoolean(key, value);
+            if(isLocked)
+                return;
+
+//            CompoundTag tag = player.getPersistentData();
+//            if(!tag.contains("bool")){
+//                ListTag boolTagsList = new ListTag();
+//                for (int i = 0; i < maxNum; i++) {
+//                    boolTagsList.add(new CompoundTag());
+//                }
+//                tag.put("bool", boolTagsList);
+//            }
+//            ListTag bool = tag.getList("bool", maxNum);
+//            bool.getCompound(id).putBoolean(key,value);
+
+            player.getPersistentData().putBoolean(key, value);
+
         }
 
         public boolean getBool(Player player){
-            System.out.println(key+"local"+player.isLocalPlayer()+player.getPersistentData().getBoolean(key));
+
+//            CompoundTag tag = player.getPersistentData();
+//            if(!tag.contains("bool")){
+//                ListTag boolTagsList = new ListTag();
+//                for (int i = 0; i < maxNum; i++) {
+//                    boolTagsList.add(new CompoundTag());
+//                }
+//                tag.put("bool", boolTagsList);
+//                return false;
+//            }
+//
+//            System.out.println(key+"local"+player.isLocalPlayer()+player.getPersistentData().getList("bool",maxNum).getCompound(id).getBoolean(key));//操你妈傻逼为啥这行输出不了也不给我报个错 后面发现原来是因为ServerPlayer不能在客户端用。。
+
+            System.out.println(key+player.getPersistentData().getBoolean(key));//操你妈傻逼为啥这行输出不了也不给我报个错
+//            System.out.println("isLocked"+isLocked);
+//            ListTag bool = tag.getList("bool", maxNum);
+//            return bool.getCompound(id).getBoolean(key);
+
+//            System.out.println("isLocked"+isLocked);
             return player.getPersistentData().getBoolean(key);
         }
 

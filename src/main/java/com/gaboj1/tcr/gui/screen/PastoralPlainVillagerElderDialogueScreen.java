@@ -2,10 +2,13 @@ package com.gaboj1.tcr.gui.screen;
 
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.gui.screen.component.DialogueChoiceComponent;
 import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.util.DataManager;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
@@ -17,16 +20,19 @@ import net.minecraft.world.entity.player.Player;
 public class PastoralPlainVillagerElderDialogueScreen extends TCRDialogueScreen {
     public static final ResourceLocation MY_BACKGROUND_LOCATION = new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"textures/gui/background.png");
 
-    public PastoralPlainVillagerElderDialogueScreen(Entity elder) {
+    private CompoundTag playerData;
+
+    public PastoralPlainVillagerElderDialogueScreen(PastoralPlainVillagerElder elder, CompoundTag serverPlayerData) {
         super(elder, TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get());
+        this.playerData = serverPlayerData;//强制获取服务端数据，就为了读玩家数据..之前写成用this.getMinecraft().player获取玩家，因为客户端和服务端问题折腾一晚上妈的
     }
 
     @Override
     protected void init() {
         if (this.getMinecraft().player != null) {
-            Player player = this.getMinecraft().player;
-            if(DataManager.isWhite.getBool(player)){
-                if(!DataManager.boss1Defeated.getBool(player)){//是否为白方，是否击杀boss，对话不同
+//            Player player = ((PastoralPlainVillagerElder)entity).getConversingPlayer();//之前写成用this.getMinecraft().player获取玩家，因为客户端和服务端问题折腾一晚上妈的
+            if(playerData.getBoolean(DataManager.isWhite.getKey())){
+                if(!playerData.getBoolean(DataManager.boss1Defeated.getKey())){//是否为白方，是否击杀boss，对话不同
                     this.setDialogueAnswer(this.buildDialogueDialog(0));//勇者啊，我所期盼的勇者啊你终于来了。你可知我这十年来的心在仇恨的尖刀上是如何滴血的么。密林中的魔物危害着这个村子呵。恳请您前去剿除。
                     this.setupDialogueChoices( // Set up choices.
                             new DialogueChoiceComponent(this.buildDialogueChoice(0), button -> { // Opens a new dialogue tree.//我的命运与密林也不无关系。请你告诉我前往密林的路径，到了密林我自然会听从我的心做出我的行动。自然，我的心已经听到了你的声音。
@@ -68,38 +74,33 @@ public class PastoralPlainVillagerElderDialogueScreen extends TCRDialogueScreen 
                 }
 
             }else {
-                if(!DataManager.boss1Defeated.getBool(player)){
+                if(!playerData.getBoolean(DataManager.boss1Defeated.getKey())){
 
                 }else {
 
                 }
             }
 
-
-
         }
     }
 
     @Override
     public void onClose() {
-        if (this.getMinecraft().player != null) {
-            Player player = this.getMinecraft().player;
 
-            if (DataManager.isWhite.getBool(player)) {
-                if (!DataManager.boss1Defeated.getBool(player)) {
-                    finishChat((byte) 0);
-                } else {
-                    finishChat((byte) 1);
-                }
-
+        if (!playerData.getBoolean(DataManager.isWhite.getKey())) {
+            if (!playerData.getBoolean(DataManager.boss1Defeated.getKey())) {
+                finishChat((byte) 0);
             } else {
-                if (!DataManager.boss1Defeated.getBool(player)) {
-                    finishChat((byte) 2);
-                } else {
-                    finishChat((byte) 3);
-                }
+                finishChat((byte) 1);
             }
 
+        } else {
+            if (!playerData.getBoolean(DataManager.boss1Defeated.getKey())) {
+                finishChat((byte) 2);
+            } else {
+                finishChat((byte) 3);
+            }
         }
+
     }
 }

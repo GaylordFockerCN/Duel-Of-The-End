@@ -163,6 +163,7 @@ public class TCRVillager extends Villager implements GeoEntity {
     public boolean wantsToSpawnGolem(long pGameTime) {
         return false;
     }
+
     @Override
     public void die(DamageSource pCause) {
         super.die(pCause);

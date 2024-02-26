@@ -1,6 +1,8 @@
 package com.gaboj1.tcr.entity;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -16,7 +18,7 @@ public interface NpcDialogue {
      * This method shouldn't be used on the server.
      */
     @OnlyIn(Dist.CLIENT)
-    void openDialogueScreen();
+    void openDialogueScreen(CompoundTag senderData);
 
     /**
      * Handles an NPC reaction on the server.

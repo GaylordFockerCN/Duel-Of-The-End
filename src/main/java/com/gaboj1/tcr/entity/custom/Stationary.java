@@ -7,6 +7,7 @@ import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.NPCDialoguePacket;
 import net.minecraft.client.Minecraft;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -37,7 +38,10 @@ public class Stationary extends PathfinderMob implements NpcDialogue {
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 100.0D)
+                .add(Attributes.MAX_HEALTH, 20.0D)//最大血量
+                .add(Attributes.ATTACK_DAMAGE, 0)//单次攻击伤害
+                .add(Attributes.ATTACK_SPEED, 0)//攻速
+                .add(Attributes.MOVEMENT_SPEED, 0)//移速
                 .build();
     }
     @Override
@@ -56,7 +60,7 @@ public class Stationary extends PathfinderMob implements NpcDialogue {
                 this.lookAt(player, 180.0F, 180.0F);
                 if (player instanceof ServerPlayer serverPlayer) {
                     if (this.getConversingPlayer() == null) {
-                        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId()), serverPlayer);
+                        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(),serverPlayer.getPersistentData().copy()), serverPlayer);
                         this.setConversingPlayer(serverPlayer);
                     }
                 }
@@ -66,12 +70,18 @@ public class Stationary extends PathfinderMob implements NpcDialogue {
         return InteractionResult.PASS;
     }
 
+    /**
+     * 重写这里以调用对应的对话框
+     */
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void openDialogueScreen() {
-        Minecraft.getInstance().setScreen(new PastoralPlainVillagerElderDialogueScreen(this));
+    public void openDialogueScreen(CompoundTag serverPlayerData) {
+
     }
 
+    /**
+     * 重写这里以处理对应的对话结束代码
+     */
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID) {
