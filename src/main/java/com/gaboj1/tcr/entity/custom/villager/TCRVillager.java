@@ -115,7 +115,7 @@ public class TCRVillager extends Villager implements GeoEntity {
                     pPlayer.awardStat(Stats.TALKED_TO_VILLAGER);
                 }
 
-                if (flag && canTalk && pPlayer instanceof LocalPlayer player) {
+                if (flag && canTalk && pPlayer instanceof ServerPlayer player) {
                     if(DataManager.isWhite.getBool(player)){//新增对话，其他和原版一样
                         talk(pPlayer);
                     }else {

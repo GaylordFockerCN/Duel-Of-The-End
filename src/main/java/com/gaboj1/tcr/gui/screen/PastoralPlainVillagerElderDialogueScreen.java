@@ -22,6 +22,10 @@ public class PastoralPlainVillagerElderDialogueScreen extends TCRDialogueScreen 
 
     private CompoundTag playerData;
 
+    /**
+     * @param serverPlayerData 从服务端发送来的玩家数据
+     * @see com.gaboj1.tcr.network.packet.NPCDialoguePacket#execute(Player)
+     */
     public PastoralPlainVillagerElderDialogueScreen(PastoralPlainVillagerElder elder, CompoundTag serverPlayerData) {
         super(elder, TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get());
         this.playerData = serverPlayerData;//强制获取服务端数据，就为了读玩家数据..之前写成用this.getMinecraft().player获取玩家，因为客户端和服务端问题折腾一晚上妈的
@@ -31,8 +35,8 @@ public class PastoralPlainVillagerElderDialogueScreen extends TCRDialogueScreen 
     protected void init() {
         if (this.getMinecraft().player != null) {
 //            Player player = ((PastoralPlainVillagerElder)entity).getConversingPlayer();//之前写成用this.getMinecraft().player获取玩家，因为客户端和服务端问题折腾一晚上妈的
-            if(playerData.getBoolean(DataManager.isWhite.getKey())){
-                if(!playerData.getBoolean(DataManager.boss1Defeated.getKey())){//是否为白方，是否击杀boss，对话不同
+            if(DataManager.isWhite.getBool(playerData)){
+                if(!DataManager.boss1Defeated.getBool(playerData)){//是否为白方，是否击杀boss，对话不同
                     this.setDialogueAnswer(this.buildDialogueDialog(0));//勇者啊，我所期盼的勇者啊你终于来了。你可知我这十年来的心在仇恨的尖刀上是如何滴血的么。密林中的魔物危害着这个村子呵。恳请您前去剿除。
                     this.setupDialogueChoices( // Set up choices.
                             new DialogueChoiceComponent(this.buildDialogueChoice(0), button -> { // Opens a new dialogue tree.//我的命运与密林也不无关系。请你告诉我前往密林的路径，到了密林我自然会听从我的心做出我的行动。自然，我的心已经听到了你的声音。
@@ -74,7 +78,7 @@ public class PastoralPlainVillagerElderDialogueScreen extends TCRDialogueScreen 
                 }
 
             }else {
-                if(!playerData.getBoolean(DataManager.boss1Defeated.getKey())){
+                if(!DataManager.boss1Defeated.getBool(playerData)){
 
                 }else {
 
@@ -87,15 +91,15 @@ public class PastoralPlainVillagerElderDialogueScreen extends TCRDialogueScreen 
     @Override
     public void onClose() {
 
-        if (!playerData.getBoolean(DataManager.isWhite.getKey())) {
-            if (!playerData.getBoolean(DataManager.boss1Defeated.getKey())) {
+        if (DataManager.isWhite.getBool(playerData)) {
+            if (!DataManager.boss1Defeated.getBool(playerData)) {
                 finishChat((byte) 0);
             } else {
                 finishChat((byte) 1);
             }
 
         } else {
-            if (!playerData.getBoolean(DataManager.boss1Defeated.getKey())) {
+            if (!DataManager.boss1Defeated.getBool(playerData)) {
                 finishChat((byte) 2);
             } else {
                 finishChat((byte) 3);

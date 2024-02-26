@@ -194,13 +194,18 @@ public class DataManager {
 //
 //            System.out.println(key+"local"+player.isLocalPlayer()+player.getPersistentData().getList("bool",maxNum).getCompound(id).getBoolean(key));//操你妈傻逼为啥这行输出不了也不给我报个错 后面发现原来是因为ServerPlayer不能在客户端用。。
 
-            System.out.println(key+player.getPersistentData().getBoolean(key));//操你妈傻逼为啥这行输出不了也不给我报个错
-//            System.out.println("isLocked"+isLocked);
+            System.out.println(key+player.getPersistentData().getBoolean(key));
+            System.out.println("isLocked"+isLocked);
 //            ListTag bool = tag.getList("bool", maxNum);
 //            return bool.getCompound(id).getBoolean(key);
 
 //            System.out.println("isLocked"+isLocked);
             return player.getPersistentData().getBoolean(key);
+        }
+
+        public boolean getBool(CompoundTag playerData){
+//            System.out.println(playerData);
+            return playerData.getBoolean(key);
         }
 
     }
