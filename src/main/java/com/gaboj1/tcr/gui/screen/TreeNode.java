@@ -9,13 +9,16 @@ import java.util.List;
 //为什么就没有现成的库呢因为太简单了吗
 public class TreeNode {
 
-    private Component answer = Component.empty();
-    private Component option;
+    protected Component answer;
+    protected Component option = Component.empty();
     @Nullable
-    private List<TreeNode> options;
+    protected List<TreeNode> options;
 
-    public TreeNode(Component option) {
-        this.option = option;
+    /**
+     * 根节点不应该有选项。
+    * */
+    public TreeNode(Component answer) {
+        this.answer = answer;
         this.options = new ArrayList<>();
     }
 
@@ -49,7 +52,8 @@ public class TreeNode {
 
         private byte returnValue;
         public FinalNode(Component finalOption, byte returnValue) {
-            super(finalOption);
+            super(Component.empty());//最终节点不需要回答
+            this.option = finalOption;
             this.returnValue = returnValue;
         }
 

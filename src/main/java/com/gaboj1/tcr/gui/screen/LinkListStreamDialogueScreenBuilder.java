@@ -87,7 +87,6 @@ public class LinkListStreamDialogueScreenBuilder {
             choiceList.add(new DialogueChoiceComponent(child.getOption().copy(), createChoiceButton(child)));
         }
         screen.setupDialogueChoices(choiceList);
-        screen.positionDialogue();
         return screen;
     }
 

@@ -49,7 +49,9 @@ public class TCRDialogueScreen extends Screen {
      * @see PastoralPlainVillagerElderDialogueScreen#init()
      */
     @Override
-    protected void init() {}
+    protected void init() {
+        positionDialogue();//不填的话用builder创造出来的对话框第一个对话会错误显示
+    }
 
     /**
      * Adds and repositions a new set of dialogue options.
