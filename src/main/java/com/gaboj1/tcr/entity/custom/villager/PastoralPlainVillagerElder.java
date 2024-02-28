@@ -4,6 +4,8 @@ import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.gui.screen.PastoralPlainVillagerElderDialogueScreen;
+import com.gaboj1.tcr.gui.screen.TestLinkListStreamScreen;
+import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.packet.NPCDialoguePacket;
@@ -78,7 +80,11 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     @Override
     @OnlyIn(Dist.CLIENT)
     public void openDialogueScreen(CompoundTag serverPlayerData) {
-        Minecraft.getInstance().setScreen(new PastoralPlainVillagerElderDialogueScreen(this, serverPlayerData));
+//        Minecraft.getInstance().setScreen(new PastoralPlainVillagerElderDialogueScreen(this, serverPlayerData));
+
+        TestLinkListStreamScreen screen = new TestLinkListStreamScreen(this, TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get());
+        screen.init();
+        Minecraft.getInstance().setScreen(screen.build());
     }
 
     @Override

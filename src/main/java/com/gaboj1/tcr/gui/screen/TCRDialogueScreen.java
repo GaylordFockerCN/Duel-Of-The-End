@@ -24,6 +24,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 
+import java.util.List;
+
 /**
  * 改编自theAether 的 ValkyrieQueenDialogueScreen
  * 搬运了相关类
@@ -31,7 +33,7 @@ import net.minecraftforge.common.MinecraftForge;
 public class TCRDialogueScreen extends Screen {
     public static final ResourceLocation MY_BACKGROUND_LOCATION = new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"textures/gui/background.png");
     protected final DialogueAnswerComponent dialogueAnswer;
-    protected final Entity entity;//TODO 改回去
+    protected final Entity entity;
 
     EntityType<?> entityType;
 
@@ -54,6 +56,14 @@ public class TCRDialogueScreen extends Screen {
      * @param options The {@link DialogueChoiceComponent} option buttons to render.
      */
     public void setupDialogueChoices(DialogueChoiceComponent... options) {
+        this.clearWidgets();
+        for (DialogueChoiceComponent option : options) {
+            this.addRenderableWidget(option);
+        }
+        this.positionDialogue();
+    }
+
+    public void setupDialogueChoices(List<DialogueChoiceComponent> options) {
         this.clearWidgets();
         for (DialogueChoiceComponent option : options) {
             this.addRenderableWidget(option);

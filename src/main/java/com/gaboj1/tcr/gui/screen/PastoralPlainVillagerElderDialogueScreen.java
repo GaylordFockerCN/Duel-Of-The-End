@@ -1,6 +1,5 @@
 package com.gaboj1.tcr.gui.screen;
 
-import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.gui.screen.component.DialogueChoiceComponent;
@@ -8,8 +7,6 @@ import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
 
@@ -33,12 +30,13 @@ public class PastoralPlainVillagerElderDialogueScreen extends TCRDialogueScreen 
 
     @Override
     protected void init() {
+
         if (this.getMinecraft().player != null) {
 //            Player player = ((PastoralPlainVillagerElder)entity).getConversingPlayer();//之前写成用this.getMinecraft().player获取玩家，因为客户端和服务端问题折腾一晚上妈的
             if(DataManager.isWhite.getBool(playerData)){
                 if(!DataManager.boss1Defeated.getBool(playerData)){//是否为白方，是否击杀boss，对话不同
                     this.setDialogueAnswer(this.buildDialogueDialog(0));//勇者啊，我所期盼的勇者啊你终于来了。你可知我这十年来的心在仇恨的尖刀上是如何滴血的么。密林中的魔物危害着这个村子呵。恳请您前去剿除。
-                    this.setupDialogueChoices( // Set up choices.
+                    this.setupDialogueChoices(
                             new DialogueChoiceComponent(this.buildDialogueChoice(0), button -> { // Opens a new dialogue tree.//我的命运与密林也不无关系。请你告诉我前往密林的路径，到了密林我自然会听从我的心做出我的行动。自然，我的心已经听到了你的声音。
                                 this.setDialogueAnswer(this.buildDialogueDialog(1,"(x,z)"));//密林，就在 s% 。你要睁大眼睛侧起耳朵开动脑筋来揣度密林中提示之物的含义，你要是有心，那么就趁有心之时让它发挥作用。对了，尊敬的勇者…… TODO 换成密林坐标
                                 this.setupDialogueChoices(
