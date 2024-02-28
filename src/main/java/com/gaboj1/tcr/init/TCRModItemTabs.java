@@ -74,6 +74,7 @@ public class TCRModItemTabs {
 
 
 				tabData.accept(TCRModItems.ELDER_STAFF.get());
+				tabData.accept(TCRModItems.TREE_DEMON_HORN.get());
 
 				//法宝
 				tabData.accept(TCRModItems.TREE_SPIRIT_WAND.get());
