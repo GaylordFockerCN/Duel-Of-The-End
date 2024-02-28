@@ -28,11 +28,16 @@ public class TreeNode {
         this.options = new ArrayList<>();
     }
 
-    public void addOption(Component answer, Component option) {
+    /**
+     * 返回自己以方便构造
+    * */
+    public TreeNode addOption(Component answer, Component option) {
         options.add(new TreeNode(answer, option));
+        return this;
     }
-    public void addChild(TreeNode node) {
+    public TreeNode addChild(TreeNode node) {
         options.add(node);
+        return this;
     }
 
     public Component getAnswer() {
