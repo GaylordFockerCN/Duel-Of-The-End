@@ -19,13 +19,21 @@ import java.util.List;
  */
 public class LinkListStreamDialogueScreenBuilder {
 
-    protected TCRDialogueScreen screen;//封装一下防止出现一堆杂七杂八的方法 TODO 没有重写init不一定成
+    protected TCRDialogueScreen screen;//封装一下防止出现一堆杂七杂八的方法
     private TreeNode answerRoot;
 
     private TreeNode answerNode;
 
     public LinkListStreamDialogueScreenBuilder(Entity entity, EntityType<?> entityType) {
         screen = new TCRDialogueScreen(entity,entityType);
+        init();
+    }
+
+    /**
+     * 用于构建树状对话
+    * */
+    public void setAnswerRoot(TreeNode root){
+        this.answerRoot = root;
     }
 
     /**
@@ -64,7 +72,7 @@ public class LinkListStreamDialogueScreenBuilder {
     public LinkListStreamDialogueScreenBuilder addChoice(Component option, Component answer){
         if(answerNode == null)
             return null;
-        answerNode.addOption(answer,option);
+        answerNode.addChild(answer,option);
 
         //直接下一个
         List<TreeNode> list = answerNode.getChildren();

@@ -3,8 +3,8 @@ package com.gaboj1.tcr.gui.screen;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 
-public class TestLinkListStreamScreen extends LinkListStreamDialogueScreenBuilder {
-    public TestLinkListStreamScreen(Entity entity, EntityType<?> entityType) {
+public class PastoralPlainElderLinkListStreamScreen extends LinkListStreamDialogueScreenBuilder {
+    public PastoralPlainElderLinkListStreamScreen(Entity entity, EntityType<?> entityType) {
         super(entity, entityType);
     }
 
