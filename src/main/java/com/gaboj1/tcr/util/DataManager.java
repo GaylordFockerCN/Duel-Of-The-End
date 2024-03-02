@@ -28,9 +28,9 @@ public class DataManager {
     }
 
     //阵营判断
-    //TODO 用命令来修改这些变量
     public static BoolData isWhite =  new BoolData("is_white",true,1);
     public static BoolData boss1Defeated =  new BoolData("boss1_defeated",false,2);
+    public static BoolData gunGot =  new BoolData("gun_got",false,3);
 
     //给予初始值
     public static void init(Player player){
@@ -43,7 +43,7 @@ public class DataManager {
     public static class Data {
 
         protected String key;
-        protected boolean isLocked = false;//增加一个锁
+        protected boolean isLocked = false;//增加一个锁，用于初始化数据用
         protected int id;
         public Data(String key, int id){
             this.key = key;
@@ -180,6 +180,13 @@ public class DataManager {
 
         }
 
+        public void putBool(CompoundTag playerData ,boolean bool){
+            if(isLocked)
+                return;
+            playerData.putBoolean(key,bool);
+
+        }
+
         public boolean getBool(Player player){
 
 //            CompoundTag tag = player.getPersistentData();
@@ -193,9 +200,9 @@ public class DataManager {
 //            }
 //
 //            System.out.println(key+"local"+player.isLocalPlayer()+player.getPersistentData().getList("bool",maxNum).getCompound(id).getBoolean(key));//操你妈傻逼为啥这行输出不了也不给我报个错 后面发现原来是因为ServerPlayer不能在客户端用。。
-
-            System.out.println(key+player.getPersistentData().getBoolean(key));
-            System.out.println("isLocked"+isLocked);
+//
+//            System.out.println(key+player.getPersistentData().getBoolean(key));
+//            System.out.println("isLocked"+isLocked);
 //            ListTag bool = tag.getList("bool", maxNum);
 //            return bool.getCompound(id).getBoolean(key);
 

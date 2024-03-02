@@ -16,7 +16,7 @@ public class TCRVillagerRenderer extends GeoEntityRenderer<TCRVillager> {
 
     @Override
     public ResourceLocation getTextureLocation(TCRVillager animatable) {
-        System.out.println("tex res loc"+animatable.getResourceName());
+//        System.out.println("tex res loc"+animatable.getResourceName());
         return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/pastoral_plain_villager.png");
     }
 

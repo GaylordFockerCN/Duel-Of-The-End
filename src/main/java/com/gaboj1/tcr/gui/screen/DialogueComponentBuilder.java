@@ -28,7 +28,13 @@ public class DialogueComponentBuilder {
     public MutableComponent buildDialogueChoice(EntityType<?> entityType, int i) {
         return Component.translatable(entityType+".choice" + i);
     }
-    public MutableComponent buildDialogueDialog(EntityType<?> entityType, int i) {
+    public MutableComponent buildDialogueDialog(EntityType<?> entityType, int i ,boolean newLine) {
+        Component component = Component.translatable(entityType+".dialog"+i);
+
+        return Component.literal(newLine?"\n":"").append(component);//换行符有效
+    }
+
+    public MutableComponent buildDialogueDialog(EntityType<?> entityType, int i ) {
         Component component = Component.translatable(entityType+".dialog"+i);
 
         return Component.literal("\n").append(component);//换行符有效

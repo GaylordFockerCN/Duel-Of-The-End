@@ -2,6 +2,7 @@ package com.gaboj1.tcr.entity.custom.villager;
 
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
+import com.gaboj1.tcr.gui.screen.DialogueComponentBuilder;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.NPCDialoguePacket;
@@ -35,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
 public class TCRStationaryVillager extends TCRVillager implements NpcDialogue {
 
     @Nullable
-    private Player conversingPlayer;
+    protected Player conversingPlayer;
     public TCRStationaryVillager(EntityType<? extends Villager> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
@@ -99,15 +100,16 @@ public class TCRStationaryVillager extends TCRVillager implements NpcDialogue {
         this.conversingPlayer = player;
     }
 
-    @javax.annotation.Nullable
+    @Nullable
     @Override
     public Player getConversingPlayer() {
         return this.conversingPlayer;
     }
 
-    @Nullable
     @Override
     public void chat(Component component) {
-
+        if(conversingPlayer != null) {
+            conversingPlayer.sendSystemMessage(DialogueComponentBuilder.BUILDER.buildDialogue(this, component));
+        }
     }
 }
