@@ -104,7 +104,7 @@ public class LinkListStreamDialogueScreenBuilder {
      * 根据树来建立套娃按钮
      */
     public TCRDialogueScreen build(){
-        if(answerNode == null)
+        if(answerRoot == null)
             return screen;
         screen.setDialogueAnswer(answerRoot.getAnswer());
         List<DialogueChoiceComponent> choiceList = new ArrayList<>();
