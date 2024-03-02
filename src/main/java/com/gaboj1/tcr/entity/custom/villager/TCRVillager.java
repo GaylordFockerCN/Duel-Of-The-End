@@ -66,7 +66,7 @@ public class TCRVillager extends Villager implements GeoEntity {
 
 
 
-    private void registerBrainGoals(Brain<Villager> pVillagerBrain) {
+    protected void registerBrainGoals(Brain<Villager> pVillagerBrain) {
         VillagerProfession villagerprofession = this.getVillagerData().getProfession();
         if (this.isBaby()) {
             pVillagerBrain.setSchedule(Schedule.VILLAGER_BABY);

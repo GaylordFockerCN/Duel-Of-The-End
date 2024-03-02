@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.init;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.entity.custom.villager.PastoralPlainTalkableVillager1;
 import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.entity.custom.*;
 
@@ -40,8 +41,12 @@ public class TCRModEntities {
 	public static final RegistryObject<EntityType<PastoralPlainVillager>> PASTORAL_PLAIN_VILLAGER =
 			REGISTRY.register("pastoral_plain_villager",
 					() -> EntityType.Builder.of(PastoralPlainVillager::new, MobCategory.CREATURE)
-							.sized(1.5f, 1.75f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "pastoral_plain_villager").toString()));
+
+	public static final RegistryObject<EntityType<PastoralPlainTalkableVillager1>> PASTORAL_PLAIN_TALKABLE_VILLAGER_1 =
+			REGISTRY.register("pastoral_plain_talkable_villager_1",
+					() -> EntityType.Builder.of(PastoralPlainTalkableVillager1::new, MobCategory.CREATURE)
+							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "pastoral_plain_talkable_villager_1").toString()));
 
 	public static final RegistryObject<EntityType<PastoralPlainVillagerElder>> PASTORAL_PLAIN_VILLAGER_ELDER =
 			REGISTRY.register("pastoral_plain_villager_elder",

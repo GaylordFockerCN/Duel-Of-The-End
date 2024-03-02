@@ -2,7 +2,7 @@ package com.gaboj1.tcr.entity.custom.villager;
 
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
-import com.gaboj1.tcr.gui.screen.PastoralPlainElderLinkListStreamScreen;
+import com.gaboj1.tcr.gui.screen.villager.PastoralPlainElderLinkListStreamScreen;
 import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.PacketRelay;

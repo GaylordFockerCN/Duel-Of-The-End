@@ -34,6 +34,7 @@ public class ModEntityLootTables extends EntityLootSubProvider {
                                 .setRolls(ConstantValue.exactly(1))
                                 .add(LootItem.lootTableItem(TCRModItems.ELDER_STAFF.get()))));
         add(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), emptyLootTable());
+        add(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1.get(), emptyLootTable());
 
         add(TCRModEntities.SMALL_TREE_MONSTER.get(),
                 LootTable.lootTable()

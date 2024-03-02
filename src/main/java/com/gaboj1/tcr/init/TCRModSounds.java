@@ -13,7 +13,6 @@ public final class TCRModSounds {
 	public static final RegistryObject<SoundEvent> DESERT_EAGLE_FIRE = createEvent("item.tcr.desert_eagle_fire");
 	public static final RegistryObject<SoundEvent> DESERT_EAGLE_RELOAD = createEvent("item.tcr.desert_eagle_reload");
 
-
 	private static RegistryObject<SoundEvent> createEvent(String sound) {
 		return REGISTRY.register(sound, () -> SoundEvent.createVariableRangeEvent(TheCasketOfReveriesMod.prefix(sound)));
 	}

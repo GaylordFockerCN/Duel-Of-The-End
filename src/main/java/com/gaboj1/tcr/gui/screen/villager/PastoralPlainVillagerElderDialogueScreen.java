@@ -1,7 +1,8 @@
-package com.gaboj1.tcr.gui.screen;
+package com.gaboj1.tcr.gui.screen.villager;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillagerElder;
+import com.gaboj1.tcr.gui.screen.TCRDialogueScreen;
 import com.gaboj1.tcr.gui.screen.component.DialogueChoiceComponent;
 import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.util.DataManager;

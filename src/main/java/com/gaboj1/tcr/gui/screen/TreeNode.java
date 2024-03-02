@@ -11,6 +11,16 @@ public class TreeNode {
 
     protected Component answer;
     protected Component option = Component.empty();
+
+    @Nullable
+    protected Runnable runnable;//要执行的操作
+
+    public byte getExecuteValue() {
+        return executeValue;
+    }
+
+    protected byte executeValue = (byte) 114514;//要执行的操作代码 ，114514 代表无操作
+
     @Nullable
     protected List<TreeNode> options;
 
@@ -44,6 +54,28 @@ public class TreeNode {
     public TreeNode addChild(TreeNode node) {
         options.add(node);
         return this;
+    }
+
+    public TreeNode execute(Runnable runnable) {
+        this.runnable = runnable;
+        return this;
+    }
+
+    public TreeNode execute(byte executeValue) {
+        this.executeValue = executeValue;
+        return this;
+    }
+
+    public void execute() {
+        runnable.run();
+    }
+
+    public boolean canExecute(){
+        return runnable!=null;
+    }
+
+    public boolean canExecuteCode(){
+        return executeValue != (byte)-114514;
     }
 
     public Component getAnswer() {

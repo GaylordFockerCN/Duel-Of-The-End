@@ -1,5 +1,6 @@
-package com.gaboj1.tcr.gui.screen;
+package com.gaboj1.tcr.gui.screen.villager;
 
+import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 

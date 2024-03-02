@@ -1,10 +1,12 @@
-package com.gaboj1.tcr.entity.custom;
+package com.gaboj1.tcr.entity.custom.villager;
 
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.NPCDialoguePacket;
+import com.google.common.collect.ImmutableSet;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -12,27 +14,35 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.ai.behavior.VillagerGoalPackages;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.memory.MemoryStatus;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.schedule.Activity;
+import net.minecraft.world.entity.schedule.Schedule;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * 固定位置NPC，能对话但是不移动
- */
-public class Stationary extends Mob implements NpcDialogue {
+public class TCRStationaryVillager extends TCRVillager implements NpcDialogue {
 
     @Nullable
-    Player conversingPlayer;
+    private Player conversingPlayer;
+    public TCRStationaryVillager(EntityType<? extends Villager> pEntityType, Level pLevel) {
+        super(pEntityType, pLevel);
+    }
 
-    protected Stationary(EntityType<? extends Mob> entityType, Level level) {
-        super(entityType, level);
+    @Override
+    protected void registerBrainGoals(Brain<Villager> pVillagerBrain) {
+
     }
 
     public static AttributeSupplier setAttributes() {

@@ -5,6 +5,7 @@ import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.gui.screen.component.DialogueAnswerComponent;
 import com.gaboj1.tcr.gui.screen.component.DialogueChoiceComponent;
+import com.gaboj1.tcr.gui.screen.villager.PastoralPlainVillagerElderDialogueScreen;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.NpcPlayerInteractPacket;
@@ -46,7 +47,7 @@ public class TCRDialogueScreen extends Screen {
 
     /**
      * 在这里实现对话逻辑调用
-     * @see PastoralPlainVillagerElderDialogueScreen#init()
+     * @see PastoralPlainVillagerElderDialogueScreen
      */
     @Override
     protected void init() {
@@ -155,6 +156,13 @@ public class TCRDialogueScreen extends Screen {
     protected void finishChat(byte interactionID) {
         PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new NpcPlayerInteractPacket(this.entity.getId(), interactionID));
         super.onClose();
+    }
+
+    /**
+     * 发包但不关闭窗口
+    * */
+    protected void execute(byte interactionID) {
+        PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new NpcPlayerInteractPacket(this.entity.getId(), interactionID));
     }
 
     @Override

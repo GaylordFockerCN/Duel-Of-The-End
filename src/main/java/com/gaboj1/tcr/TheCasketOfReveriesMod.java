@@ -9,6 +9,7 @@ import com.gaboj1.tcr.entity.client.villager.TCRVillagerRenderer;
 import com.gaboj1.tcr.entity.custom.MiddleTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.TreeGuardianEntity;
+import com.gaboj1.tcr.entity.custom.villager.PastoralPlainTalkableVillager1;
 import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillager;
 import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.init.*;
@@ -145,6 +146,7 @@ public class TheCasketOfReveriesMod {
             EntityRenderers.register(TCRModEntities.SMALL_TREE_MONSTER.get(), SmallTreeMonsterRenderer::new);
 
             EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1.get(), TCRVillagerRenderer::new);
             EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(), TCRVillagerRenderer::new);
 
             BlockEntityRenderers.register(TCRModBlockEntities.PORTAL_BED.get(), PortalBedRenderer::new);
@@ -157,12 +159,15 @@ public class TheCasketOfReveriesMod {
             event.put(TCRModEntities.TREE_GUARDIAN.get(), TreeGuardianEntity.setAttributes());//设置生物属性功能在此被调用
             event.put(TCRModEntities.MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterEntity.setAttributes());
             event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(),PastoralPlainVillager.setAttributes());
+            event.put(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1.get(), PastoralPlainTalkableVillager1.setAttributes());
             event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),PastoralPlainVillagerElder.setAttributes());
         }
 
         //刷新规则
         @SubscribeEvent
         public static void entitySpawnRestriction(SpawnPlacementRegisterEvent event) {
+            event.register(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    PastoralPlainTalkableVillager1::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                     PastoralPlainVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,

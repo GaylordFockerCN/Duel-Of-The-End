@@ -14,6 +14,7 @@ public class SoundGenerator extends TCRSoundProvider {
     public void registerSounds() {
         this.generateNewSoundWithSubtitle(TCRModSounds.DESERT_EAGLE_FIRE, "item/desert_eagle/fire", 1);
         this.generateNewSoundWithSubtitle(TCRModSounds.DESERT_EAGLE_RELOAD, "item/desert_eagle/reload", 1);
+
 //        this.generateExistingSoundWithSubtitle(TFSounds.ACID_RAIN_BURNS, SoundEvents.FIRE_EXTINGUISH);
 //        this.generateNewSoundWithSubtitle(TFSounds.ALPHA_YETI_ALERT, "mob/alpha_yeti/alert", 1);
 //        this.generateNewSoundWithSubtitle(TFSounds.ALPHA_YETI_DEATH, "mob/alpha_yeti/death", 1);

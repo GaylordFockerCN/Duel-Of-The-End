@@ -84,6 +84,23 @@ public class LinkListStreamDialogueScreenBuilder {
     }
 
     /**
+     * 按下按钮后执行
+     */
+    public LinkListStreamDialogueScreenBuilder thenExecute(Runnable runnable){
+        if(answerNode == null)
+            return null;
+        answerNode.execute(runnable);
+        return this;
+    }
+    /**
+     * 按下按钮后执行
+     */
+    public LinkListStreamDialogueScreenBuilder thenExecute(byte returnValue){
+        answerNode.execute(returnValue);
+        return this;
+    }
+
+    /**
      * 根据树来建立套娃按钮
      */
     public TCRDialogueScreen build(){
@@ -105,11 +122,22 @@ public class LinkListStreamDialogueScreenBuilder {
 
         //如果是终止按钮则实现返回效果
         if(node instanceof TreeNode.FinalNode finalNode){
-            return button -> {screen.finishChat(finalNode.getReturnValue());};
+            return button -> {
+                screen.finishChat(finalNode.getReturnValue());
+                if(finalNode.canExecute()){
+                    finalNode.execute();
+                }
+            };
         }
 
         //否则继续递归创建按钮
         return button -> {
+            if(node.canExecute()){
+                node.execute();
+            }
+            if(node.canExecuteCode()){
+                screen.execute(node.getExecuteValue());
+            }
             screen.setDialogueAnswer(node.getAnswer());
             List<DialogueChoiceComponent> choiceList = new ArrayList<>();
             List<TreeNode> options = node.getChildren();
