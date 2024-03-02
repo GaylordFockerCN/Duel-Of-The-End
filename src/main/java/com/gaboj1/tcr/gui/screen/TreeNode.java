@@ -19,7 +19,7 @@ public class TreeNode {
         return executeValue;
     }
 
-    protected byte executeValue = (byte) 114514;//要执行的操作代码 ，114514 代表无操作
+    protected byte executeValue = (byte) -114514;//要执行的操作代码 ，114514 代表无操作
 
     @Nullable
     protected List<TreeNode> options;
