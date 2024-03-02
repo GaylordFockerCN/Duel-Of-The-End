@@ -30,7 +30,8 @@ public class DialogueComponentBuilder {
     }
     public MutableComponent buildDialogueDialog(EntityType<?> entityType, int i) {
         Component component = Component.translatable(entityType+".dialog"+i);
-        return component.copy();
+
+        return Component.literal("\n").append(component);//换行符有效
     }
 
     public MutableComponent buildDialogueDialog(EntityType<?> entityType, int i, String s) {
