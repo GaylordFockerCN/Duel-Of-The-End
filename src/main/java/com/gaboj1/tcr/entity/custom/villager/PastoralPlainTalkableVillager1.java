@@ -9,7 +9,6 @@ import com.gaboj1.tcr.util.ItemUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -22,7 +21,6 @@ import static com.gaboj1.tcr.gui.screen.DialogueComponentBuilder.BUILDER;
 
 public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
 
-    CompoundTag serverPlayerData;
     EntityType<?> entityType = TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1.get();
 
     public PastoralPlainTalkableVillager1(EntityType<? extends Villager> entityType, Level level) {
@@ -34,7 +32,6 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
     public void openDialogueScreen(CompoundTag serverPlayerData) {
 
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
-        this.serverPlayerData = serverPlayerData;//用于handle的时候判断
 
         if(!DataManager.gunGot.getBool(serverPlayerData)){
             builder.start(BUILDER.buildDialogueDialog(entityType,0))//不许伤害小羊小牛小猪！（我们好像没有这些生物）
@@ -64,10 +61,14 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
                 chat(BUILDER.buildDialogueDialog(entityType,4,false));
                 break;
             case 1:
-                ItemStack itemStack = TCRModItems.DESERT_EAGLE_AMMO.get().getDefaultInstance();
-                itemStack.setCount(20);
-                player.addItem(itemStack);
-                chat(BUILDER.buildDialogueDialog(entityType,5,false));
+                if(!DataManager.ammoGot.getBool(player.getPersistentData())){
+                    ItemStack stack = TCRModItems.DESERT_EAGLE_AMMO.get().getDefaultInstance();
+                    stack.setCount(20);
+                    player.addItem(stack);
+                    chat(BUILDER.buildDialogueDialog(entityType,5,false));
+                    DataManager.ammoGot.putBool(player,true);
+                }
+
                 break;
             case 7:
                 player.addItem(TCRModItems.DESERT_EAGLE.get().getDefaultInstance());

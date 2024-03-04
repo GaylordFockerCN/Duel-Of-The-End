@@ -42,7 +42,7 @@ public class DialogueComponentBuilder {
 
     public MutableComponent buildDialogueDialog(EntityType<?> entityType, int i, String s) {
         Component component = Component.translatable(entityType + ".dialog" + i, s);
-        return component.copy();
+        return Component.literal("\n").append(component);
     }
 
 }
