@@ -126,7 +126,8 @@ public class ModLangGenerator extends ModLangProvider {
 
         this.addSubtitle(TCRModSounds.DESERT_EAGLE_FIRE,"沙鹰开火");
         this.addSubtitle(TCRModSounds.DESERT_EAGLE_RELOAD,"沙鹰换弹");
-
+        this.addSubtitle(TCRModSounds.TREE_MONSTERS_DEATH,"树怪死亡");
+        this.addSubtitle(TCRModSounds.TREE_MONSTERS_HURT,"树怪受伤");
 
     }
 }

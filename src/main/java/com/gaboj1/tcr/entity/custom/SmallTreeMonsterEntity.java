@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.entity.custom;
 
+import com.gaboj1.tcr.init.TCRModSounds;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -84,6 +85,19 @@ public class SmallTreeMonsterEntity extends TamableAnimal implements GeoEntity ,
 //    protected SoundEvent getDeathSound() {
 //        return SoundEvents.WOLF_DEATH;
 //    }
+
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource p_21239_) {
+        return TCRModSounds.TREE_MONSTERS_HURT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return TCRModSounds.TREE_MONSTERS_DEATH.get();
+    }
 
     private PlayState attackPredicate(AnimationState state) {
         if(this.swinging && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {

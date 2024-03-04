@@ -1,6 +1,9 @@
 package com.gaboj1.tcr.entity.custom;
 
+import com.gaboj1.tcr.init.TCRModSounds;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -56,7 +59,18 @@ public class MiddleTreeMonsterEntity extends TamableAnimal implements GeoEntity 
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false));
     }
 
-
+    //中树怪受伤声音
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource p_21239_) {
+        return TCRModSounds.TREE_MONSTERS_HURT.get();
+    }
+    //中树怪死亡声音
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return TCRModSounds.TREE_MONSTERS_DEATH.get();
+    }
 
 //    @Nullable
 //    @Override
