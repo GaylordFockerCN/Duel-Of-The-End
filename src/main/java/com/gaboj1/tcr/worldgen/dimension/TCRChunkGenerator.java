@@ -129,7 +129,7 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
 
             //此处加一行判断即可，其他全是抄原版的
             if ((structurePlacement instanceof BiomeForcedLandmarkPlacement biomeForcedLandmarkPlacement && biomeForcedLandmarkPlacement.isTCRPlacementChunk(this,pChunk,pos.x,pos.z)) || structurePlacement.isStructureChunk(pStructureState, pos.x, pos.z)) {
-                System.out.println("Ok"+pos+" "+sectionPos);
+                System.out.println("Ok"+pos+" "+sectionPos+structurePlacement);
                 if (iterator.size() == 1) {
                     this.tryGenerateStructure(iterator.get(0), pStructureManager, pRegistryAccess, randomState, pStructureTemplateManager, pStructureState.getLevelSeed(), pChunk, pos, sectionPos);
              } else {
@@ -181,10 +181,11 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
             pStructureManager.setStartForStructure(pSectionPos, $$9, $$13, pChunk);
             return true;
         } else {
-            //NOTE: 非常之危险，但是应该可以保证生成率？
+//            //NOTE: 非常之危险，但是应该可以保证生成率？每次递归x多一格区块
             System.out.println("Try Again");
             if(tries-->0)
                 tryGenerateStructure(pStructureSelectionEntry,pStructureManager,pRegistryAccess,pRandom,pStructureTemplateManager,pSeed,pChunk,new ChunkPos(pChunkPos.x+1,pChunkPos.z), pSectionPos);
+            System.out.println("give up");
             return false;
         }
     }

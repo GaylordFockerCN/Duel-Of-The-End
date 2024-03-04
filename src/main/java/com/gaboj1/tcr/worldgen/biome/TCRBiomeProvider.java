@@ -119,14 +119,14 @@ public class TCRBiomeProvider extends BiomeSource {
         biomeList.add(biomeHolder8);
         biomeList.add(biomeHolder9);
 
-
     }
 
     @Override
     protected Stream<Holder<Biome>> collectPossibleBiomes() {
 
 
-        String levelName = ServerLifecycleHooks.getCurrentServer().getServerDirectory().getName();//FIXME 换成存档名字
+        String levelName = ServerLifecycleHooks.getCurrentServer().getServerDirectory().getName();
+        //FIXME 换成存档名字，很重要！！
         //不在这里生成的话map会被清空，但是这里生成不知道有什么bug...
         File mapFile = new File(BiomeMap.DIR + levelName+"Map.dat");
         boolean mapExist = mapFile.exists();
@@ -180,7 +180,6 @@ public class TCRBiomeProvider extends BiomeSource {
             oos.writeObject(mainCenter);
             oos.close();
             fos.close();
-            System.out.println("Map Array saved to file successfully.");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -205,7 +204,7 @@ public class TCRBiomeProvider extends BiomeSource {
         z = getCorrectValue(z);
         if(0 <= x && x <map.length && 0 <= z && z < map[0].length ){
             int index = (int)map[x][z];
-            if(index <= biomeList.size())
+            if(index < biomeList.size())
                 return biomeList.get((int)map[x][z]);
         }
         return biomeHolder0;

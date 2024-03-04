@@ -468,7 +468,7 @@ public class NoiseMapGenerator {
     }
 
     public static void main(String args[]){
-        int size = 1000;
+        int size = 100;
         double[][] map = getDoubles(size);
 
         for(int i = 0 ; i < size ; i++){
@@ -490,6 +490,8 @@ public class NoiseMapGenerator {
                     System.out.print("1 ");
                 }else if(map[i][j] == 8){
                     System.out.print("1 ");
+                }else if(map[i][j] == 9){
+                    System.out.print("9 ");
                 }else {
                     System.out.print("- ");
                 }
