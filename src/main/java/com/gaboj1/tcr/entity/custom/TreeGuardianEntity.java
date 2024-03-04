@@ -1,5 +1,8 @@
 package com.gaboj1.tcr.entity.custom;
 
+import com.gaboj1.tcr.init.TCRModSounds;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -102,6 +105,19 @@ public class TreeGuardianEntity extends IronGolem implements GeoEntity {
         this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(damage);
     }
 
+
+//森林守护者受伤声音
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource p_21239_) {
+        return TCRModSounds.TREE_MONSTERS_HURT.get();
+    }
+//森林守护者死亡声音
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return TCRModSounds.TREE_MONSTERS_DEATH.get();
+    }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
