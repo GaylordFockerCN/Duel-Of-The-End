@@ -59,18 +59,11 @@ public class BiomeForcedLandmarkPlacement extends StructurePlacement {
                 return true;
             }
 
-            size = 1;
+//            size = 1;
             if(this.structure == EnumStructures.FINAL.ordinal()
                     && correctX >= provider.getMainCenter().x - size && correctZ >= provider.getMainCenter().y-size
                     && correctX <= provider.getMainCenter().x + size && correctZ <= provider.getMainCenter().y+size
                     && !hasGenerated){
-//                BlockPos pos = new BlockPos(chunkX<<4,80,chunkZ<<4);
-//                System.out.println((chunkX<<4)+","+(chunkZ<<4)+pChunk.getBlockState(pos).getBlock());
-//                if(pChunk.getBlockState(pos).getBlock() != Blocks.AIR){//因为有些地面是后面补的，防止生成在地下。
-//                    hasGenerated = true;
-//                    return true;
-//                }
-                //FIXME 不想修了，看看大结构会不会也有这个bug吧妈的
                 return true;
             }
 

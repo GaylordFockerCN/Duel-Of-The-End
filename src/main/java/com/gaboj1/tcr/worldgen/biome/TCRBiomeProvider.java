@@ -205,7 +205,7 @@ public class TCRBiomeProvider extends BiomeSource {
         z = getCorrectValue(z);
         if(0 <= x && x <map.length && 0 <= z && z < map[0].length ){
             int index = (int)map[x][z];
-            if(index < biomeList.size())
+            if(index <= biomeList.size())
                 return biomeList.get((int)map[x][z]);
         }
         return biomeHolder0;

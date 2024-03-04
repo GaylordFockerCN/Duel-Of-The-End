@@ -216,7 +216,9 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
                 BiomeForcedLandmarkPlacement placement = landmarkPlacement.getKey();
                 int structure = placement.structure;
                 Point p = new Point(0,0);
+                //在这里判断结构是什么，并且返回对应的点
                 switch (structure){
+                    case 0: p = provider.getMainCenter(); break;
                     case 1: p = provider.getCenter1(); break;
                 }
                 int chunkX = provider.deCorrectValue(p.x)>>2;
