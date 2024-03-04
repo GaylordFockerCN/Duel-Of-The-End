@@ -54,7 +54,6 @@ public class TCRBiomeProvider extends BiomeSource {
     private final Holder<Biome> biomeHolder6;
     private final Holder<Biome> biomeHolder7;
     private final Holder<Biome> biomeHolder8;
-    //TODO：边境之地
     private final Holder<Biome> biomeHolder9;
 
     public Point getCenter1() {

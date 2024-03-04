@@ -1,8 +1,9 @@
 package com.gaboj1.tcr.worldgen.structure;
 
 public enum EnumStructures {
-    FLOWER_ALTAR,
-    CHURCH;
+    FINAL,
+    CHURCH,
+    FLOWER_ALTAR;
 
     int size;
 

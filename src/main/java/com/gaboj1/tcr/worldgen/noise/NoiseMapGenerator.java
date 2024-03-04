@@ -266,7 +266,7 @@ public class NoiseMapGenerator {
 
                     // 根据角度划分区域
                     if(distance <= centerR){
-                        map[y][x] = 0;
+                        map[y][x] = 9;
                     } else if (angle >= 0 && angle < Math.PI / 2) {
                         // 区域A
                         map[y][x] = 1;
