@@ -22,6 +22,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -146,6 +147,7 @@ public class TheCasketOfReveriesMod {
             EntityRenderers.register(TCRModEntities.SMALL_TREE_MONSTER.get(), SmallTreeMonsterRenderer::new);
 
             EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER1.get(), TCRVillagerRenderer::new);
             EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1.get(), TCRVillagerRenderer::new);
             EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(), TCRVillagerRenderer::new);
 
@@ -159,6 +161,7 @@ public class TheCasketOfReveriesMod {
             event.put(TCRModEntities.TREE_GUARDIAN.get(), TreeGuardianEntity.setAttributes());//设置生物属性功能在此被调用
             event.put(TCRModEntities.MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterEntity.setAttributes());
             event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(),PastoralPlainVillager.setAttributes());
+            event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER1.get(),PastoralPlainVillager.setAttributes());
             event.put(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1.get(), PastoralPlainTalkableVillager1.setAttributes());
             event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),PastoralPlainVillagerElder.setAttributes());
         }
@@ -183,6 +186,7 @@ public class TheCasketOfReveriesMod {
         @SubscribeEvent
         public static void onRendererSetup(EntityRenderersEvent.RegisterRenderers event){
             event.registerBlockEntityRenderer(TCRModBlockEntities.BETTER_STRUCTURE_BLOCK_ENTITY.get(), BetterStructureBlockRenderer::new);
+            event.registerEntityRenderer(TCRModEntities.DESERT_EAGLE_BULLET.get(), ThrownItemRenderer::new);
         }
 
         @SubscribeEvent

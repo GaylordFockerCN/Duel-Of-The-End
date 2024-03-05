@@ -1,0 +1,15 @@
+{
+  // What structures to pick to try and spawn if a spot passes the placement check.
+  // If two or more structures in this list can spawn in a biome at a spot, a random one based on weight is chosen to spawn
+  "structures": [
+    {
+      "structure": "the_casket_of_reveries:final",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "the_casket_of_reveries:forced_landmark",
+    "structure": 1,
+    "hasGenerated": false
+  }
+}

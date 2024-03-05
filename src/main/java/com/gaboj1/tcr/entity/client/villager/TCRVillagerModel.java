@@ -23,12 +23,14 @@ public class TCRVillagerModel extends GeoModel<TCRVillager> {
     public ResourceLocation getTextureResource(TCRVillager animatable) {
 //        System.out.println(animatable.getResourceName());
 //        System.out.println("tex res"+animatable.getResourceName());
-        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/pastoral_plain_villager.png");
+//        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/pastoral_plain_villager.png");
+        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/"+animatable.getResourceName()+".png");
     }
 
     @Override
     public ResourceLocation getAnimationResource(TCRVillager animatable) {
 //        System.out.println("ani res"+animatable.getResourceName());
         return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "animations/pastoral_plain_villager.animation.json");
+//        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "animations/"+animatable.getResourceName()+".animation.json");
     }
 }
