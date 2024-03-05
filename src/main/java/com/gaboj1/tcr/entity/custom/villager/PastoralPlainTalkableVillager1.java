@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.entity.custom.villager;
 
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.gui.screen.TreeNode;
 import com.gaboj1.tcr.init.TCRModEntities;
@@ -7,8 +8,12 @@ import com.gaboj1.tcr.init.TCRModItems;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.ItemUtil;
 import net.minecraft.ChatFormatting;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -44,8 +49,8 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
             builder.setAnswerRoot(
                     new TreeNode(BUILDER.buildDialogueDialog(entityType,3))// ......
                         .addChild(new TreeNode(BUILDER.buildDialogueDialog(entityType,3),BUILDER.buildDialogueChoice(entityType,4))// ......  ......
-                                .addLeaf(BUILDER.buildDialogueChoice(entityType,5), (byte) 0)//快给我，不然嘣了你
-                                .addLeaf(BUILDER.buildDialogueChoice(entityType,6), (byte) 1)//谢谢你的火铳~
+                                .addLeaf(BUILDER.buildDialogueChoice(entityType,5), (byte) 1)//快给我，不然嘣了你
+                                .addLeaf(BUILDER.buildDialogueChoice(entityType,6), (byte) 2)//谢谢你的火铳~
                     ));
         }
         Minecraft.getInstance().setScreen(builder.build());
@@ -56,11 +61,11 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
     public void handleNpcInteraction(Player player, byte interactionID) {
 
         switch (interactionID){
-            case 0:
+            case 1:
                 ItemUtil.searchAndConsumeItem(player, TCRModItems.DESERT_EAGLE_AMMO.get(), 20);
                 chat(BUILDER.buildDialogueDialog(entityType,4,false));
                 break;
-            case 1:
+            case 2:
                 if(!DataManager.ammoGot.getBool(player.getPersistentData())){
                     ItemStack stack = TCRModItems.DESERT_EAGLE_AMMO.get().getDefaultInstance();
                     stack.setCount(20);
@@ -76,6 +81,17 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
                 ammo.setCount(20);
                 player.addItem(ammo);
                 DataManager.gunGot.putBool(player,true);//存入得用玩家
+
+                if(player instanceof ServerPlayer serverPlayer){
+                    Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"day_dreamer"));
+                    AdvancementProgress _ap = serverPlayer.getAdvancements().getOrStartProgress(_adv);
+                    if (!_ap.isDone()) {
+                        for (String criteria : _ap.getRemainingCriteria())
+                            serverPlayer.getAdvancements().award(_adv, criteria);
+                    }
+                }
+
+
                 return;
             default:
                 return;
