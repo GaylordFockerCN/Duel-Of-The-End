@@ -38,7 +38,7 @@ public class TCRStationaryVillager extends TCRVillager implements NpcDialogue {
     @Nullable
     protected Player conversingPlayer;
     public TCRStationaryVillager(EntityType<? extends Villager> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel);
+        super(pEntityType, pLevel,1);
     }
 
     @Override

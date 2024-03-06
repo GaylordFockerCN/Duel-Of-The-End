@@ -1,6 +1,8 @@
 package com.gaboj1.tcr.listener;
 
 import com.gaboj1.tcr.util.DataManager;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -24,6 +26,13 @@ public class PlayerLoggedIn {
         public static void initServerPlayerPersistentData(PlayerEvent.PlayerLoggedInEvent event) {
             DataManager.init(event.getEntity());
         }
+
+        @SubscribeEvent
+        public static void enterBiome(TickEvent.PlayerTickEvent event) {
+            Player player = event.player;
+
+        }
+
 
     }
 }

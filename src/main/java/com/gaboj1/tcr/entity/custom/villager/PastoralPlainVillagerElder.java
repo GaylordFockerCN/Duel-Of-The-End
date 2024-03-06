@@ -30,7 +30,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     private Player conversingPlayer;
 
     public PastoralPlainVillagerElder(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel);
+        super(pEntityType, pLevel, 1);
     }
 
     @Override

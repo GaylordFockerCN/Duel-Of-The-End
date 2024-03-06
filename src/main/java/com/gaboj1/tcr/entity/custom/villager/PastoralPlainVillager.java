@@ -11,10 +11,12 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.Random;
+
 public class PastoralPlainVillager extends TCRVillager {
 
     public PastoralPlainVillager(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel);
+        super(pEntityType, pLevel, new Random().nextInt(TYPES));
         whatCanISay = 3;
     }
 
@@ -40,7 +42,7 @@ public class PastoralPlainVillager extends TCRVillager {
 
     @Override
     public String getResourceName() {
-        return "pastoral_plain_villager";
+        return "pastoral_plain_villager"+id;
     }
 
 

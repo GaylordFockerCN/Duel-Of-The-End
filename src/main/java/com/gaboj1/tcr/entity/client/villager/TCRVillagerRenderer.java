@@ -18,9 +18,9 @@ public class TCRVillagerRenderer extends GeoEntityRenderer<TCRVillager> {
 //        super(renderManager, new TCRVillagerModel());
 //    }
 
-    @Override
-    public ResourceLocation getTextureLocation(TCRVillager animatable) {
-        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/"+animatable.getResourceName()+".png");
-    }
+//    @Override
+//    public ResourceLocation getTextureLocation(TCRVillager animatable) {
+//        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/villager/"+animatable.getResourceName()+".png");
+//    }
 
 }
