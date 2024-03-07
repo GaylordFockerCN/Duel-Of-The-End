@@ -17,6 +17,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.util.Random;
 
+
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class PlayerLoggedIn {
 
@@ -34,20 +35,17 @@ public class PlayerLoggedIn {
             DataManager.init(event.getEntity());
         }
 
-        //前面的区域，以后再来探索吧~
+        //前面的区域以后再来探索吧~
         @SubscribeEvent
         public static void enterBiome(TickEvent.PlayerTickEvent event) {
             Player player = event.player;
             Level level = player.level();
             Holder<Biome> currentBiome = level.getBiome(player.getOnPos());
-            if(currentBiome.is(TCRBiomeTags.FORBIDDEN_BIOME)){
-                player.displayClientMessage(Component.translatable("info.the_casket_of_reveries.enter_forbidden_biome"),true);
-                player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS,20,1,false,true));
-                player.addEffect(new MobEffectInstance(MobEffects.HARM,1,1,false,true));
+            if (currentBiome.is(TCRBiomeTags.FORBIDDEN_BIOME)) {
+                player.displayClientMessage(Component.translatable("info.the_casket_of_reveries.enter_forbidden_biome"), true);
+                player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 1, false, true));
+                player.addEffect(new MobEffectInstance(MobEffects.HARM, 1, 1, false, true));
             }
-
         }
-
-
     }
 }
