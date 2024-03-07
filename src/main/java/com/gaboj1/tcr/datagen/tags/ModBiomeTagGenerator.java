@@ -12,9 +12,10 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
+import static com.gaboj1.tcr.worldgen.biome.TCRBiomeTags.*;
+
 public class ModBiomeTagGenerator extends BiomeTagsProvider {
-    public static final TagKey<Biome> IS_TCR = TagKey.create(Registries.BIOME, TheCasketOfReveriesMod.prefix("in_tcr"));
-    public static final TagKey<Biome> VALID_BIOME1 = TagKey.create(Registries.BIOME, TheCasketOfReveriesMod.prefix("valid_biome1"));
+
 
     public ModBiomeTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper helper) {
         super(output, provider, TheCasketOfReveriesMod.MOD_ID, helper);
@@ -22,6 +23,12 @@ public class ModBiomeTagGenerator extends BiomeTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+
+        tag(FORBIDDEN_BIOME).add(
+                TCRBiomes.biome3,
+                TCRBiomes.biome3Center,
+                TCRBiomes.biome4,
+                TCRBiomes.biome4Center);
 
         tag(IS_TCR).add(
                 TCRBiomes.AIR,

@@ -168,6 +168,7 @@ public class TCRDialogueScreen extends Screen {
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(guiGraphics);
+        guiGraphics.blit(MY_BACKGROUND_LOCATION, this.width/2 - 214/2, this.height/2 - 252/2, 0, 0, 214, 252);
         this.dialogueAnswer.render(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }

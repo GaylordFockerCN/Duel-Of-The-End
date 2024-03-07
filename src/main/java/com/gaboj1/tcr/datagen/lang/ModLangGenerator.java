@@ -16,6 +16,8 @@ public class ModLangGenerator extends ModLangProvider {
     @Override
     protected void addTranslations() {
 
+        this.add("info.the_casket_of_reveries.enter_forbidden_biome","前面的区域，以后再来探索吧~");
+
         this.addConfig("is_white","是否属于白方");
         this.addConfig("enable_scaling","是否启用地图缩放。若启用，则无论用何种尺寸的图片生成的地图大小固定");
         this.addConfig("repair_value","基础树脂的修理值");

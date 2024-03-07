@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.gaboj1.tcr.worldgen.biome.TCRBiomeTags.VALID_BIOME1;
+
 public class FlowerAltarStructure extends Structure implements DecorationClearance {
 
     public static final Codec<FlowerAltarStructure> CODEC = RecordCodecBuilder.create(instance -> instance
@@ -71,7 +73,7 @@ public class FlowerAltarStructure extends Structure implements DecorationClearan
     public static FlowerAltarStructure buildStructureConfig(BootstapContext<Structure> context) {
         return new FlowerAltarStructure(
                 new Structure.StructureSettings(
-                        context.lookup(Registries.BIOME).getOrThrow(ModBiomeTagGenerator.VALID_BIOME1),
+                        context.lookup(Registries.BIOME).getOrThrow(VALID_BIOME1),
                         Arrays.stream(MobCategory.values()).collect(Collectors.toMap(category -> category, category -> new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create()))), // Landmarks have Controlled Mob spawning
                         GenerationStep.Decoration.SURFACE_STRUCTURES,
                         TerrainAdjustment.NONE

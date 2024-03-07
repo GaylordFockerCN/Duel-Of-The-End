@@ -33,11 +33,11 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         super(pEntityType, pLevel, 1);
     }
 
-    @Override
-    public String getResourceName() {
-//        return "pastoral_plain_villager_elder";
-        return "pastoral_plain_villager";
-    }
+//    @Override
+//    public String getResourceName() {
+////        return "pastoral_plain_villager_elder";
+//        return "pastoral_plain_villager";
+//    }
 
     public static AttributeSupplier setAttributes() {//生物属性
         return Animal.createMobAttributes()

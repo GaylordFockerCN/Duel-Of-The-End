@@ -170,9 +170,8 @@ public class TCRVillager extends Villager implements GeoEntity {
 
     }
 
-    public String getResourceName(){
-//        return "villager";
-        return "pastoral_plain_villager";
+    public String getResourceName() {
+        return "pastoral_plain_villager"+id;
     }
 
 

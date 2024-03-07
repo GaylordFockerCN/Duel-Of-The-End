@@ -40,12 +40,4 @@ public class PastoralPlainVillager extends TCRVillager {
         player.sendSystemMessage(Component.translatable(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get().getDescriptionId()+".fuck_chat"+(1+r.nextInt(whatCanISay))));
     }
 
-    @Override
-    public String getResourceName() {
-        return "pastoral_plain_villager"+id;
-    }
-
-
-
-
 }
