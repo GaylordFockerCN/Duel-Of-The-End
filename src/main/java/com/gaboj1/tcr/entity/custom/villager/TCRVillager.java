@@ -58,10 +58,11 @@ public class TCRVillager extends Villager implements GeoEntity {
     protected int id;
 
     //共有多少种村民，会根据村民数量来随机一个id，从[0,TYPES]中取
-    public static final int TYPES = 3;
+    public static final int TYPES = 5;
     public TCRVillager(EntityType<? extends Villager> pEntityType, Level pLevel, int id) {
         super(pEntityType, pLevel);
 
+        //尝试把id保存进nbt文件，但是发现没有用..
         CompoundTag data = this.getPersistentData();
         if(!data.getBoolean("hasID")){
             this.id = id;
@@ -129,51 +130,46 @@ public class TCRVillager extends Villager implements GeoEntity {
                 return InteractionResult.sidedSuccess(this.level().isClientSide);
             } else {
                 boolean flag = true;//this.getOffers().isEmpty();
-                if (pHand == InteractionHand.MAIN_HAND) {
-                    if (flag && !this.level().isClientSide) {
-                        this.setUnhappy();
-                    }
+//                if (pHand == InteractionHand.MAIN_HAND) {
+//                    if (flag && !this.level().isClientSide) {
+//                        this.setUnhappy();
+//                    }
+//
+//                    pPlayer.awardStat(Stats.TALKED_TO_VILLAGER);
+//                }
 
-                    pPlayer.awardStat(Stats.TALKED_TO_VILLAGER);
-                }
-
-                if (flag && canTalk && pPlayer instanceof ServerPlayer player) {
+                if (flag && canTalk && pPlayer instanceof ServerPlayer player && pHand == InteractionHand.MAIN_HAND) {
                     if(DataManager.isWhite.getBool(player)){//新增对话，其他和原版一样
                         talk(pPlayer);
                     }else {
                         talkFuck(pPlayer);
                     }
 
-                    return InteractionResult.sidedSuccess(this.level().isClientSide);
                 } else {
                     if (!this.level().isClientSide && !this.offers.isEmpty()) {
 //                        this.startTrading(pPlayer);
                     }
 
-                    return InteractionResult.sidedSuccess(this.level().isClientSide);
                 }
+                return InteractionResult.sidedSuccess(this.level().isClientSide);
             }
         } else {
             return super.mobInteract(pPlayer, pHand);
         }
     }
-    public void talk(Player player){
+    public void talk(Player player){}
 
-    }
+    public void talkFuck(Player player){}
 
     public void talk(Player player, Component component){
         if(player != null)
             player.sendSystemMessage(Component.literal("[").append(this.getDisplayName().copy().withStyle(ChatFormatting.YELLOW)).append("]: ").append(component));
     }
 
-    public void talkFuck(Player player){
-
-    }
-
+    //用于Geckolib模型区分贴图
     public String getResourceName() {
         return "pastoral_plain_villager"+id;
     }
-
 
     private void setUnhappy() {
 //        this.setUnhappyCounter(40);
@@ -211,7 +207,7 @@ public class TCRVillager extends Villager implements GeoEntity {
 //    }
 //
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        if(pDamageSource.getEntity() instanceof Player player) {
+        if(pDamageSource.getEntity() instanceof Player player && this.isClientSide()) {
             talkFuck(player);
         }
         return SoundEvents.VILLAGER_HURT;
