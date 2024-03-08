@@ -18,7 +18,7 @@ public class ModLangGenerator extends ModLangProvider {
 
         this.add("info.the_casket_of_reveries.enter_forbidden_biome","前面的区域，以后再来探索吧~");
 
-        this.addConfig("is_white","是否属于白方");
+        this.addConfig("more_hole","是否启用更多空洞的世界（地图更像空岛，类似天境，但是陆地较少）");
         this.addConfig("enable_scaling","是否启用地图缩放。若启用，则无论用何种尺寸的图片生成的地图大小固定");
         this.addConfig("repair_value","基础树脂的修理值");
         this.addConfig("tree_spirit_wand_hungry_consume","树灵法杖回血时的饥饿值消耗");

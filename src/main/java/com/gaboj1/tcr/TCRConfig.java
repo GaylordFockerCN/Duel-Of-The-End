@@ -1,5 +1,6 @@
 package com.gaboj1.tcr;
 
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -13,29 +14,39 @@ public class TCRConfig
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
     //是否启用自定义地图生成时缩放
-    public static final ForgeConfigSpec.BooleanValue ENABLE_SCALING = BUILDER
-            .translation("config."+TheCasketOfReveriesMod.MOD_ID+".enable_scaling")
-            .define("enable_scaling", false);
+    public static final ForgeConfigSpec.BooleanValue ENABLE_SCALING = createBool("enable_scaling",false);
+    //是否启用更多空洞的世界（地图更像空岛，类似天境，但是陆地较少）
+    public static final ForgeConfigSpec.BooleanValue MORE_HOLE = createBool("more_hole",false);
 
     //基础树脂的修复值
-    public static final ForgeConfigSpec.IntValue REPAIR_VALUE = BUILDER
-            .translation("config."+TheCasketOfReveriesMod.MOD_ID+".repair_value")
-            .defineInRange("repair_value",1,1, Integer.MAX_VALUE);
+    public static final ForgeConfigSpec.IntValue REPAIR_VALUE = createInt("repair_value",1,1);
 
     //树灵法杖参数
-    //是的我知道小写很不规范，但是复制粘贴真的很香。
-    public static final ForgeConfigSpec.IntValue tree_spirit_wand_hungry_consume = BUILDER
-            .translation("config."+TheCasketOfReveriesMod.MOD_ID+".tree_spirit_wand_hungry_consume")
-            .defineInRange("tree_spirit_wand_hungry_consume",2,1, Integer.MAX_VALUE);
-    public static final ForgeConfigSpec.IntValue tree_spirit_wand_heal = BUILDER
-            .translation("config."+TheCasketOfReveriesMod.MOD_ID+".tree_spirit_wand_heal")
-            .defineInRange("tree_spirit_wand_heal",5,1, Integer.MAX_VALUE);
-
-    public static final ForgeConfigSpec.IntValue spirit_log_consume = BUILDER
-            .translation("config."+TheCasketOfReveriesMod.MOD_ID+".spirit_log_consume")
-            .defineInRange("spirit_log_consume",1,1, Integer.MAX_VALUE);
+    public static final ForgeConfigSpec.IntValue TREE_SPIRIT_WAND_HUNGRY_CONSUME = createInt("tree_spirit_wand_hungry_consume",2,1);
+    public static final ForgeConfigSpec.IntValue TREE_SPIRIT_WAND_HEAL = createInt("tree_spirit_wand_heal",5,1);
+    public static final ForgeConfigSpec.IntValue SPIRIT_LOG_CONSUME = createInt("spirit_log_consume",1,1);
 
     static final ForgeConfigSpec SPEC = BUILDER.build();
+
+    private static ForgeConfigSpec.BooleanValue createBool(String key, boolean defaultValue){
+        return BUILDER
+                .comment(I18n.get("config."+TheCasketOfReveriesMod.MOD_ID+"."+key))
+                .translation("config."+TheCasketOfReveriesMod.MOD_ID+"."+key)
+                .define(key, defaultValue);
+    }
+
+    private static ForgeConfigSpec.IntValue createInt(String key, int defaultValue, int min){
+        return BUILDER
+                .comment(I18n.get("config."+TheCasketOfReveriesMod.MOD_ID+"."+key))
+                .translation("config."+TheCasketOfReveriesMod.MOD_ID+"."+key)
+                .defineInRange(key,defaultValue,min, Integer.MAX_VALUE);
+    }
+
+    private static ForgeConfigSpec.IntValue createInt(String key, int defaultValue, int min, int max){
+        return BUILDER
+                .translation("config."+TheCasketOfReveriesMod.MOD_ID+"."+key)
+                .defineInRange(key,defaultValue,min,max);
+    }
 
     private static boolean validateItemName(final Object obj){
         return obj instanceof final String itemName && ForgeRegistries.ITEMS.containsKey(new ResourceLocation(itemName));
