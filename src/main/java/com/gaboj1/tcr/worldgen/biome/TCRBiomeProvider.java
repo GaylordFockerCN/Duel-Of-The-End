@@ -9,9 +9,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.resources.RegistryOps;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
+import net.minecraft.world.level.saveddata.SavedData;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
 import java.awt.*;
@@ -124,14 +127,14 @@ public class TCRBiomeProvider extends BiomeSource {
     @Override
     protected Stream<Holder<Biome>> collectPossibleBiomes() {
 
-
-        String levelName = ServerLifecycleHooks.getCurrentServer().getServerDirectory().getName();
+        //不在这里生成map的话map会被清空
+//        String levelName = Minecraft.getInstance().getCurrentServer().name;服务端还没创建，无法获取名字......
         //FIXME 换成存档名字，很重要！！
-        //不在这里生成的话map会被清空，但是这里生成不知道有什么bug...
-        File mapFile = new File(BiomeMap.DIR + levelName+"Map.dat");
+
+        File mapFile = new File(Minecraft.getInstance().gameDirectory.getAbsoluteFile() +"Map.dat");
         boolean mapExist = mapFile.exists();
 
-        //后续从文件直接读取数组较快，否则每次进世界都得加载，地图大的话很慢
+        //二次进入游戏从文件直接读取数组较快，否则每次进世界都得加载，地图大的话很慢
         if(mapExist){
             try {
                 FileInputStream fis = new FileInputStream(mapFile);
@@ -168,7 +171,7 @@ public class TCRBiomeProvider extends BiomeSource {
         mainCenter = generator.getCenter();
 
         try {
-            new File(BiomeMap.DIR).mkdir();
+//            new File(BiomeMap.DIR).mkdir();
             mapFile.createNewFile();
             FileOutputStream fos = new FileOutputStream(mapFile);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -180,10 +183,12 @@ public class TCRBiomeProvider extends BiomeSource {
             oos.writeObject(mainCenter);
             oos.close();
             fos.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     @Override
     protected Codec<? extends BiomeSource> codec() {
