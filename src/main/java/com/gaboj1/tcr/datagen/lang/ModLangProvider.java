@@ -156,6 +156,17 @@ public abstract class ModLangProvider extends LanguageProvider {
     }
 
     public void addBookAndContents(String bookKey, String bookTitle, String... pages) {
+        this.add(TheCasketOfReveriesMod.MOD_ID+".book.author." + bookKey, "无名氏");
+        this.add(TheCasketOfReveriesMod.MOD_ID+".book." + bookKey, bookTitle);
+        int pageCount = 0;
+        for (String page : pages) {
+            pageCount++;
+            this.add(TheCasketOfReveriesMod.MOD_ID+".book." + bookKey + "." + pageCount, page);
+        }
+    }
+
+    public void addBookAndAuthorAndContents(String bookKey, String author, String bookTitle, String... pages) {
+        this.add(TheCasketOfReveriesMod.MOD_ID+".book.author." + bookKey, author);
         this.add(TheCasketOfReveriesMod.MOD_ID+".book." + bookKey, bookTitle);
         int pageCount = 0;
         for (String page : pages) {

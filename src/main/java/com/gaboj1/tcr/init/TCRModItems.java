@@ -23,6 +23,9 @@ public class TCRModItems {
 	public static final RegistryObject<Item> TREE_SPIRIT_WAND = REGISTRY.register("tree_spirit_wand",() ->  new TreeSpiritWand());
 	public static final RegistryObject<Item> TREE_DEMON_HORN = REGISTRY.register("tree_demon_horn",() ->  new Drops());
 	public static final RegistryObject<Item> ELDER_STAFF = REGISTRY.register("elder_staff",() ->  new Drops());
+	public static final RegistryObject<Item> BOOK1 = REGISTRY.register("book1",() ->  new Book("book1"));
+
+	public static final RegistryObject<Item> BOOK2 = REGISTRY.register("book2",() ->  new Book("book2"));
 
 	public static final RegistryObject<Item> MIDDLE_TREE_MONSTER_SPAWN_EGG = REGISTRY.register("middle_tree_monster_spawn_egg",
 			() -> new ForgeSpawnEggItem(TCRModEntities.MIDDLE_TREE_MONSTER, 0xD57E36, 0x1D0D00,

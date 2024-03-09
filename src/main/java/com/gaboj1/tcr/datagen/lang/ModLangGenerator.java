@@ -101,6 +101,9 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,2,"嗯");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,3,"33");
 
+        this.addBookAndContents("book1","Test","Test1","Test1.1");
+        this.addBookAndContents("book2","Test2","Test2","Test2.2");
+
         this.addAdvancement(TheCasketOfReveriesMod.MOD_ID,"远梦之棺","> <");
         this.addAdvancement("enter_realm_of_the_dream","梦之领域","进入梦之领域");
         this.addAdvancement("wow","嘿！","砍伐密林灵木时小树妖突然出现！");
