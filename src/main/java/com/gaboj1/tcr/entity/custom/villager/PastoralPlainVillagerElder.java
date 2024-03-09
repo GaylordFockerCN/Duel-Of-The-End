@@ -4,6 +4,7 @@ import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.gui.screen.villager.PastoralPlainElderLinkListStreamScreen;
 import com.gaboj1.tcr.init.TCRModEntities;
+import com.gaboj1.tcr.init.TCRModItems;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.packet.NPCDialoguePacket;
@@ -43,12 +44,14 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     }
 
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new NpcDialogueGoal<>(this));//防乱跑
+        this.goalSelector.addGoal(1, new NpcDialogueGoal<>(this));//防乱跑但是好像没成功
         super.registerGoals();
     }
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        this.setItemInHand(InteractionHand.MAIN_HAND, TCRModItems.ELDER_STAFF.get().getDefaultInstance());
+//        System.out.println(this.getItemInHand(InteractionHand.MAIN_HAND)+"client?"+this.isClientSide());
         if (hand == InteractionHand.MAIN_HAND) {
             if ( !this.level().isClientSide()) {
 //                if (DataManager.isWhite.getBool((ServerPlayer)player)) {
