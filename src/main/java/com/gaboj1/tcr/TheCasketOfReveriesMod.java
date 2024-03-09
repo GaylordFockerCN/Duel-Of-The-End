@@ -2,24 +2,24 @@ package com.gaboj1.tcr;
 
 import com.gaboj1.tcr.block.renderer.BetterStructureBlockRenderer;
 import com.gaboj1.tcr.block.renderer.PortalBedRenderer;
-import com.gaboj1.tcr.entity.client.MiddleTreeMonsterRenderer;
-import com.gaboj1.tcr.entity.client.SmallTreeMonsterRenderer;
-import com.gaboj1.tcr.entity.client.TreeGuardianRenderer;
+import com.gaboj1.tcr.entity.client.boss.BossOneRenderer;
+import com.gaboj1.tcr.entity.client.tree_monster.MiddleTreeMonsterRenderer;
+import com.gaboj1.tcr.entity.client.tree_monster.SmallTreeMonsterRenderer;
+import com.gaboj1.tcr.entity.client.tree_monster.TreeGuardianRenderer;
 import com.gaboj1.tcr.entity.client.villager.TCRVillagerRenderer;
-import com.gaboj1.tcr.entity.custom.MiddleTreeMonsterEntity;
-import com.gaboj1.tcr.entity.custom.SmallTreeMonsterEntity;
-import com.gaboj1.tcr.entity.custom.TreeGuardianEntity;
+import com.gaboj1.tcr.entity.custom.boss_one.BossOneEntity;
+import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
+import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
+import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
 import com.gaboj1.tcr.entity.custom.villager.PastoralPlainTalkableVillager1;
 import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillager;
 import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.init.*;
 import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import com.gaboj1.tcr.worldgen.dimension.TCRChunkGenerator;
 import com.gaboj1.tcr.worldgen.structure.TCRStructurePlacementTypes;
 import com.mojang.logging.LogUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.Registry;
@@ -27,7 +27,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
@@ -35,11 +34,9 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -149,18 +146,20 @@ public class TheCasketOfReveriesMod {
             EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1.get(), TCRVillagerRenderer::new);
             EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(), TCRVillagerRenderer::new);
 
+            EntityRenderers.register(TCRModEntities.BOSS_ONE.get(), BossOneRenderer::new);
+
             BlockEntityRenderers.register(TCRModBlockEntities.PORTAL_BED.get(), PortalBedRenderer::new);
         }
 
         @SubscribeEvent
         public static void entityAttributeEvent(EntityAttributeCreationEvent event) {
-
             event.put(TCRModEntities.SMALL_TREE_MONSTER.get(), SmallTreeMonsterEntity.setAttributes());
             event.put(TCRModEntities.TREE_GUARDIAN.get(), TreeGuardianEntity.setAttributes());//设置生物属性功能在此被调用
             event.put(TCRModEntities.MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterEntity.setAttributes());
             event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(),PastoralPlainVillager.setAttributes());
             event.put(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1.get(), PastoralPlainTalkableVillager1.setAttributes());
             event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),PastoralPlainVillagerElder.setAttributes());
+            event.put(TCRModEntities.BOSS_ONE.get(), BossOneEntity.setAttributes());
         }
 
         //刷新规则

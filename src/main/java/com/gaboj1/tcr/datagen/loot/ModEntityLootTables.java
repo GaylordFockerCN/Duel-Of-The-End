@@ -70,6 +70,11 @@ public class ModEntityLootTables extends EntityLootSubProvider {
                                 .add(LootItem.lootTableItem(TCRModItems.COPY_RESIN.get())))
         );
 
+        add(TCRModEntities.BOSS_ONE.get(),
+                LootTable.lootTable()
+                        .withPool((LootPool.lootPool()
+                                .setRolls((UniformGenerator.between(0,2)))
+                                .add(LootItem.lootTableItem(TCRModItems.TREE_DEMON_HORN.get())))));
     }
 
     public LootTable.Builder emptyLootTable() {

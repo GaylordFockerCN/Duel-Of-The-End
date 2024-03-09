@@ -1,6 +1,10 @@
 package com.gaboj1.tcr.init;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.entity.custom.boss_one.BossOneEntity;
+import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
+import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
+import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
 import com.gaboj1.tcr.entity.custom.villager.PastoralPlainTalkableVillager1;
 import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.entity.custom.*;
@@ -52,6 +56,11 @@ public class TCRModEntities {
 			REGISTRY.register("pastoral_plain_villager_elder",
 					() -> EntityType.Builder.of(PastoralPlainVillagerElder::new, MobCategory.CREATURE)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "pastoral_plain_villager_elder").toString()));
+
+	public static final RegistryObject<EntityType<BossOneEntity>> BOSS_ONE =
+			REGISTRY.register("boss_one",
+					() -> EntityType.Builder.of(BossOneEntity::new, MobCategory.CREATURE)
+							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "boss_one").toString()));
 
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
