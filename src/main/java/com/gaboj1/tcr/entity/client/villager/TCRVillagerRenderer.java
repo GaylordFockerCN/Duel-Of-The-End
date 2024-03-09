@@ -14,10 +14,13 @@ public class TCRVillagerRenderer extends GeoEntityRenderer<TCRVillager> {
         super(renderManager, new TCRVillagerModel());
     }
 
-    @Override
-    public ResourceLocation getTextureLocation(TCRVillager animatable) {
-//        System.out.println("tex res loc"+animatable.getResourceName());
-        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/pastoral_plain_villager.png");
-    }
+//    public TCRVillagerRenderer(EntityRendererProvider.Context renderManager ,String textureLocation) {
+//        super(renderManager, new TCRVillagerModel());
+//    }
+
+//    @Override
+//    public ResourceLocation getTextureLocation(TCRVillager animatable) {
+//        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/villager/"+animatable.getResourceName()+".png");
+//    }
 
 }

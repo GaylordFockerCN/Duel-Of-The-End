@@ -41,10 +41,12 @@ public class ModNoiseBuilders   {
         SurfaceRules.RuleSource air = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.AIR),AIR));
 
         SurfaceRules.RuleSource finalBiome = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.FINAL),AIR));
+//        SurfaceRules.RuleSource finalBiome = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.FINAL),DIRT));
 
         SurfaceRules.RuleSource noWater = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.waterBlockCheck(-1, 0), GRASS_BLOCK), DIRT);
 
         SurfaceRules.RuleSource surface = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, noWater), SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DIRT));
+//        SurfaceRules.RuleSource surface = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.yBlockCheck(VerticalAnchor.aboveBottom(10),10),DIRT));
 
         SurfaceRules.RuleSource denseForest = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.DENSE_FOREST),GRASS_BLOCK), SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DIRT));
 
@@ -80,7 +82,11 @@ public class ModNoiseBuilders   {
 //        density = slide(density, 0, 64, 64, 0, -0.2, 8, 40, -0.1);
 //        density = DensityFunctions.add(density, DensityFunctions.constant(-0.15));//-0.15
 //        density = DensityFunctions.blendDensity(density);
-//        density = DensityFunctions.interpolated(density);
+        //不知道有无效果。。
+        density = DensityFunctions.interpolated(density);
+        density = DensityFunctions.interpolated(density);
+        density = DensityFunctions.interpolated(density);
+        density = DensityFunctions.interpolated(density);
 //        density = density.squeeze();
 //        return postProcess(slide(density, -64, 384, 80,  64, -0.078125, 0, 24, 0.1171875));
         return density;

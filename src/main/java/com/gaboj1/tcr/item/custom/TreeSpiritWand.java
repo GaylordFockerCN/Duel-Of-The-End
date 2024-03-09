@@ -48,8 +48,8 @@ public class TreeSpiritWand extends MagicWeapon {
         if(foodData.getFoodLevel()==0  || pPlayer.getHealth() == pPlayer.getMaxHealth()){
             return InteractionResultHolder.fail(itemStack);
         }
-        foodData.setFoodLevel(foodData.getFoodLevel()-TCRConfig.tree_spirit_wand_hungry_consume.get());
-        pPlayer.heal(TCRConfig.tree_spirit_wand_heal.get());
+        foodData.setFoodLevel(foodData.getFoodLevel()-TCRConfig.TREE_SPIRIT_WAND_HUNGRY_CONSUME.get());
+        pPlayer.heal(TCRConfig.TREE_SPIRIT_WAND_HEAL.get());
         if(!pPlayer.isCreative())
             itemStack.setDamageValue(itemStack.getDamageValue()+1);
         return InteractionResultHolder.success(itemStack);
@@ -61,7 +61,7 @@ public class TreeSpiritWand extends MagicWeapon {
         Level level = pContext.getLevel();
         Player player = pContext.getPlayer();
         if(!level.isClientSide){
-            if(ItemUtil.searchAndConsumeItem(player, TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get().asItem(), TCRConfig.spirit_log_consume.get()) == 0){
+            if(ItemUtil.searchAndConsumeItem(player, TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get().asItem(), TCRConfig.SPIRIT_LOG_CONSUME.get()) == 0){
                 player.displayClientMessage(Component.translatable(this.getDescriptionId()+".no_spirit_tree"), true);
                 return InteractionResult.FAIL;
             }

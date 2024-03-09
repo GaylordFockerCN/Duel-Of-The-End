@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.worldgen.dimension;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import com.gaboj1.tcr.worldgen.structure.BiomeForcedLandmarkPlacement;
@@ -87,9 +88,12 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
                     }
                 }
 
-                if(gBase == 75)
-//                    continue;//不填坑
+                if(gBase == 75) {
+                    if(TCRConfig.MORE_HOLE.get()){
+                        continue;//不填坑
+                    }
                     gBase = 77;//TODO 填坑，但是数值有待调
+                }
 
                 //获取对应噪声值并填补地形
                 double scale = 0.01;
@@ -195,6 +199,7 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
         return $$4 != null ? $$4.getReferences() : 0;
     }
 
+    //用于搜结构
     @Nullable
     @Override
     public Pair<BlockPos, Holder<Structure>> findNearestMapStructure(ServerLevel level, HolderSet<Structure> targetStructures, BlockPos pos, int searchRadius, boolean skipKnownStructures) {

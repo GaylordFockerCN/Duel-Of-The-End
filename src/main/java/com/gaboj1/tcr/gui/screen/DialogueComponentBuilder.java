@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.gui.screen;
 
 import com.gaboj1.tcr.entity.NpcDialogue;
+import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillager;
 import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.player.LocalPlayer;

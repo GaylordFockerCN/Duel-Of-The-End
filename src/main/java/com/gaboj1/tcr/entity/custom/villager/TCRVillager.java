@@ -7,6 +7,7 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -40,9 +41,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import java.util.Random;
 
 public class TCRVillager extends Villager implements GeoEntity {
-    public TCRVillager(EntityType<? extends Villager> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel);
-    }
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
@@ -50,6 +48,31 @@ public class TCRVillager extends Villager implements GeoEntity {
 
     Random r = new Random();
     int whatCanISay = 0;
+
+    //区别于getID
+    public int getVillagerId() {
+        return id;
+    }
+
+    //用于随机生成不同的皮肤和声音
+    protected int id;
+
+    //共有多少种村民，会根据村民数量来随机一个id，从[0,TYPES]中取
+    public static final int TYPES = 5;
+    public TCRVillager(EntityType<? extends Villager> pEntityType, Level pLevel, int id) {
+        super(pEntityType, pLevel);
+
+        //尝试把id保存进nbt文件，但是发现没有用..
+        CompoundTag data = this.getPersistentData();
+        if(!data.getBoolean("hasID")){
+            this.id = id;
+            data.putInt("villagerID",id);
+            data.putBoolean("hasID",true);
+
+        }else {
+            this.id = data.getInt("villagerID");
+        }
+    }
     @Override
     protected Brain<?> makeBrain(Dynamic<?> pDynamic) {
         Brain<Villager> brain = this.brainProvider().makeBrain(pDynamic);
@@ -107,49 +130,45 @@ public class TCRVillager extends Villager implements GeoEntity {
                 return InteractionResult.sidedSuccess(this.level().isClientSide);
             } else {
                 boolean flag = true;//this.getOffers().isEmpty();
-                if (pHand == InteractionHand.MAIN_HAND) {
-                    if (flag && !this.level().isClientSide) {
-                        this.setUnhappy();
-                    }
+//                if (pHand == InteractionHand.MAIN_HAND) {
+//                    if (flag && !this.level().isClientSide) {
+//                        this.setUnhappy();
+//                    }
+//
+//                    pPlayer.awardStat(Stats.TALKED_TO_VILLAGER);
+//                }
 
-                    pPlayer.awardStat(Stats.TALKED_TO_VILLAGER);
-                }
-
-                if (flag && canTalk && pPlayer instanceof ServerPlayer player) {
+                if (flag && canTalk && pPlayer instanceof ServerPlayer player && pHand == InteractionHand.MAIN_HAND) {
                     if(DataManager.isWhite.getBool(player)){//新增对话，其他和原版一样
                         talk(pPlayer);
                     }else {
                         talkFuck(pPlayer);
                     }
 
-                    return InteractionResult.sidedSuccess(this.level().isClientSide);
                 } else {
                     if (!this.level().isClientSide && !this.offers.isEmpty()) {
 //                        this.startTrading(pPlayer);
                     }
 
-                    return InteractionResult.sidedSuccess(this.level().isClientSide);
                 }
+                return InteractionResult.sidedSuccess(this.level().isClientSide);
             }
         } else {
             return super.mobInteract(pPlayer, pHand);
         }
     }
-    public void talk(Player player){
+    public void talk(Player player){}
 
-    }
+    public void talkFuck(Player player){}
 
     public void talk(Player player, Component component){
         if(player != null)
             player.sendSystemMessage(Component.literal("[").append(this.getDisplayName().copy().withStyle(ChatFormatting.YELLOW)).append("]: ").append(component));
     }
 
-    public void talkFuck(Player player){
-
-    }
-
-    public String getResourceName(){
-        return "villager";
+    //用于Geckolib模型区分贴图
+    public String getResourceName() {
+        return "pastoral_plain_villager"+id;
     }
 
     private void setUnhappy() {
@@ -188,7 +207,7 @@ public class TCRVillager extends Villager implements GeoEntity {
 //    }
 //
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        if(pDamageSource.getEntity() instanceof Player player) {
+        if(pDamageSource.getEntity() instanceof Player player && this.isClientSide()) {
             talkFuck(player);
         }
         return SoundEvents.VILLAGER_HURT;

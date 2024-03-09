@@ -17,6 +17,7 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
+import net.minecraft.world.level.levelgen.NoiseSettings;
 
 import java.util.OptionalLong;
 import java.util.Random;
@@ -62,6 +63,7 @@ public class TCRDimension {
                 noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS));
 
         TCRChunkGenerator chunkGenerator = new TCRChunkGenerator(wrappedChunkGenerator,noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS));
+//        TCRChunkGenerator chunkGenerator = new TCRChunkGenerator(wrappedChunkGenerator,noiseGenSettings.getOrThrow(NoiseGeneratorSettings.NETHER));
 
         LevelStem stem = new LevelStem(dimTypes.getOrThrow(TCRDimension.SKY_ISLAND_TYPE), chunkGenerator);
 

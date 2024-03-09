@@ -6,6 +6,7 @@ import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
 import com.gaboj1.tcr.entity.custom.villager.PastoralPlainTalkableVillager1;
+import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillager1;
 import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.entity.custom.*;
 
@@ -46,6 +47,11 @@ public class TCRModEntities {
 			REGISTRY.register("pastoral_plain_villager",
 					() -> EntityType.Builder.of(PastoralPlainVillager::new, MobCategory.CREATURE)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "pastoral_plain_villager").toString()));
+
+	public static final RegistryObject<EntityType<PastoralPlainVillager1>> PASTORAL_PLAIN_VILLAGER1 =
+			REGISTRY.register("pastoral_plain_villager1",
+					() -> EntityType.Builder.of(PastoralPlainVillager1::new, MobCategory.CREATURE)
+							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "pastoral_plain_villager1").toString()));
 
 	public static final RegistryObject<EntityType<PastoralPlainTalkableVillager1>> PASTORAL_PLAIN_TALKABLE_VILLAGER_1 =
 			REGISTRY.register("pastoral_plain_talkable_villager_1",
