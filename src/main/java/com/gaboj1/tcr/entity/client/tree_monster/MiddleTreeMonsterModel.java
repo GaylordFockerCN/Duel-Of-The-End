@@ -1,7 +1,7 @@
-package com.gaboj1.tcr.entity.client;
+package com.gaboj1.tcr.entity.client.tree_monster;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.entity.custom.MiddleTreeMonsterEntity;
+import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import software.bernie.geckolib.constant.DataTickets;

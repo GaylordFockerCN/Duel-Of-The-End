@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.entity.custom;
+package com.gaboj1.tcr.entity.custom.tree_monsters;
 
 import com.gaboj1.tcr.init.TCRModSounds;
 import net.minecraft.server.level.ServerLevel;

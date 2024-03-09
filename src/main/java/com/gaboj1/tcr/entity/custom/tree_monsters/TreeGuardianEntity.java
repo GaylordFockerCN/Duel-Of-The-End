@@ -1,7 +1,9 @@
-package com.gaboj1.tcr.entity.custom;
+package com.gaboj1.tcr.entity.custom.tree_monsters;
 
 import com.gaboj1.tcr.init.TCRModSounds;
+import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -17,6 +19,7 @@ import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -47,6 +50,12 @@ public class TreeGuardianEntity extends IronGolem implements GeoEntity {
                 .add(Attributes.MOVEMENT_SPEED, 0.4f)//移速
                 .build();
     }
+
+    @Override
+    protected void playStepSound(BlockPos p_28864_, BlockState p_28865_) {
+        this.playSound(SoundEvents.ZOMBIE_STEP);
+    }
+
     @Override
     protected void registerGoals() {//设置生物行为
         /*
@@ -104,7 +113,6 @@ public class TreeGuardianEntity extends IronGolem implements GeoEntity {
         // 设置生物的攻击伤害值
         this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(damage);
     }
-
 
 //森林守护者受伤声音
     @Nullable

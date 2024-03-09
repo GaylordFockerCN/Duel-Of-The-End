@@ -1,7 +1,8 @@
-package com.gaboj1.tcr.entity.client;
+package com.gaboj1.tcr.entity.client.tree_monster;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.entity.custom.MiddleTreeMonsterEntity;
+import com.gaboj1.tcr.entity.client.tree_monster.MiddleTreeMonsterModel;
+import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
