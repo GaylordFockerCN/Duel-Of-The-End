@@ -1,5 +1,7 @@
 package com.gaboj1.tcr.worldgen.noise;
 
+import org.spongepowered.noise.module.source.Perlin;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -467,7 +469,12 @@ public class NoiseMapGenerator {
         return random.nextDouble() * 2 - 1;
     }
 
+    public static double gaussianFunction(int x, int y, int peakX, int peakY, double variance) {
+        return Math.exp(-((x - peakX) * (x - peakX) + (y - peakY) * (y - peakY)) / (2 * variance * variance));
+    }
+
     public static void main(String args[]){
+
         int size = 100;
         double[][] map = getDoubles(size);
 

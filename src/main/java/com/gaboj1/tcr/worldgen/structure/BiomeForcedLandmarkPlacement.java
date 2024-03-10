@@ -59,14 +59,14 @@ public class BiomeForcedLandmarkPlacement extends StructurePlacement {
                 return true;
             }
 
-//            size = 14;
-//            if(this.structure == EnumStructures.FINAL.ordinal()
-//                    && correctX >= provider.getMainCenter().x - size && correctZ >= provider.getMainCenter().y-size
-//                    && correctX <= provider.getMainCenter().x + size && correctZ <= provider.getMainCenter().y+size
-//                    && !hasGenerated){
-//
-//                return true;
-//            }
+            size = 3;
+            if(this.structure == EnumStructures.FINAL.ordinal()
+                    && correctX >= provider.getMainCenter().x - size && correctZ >= provider.getMainCenter().y-size
+                    && correctX <= provider.getMainCenter().x + size && correctZ <= provider.getMainCenter().y+size
+                    && !hasGenerated){
+
+                return true;
+            }
 
         }
 

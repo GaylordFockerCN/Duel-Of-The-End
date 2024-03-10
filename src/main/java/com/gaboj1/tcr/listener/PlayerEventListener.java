@@ -50,6 +50,9 @@ public class PlayerEventListener {
         @SubscribeEvent
         public static void enterBiome(TickEvent.PlayerTickEvent event) {
             Player player = event.player;
+            if(player.isCreative()){
+                return;
+            }
             Level level = player.level();
             Holder<Biome> currentBiome = level.getBiome(player.getOnPos());
             if (currentBiome.is(TCRBiomeTags.FORBIDDEN_BIOME)) {
