@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
@@ -41,6 +42,9 @@ public class SetPlayerDataCommand {
             DataManager.putData(player, key, data);
             //懒得写翻译文件了哈哈顺便学一下怎么判断语言环境
             if(Minecraft.getInstance().getLanguageManager().getSelected() == "zh_cn"){
+
+//                source.sendSuccess(() -> Component.literal(""), false);
+                
                 player.sendSystemMessage(player.getDisplayName().copy().append(" 的 "+key+" 已经被设置为 ").append(String.valueOf(data)));
             }else {
                 player.sendSystemMessage(player.getDisplayName().copy().append("'s "+key+" has been set to ").append(String.valueOf(data)));

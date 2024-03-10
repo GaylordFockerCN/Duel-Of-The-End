@@ -27,6 +27,7 @@ public class Book extends WrittenBookItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         System.out.println("used");
         ItemStack book = player.getItemInHand(hand);
+        book.getOrCreateTag().putBoolean(TheCasketOfReveriesMod.MOD_ID + ":book", true);
         ListTag bookPages = new ListTag();
 
         for (int i = 1; i <= 2; i++)
@@ -38,4 +39,20 @@ public class Book extends WrittenBookItem {
         book.addTagElement("title", StringTag.valueOf(TheCasketOfReveriesMod.MOD_ID + ".book." + key));
         return super.use(level, player, hand);
     }
+
+    public static ItemStack getBook(String key){
+        ItemStack book = new ItemStack(Items.WRITTEN_BOOK);
+        book.getOrCreateTag().putBoolean(TheCasketOfReveriesMod.MOD_ID + ":book", true);
+        ListTag bookPages = new ListTag();
+
+        for (int i = 1; i <= 2; i++)
+            bookPages.add(StringTag.valueOf(Component.Serializer.toJson(Component.translatable(TheCasketOfReveriesMod.MOD_ID + ".book." + key + "." + i))));
+
+        book.addTagElement("pages", bookPages);
+        book.addTagElement("generation", IntTag.valueOf(3));
+        book.addTagElement("author", StringTag.valueOf(TheCasketOfReveriesMod.MOD_ID + ".book.author." + key));
+        book.addTagElement("title", StringTag.valueOf(TheCasketOfReveriesMod.MOD_ID + ".book." + key));
+        return book;
+    }
+
 }

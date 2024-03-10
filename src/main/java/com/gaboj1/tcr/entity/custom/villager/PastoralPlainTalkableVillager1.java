@@ -5,6 +5,7 @@ import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.gui.screen.TreeNode;
 import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.init.TCRModItems;
+import com.gaboj1.tcr.item.custom.Book;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.ItemUtil;
 import net.minecraft.ChatFormatting;
@@ -63,6 +64,7 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
         switch (interactionID){
             case 1:
                 ItemUtil.searchAndConsumeItem(player, TCRModItems.DESERT_EAGLE_AMMO.get(), 20);
+                player.addItem(Book.getBook("book1"));
                 chat(BUILDER.buildDialogueDialog(entityType,4,false));
                 break;
             case 2:
