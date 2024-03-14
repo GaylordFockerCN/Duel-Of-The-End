@@ -1,9 +1,9 @@
 {
   // The base structure class to use for the behavior of the structure. (Like extra terrain checks and such)
   "type": "minecraft:jigsaw",
-
+  "adapt_noise": false,
   // the path to the template pool json file to use
-  "start_pool": "the_casket_of_reveries:boss/final/bottom_pool",
+  "start_pool": "the_casket_of_reveries:boss/final/bottom",
 
   // This is how many pieces away from the starting piece a piece of the structure can spawn
   // Think of it like the length of the branch of the structure
@@ -31,6 +31,7 @@
   // Makes our sky fan structure take the terrain's top y value and add it to the start_height y value above.
   // The final value is the y value the structures spawn at.
   // WORLD_SURFACE_WG will stop at first non-air block so it spawns above oceans always instead of sunken into a deep sea.
+  //注释这个，使其百分百在高度240生成
 //  "project_start_to_heightmap": "WORLD_SURFACE_WG",
 
   // Keep this false. This is only for vanilla legacy villages to make it spawn properly. We don't need no hacks here!

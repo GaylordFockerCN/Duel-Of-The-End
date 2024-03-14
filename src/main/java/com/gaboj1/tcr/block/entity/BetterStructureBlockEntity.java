@@ -4,9 +4,12 @@ import com.gaboj1.tcr.init.TCRModBlockEntities;
 import com.gaboj1.tcr.init.TCRModBlocks;
 import com.google.common.collect.Lists;
 import net.minecraft.ResourceLocationException;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.inventory.StructureBlockEditScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ServerboundSetStructureBlockPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -31,6 +34,9 @@ import java.util.stream.Stream;
 public class BetterStructureBlockEntity extends StructureBlockEntity {
 
     public static final int MAX_SIZE = 256;
+
+    //用于判断有没有加载过，否则会一直重复加载
+    public boolean generated = false;
 
     public BetterStructureBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(pPos, pBlockState);
@@ -136,23 +142,24 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
         int j1 = Math.max(nbt.getInt("sizeZ"), 0);
         setStructureSize(new BlockPos(l, i1, j1));
         this.updateBlockState();
+
+//        if(generated && this.level != null && !this.level.isClientSide){
+//            this.level.destroyBlock(this.getBlockPos(),false);
+//        }
+
+        //当加载的时候强制加载一下区块，为了在结构内包含结构方块时以生成结构，省的调用红石。
+        //用button是因为StructureBlockEditScreen的sendToServer方法不知道怎么搞成public，比较复杂，不如按钮简单。
+        if(this.level != null && this.level.isClientSide && !generated){
+            StructureBlockEditScreen screen = new StructureBlockEditScreen(this);
+            Minecraft.getInstance().setScreen(screen);
+            screen.loadButton.onPress();
+            generated = true;
+        }
+
     }
 
     @Override
     public boolean saveStructure(boolean writeToDisk) {
-//
-//        if (this.getMode() == StructureMode.SAVE && this.level.isClientSide ) {
-//            BlockPos blockpos = this.getBlockPos();
-//            ServerLevel serverLevel = (ServerLevel) this.level;
-//            StructureTemplateManager templatemanager = serverLevel.getStructureManager();
-//            StructureTemplate template = templatemanager.getOrCreate(new ResourceLocation(getStructureName()));
-//            template.fillFromWorld(this.level, blockpos, this.getStructureSize(), !this.isIgnoreEntities(), Blocks.STRUCTURE_VOID);
-////          变成private方法了没法沿用了qwq
-////          template.setAuthor(this.author);
-//            return !writeToDisk || templatemanager.save(new ResourceLocation(getStructureName()));
-//        } else {
-//            return false;
-//        }
 
         if (this.getMode() == StructureMode.SAVE && !this.level.isClientSide && this.getStructureName() != null) {
             BlockPos $$1 = this.getBlockPos().offset(this.getStructurePos());
@@ -167,7 +174,7 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
             }
 
             $$6.fillFromWorld(this.level, $$1, this.getStructureSize(), !this.isIgnoreEntities(), Blocks.STRUCTURE_VOID);
-//          变成private方法了没法沿用了qwq
+//          变成private方法了没法沿用了qwq（其实是不会改
             $$6.setAuthor("Sorry It's Private");
             if (writeToDisk) {
                 try {

@@ -1,0 +1,15 @@
+{
+  "name": "the_casket_of_reveries:boss/final/bottom",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_casket_of_reveries:boss/final/bottom",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

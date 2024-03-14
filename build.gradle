@@ -29,6 +29,8 @@ minecraft {
 
     copyIdeResources = true
 
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
     runs {
         configureEach {
             workingDirectory project.file('run')
@@ -99,8 +101,6 @@ dependencies {
 //    implementation fg.deobf('com.sk89q.worldedit:worldedit-forge-mc1.20:7.2.15')
 //    implementation fg.deobf('com.sk89q.worldedit:worldedit-core:7.2.0')
 }
-
-
 
 mixin {
     add sourceSets.main, 'the_casket_of_reveries.mixin-refmap.json'
