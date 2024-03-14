@@ -1,5 +1,7 @@
 package com.gaboj1.tcr.worldgen.noise;
 
+import net.minecraft.client.gui.screens.inventory.StructureBlockEditScreen;
+import org.spongepowered.noise.NoiseQuality;
 import org.spongepowered.noise.module.source.Perlin;
 
 import java.awt.Point;
@@ -24,6 +26,13 @@ public class NoiseMapGenerator {
     private List<Point> cPoints = new ArrayList<>();
     private List<Point> dPoints = new ArrayList<>();
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getLength() {
+        return length;
+    }
 
     public Point getCenter1() {
         return center1;
@@ -48,7 +57,7 @@ public class NoiseMapGenerator {
     private Point center1, center2, center3, center4;
     public static final double CURVE_INTENSITY = 0.1;
     public static final double SCALE_OF_CENTER_R = 0.05;//相对宽度width的比例，中心空岛半径即为width*scaleOfCenterR
-    public final double scaleOfaCenterR = 1.2;//相对各个中心到整体中心的距离的比例， 各群系的中心群系的噪声半径 即 center.distance(aCenter)*scaleOfaCenterR
+    public static final double SCALE_OF_A_CENTER_R = 1.2;//相对各个中心到整体中心的距离的比例， 各群系的中心群系的噪声半径 即 center.distance(aCenter)*scaleOfaCenterR
     private Random random;
     private Point centerPoint = new Point();
     public void setLength(int length) {
@@ -360,14 +369,23 @@ public class NoiseMapGenerator {
 
         //生成中心群系
         if(aCenterR == 0){
-            aCenterR = (int)( aCenter.distance(centerPoint) * scaleOfaCenterR);
+            aCenterR = (int)( aCenter.distance(centerPoint) * SCALE_OF_A_CENTER_R);
         }
 
         generator.setWidth(aCenterR);
         generator.setLength(aCenterR);
         generator.setLacunarity(12);
         generator.setOctaves(8);
-        generator.setSeed(getDifferRandom());
+
+        //第二群系造山用
+        if(tag == 6){
+            generator.setSeed(142857);
+            generator.setLacunarity(2);
+            generator.setOctaves(6);
+        }else {
+            generator.setSeed(getDifferRandom());
+        }
+
         double[][] aCenterBiomeMap = generator.generateNoiseMap();
 
         ArrayList newPoints = new ArrayList<>();
@@ -475,36 +493,54 @@ public class NoiseMapGenerator {
 
     public static void main(String args[]){
 
-        int size = 100;
-        double[][] map = getDoubles(size);
+        Perlin perlin = new Perlin();
+        perlin.setNoiseQuality(NoiseQuality.BEST);
+//        perlin.setFrequency(1); // 调整频率以增加波动频率
+        perlin.setLacunarity(20.0); // 设置较高的lacunarity增加细节
+        perlin.setPersistence(0.001); // 设置较低的持续性以增加波动幅度
+        perlin.setOctaveCount(6); // 增加Octaves以增加复杂性
 
+        int size = 100;
         for(int i = 0 ; i < size ; i++){
             for(int j = 0 ; j < size ; j++){
-//                System.out.print(String.format("%.0f ",map[i][j]));
-                if(map[i][j] == 1){
-                    System.out.print("@ ");
-                }else if(map[i][j] == 2){
-                    System.out.print("# ");
-                }else if(map[i][j] == 3){
-                    System.out.print("^ ");
-                }else if(map[i][j] == 4){
-                    System.out.print("* ");
-                }else if(map[i][j] == 5){
-                    System.out.print("1 ");
-                }else if(map[i][j] == 6){
-                    System.out.print("1 ");
-                }else if(map[i][j] == 7){
-                    System.out.print("1 ");
-                }else if(map[i][j] == 8){
-                    System.out.print("1 ");
-                }else if(map[i][j] == 9){
-                    System.out.print("9 ");
-                }else {
-                    System.out.print("- ");
-                }
+                System.out.print(String.format("%.2f ",Math.abs(perlin.get(i * 0.01,0,j*0.01)-1)));
             }
             System.out.println();
+
         }
+
+
+
+//        int size = 100;
+//        double[][] map = getDoubles(size);
+//
+//        for(int i = 0 ; i < size ; i++){
+//            for(int j = 0 ; j < size ; j++){
+////                System.out.print(String.format("%.0f ",map[i][j]));
+//                if(map[i][j] == 1){
+//                    System.out.print("@ ");
+//                }else if(map[i][j] == 2){
+//                    System.out.print("# ");
+//                }else if(map[i][j] == 3){
+//                    System.out.print("^ ");
+//                }else if(map[i][j] == 4){
+//                    System.out.print("* ");
+//                }else if(map[i][j] == 5){
+//                    System.out.print("1 ");
+//                }else if(map[i][j] == 6){
+//                    System.out.print("1 ");
+//                }else if(map[i][j] == 7){
+//                    System.out.print("1 ");
+//                }else if(map[i][j] == 8){
+//                    System.out.print("1 ");
+//                }else if(map[i][j] == 9){
+//                    System.out.print("9 ");
+//                }else {
+//                    System.out.print("- ");
+//                }
+//            }
+//            System.out.println();
+//        }
 
     }
 

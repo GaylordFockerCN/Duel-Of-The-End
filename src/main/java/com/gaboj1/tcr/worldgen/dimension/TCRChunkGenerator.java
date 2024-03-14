@@ -3,6 +3,7 @@ package com.gaboj1.tcr.worldgen.dimension;
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
+import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
 import com.gaboj1.tcr.worldgen.structure.BiomeForcedLandmarkPlacement;
 import com.gaboj1.tcr.worldgen.structure.EnumStructures;
 import com.mojang.datafixers.util.Pair;
@@ -59,14 +60,63 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
     public void buildSurface(WorldGenRegion pLevel, StructureManager pStructureManager, RandomState pRandom, ChunkAccess pChunk) {
         super.buildSurface(pLevel, pStructureManager, pRandom, pChunk);
         fixPrimerSurface(pLevel);
+        buildPeak(pLevel);
+    }
+
+    private void buildPeak(WorldGenRegion primer){
+
+        BlockState grassTop = Blocks.GRASS_BLOCK.defaultBlockState();
+
+        Perlin perlin = new Perlin();
+        perlin.setFrequency(0.03);
+        if(this.getBiomeSource() instanceof TCRBiomeProvider provider){
+            //群系噪声半径
+            int r = (int) (provider.getCenter2().distance(provider.getMainCenter()) * NoiseMapGenerator.SCALE_OF_A_CENTER_R);
+
+            for (int z = 0; z < 16; z++) {
+                for (int x = 0; x < 16; x++) {
+
+                    //判断是否属于第二群系中心
+                    BlockPos pos = primer.getCenter().getWorldPosition().offset(x, 0, z);
+                    Optional<ResourceKey<Biome>> biome = primer.getBiome(pos).unwrapKey();
+                    if (!TCRBiomes.AZURE_SKIES.location().equals(biome.get().location()))
+                        continue;
+                    //NOTE! 要getCorrectValue，因为数组是正的，中心是(width/2,height/2),而实际群系中心是(0,0) 详情看BiomeForceLandMarkPlacement...
+                    int correctX = provider.getCorrectValue(pos.getX()>>2);
+                    int correctZ = provider.getCorrectValue(pos.getZ()>>2);
+                    Point center = provider.getCenter2();
+                    double dis = Math.sqrt(Math.pow(correctX - center.x,2)+Math.pow(correctZ-center.y,2)) * 4;//不能<<2哈哈
+                    double t = Math.max(0, r-dis);
+                    //double t = Math.pow(Math.max(0, r-dis),2) / 64;
+                    //根据距离进行缩放
+                    double scale = 0.01;
+                    int height = (int) (perlin.get(correctX*scale,0 ,correctZ*scale) * t) + (int)(perlin.get(correctX*scale,0 ,correctZ*scale)*10-10);
+
+
+                    // 寻找最顶的方块
+                    int gBase = 75;
+                    for (int y = 80; y > gBase; y--) {
+                        Block currentBlock = primer.getBlockState(pos.atY(y)).getBlock();
+                        if (currentBlock != Blocks.AIR) {
+                            gBase = y;
+                            break;
+                        }
+                    }
+
+                    //造山咯
+                    int y  = 0;
+                    while(y ++ < height){
+                        primer.setBlock(pos.atY(gBase+y), grassTop, 3);
+                    }
+
+                }
+            }
+        }
+
     }
 
     private void fixPrimerSurface(WorldGenRegion primer){
-
         Perlin perlin = new Perlin();
-        perlin.setLacunarity(2);
-        perlin.setPersistence(0.5);
-        perlin.setOctaveCount(6);
 
         BlockState grassTop = Blocks.GRASS_BLOCK.defaultBlockState();
         BlockState grass = Blocks.DIRT.defaultBlockState();
