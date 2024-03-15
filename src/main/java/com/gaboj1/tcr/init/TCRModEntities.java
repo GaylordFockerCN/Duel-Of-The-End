@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.init;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.entity.custom.boss_one.BossOneEntity;
+import com.gaboj1.tcr.entity.custom.boss_one.YggdrasilEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
@@ -63,11 +63,11 @@ public class TCRModEntities {
 					() -> EntityType.Builder.of(PastoralPlainVillagerElder::new, MobCategory.CREATURE)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "pastoral_plain_villager_elder").toString()));
 
-	public static final RegistryObject<EntityType<BossOneEntity>> BOSS_ONE =
-			REGISTRY.register("boss_one",
-					() -> EntityType.Builder.of(BossOneEntity::new, MobCategory.CREATURE)
+	public static final RegistryObject<EntityType<YggdrasilEntity>> YGGDRASIL =
+			REGISTRY.register("yggdrasil",
+					() -> EntityType.Builder.of(YggdrasilEntity::new, MobCategory.CREATURE)
 							.sized(1.5f,5f)
-							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "boss_one").toString()));
+							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "yggdrasil").toString()));
 
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {

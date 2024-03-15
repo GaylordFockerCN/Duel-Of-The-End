@@ -71,7 +71,7 @@ public class ModEntityLootTables extends EntityLootSubProvider {
                                 .add(LootItem.lootTableItem(TCRModItems.COPY_RESIN.get())))
         );
 
-        add(TCRModEntities.BOSS_ONE.get(),
+        add(TCRModEntities.YGGDRASIL.get(),
                 LootTable.lootTable()
                         .withPool((LootPool.lootPool()
                                 .setRolls((UniformGenerator.between(0,2)))

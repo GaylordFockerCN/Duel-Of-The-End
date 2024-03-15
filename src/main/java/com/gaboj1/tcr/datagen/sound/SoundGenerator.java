@@ -16,7 +16,7 @@ public class SoundGenerator extends TCRSoundProvider {
         this.generateNewSoundWithSubtitle(TCRModSounds.DESERT_EAGLE_RELOAD, "item/desert_eagle/reload", 1);
         this.generateNewSoundWithSubtitle(TCRModSounds.TREE_MONSTERS_DEATH, "entity/tree_monsters/tree_monsters_death", 1);
         this.generateNewSoundWithSubtitle(TCRModSounds.TREE_MONSTERS_HURT, "entity/tree_monsters/tree_monsters_hurt", 1);
-        this.generateNewSoundWithSubtitle(TCRModSounds.BOSS_ONE_AMBIENT_SOUND, "entity/bossone/first_boss_sound", 1);
+        this.generateNewSoundWithSubtitle(TCRModSounds.YGGDRASIL_AMBIENT_SOUND, "entity/yggdrasil/yggdrasil_sound", 1);
 
 
 //        this.generateExistingSoundWithSubtitle(TFSounds.ACID_RAIN_BURNS, SoundEvents.FIRE_EXTINGUISH);
