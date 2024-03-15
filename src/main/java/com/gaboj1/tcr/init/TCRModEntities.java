@@ -66,6 +66,7 @@ public class TCRModEntities {
 	public static final RegistryObject<EntityType<BossOneEntity>> BOSS_ONE =
 			REGISTRY.register("boss_one",
 					() -> EntityType.Builder.of(BossOneEntity::new, MobCategory.CREATURE)
+							.sized(1.5f,5f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "boss_one").toString()));
 
 
