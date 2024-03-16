@@ -195,19 +195,19 @@ public class NoiseMapGenerator {
                     } else if (angle >= 0 && angle < Math.PI / 2) {
                         // 区域A
                         map[x][y] = 1;
-                        aPoints.add(new Point(y, x));//保存各个群系所含有的点来计算重心
+                        aPoints.add(new Point(x, y));//保存各个群系所含有的点来计算重心
                     } else if (angle >= Math.PI / 2 && angle < Math.PI) {
                         // 区域B
                         map[x][y] = 2;
-                        bPoints.add(new Point(y, x));
+                        bPoints.add(new Point(x, y));
                     } else if (angle >= -Math.PI / 2 && angle < 0) {
                         // 区域C
                         map[x][y] = 3;
-                        cPoints.add(new Point(y, x));
+                        cPoints.add(new Point(x, y));
                     } else {
                         // 区域D
                         map[x][y] = 4;
-                        dPoints.add(new Point(y, x));
+                        dPoints.add(new Point(x, y));
                     }
                 }
             }
