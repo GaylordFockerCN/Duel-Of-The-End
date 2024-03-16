@@ -144,91 +144,6 @@ public class NoiseMapGenerator {
         return skyIsland;
     }
 
-    public double [][] divideTest(double [][]map1) {
-
-        double[][] map = map1.clone();
-        int width = map.length; // 假设生成的数组大小为100x100
-        int length = map[0].length;
-// 生成噪声地图数组 map
-
-// 求中心点坐标（重心）
-        List<Point> points = new ArrayList<>();
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[0].length; j++) {
-                if (map[i][j] != 0) {
-                    points.add(new Point(j,i));
-                }
-            }
-        }
-        centerPoint = computeCenter(points);
-        int centerX = centerPoint.x;
-        int centerY = centerPoint.y;
-
-        int centerR = (int) (width * SCALE_OF_CENTER_R);//TODO: 调整合适大小
-//        int centerR = 16;
-
-        //TODO: 调整合适大小
-        for (int y = 0; y < width; y++) {
-            for (int x = 0; x < length; x++) {
-                double value = map[y][x];
-
-                // 判断当前位置是否为零
-                if (value != 0) {
-                    // 计算当前位置相对于中心点的角度
-                    double angle = Math.atan2(y - centerY, x - centerX);
-                    double distance = Math.sqrt((y - centerY) * (y - centerY) + (x - centerX) * (x - centerX));
-
-                    // 根据角度划分区域并旋转45度
-//                    angle += Math.PI / 4;  // 添加旋转角度的偏移量
-
-                    // 将角度限制在 -PI 到 PI 之间
-                    while (angle < -Math.PI) {
-                        angle += 2 * Math.PI;
-                    }
-                    while (angle >= Math.PI) {
-                        angle -= 2 * Math.PI;
-                    }
-
-                    // 使用曲线函数调整角度
-//                    double curveValue = Math.exp(-CURVE_INTENSITY * distance); // 根据距离计算曲线值
-//                    angle += curveValue; // 添加曲线值到角度
-
-                    // 使用 S 型曲线函数调整角度
-                    angle = getSinAngle(distance, angle);
-
-                    // 根据角度划分区域
-                    if(distance <= centerR){
-                        //中间挖个空
-                        System.out.print("- ");
-                        map[y][x] = 9;
-                    } else if (angle >= 0 && angle < Math.PI / 2) {
-                        // 区域A
-                        System.out.print("A ");
-                        map[y][x] = 1;
-                    } else if (angle >= Math.PI / 2 && angle < Math.PI) {
-                        // 区域B
-                        System.out.print("B ");
-                        map[y][x] = 2;
-                    } else if (angle >= -Math.PI / 2 && angle < 0) {
-                        // 区域C
-                        System.out.print("C ");
-                        map[y][x] = 3;
-                    } else {
-                        // 区域D
-                        System.out.print("D ");
-                        map[y][x] = 4;
-                    }
-                } else {
-                    // 当前位置为零，那不用管
-                    System.out.print("- ");
-                }
-            }
-            System.out.println();
-        }
-        return map;
-    }
-
-    //不输出信息版
     public double [][] divide(double [][]map1) {
 
         double[][] map = map1.clone();
@@ -240,7 +155,7 @@ public class NoiseMapGenerator {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
                 if (map[i][j] != 0) {
-                    points.add(new Point(j,i));
+                    points.add(new Point(i,j));
                 }
             }
         }
@@ -250,12 +165,11 @@ public class NoiseMapGenerator {
 
         int centerR = (int) (width * SCALE_OF_CENTER_R);//TODO:调整合适大小
 
-        for (int y = 0; y < width; y++) {
-            for (int x = 0; x < length; x++) {
-                double value = map[y][x];
-                if (value != 0) {
-                    double angle = Math.atan2(y - centerY, x - centerX);
-                    double distance = Math.sqrt((y - centerY) * (y - centerY) + (x - centerX) * (x - centerX));
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < length; y++) {
+                if (map[x][y] != 0) {
+                    double angle = Math.atan2(x - centerX, y - centerY);
+                    double distance = Math.sqrt((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY));
 
                     // 根据角度划分区域并旋转45度
                     angle += Math.PI / 4;  // 添加旋转角度的偏移量
@@ -277,22 +191,22 @@ public class NoiseMapGenerator {
 
                     // 根据角度划分区域
                     if(distance <= centerR){
-                        map[y][x] = 9;
+                        map[x][y] = 9;
                     } else if (angle >= 0 && angle < Math.PI / 2) {
                         // 区域A
-                        map[y][x] = 1;
+                        map[x][y] = 1;
                         aPoints.add(new Point(y, x));//保存各个群系所含有的点来计算重心
                     } else if (angle >= Math.PI / 2 && angle < Math.PI) {
                         // 区域B
-                        map[y][x] = 2;
+                        map[x][y] = 2;
                         bPoints.add(new Point(y, x));
                     } else if (angle >= -Math.PI / 2 && angle < 0) {
                         // 区域C
-                        map[y][x] = 3;
+                        map[x][y] = 3;
                         cPoints.add(new Point(y, x));
                     } else {
                         // 区域D
-                        map[y][x] = 4;
+                        map[x][y] = 4;
                         dPoints.add(new Point(y, x));
                     }
                 }

@@ -52,10 +52,15 @@ public class BiomeForcedLandmarkPlacement extends StructurePlacement {
                 return true;
             }
 
-            //采用结构方块递归生成，所以不需要很大空间
+
+
+            //采用结构方块递归生成，所以不需要很大空间，但是需要偏移
+            //竞技场半径104，所以转换成群系坐标即为 104>>2 = 26
+            int deOffsetX = provider.getMainCenter().x -26;
+            int deOffsetZ = provider.getMainCenter().y -26;
             if(this.structure == EnumStructures.FINAL.ordinal()
-                    && correctX >= provider.getMainCenter().x - size && correctZ >= provider.getMainCenter().y-size
-                    && correctX <= provider.getMainCenter().x + size && correctZ <= provider.getMainCenter().y+size
+                    && correctX >= deOffsetX - size && correctZ >= deOffsetZ-size
+                    && correctX <= deOffsetX  + size && correctZ <= deOffsetZ+size
                     && !hasGenerated){
                 hasGenerated = true;
                 return true;
