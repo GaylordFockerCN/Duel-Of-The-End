@@ -2,7 +2,7 @@ package com.gaboj1.tcr.item.custom;
 
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.init.TCRModItems;
-import net.minecraft.client.resources.language.I18n;
+import com.gaboj1.tcr.item.custom.boss_loot.MagicWeapon;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;

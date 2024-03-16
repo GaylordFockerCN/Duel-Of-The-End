@@ -78,6 +78,7 @@ public class TCRModItemTabs {
 
 				//法宝
 				tabData.accept(TCRModItems.TREE_SPIRIT_WAND.get());
+				tabData.accept(TCRModItems.HOLY_SWORD.get());
 
 			}).build());
 

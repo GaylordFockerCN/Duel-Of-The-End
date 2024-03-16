@@ -55,7 +55,7 @@ public class BiomeForcedLandmarkPlacement extends StructurePlacement {
 //                    hasGenerated = true;
 //                    return true;
 //                }
-                //FIXME 不想修了，看看大结构会不会也有这个bug吧妈的
+                //FIXME 不想修了，看看大结构会不会也有这个bug吧妈的（建筑生成不了的bug）
                 return true;
             }
 
@@ -64,7 +64,6 @@ public class BiomeForcedLandmarkPlacement extends StructurePlacement {
                     && correctX >= provider.getMainCenter().x - size && correctZ >= provider.getMainCenter().y-size
                     && correctX <= provider.getMainCenter().x + size && correctZ <= provider.getMainCenter().y+size
                     && !hasGenerated){
-
                 return true;
             }
 

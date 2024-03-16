@@ -2,6 +2,8 @@ package com.gaboj1.tcr.init;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.item.custom.*;
+import com.gaboj1.tcr.item.custom.boss_loot.HolySword;
+import com.gaboj1.tcr.item.custom.boss_loot.TreeSpiritWand;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -23,6 +25,7 @@ public class TCRModItems {
 	public static final RegistryObject<Item> TREE_SPIRIT_WAND = REGISTRY.register("tree_spirit_wand",() ->  new TreeSpiritWand());
 	public static final RegistryObject<Item> TREE_DEMON_HORN = REGISTRY.register("tree_demon_horn",() ->  new Drops());
 	public static final RegistryObject<Item> ELDER_STAFF = REGISTRY.register("elder_staff",() ->  new Drops());
+	public static final RegistryObject<Item> HOLY_SWORD = REGISTRY.register("holy_sword",() -> new HolySword());
 	public static final RegistryObject<Item> BOOK1 = REGISTRY.register("book1",() ->  new Book("book1"));
 
 	public static final RegistryObject<Item> BOOK2 = REGISTRY.register("book2",() ->  new Book("book2"));

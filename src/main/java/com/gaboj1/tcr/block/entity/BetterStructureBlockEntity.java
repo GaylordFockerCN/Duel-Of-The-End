@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.block.entity;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.init.TCRModBlockEntities;
 import com.gaboj1.tcr.init.TCRModBlocks;
 import com.google.common.collect.Lists;
@@ -149,7 +150,7 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
 
         //当加载的时候强制加载一下区块，为了在结构内包含结构方块时以生成结构，省的调用红石。
         //用button是因为StructureBlockEditScreen的sendToServer方法不知道怎么搞成public，比较复杂，不如按钮简单。
-        if(this.level != null && this.level.isClientSide && !generated){
+        if(this.level != null && this.level.isClientSide && !generated && TCRConfig.ENABLE_BETTER_STRUCTURE_BLOCK_LOAD.get()){
             StructureBlockEditScreen screen = new StructureBlockEditScreen(this);
             Minecraft.getInstance().setScreen(screen);
             screen.loadButton.onPress();

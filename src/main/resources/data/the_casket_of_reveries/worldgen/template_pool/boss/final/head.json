@@ -5,7 +5,7 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_casket_of_reveries:boss/final/head",
+        "location": "the_casket_of_reveries:boss/final/final_head",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
