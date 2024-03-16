@@ -13,6 +13,7 @@ import net.minecraft.world.level.chunk.ChunkGeneratorStructureState;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacementType;
 
+import java.awt.*;
 import java.util.Optional;
 
 //TODO 改判断区域逻辑
@@ -39,35 +40,30 @@ public class BiomeForcedLandmarkPlacement extends StructurePlacement {
             int correctX = provider.getCorrectValue(chunkX << 2);
             int correctZ = provider.getCorrectValue(chunkZ << 2);
 
-//            if(this.structure == EnumStructures.CHURCH.ordinal() && correctX == provider.getCenter1().x && correctZ == provider.getCenter1().y){
-//                return true;
-//            }
-            //存在误差，所以用一个范围好，而且大结构需要多个区块
-            int size = 2;
-            if(this.structure == EnumStructures.CHURCH.ordinal()
-                    && correctX >= provider.getCenter1().x - size && correctZ >= provider.getCenter1().y-size
-                        && correctX <= provider.getCenter1().x + size && correctZ <= provider.getCenter1().y+size
-                            && !hasGenerated){
-                hasGenerated = true;//防止多次生成
-                return true;
-            }
-
-
-
-            //采用结构方块递归生成，所以不需要很大空间，但是需要偏移
-            //竞技场半径104，所以转换成群系坐标即为 104>>2 = 26
-            int deOffsetX = provider.getMainCenter().x -26;
-            int deOffsetZ = provider.getMainCenter().y -26;
-            if(this.structure == EnumStructures.FINAL.ordinal()
-                    && correctX >= deOffsetX - size && correctZ >= deOffsetZ-size
-                    && correctX <= deOffsetX  + size && correctZ <= deOffsetZ+size
-                    && !hasGenerated){
-                hasGenerated = true;
-                return true;
+            for(EnumStructures structure : EnumStructures.values()){
+                if(checkStructure(structure, structure.getPoint(provider), correctX, correctZ))
+                    return true;
             }
 
         }
 
+        return false;
+    }
+
+    //判断该区块是否复合map所指定的结构的位置
+    private boolean checkStructure(EnumStructures structure, Point point, int correctX, int correctZ){
+
+        int deOffsetX = point.x - structure.getOffsetX();
+        int deOffsetZ = point.y - structure.getOffsetZ();
+        int size = structure.getSize();
+        //存在误差，所以用一个范围好，而且大结构需要多个区块
+        if(this.structure == structure.ordinal()
+                && correctX >= deOffsetX - size && correctZ >= deOffsetZ-size
+                    && correctX <= deOffsetX  + size && correctZ <= deOffsetZ+size
+                        && !hasGenerated){
+            hasGenerated = true;//防止多次生成
+            return true;
+        }
         return false;
     }
 
