@@ -33,7 +33,6 @@ public class BiomeForcedLandmarkPlacement extends StructurePlacement {
         this.hasGenerated = false;
     }
 
-    //不知道会不会起作用
     public boolean isTCRPlacementChunk(TCRChunkGenerator chunkGen, ChunkAccess pChunk, int chunkX, int chunkZ) {
 
         if(chunkGen.getBiomeSource() instanceof TCRBiomeProvider provider){
@@ -43,27 +42,22 @@ public class BiomeForcedLandmarkPlacement extends StructurePlacement {
 //            if(this.structure == EnumStructures.CHURCH.ordinal() && correctX == provider.getCenter1().x && correctZ == provider.getCenter1().y){
 //                return true;
 //            }
-            //存在误差，所以用一个范围好
+            //存在误差，所以用一个范围好，而且大结构需要多个区块
             int size = 2;
             if(this.structure == EnumStructures.CHURCH.ordinal()
                     && correctX >= provider.getCenter1().x - size && correctZ >= provider.getCenter1().y-size
                         && correctX <= provider.getCenter1().x + size && correctZ <= provider.getCenter1().y+size
                             && !hasGenerated){
-//                BlockPos pos = new BlockPos(chunkX<<4,80,chunkZ<<4);
-//                System.out.println((chunkX<<4)+","+(chunkZ<<4)+pChunk.getBlockState(pos).getBlock());
-//                if(pChunk.getBlockState(pos).getBlock() != Blocks.AIR){//因为有些地面是后面补的，防止生成在地下。
-//                    hasGenerated = true;
-//                    return true;
-//                }
-                //FIXME 不想修了，看看大结构会不会也有这个bug吧妈的（建筑生成不了的bug）
+                hasGenerated = true;//防止多次生成
                 return true;
             }
 
-            size = 3;
+            //采用结构方块递归生成，所以不需要很大空间
             if(this.structure == EnumStructures.FINAL.ordinal()
                     && correctX >= provider.getMainCenter().x - size && correctZ >= provider.getMainCenter().y-size
                     && correctX <= provider.getMainCenter().x + size && correctZ <= provider.getMainCenter().y+size
                     && !hasGenerated){
+                hasGenerated = true;
                 return true;
             }
 

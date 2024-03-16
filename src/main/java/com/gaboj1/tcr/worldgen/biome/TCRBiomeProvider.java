@@ -133,7 +133,7 @@ public class TCRBiomeProvider extends BiomeSource {
 
         File mapFile = new File(Minecraft.getInstance().gameDirectory.getAbsoluteFile() +"Map.dat");
 //        boolean mapExist = mapFile.exists();
-        boolean mapExist = false;
+        boolean mapExist = false;//先默认不用读取的
 
         //二次进入游戏从文件直接读取数组较快，否则每次进世界都得加载，地图大的话很慢 TODO:有bug，二次读取会出现很大偏移
 
