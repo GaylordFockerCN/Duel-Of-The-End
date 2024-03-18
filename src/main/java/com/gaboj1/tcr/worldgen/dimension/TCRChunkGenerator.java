@@ -82,16 +82,17 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
                     if (!TCRBiomes.AZURE_SKIES.location().equals(biome.get().location()))
                         continue;
                     //NOTE! 要getCorrectValue，因为数组是正的，中心是(width/2,height/2),而实际群系中心是(0,0) 详情看BiomeForceLandMarkPlacement...
-                    int correctX = provider.getCorrectValue(pos.getX()>>2);
-                    int correctZ = provider.getCorrectValue(pos.getZ()>>2);
-                    Point center = provider.getCenter2();
-                    double dis = Math.sqrt(Math.pow(correctX - center.x,2)+Math.pow(correctZ-center.y,2)) * 4;//不能<<2哈哈
-                    double t = Math.max(0, r-dis);
-                    //double t = Math.pow(Math.max(0, r-dis),2) / 64;
-                    //根据距离进行缩放
-                    double scale = 0.01;
-                    int height = (int) (perlin.get(correctX*scale,0 ,correctZ*scale) * t) + (int)(perlin.get(correctX*scale,0 ,correctZ*scale)*10-10);
+//                    int correctX = provider.getCorrectValue(pos.getX()>>2);
+//                    int correctZ = provider.getCorrectValue(pos.getZ()>>2);
+//                    Point center = provider.getCenter2();
+//                    double dis = Math.sqrt(Math.pow(correctX - center.x,2)+Math.pow(correctZ-center.y,2)) * 4;//不能<<2哈哈
+//                    double t = Math.max(0, r-dis);
+//                    //double t = Math.pow(Math.max(0, r-dis),2) / 64;
+//                    //根据距离进行缩放
+//                    double scale = 0.01;
+//                    int height = (int) (perlin.get(correctX*scale,0 ,correctZ*scale) * t) + (int)(perlin.get(correctX*scale,0 ,correctZ*scale)*10-10);
 
+                    int height = provider.getMountainHeight(pos);
 
                     // 寻找最顶的方块
                     int gBase = 75;
@@ -119,7 +120,7 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
         Perlin perlin = new Perlin();
 
         BlockState grassTop = Blocks.GRASS_BLOCK.defaultBlockState();
-        BlockState grass = Blocks.DIRT.defaultBlockState();
+        BlockState dirt = Blocks.DIRT.defaultBlockState();
         BlockState air = Blocks.AIR.defaultBlockState();
         for (int z = 0; z < 16; z++) {
             for (int x = 0; x < 16; x++) {
@@ -148,10 +149,16 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
                 //获取对应噪声值并填补地形
                 double scale = 0.01;
                 double perlinValue = perlin.get(pos.getX()*scale,0,pos.getZ()*scale);
-                int height = perlinValue==1 ? 1 : (perlinValue > 1 ? 2 : 0);
+                int height;
+//                if(TCRBiomes.AZURE_SKIES.location().equals(biome.get().location())){
+//                    height = Math.max(0,(int)(perlinValue*10-8));
+//                }else {
+//                    height = perlinValue==1 ? 1 : (perlinValue > 1 ? 2 : 0);
+//                }
+                height = perlinValue==1 ? 1 : (perlinValue > 1 ? 2 : 0);
                 int i;
                 for(i = 0; i < height-1; i++){
-                    primer.setBlock(pos.atY(gBase+i), grass, 3);
+                    primer.setBlock(pos.atY(gBase+i), dirt, 3);
                 }
                 primer.setBlock(pos.atY(gBase+i), grassTop, 3);
             }

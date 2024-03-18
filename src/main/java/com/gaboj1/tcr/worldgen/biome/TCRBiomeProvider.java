@@ -1,21 +1,18 @@
 package com.gaboj1.tcr.worldgen.biome;
 
 import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
+import com.gaboj1.tcr.util.map.RandomMountainGenerator;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.resources.RegistryOps;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
-import net.minecraft.world.level.saveddata.SavedData;
-import net.minecraftforge.event.level.LevelEvent;
-import net.minecraftforge.server.ServerLifecycleHooks;
 
 import java.awt.*;
 import java.io.*;
@@ -44,7 +41,9 @@ public class TCRBiomeProvider extends BiomeSource {
     ).apply(instance, instance.stable(TCRBiomeProvider::new)));
 
     private double[][] map;
-    private int R;
+    private int[][] peakMap;
+
+    private int R,aCenterR;//总体半径和中心群系噪声半径
     public static final double SCALE = 0.2;
     private boolean isImage = true;
 
@@ -124,10 +123,9 @@ public class TCRBiomeProvider extends BiomeSource {
 
     }
 
+    //不在这里生成map的话map会被清空
     @Override
     protected Stream<Holder<Biome>> collectPossibleBiomes() {
-
-        //不在这里生成map的话map会被清空
 //        String levelName = Minecraft.getInstance().getCurrentServer().name;服务端还没创建，无法获取名字......
         //FIXME 换成存档名字，很重要！！
 
@@ -155,6 +153,10 @@ public class TCRBiomeProvider extends BiomeSource {
         }else {
             createBiomeMap(mapFile);
         }
+        aCenterR = (int) (center1.distance(mainCenter)*NoiseMapGenerator.SCALE_OF_A_CENTER_R);
+        int mountainsR = (aCenterR<<2);
+        System.out.println(mountainsR);
+        peakMap = RandomMountainGenerator.getMountains(mountainsR,mountainsR,128);
 
         return Stream.of(biomeHolder0,biomeHolder1,biomeHolder2,biomeHolder3,biomeHolder4,biomeHolder5,biomeHolder6,biomeHolder7,biomeHolder8,biomeHolder9);
     }
@@ -216,20 +218,37 @@ public class TCRBiomeProvider extends BiomeSource {
         }
         return biomeHolder0;
     }
-    
-    public int getCorrectValue(int x){
+
+    /**
+     * 对于chunkX，应该使用getCorrectValue(chunkX<<2)
+     * 对于blockPosX，应该使用getCorrectValue(blockPosX>>2)
+    * */
+    public int getCorrectValue(int biomeX){
         if(!isImage || TCRConfig.ENABLE_SCALING.get()){
-            x *= SCALE * map.length / BiomeMap.SIZE;//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
+            biomeX *= SCALE * map.length / BiomeMap.SIZE;//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
         }
-        return x+R;
+        return biomeX+R;
     }
 
     //还原回去
-    public int deCorrectValue(int x){
+    public int deCorrectValue(int biomeX){
         if(!isImage || TCRConfig.ENABLE_SCALING.get()){
-            x /= SCALE * map.length / BiomeMap.SIZE;//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
+            biomeX /= SCALE * map.length / BiomeMap.SIZE;//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
         }
-        return x-R;
+        return biomeX-R;
+    }
+
+    /**
+     * 仅针对第二群系
+     */
+    public int getMountainHeight(BlockPos pos){
+        int offsetX = pos.getX()+R*4-(((center2.x)*4) - (aCenterR*2));
+        int offsetZ = pos.getZ()+R*4-(((center2.y)*4) - (aCenterR*2));
+        System.out.println(offsetX+" "+offsetZ);
+        if(offsetX > 0 && offsetX < peakMap.length && offsetZ > 0 && offsetZ < peakMap[0].length){
+            return peakMap[offsetX][offsetZ];
+        }
+        return 0;
     }
 
 }
