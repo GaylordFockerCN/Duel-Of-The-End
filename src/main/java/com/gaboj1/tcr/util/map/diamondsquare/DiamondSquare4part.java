@@ -1,8 +1,8 @@
-package com.gaboj1.tcr.util.map;
+package com.gaboj1.tcr.util.map.diamondsquare;
 
 import java.util.Random;
 
-public class DiamondSquareTest {
+public class DiamondSquare4part {
     private static final int SIZE = 1000; // 二维数组边长
     private static final Random random = new Random();
 
@@ -87,11 +87,6 @@ public class DiamondSquareTest {
         if(delta >= (SIZE-1)/2 - 2 && delta <= (SIZE-1)/2 + 2){
             map[middleX][middleY] = maxHeight*2 / 3 + random.nextInt(maxHeight/5);
         }
-
-        if(delta >= (SIZE-1)/4 - 2 && delta <= (SIZE-1)/4 + 2){
-            map[middleX][middleY] = maxHeight / 3 + random.nextInt(maxHeight/6);
-        }
-
 
         // Square step
         if (map[middleX][middleY] == 0) {
