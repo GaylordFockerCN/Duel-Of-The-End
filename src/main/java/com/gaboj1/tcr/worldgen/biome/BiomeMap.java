@@ -2,15 +2,12 @@ package com.gaboj1.tcr.worldgen.biome;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
-import net.minecraft.client.Minecraft;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -75,13 +72,12 @@ public class BiomeMap {
             if(!GraphicsEnvironment.isHeadless())
                 JOptionPane.showMessageDialog(null,"维度地图图片\""+FILE+"\"文件异常！将以默认预设生成地图","The Casket Of Reveries：提示",JOptionPane.INFORMATION_MESSAGE);
             isImage = false;
-            return createNoiseMap();
+            return createNoiseMapStatic(generator);
         }
     }
 
 
-    public static double[][] createNoiseMap(){
-        NoiseMapGenerator generator = new NoiseMapGenerator();
+    public static double[][] createNoiseMapStatic(NoiseMapGenerator generator){
         generator.setSeed(new Random().nextInt(3));//TODO: 改成世界种子
         generator.setLength(SIZE);
         generator.setWidth(SIZE);
@@ -94,7 +90,7 @@ public class BiomeMap {
         return map;
     }
 
-    public static double[][] createImageMap(){
+    public static double[][] createImageMapStatic(NoiseMapGenerator generator){
         try {
             File dir = new File(DIR);
             if(!dir.exists()){
@@ -116,7 +112,6 @@ public class BiomeMap {
                 }
             }
 
-            NoiseMapGenerator generator = new NoiseMapGenerator();
             map = generator.divide(map);
             map = generator.addCenter(map);
             return map;
@@ -126,12 +121,12 @@ public class BiomeMap {
             System.out.println("维度地图图片\""+FILE+"\"文件异常！将以默认预设生成地图");
             if(!GraphicsEnvironment.isHeadless())
                 JOptionPane.showMessageDialog(null,"维度地图图片\""+FILE+"\"文件异常！将以默认预设生成地图","The Casket Of Reveries：提示",JOptionPane.INFORMATION_MESSAGE);
-            return createNoiseMap();
+            return createNoiseMapStatic(generator);
         }
     }
 
     public static void main(String args[]) {
-        for(double a[] : BiomeMap.createImageMap()){
+        for(double a[] : BiomeMap.createImageMapStatic(new NoiseMapGenerator())){
             for (double b:a){
                 System.out.print(b+" ");
             }
