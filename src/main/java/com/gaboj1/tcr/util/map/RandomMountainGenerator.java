@@ -16,12 +16,13 @@ public class RandomMountainGenerator {
     }
 
     public static int[][] getMountains(int width, int length, int numPeaks){
-        int[][] baseMap = WaveRiver.generateIntersectingRivers(width, length, 8);
-        baseMap = addDecay(baseMap);
-        return baseMap;
+//        int[][] baseMap = WaveRiver.generateIntersectingRivers(width, length, 8);
+//        baseMap = addDecay(baseMap);
+//        return baseMap;
 //        int[][] sphere = createSphere(20);
 //        return addSphereValues(baseMap,sphere);
-
+        DiamondSquareTest.init();
+        return DiamondSquareTest.map;
     }
 
     public static int[][] createSphere(int size) {
