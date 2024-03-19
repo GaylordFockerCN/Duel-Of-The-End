@@ -17,8 +17,8 @@ public class TCRConfig
     public static final ForgeConfigSpec.BooleanValue ENABLE_SCALING = createBool("enable_scaling",false);
     //是否启用更多空洞的世界（地图更像空岛，类似天境，但是陆地较少）
     public static final ForgeConfigSpec.BooleanValue MORE_HOLE = createBool("more_hole",false);
-    //更好的结构方块是否立即刷新（默认开启，开发时关闭）enable_better_structure_block_load
-    public static final ForgeConfigSpec.BooleanValue ENABLE_BETTER_STRUCTURE_BLOCK_LOAD = createBool("",true);
+    //更好的结构方块是否立即刷新（默认开启，开发时关闭）
+    public static final ForgeConfigSpec.BooleanValue ENABLE_BETTER_STRUCTURE_BLOCK_LOAD = createBool("enable_better_structure_block_load",true);
 
     //基础树脂的修复值
     public static final ForgeConfigSpec.IntValue REPAIR_VALUE = createInt("repair_value",1,1);
