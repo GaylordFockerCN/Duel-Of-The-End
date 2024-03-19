@@ -1,13 +1,13 @@
 package com.gaboj1.tcr;
-
 import com.gaboj1.tcr.block.renderer.BetterStructureBlockRenderer;
 import com.gaboj1.tcr.block.renderer.PortalBedRenderer;
 import com.gaboj1.tcr.entity.client.boss.YggdrasilRenderer;
+import com.gaboj1.tcr.entity.client.boss.tree_clawRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.MiddleTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.SmallTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.TreeGuardianRenderer;
 import com.gaboj1.tcr.entity.client.villager.TCRVillagerRenderer;
-import com.gaboj1.tcr.entity.custom.boss_one.YggdrasilEntity;
+import com.gaboj1.tcr.entity.custom.Yggdrasil.YggdrasilEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
@@ -149,6 +149,7 @@ public class TheCasketOfReveriesMod {
             EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(), TCRVillagerRenderer::new);
 
             EntityRenderers.register(TCRModEntities.YGGDRASIL.get(), YggdrasilRenderer::new);
+            EntityRenderers.register(TCRModEntities.TREE_CLAW.get(), tree_clawRenderer::new);
 
             BlockEntityRenderers.register(TCRModBlockEntities.PORTAL_BED.get(), PortalBedRenderer::new);
         }
