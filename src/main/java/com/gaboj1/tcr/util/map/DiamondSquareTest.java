@@ -7,7 +7,7 @@ public class DiamondSquareTest {
     private static final Random random = new Random();
 
     public static int[][] map = new int[SIZE][SIZE];
-    private static final double roughness = 10.0;
+    private static double roughness = 10.0;
     private static final int maxHeight = 300;
 
     public static void main(String[] args) {
@@ -34,73 +34,69 @@ public class DiamondSquareTest {
             }
         }
         // 设置四个角点的高度
-        map[0][0] = random.nextInt(maxHeight);
-        map[0][SIZE - 1] = random.nextInt(maxHeight);
-        map[SIZE - 1][0] = random.nextInt(maxHeight);
-        map[SIZE - 1][SIZE - 1] = random.nextInt(maxHeight);
+//        map[0][0] = random.nextInt(maxHeight);
+//        map[0][SIZE - 1] = random.nextInt(maxHeight);
+//        map[SIZE - 1][0] = random.nextInt(maxHeight);
+//        map[SIZE - 1][SIZE - 1] = random.nextInt(maxHeight);
+        map[0][0] = 0;
+        map[0][SIZE - 1] = 0;
+        map[SIZE - 1][0] = 0;
+        map[SIZE - 1][SIZE - 1] = 0;
+//        map[(SIZE - 1)/3][(SIZE - 1)/3] = maxHeight/4+random.nextInt(maxHeight/3);
+//        map[2*(SIZE - 1)/3][(SIZE - 1)/3] = maxHeight/4+random.nextInt(maxHeight/3);
+//        map[(SIZE - 1)/3][2*(SIZE - 1)/3] = maxHeight/4+random.nextInt(maxHeight/3);
+//        map[2*(SIZE - 1)/3][2*(SIZE - 1)/3] = maxHeight/4+random.nextInt(maxHeight/3);
+
     }
 
     private static void diamondSquare(int leftX, int topY, int rightX, int bottomY) {
-        if (rightX - leftX < 2) {
+        int delta = rightX - leftX;
+        if (delta < 2) {
             return;
         }
-
-        int size = rightX - leftX + 1;
-        if (size <= 20) {
-            smoothTransition(leftX, topY, rightX, bottomY);
-            return;
+        if (delta < 20) {
+            roughness = 0.7;
         }
 
         int middleX = (leftX + rightX) / 2;
         int middleY = (topY + bottomY) / 2;
 
         // Diamond step
-        map[middleX][topY] = (map[leftX][topY] + map[rightX][topY]) / 2 + (int) (random.nextDouble() * roughness * 2) - (int) roughness;
-        map[middleX][bottomY] = (map[leftX][bottomY] + map[rightX][bottomY]) / 2 + (int) (random.nextDouble() * roughness * 2) - (int) roughness;
-        map[leftX][middleY] = (map[leftX][topY] + map[leftX][bottomY]) / 2 + (int) (random.nextDouble() * roughness * 2) - (int) roughness;
-        map[rightX][middleY] = (map[rightX][topY] + map[rightX][bottomY]) / 2 + (int) (random.nextDouble() * roughness * 2) - (int) roughness;
-        map[middleX][middleY] = (map[leftX][topY] + map[rightX][topY] + map[leftX][bottomY] + map[rightX][bottomY]) / 4 + (int) (random.nextDouble() * roughness * 2) - (int) roughness;
+        if (map[middleX][topY] == 0) {
+            map[middleX][topY] = (map[leftX][topY] + map[rightX][topY]) / 2 + (int) (random.nextDouble() * roughness * 2) - (int) roughness;
+        }
+        if (map[middleX][bottomY] == 0) {
+            map[middleX][bottomY] = (map[leftX][bottomY] + map[rightX][bottomY]) / 2 + (int) (random.nextDouble() * roughness * 2) - (int) roughness;
+        }
+        if (map[leftX][middleY] == 0) {
+            map[leftX][middleY] = (map[leftX][topY] + map[leftX][bottomY]) / 2 + (int) (random.nextDouble() * roughness * 2) - (int) roughness;
+        }
+        if (map[rightX][middleY] == 0) {
+            map[rightX][middleY] = (map[rightX][topY] + map[rightX][bottomY]) / 2 + (int) (random.nextDouble() * roughness * 2) - (int) roughness;
+        }
+
+        if (middleX == (SIZE - 1) / 2 && middleY == (SIZE - 1) / 2) {
+            if (map[middleX][middleY] == 0) {
+                map[middleX][middleY] = maxHeight;
+            }
+        } else {
+            if (map[middleX][middleY] == 0) {
+                map[middleX][middleY] = (map[leftX][topY] + map[rightX][topY] + map[leftX][bottomY] + map[rightX][bottomY]) / 4 + (int) (random.nextDouble() * roughness * 2) - (int) roughness;
+            }
+        }
+        if(delta >= (SIZE-1)/2 - 2 && delta <= (SIZE-1)/2 + 2){
+            map[middleX][middleY] = maxHeight*2 / 3 + random.nextInt(maxHeight/5);
+        }
 
         // Square step
-        map[middleX][middleY] = (map[leftX][topY] + map[rightX][topY] + map[leftX][bottomY] + map[rightX][bottomY]) / 4 + (int) (random.nextDouble() * roughness * 2) - (int) roughness;
+        if (map[middleX][middleY] == 0) {
+            map[middleX][middleY] = (map[leftX][topY] + map[rightX][topY] + map[leftX][bottomY] + map[rightX][bottomY]) / 4 + (int) (random.nextDouble() * roughness * 2) - (int) roughness;
+        }
 
         diamondSquare(leftX, topY, middleX, middleY);
         diamondSquare(middleX, topY, rightX, middleY);
         diamondSquare(leftX, middleY, middleX, bottomY);
         diamondSquare(middleX, middleY, rightX, bottomY);
-    }
-
-    private static void smoothTransition(int leftX, int topY, int rightX, int bottomY) {
-        // Smooth transition within the small grid by averaging neighboring heights
-        for (int i = leftX; i <= rightX; i++) {
-            for (int j = topY; j <= bottomY; j++) {
-                map[i][j] = calculateSmoothedHeight(i, j);
-            }
-        }
-    }
-
-    private static int calculateSmoothedHeight(int x, int y) {
-        int sum = map[x][y];
-        int count = 1;
-
-        if (x > 0) {
-            sum += map[x - 1][y];
-            count++;
-        }
-        if (x < SIZE - 1) {
-            sum += map[x + 1][y];
-            count++;
-        }
-        if (y > 0) {
-            sum += map[x][y - 1];
-            count++;
-        }
-        if (y < SIZE - 1) {
-            sum += map[x][y + 1];
-            count++;
-        }
-
-        return sum / count;
     }
 
     private static void normalizeHeight() {

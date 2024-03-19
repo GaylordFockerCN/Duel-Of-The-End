@@ -244,9 +244,8 @@ public class TCRBiomeProvider extends BiomeSource {
     public int getMountainHeight(BlockPos pos){
         int offsetX = pos.getX()+R*4-(((center2.x)*4) - (aCenterR*2));
         int offsetZ = pos.getZ()+R*4-(((center2.y)*4) - (aCenterR*2));
-        System.out.println(offsetX+" "+offsetZ);
         if(offsetX > 0 && offsetX < peakMap.length && offsetZ > 0 && offsetZ < peakMap[0].length){
-            return peakMap[offsetX][offsetZ];
+            return Math.abs(peakMap[offsetX][offsetZ]);
         }
         return 0;
     }
