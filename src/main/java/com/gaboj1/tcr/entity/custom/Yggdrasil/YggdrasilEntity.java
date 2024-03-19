@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.entity.custom.boss_one;
+package com.gaboj1.tcr.entity.custom.Yggdrasil;
 
 import com.gaboj1.tcr.init.TCRModSounds;
 import net.minecraft.network.chat.Component;
