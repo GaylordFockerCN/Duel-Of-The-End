@@ -5,7 +5,7 @@ public class RandomMountainGenerator {
         int width = 1000;
         int length = 1000;
         int numPeaks = 32;
-        int[][] terrain = getMountains(width, length, numPeaks);
+        int[][] terrain = getMountains(width, length);
         // 输出地形数据
         for (int i = 0; i < terrain.length; i++) {
             for (int j = 0; j < terrain[0].length; j++) {
@@ -15,14 +15,13 @@ public class RandomMountainGenerator {
         }
     }
 
-    public static int[][] getMountains(int width, int length, int numPeaks){
+    public static int[][] getMountains(int width, int length){
 //        int[][] baseMap = WaveRiver.generateIntersectingRivers(width, length, 8);
 //        baseMap = addDecay(baseMap);
 //        return baseMap;
 //        int[][] sphere = createSphere(20);
 //        return addSphereValues(baseMap,sphere);
-        DiamondSquareTest.init();
-        return DiamondSquareTest.map;
+        return new DiamondSquareTest(width, length).getMap();
     }
 
     public static int[][] createSphere(int size) {

@@ -155,8 +155,7 @@ public class TCRBiomeProvider extends BiomeSource {
         }
         aCenterR = (int) (center1.distance(mainCenter)*NoiseMapGenerator.SCALE_OF_A_CENTER_R);
         int mountainsR = (aCenterR<<2);
-        System.out.println(mountainsR);
-        peakMap = RandomMountainGenerator.getMountains(mountainsR,mountainsR,128);
+        peakMap = RandomMountainGenerator.getMountains(mountainsR,mountainsR);
 
         return Stream.of(biomeHolder0,biomeHolder1,biomeHolder2,biomeHolder3,biomeHolder4,biomeHolder5,biomeHolder6,biomeHolder7,biomeHolder8,biomeHolder9);
     }
