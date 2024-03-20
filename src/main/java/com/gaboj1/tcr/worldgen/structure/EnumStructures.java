@@ -5,9 +5,11 @@ import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import java.awt.Point;
 
 public enum EnumStructures {
+
+    //offset应为偏移的方块数量除以四。举例：FINAL偏移104格，应填26。
     FINAL(2, 26, 26),
     CHURCH(2,0,0),
-    SWORD(2,0,48),
+    SWORD(2,0,12),
     FLOWER_ALTAR();
 
     int size = 0;
