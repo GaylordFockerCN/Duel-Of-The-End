@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.util.map;
+package com.gaboj1.tcr.util.map.diamondsquare;
 
 import java.util.Random;
 

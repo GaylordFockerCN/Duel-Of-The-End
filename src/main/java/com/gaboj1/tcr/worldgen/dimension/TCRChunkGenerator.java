@@ -67,6 +67,12 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
 
         BlockState grassTop = Blocks.GRASS_BLOCK.defaultBlockState();
 
+        BlockState stone = Blocks.STONE.defaultBlockState();
+
+        BlockState snowBlock = Blocks.SNOW_BLOCK.defaultBlockState();
+
+        BlockState snow = Blocks.SNOW.defaultBlockState();
+
         Perlin perlin = new Perlin();
         perlin.setFrequency(0.03);
         if(this.getBiomeSource() instanceof TCRBiomeProvider provider){
@@ -106,10 +112,14 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
 
                     //造山咯
                     int y  = 0;
-                    while(y ++ < height){
-                        primer.setBlock(pos.atY(gBase+y), grassTop, 3);
+                    while(y ++ < height-1){
+                        primer.setBlock(pos.atY(gBase+y), stone, 3);
                     }
-
+                    primer.setBlock(pos.atY(gBase+y), grassTop, 3);
+                    if(y > 160-new Random().nextInt(20)){
+                        primer.setBlock(pos.atY(gBase+y+1), new Random().nextBoolean()?snowBlock:snow, 3);
+//                        primer.setBlock(pos.atY(gBase+y+2), snow, 3);
+                    }
                 }
             }
         }
