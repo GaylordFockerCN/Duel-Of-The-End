@@ -7,6 +7,7 @@ import java.awt.Point;
 public enum EnumStructures {
     FINAL(2, 26, 26),
     CHURCH(2,0,0),
+    SWORD(2,0,48),
     FLOWER_ALTAR();
 
     int size = 0;
@@ -39,6 +40,7 @@ public enum EnumStructures {
         switch (this){
             case FINAL: point = provider.getMainCenter();break;
             case CHURCH: point = provider.getCenter1();break;
+            case SWORD: point = provider.getCenter2();break;
             default:point = new Point(0,0);
         }
 
