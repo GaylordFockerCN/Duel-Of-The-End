@@ -72,7 +72,7 @@ public class TCRModEntities {
 
 	public static final RegistryObject<EntityType<tree_clawEntity>> TREE_CLAW =
 			REGISTRY.register("tree_claw",
-					() -> EntityType.Builder.of(tree_clawEntity::new, MobCategory.CREATURE)
+					() -> EntityType.Builder.<tree_clawEntity>of(tree_clawEntity::new, MobCategory.CREATURE)
 							.sized(1.5f,5f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "tree_claw").toString()));
 
