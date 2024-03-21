@@ -33,9 +33,9 @@ public class DiamondSquareTest {
     public void init() {
         initializeArray();
         diamondSquare(0, 0, width - 1, height - 1);
-
         normalizeHeight(); // 将高度限制在合理范围内
-        printMap(); // 输出生成的二维数组
+        map = applyMeanFilter(map,2);
+//        printMap(); // 输出生成的二维数组
     }
 
     private void initializeArray() {
@@ -104,6 +104,48 @@ public class DiamondSquareTest {
         diamondSquare(middleX, topY, rightX, middleY);
         diamondSquare(leftX, middleY, middleX, bottomY);
         diamondSquare(middleX, middleY, rightX, bottomY);
+    }
+
+    /**
+     * @param input 原数组
+     * @param blockSize 同时作平滑处理的方块数
+    * */
+    public int[][] applyMeanFilter(int[][] input, int blockSize) {
+        int[][] result = input.clone();
+        int numRows = result.length;
+        int numCols = result[0].length;
+
+        for (int i = 0; i < numRows; i += blockSize) {
+            for (int j = 0; j < numCols; j += blockSize) {
+                int sum = 0;
+                int count = 0;
+                int max = 0;
+
+                for (int x = i; x < i + blockSize; x++) {
+                    for (int y = j; y < j + blockSize; y++) {
+                        if (x < numRows && y < numCols) {
+                            max = Math.max(max,result[x][y]);
+                            sum += result[x][y];
+                            count++;
+                        }
+                    }
+                }
+
+                double average = sum / count;
+                if(average < max - 4){
+                    average = max-2;
+                }
+
+                for (int x = i; x < i + blockSize; x++) {
+                    for (int y = j; y < j + blockSize; y++) {
+                        if (x < numRows && y < numCols) {
+                            result[x][y] = (int) average;
+                        }
+                    }
+                }
+            }
+        }
+        return  result;
     }
 
     private void normalizeHeight() {

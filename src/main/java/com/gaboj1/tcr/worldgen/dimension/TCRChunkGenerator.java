@@ -66,6 +66,7 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
     private void buildPeak(WorldGenRegion primer){
 
         BlockState grassTop = Blocks.GRASS_BLOCK.defaultBlockState();
+        BlockState dirt = Blocks.DIRT.defaultBlockState();
 
         BlockState stone = Blocks.STONE.defaultBlockState();
 
@@ -117,8 +118,14 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
                     }
                     primer.setBlock(pos.atY(gBase+y), grassTop, 3);
                     if(y > 50-new Random().nextInt(20)){
-                        primer.setBlock(pos.atY(gBase+y+1), new Random().nextBoolean()?snowBlock:snow, 3);
+                        primer.setBlock(pos.atY(gBase+y-2), dirt, 3);
+                        primer.setBlock(pos.atY(gBase+y-1), snowBlock, 3);
+                        primer.setBlock(pos.atY(gBase+y), snowBlock, 3);
+//                        primer.setBlock(pos.atY(gBase+y+1), new Random().nextBoolean()?snowBlock:snow, 3);
+                        primer.setBlock(pos.atY(gBase+y+1), snowBlock, 3);
 //                        primer.setBlock(pos.atY(gBase+y+2), snow, 3);
+                    }else {
+                        primer.setBlock(pos.atY(gBase+y), grassTop, 3);
                     }
                 }
             }
@@ -161,7 +168,7 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
                 double perlinValue = perlin.get(pos.getX()*scale,0,pos.getZ()*scale);
                 int height;
 //                if(TCRBiomes.AZURE_SKIES.location().equals(biome.get().location())){
-//                    height = Math.max(0,(int)(perlinValue*10-8));
+//                    height = Math.max(0,(int)(perlinValue*10-10));
 //                }else {
 //                    height = perlinValue==1 ? 1 : (perlinValue > 1 ? 2 : 0);
 //                }
