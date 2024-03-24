@@ -85,7 +85,7 @@ public class TCRModBlocks {
             () -> new SaplingBlock(new DenseSpiritTreeGrower(), BlockBehaviour.Properties.copy(Blocks.JUNGLE_SAPLING)));
 
     public static final RegistryObject<Block> PORTAL_BLOCK = REGISTRY.register("portal_block",
-            () -> new PortalBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(1f).noOcclusion()));
+            () -> new PortalBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){
