@@ -3,6 +3,7 @@ package com.gaboj1.tcr.init;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.entity.BetterStructureBlockEntity;
 import com.gaboj1.tcr.block.entity.PortalBedEntity;
+import com.gaboj1.tcr.block.entity.PortalBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -21,5 +22,10 @@ public class TCRModBlockEntities {
             REGISTRY.register("portal_bed_entity", () ->
                     BlockEntityType.Builder.of(PortalBedEntity::new,
                             TCRModBlocks.PORTAL_BED.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<PortalBlockEntity>> PORTAL_BLOCK_ENTITY =
+            REGISTRY.register("portal_block_entity", () ->
+                    BlockEntityType.Builder.of(PortalBlockEntity::new,
+                            TCRModBlocks.PORTAL_BLOCK.get()).build(null));
 
 }

@@ -162,9 +162,10 @@ public class TCRBiomeProvider extends BiomeSource {
 
     private void createBiomeMap(File mapFile){
         NoiseMapGenerator generator = new NoiseMapGenerator();
-        BiomeMap biomeMap = new BiomeMap();
-        map = biomeMap.createImageMap(generator);
-        isImage = biomeMap.isImage;
+//        BiomeMap biomeMap = new BiomeMap();
+//        map = biomeMap.createImageMap(generator);
+        map = BiomeMap.createImageMapStatic(generator);
+        isImage = BiomeMap.getInstance().isImage;
         R = map[0].length / 2;
         //以便获取主建筑摆放位置
         center1 = generator.getCenter1();

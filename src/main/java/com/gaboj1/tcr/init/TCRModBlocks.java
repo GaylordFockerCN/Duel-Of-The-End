@@ -1,10 +1,7 @@
 package com.gaboj1.tcr.init;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.block.custom.BetterStructureBlock;
-import com.gaboj1.tcr.block.custom.DenseForestSpiritFlower;
-import com.gaboj1.tcr.block.custom.DenseForestTreeBlock;
-import com.gaboj1.tcr.block.custom.PortalBed;
+import com.gaboj1.tcr.block.custom.*;
 import com.gaboj1.tcr.worldgen.tree.DenseSpiritTreeGrower;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -86,6 +83,9 @@ public class TCRModBlocks {
 
     public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_SAPLING = registerBlock("dense_forest_spirit_sapling",
             () -> new SaplingBlock(new DenseSpiritTreeGrower(), BlockBehaviour.Properties.copy(Blocks.JUNGLE_SAPLING)));
+
+    public static final RegistryObject<Block> PORTAL_BLOCK = REGISTRY.register("portal_block",
+            () -> new PortalBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(1f).noOcclusion()));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){

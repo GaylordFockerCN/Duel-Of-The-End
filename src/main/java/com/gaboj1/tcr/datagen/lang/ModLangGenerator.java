@@ -17,6 +17,7 @@ public class ModLangGenerator extends ModLangProvider {
     protected void addTranslations() {
 
         this.add("info.the_casket_of_reveries.enter_forbidden_biome","前面的区域，以后再来探索吧~");
+        this.add("info.the_casket_of_reveries.teleport_unlock","该区域尚未解锁");
 
         this.addConfig("enable_better_structure_block_load","更好的结构方块是否立即刷新（默认开启，开发时关闭）");
         this.addConfig("more_hole","是否启用更多空洞的世界（地图更像空岛，类似天境，但是陆地较少）");
