@@ -1,9 +1,7 @@
 package com.gaboj1.tcr.network;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.network.packet.BasePacket;
-import com.gaboj1.tcr.network.packet.NpcPlayerInteractPacket;
-import com.gaboj1.tcr.network.packet.NPCDialoguePacket;
+import com.gaboj1.tcr.network.packet.*;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
@@ -22,11 +20,13 @@ public class TCRPacketHandler {
 
     public static synchronized void register() {
         // CLIENTBOUND
-         register(NPCDialoguePacket.class, NPCDialoguePacket::decode);
+        register(NPCDialoguePacket.class, NPCDialoguePacket::decode);
+        register(PortalBlockScreenPacket.class, PortalBlockScreenPacket::decode);
 
 
         // SERVERBOUND
         register(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);
+        register(PortalBlockTeleportPacket.class, PortalBlockTeleportPacket::decode);
 
         // BOTH
 

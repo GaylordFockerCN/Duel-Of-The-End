@@ -4,9 +4,14 @@ import com.gaboj1.tcr.block.entity.PortalBlockEntity;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.PortalBlockScreenPacket;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -43,9 +48,14 @@ public class PortalBlock extends BaseEntityBlock{
                 if(serverPlayer.isCreative()){
                     portalBlockEntity.changeId(player);
                 }else {
-                    serverPlayer.getPersistentData().putBoolean(portalBlockEntity.getID(),true);//解锁传送石！
-                    portalBlockEntity.unlock();
-                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PortalBlockScreenPacket(serverPlayer.getPersistentData().copy()), serverPlayer);
+                    if(!serverPlayer.getPersistentData().getBoolean(portalBlockEntity.getID())){
+                        serverPlayer.getPersistentData().putBoolean(portalBlockEntity.getID(),true);//解锁传送石！
+                        serverPlayer.sendSystemMessage(Component.translatable("info.the_casket_of_reveries.teleport_unlock"));
+                        level.playSound(player,pos, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS,1,1);//播放末地传送门开启的音效 TODO 有bug
+                        portalBlockEntity.unlock();
+                    }else{
+                        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PortalBlockScreenPacket(serverPlayer.getPersistentData().copy()), serverPlayer);
+                    }
                 }
             }
         }

@@ -56,15 +56,15 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
     public String getID(){
         switch (id){
             case 1:
-                return "boss1";
+                return "boss1Unlocked";
             case 2:
-                return "boss2";
+                return "boss2Unlocked";
             case 3:
-                return "boss3";
+                return "boss3Unlocked";
             case 4:
-                return "boss4";
+                return "boss4Unlocked";
             default:
-                return "final";
+                return "finalUnlocked";
         }
     }
 

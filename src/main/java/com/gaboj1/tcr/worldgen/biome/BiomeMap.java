@@ -40,6 +40,16 @@ public class BiomeMap {
         return generator.getCenter();
     }
 
+    public int getR() {
+        return generator.getLength()/2;
+    }
+    public Point getBlockPos(Point biomePos0) {
+        Point biomePos = (Point) biomePos0.clone();
+        biomePos.x = (biomePos0.x-getR())*4;
+        biomePos.y = (biomePos0.y-getR())*4;
+        return biomePos;
+    }
+
     public static final int SIZE = 320;
 
     boolean isImage;

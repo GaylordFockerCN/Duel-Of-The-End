@@ -1,8 +1,6 @@
 package com.gaboj1.tcr.network.packet;
 
-import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.gui.screen.portalblock.PortalBlockScreen;
-import com.gaboj1.tcr.network.packet.BasePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
