@@ -1,6 +1,5 @@
 package com.gaboj1.tcr.item.custom;
 
-import com.gaboj1.tcr.item.renderer.DesertEagleItemRenderer;
 import com.gaboj1.tcr.item.renderer.ElderStaffRenderer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
@@ -12,7 +11,7 @@ import software.bernie.geckolib.util.RenderUtils;
 
 import java.util.function.Consumer;
 
-public class ElderStaff extends Drops implements GeoAnimatable {
+public class ElderStaff extends DropItem implements GeoAnimatable {
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     @Override

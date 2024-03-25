@@ -25,7 +25,7 @@ public class TCRModItemTabs {
 
 				tabData.accept(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get());
 				tabData.accept(TCRModBlocks.PORTAL_BED.get());
-//				tabData.accept(TCRModBlocks.PORTAL_BLOCK.get());
+				tabData.accept(TCRModBlocks.PORTAL_BLOCK.get());
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get());
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get());
@@ -80,6 +80,10 @@ public class TCRModItemTabs {
 				//法宝
 				tabData.accept(TCRModItems.TREE_SPIRIT_WAND.get());
 				tabData.accept(TCRModItems.HOLY_SWORD.get());
+
+				//食物
+				tabData.accept(TCRModItems.BLUE_BANANA.get());
+
 
 			}).build());
 

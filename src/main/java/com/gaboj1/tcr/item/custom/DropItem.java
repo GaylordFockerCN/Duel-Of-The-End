@@ -11,15 +11,15 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
- * 没用的掉落物
+ * 没用的掉落物，带有物品说明
  */
-public class Drops extends Item {
+public class DropItem extends Item {
 
-    public Drops() {
+    public DropItem() {
         super(new Item.Properties().setNoRepair().stacksTo(1).rarity(Rarity.COMMON));
     }
 
-    public Drops(Properties properties) {
+    public DropItem(Properties properties) {
         super(properties);
     }
 

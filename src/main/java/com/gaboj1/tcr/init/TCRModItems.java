@@ -23,9 +23,12 @@ public class TCRModItems {
 	public static final RegistryObject<Item> SUPER_RESIN = REGISTRY.register("super_resin", () -> new BasicResin(new Item.Properties().setNoRepair().stacksTo(64).rarity(Rarity.EPIC),BasicResin.SUPER_RESIN));
 	public static final RegistryObject<Item> COPY_RESIN = REGISTRY.register("copy_resin", () -> new CopyResin(new Item.Properties().setNoRepair().stacksTo(64).rarity(Rarity.EPIC)));
 	public static final RegistryObject<Item> TREE_SPIRIT_WAND = REGISTRY.register("tree_spirit_wand",() ->  new TreeSpiritWand());
-	public static final RegistryObject<Item> TREE_DEMON_HORN = REGISTRY.register("tree_demon_horn",() ->  new Drops());
-	public static final RegistryObject<Item> ELDER_STAFF = REGISTRY.register("elder_staff",() ->  new Drops());
+	public static final RegistryObject<Item> TREE_DEMON_HORN = REGISTRY.register("tree_demon_horn",() ->  new DropItem());
+	public static final RegistryObject<Item> ELDER_STAFF = REGISTRY.register("elder_staff",() ->  new DropItem());
 	public static final RegistryObject<Item> HOLY_SWORD = REGISTRY.register("holy_sword",() -> new HolySword());
+
+	public static final RegistryObject<Item> BLUE_BANANA = REGISTRY.register("blue_banana",() ->  new DropItem(new Item.Properties().food(TCRFoods.BLUE_BANANA)));
+	public static final RegistryObject<Item> DREAM_DA = REGISTRY.register("dream_da",() ->  new DrinkItem(new Item.Properties().food(TCRFoods.DREAM_DA)));
 	public static final RegistryObject<Item> BOOK1 = REGISTRY.register("book1",() ->  new Book("book1"));
 
 	public static final RegistryObject<Item> BOOK2 = REGISTRY.register("book2",() ->  new Book("book2"));
