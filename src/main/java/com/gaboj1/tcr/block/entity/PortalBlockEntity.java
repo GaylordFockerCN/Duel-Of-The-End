@@ -68,9 +68,16 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
         }
     }
 
+    public void activateAnim(){
+        triggerAnim("Activate","activate");
+    }
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
+
+        controllerRegistrar.add(new AnimationController<>(this, "Activate", 0, state -> PlayState.STOP)
+                .triggerableAnim("activate", RawAnimation.begin().thenPlay("start")));
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {

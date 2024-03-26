@@ -4,12 +4,10 @@ import com.gaboj1.tcr.block.entity.PortalBlockEntity;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.PortalBlockScreenPacket;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -17,9 +15,10 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -29,6 +28,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 /**
  * 右键传送石碑
@@ -54,6 +55,7 @@ public class PortalBlock extends BaseEntityBlock{
                         level.playSound(player,pos, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS,1,1);//播放末地传送门开启的音效 TODO 有bug
                         portalBlockEntity.unlock();
                     }else{
+                        portalBlockEntity.activateAnim();
                         PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PortalBlockScreenPacket(serverPlayer.getPersistentData().copy()), serverPlayer);
                     }
                 }
@@ -63,7 +65,13 @@ public class PortalBlock extends BaseEntityBlock{
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
-//    @Override
+    @Override
+    public void appendHoverText(ItemStack p_49816_, @Nullable BlockGetter p_49817_, List<Component> components, TooltipFlag p_49819_) {
+        components.add(Component.translatable(this.getDescriptionId()+".usage"));
+        super.appendHoverText(p_49816_, p_49817_, components, p_49819_);
+    }
+
+    //    @Override
 //    public void onBlockStateChange(LevelReader level, BlockPos pos, BlockState oldState, BlockState newState) {
 //        super.onBlockStateChange(level, pos, oldState, newState);
 //    }
