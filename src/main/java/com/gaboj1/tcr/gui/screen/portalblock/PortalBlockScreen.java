@@ -5,6 +5,7 @@ import com.gaboj1.tcr.gui.screen.component.PortalScreenComponent;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.PortalBlockTeleportPacket;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -13,7 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 public class PortalBlockScreen extends Screen {
-    public static final ResourceLocation MY_BACKGROUND_LOCATION = new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"textures/gui/background.png");
+    public static final ResourceLocation MY_BACKGROUND_LOCATION = new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"textures/gui/portal_background.png");
 
     PortalScreenComponent bossFinal = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.final"), button -> this.finishChat((byte) 0));
     PortalScreenComponent boss1 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss1"), button -> this.finishChat((byte) 1));
@@ -49,7 +50,14 @@ public class PortalBlockScreen extends Screen {
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(guiGraphics);
-        guiGraphics.blit(MY_BACKGROUND_LOCATION, this.width/2 - 214/2, this.height/2 - 252/2, 0, 0, 214, 252);
+        int posX = (this.width - 256) / 2;
+        int posY = (this.height - 200) / 2;
+        PoseStack poseStack = guiGraphics.pose();
+        poseStack.pushPose();
+        poseStack.translate(posX + 128, posY + 90, 0.0F);
+        poseStack.scale(1.2f,1.2f,1.0f);
+        guiGraphics.blit(MY_BACKGROUND_LOCATION, -128, -90, 0, 0, 256, 181);
+        poseStack.popPose();
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
 

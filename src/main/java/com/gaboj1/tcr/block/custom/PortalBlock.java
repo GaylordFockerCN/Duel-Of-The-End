@@ -45,6 +45,7 @@ public class PortalBlock extends BaseEntityBlock{
 
         BlockEntity entity = level.getBlockEntity(pos);
         if(entity instanceof PortalBlockEntity portalBlockEntity){
+            portalBlockEntity.unlock();//客户端服务端都需要unlock
             if (player instanceof ServerPlayer serverPlayer) {
                 if(serverPlayer.isCreative()){
                     portalBlockEntity.changeId(player);
@@ -53,9 +54,8 @@ public class PortalBlock extends BaseEntityBlock{
                         serverPlayer.getPersistentData().putBoolean(portalBlockEntity.getID(),true);//解锁传送石！
                         serverPlayer.sendSystemMessage(Component.translatable("info.the_casket_of_reveries.teleport_unlock"));
                         level.playSound(player,pos, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS,1,1);//播放末地传送门开启的音效 TODO 有bug
-                        portalBlockEntity.unlock();
-                    }else{
                         portalBlockEntity.activateAnim();
+                    }else{
                         PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PortalBlockScreenPacket(serverPlayer.getPersistentData().copy()), serverPlayer);
                     }
                 }

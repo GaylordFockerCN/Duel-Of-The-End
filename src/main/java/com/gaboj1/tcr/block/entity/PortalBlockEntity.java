@@ -23,6 +23,10 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
 
     private boolean isUnlock = false;
 
+    public boolean isUnlock() {
+        return isUnlock;
+    }
+
     public PortalBlockEntity(BlockPos pos, BlockState state) {
         super(TCRModBlockEntities.PORTAL_BLOCK_ENTITY.get(), pos, state);
     }
@@ -77,10 +81,11 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
         controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
 
         controllerRegistrar.add(new AnimationController<>(this, "Activate", 0, state -> PlayState.STOP)
-                .triggerableAnim("activate", RawAnimation.begin().thenPlay("start")));
+                .triggerableAnim("activate", RawAnimation.begin().thenPlay("activate")));
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
+//        System.out.println(isUnlock);
         if(isUnlock){
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("unlock", Animation.LoopType.LOOP));
         }else {

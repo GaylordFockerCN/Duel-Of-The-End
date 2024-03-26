@@ -25,7 +25,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         //copy from VanillaBlockLoot (我真是天才~
         this.add(TCRModBlocks.PORTAL_BED.get(), (block) -> this.createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD));
 
-        this.dropSelf(TCRModBlocks.PORTAL_BLOCK.get());
+//        this.dropSelf(TCRModBlocks.PORTAL_BLOCK.get());
         this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
         this.add(TCRModBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER.get(), createPotFlowerItemTable(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get()));
 
