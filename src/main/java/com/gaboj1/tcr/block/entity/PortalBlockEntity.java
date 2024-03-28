@@ -8,15 +8,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
+import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 import software.bernie.geckolib.util.RenderUtils;
 
 public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private int id = 0;
     public static final int maxID = 4;
@@ -29,6 +31,7 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
 
     public PortalBlockEntity(BlockPos pos, BlockState state) {
         super(TCRModBlockEntities.PORTAL_BLOCK_ENTITY.get(), pos, state);
+        SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 
     @Override
@@ -80,7 +83,7 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
 
-        controllerRegistrar.add(new AnimationController<>(this, "Activate", 0, state -> PlayState.CONTINUE)
+        controllerRegistrar.add(new AnimationController<>(this, "Activate", 0, state -> PlayState.STOP)
                 .triggerableAnim("activate1", RawAnimation.begin().thenPlay("activate")));
     }
 

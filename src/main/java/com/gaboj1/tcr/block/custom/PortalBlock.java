@@ -45,7 +45,7 @@ public class PortalBlock extends BaseEntityBlock{
 
         BlockEntity entity = level.getBlockEntity(pos);
         if(entity instanceof PortalBlockEntity portalBlockEntity){
-            portalBlockEntity.unlock();//客户端服务端都需要unlock
+
             if (player instanceof ServerPlayer serverPlayer) {
                 //创造且潜行的情况下，按下即为切换传送锚点的类型。
                 if(serverPlayer.isCreative()&&player.isShiftKeyDown()){
@@ -57,11 +57,20 @@ public class PortalBlock extends BaseEntityBlock{
                         portalBlockEntity.activateAnim();
                         level.playSound(null , player.getX(),player.getY(),player.getZ(), SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS,1,1);//播放末地传送门开启的音效
                     }else{
-//                        portalBlockEntity.activateAnim();
+                        portalBlockEntity.activateAnim();
                         PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PortalBlockScreenPacket(serverPlayer.getPersistentData().copy()), serverPlayer);
                     }
                 }
             }
+            new Thread(()->{
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                portalBlockEntity.unlock();//客户端服务端都需要unlock，并且要在播放解锁动画后再unlock
+            }).start();
+
         }
 
         return InteractionResult.sidedSuccess(level.isClientSide);
