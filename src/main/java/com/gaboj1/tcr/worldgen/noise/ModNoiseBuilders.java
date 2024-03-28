@@ -13,7 +13,7 @@ import net.minecraft.world.level.levelgen.synth.NormalNoise;
 
 import java.util.List;
 
-public class ModNoiseBuilders   {
+public class ModNoiseBuilders {
 
     private static final SurfaceRules.RuleSource GRASS_BLOCK = SurfaceRules.state(Blocks.GRASS_BLOCK.defaultBlockState());
     private static final SurfaceRules.RuleSource DIRT = SurfaceRules.state(Blocks.DIRT.defaultBlockState());
@@ -21,7 +21,7 @@ public class ModNoiseBuilders   {
 
     public static NoiseGeneratorSettings skylandsNoiseSettings(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noise) {
         return new NoiseGeneratorSettings(
-                new NoiseSettings(64, 16, 1, 1), // noiseSettings default:0 128 2 1
+                new NoiseSettings(32, 48, 1, 1), // noiseSettings default:0 128 2 1
                 Blocks.STONE.defaultBlockState(), // defaultBlock
                 Blocks.GRASS_BLOCK.defaultBlockState(), // defaultFluid default:water
                 makeNoiseRouter(densityFunctions, noise), // noiseRouter
@@ -49,7 +49,7 @@ public class ModNoiseBuilders   {
 //        SurfaceRules.RuleSource surface = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.yBlockCheck(VerticalAnchor.aboveBottom(10),10),DIRT));
 
         SurfaceRules.RuleSource denseForest = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.DENSE_FOREST),GRASS_BLOCK), SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DIRT));
-
+        SurfaceRules.RuleSource all = SurfaceRules.sequence(finalBiome,surface,air,denseForest);
 
         ImmutableList.Builder<SurfaceRules.RuleSource> builder = ImmutableList.builder();
         builder
@@ -57,6 +57,7 @@ public class ModNoiseBuilders   {
                 .add(air)
                 .add(surface)
                 .add(denseForest)
+//                .add(SurfaceRules.ifTrue(SurfaceRules.abovePreliminarySurface(), all))//试试看abovePre这个
                 ;
 
 

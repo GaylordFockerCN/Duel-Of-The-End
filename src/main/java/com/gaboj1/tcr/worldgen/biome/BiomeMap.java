@@ -110,7 +110,7 @@ public class BiomeMap {
             if(!GraphicsEnvironment.isHeadless())
                 JOptionPane.showMessageDialog(null,"维度地图图片\""+FILE+"\"文件异常！将以默认预设生成地图","The Casket Of Reveries：提示",JOptionPane.INFORMATION_MESSAGE);
             isImage = false;
-            return createNoiseMapStatic(generator);
+            return createNoiseMap(generator);
         }
     }
 
