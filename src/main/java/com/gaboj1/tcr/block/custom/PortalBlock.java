@@ -47,15 +47,17 @@ public class PortalBlock extends BaseEntityBlock{
         if(entity instanceof PortalBlockEntity portalBlockEntity){
             portalBlockEntity.unlock();//客户端服务端都需要unlock
             if (player instanceof ServerPlayer serverPlayer) {
-                if(serverPlayer.isCreative()){
+                //创造且潜行的情况下，按下即为切换传送锚点的类型。
+                if(serverPlayer.isCreative()&&player.isShiftKeyDown()){
                     portalBlockEntity.changeId(player);
                 }else {
                     if(!serverPlayer.getPersistentData().getBoolean(portalBlockEntity.getID())){
                         serverPlayer.getPersistentData().putBoolean(portalBlockEntity.getID(),true);//解锁传送石！
                         serverPlayer.sendSystemMessage(Component.translatable("info.the_casket_of_reveries.teleport_unlock"));
-                        level.playSound(player,pos, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS,1,1);//播放末地传送门开启的音效 TODO 有bug
                         portalBlockEntity.activateAnim();
+                        level.playSound(null , player.getX(),player.getY(),player.getZ(), SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS,1,1);//播放末地传送门开启的音效
                     }else{
+//                        portalBlockEntity.activateAnim();
                         PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PortalBlockScreenPacket(serverPlayer.getPersistentData().copy()), serverPlayer);
                     }
                 }
@@ -76,12 +78,6 @@ public class PortalBlock extends BaseEntityBlock{
 //        super.onBlockStateChange(level, pos, oldState, newState);
 //    }
 
-    private String findNearestStone(BlockPos pos){
-        int x = pos.getX();
-        int z = pos.getZ();
-
-        return "true";
-    }
 
     //粒子特效
     @Override

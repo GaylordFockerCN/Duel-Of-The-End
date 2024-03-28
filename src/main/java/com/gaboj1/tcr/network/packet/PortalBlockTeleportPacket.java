@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 import java.awt.Point;
 
 /**
- * This packet is sent to the server whenever the player chooses an important action in the NPC dialogue.
+ * 客户端发给服务端，进行传送判断并播放音效
  */
 public record PortalBlockTeleportPacket(byte interactionID) implements BasePacket {
     @Override
@@ -32,7 +32,6 @@ public record PortalBlockTeleportPacket(byte interactionID) implements BasePacke
         Point destination;
         boolean unlocked;
         int height;
-        int R = BiomeMap.getInstance().getR();
         switch (this.interactionID()){
             case 1: destination = BiomeMap.getInstance().getCenter1();height = 210;unlocked = serverPlayerData.getBoolean("boss1Unlocked");break;
             case 2: destination = BiomeMap.getInstance().getCenter2();height = 220;unlocked = serverPlayerData.getBoolean("boss2Unlocked");break;
@@ -47,7 +46,7 @@ public record PortalBlockTeleportPacket(byte interactionID) implements BasePacke
         if(unlocked || playerEntity.isCreative()){
             Level level = playerEntity.level();
             playerEntity.teleportTo(destination.x,height,destination.y);
-            level.playSound(null,playerEntity.getOnPos(), SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS,1,1);//播放传送音效 TODO 有bug
+            level.playSound(null,playerEntity.getX(),playerEntity.getY(),playerEntity.getZ(), SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS,1,1);//播放传送音效
         }else {
             playerEntity.sendSystemMessage(Component.translatable("info.the_casket_of_reveries.teleport_lock"));
         }
