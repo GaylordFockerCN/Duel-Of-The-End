@@ -300,7 +300,19 @@ public class NoiseMapGenerator {
             generator.setSeed(getDifferRandom());
         }
 
-        double[][] aCenterBiomeMap = generator.generateNoiseMap();
+        //第二群系造山用
+        double[][] aCenterBiomeMap;
+        if(tag == 6){
+            aCenterBiomeMap = new double[aCenterR][aCenterR];
+            for(int i = 0;i < aCenterR;i++){
+                for(int j = 0;j < aCenterR;j++){
+                    aCenterBiomeMap[i][j] = tag;
+                }
+            }
+        }else {
+            aCenterBiomeMap = generator.generateNoiseMap();
+        }
+
 
         ArrayList newPoints = new ArrayList<>();
         //centerR即偏移量

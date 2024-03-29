@@ -73,8 +73,8 @@ public class TCRBiomes {
         context.register(PASTORAL_PLAINS, createPastoralPlainsBiome(context));
         context.register(DENSE_FOREST, createDenseForestBiome(context));
 
-        context.register(GALLERY_OF_SERENE, createTestBiome(context,0xffffff));
-        context.register(AZURE_SKIES, createTestBiome(context,0x6fffbd));
+        context.register(GALLERY_OF_SERENE, createTestBiome(context,11983713));
+        context.register(AZURE_SKIES, createTestBiome(context,11983713));
 
         context.register(SAKURA, createSakuraBiome(context));
         context.register(DARK_SAKURA, createDarkSakuraBiome(context));
