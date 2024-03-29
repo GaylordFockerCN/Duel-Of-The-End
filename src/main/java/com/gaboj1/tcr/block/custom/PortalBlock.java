@@ -20,6 +20,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -87,6 +88,10 @@ public class PortalBlock extends BaseEntityBlock{
 //        super.onBlockStateChange(level, pos, oldState, newState);
 //    }
 
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos blockPos, CollisionContext p_60558_) {
+        return Block.box(0,0,0,32,32,32);
+    }
 
     //粒子特效
     @Override
