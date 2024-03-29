@@ -55,6 +55,19 @@
 							"vector": [-30.75, 0, 0]
 						}
 					}
+				},
+				"group11": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [16.13, 0, 0]
+						},
+						"0.5": {
+							"vector": [-30.25, 0, 0]
+						}
+					}
 				}
 			}
 		},
@@ -125,9 +138,6 @@
 					}
 				}
 			}
-		},
-		"animation.m_treemonster - Converted.idle": {
-			"animation_length": 1
 		}
 	},
 	"geckolib_format_version": 2
