@@ -277,7 +277,7 @@ public class NoiseMapGenerator {
 
     //生成中心并且把中心复制到各个区域
     int aCenterR = 0;//统一半径，否则有的中心群系过大
-    public Point copyMap(Point aCenter,double map[][],double tag, boolean rotate){
+    public Point copyMap(Point aCenter, double[][] map, double tag, boolean rotate){
         //再以各个点为中心生成噪声图，比较自然一点~
         NoiseMapGenerator generator = new NoiseMapGenerator();
 
@@ -300,25 +300,14 @@ public class NoiseMapGenerator {
             generator.setSeed(getDifferRandom());
         }
 
-        //第二群系造山用
-        double[][] aCenterBiomeMap;
-        if(tag == 6){
-            aCenterBiomeMap = new double[aCenterR][aCenterR];
-            for(int i = 0;i < aCenterR;i++){
-                for(int j = 0;j < aCenterR;j++){
-                    aCenterBiomeMap[i][j] = tag;
-                }
-            }
-        }else {
-            aCenterBiomeMap = generator.generateNoiseMap();
-        }
 
+        double[][] aCenterBiomeMap = generator.generateNoiseMap();
 
-        ArrayList newPoints = new ArrayList<>();
+        ArrayList<Point> newPoints = new ArrayList<>();
         //centerR即偏移量
         for(int i = aCenter.x - aCenterR /2, a = 0; i < aCenter.x + aCenterR /2 && a < aCenterR; i++,a++){
             for(int j = aCenter.y - aCenterR /2, b = 0; j < aCenter.y + aCenterR /2 && b < aCenterR; j++,b++){
-                if(i > 0 && j > 0 && i<map.length && j<map[0].length && aCenterBiomeMap[a][b] != 0)
+                if(i > 0 && j > 0 && i<map.length && j<map[0].length && (aCenterBiomeMap[a][b] != 0 || tag == 6)) //第二群系造山用
                     if(rotate){
                         map[j][i] = tag;//旋转，增加多样性 TODO 部分图效果不好
                         newPoints.add(new Point(j,i));
