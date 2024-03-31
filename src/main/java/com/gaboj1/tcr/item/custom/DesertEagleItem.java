@@ -12,8 +12,6 @@ import com.gaboj1.tcr.util.ItemUtil;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.commands.CommandSource;
-import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -24,13 +22,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.RegistryObject;
 
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
@@ -92,7 +87,6 @@ public class DesertEagleItem extends Item implements GeoItem {
 
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-
         consumer.accept(new IClientItemExtensions() {
             private DesertEagleItemRenderer renderer;
             @Override
@@ -209,7 +203,7 @@ public class DesertEagleItem extends Item implements GeoItem {
 
                 if (!world.isClientSide()) {
                     //播放音效
-                    world.playSound(null, BlockPos.containing(x, y, z), TCRModSounds.DESERT_EAGLE_FIRE.get(), SoundSource.PLAYERS, 1, 1);
+                    world.playSound(null, x,y,z, TCRModSounds.DESERT_EAGLE_FIRE.get(), SoundSource.BLOCKS, 1, 1);
                 } else {
                     //实现抖动
                     double[] recoilTimer = {0}; // 后坐力计时器
@@ -422,7 +416,7 @@ public class DesertEagleItem extends Item implements GeoItem {
                         ((DesertEagleItem)handItemStake.getItem()).reloadAnim(serverLevel, player, handItemStake);
                         //播放音效
                         //serverLevel.playSound(player, x,y,z, HDLModSounds.DESERTEAGLECRCRELOAD.get(), SoundSource.HOSTILE, 1, 1);
-                        serverLevel.playSound(null, BlockPos.containing(x, y, z), TCRModSounds.DESERT_EAGLE_RELOAD.get(), SoundSource.PLAYERS, 1, 1);
+                        serverLevel.playSound(null, x, y, z, TCRModSounds.DESERT_EAGLE_RELOAD.get(), SoundSource.BLOCKS, 1, 1);
                     }
 
                     Thread.sleep(DesertEagleItem.RELOAD_TIME);
