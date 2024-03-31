@@ -14,7 +14,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class TCRModItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, TheCasketOfReveriesMod.MOD_ID);
 	public static final RegistryObject<Item> DESERT_EAGLE_AMMO = REGISTRY.register("desert_eagle_ammo", () -> new Item(new Item.Properties().stacksTo(64)));
-	public static final RegistryObject<Item> DESERT_EAGLE = REGISTRY.register("desert_eagle", () -> new DesertEagleItem());
+	public static final RegistryObject<Item> DESERT_EAGLE = REGISTRY.register("desert_eagle", DesertEagleItem::new);
 	public static final RegistryObject<Item> DESERT_EAGLE_BULLET = REGISTRY.register("desert_eagle_bullet", () -> new Item(new Item.Properties().stacksTo(64)));
 
 	public static final RegistryObject<Item> BASIC_RESIN = REGISTRY.register("basic_resin", () -> new BasicResin(new Item.Properties().setNoRepair().stacksTo(64).rarity(Rarity.COMMON),1));
@@ -22,10 +22,10 @@ public class TCRModItems {
 	public static final RegistryObject<Item> ADVANCED_RESIN = REGISTRY.register("advanced_resin", () -> new BasicResin(new Item.Properties().setNoRepair().stacksTo(64).rarity(Rarity.RARE),BasicResin.ADVANCED_RESIN));
 	public static final RegistryObject<Item> SUPER_RESIN = REGISTRY.register("super_resin", () -> new BasicResin(new Item.Properties().setNoRepair().stacksTo(64).rarity(Rarity.EPIC),BasicResin.SUPER_RESIN));
 	public static final RegistryObject<Item> COPY_RESIN = REGISTRY.register("copy_resin", () -> new CopyResin(new Item.Properties().setNoRepair().stacksTo(64).rarity(Rarity.EPIC)));
-	public static final RegistryObject<Item> TREE_SPIRIT_WAND = REGISTRY.register("tree_spirit_wand",() ->  new TreeSpiritWand());
-	public static final RegistryObject<Item> TREE_DEMON_HORN = REGISTRY.register("tree_demon_horn",() ->  new DropItem());
-	public static final RegistryObject<Item> ELDER_STAFF = REGISTRY.register("elder_staff",() ->  new DropItem());
-	public static final RegistryObject<Item> HOLY_SWORD = REGISTRY.register("holy_sword",() -> new HolySword());
+	public static final RegistryObject<Item> TREE_SPIRIT_WAND = REGISTRY.register("tree_spirit_wand", TreeSpiritWand::new);
+	public static final RegistryObject<Item> TREE_DEMON_HORN = REGISTRY.register("tree_demon_horn", DropItem::new);
+	public static final RegistryObject<Item> ELDER_STAFF = REGISTRY.register("elder_staff", DropItem::new);
+	public static final RegistryObject<Item> HOLY_SWORD = REGISTRY.register("holy_sword", HolySword::new);
 
 	public static final RegistryObject<Item> BLUE_BANANA = REGISTRY.register("blue_banana",() ->  new DropItem(new Item.Properties().food(TCRFoods.BLUE_BANANA)));
 	public static final RegistryObject<Item> DREAM_DA = REGISTRY.register("dream_da",() ->  new DrinkItem(new Item.Properties().food(TCRFoods.DREAM_DA)));
