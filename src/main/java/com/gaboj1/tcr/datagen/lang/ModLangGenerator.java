@@ -112,6 +112,10 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,3,"......");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,4,"我赌你的枪里没有子弹！");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,5,"不要拿去干坏事哦~");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,7,"抱歉没注意到你，我一思考就容易陷进去了呢，哈哈");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,8,"知识从不对人吝啬");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,9,"愿我的智慧为你扫开前路");
+
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,0,"那你汉堡里面的牛肉是哪来的？");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,1,"我也可以吗？我想要把火铳！");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,2,"【获得 火铳*1 弹药*20】");
@@ -119,6 +123,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,4,"......");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,5,"快给我，不然嘣了你");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,6,"谢谢你的火铳~");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,7,"询问");
 
         this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,"牧歌原野-长老");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,0,"勇者啊，我所期盼的勇者啊你终于来了。你可知我这十年来的心在仇恨的尖刀上是如何滴血的么。密林中的魔物危害着这个村子呵。恳请您前去剿除。");

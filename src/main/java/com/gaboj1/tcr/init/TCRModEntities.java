@@ -6,12 +6,12 @@ import com.gaboj1.tcr.entity.custom.Yggdrasil.tree_clawEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
-import com.gaboj1.tcr.entity.custom.villager.PastoralPlainTalkableVillager1;
-import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillager1;
-import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillagerElder;
+import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainTalkableVillager1;
+import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillager1;
+import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.entity.custom.*;
 
-import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillager;
+import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -44,25 +44,17 @@ public class TCRModEntities {
 							.sized(1.5f, 1.75f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "tree_guardian").toString()));
 
-	public static final RegistryObject<EntityType<PastoralPlainVillager>> PASTORAL_PLAIN_VILLAGER =
-			REGISTRY.register("pastoral_plain_villager",
-					() -> EntityType.Builder.of(PastoralPlainVillager::new, MobCategory.CREATURE)
-							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "pastoral_plain_villager").toString()));
+	public static final RegistryObject<EntityType<PastoralPlainVillager>> PASTORAL_PLAIN_VILLAGER = register("pastoral_plain_villager",
+			EntityType.Builder.of(PastoralPlainVillager::new, MobCategory.CREATURE));
 
-	public static final RegistryObject<EntityType<PastoralPlainVillager1>> PASTORAL_PLAIN_VILLAGER1 =
-			REGISTRY.register("pastoral_plain_villager1",
-					() -> EntityType.Builder.of(PastoralPlainVillager1::new, MobCategory.CREATURE)
-							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "pastoral_plain_villager1").toString()));
+	public static final RegistryObject<EntityType<PastoralPlainVillager1>> PASTORAL_PLAIN_VILLAGER1 = register("pastoral_plain_villager1",
+			EntityType.Builder.of(PastoralPlainVillager1::new, MobCategory.CREATURE));
 
-	public static final RegistryObject<EntityType<PastoralPlainTalkableVillager1>> PASTORAL_PLAIN_TALKABLE_VILLAGER_1 =
-			REGISTRY.register("pastoral_plain_talkable_villager_1",
-					() -> EntityType.Builder.of(PastoralPlainTalkableVillager1::new, MobCategory.CREATURE)
-							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "pastoral_plain_talkable_villager_1").toString()));
+	public static final RegistryObject<EntityType<PastoralPlainTalkableVillager1>> PASTORAL_PLAIN_TALKABLE_VILLAGER_1 = register("pastoral_plain_talkable_villager_1",
+			EntityType.Builder.of(PastoralPlainTalkableVillager1::new, MobCategory.CREATURE));
 
-	public static final RegistryObject<EntityType<PastoralPlainVillagerElder>> PASTORAL_PLAIN_VILLAGER_ELDER =
-			REGISTRY.register("pastoral_plain_villager_elder",
-					() -> EntityType.Builder.of(PastoralPlainVillagerElder::new, MobCategory.CREATURE)
-							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "pastoral_plain_villager_elder").toString()));
+	public static final RegistryObject<EntityType<PastoralPlainVillagerElder>> PASTORAL_PLAIN_VILLAGER_ELDER = register("pastoral_plain_villager_elder",
+			EntityType.Builder.of(PastoralPlainVillagerElder::new, MobCategory.CREATURE));
 
 	public static final RegistryObject<EntityType<YggdrasilEntity>> YGGDRASIL =
 			REGISTRY.register("yggdrasil",
@@ -78,7 +70,7 @@ public class TCRModEntities {
 
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
-		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
+		return REGISTRY.register(registryname, () -> entityTypeBuilder.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, registryname).toString()));
 	}
 
 }

@@ -2,7 +2,7 @@ package com.gaboj1.tcr.gui.screen;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.NpcDialogue;
-import com.gaboj1.tcr.entity.custom.villager.PastoralPlainVillagerElder;
+import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.gui.screen.component.DialogueAnswerComponent;
 import com.gaboj1.tcr.gui.screen.component.DialogueChoiceComponent;
 import com.gaboj1.tcr.gui.screen.villager.PastoralPlainVillagerElderDialogueScreen;
@@ -198,6 +198,6 @@ public class TCRDialogueScreen extends Screen {
     }
 
     @Override
-    public void onClose() {}
+    public void onClose() {this.finishChat((byte) 0);}
 
 }

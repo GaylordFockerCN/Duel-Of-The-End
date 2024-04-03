@@ -1,19 +1,16 @@
 package com.gaboj1.tcr.entity.custom.villager;
 
-import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.util.DataManager;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -29,8 +26,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.entity.schedule.Schedule;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -46,41 +43,50 @@ public class TCRVillager extends Villager implements GeoEntity {
 
     boolean canTalk = true;
 
-    Random r = new Random();
-    int whatCanISay = 0;
+    protected Random r = new Random();
+    protected int whatCanISay = 0;//真的不是玩牢大的梗（
 
     //区别于getID
     public int getVillagerId() {
-        return id;
+        return skinId;
     }
 
     //用于随机生成不同的皮肤和声音
-    protected int id;
+    protected int skinId;
 
     //共有多少种村民，会根据村民数量来随机一个id，从[0,TYPES]中取
-    public static final int TYPES = 5;
-    public TCRVillager(EntityType<? extends Villager> pEntityType, Level pLevel, int id) {
+    public static final int MAX_TYPES = 4;
+    public TCRVillager(EntityType<? extends Villager> pEntityType, Level pLevel, int skinId) {
         super(pEntityType, pLevel);
-
-        //尝试把id保存进nbt文件，但是发现没有用..
-        CompoundTag data = this.getPersistentData();
-        if(!data.getBoolean("hasID")){
-            this.id = id;
-            data.putInt("villagerID",id);
-            data.putBoolean("hasID",true);
-
-        }else {
-            this.id = data.getInt("villagerID");
-        }
+        this.skinId = skinId;
     }
+
     @Override
-    protected Brain<?> makeBrain(Dynamic<?> pDynamic) {
+    public boolean save(@NotNull CompoundTag tag) {
+        tag.putInt("TCRVillagerSkinID", skinId);
+        return super.save(tag);
+    }
+
+    @Override
+    public void load(@NotNull CompoundTag tag) {
+        skinId = tag.getInt("TCRVillagerSkinID");
+        super.load(tag);
+    }
+
+    /**
+     * copy from 原版
+    * */
+    @Override
+    protected @NotNull Brain<?> makeBrain(@NotNull Dynamic<?> pDynamic) {
         Brain<Villager> brain = this.brainProvider().makeBrain(pDynamic);
         this.registerBrainGoals(brain);
         return brain;
     }
+    /**
+     * copy from 原版
+     * */
     @Override
-    public void refreshBrain(ServerLevel pServerLevel) {
+    public void refreshBrain(@NotNull ServerLevel pServerLevel) {
         Brain<Villager> brain = this.getBrain();
         brain.stopAll(pServerLevel, this);
         this.brain = brain.copyWithoutBehaviors();
@@ -88,7 +94,9 @@ public class TCRVillager extends Villager implements GeoEntity {
     }
 
 
-
+    /**
+     * copy from 原版
+     * */
     protected void registerBrainGoals(Brain<Villager> pVillagerBrain) {
         VillagerProfession villagerprofession = this.getVillagerData().getProfession();
         if (this.isBaby()) {
@@ -168,7 +176,7 @@ public class TCRVillager extends Villager implements GeoEntity {
 
     //用于Geckolib模型区分贴图
     public String getResourceName() {
-        return "pastoral_plain_villager"+id;
+        return "pastoral_plain_villager"+ skinId;
     }
 
     private void setUnhappy() {

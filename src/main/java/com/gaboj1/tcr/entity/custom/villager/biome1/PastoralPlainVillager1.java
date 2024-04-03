@@ -1,5 +1,6 @@
-package com.gaboj1.tcr.entity.custom.villager;
+package com.gaboj1.tcr.entity.custom.villager.biome1;
 
+import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 

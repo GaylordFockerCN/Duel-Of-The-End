@@ -1,6 +1,6 @@
-package com.gaboj1.tcr.entity.custom.villager;
+package com.gaboj1.tcr.entity.custom.villager.biome1;
 
-import com.gaboj1.tcr.gui.screen.DialogueComponentBuilder;
+import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.init.TCRModEntities;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
@@ -17,7 +17,7 @@ import java.util.Random;
 public class PastoralPlainVillager extends TCRVillager {
 
     public PastoralPlainVillager(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel, new Random().nextInt(TYPES));
+        super(pEntityType, pLevel, new Random().nextInt(MAX_TYPES));
         whatCanISay = 5;
     }
 

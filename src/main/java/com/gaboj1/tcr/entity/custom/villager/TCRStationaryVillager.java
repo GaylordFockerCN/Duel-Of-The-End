@@ -37,8 +37,8 @@ public class TCRStationaryVillager extends TCRVillager implements NpcDialogue {
 
     @Nullable
     protected Player conversingPlayer;
-    public TCRStationaryVillager(EntityType<? extends Villager> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel,1);
+    public TCRStationaryVillager(EntityType<? extends Villager> pEntityType, Level pLevel, int skinID) {
+        super(pEntityType, pLevel,skinID);
     }
 
     @Override
@@ -62,6 +62,16 @@ public class TCRStationaryVillager extends TCRVillager implements NpcDialogue {
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if(player.isCreative() ){//潜行右键切换村民种类，客户端服务端都需要改变。单单右键则输出当前id
+            if(player.isShiftKeyDown()){
+                skinId++;
+                if(skinId >= TCRVillager.MAX_TYPES){
+                    skinId = 0;
+                }
+            }
+            player.sendSystemMessage(Component.literal("current skin ID: "+skinId));
+            return InteractionResult.SUCCESS;
+        }
         if (hand == InteractionHand.MAIN_HAND) {
             if (!this.level().isClientSide()) {
                 this.lookAt(player, 180.0F, 180.0F);
