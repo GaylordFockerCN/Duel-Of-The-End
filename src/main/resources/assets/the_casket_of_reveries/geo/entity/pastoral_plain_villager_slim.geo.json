@@ -12,7 +12,7 @@
 			},
 			"bones": [
 				{
-					"name": "Head",
+					"name": "head",
 					"pivot": [0, 24, 0],
 					"rotation": [-6, 5, 0],
 					"cubes": [

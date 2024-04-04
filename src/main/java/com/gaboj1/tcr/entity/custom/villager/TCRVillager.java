@@ -54,8 +54,9 @@ public class TCRVillager extends Villager implements GeoEntity {
     //用于随机生成不同的皮肤和声音
     protected int skinId;
 
-    //共有多少种村民，会根据村民数量来随机一个id，从[0,TYPES]中取
-    public static final int MAX_TYPES = 4;
+    //共有多少种村民，会根据村民数量来随机一个id，从[0,TYPES]中取。负数代表女性
+    public static final int MAX_TYPES = 5;//男性数量
+    public static final int MAX_FEMALE_TYPES = 3;//女性数量
     public TCRVillager(EntityType<? extends Villager> pEntityType, Level pLevel, int skinId) {
         super(pEntityType, pLevel);
         this.skinId = skinId;

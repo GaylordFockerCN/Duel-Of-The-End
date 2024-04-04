@@ -72,11 +72,22 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
                 break;
             //学者 对话id分配：7~9 返回值分配：3
             case 2:
-                Component greeting = BUILDER.buildDialogueDialog(entityType,7 + random.nextInt(2));
-                builder.start(greeting)
+                Component greeting2 = BUILDER.buildDialogueDialog(entityType,7 + random.nextInt(2));
+                builder.start(greeting2)
                         .addFinalChoice((BUILDER.buildDialogueChoice(entityType,7)), (byte) 3);
                 break;
+
+            //牧羊人 对话id分配：10~12 返回值分配：4
             case 3:
+                Component greeting3 = BUILDER.buildDialogueDialog(entityType,10 + random.nextInt(2));
+                builder.start(greeting3)
+                        .addFinalChoice((BUILDER.buildDialogueChoice(entityType,10)), (byte) 4);
+                break;
+            //猎人 对话id分配：13~15 返回值分配：5
+            case 4:
+                Component greeting4 = BUILDER.buildDialogueDialog(entityType,13 + random.nextInt(2));
+                builder.start(greeting4)
+                        .addFinalChoice((BUILDER.buildDialogueChoice(entityType,13)), (byte) 5);
                 break;
 
         }
@@ -108,6 +119,12 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
                 break;
             case 3:
                 chat(BUILDER.buildDialogueDialog(entityType,9,false));//愿我的智慧为你扫开前路
+                break;
+            case 4:
+                chat(BUILDER.buildDialogueDialog(entityType,12,false));//真是有干劲啊，那我也要全力以赴了，朋友
+                break;
+            case 5:
+                chat(BUILDER.buildDialogueDialog(entityType,15,false));//真是有干劲啊，那我也要全力以赴了，朋友
                 break;
             case 7:
                 player.addItem(TCRModItems.DESERT_EAGLE.get().getDefaultInstance());

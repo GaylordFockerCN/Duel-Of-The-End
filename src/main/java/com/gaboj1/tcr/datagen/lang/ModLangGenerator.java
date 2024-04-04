@@ -106,16 +106,28 @@ public class ModLangGenerator extends ModLangProvider {
         this.addVillagerChat(TCRModEntities.PASTORAL_PLAIN_VILLAGER, 5, true, "你的观点让人想起了安妮小姐家的鸭子闹剧");
 
         this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,"牧歌原野-村民");
+
+        //工匠
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,0,"不许伤害小羊小牛小猪！");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,1,"上天……上天给我的……这不是祈祷就有了吗？");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,2,"做梦吧你！火铳是我帮你祈祷出来的");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,3,"......");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,4,"我赌你的枪里没有子弹！");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,5,"不要拿去干坏事哦~");
+        //学者
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,7,"抱歉没注意到你，我一思考就容易陷进去了呢，哈哈");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,8,"知识从不对人吝啬");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,9,"愿我的智慧为你扫开前路");
+        //牧羊人
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,10,"云朵和羊…都是软绵绵的，要跟我一起躲在云里晒太阳吗");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,11,"一只羊，两只羊…….抱歉又睡着了，没给你添麻烦吧");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,12,"真是有干劲啊，那我也要全力以赴了，朋友");
+        //猎人
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,13,"今天出去解决了几只小“猎物”呢");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,14,"要来和我比赛打猎吗，您看上去可是相当强大啊，真是按耐不住想比试的心");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,15,"我这边可是有很多帮助您打猎的好东西呢，呵呵");
 
+        //工匠
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,0,"那你汉堡里面的牛肉是哪来的？");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,1,"我也可以吗？我想要把火铳！");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,2,"【获得 火铳*1 弹药*20】");
@@ -123,7 +135,12 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,4,"......");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,5,"快给我，不然嘣了你");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,6,"谢谢你的火铳~");
+        //学者
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,7,"询问");
+        //牧羊人
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,10,"我要去忙了");
+        //猎人
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,13,"交易");
 
         this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,"牧歌原野-长老");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,0,"勇者啊，我所期盼的勇者啊你终于来了。你可知我这十年来的心在仇恨的尖刀上是如何滴血的么。密林中的魔物危害着这个村子呵。恳请您前去剿除。");

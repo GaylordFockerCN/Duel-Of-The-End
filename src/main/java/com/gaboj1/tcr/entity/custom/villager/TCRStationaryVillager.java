@@ -66,10 +66,10 @@ public class TCRStationaryVillager extends TCRVillager implements NpcDialogue {
             if(player.isShiftKeyDown()){
                 skinId++;
                 if(skinId >= TCRVillager.MAX_TYPES){
-                    skinId = 0;
+                    skinId = -TCRVillager.MAX_FEMALE_TYPES;//无法区分0 和 -0
                 }
             }
-            player.sendSystemMessage(Component.literal("current skin ID: "+skinId));
+            player.sendSystemMessage(Component.literal("current skin ID "+(level().isClientSide?"Client:":"Server:")+skinId));
             return InteractionResult.SUCCESS;
         }
         if (hand == InteractionHand.MAIN_HAND) {
