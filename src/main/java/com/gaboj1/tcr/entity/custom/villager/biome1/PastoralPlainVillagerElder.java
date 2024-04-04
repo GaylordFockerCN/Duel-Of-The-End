@@ -3,12 +3,13 @@ package com.gaboj1.tcr.entity.custom.villager.biome1;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
-import com.gaboj1.tcr.gui.screen.villager.PastoralPlainElderLinkListStreamScreen;
+import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.init.TCRModItems;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.packet.NPCDialoguePacket;
+import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -26,13 +27,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
+import static com.gaboj1.tcr.gui.screen.DialogueComponentBuilder.BUILDER;
+
 public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialogue {
 
     @Nullable
     private Player conversingPlayer;
 
     public PastoralPlainVillagerElder(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel, 1);
+        super(pEntityType, pLevel, 114514);
     }
 
     public static AttributeSupplier setAttributes() {//生物属性
@@ -75,7 +78,22 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     @Override
     @OnlyIn(Dist.CLIENT)
     public void openDialogueScreen(CompoundTag serverPlayerData) {
-        Minecraft.getInstance().setScreen(new PastoralPlainElderLinkListStreamScreen(this, TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get()).build());
+        var entityType = TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get();
+        LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
+        if(DataManager.boss1Defeated.getBool(serverPlayerData)){
+            builder.start(BUILDER.buildDialogueDialog(entityType,4))
+                    .addChoice(BUILDER.buildDialogueChoice(entityType,3),BUILDER.buildDialogueDialog(entityType,5))
+                    .addChoice(BUILDER.buildDialogueChoice(entityType,4),BUILDER.buildDialogueDialog(entityType,6))
+                    .addFinalChoice(BUILDER.buildDialogueChoice(entityType,5),(byte)0);
+        }else {
+            builder.start(BUILDER.buildDialogueDialog(entityType,0))
+                    .addChoice(BUILDER.buildDialogueChoice(entityType,0),BUILDER.buildDialogueDialog(entityType,1,"(x,y)"))
+                    .addChoice(BUILDER.buildDialogueChoice(entityType,1),BUILDER.buildDialogueDialog(entityType,2))
+                    .addChoice(BUILDER.buildDialogueChoice(entityType,1),BUILDER.buildDialogueDialog(entityType,3))
+                    .addFinalChoice(BUILDER.buildDialogueChoice(entityType,2),(byte)0);
+        }
+
+        Minecraft.getInstance().setScreen(builder.build());
     }
 
     @Override
