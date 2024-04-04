@@ -48,8 +48,19 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     }
 
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new NpcDialogueGoal<>(this));//防乱跑但是好像没成功
+        this.goalSelector.addGoal(1, new NpcDialogueGoal<>(this));
         super.registerGoals();
+    }
+
+    /**
+     * 因为不知为何Goal失效，所以只能在tick中实现这个操作
+     */
+    @Override
+    public void tick() {
+        super.tick();
+        if(this.conversingPlayer!=null){
+            this.navigation.stop();
+        }
     }
 
     @Override
