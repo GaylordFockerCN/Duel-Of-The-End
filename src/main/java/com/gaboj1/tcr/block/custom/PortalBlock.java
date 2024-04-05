@@ -3,7 +3,7 @@ package com.gaboj1.tcr.block.custom;
 import com.gaboj1.tcr.block.entity.PortalBlockEntity;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.PortalBlockScreenPacket;
+import com.gaboj1.tcr.network.packet.server.PortalBlockScreenPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -52,8 +52,8 @@ public class PortalBlock extends BaseEntityBlock{
                 if(serverPlayer.isCreative()&&player.isShiftKeyDown()){
                     portalBlockEntity.changeId(player);
                 }else {
-                    if(!serverPlayer.getPersistentData().getBoolean(portalBlockEntity.getID())){
-                        serverPlayer.getPersistentData().putBoolean(portalBlockEntity.getID(),true);//解锁传送石！
+                    if(!serverPlayer.getPersistentData().getBoolean(portalBlockEntity.getTypeID())){
+                        serverPlayer.getPersistentData().putBoolean(portalBlockEntity.getTypeID(),true);//解锁传送石！
                         serverPlayer.sendSystemMessage(Component.translatable("info.the_casket_of_reveries.teleport_unlock"));
                         portalBlockEntity.activateAnim();
                         level.playSound(null , player.getX(),player.getY(),player.getZ(), SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS,1,1);//播放末地传送门开启的音效

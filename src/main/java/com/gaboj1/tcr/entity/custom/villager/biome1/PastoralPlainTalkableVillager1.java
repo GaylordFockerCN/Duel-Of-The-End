@@ -6,7 +6,6 @@ import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.gui.screen.TreeNode;
 import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.init.TCRModItems;
-import com.gaboj1.tcr.item.custom.Book;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.ItemUtil;
 import net.minecraft.ChatFormatting;
@@ -47,7 +46,7 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
 
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
         Random random = new Random();
-        switch (skinId){
+        switch (skinID){
             //商人 对话id分配：
             case 0:
                 break;

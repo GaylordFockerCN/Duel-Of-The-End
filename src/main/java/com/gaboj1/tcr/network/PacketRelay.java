@@ -17,9 +17,7 @@ public class PacketRelay {
     }
 
     public static <MSG> void sendToPlayer(SimpleChannel handler, MSG message, ServerPlayer player) {
-        handler.send(PacketDistributor.PLAYER.with(() -> {
-            return player;
-        }), message);
+        handler.send(PacketDistributor.PLAYER.with(() -> player), message);
     }
 
     public static <MSG> void sendToNear(SimpleChannel handler, MSG message, double x, double y, double z, double radius, ResourceKey<Level> dimension) {

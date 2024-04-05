@@ -1,6 +1,7 @@
-package com.gaboj1.tcr.network.packet;
+package com.gaboj1.tcr.network.packet.client;
 
 import com.gaboj1.tcr.entity.NpcDialogue;
+import com.gaboj1.tcr.network.packet.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 

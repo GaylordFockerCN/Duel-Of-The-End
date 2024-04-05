@@ -11,7 +11,6 @@ import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
@@ -60,7 +59,7 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
         isUnlock = true;
     }
 
-    public String getID(){
+    public String getTypeID(){
         switch (id){
             case 1:
                 return "boss1Unlocked";

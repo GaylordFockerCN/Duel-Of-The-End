@@ -17,7 +17,7 @@ import java.util.Random;
 public class PastoralPlainVillager extends TCRVillager {
 
     public PastoralPlainVillager(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel, new Random().nextInt(MAX_TYPES));
+        super(pEntityType, pLevel, new Random().nextInt(MAX_TYPES+MAX_FEMALE_TYPES)-MAX_FEMALE_TYPES);
         whatCanISay = 5;
     }
 

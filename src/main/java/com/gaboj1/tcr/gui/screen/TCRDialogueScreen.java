@@ -8,7 +8,7 @@ import com.gaboj1.tcr.gui.screen.component.DialogueChoiceComponent;
 import com.gaboj1.tcr.gui.screen.villager.PastoralPlainVillagerElderDialogueScreen;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.NpcPlayerInteractPacket;
+import com.gaboj1.tcr.network.packet.client.NpcPlayerInteractPacket;
 import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;

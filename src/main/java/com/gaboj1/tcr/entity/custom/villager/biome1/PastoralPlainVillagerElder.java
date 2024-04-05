@@ -8,7 +8,7 @@ import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.init.TCRModItems;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.PacketRelay;
-import com.gaboj1.tcr.network.packet.NPCDialoguePacket;
+import com.gaboj1.tcr.network.packet.server.NPCDialoguePacket;
 import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
@@ -35,7 +35,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     private Player conversingPlayer;
 
     public PastoralPlainVillagerElder(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel, 114514);
+        super(pEntityType, pLevel, -114514);
     }
 
     public static AttributeSupplier setAttributes() {//生物属性
@@ -130,6 +130,12 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         this.talk(conversingPlayer,component);
     }
 
+    //长老被打也是会生气滴！
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void talkFuck(Player player){
+        talk(player, Component.translatable(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get().getDescriptionId()+".fuck_chat"+(r.nextInt(whatCanISay))));
+    }
     @Override
     public void setConversingPlayer(@org.jetbrains.annotations.Nullable Player player) {
         this.conversingPlayer = player;

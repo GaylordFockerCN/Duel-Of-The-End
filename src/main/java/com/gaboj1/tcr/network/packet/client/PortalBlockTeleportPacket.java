@@ -1,5 +1,6 @@
-package com.gaboj1.tcr.network.packet;
+package com.gaboj1.tcr.network.packet.client;
 
+import com.gaboj1.tcr.network.packet.BasePacket;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
