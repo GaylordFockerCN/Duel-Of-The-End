@@ -1,5 +1,10 @@
 package com.gaboj1.tcr.entity.custom.villager;
 
+import com.gaboj1.tcr.network.PacketRelay;
+import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.packet.server.NPCDialoguePacket;
+import com.gaboj1.tcr.network.packet.server.PortalBlockScreenPacket;
+import com.gaboj1.tcr.network.packet.server.VillagerChangeIDPacket;
 import com.gaboj1.tcr.util.DataManager;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
@@ -28,6 +33,7 @@ import net.minecraft.world.entity.schedule.Schedule;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -48,30 +54,64 @@ public class TCRVillager extends Villager implements GeoEntity {
 
     //区别于getID
     public int getVillagerId() {
-        return skinId;
+        return skinID;
+    }
+    public void setVillagerId(int newSkinID) {
+        skinID = newSkinID;
     }
 
     //用于随机生成不同的皮肤和声音
-    protected int skinId;
+    protected int skinID = 0;
 
     //共有多少种村民，会根据村民数量来随机一个id，从[0,TYPES]中取。负数代表女性
     public static final int MAX_TYPES = 5;//男性数量
     public static final int MAX_FEMALE_TYPES = 3;//女性数量
-    public TCRVillager(EntityType<? extends Villager> pEntityType, Level pLevel, int skinId) {
+    public TCRVillager(EntityType<? extends Villager> pEntityType, Level pLevel, int skinID) {
         super(pEntityType, pLevel);
-        this.skinId = skinId;
+//        if(!this.getPersistentData().getBoolean("hasSkinID")){
+            this.skinID = skinID;
+//        }
     }
 
     @Override
-    public boolean save(@NotNull CompoundTag tag) {
-        tag.putInt("TCRVillagerSkinID", skinId);
+    public boolean save(CompoundTag tag) {
+        tag.putInt("TCRVillagerSkinID", skinID);
+        this.getPersistentData().putBoolean("hasSkinID", true);
         return super.save(tag);
     }
 
     @Override
-    public void load(@NotNull CompoundTag tag) {
-        skinId = tag.getInt("TCRVillagerSkinID");
+    public void load(CompoundTag tag) {
+        skinID = tag.getInt("TCRVillagerSkinID");
+
+        new Thread(()->{
+            try {
+                Thread.sleep(100);//等两端实体数据互通完才能进行同步操作
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new VillagerChangeIDPacket(this.getId(), skinID));
+        }).start();
         super.load(tag);
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return super.getAmbientSound();
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        if(pDamageSource.getEntity() instanceof Player player && this.isClientSide()) {
+            talkFuck(player);
+        }
+        return SoundEvents.VILLAGER_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return super.getDeathSound();
     }
 
     /**
@@ -177,7 +217,7 @@ public class TCRVillager extends Villager implements GeoEntity {
 
     //用于Geckolib模型区分贴图
     public String getResourceName() {
-        return "pastoral_plain_villager"+ skinId;
+        return "pastoral_plain_villager"+ skinID;
     }
 
     private void setUnhappy() {
@@ -203,28 +243,6 @@ public class TCRVillager extends Villager implements GeoEntity {
         }
 //        this.getServer().getSingleplayerProfile().getProperties();
     }
-
-    //TODO 补全音效
-//    protected SoundEvent getAmbientSound() {
-//        if (this.isAngry()) {
-//            return SoundEvents.WOLF_GROWL;
-//        } else if (this.random.nextInt(3) != 0) {
-//            return SoundEvents.WOLF_AMBIENT;
-//        } else {
-//            return this.isTame() && this.getHealth() < 10.0F ? SoundEvents.WOLF_WHINE : SoundEvents.WOLF_PANT;
-//        }
-//    }
-//
-    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        if(pDamageSource.getEntity() instanceof Player player && this.isClientSide()) {
-            talkFuck(player);
-        }
-        return SoundEvents.VILLAGER_HURT;
-    }
-//
-//    protected SoundEvent getDeathSound() {
-//        return SoundEvents.WOLF_DEATH;
-//    }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {

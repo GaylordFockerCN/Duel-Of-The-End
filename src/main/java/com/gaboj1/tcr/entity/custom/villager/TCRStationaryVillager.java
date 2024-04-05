@@ -5,9 +5,7 @@ import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.gui.screen.DialogueComponentBuilder;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.NPCDialoguePacket;
-import com.google.common.collect.ImmutableSet;
-import com.mojang.datafixers.util.Pair;
+import com.gaboj1.tcr.network.packet.server.NPCDialoguePacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,16 +16,10 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.behavior.VillagerGoalPackages;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.schedule.Activity;
-import net.minecraft.world.entity.schedule.Schedule;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -64,12 +56,12 @@ public class TCRStationaryVillager extends TCRVillager implements NpcDialogue {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if(player.isCreative() ){//潜行右键切换村民种类，客户端服务端都需要改变。单单右键则输出当前id
             if(player.isShiftKeyDown()){
-                skinId++;
-                if(skinId >= TCRVillager.MAX_TYPES){
-                    skinId = -TCRVillager.MAX_FEMALE_TYPES;//无法区分0 和 -0
+                skinID++;
+                if(skinID >= TCRVillager.MAX_TYPES){
+                    skinID = -TCRVillager.MAX_FEMALE_TYPES;//无法区分0 和 -0
                 }
             }
-            player.sendSystemMessage(Component.literal("current skin ID "+(level().isClientSide?"Client:":"Server:")+skinId));
+            player.sendSystemMessage(Component.literal("current skin ID "+(level().isClientSide?"Client:":"Server:")+ skinID));
             return InteractionResult.SUCCESS;
         }
         if (hand == InteractionHand.MAIN_HAND) {
