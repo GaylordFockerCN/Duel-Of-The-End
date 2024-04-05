@@ -32,15 +32,15 @@ public abstract class ModLangProvider extends LanguageProvider {
     public void createLogs(String woodPrefix, String woodName) {
         this.add("block."+TheCasketOfReveriesMod.MOD_ID+"." + woodPrefix + "_log", woodName + " Log");
         this.add("block."+TheCasketOfReveriesMod.MOD_ID+"." + woodPrefix + "_wood", woodName + " Wood");
-        this.add("block.twilightforest.stripped_" + woodPrefix + "_log", "Stripped " + woodName + " Log");
-        this.add("block.twilightforest.stripped_" + woodPrefix + "_wood", "Stripped " + woodName + " Wood");
+        this.add("block."+TheCasketOfReveriesMod.MOD_ID + ".stripped_" + woodPrefix + "_log", "Stripped " + woodName + " Log");
+        this.add("block."+TheCasketOfReveriesMod.MOD_ID + ".stripped_" + woodPrefix + "_wood", "Stripped " + woodName + " Wood");
         this.createHollowLogs(woodPrefix, woodName, false);
     }
 
     public void createHollowLogs(String woodPrefix, String woodName, boolean stem) {
-        this.add("block.twilightforest.hollow_" + woodPrefix + (stem ? "_stem" : "_log") + "_horizontal", "Hollow " + woodName + (stem ? " Stem" : " Log"));
-        this.add("block.twilightforest.hollow_" + woodPrefix + (stem ? "_stem" : "_log") + "_vertical", "Hollow " + woodName + (stem ? " Stem" : " Log"));
-        this.add("block.twilightforest.hollow_" + woodPrefix + (stem ? "_stem" : "_log") + "_climbable", "Hollow " + woodName + (stem ? " Stem" : " Log"));
+        this.add("block."+TheCasketOfReveriesMod.MOD_ID + ".hollow_" + woodPrefix + (stem ? "_stem" : "_log") + "_horizontal", "Hollow " + woodName + (stem ? " Stem" : " Log"));
+        this.add("block."+TheCasketOfReveriesMod.MOD_ID + ".hollow_" + woodPrefix + (stem ? "_stem" : "_log") + "_vertical", "Hollow " + woodName + (stem ? " Stem" : " Log"));
+        this.add("block."+TheCasketOfReveriesMod.MOD_ID + ".hollow_" + woodPrefix + (stem ? "_stem" : "_log") + "_climbable", "Hollow " + woodName + (stem ? " Stem" : " Log"));
     }
 
     public void createWoodSet(String woodPrefix, String woodName) {
@@ -73,8 +73,8 @@ public abstract class ModLangProvider extends LanguageProvider {
 
     public void addStoneVariants(String blockKey, String blockName) {
         this.add("block."+TheCasketOfReveriesMod.MOD_ID+"." + blockKey, blockName);
-        this.add("block.twilightforest.cracked_" + blockKey, "Cracked " + blockName);
-        this.add("block.twilightforest.mossy_" + blockKey, "Mossy " + blockName);
+        this.add("block."+TheCasketOfReveriesMod.MOD_ID + ".cracked_" + blockKey, "Cracked " + blockName);
+        this.add("block."+TheCasketOfReveriesMod.MOD_ID + ".mossy_" + blockKey, "Mossy " + blockName);
     }
 
     public void addArmor(String itemKey, String item) {
@@ -182,6 +182,14 @@ public abstract class ModLangProvider extends LanguageProvider {
     public void addConfig(String key, String name) {
         this.add("config."+TheCasketOfReveriesMod.MOD_ID+"." + key, name);
     }
+
+    public void addDrinkName(Item item, String name) {
+        this.add(item.getDescriptionId()+".effect.empty", name);
+    }
+    public void addDrinkName(Item item, String effect,String name) {
+        this.add(item.getDescriptionId()+".effect."+effect, name);
+    }
+
 
     public void addItemInfo(Item item, String key, String name) {
         this.add(item.getDescriptionId()+"." + key, name);

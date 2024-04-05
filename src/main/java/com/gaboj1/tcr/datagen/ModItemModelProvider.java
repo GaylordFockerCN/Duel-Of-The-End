@@ -20,14 +20,19 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        withExistingParent(TCRModItems.SMALL_TREE_MONSTER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
-        withExistingParent(TCRModItems.MIDDLE_TREE_MONSTER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
-        withExistingParent(TCRModItems.TREE_GUARDIAN_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
-        withExistingParent(TCRModItems.PASTORAL_PLAIN_VILLAGER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
-        withExistingParent(TCRModItems.PASTORAL_PLAIN_VILLAGER_ELDER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
-
+        eggItem(TCRModItems.SMALL_TREE_MONSTER_SPAWN_EGG);
+        eggItem(TCRModItems.MIDDLE_TREE_MONSTER_SPAWN_EGG);
+        eggItem(TCRModItems.TREE_GUARDIAN_SPAWN_EGG);
+        eggItem(TCRModItems.PASTORAL_PLAIN_VILLAGER_SPAWN_EGG);
+        eggItem(TCRModItems.PASTORAL_PLAIN_VILLAGER_ELDER_SPAWN_EGG);
+        handheldItem(TCRModItems.BLUE_BANANA);
+        handheldItem(TCRModItems.DREAM_TA);
         simpleBlockItemBlockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER);
         saplingItem(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING);
+    }
+
+    private ItemModelBuilder eggItem(RegistryObject<Item> item) {
+        return withExistingParent(item.getId().getPath(), mcLoc("item/template_spawn_egg"));
     }
 
     private ItemModelBuilder saplingItem(RegistryObject<Block> item) {

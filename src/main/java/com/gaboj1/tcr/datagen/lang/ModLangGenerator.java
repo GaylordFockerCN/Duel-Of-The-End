@@ -74,6 +74,9 @@ public class ModLangGenerator extends ModLangProvider {
         this.add(TCRModItems.SUPER_RESIN.get(),"超级树脂");
 
         this.add(TCRModItems.BLUE_BANANA.get(),"蓝蕉");
+        this.addItemUsageInfo(TCRModItems.BLUE_BANANA.get(),"蓝色的香蕉品种，不知道有什么特殊含义。");
+        this.addDrinkName(TCRModItems.DREAM_TA.get(),"梦达");//芬达美年达打钱
+        this.addItemUsageInfo(TCRModItems.DREAM_TA.get(),"一种老少皆宜的气泡饮料，好像在哪里听过这个名字？『喝上这瓶梦达~欢乐美梦速速达~』");
 
         this.add(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get(),"更好的结构方块");
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get(),"密林灵叶");
@@ -159,6 +162,7 @@ public class ModLangGenerator extends ModLangProvider {
 
         this.addBookAndContents("book1","Test","Test1","Test1.1");
         this.addBookAndContents("book2","Test2","Test2","Test2.2");
+        this.addBookAndContents("biome1_elder_diary3","村长的日记3","那个怪物说的话是真的吗？怪物竟然是守护着我们的守护神？没有了它，这个地方的生命之力就会消失？那孩子们要怎么活下去啊？真该死啊！","是愿望？还是生存？这是我能决定的吗？可怜的孩子啊……不，最可怜的不是我吗？为什么这样的重任只能我独自承担啊？我长眠的伙伴们……");
 
         this.addAdvancement(TheCasketOfReveriesMod.MOD_ID,"远梦之棺","> <");
         this.addAdvancement("enter_realm_of_the_dream","梦之领域","进入梦之领域");
