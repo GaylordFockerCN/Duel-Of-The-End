@@ -86,7 +86,7 @@ public class TCRVillager extends Villager implements GeoEntity {
 
         new Thread(()->{
             try {
-                Thread.sleep(100);//等两端实体数据互通完才能进行同步操作
+                Thread.sleep(200);//等两端实体数据互通完才能进行同步操作
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
