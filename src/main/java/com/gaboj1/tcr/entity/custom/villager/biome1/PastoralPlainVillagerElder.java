@@ -6,6 +6,7 @@ import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.init.TCRModItems;
+import com.gaboj1.tcr.item.custom.Book;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.packet.server.NPCDialoguePacket;
@@ -16,6 +17,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -147,4 +149,11 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         return this.conversingPlayer;
     }
 
+    @Override
+    public void die(DamageSource pCause) {
+        if(pCause.getEntity() instanceof Player player){
+            player.addItem(Book.getBook("biome1_elder_diary3",2));
+        }
+        super.die(pCause);
+    }
 }

@@ -40,12 +40,12 @@ public class Book extends WrittenBookItem {
         return super.use(level, player, hand);
     }
 
-    public static ItemStack getBook(String key){
+    public static ItemStack getBook(String key, int pageCount){
         ItemStack book = new ItemStack(Items.WRITTEN_BOOK);
         book.getOrCreateTag().putBoolean(TheCasketOfReveriesMod.MOD_ID + ":book", true);
         ListTag bookPages = new ListTag();
 
-        for (int i = 1; i <= 2; i++)
+        for (int i = 1; i <= pageCount; i++)
             bookPages.add(StringTag.valueOf(Component.Serializer.toJson(Component.translatable(TheCasketOfReveriesMod.MOD_ID + ".book." + key + "." + i))));
 
         book.addTagElement("pages", bookPages);
