@@ -25,8 +25,22 @@ public class ModItemModelProvider extends ItemModelProvider {
         eggItem(TCRModItems.TREE_GUARDIAN_SPAWN_EGG);
         eggItem(TCRModItems.PASTORAL_PLAIN_VILLAGER_SPAWN_EGG);
         eggItem(TCRModItems.PASTORAL_PLAIN_VILLAGER_ELDER_SPAWN_EGG);
-        handheldItem(TCRModItems.BLUE_BANANA);
-        handheldItem(TCRModItems.DREAM_TA);
+        //handheldItem()会变很大个，适合用于武器什么的
+        simpleItem(TCRModItems.BLUE_BANANA);
+        simpleItem(TCRModItems.DREAM_TA);
+        simpleItem(TCRModItems.BEER);
+        simpleItem(TCRModItems.COOKIE);
+        //说出来你可能不信，以下的小物品是训练chatGPT3.5仿写后修改的（大力解放生产力！）
+        simpleItem(TCRModItems.EDEN_APPLE);
+        simpleItem(TCRModItems.DRINK1);
+        simpleItem(TCRModItems.DRINK2);
+        simpleItem(TCRModItems.GOLDEN_WIND_AND_DEW);
+        simpleItem(TCRModItems.GREEN_BANANA);
+        simpleItem(TCRModItems.HOT_CHOCOLATE);
+        simpleItem(TCRModItems.JUICE_TEA);
+        simpleItem(TCRModItems.MAO_DAI);
+        simpleItem(TCRModItems.PINE_CONE);
+        simpleItem(TCRModItems.RED_WINE);
         simpleBlockItemBlockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER);
         saplingItem(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING);
     }

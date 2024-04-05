@@ -151,7 +151,8 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
     @Override
     public void die(DamageSource pCause) {
-        if(pCause.getEntity() instanceof Player player){
+        //如果玩家为黑方（接受boss任务）则获取村长日记真相
+        if(pCause.getEntity() instanceof Player player && !DataManager.isWhite.getBool(player)){
             player.addItem(Book.getBook("biome1_elder_diary3",2));
         }
         super.die(pCause);

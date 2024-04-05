@@ -75,8 +75,33 @@ public class ModLangGenerator extends ModLangProvider {
 
         this.add(TCRModItems.BLUE_BANANA.get(),"蓝蕉");
         this.addItemUsageInfo(TCRModItems.BLUE_BANANA.get(),"蓝色的香蕉品种，不知道有什么特殊含义。");
-        this.addDrinkName(TCRModItems.DREAM_TA.get(),"梦达");//芬达美年达打钱
+        this.add(TCRModItems.DREAM_TA.get(),"梦达");//芬达美年达打钱
         this.addItemUsageInfo(TCRModItems.DREAM_TA.get(),"一种老少皆宜的气泡饮料，好像在哪里听过这个名字？『喝上这瓶梦达~欢乐美梦速速达~』");
+        this.add(TCRModItems.BEER.get(),"啤酒");
+        this.addItemUsageInfo(TCRModItems.BEER.get(),"小孩子不能喝！");
+        this.add(TCRModItems.COOKIE.get(),"曲奇");
+        this.addItemUsageInfo(TCRModItems.COOKIE.get(),"很普通但是很美味");
+        //说出来你可能不信，以下的小物品是训练chatGPT3.5仿写后修改的（大力解放生产力！免责声明（划掉））
+        this.add(TCRModItems.EDEN_APPLE.get(), "伊甸苹果");
+        this.addItemUsageInfo(TCRModItems.EDEN_APPLE.get(), "一种神秘的苹果，传说中带有无限的力量。");
+        this.add(TCRModItems.DRINK1.get(), "清凉神仙水");
+        this.addItemUsageInfo(TCRModItems.DRINK1.get(), "一种清凉解渴的饮料，适合夏日消暑。");
+        this.add(TCRModItems.DRINK2.get(), "果味汽泡妖精水");
+        this.addItemUsageInfo(TCRModItems.DRINK2.get(), "一种充满果香的饮料，口感甘甜可口。");
+        this.add(TCRModItems.GOLDEN_WIND_AND_DEW.get(), "金风玉露液");
+        this.addItemUsageInfo(TCRModItems.GOLDEN_WIND_AND_DEW.get(), "一种传说中的仙饮，据说能赋予长生不老之力。");
+        this.add(TCRModItems.GREEN_BANANA.get(), "蕉绿");
+        this.addItemUsageInfo(TCRModItems.GREEN_BANANA.get(), "一种独特的绿色香蕉，富含维生素和矿物质。但是看起来吃了会不开心。");
+        this.add(TCRModItems.HOT_CHOCOLATE.get(), "热巧克力");
+        this.addItemUsageInfo(TCRModItems.HOT_CHOCOLATE.get(), "一种暖身的饮品，深受寒冷天气中人们的喜爱。");
+        this.add(TCRModItems.JUICE_TEA.get(), "果果味茶香魔法药水");
+        this.addItemUsageInfo(TCRModItems.JUICE_TEA.get(), "其实就是一种结合了果汁和茶叶的饮品，清新美味。");
+        this.add(TCRModItems.MAO_DAI.get(), "茅台仙酒");
+        this.addItemUsageInfo(TCRModItems.MAO_DAI.get(), "一种名贵的白酒，香气浓郁，口感醇厚。『一口喝下，仿佛坐上了云端，与仙女共饮琼浆，世间烦恼尽皆飘散。』");
+        this.add(TCRModItems.PINE_CONE.get(), "松果");
+        this.addItemUsageInfo(TCRModItems.PINE_CONE.get(), "一种装饰和美食兼备的植物果实，常用于节日装饰。");
+        this.add(TCRModItems.RED_WINE.get(), "红酒");
+        this.addItemUsageInfo(TCRModItems.RED_WINE.get(), "一种经过发酵的葡萄酒，风味独特，适合与美食搭配。");
 
         this.add(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get(),"更好的结构方块");
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get(),"密林灵叶");
