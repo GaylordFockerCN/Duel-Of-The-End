@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.item.custom;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.ListTag;
@@ -40,6 +41,12 @@ public class Book extends WrittenBookItem {
         return super.use(level, player, hand);
     }
 
+    /**
+     * 获取书籍，key和LangGenerator里面的bookKey对应。
+     * @param key 书的key
+     * @param pageCount 书的页码，记得和LangGenerator里对应
+     * @return 带内容的书
+     */
     public static ItemStack getBook(String key, int pageCount){
         ItemStack book = new ItemStack(Items.WRITTEN_BOOK);
         book.getOrCreateTag().putBoolean(TheCasketOfReveriesMod.MOD_ID + ":book", true);
@@ -50,8 +57,10 @@ public class Book extends WrittenBookItem {
 
         book.addTagElement("pages", bookPages);
         book.addTagElement("generation", IntTag.valueOf(3));
-        book.addTagElement("author", StringTag.valueOf(TheCasketOfReveriesMod.MOD_ID + ".book.author." + key));
-        book.addTagElement("title", StringTag.valueOf(TheCasketOfReveriesMod.MOD_ID + ".book." + key));
+        //不用I18n不知道为什么书会失效.....
+        System.out.println(I18n.get(TheCasketOfReveriesMod.MOD_ID + ".book.author." + key));
+        book.addTagElement("author", StringTag.valueOf(I18n.get(TheCasketOfReveriesMod.MOD_ID + ".book.author." + key)));
+        book.addTagElement("title", StringTag.valueOf(I18n.get(TheCasketOfReveriesMod.MOD_ID + ".book." + key)));
         return book;
     }
 

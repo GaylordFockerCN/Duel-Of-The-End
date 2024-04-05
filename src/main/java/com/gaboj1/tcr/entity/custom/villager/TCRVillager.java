@@ -50,7 +50,7 @@ public class TCRVillager extends Villager implements GeoEntity {
     boolean canTalk = true;
 
     protected Random r = new Random();
-    protected int whatCanISay = 0;//真的不是玩牢大的梗（
+    protected int whatCanISay = 2;//真的不是玩牢大的梗（
 
     //区别于getID
     public int getVillagerId() {

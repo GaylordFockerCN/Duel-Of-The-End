@@ -42,7 +42,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
     public static AttributeSupplier setAttributes() {//生物属性
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 100.0D)//最大血量
+                .add(Attributes.MAX_HEALTH, 50.0D)//最大血量
                 .add(Attributes.ATTACK_DAMAGE, 1.0f)//单次攻击伤害
                 .add(Attributes.ATTACK_SPEED, 1.0f)//攻速
                 .add(Attributes.MOVEMENT_SPEED, 0.4f)//移速

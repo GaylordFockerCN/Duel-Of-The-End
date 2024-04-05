@@ -145,7 +145,7 @@ public class ModLangGenerator extends ModLangProvider {
         //猎人
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,13,"交易");
 
-        this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,"牧歌原野-长老");
+        this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,"牧歌原野-海拉长老");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,0,"勇者啊，我所期盼的勇者啊你终于来了。你可知我这十年来的心在仇恨的尖刀上是如何滴血的么。密林中的魔物危害着这个村子呵。恳请您前去剿除。");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,1,"密林，就在 %s 你要睁大眼睛侧起耳朵开动脑筋来揣度密林中提示之物的含义。你要是有心，那么就趁有心之时让它发挥作用。对了，尊敬的勇者……");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,2,"算了，有的东西不过很久，是不可能理解的。 有的东西等到理解了，又为时已晚。 大多时候，我们不得不在尚未清楚认识自己的心的情况下选择行动，因而感到迷惘和困惑，因而悲伤不已。");
@@ -162,7 +162,7 @@ public class ModLangGenerator extends ModLangProvider {
 
         this.addBookAndContents("book1","Test","Test1","Test1.1");
         this.addBookAndContents("book2","Test2","Test2","Test2.2");
-        this.addBookAndAuthorAndContents("biome1_elder_diary3","海拉","长老的日记3","那个怪物说的话是真的吗？怪物竟然是守护着我们的守护神？没有了它，这个地方的生命之力就会消失？那孩子们要怎么活下去啊？真该死啊！","是愿望？还是生存？这是我能决定的吗？可怜的孩子啊……不，最可怜的不是我吗？为什么这样的重任只能我独自承担啊？我长眠的伙伴们……");
+        this.addBookAndAuthorAndContents("biome1_elder_diary3","海拉","海拉长老的日记3","那个怪物说的话是真的吗？怪物竟然是守护着我们的守护神？没有了它，这个地方的生命之力就会消失？那孩子们要怎么活下去啊？真该死啊！","是愿望？还是生存？这是我能决定的吗？可怜的孩子啊……不，最可怜的不是我吗？为什么这样的重任只能我独自承担啊？我长眠的伙伴们……");
 
         this.addAdvancement(TheCasketOfReveriesMod.MOD_ID,"远梦之棺","> <");
         this.addAdvancement("enter_realm_of_the_dream","梦之领域","进入梦之领域");
