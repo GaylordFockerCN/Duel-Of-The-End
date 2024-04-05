@@ -7,7 +7,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -83,6 +82,7 @@ public class TCRModItemTabs {
 
 				//食物
 				tabData.accept(TCRModItems.BLUE_BANANA.get());
+				tabData.accept(TCRModItems.DREAM_TA.get());
 
 
 			}).build());

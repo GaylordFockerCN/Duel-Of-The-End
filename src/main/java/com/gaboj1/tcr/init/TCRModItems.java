@@ -28,7 +28,10 @@ public class TCRModItems {
 	public static final RegistryObject<Item> HOLY_SWORD = REGISTRY.register("holy_sword", HolySword::new);
 
 	public static final RegistryObject<Item> BLUE_BANANA = REGISTRY.register("blue_banana",() ->  new DropItem(new Item.Properties().food(TCRFoods.BLUE_BANANA)));
-	public static final RegistryObject<Item> DREAM_DA = REGISTRY.register("dream_da",() ->  new DrinkItem(new Item.Properties().food(TCRFoods.DREAM_DA)));
+	public static final RegistryObject<Item> DREAM_TA = REGISTRY.register("dream_ta",() ->  new DrinkItem(new Item.Properties().food(TCRFoods.DREAM_DA)));
+
+
+
 	public static final RegistryObject<Item> BOOK1 = REGISTRY.register("book1",() ->  new Book("book1"));
 
 	public static final RegistryObject<Item> BOOK2 = REGISTRY.register("book2",() ->  new Book("book2"));
