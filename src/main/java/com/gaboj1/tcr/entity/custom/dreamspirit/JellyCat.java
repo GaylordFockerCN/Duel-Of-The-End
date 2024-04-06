@@ -13,7 +13,7 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -36,21 +36,69 @@ public class JellyCat extends TamableAnimal implements GeoEntity {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     //0 代表 正常，1代表闭眼，2代表跑动、受攻击 > <
-    private int faceID = 0;//TODO 用goal实现眨眼
+    private FaceID faceID = FaceID.IDLE;
     private int skinID = 0;
-    private int faceTick = 10;
+    private final int winkIntervalMax = 5;
+    private int winkInterval;
+    private final int useTimeMax = 10;
+    private int useTime;
+    private boolean isWinking = false;
+
+    /**
+     * Goal太难用了，直接tick屎山。
+     * 后面感觉随机眨眼太奇怪了，改成跳起来的时候眨眼
+     */
+    @Override
+    public void tick() {
+//        if(this.hurtMarked){
+//            setFaceID(FaceID.HURT);
+//        }else {
+//            if(!isWinking && isAlive() && !hurtMarked && !(this.winkInterval --> 0)){
+//                isWinking = true;
+//                this.winkInterval = winkIntervalMax+random.nextInt(100);
+//                this.useTime = useTimeMax;
+//            }
+//            if(isWinking){
+//                if(useTime-->0){
+//                    setFaceID(FaceID.WINK);
+//                }else {
+//                    useTime = useTimeMax;
+//                    isWinking = false;
+//                    setFaceID(FaceID.IDLE);
+//                }
+//            }
+//        }
+        if(!isAlive()){
+            setFaceID(FaceID.DIE);
+        } else if(this.hurtMarked){
+            setFaceID(FaceID.HURT);
+        } else if(!onGround()){
+            setFaceID(FaceID.WINK);
+        } else {
+            setFaceID(FaceID.IDLE);
+        }
+        super.tick();
+    }
 
     public JellyCat(EntityType<? extends TamableAnimal> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new JellyCatMoveControl(this);
     }
 
-    public int getFaceID() {
+    public FaceID getFaceID() {
         return faceID;
+    }
+
+    public void setFaceID(FaceID faceID) {
+        this.faceID = faceID;
     }
 
     public int getSkinID() {
         return skinID;
+    }
+
+    public void setSkinID(int skinID) {
+        this.skinID = skinID;
     }
 
     public static AttributeSupplier setAttributes() {
@@ -67,6 +115,8 @@ public class JellyCat extends TamableAnimal implements GeoEntity {
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(1, new JellyCatFloatGoal(this));
         this.goalSelector.addGoal(2, new JellyCatAttackGoal(this));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
+//        this.goalSelector.addGoal(2, new JellyCatWinkGoal(this));
         this.goalSelector.addGoal(3, new JellyCatRandomDirectionGoal(this));
         this.goalSelector.addGoal(5, new JellyCatKeepOnJumpingGoal(this));
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
@@ -74,16 +124,10 @@ public class JellyCat extends TamableAnimal implements GeoEntity {
         this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0F, false));
     }
 
-    @Override
-    public void tick() {
-
-        super.tick();
-    }
-
-
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
+        setFaceID(FaceID.DIE);
         return super.getDeathSound();
     }
 
@@ -121,6 +165,55 @@ public class JellyCat extends TamableAnimal implements GeoEntity {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
+    }
+
+    public enum FaceID{
+        IDLE,
+        WINK,
+        HURT,
+        DIE
+
+    }
+
+    public static class JellyCatWinkGoal extends Goal {
+        private final JellyCat jellyCat;
+        private final int winkIntervalMax = 25;
+        private int winkInterval;
+        private boolean isWinking = false;
+
+        public JellyCatWinkGoal(JellyCat jellyCat) {
+            this.jellyCat = jellyCat;
+            winkInterval = winkIntervalMax;
+        }
+
+        @Override
+        public boolean canUse() {
+            return this.jellyCat.isAlive() && !this.jellyCat.hurtMarked && !(this.winkInterval --> 0);
+        }
+
+        @Override
+        public void start() {
+            if(isWinking){
+                return;
+            }
+            this.jellyCat.setFaceID(FaceID.WINK);
+            isWinking = true;
+            new Thread(()->{
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                this.jellyCat.setFaceID(FaceID.IDLE);
+                isWinking = false;
+                this.winkInterval = winkIntervalMax;
+            }).start();
+        }
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
+        }
     }
 
     static class JellyCatMoveControl extends MoveControl {
@@ -177,6 +270,17 @@ public class JellyCat extends TamableAnimal implements GeoEntity {
     }
     protected int getJumpDelay() {
         return this.random.nextInt(20) + 10;
+    }
+
+    /**
+     * 友好生物
+     */
+    @Override
+    public boolean canAttack(LivingEntity entity) {
+        if(entity instanceof Player){
+            return false;
+        }
+        return super.canAttack(entity);
     }
 
     static class JellyCatRandomDirectionGoal extends Goal {

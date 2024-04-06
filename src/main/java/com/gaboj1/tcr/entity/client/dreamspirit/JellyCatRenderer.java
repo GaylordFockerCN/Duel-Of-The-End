@@ -13,7 +13,7 @@ public class JellyCatRenderer extends GeoEntityRenderer<JellyCat> {
 
     @Override
     public void render(JellyCat entity, float entityYaw, float partialTick, PoseStack poseStack,MultiBufferSource bufferSource, int packedLight) {
-        poseStack.scale(2f, 2f, 2f);
+        poseStack.scale(0.5f, 0.5f, 0.5f);
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 
