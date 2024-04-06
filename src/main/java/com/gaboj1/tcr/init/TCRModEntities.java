@@ -46,7 +46,7 @@ public class TCRModEntities {
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "tree_guardian").toString()));
 
 	public static final RegistryObject<EntityType<JellyCat>> JELLY_CAT = register("jelly_cat",
-			EntityType.Builder.of(JellyCat::new, MobCategory.CREATURE));
+			EntityType.Builder.of(JellyCat::new, MobCategory.CREATURE).sized(2.0f,1.75f));
 
 	public static final RegistryObject<EntityType<PastoralPlainVillager>> PASTORAL_PLAIN_VILLAGER = register("pastoral_plain_villager",
 			EntityType.Builder.of(PastoralPlainVillager::new, MobCategory.CREATURE));
