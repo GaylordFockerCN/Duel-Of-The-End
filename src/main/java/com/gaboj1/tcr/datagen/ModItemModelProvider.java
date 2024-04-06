@@ -20,6 +20,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+        eggItem(TCRModItems.JELLY_CAT_SPAWN_EGG);
         eggItem(TCRModItems.SMALL_TREE_MONSTER_SPAWN_EGG);
         eggItem(TCRModItems.MIDDLE_TREE_MONSTER_SPAWN_EGG);
         eggItem(TCRModItems.TREE_GUARDIAN_SPAWN_EGG);

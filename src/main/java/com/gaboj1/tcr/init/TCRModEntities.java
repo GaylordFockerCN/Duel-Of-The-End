@@ -3,6 +3,7 @@ package com.gaboj1.tcr.init;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.custom.Yggdrasil.YggdrasilEntity;
 import com.gaboj1.tcr.entity.custom.Yggdrasil.tree_clawEntity;
+import com.gaboj1.tcr.entity.custom.dreamspirit.JellyCat;
 import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
@@ -43,6 +44,9 @@ public class TCRModEntities {
 					() -> EntityType.Builder.of(TreeGuardianEntity::new, MobCategory.CREATURE)
 							.sized(1.5f, 1.75f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "tree_guardian").toString()));
+
+	public static final RegistryObject<EntityType<JellyCat>> JELLY_CAT = register("jelly_cat",
+			EntityType.Builder.of(JellyCat::new, MobCategory.CREATURE));
 
 	public static final RegistryObject<EntityType<PastoralPlainVillager>> PASTORAL_PLAIN_VILLAGER = register("pastoral_plain_villager",
 			EntityType.Builder.of(PastoralPlainVillager::new, MobCategory.CREATURE));

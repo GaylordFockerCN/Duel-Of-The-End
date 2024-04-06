@@ -34,7 +34,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addConfig("spirit_log_consume","树灵法杖召唤小树妖时消耗的原木数");
 
         this.add("item_group.the_casket_of_reveries.block","远梦之棺-方块");
-        this.add("item_group.the_casket_of_reveries.spawn_egg","远梦之棺-生物蛋");
+        this.add("item_group.the_casket_of_reveries.spawn_egg","远梦之棺-刷怪蛋");
         this.add("item_group.the_casket_of_reveries.loot","远梦之棺-战利品");
 
         this.add(TCRModItems.DESERT_EAGLE.get(),"沙漠之鹰");
@@ -116,6 +116,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.add(TCRModBlocks.PORTAL_BLOCK.get(),"天域凭证");//传送石碑
         this.add(TCRModBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER.get(),"密林灵花盆栽");
 
+        this.addEntityAndEgg(TCRModEntities.JELLY_CAT,"猫猫果冻");
         this.addEntityAndEgg(TCRModEntities.SMALL_TREE_MONSTER,"小树妖");
         this.addEntityAndEgg(TCRModEntities.MIDDLE_TREE_MONSTER,"树妖");
         this.addEntityAndEgg(TCRModEntities.TREE_GUARDIAN,"森林守护者");

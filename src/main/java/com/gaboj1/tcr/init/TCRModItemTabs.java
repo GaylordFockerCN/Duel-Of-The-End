@@ -44,8 +44,9 @@ public class TCRModItemTabs {
 					.withTabsBefore(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "block"))
 					.withTabsAfter(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "loot"))
 					.title(Component.translatable("item_group.the_casket_of_reveries.spawn_egg"))
-					.icon(() -> new ItemStack(TCRModItems.MIDDLE_TREE_MONSTER_SPAWN_EGG.get()))
+					.icon(() -> new ItemStack(TCRModItems.JELLY_CAT_SPAWN_EGG.get()))
 					.displayItems((parameters, tabData) -> {
+						tabData.accept(TCRModItems.JELLY_CAT_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.SMALL_TREE_MONSTER_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.MIDDLE_TREE_MONSTER_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.TREE_GUARDIAN_SPAWN_EGG.get());

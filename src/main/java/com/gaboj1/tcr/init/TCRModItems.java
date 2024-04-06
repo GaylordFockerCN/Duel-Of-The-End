@@ -4,6 +4,8 @@ import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.item.custom.*;
 import com.gaboj1.tcr.item.custom.boss_loot.HolySword;
 import com.gaboj1.tcr.item.custom.boss_loot.TreeSpiritWand;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -11,6 +13,8 @@ import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 public class TCRModItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, TheCasketOfReveriesMod.MOD_ID);
@@ -49,6 +53,8 @@ public class TCRModItems {
 
 	public static final RegistryObject<Item> BOOK2 = REGISTRY.register("book2",() ->  new Book("book2"));
 
+	public static final RegistryObject<Item> JELLY_CAT_SPAWN_EGG = registerEgg("jelly_cat_spawn_egg",TCRModEntities.JELLY_CAT);
+
 	public static final RegistryObject<Item> MIDDLE_TREE_MONSTER_SPAWN_EGG = REGISTRY.register("middle_tree_monster_spawn_egg",
 			() -> new ForgeSpawnEggItem(TCRModEntities.MIDDLE_TREE_MONSTER, 0xD57E36, 0x1D0D00,
 					new Item.Properties()));
@@ -69,5 +75,10 @@ public class TCRModItems {
 			() -> new ForgeSpawnEggItem(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER, 0xD57E36, 0x1D0D00,
 					new Item.Properties()));
 
+	public static RegistryObject<Item> registerEgg(String name, Supplier<? extends EntityType<? extends Mob>> type){
+		return REGISTRY.register(name,
+				() -> new ForgeSpawnEggItem(type, 0xD51236, 0x1D6600,
+						new Item.Properties()));
+	}
 
 }
