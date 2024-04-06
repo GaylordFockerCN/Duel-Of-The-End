@@ -57,7 +57,7 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
                     builder.start(BUILDER.buildDialogueDialog(entityType,0))//不许伤害小羊小牛小猪！（我们好像没有这些生物）
                             .addChoice(BUILDER.buildDialogueChoice(entityType,0),BUILDER.buildDialogueDialog(entityType,1))//那你汉堡里面的牛肉是哪来的？  上天……上天给我的……这不是祈祷就有了吗？
                             .addChoice(BUILDER.buildDialogueChoice(entityType,1),BUILDER.buildDialogueChoice(entityType,2).withStyle(ChatFormatting.DARK_RED,ChatFormatting.BOLD))//我也可以吗？我想要把火铳！（内心真诚地默念一遍） 【获得火铳】
-                            .thenExecute((byte) 7)//代号7，获得沙鹰
+                            .thenExecute((byte) 111)//代号111，获得沙鹰
                             .addChoice(BUILDER.buildDialogueChoice(entityType,3),BUILDER.buildDialogueDialog(entityType,2))
                             .addFinalChoice(BUILDER.buildDialogueChoice(entityType,4),(byte) 0);//做梦吧你！火铳是我帮你祈祷出来的！
                 }else {
@@ -88,6 +88,24 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
                 builder.start(greeting4)
                         .addFinalChoice((BUILDER.buildDialogueChoice(entityType,13)), (byte) 5);
                 break;
+            //舞女 对话id分配：16~18 返回值分配：6
+            case -1:
+                Component greeting_1 = BUILDER.buildDialogueDialog(entityType,16);
+                builder.start(greeting_1)//嘿，你是来看我跳舞的吗？在这个小镇上我可是最出名的舞者哦。
+                        .addChoice((BUILDER.buildDialogueChoice(entityType,16)),(BUILDER.buildDialogueDialog(entityType,17)))//你跳的舞一定很精彩//当然可以！这支舞是我从外地学来的，希望你喜欢！顺便问一下，你是来这里做什么的呢？
+                        .addFinalChoice((BUILDER.buildDialogueChoice(entityType,17)), (byte) 6);
+                break;
+
+            //服务生 对话id分配：19~21 返回值分配：7
+            case -2:
+                Component greeting_2 = BUILDER.buildDialogueDialog(entityType,19);
+                builder.start(greeting_2)
+                        .addChoice((BUILDER.buildDialogueChoice(entityType,19)),(BUILDER.buildDialogueDialog(entityType,20)))
+                        .thenExecute((byte)112)//代号112，获得饮料
+                        .addFinalChoice((BUILDER.buildDialogueChoice(entityType,20)), (byte) 7);
+                break;
+            case -3:
+                break;
 
         }
 
@@ -102,6 +120,23 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
             case 0:
                 //什么都不做
                 break;
+            case 111:
+                player.addItem(TCRModItems.DESERT_EAGLE.get().getDefaultInstance());
+                ItemStack ammo = TCRModItems.DESERT_EAGLE_AMMO.get().getDefaultInstance();
+                ammo.setCount(20);
+                player.addItem(ammo);
+                DataManager.gunGot.putBool(player,true);//存入得用玩家
+
+                if(player instanceof ServerPlayer serverPlayer){
+                    Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"day_dreamer"));
+                    AdvancementProgress _ap = serverPlayer.getAdvancements().getOrStartProgress(_adv);
+                    if (!_ap.isDone()) {
+                        for (String criteria : _ap.getRemainingCriteria())
+                            serverPlayer.getAdvancements().award(_adv, criteria);
+                    }
+                }
+
+                return;//NOTE 记得返回，否则对话中断！
             case 1:
                 ItemUtil.searchAndConsumeItem(player, TCRModItems.DESERT_EAGLE_AMMO.get(), 20);
 //                player.addItem(Book.getBook("book1"));//测试书籍生成
@@ -123,26 +158,21 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
                 chat(BUILDER.buildDialogueDialog(entityType,12,false));//真是有干劲啊，那我也要全力以赴了，朋友
                 break;
             case 5:
-                chat(BUILDER.buildDialogueDialog(entityType,15,false));//真是有干劲啊，那我也要全力以赴了，朋友
+                chat(BUILDER.buildDialogueDialog(entityType,15,false));
+                break;
+            case 6:
+                chat(BUILDER.buildDialogueDialog(entityType,16,false));//哦，那你一定要小心，那些传说听起来让人直做噩梦。
                 break;
             case 7:
-                player.addItem(TCRModItems.DESERT_EAGLE.get().getDefaultInstance());
-                ItemStack ammo = TCRModItems.DESERT_EAGLE_AMMO.get().getDefaultInstance();
-                ammo.setCount(20);
-                player.addItem(ammo);
-                DataManager.gunGot.putBool(player,true);//存入得用玩家
-
-                if(player instanceof ServerPlayer serverPlayer){
-                    Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"day_dreamer"));
-                    AdvancementProgress _ap = serverPlayer.getAdvancements().getOrStartProgress(_adv);
-                    if (!_ap.isDone()) {
-                        for (String criteria : _ap.getRemainingCriteria())
-                            serverPlayer.getAdvancements().award(_adv, criteria);
-                    }
+                chat(BUILDER.buildDialogueDialog(entityType,21,false));
+                break;
+            case 112:
+                if(!DataManager.drinkGot.getBool(player)){
+                    player.addItem(TCRModItems.DRINK2.get().getDefaultInstance());
+                    DataManager.drinkGot.putBool(player,true);
                 }
+                return;//NOTE 记得返回，否则对话中断！
 
-
-                return;
             default:
                 return;
         }

@@ -86,7 +86,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addItemUsageInfo(TCRModItems.EDEN_APPLE.get(), "一种神秘的苹果，传说中带有无限的力量。");
         this.add(TCRModItems.DRINK1.get(), "清凉神仙水");
         this.addItemUsageInfo(TCRModItems.DRINK1.get(), "一种清凉解渴的饮料，适合夏日消暑。");
-        this.add(TCRModItems.DRINK2.get(), "果味汽泡妖精水");
+        this.add(TCRModItems.DRINK2.get(), "果果味汽泡妖精水");
         this.addItemUsageInfo(TCRModItems.DRINK2.get(), "一种充满果香的饮料，口感甘甜可口。");
         this.add(TCRModItems.GOLDEN_WIND_AND_DEW.get(), "金风玉露液");
         this.addItemUsageInfo(TCRModItems.GOLDEN_WIND_AND_DEW.get(), "一种传说中的仙饮，据说能赋予长生不老之力。");
@@ -155,6 +155,14 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,13,"今天出去解决了几只小“猎物”呢");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,14,"要来和我比赛打猎吗，您看上去可是相当强大啊，真是按耐不住想比试的心");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,15,"我这边可是有很多帮助您打猎的好东西呢，呵呵");
+        //舞者
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,16,"嘿，你是来看我跳舞的吗？在这个小镇上我可是最出名的舞者哦。");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,17,"当然可以！这支舞是我从外地学来的，希望你喜欢！顺便问一下，你是来这里做什么的呢？");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,18,"哦，那你一定要小心，那些传说听起来让人直做噩梦。 ");
+        //侍者
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,19,"哦，你是新来的旅人吗？欢迎来到我们的小镇！需要我为你倒杯酒吗？");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,20,"当然，这是我们特制的饮料，品尝一下吧！顺便问一句，你是来冒险的还是仅仅路过这里？");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,21,"那座教堂？那可不是个想去就去的地方，我祝你好运。 ");
 
         //工匠
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,0,"那你汉堡里面的牛肉是哪来的？");
@@ -170,6 +178,12 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,10,"我要去忙了");
         //猎人
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,13,"交易");
+        //舞者
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,16,"你跳的舞一定很精彩");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,17,"我是来探险的，听说这个小镇有很多古老的传说。");
+        //侍者
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,19,"谢谢，我想来一杯你们这里最畅销的饮料。");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,20,"我是来探险的，听说这附近有个古老的教堂，我想去看看。");
 
         this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,"牧歌原野-海拉长老");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,0,"勇者啊，我所期盼的勇者啊你终于来了。你可知我这十年来的心在仇恨的尖刀上是如何滴血的么。密林中的魔物危害着这个村子呵。恳请您前去剿除。");

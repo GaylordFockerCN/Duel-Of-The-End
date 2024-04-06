@@ -93,7 +93,7 @@ public class LinkListStreamDialogueScreenBuilder {
         return this;
     }
     /**
-     * 按下按钮后执行
+     * 按下按钮后执行。记得在handle的时候不要把玩家设置为null，提前返回，否则可能中断对话！
      */
     public LinkListStreamDialogueScreenBuilder thenExecute(byte returnValue){
         answerNode.execute(returnValue);

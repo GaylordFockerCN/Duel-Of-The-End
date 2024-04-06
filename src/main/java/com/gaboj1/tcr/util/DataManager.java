@@ -32,6 +32,7 @@ public class DataManager {
     public static BoolData boss1Defeated =  new BoolData("boss1_defeated",false,2);
     public static BoolData gunGot =  new BoolData("gun_got",false,3);
     public static BoolData ammoGot =  new BoolData("ammo_got",false,4);
+    public static BoolData drinkGot =  new BoolData("drink_got",false,5);
 
     //给予初始值
     public static void init(Player player){
