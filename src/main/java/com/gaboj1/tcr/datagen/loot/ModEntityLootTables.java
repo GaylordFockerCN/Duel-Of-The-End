@@ -33,6 +33,9 @@ public class ModEntityLootTables extends EntityLootSubProvider {
                         .withPool(LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1))
                                 .add(LootItem.lootTableItem(TCRModItems.ELDER_STAFF.get()))));
+
+        add(TCRModEntities.JELLY_CAT.get(), emptyLootTable());//TODO 加点残忍的掉落物
+
         add(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), emptyLootTable());
         add(TCRModEntities.PASTORAL_PLAIN_VILLAGER1.get(), emptyLootTable());
         add(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1.get(), emptyLootTable());
