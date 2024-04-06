@@ -162,7 +162,7 @@ public class JellyCat extends TamableAnimal implements GeoEntity {
                             this.jumpDelay /= 3;
                         }
                         this.jellyCat.getJumpControl().jump();
-                        this.jellyCat.playSound(SoundEvents.SLIME_JUMP_SMALL, this.jellyCat.getSoundVolume(), 1.0f);
+                        this.jellyCat.playSound(SoundEvents.SLIME_JUMP, this.jellyCat.getSoundVolume() / 2, 1.0f);
                     } else {
                         this.jellyCat.xxa = 0.0F;
                         this.jellyCat.zza = 0.0F;
