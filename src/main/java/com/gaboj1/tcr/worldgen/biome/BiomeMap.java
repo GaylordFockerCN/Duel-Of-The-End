@@ -2,6 +2,7 @@ package com.gaboj1.tcr.worldgen.biome;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
+import net.minecraft.core.BlockPos;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -39,6 +40,21 @@ public class BiomeMap {
     public Point getMainCenter() {
         return generator.getCenter();
     }
+    public Point getVillage1() {
+        return generator.getVillage1();
+    }
+
+    public Point getVillage2() {
+        return generator.getVillage2();
+    }
+
+    public Point getVillage3() {
+        return generator.getVillage3();
+    }
+
+    public Point getVillage4() {
+        return generator.getVillage4();
+    }
 
     public int getR() {
         return generator.getLength()/2;
@@ -48,6 +64,11 @@ public class BiomeMap {
         biomePos.x = (biomePos0.x-getR())*4;
         biomePos.y = (biomePos0.y-getR())*4;
         return biomePos;
+    }
+
+    public BlockPos getBlockPos(Point biomePos0,int y){
+        Point pos = getBlockPos(biomePos0);
+        return new BlockPos(pos.x, y, pos.y);
     }
 
     public static final int SIZE = 320;

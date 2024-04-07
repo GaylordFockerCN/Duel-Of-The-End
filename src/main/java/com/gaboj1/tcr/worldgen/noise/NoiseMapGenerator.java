@@ -54,7 +54,23 @@ public class NoiseMapGenerator {
         return centerPoint;
     }
 
-    private Point center1, center2, center3, center4;
+    public Point getVillage1() {
+        return village1;
+    }
+
+    public Point getVillage2() {
+        return village2;
+    }
+
+    public Point getVillage3() {
+        return village3;
+    }
+
+    public Point getVillage4() {
+        return village4;
+    }
+
+    private Point center1, center2, center3, center4, village1,village2,village3,village4;
     public static final double CURVE_INTENSITY = 0.1;
     public static final double SCALE_OF_CENTER_R = 0.05;//相对宽度width的比例，中心空岛半径即为width*scaleOfCenterR
     public static final double SCALE_OF_A_CENTER_R = 1.2;//相对各个中心到整体中心的距离的比例， 各群系的中心群系的噪声半径 即 center.distance(aCenter)*scaleOfaCenterR
@@ -272,7 +288,29 @@ public class NoiseMapGenerator {
         center3=copyMap(center3,map1,7,false);
         center4 = computeCenter(dPoints);
         center4=copyMap(center4,map1,8,false);
+
+        village1 = calculateVillage(center1); // 计算村庄1的位置
+        village2 = calculateVillage(center2); // 计算村庄2的位置
+        village3 = calculateVillage(center3); // 计算村庄3的位置
+        village4 = calculateVillage(center4); // 计算村庄4的位置
+
         return map1;
+    }
+
+    public Point calculateVillage(Point center) {
+        // 计算村庄到中心点的距离
+        double distance = center.distance(centerPoint);
+
+        // 计算半径为村庄到中心点距离的一半
+        double radius = distance / 2.0;
+
+        // 以群系中心点为圆心，绘制圆并随机获取圆上的一个点
+        double angle = random.nextDouble() * 2 * Math.PI; // 随机生成一个角度
+        double x = center.getX() + radius * Math.cos(angle); // 计算圆上点的 x 坐标
+        double y = center.getY() + radius * Math.sin(angle); // 计算圆上点的 y 坐标
+
+        // 返回村庄的位置
+        return new Point((int) x, (int) y);
     }
 
     //生成中心并且把中心复制到各个区域

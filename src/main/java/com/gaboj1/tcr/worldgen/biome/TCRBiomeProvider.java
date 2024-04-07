@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.worldgen.biome;
 
 import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
 import com.gaboj1.tcr.util.map.RandomMountainGenerator;
 import com.mojang.serialization.Codec;
@@ -13,6 +14,7 @@ import net.minecraft.resources.RegistryOps;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
+import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.awt.*;
 import java.io.*;
@@ -129,6 +131,14 @@ public class TCRBiomeProvider extends BiomeSource {
 //        String levelName = Minecraft.getInstance().getCurrentServer().name;服务端还没创建，无法获取名字......
         //FIXME 换成存档名字，很重要！！
 
+        File mapFileDir = FMLPaths.CONFIGDIR.get().resolve(TheCasketOfReveriesMod.MOD_ID).toFile();
+//        while(Minecraft.getInstance().getCurrentServer()==null){
+//            try {
+//                Thread.sleep(200);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
         File mapFile = new File(Minecraft.getInstance().gameDirectory.getAbsoluteFile() +"Map.dat");
 //        boolean mapExist = mapFile.exists();
         boolean mapExist = false;//先默认不用读取的
@@ -158,6 +168,10 @@ public class TCRBiomeProvider extends BiomeSource {
         peakMap = RandomMountainGenerator.getMountains(mountainsR,mountainsR);
 
         return Stream.of(biomeHolder0,biomeHolder1,biomeHolder2,biomeHolder3,biomeHolder4,biomeHolder5,biomeHolder6,biomeHolder7,biomeHolder8,biomeHolder9);
+    }
+
+    private void saveMap(){
+
     }
 
     private void createBiomeMap(File mapFile){
