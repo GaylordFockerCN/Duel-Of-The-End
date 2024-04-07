@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.item.custom;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.datagen.ModAdvancementData;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.network.chat.Component;
@@ -32,21 +33,10 @@ public class CopyResin extends Item {
             pPlayer.getItemInHand(pUsedHand).shrink(1);
             pPlayer.addItem(otherHandItem.copyWithCount(1));
 
-            Advancement _adv = ((ServerPlayer) pPlayer).getServer().getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"mass_production"));
-            AdvancementProgress _ap = ((ServerPlayer) pPlayer).getAdvancements().getOrStartProgress(_adv);
-
-            if (!_ap.isDone()) {
-                for (String criteria : _ap.getRemainingCriteria())
-                    ((ServerPlayer) pPlayer).getAdvancements().award(_adv, criteria);
-            }
+            ModAdvancementData.getAdvancement("mass_production",(ServerPlayer) pPlayer);
 
             if(otherHandItem.isEmpty()) {
-                Advancement _adv2 = ((ServerPlayer) pPlayer).getServer().getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "so_rich"));
-                AdvancementProgress _ap2 = ((ServerPlayer) pPlayer).getAdvancements().getOrStartProgress(_adv2);
-                if (!_ap2.isDone()) {
-                    for (String criteria : _ap2.getRemainingCriteria())
-                        ((ServerPlayer) pPlayer).getAdvancements().award(_adv2, criteria);
-                }
+                ModAdvancementData.getAdvancement("so_rich", (ServerPlayer) pPlayer);
             }
         }
 

@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.entity.custom.villager.biome1;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.datagen.ModAdvancementData;
 import com.gaboj1.tcr.entity.custom.villager.TCRStationaryVillager;
 import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.gui.screen.TreeNode;
@@ -128,12 +129,7 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
                 DataManager.gunGot.putBool(player,true);//存入得用玩家
 
                 if(player instanceof ServerPlayer serverPlayer){
-                    Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"day_dreamer"));
-                    AdvancementProgress _ap = serverPlayer.getAdvancements().getOrStartProgress(_adv);
-                    if (!_ap.isDone()) {
-                        for (String criteria : _ap.getRemainingCriteria())
-                            serverPlayer.getAdvancements().award(_adv, criteria);
-                    }
+                    ModAdvancementData.getAdvancement("day_dreamer",serverPlayer);
                 }
 
                 return;//NOTE 记得返回，否则对话中断！

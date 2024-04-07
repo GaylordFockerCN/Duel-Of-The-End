@@ -2,6 +2,7 @@
 package com.gaboj1.tcr.item.custom;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.datagen.ModAdvancementData;
 import com.gaboj1.tcr.init.TCRModItems;
 import com.gaboj1.tcr.keymapping.KeyMappings;
 import com.gaboj1.tcr.entity.custom.DesertEagleBulletEntity;
@@ -173,12 +174,7 @@ public class DesertEagleItem extends Item implements GeoItem {
                             //双持伤害翻倍。不发射两发是因为有霸体时间..
                             if(player.getItemInHand((hand == InteractionHand.MAIN_HAND?InteractionHand.OFF_HAND:InteractionHand.MAIN_HAND)).getItem() instanceof DesertEagleItem){
                                 entityToSpawn.setBaseDamage(damage*2);
-                                Advancement _adv = ((ServerPlayer) player).getServer().getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"can_double_hold"));
-                                AdvancementProgress _ap = ((ServerPlayer) player).getAdvancements().getOrStartProgress(_adv);
-                                if (!_ap.isDone()) {
-                                    for (String criteria : _ap.getRemainingCriteria())
-                                        ((ServerPlayer) player).getAdvancements().award(_adv, criteria);
-                                }
+                                ModAdvancementData.getAdvancement("can_double_hold",(ServerPlayer) player);
 
                             }
                             entityToSpawn.setKnockback(knockBack);

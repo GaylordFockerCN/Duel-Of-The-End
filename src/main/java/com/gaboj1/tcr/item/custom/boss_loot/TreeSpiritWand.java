@@ -2,6 +2,7 @@ package com.gaboj1.tcr.item.custom.boss_loot;
 
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.datagen.ModAdvancementData;
 import com.gaboj1.tcr.init.TCRModBlocks;
 import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.item.renderer.TreeSpiritWandRenderer;
@@ -93,13 +94,7 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
             }
             player.hurt(level.damageSources().magic(), 2f);
             if(player.isDeadOrDying()){
-                Advancement _adv = player.getServer().getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"die_for_summon"));
-                AdvancementProgress _ap = ((ServerPlayer) player).getAdvancements().getOrStartProgress(_adv);
-
-                if (!_ap.isDone()) {
-                    for (String criteria : _ap.getRemainingCriteria())
-                        ((ServerPlayer) player).getAdvancements().award(_adv, criteria);
-                }
+                ModAdvancementData.getAdvancement("die_for_summon",(ServerPlayer) player);
             }
             ItemStack itemStack = player.getItemInHand(pContext.getHand());//pContext.getItemInHand()不知道ok不ok
             summonAnim(serverLevel,player,itemStack);
@@ -133,12 +128,7 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
     public boolean hurtEnemy(ItemStack itemStack, LivingEntity pTarget, LivingEntity pAttacker) {
         itemStack.setDamageValue(itemStack.getDamageValue()+1);
         if(pAttacker instanceof ServerPlayer serverPlayer) {
-            Advancement _adv = serverPlayer.getServer().getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "melee_mage"));
-            AdvancementProgress _ap = serverPlayer.getAdvancements().getOrStartProgress(_adv);
-            if (!_ap.isDone()) {
-                for (String criteria : _ap.getRemainingCriteria())
-                    serverPlayer.getAdvancements().award(_adv, criteria);
-            }
+            ModAdvancementData.getAdvancement("melee_mage", serverPlayer);
         }
         return super.hurtEnemy(itemStack, pTarget, pAttacker);
     }

@@ -1,6 +1,12 @@
 package com.gaboj1.tcr.entity.custom.dreamspirit;
 
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.datagen.ModAdvancementData;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -38,6 +44,7 @@ public class JellyCat extends TamableAnimal implements GeoEntity {
     //0 代表 正常，1代表闭眼，2代表跑动、受攻击 > <
     private FaceID faceID = FaceID.IDLE;
     private int skinID = 0;
+    private final int maxSkinID = 7;
     private final int winkIntervalMax = 5;
     private int winkInterval;
     private final int useTimeMax = 10;
@@ -78,6 +85,24 @@ public class JellyCat extends TamableAnimal implements GeoEntity {
             setFaceID(FaceID.IDLE);
         }
         super.tick();
+    }
+
+    @Override
+    public void tame(Player player) {
+        if(player instanceof ServerPlayer serverPlayer){
+            serverPlayer.getPersistentData().putBoolean("tamed_jelly_cat"+skinID,true);
+            boolean isAllTamed = true;
+            for(int i = 0;i < maxSkinID;i++){
+                if(!serverPlayer.getPersistentData().getBoolean("tamed_jelly_cat"+i)){
+                    isAllTamed = false;
+                    break;
+                }
+            }
+            if(isAllTamed){
+                ModAdvancementData.getAdvancement("cats_friend",serverPlayer);
+            }
+        }
+        super.tame(player);
     }
 
     public JellyCat(EntityType<? extends TamableAnimal> entityType, Level level) {

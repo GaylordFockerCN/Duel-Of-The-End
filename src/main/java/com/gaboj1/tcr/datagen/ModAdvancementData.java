@@ -6,6 +6,7 @@ import com.gaboj1.tcr.init.TCRModItems;
 import com.gaboj1.tcr.loot.TCRLoot;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.critereon.ChangeDimensionTrigger;
@@ -15,6 +16,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeAdvancementProvider;
@@ -143,6 +145,27 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
                     .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
 
+            name = "cats_friend";
+            Advancement cats_friend = Advancement.Builder.advancement()
+                    .parent(enterRealmOfTheDream)
+                    .display(TCRModItems.JELLY_CAT_SPAWN_EGG.get(),
+                            Component.translatable(pre+name),
+                            Component.translatable(pre+name+".desc"),
+                            null,
+                            FrameType.GOAL, true, true, true)
+                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
+                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
+
         }
     }
+
+    public static void getAdvancement(String name, ServerPlayer serverPlayer){
+        Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,name));
+        AdvancementProgress _ap = serverPlayer.getAdvancements().getOrStartProgress(_adv);
+        if (!_ap.isDone()) {
+            for (String criteria : _ap.getRemainingCriteria())
+                serverPlayer.getAdvancements().award(_adv, criteria);
+        }
+    }
+
 }

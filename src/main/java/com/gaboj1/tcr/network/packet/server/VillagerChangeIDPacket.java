@@ -27,11 +27,25 @@ public record VillagerChangeIDPacket(int id, int skinID) implements BasePacket {
 
     @Override
     public void execute(Player playerEntity) {
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
+//        new Thread(()->{
+//            while (Minecraft.getInstance().level == null || Minecraft.getInstance().player == null) {
+//                try {
+//                    Thread.sleep(200);//等两端实体数据互通完才能进行同步操作
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//            Entity entity = Minecraft.getInstance().player.level().getEntity(id);
+//            if(entity instanceof TCRVillager tcrVillager){
+//                tcrVillager.setVillagerId(skinID());
+//            }
+//        }).start();
+        if(Minecraft.getInstance().level != null && Minecraft.getInstance().player != null){
             Entity entity = Minecraft.getInstance().player.level().getEntity(id);
             if(entity instanceof TCRVillager tcrVillager){
                 tcrVillager.setVillagerId(skinID());
             }
         }
+
     }
 }

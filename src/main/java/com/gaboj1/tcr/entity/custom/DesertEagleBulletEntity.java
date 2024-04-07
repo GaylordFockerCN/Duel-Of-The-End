@@ -2,6 +2,7 @@
 package com.gaboj1.tcr.entity.custom;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.datagen.ModAdvancementData;
 import com.gaboj1.tcr.headshot.BoundingBoxManager;
 import com.gaboj1.tcr.headshot.IHeadshotBox;
 import com.gaboj1.tcr.init.TCRModEntities;
@@ -86,12 +87,7 @@ public class DesertEagleBulletEntity extends AbstractArrow implements ItemSuppli
 			this.discard();
 
 			if (this.getOwner() instanceof ServerPlayer _player && distanceTo(_player) >= 100) {
-				Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"shoot_hundred_meters"));
-				AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
-				if (!_ap.isDone()) {
-					for (String criteria : _ap.getRemainingCriteria())
-						_player.getAdvancements().award(_adv, criteria);
-				}
+				ModAdvancementData.getAdvancement("shoot_hundred_meters",_player);
 			}
 
 		}

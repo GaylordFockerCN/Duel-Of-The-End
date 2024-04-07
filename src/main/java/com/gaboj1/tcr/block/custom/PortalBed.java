@@ -2,6 +2,7 @@ package com.gaboj1.tcr.block.custom;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.entity.PortalBedEntity;
+import com.gaboj1.tcr.datagen.ModAdvancementData;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import com.gaboj1.tcr.worldgen.portal.TCRTeleporter;
 import net.minecraft.advancements.Advancement;
@@ -63,12 +64,7 @@ public class PortalBed extends BedBlock {
                         Vec3 $$7 = pPos.getCenter();
                         pLevel.explode((Entity)null, pLevel.damageSources().badRespawnPointExplosion($$7), (ExplosionDamageCalculator)null, $$7, 5.0F, true, Level.ExplosionInteraction.BLOCK);
 
-                        Advancement _adv = pPlayer.getServer().getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"try_wake_up"));
-                        AdvancementProgress _ap = ((ServerPlayer)pPlayer).getAdvancements().getOrStartProgress(_adv);
-                        if (!_ap.isDone()) {
-                            for (String criteria : _ap.getRemainingCriteria())
-                                ((ServerPlayer)pPlayer).getAdvancements().award(_adv, criteria);
-                        }
+                        ModAdvancementData.getAdvancement("try_wake_up",(ServerPlayer) pPlayer);
 
                     }
                 }
