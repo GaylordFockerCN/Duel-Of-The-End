@@ -157,6 +157,29 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
                     .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
 
         }
+
+        /**
+         * 备用
+         * @param parent
+         * @param name
+         * @param consumer
+         * @param helper
+         * @param type
+         * @return
+         */
+        public Advancement registerAdvancement(Advancement parent, String name, Consumer<Advancement> consumer , ExistingFileHelper helper, FrameType type){
+            return Advancement.Builder.advancement()
+                    .parent(parent)
+                    .display(TCRModItems.JELLY_CAT_SPAWN_EGG.get(),
+                            Component.translatable(pre+name),
+                            Component.translatable(pre+name+".desc"),
+                            null,
+                            type, true, true, true)
+                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
+                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), helper);
+        }
+
+
     }
 
     public static void getAdvancement(String name, ServerPlayer serverPlayer){

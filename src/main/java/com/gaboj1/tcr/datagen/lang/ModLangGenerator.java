@@ -215,6 +215,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addAdvancement("die_for_summon","一命换一命","用生命值召唤小树妖而死");
         this.addAdvancement("day_dreamer","白日梦想家","通过村民帮助获得火铳");
         this.addAdvancement("can_double_hold","原来这也行？","双持火铳");
+        this.addAdvancement("cats_friend","猫猫之友","驯服所有种类的猫猫果冻");
 
         this.addBiome(TCRBiomes.PASTORAL_PLAINS,"牧歌原野");
         this.addBiome(TCRBiomes.DENSE_FOREST,"回溯密林");
