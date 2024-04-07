@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.network.packet.server;
 
+import com.gaboj1.tcr.entity.ManySkinEntity;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.network.packet.BasePacket;
 import net.minecraft.client.Minecraft;
@@ -12,17 +13,17 @@ import net.minecraft.world.entity.player.Player;
  * @param id 实体id，用于查找实体
  * @param skinID 皮肤id
  */
-public record VillagerChangeIDPacket(int id, int skinID) implements BasePacket {
+public record EntityChangeSkinIDPacket(int id, int skinID) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.id());
         buf.writeInt(this.skinID());
     }
 
-    public static VillagerChangeIDPacket decode(FriendlyByteBuf buf) {
+    public static EntityChangeSkinIDPacket decode(FriendlyByteBuf buf) {
         int id = buf.readInt();
         int skinID = buf.readInt();
-        return new VillagerChangeIDPacket(id, skinID);
+        return new EntityChangeSkinIDPacket(id, skinID);
     }
 
     @Override
@@ -42,8 +43,8 @@ public record VillagerChangeIDPacket(int id, int skinID) implements BasePacket {
 //        }).start();
         if(Minecraft.getInstance().level != null && Minecraft.getInstance().player != null){
             Entity entity = Minecraft.getInstance().player.level().getEntity(id);
-            if(entity instanceof TCRVillager tcrVillager){
-                tcrVillager.setVillagerId(skinID());
+            if(entity instanceof ManySkinEntity manySkinEntity){
+                manySkinEntity.setSkinID(skinID());
             }
         }
 

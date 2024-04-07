@@ -77,7 +77,13 @@ public class TCRModItems {
 
 	public static RegistryObject<Item> registerEgg(String name, Supplier<? extends EntityType<? extends Mob>> type){
 		return REGISTRY.register(name,
-				() -> new ForgeSpawnEggItem(type, 0xD51236, 0x1D6600,
+				() -> new ForgeSpawnEggItem(type, 15714446, 9794134,
+						new Item.Properties()));
+	}
+
+	public static RegistryObject<Item> registerEgg(String name, Supplier<? extends EntityType<? extends Mob>> type, int bgColor, int highlightColor){
+		return REGISTRY.register(name,
+				() -> new ForgeSpawnEggItem(type, bgColor, highlightColor,
 						new Item.Properties()));
 	}
 

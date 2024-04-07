@@ -6,7 +6,7 @@ import com.gaboj1.tcr.network.packet.client.NpcPlayerInteractPacket;
 import com.gaboj1.tcr.network.packet.client.PortalBlockTeleportPacket;
 import com.gaboj1.tcr.network.packet.server.NPCDialoguePacket;
 import com.gaboj1.tcr.network.packet.server.PortalBlockScreenPacket;
-import com.gaboj1.tcr.network.packet.server.VillagerChangeIDPacket;
+import com.gaboj1.tcr.network.packet.server.EntityChangeSkinIDPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
@@ -27,7 +27,7 @@ public class TCRPacketHandler {
         // 发给客户端
         register(NPCDialoguePacket.class, NPCDialoguePacket::decode);
         register(PortalBlockScreenPacket.class, PortalBlockScreenPacket::decode);
-        register(VillagerChangeIDPacket.class, VillagerChangeIDPacket::decode);
+        register(EntityChangeSkinIDPacket.class, EntityChangeSkinIDPacket::decode);
 
         // 发给服务端
         register(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);

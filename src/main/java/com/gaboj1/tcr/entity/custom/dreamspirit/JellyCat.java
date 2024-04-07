@@ -2,8 +2,13 @@ package com.gaboj1.tcr.entity.custom.dreamspirit;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.datagen.ModAdvancementData;
+import com.gaboj1.tcr.entity.ManySkinEntity;
+import com.gaboj1.tcr.network.PacketRelay;
+import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.packet.server.EntityChangeSkinIDPacket;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -19,6 +24,7 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
@@ -31,25 +37,59 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.EnumSet;
+import java.util.Random;
 
 /**
  * 大部分代码copy form Slime.java，实现猫猫跳动。没办法史莱姆不是可驯养的，只能这么做了awa
  * @see net.minecraft.world.entity.monster.Slime
  * @author LZY
  */
-public class JellyCat extends TamableAnimal implements GeoEntity {
+public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity {
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     //0 代表 正常，1代表闭眼，2代表跑动、受攻击 > <
     private FaceID faceID = FaceID.IDLE;
-    private int skinID = 0;
-    private final int maxSkinID = 7;
+    //负数代表球形手
+    private int skinID;
+
+    //猫猫皮肤总数
+    private final int maxSkinID = 3;
     private final int winkIntervalMax = 5;
     private int winkInterval;
     private final int useTimeMax = 10;
     private int useTime;
     private boolean isWinking = false;
+
+    public JellyCat(EntityType<? extends TamableAnimal> entityType, Level level) {
+        super(entityType, level);
+        this.moveControl = new JellyCatMoveControl(this);
+        this.skinID = -maxSkinID + new Random().nextInt(maxSkinID * 2 + 1);//随机产生皮肤，负数代表球形手
+        if(skinID == 0){
+            skinID = -1;
+        }
+    }
+    @Override
+    public boolean save(CompoundTag tag) {
+        tag.putInt("TCRJellyCatSkinID", skinID);
+        this.getPersistentData().putBoolean("hasSkinID", true);
+        return super.save(tag);
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        skinID = tag.getInt("TCRJellyCatSkinID");
+
+        new Thread(()->{
+            try {
+                Thread.sleep(200);//等两端实体数据互通完才能进行同步操作
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new EntityChangeSkinIDPacket(this.getId(), skinID));
+        }).start();
+        super.load(tag);
+    }
 
     /**
      * Goal太难用了，直接tick屎山。
@@ -92,7 +132,8 @@ public class JellyCat extends TamableAnimal implements GeoEntity {
         if(player instanceof ServerPlayer serverPlayer){
             serverPlayer.getPersistentData().putBoolean("tamed_jelly_cat"+skinID,true);
             boolean isAllTamed = true;
-            for(int i = 0;i < maxSkinID;i++){
+            //没有-0所以从1开始编号
+            for(int i = 1;i <= maxSkinID;i++){
                 if(!serverPlayer.getPersistentData().getBoolean("tamed_jelly_cat"+i)){
                     isAllTamed = false;
                     break;
@@ -105,11 +146,6 @@ public class JellyCat extends TamableAnimal implements GeoEntity {
         super.tame(player);
     }
 
-    public JellyCat(EntityType<? extends TamableAnimal> entityType, Level level) {
-        super(entityType, level);
-        this.moveControl = new JellyCatMoveControl(this);
-    }
-
     public FaceID getFaceID() {
         return faceID;
     }
@@ -118,10 +154,12 @@ public class JellyCat extends TamableAnimal implements GeoEntity {
         this.faceID = faceID;
     }
 
+    @Override
     public int getSkinID() {
         return skinID;
     }
 
+    @Override
     public void setSkinID(int skinID) {
         this.skinID = skinID;
     }
@@ -141,6 +179,7 @@ public class JellyCat extends TamableAnimal implements GeoEntity {
         this.goalSelector.addGoal(1, new JellyCatFloatGoal(this));
         this.goalSelector.addGoal(2, new JellyCatAttackGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
+        this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
 //        this.goalSelector.addGoal(2, new JellyCatWinkGoal(this));
         this.goalSelector.addGoal(3, new JellyCatRandomDirectionGoal(this));
         this.goalSelector.addGoal(5, new JellyCatKeepOnJumpingGoal(this));

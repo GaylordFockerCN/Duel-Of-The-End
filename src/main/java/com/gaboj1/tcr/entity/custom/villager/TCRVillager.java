@@ -1,10 +1,9 @@
 package com.gaboj1.tcr.entity.custom.villager;
 
+import com.gaboj1.tcr.entity.ManySkinEntity;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.server.NPCDialoguePacket;
-import com.gaboj1.tcr.network.packet.server.PortalBlockScreenPacket;
-import com.gaboj1.tcr.network.packet.server.VillagerChangeIDPacket;
+import com.gaboj1.tcr.network.packet.server.EntityChangeSkinIDPacket;
 import com.gaboj1.tcr.util.DataManager;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
@@ -43,7 +42,7 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.Random;
 
-public class TCRVillager extends Villager implements GeoEntity {
+public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
@@ -53,10 +52,12 @@ public class TCRVillager extends Villager implements GeoEntity {
     protected int whatCanISay = 2;//真的不是玩牢大的梗（
 
     //区别于getID
-    public int getVillagerId() {
+    @Override
+    public int getSkinID() {
         return skinID;
     }
-    public void setVillagerId(int newSkinID) {
+    @Override
+    public void setSkinID(int newSkinID) {
         skinID = newSkinID;
     }
 
@@ -90,7 +91,7 @@ public class TCRVillager extends Villager implements GeoEntity {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new VillagerChangeIDPacket(this.getId(), skinID));
+            PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new EntityChangeSkinIDPacket(this.getId(), skinID));
         }).start();
         super.load(tag);
     }
