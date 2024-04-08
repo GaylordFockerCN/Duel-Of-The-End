@@ -1,22 +1,21 @@
 package com.gaboj1.tcr.entity.custom.dreamspirit;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.datagen.ModAdvancementData;
 import com.gaboj1.tcr.entity.ManySkinEntity;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.server.EntityChangeSkinIDPacket;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
@@ -24,7 +23,6 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
@@ -33,7 +31,6 @@ import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.EnumSet;
@@ -117,7 +114,7 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
 //        }
         if(!isAlive()){
             setFaceID(FaceID.DIE);
-        } else if(this.hurtMarked){
+        } else if(this.hurtTime > 0){//hurtMark好像不起作用
             setFaceID(FaceID.HURT);
         } else if(!onGround()){
             setFaceID(FaceID.WINK);
@@ -133,7 +130,10 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
             serverPlayer.getPersistentData().putBoolean("tamed_jelly_cat"+skinID,true);
             boolean isAllTamed = true;
             //没有-0所以从1开始编号
-            for(int i = 1;i <= maxSkinID;i++){
+            for(int i = -maxSkinID;i <= maxSkinID;i++){
+                if(i == 0){
+                    continue;
+                }
                 if(!serverPlayer.getPersistentData().getBoolean("tamed_jelly_cat"+i)){
                     isAllTamed = false;
                     break;
@@ -191,7 +191,6 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        setFaceID(FaceID.DIE);
         return super.getDeathSound();
     }
 
