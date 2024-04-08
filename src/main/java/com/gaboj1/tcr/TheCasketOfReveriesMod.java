@@ -85,6 +85,7 @@ public class TheCasketOfReveriesMod {
         TCRModEntities.REGISTRY.register(bus);
         TCRModItemTabs.REGISTRY.register(bus);
         TCRStructurePlacementTypes.STRUCTURE_PLACEMENT_TYPES.register(bus);
+        TCRModVillagers.register(bus);
 
         bus.addListener(this::commonSetup);
         bus.addListener(this::registerExtraStuff);

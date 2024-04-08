@@ -84,7 +84,6 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
     @Override
     public void load(CompoundTag tag) {
         skinID = tag.getInt("TCRVillagerSkinID");
-
         new Thread(()->{
             try {
                 Thread.sleep(200);//等两端实体数据互通完才能进行同步操作
@@ -179,14 +178,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
                 this.setUnhappy();
                 return InteractionResult.sidedSuccess(this.level().isClientSide);
             } else {
-                boolean flag = true;//this.getOffers().isEmpty();
-//                if (pHand == InteractionHand.MAIN_HAND) {
-//                    if (flag && !this.level().isClientSide) {
-//                        this.setUnhappy();
-//                    }
-//
-//                    pPlayer.awardStat(Stats.TALKED_TO_VILLAGER);
-//                }
+                boolean flag = true;
 
                 if (flag && canTalk && pPlayer instanceof ServerPlayer player && pHand == InteractionHand.MAIN_HAND) {
                     if(DataManager.isWhite.getBool(player)){//新增对话，其他和原版一样

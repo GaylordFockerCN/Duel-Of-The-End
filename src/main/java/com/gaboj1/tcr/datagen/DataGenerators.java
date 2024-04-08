@@ -4,10 +4,7 @@ import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.datagen.lang.ModLangGenerator;
 import com.gaboj1.tcr.datagen.loot.ModLootTableProvider;
 import com.gaboj1.tcr.datagen.sound.SoundGenerator;
-import com.gaboj1.tcr.datagen.tags.ModBiomeTagGenerator;
-import com.gaboj1.tcr.datagen.tags.ModBlockTagGenerator;
-import com.gaboj1.tcr.datagen.tags.ModEntityTagGenerator;
-import com.gaboj1.tcr.datagen.tags.ModItemTagGenerator;
+import com.gaboj1.tcr.datagen.tags.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -43,6 +40,7 @@ public class DataGenerators {
         ModBlockTagGenerator blockTagGenerator = generator.addProvider(event.includeServer(),
                 new ModBlockTagGenerator(output, lookupProvider, helper));
         generator.addProvider(event.includeServer(), new ModItemTagGenerator(output, lookupProvider, blockTagGenerator.contentsGetter(), helper));
+        generator.addProvider(event.includeServer(), new ModPoiTypeTagsProvider(output, lookupProvider, helper));
 
         DatapackBuiltinEntriesProvider datapackProvider = new ModWorldGenProvider(output, lookupProvider);
         CompletableFuture<HolderLookup.Provider> provider = datapackProvider.getRegistryProvider();
