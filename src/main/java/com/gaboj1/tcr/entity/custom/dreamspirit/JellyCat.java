@@ -2,6 +2,7 @@ package com.gaboj1.tcr.entity.custom.dreamspirit;
 
 import com.gaboj1.tcr.datagen.ModAdvancementData;
 import com.gaboj1.tcr.entity.ManySkinEntity;
+import com.gaboj1.tcr.init.TCRModSounds;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.server.EntityChangeSkinIDPacket;
@@ -191,19 +192,19 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return super.getDeathSound();
+        return TCRModSounds.JELLY_CAT_DIE.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return super.getAmbientSound();
+        return TCRModSounds.JELLY_CAT_AMBIENT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return super.getHurtSound(damageSource);
+        return TCRModSounds.JELLY_CAT_HURT.get();
     }
 
     @Nullable

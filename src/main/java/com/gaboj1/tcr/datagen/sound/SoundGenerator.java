@@ -22,6 +22,9 @@ public class SoundGenerator extends TCRSoundProvider {
         this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_HI, "entity/female_villager/hi", 2);
         this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_HITHERE, "entity/female_villager/hithere", 1);
         this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_HENG, "entity/female_villager/heng", 2);
+        this.generateNewSoundWithSubtitle(TCRModSounds.JELLY_CAT_AMBIENT, "entity/jelly_cat/jelly_cat_ambient", 4);
+        this.generateNewSoundWithSubtitle(TCRModSounds.JELLY_CAT_HURT, "entity/jelly_cat/jelly_cat_hurt", 1);
+        this.generateNewSoundWithSubtitle(TCRModSounds.JELLY_CAT_DIE, "entity/jelly_cat/jelly_cat_die", 1);
 
 //        this.generateExistingSoundWithSubtitle(TFSounds.ACID_RAIN_BURNS, SoundEvents.FIRE_EXTINGUISH);
 //        this.generateNewSoundWithSubtitle(TFSounds.ALPHA_YETI_ALERT, "mob/alpha_yeti/alert", 1);
