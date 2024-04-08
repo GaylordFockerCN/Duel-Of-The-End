@@ -26,7 +26,7 @@ public abstract class TCRSoundProvider extends SoundDefinitionsProvider {
             definition.subtitle("subtitles."+TheCasketOfReveriesMod.MOD_ID+"." + splitSoundName[0] + "." + splitSoundName[2]);
         }
         for (int i = 1; i <= numberOfSounds; i++) {
-            definition.with(SoundDefinition.Sound.sound(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, baseSoundDirectory + (numberOfSounds > 1 ? i : "")), SoundDefinition.SoundType.SOUND));
+            definition.with(SoundDefinition.Sound.sound(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, baseSoundDirectory + (numberOfSounds > 1 ? "_"+i : "")), SoundDefinition.SoundType.SOUND));
         }
         this.add(event, definition);
     }

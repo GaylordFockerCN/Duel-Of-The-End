@@ -254,6 +254,11 @@ public class ModLangGenerator extends ModLangProvider {
         this.addSubtitle(TCRModSounds.DESERT_EAGLE_RELOAD,"沙鹰换弹");
         this.addSubtitle(TCRModSounds.TREE_MONSTERS_DEATH,"树怪死亡");
         this.addSubtitle(TCRModSounds.TREE_MONSTERS_HURT,"树怪受伤");
-
+        this.addSubtitle(TCRModSounds.YGGDRASIL_AMBIENT_SOUND,"伊格德拉希尔叫声");
+        this.addSubtitle(TCRModSounds.FEMALE_VILLAGER_HELLO, "女村民：你好");
+        this.addSubtitle(TCRModSounds.FEMALE_VILLAGER_EI, "女村民：嗯");
+        this.addSubtitle(TCRModSounds.FEMALE_VILLAGER_HI, "女村民：嗨");
+        this.addSubtitle(TCRModSounds.FEMALE_VILLAGER_HITHERE, "女村民：嘿那里");
+        this.addSubtitle(TCRModSounds.FEMALE_VILLAGER_HENG, "女村民：哼");
     }
 }

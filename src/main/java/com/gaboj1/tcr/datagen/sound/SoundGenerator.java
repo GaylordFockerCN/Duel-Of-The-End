@@ -17,7 +17,11 @@ public class SoundGenerator extends TCRSoundProvider {
         this.generateNewSoundWithSubtitle(TCRModSounds.TREE_MONSTERS_DEATH, "entity/tree_monsters/tree_monsters_death", 1);
         this.generateNewSoundWithSubtitle(TCRModSounds.TREE_MONSTERS_HURT, "entity/tree_monsters/tree_monsters_hurt", 1);
         this.generateNewSoundWithSubtitle(TCRModSounds.YGGDRASIL_AMBIENT_SOUND, "entity/yggdrasil/yggdrasil_sound", 1);
-
+        this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_HELLO, "entity/female_villager/hello", 4);
+        this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_EI, "entity/female_villager/ei", 3);
+        this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_HI, "entity/female_villager/hi", 2);
+        this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_HITHERE, "entity/female_villager/hithere", 1);
+        this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_HENG, "entity/female_villager/heng", 2);
 
 //        this.generateExistingSoundWithSubtitle(TFSounds.ACID_RAIN_BURNS, SoundEvents.FIRE_EXTINGUISH);
 //        this.generateNewSoundWithSubtitle(TFSounds.ALPHA_YETI_ALERT, "mob/alpha_yeti/alert", 1);

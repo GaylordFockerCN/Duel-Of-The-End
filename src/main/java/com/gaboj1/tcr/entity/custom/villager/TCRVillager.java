@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.entity.custom.villager;
 
 import com.gaboj1.tcr.entity.ManySkinEntity;
+import com.gaboj1.tcr.init.TCRModSounds;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.server.EntityChangeSkinIDPacket;
@@ -72,6 +73,16 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
 //        if(!this.getPersistentData().getBoolean("hasSkinID")){
             this.skinID = skinID;
 //        }
+        if(!pLevel.isClientSide){
+            new Thread(()->{
+                try {
+                    Thread.sleep(200);//等两端实体数据互通完才能进行同步操作
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new EntityChangeSkinIDPacket(this.getId(), skinID));
+            }).start();
+        }
     }
 
     @Override
@@ -98,7 +109,17 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return super.getAmbientSound();
+        SoundEvent sound = TCRModSounds.FEMALE_VILLAGER_HI.get();
+        int i = random.nextInt(5);
+        sound = switch (i) {
+            case 0 -> TCRModSounds.FEMALE_VILLAGER_HI.get();
+            case 1 -> TCRModSounds.FEMALE_VILLAGER_HELLO.get();
+            case 2 -> TCRModSounds.FEMALE_VILLAGER_HENG.get();
+            case 3 -> TCRModSounds.FEMALE_VILLAGER_HITHERE.get();
+            case 4 -> TCRModSounds.FEMALE_VILLAGER_EI.get();
+            default -> sound;
+        };
+        return skinID < 0 ? sound : super.getAmbientSound();
     }
 
     @Override
@@ -106,7 +127,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
         if(pDamageSource.getEntity() instanceof Player player && this.isClientSide()) {
             talkFuck(player);
         }
-        return SoundEvents.VILLAGER_HURT;
+        return skinID < 0 ? TCRModSounds.FEMALE_VILLAGER_EI.get() : SoundEvents.VILLAGER_HURT;
     }
 
     @Override
