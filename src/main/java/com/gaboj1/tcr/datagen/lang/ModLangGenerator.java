@@ -73,6 +73,10 @@ public class ModLangGenerator extends ModLangProvider {
         this.add(TCRModItems.ADVANCED_RESIN.get(),"高级树脂");
         this.add(TCRModItems.SUPER_RESIN.get(),"超级树脂");
 
+
+        this.add(TCRModItems.DREAMSCAPE_COIN.get(),"奇梦币");
+        this.addItemUsageInfo(TCRModItems.DREAMSCAPE_COIN.get(),"在梦之领域通用的货币，闪闪发光十分珍贵");
+
         this.add(TCRModItems.BLUE_BANANA.get(),"蓝蕉");
         this.addItemUsageInfo(TCRModItems.BLUE_BANANA.get(),"蓝色的香蕉品种，不知道有什么特殊含义。");
         this.add(TCRModItems.DREAM_TA.get(),"梦达");//芬达美年达打钱

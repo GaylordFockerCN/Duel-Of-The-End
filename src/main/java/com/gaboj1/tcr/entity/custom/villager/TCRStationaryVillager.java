@@ -20,6 +20,7 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -29,8 +30,23 @@ public class TCRStationaryVillager extends TCRVillager implements NpcDialogue {
 
     @Nullable
     protected Player conversingPlayer;
+
+    protected boolean alreadyAddTrade = false;
+
     public TCRStationaryVillager(EntityType<? extends Villager> pEntityType, Level pLevel, int skinID) {
         super(pEntityType, pLevel,skinID);
+    }
+
+    @Override
+    public boolean save(CompoundTag tag) {
+        tag.putBoolean("alreadyAddTrade",alreadyAddTrade);
+        return super.save(tag);
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        alreadyAddTrade = tag.getBoolean("alreadyAddTrade");
+        super.load(tag);
     }
 
     @Override
@@ -114,4 +130,25 @@ public class TCRStationaryVillager extends TCRVillager implements NpcDialogue {
             conversingPlayer.sendSystemMessage(DialogueComponentBuilder.BUILDER.buildDialogue(this, component));
         }
     }
+
+    public void startCustomTrade(Player player, MerchantOffer... merchantOffers){
+        if(!alreadyAddTrade){
+            for(MerchantOffer offer:merchantOffers){
+                this.getOffers().add(offer);
+            }
+        }
+        alreadyAddTrade = true;
+
+        this.setTradingPlayer(player);
+        this.openTradingScreen(player, this.getDisplayName(), this.getVillagerData().getLevel());
+    }
+
+    /**
+     * 为了防止交易被中断而强制不让它取消。。
+     */
+    @Override
+    protected void stopTrading() {
+
+    }
+
 }

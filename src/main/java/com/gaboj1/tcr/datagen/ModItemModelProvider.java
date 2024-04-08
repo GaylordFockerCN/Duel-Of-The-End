@@ -26,6 +26,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         eggItem(TCRModItems.TREE_GUARDIAN_SPAWN_EGG);
         eggItem(TCRModItems.PASTORAL_PLAIN_VILLAGER_SPAWN_EGG);
         eggItem(TCRModItems.PASTORAL_PLAIN_VILLAGER_ELDER_SPAWN_EGG);
+
+        simpleItem(TCRModItems.DREAMSCAPE_COIN);
         //handheldItem()会变很大个，适合用于武器什么的
         simpleItem(TCRModItems.BLUE_BANANA);
         simpleItem(TCRModItems.DREAM_TA);

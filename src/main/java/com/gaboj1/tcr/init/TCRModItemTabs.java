@@ -77,6 +77,9 @@ public class TCRModItemTabs {
 				tabData.accept(TCRModItems.ELDER_STAFF.get());
 				tabData.accept(TCRModItems.TREE_DEMON_HORN.get());
 
+				//货币
+				tabData.accept(TCRModItems.DREAMSCAPE_COIN.get());
+
 				//法宝
 				tabData.accept(TCRModItems.TREE_SPIRIT_WAND.get());
 				tabData.accept(TCRModItems.HOLY_SWORD.get());

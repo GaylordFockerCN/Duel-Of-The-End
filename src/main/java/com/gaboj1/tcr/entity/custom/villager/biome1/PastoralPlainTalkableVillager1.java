@@ -1,37 +1,23 @@
 package com.gaboj1.tcr.entity.custom.villager.biome1;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.datagen.ModAdvancementData;
 import com.gaboj1.tcr.entity.custom.villager.TCRStationaryVillager;
 import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.gui.screen.TreeNode;
 import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.init.TCRModItems;
-import com.gaboj1.tcr.init.TCRModVillagers;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.ItemUtil;
 import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.village.ReputationEventType;
 import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.npc.VillagerData;
-import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.raid.Raid;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
-import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -47,20 +33,6 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
 
     public PastoralPlainTalkableVillager1(EntityType<? extends Villager> entityType, Level level) {
         super(entityType, level,1);
-    }
-
-    private boolean alreadyAddTrade = false;
-
-    @Override
-    public boolean save(CompoundTag tag) {
-        tag.putBoolean("alreadyAddTrade",alreadyAddTrade);
-        return super.save(tag);
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        alreadyAddTrade = tag.getBoolean("alreadyAddTrade");
-        super.load(tag);
     }
 
     /**
@@ -158,13 +130,13 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
 //                System.out.println(getVillagerData().getProfession());
                 startCustomTrade(player,
                         new MerchantOffer(
-                                new ItemStack(Items.EMERALD, 16),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
                                 new ItemStack(TCRModItems.BEER.get(), 1),
-                                16, 0, 0.02f),
+                                16, 0, 0),
                         new MerchantOffer(
-                                new ItemStack(Items.EMERALD, 16),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
                                 new ItemStack(TCRModItems.DRINK2.get(), 1),
-                                16, 0, 0.02f)
+                                16, 0, 1)
                 );
                 break;
             case 0:
@@ -206,11 +178,11 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
                 chat(BUILDER.buildDialogueDialog(entityType,15,false));
                 startCustomTrade(player,
                         new MerchantOffer(
-                                new ItemStack(Items.EMERALD, 16),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
                                 new ItemStack(TCRModItems.BEER.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(Items.EMERALD, 16),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
                                 new ItemStack(TCRModItems.DRINK2.get(), 1),
                                 16, 0, 0.02f)
                 );
@@ -225,31 +197,31 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
                 chat(BUILDER.buildDialogueDialog(entityType,23,false));
                 startCustomTrade(player,
                         new MerchantOffer(
-                                new ItemStack(Items.EMERALD, 16),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 32),
                                 new ItemStack(TCRModItems.BEER.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(Items.EMERALD, 16),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
                                 new ItemStack(TCRModItems.DRINK1.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(Items.EMERALD, 16),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
                                 new ItemStack(TCRModItems.DRINK2.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(Items.EMERALD, 16),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
                                 new ItemStack(TCRModItems.DREAM_TA.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(Items.EMERALD, 16),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
                                 new ItemStack(TCRModItems.JUICE_TEA.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(Items.EMERALD, 16),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 20),
                                 new ItemStack(TCRModItems.HOT_CHOCOLATE.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(Items.EMERALD, 16),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
                                 new ItemStack(TCRModItems.COOKIE.get(), 2),
                                 16, 0, 0.02f)
                 );
@@ -268,26 +240,6 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
         }
 
         this.setConversingPlayer(null);
-    }
-
-    public void startCustomTrade(Player player, MerchantOffer... merchantOffers){
-        if(!alreadyAddTrade){
-            for(MerchantOffer offer:merchantOffers){
-                this.getOffers().add(offer);
-            }
-        }
-        alreadyAddTrade = true;
-
-        this.setTradingPlayer(player);
-        this.openTradingScreen(player, this.getDisplayName(), this.getVillagerData().getLevel());
-    }
-
-    /**
-     * 为了防止交易被中断而强制不让它取消。。
-     */
-    @Override
-    protected void stopTrading() {
-
     }
 
     @Override

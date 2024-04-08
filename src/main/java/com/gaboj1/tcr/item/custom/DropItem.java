@@ -16,7 +16,7 @@ import java.util.List;
 public class DropItem extends Item {
 
     public DropItem() {
-        super(new Item.Properties().setNoRepair().stacksTo(1).rarity(Rarity.COMMON));
+        super(new Item.Properties().setNoRepair().rarity(Rarity.COMMON));
     }
 
     public DropItem(Properties properties) {
