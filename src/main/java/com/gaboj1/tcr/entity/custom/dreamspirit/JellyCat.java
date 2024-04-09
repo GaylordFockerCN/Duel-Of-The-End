@@ -192,7 +192,7 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return TCRModSounds.JELLY_CAT_DIE.get();
+        return TCRModSounds.JELLY_CAT_DEATH.get();
     }
 
     @Nullable

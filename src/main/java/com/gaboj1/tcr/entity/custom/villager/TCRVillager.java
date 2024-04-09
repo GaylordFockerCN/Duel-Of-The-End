@@ -85,6 +85,10 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
         }
     }
 
+    public boolean isFemale(){
+        return skinID < 0;
+    }
+
     @Override
     public boolean save(CompoundTag tag) {
         tag.putInt("TCRVillagerSkinID", skinID);
@@ -115,7 +119,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
             case 0 -> TCRModSounds.FEMALE_VILLAGER_HI.get();
             case 1 -> TCRModSounds.FEMALE_VILLAGER_HELLO.get();
             case 2 -> TCRModSounds.FEMALE_VILLAGER_HENG.get();
-            case 3 -> TCRModSounds.FEMALE_VILLAGER_HITHERE.get();
+            case 3 -> TCRModSounds.FEMALE_VILLAGER_HI_THERE.get();
             case 4 -> TCRModSounds.FEMALE_VILLAGER_EI.get();
             default -> sound;
         };
@@ -127,12 +131,12 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
         if(pDamageSource.getEntity() instanceof Player player && this.isClientSide()) {
             talkFuck(player);
         }
-        return skinID < 0 ? TCRModSounds.FEMALE_VILLAGER_EI.get() : SoundEvents.VILLAGER_HURT;
+        return skinID < 0 ? TCRModSounds.FEMALE_VILLAGER_HURT.get() : SoundEvents.VILLAGER_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return super.getDeathSound();
+        return skinID < 0 ?  TCRModSounds.FEMALE_VILLAGER_DEATH.get() : SoundEvents.VILLAGER_DEATH;
     }
 
     /**

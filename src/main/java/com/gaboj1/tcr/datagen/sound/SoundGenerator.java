@@ -20,11 +20,13 @@ public class SoundGenerator extends TCRSoundProvider {
         this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_HELLO, "entity/female_villager/hello", 4);
         this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_EI, "entity/female_villager/ei", 3);
         this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_HI, "entity/female_villager/hi", 2);
-        this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_HITHERE, "entity/female_villager/hithere", 1);
+        this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_HI_THERE, "entity/female_villager/hi_there", 1);
         this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_HENG, "entity/female_villager/heng", 2);
+        this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_DEATH, "entity/female_villager/female_die", 1);
+        this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_HURT, "entity/female_villager/female_hurt", 3);
         this.generateNewSoundWithSubtitle(TCRModSounds.JELLY_CAT_AMBIENT, "entity/jelly_cat/jelly_cat_ambient", 4);
         this.generateNewSoundWithSubtitle(TCRModSounds.JELLY_CAT_HURT, "entity/jelly_cat/jelly_cat_hurt", 1);
-        this.generateNewSoundWithSubtitle(TCRModSounds.JELLY_CAT_DIE, "entity/jelly_cat/jelly_cat_die", 1);
+        this.generateNewSoundWithSubtitle(TCRModSounds.JELLY_CAT_DEATH, "entity/jelly_cat/jelly_cat_die", 1);
 
 //        this.generateExistingSoundWithSubtitle(TFSounds.ACID_RAIN_BURNS, SoundEvents.FIRE_EXTINGUISH);
 //        this.generateNewSoundWithSubtitle(TFSounds.ALPHA_YETI_ALERT, "mob/alpha_yeti/alert", 1);
