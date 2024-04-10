@@ -79,6 +79,7 @@ public class TCRModItemTabs {
 
 				//货币
 				tabData.accept(TCRModItems.DREAMSCAPE_COIN.get());
+				tabData.accept(TCRModItems.DREAMSCAPE_COIN_PLUS.get());
 
 				//法宝
 				tabData.accept(TCRModItems.TREE_SPIRIT_WAND.get());

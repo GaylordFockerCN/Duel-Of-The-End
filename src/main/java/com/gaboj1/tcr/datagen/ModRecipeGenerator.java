@@ -31,6 +31,8 @@ public class ModRecipeGenerator extends ModRecipeProvider implements IConditionB
         nineBlockStorageRecipes(consumer, RecipeCategory.MISC, TCRModItems.INTERMEDIATE_RESIN.get(), RecipeCategory.MISC, TCRModItems.ADVANCED_RESIN.get());
         nineBlockStorageRecipes(consumer, RecipeCategory.MISC, TCRModItems.ADVANCED_RESIN.get(), RecipeCategory.MISC, TCRModItems.SUPER_RESIN.get());
 
+        nineBlockStorageRecipes(consumer, RecipeCategory.MISC, TCRModItems.DREAMSCAPE_COIN.get(), RecipeCategory.MISC, TCRModItems.DREAMSCAPE_COIN_PLUS.get());
+
         woodBlockStorageRecipes(consumer, RecipeCategory.DECORATIONS, TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get(), TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
         woodBlockStorageRecipes(consumer, RecipeCategory.DECORATIONS, TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get(), TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
         woodBlockStorageRecipes(consumer, RecipeCategory.DECORATIONS, TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get(), TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());

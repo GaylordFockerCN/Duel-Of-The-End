@@ -67,7 +67,9 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
                                     .addChild(new TreeNode(BUILDER.buildDialogueDialog(entityType,3),BUILDER.buildDialogueChoice(entityType,4))// ......  ......
                                             .addLeaf(BUILDER.buildDialogueChoice(entityType,5), (byte) 1)//快给我，不然嘣了你
                                             .addLeaf(BUILDER.buildDialogueChoice(entityType,6), (byte) 2)//谢谢你的火铳~
-                                    ));
+                                    )
+                                    .addLeaf(BUILDER.buildDialogueChoice(entityType,13),(byte) 110)
+                    );
                 }
                 break;
             //学者 对话id分配：7~9 返回值分配：3
@@ -141,6 +143,19 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
                 break;
             case 0:
                 //什么都不做
+                break;
+
+            case 110:
+                startCustomTrade(player,
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 64),
+                                new ItemStack(TCRModItems.DESERT_EAGLE.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
+                                new ItemStack(TCRModItems.DESERT_EAGLE_AMMO.get(), 2),
+                                16, 0, 0.02f)
+                );
                 break;
             case 111:
                 player.addItem(TCRModItems.DESERT_EAGLE.get().getDefaultInstance());
