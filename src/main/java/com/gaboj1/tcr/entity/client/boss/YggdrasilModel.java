@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.entity.client.boss;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.entity.custom.Yggdrasil.YggdrasilEntity;
+import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 

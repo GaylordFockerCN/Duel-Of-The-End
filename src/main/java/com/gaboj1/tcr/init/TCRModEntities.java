@@ -1,8 +1,8 @@
 package com.gaboj1.tcr.init;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.entity.custom.Yggdrasil.YggdrasilEntity;
-import com.gaboj1.tcr.entity.custom.Yggdrasil.tree_clawEntity;
+import com.gaboj1.tcr.entity.custom.boss.yggdrasil.TreeClawEntity;
+import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
 import com.gaboj1.tcr.entity.custom.dreamspirit.JellyCat;
 import com.gaboj1.tcr.entity.custom.dreamspirit.Squirrel;
 import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
@@ -69,9 +69,9 @@ public class TCRModEntities {
 							.sized(1.5f,5f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "yggdrasil").toString()));
 
-	public static final RegistryObject<EntityType<tree_clawEntity>> TREE_CLAW =
+	public static final RegistryObject<EntityType<TreeClawEntity>> TREE_CLAW =
 			REGISTRY.register("tree_claw",
-					() -> EntityType.Builder.<tree_clawEntity>of(tree_clawEntity::new, MobCategory.CREATURE)
+					() -> EntityType.Builder.<TreeClawEntity>of(TreeClawEntity::new, MobCategory.CREATURE)
 							.sized(1.5f,5f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "tree_claw").toString()));
 

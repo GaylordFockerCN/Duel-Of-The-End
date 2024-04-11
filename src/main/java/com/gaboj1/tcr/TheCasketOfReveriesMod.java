@@ -3,14 +3,15 @@ import com.gaboj1.tcr.block.entity.client.PortalBlockRenderer;
 import com.gaboj1.tcr.block.renderer.BetterStructureBlockRenderer;
 import com.gaboj1.tcr.block.renderer.PortalBedRenderer;
 import com.gaboj1.tcr.entity.client.boss.YggdrasilRenderer;
-import com.gaboj1.tcr.entity.client.boss.tree_clawRenderer;
+import com.gaboj1.tcr.entity.client.boss.TreeClawRenderer;
 import com.gaboj1.tcr.entity.client.dreamspirit.JellyCatRenderer;
 import com.gaboj1.tcr.entity.client.dreamspirit.SquirrelRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.MiddleTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.SmallTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.TreeGuardianRenderer;
 import com.gaboj1.tcr.entity.client.villager.TCRVillagerRenderer;
-import com.gaboj1.tcr.entity.custom.Yggdrasil.YggdrasilEntity;
+import com.gaboj1.tcr.entity.custom.boss.yggdrasil.TreeClawEntity;
+import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
 import com.gaboj1.tcr.entity.custom.dreamspirit.JellyCat;
 import com.gaboj1.tcr.entity.custom.dreamspirit.Squirrel;
 import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
@@ -157,7 +158,7 @@ public class TheCasketOfReveriesMod {
             EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(), TCRVillagerRenderer::new);
 
             EntityRenderers.register(TCRModEntities.YGGDRASIL.get(), YggdrasilRenderer::new);
-            EntityRenderers.register(TCRModEntities.TREE_CLAW.get(), tree_clawRenderer::new);
+            EntityRenderers.register(TCRModEntities.TREE_CLAW.get(), TreeClawRenderer::new);
 
             BlockEntityRenderers.register(TCRModBlockEntities.PORTAL_BED.get(), PortalBedRenderer::new);
         }
@@ -174,6 +175,7 @@ public class TheCasketOfReveriesMod {
             event.put(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1.get(), PastoralPlainTalkableVillager1.setAttributes());
             event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),PastoralPlainVillagerElder.setAttributes());
             event.put(TCRModEntities.YGGDRASIL.get(), YggdrasilEntity.setAttributes());
+            event.put(TCRModEntities.TREE_CLAW.get(), TreeClawEntity.setAttributes());
         }
 
         //刷新规则
@@ -197,6 +199,9 @@ public class TheCasketOfReveriesMod {
                     TreeGuardianEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(TCRModEntities.MIDDLE_TREE_MONSTER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                     MiddleTreeMonsterEntity::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+
+            event.register(TCRModEntities.TREE_CLAW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    TreeClawEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
         }
         @SubscribeEvent
         public static void onRendererSetup(EntityRenderersEvent.RegisterRenderers event){

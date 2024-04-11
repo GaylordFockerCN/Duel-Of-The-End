@@ -1,42 +1,45 @@
-package com.gaboj1.tcr.entity.custom.Yggdrasil;
+package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
+
 import com.gaboj1.tcr.init.TCRModSounds;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
-
-import java.util.Objects;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 
 public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.PINK, BossEvent.BossBarOverlay.PROGRESS);
+
+    private boolean canBeHurt;
+    private int hurtTimer;
+    private final int hurtTimerMax = 200;
 
     public YggdrasilEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_);
@@ -80,6 +83,30 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
         }
     }
 
+    @Override
+    public boolean hurt(DamageSource p_21016_, float p_21017_) {
+        if(!canBeHurt){
+            return false;
+        }
+        return super.hurt(p_21016_, p_21017_);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if(canBeHurt){
+            hurtTimer--;
+        }
+        if(hurtTimer<0){
+            canBeHurt = false;
+        }
+    }
+
+    public void setCanBeHurt() {
+        this.canBeHurt = true;
+        hurtTimer = hurtTimerMax;
+    }
+
     public SoundSource getSoundSource() {
         return SoundSource.HOSTILE;
     }
@@ -107,7 +134,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
 
     }
 
-public static class spawnTreeClawAtPointPositionGoal extends Goal {
+public class spawnTreeClawAtPointPositionGoal extends Goal {
     private final YggdrasilEntity yggdrasil;
     private int shootInterval;
 
@@ -125,16 +152,17 @@ public static class spawnTreeClawAtPointPositionGoal extends Goal {
     @Override
     public void start() {
         LivingEntity target = this.yggdrasil.getTarget();
-        if (target != null) {
+//        YggdrasilEntity.this.level().getNearbyPlayers(); TODO 换成群伤
+        if (target instanceof Player player) {
             System.out.println("wHYnot !!?");
             double x = target.getX();
             double y = target.getY();
             double z = target.getZ();
-            tree_clawEntity treeClaw = new tree_clawEntity(this.yggdrasil.level(), this.yggdrasil);
+            TreeClawEntity treeClaw = new TreeClawEntity(this.yggdrasil.level(), this.yggdrasil, player);
 //        this.yggdrasil.playSound(this.sunSpirit.getShootSound(), 1.0F, this.sunSpirit.level().getRandom().nextFloat() - this.sunSpirit.level().getRandom().nextFloat() * 0.2F + 1.2F);
             treeClaw.setPos(x,y+1,z);
             yggdrasil.level().addFreshEntity(treeClaw);
-            this.shootInterval = (int) 60;
+            this.shootInterval = 60;
         }
         else System.out.println("fuck !!!!!!!!!!!!!!!");
     }
@@ -166,19 +194,11 @@ public static class spawnTreeClawAtPointPositionGoal extends Goal {
         return TCRModSounds.YGGDRASIL_AMBIENT_SOUND.get();
     }
 
+    @Nullable
     @Override
-    public void playAmbientSound() {
-        playSound(getAmbientSound());
-        super.playAmbientSound();
+    protected SoundEvent getHurtSound(DamageSource p_21239_) {
+        return TCRModSounds.YGGDRASIL_CRY.get();
     }
-
-
-    @Override
-    protected void playHurtSound(DamageSource p_21493_) {
-        this.playSound(TCRModSounds.YGGDRASIL_CRY.get());
-        super.playHurtSound(p_21493_);
-    }
-
 
     @Override
     public boolean isDeadOrDying() {
