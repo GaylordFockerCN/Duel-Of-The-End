@@ -38,7 +38,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
     public PastoralPlainVillagerElder(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
         super(pEntityType, pLevel, -114514);
-        this.setItemInHand(InteractionHand.MAIN_HAND,TCRModItems.ELDER_STAFF.get().getDefaultInstance());
+//        this.setItemInHand(InteractionHand.MAIN_HAND,TCRModItems.ELDER_STAFF.get().getDefaultInstance());
     }
 
     public static AttributeSupplier setAttributes() {//生物属性
