@@ -1,15 +1,17 @@
 package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
 import com.gaboj1.tcr.init.TCRModSounds;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -19,10 +21,12 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -30,6 +34,8 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
+
+import java.util.List;
 
 
 public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
@@ -133,10 +139,12 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
 public static class spawnTreeClawAtPointPositionGoal extends Goal {
     private final YggdrasilEntity yggdrasil;
     private int shootInterval;
+    public final int shootIntervalMax = 60;
+    public static final int attackRange = 10;
 
     public spawnTreeClawAtPointPositionGoal(YggdrasilEntity yggdrasil) {
         this.yggdrasil = yggdrasil;
-        shootInterval = 60;
+        shootInterval = shootIntervalMax;
     }
 
     @Override
@@ -147,20 +155,26 @@ public static class spawnTreeClawAtPointPositionGoal extends Goal {
 
     @Override
     public void start() {
-        LivingEntity target = this.yggdrasil.getTarget();
-//        YggdrasilEntity.this.level().getNearbyPlayers(); TODO 换成群伤
-        if (target instanceof Player player) {
-            double x = target.getX();
-            double y = target.getY();
-            double z = target.getZ();
-            TreeClawEntity treeClaw = new TreeClawEntity(this.yggdrasil.level(), this.yggdrasil, player);
-//        this.yggdrasil.playSound(this.sunSpirit.getShootSound(), 1.0F, this.sunSpirit.level().getRandom().nextFloat() - this.sunSpirit.level().getRandom().nextFloat() * 0.2F + 1.2F);
-            treeClaw.setPos(x,y+1,z);
+        List<Player> players = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.DEFAULT, yggdrasil, getPlayerAABB(yggdrasil.getOnPos(),attackRange));
+        for(Player target : players){
+            TreeClawEntity treeClaw = new TreeClawEntity(this.yggdrasil.level(), this.yggdrasil, target);
+            treeClaw.setPos(target.getX(),target.getY()+1,target.getZ());
             yggdrasil.level().addFreshEntity(treeClaw);
             treeClaw.catchPlayer();
-
+            yggdrasil.level().playSound(null,treeClaw.getOnPos(), SoundEvents.PLAYER_HURT, SoundSource.BLOCKS,1.0f,1.0f);
         }
-        this.shootInterval = 60;
+
+        this.shootInterval = shootIntervalMax;
+    }
+
+    /**
+     * 返回一个范围
+     * @param pos 中心位置
+     * @param offset 半径
+     * @return 以pos为中心offset的两倍为边长的一个正方体
+     */
+    private AABB getPlayerAABB(BlockPos pos, int offset){
+        return new AABB(pos.offset(offset,offset,offset),pos.offset(-offset,-offset,-offset));
     }
 
     @Override

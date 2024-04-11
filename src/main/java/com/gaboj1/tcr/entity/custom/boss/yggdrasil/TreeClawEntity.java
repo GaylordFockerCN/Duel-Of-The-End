@@ -59,7 +59,7 @@ public class TreeClawEntity extends Mob implements GeoEntity {
             target.setSpeed(0);// TODO 禁锢。实在不行就加个缓慢效果
             isCatching = true;
         }
-        if(catchTimer < -catchTimerMax * 10){
+        if(catchTimer < -catchTimerMax * 20){
             this.discard();//时间够久就自毁
         }
     }
