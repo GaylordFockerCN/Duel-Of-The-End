@@ -1,8 +1,13 @@
 package com.gaboj1.tcr.entity.custom.Yggdrasil;
 
 import com.gaboj1.tcr.init.TCRModEntities;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,6 +16,7 @@ import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -34,7 +40,6 @@ public class tree_clawEntity extends ThrowableProjectile implements ItemSupplier
         super.tick();
         this.makeTrail();
     }
-
     private void makeTrail() {
         for (int i = 0; i < 1; i++) {
             double sx = 0.5 * (this.random.nextDouble() - this.random.nextDouble()) + this.getDeltaMovement().x();
@@ -61,9 +66,15 @@ public class tree_clawEntity extends ThrowableProjectile implements ItemSupplier
     public boolean isOnFire() {
         return false;
     }
+
+    private void explode() {
+
+    }
+
     @Override
-    protected void onHitEntity(EntityHitResult p_37259_) {
-        super.onHitEntity(p_37259_);
+    protected void onHitEntity(EntityHitResult result) {
+        result.getEntity().hurt(this.level().damageSources().magic(), 2f);
+         super.onHitEntity(result);
     }
 
     @Override

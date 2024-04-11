@@ -31,19 +31,19 @@ public class TCRModEntities {
 	public static final RegistryObject<EntityType<SmallTreeMonsterEntity>> SMALL_TREE_MONSTER =
 			REGISTRY.register("small_tree_monster",
 					() -> EntityType.Builder.of(SmallTreeMonsterEntity::new, MobCategory.CREATURE)
-							.sized(1f, 1.17f)
+							.sized(0.4f, 0.4f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "small_tree_monster").toString()));
 
 	public static final RegistryObject<EntityType<MiddleTreeMonsterEntity>> MIDDLE_TREE_MONSTER =
 			REGISTRY.register("middle_tree_monster",
 					() -> EntityType.Builder.of(MiddleTreeMonsterEntity::new, MobCategory.CREATURE)
-							.sized(3f, 3.5f)
+							.sized(0.75f, 1f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "middle_tree_monster").toString()));
 
 	public static final RegistryObject<EntityType<TreeGuardianEntity>> TREE_GUARDIAN =
 			REGISTRY.register("tree_guardian",
 					() -> EntityType.Builder.of(TreeGuardianEntity::new, MobCategory.CREATURE)
-							.sized(1.5f, 1.75f)
+							.sized(0.3f, 0.7f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "tree_guardian").toString()));
 
 	public static final RegistryObject<EntityType<JellyCat>> JELLY_CAT = register("jelly_cat",

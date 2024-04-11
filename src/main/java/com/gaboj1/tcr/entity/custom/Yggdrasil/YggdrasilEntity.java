@@ -1,19 +1,16 @@
 package com.gaboj1.tcr.entity.custom.Yggdrasil;
-
-import com.gaboj1.tcr.entity.ai.goal.LaunchTreeClawGoal;
 import com.gaboj1.tcr.init.TCRModSounds;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -31,6 +28,7 @@ import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.Objects;
@@ -92,7 +90,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
                 .add(Attributes.MAX_HEALTH, 100.0D)//最大血量
                 .add(Attributes.ATTACK_DAMAGE, 6.0f)//单次攻击伤害
                 .add(Attributes.ATTACK_SPEED, 1.0f)//攻速
-                .add(Attributes.MOVEMENT_SPEED, 0.4f)//移速
+                .add(Attributes.MOVEMENT_SPEED, 0.35f)//移速
                 .build();
     }
 
@@ -106,30 +104,46 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
         //攻击状态动画
         controllers.add(new AnimationController(this, "attackController",
                 0, this::attackPredicate));
+
     }
 
-    public void launchProjectileAt(ThrowableProjectile projectile) {
-        //计算朝向
-        float bodyFacingAngle = ((this.yBodyRot * Mth.PI) / 180F);
+public static class spawnTreeClawAtPointPositionGoal extends Goal {
+    private final YggdrasilEntity yggdrasil;
+    private int shootInterval;
 
-        //计算发射位置
-        double sx = this.getX() + (Mth.cos(bodyFacingAngle) * 0.65D);
-        double sy = this.getY() + (this.getBbHeight() * 0.82D);
-        double sz = this.getZ() + (Mth.sin(bodyFacingAngle) * 0.65D);
-
-        //目标位置与发射位置的偏移量
-        double tx = Objects.requireNonNull(this.getTarget()).getX() - sx;
-        double ty = (this.getTarget().getBoundingBox().minY + this.getTarget().getBbHeight() / 2.0F) - (this.getY() + this.getBbHeight() / 2.0F);
-        double tz = this.getTarget().getZ() - sz;
-//      声音，有声音了再加
-//        this.playSound(TCRSounds.LICH_SHOOT.get(), this.getSoundVolume(), (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F);
-
-        projectile.moveTo(sx, sy, sz, this.getYRot(), this.getXRot());
-        projectile.shoot(tx, ty, tz, 1.5F, 1.0F);
-
-        this.level().addFreshEntity(projectile);
+    public spawnTreeClawAtPointPositionGoal(YggdrasilEntity yggdrasil) {
+        this.yggdrasil = yggdrasil;
+        shootInterval = 60;
     }
 
+    @Override
+    public boolean canUse() {
+        return --this.shootInterval <= 0;
+    }
+
+
+    @Override
+    public void start() {
+        LivingEntity target = this.yggdrasil.getTarget();
+        if (target != null) {
+            System.out.println("wHYnot !!?");
+            double x = target.getX();
+            double y = target.getY();
+            double z = target.getZ();
+            tree_clawEntity treeClaw = new tree_clawEntity(this.yggdrasil.level(), this.yggdrasil);
+//        this.yggdrasil.playSound(this.sunSpirit.getShootSound(), 1.0F, this.sunSpirit.level().getRandom().nextFloat() - this.sunSpirit.level().getRandom().nextFloat() * 0.2F + 1.2F);
+            treeClaw.setPos(x,y+1,z);
+            yggdrasil.level().addFreshEntity(treeClaw);
+            this.shootInterval = (int) 60;
+        }
+        else System.out.println("fuck !!!!!!!!!!!!!!!");
+    }
+
+    @Override
+    public boolean requiresUpdateEveryTick() {
+        return true;
+    }
+}
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
         if(tAnimationState.isMoving()) {//播放移动动画
@@ -152,6 +166,19 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
         return TCRModSounds.YGGDRASIL_AMBIENT_SOUND.get();
     }
 
+    @Override
+    public void playAmbientSound() {
+        playSound(getAmbientSound());
+        super.playAmbientSound();
+    }
+
+
+    @Override
+    protected void playHurtSound(DamageSource p_21493_) {
+        this.playSound(TCRModSounds.YGGDRASIL_CRY.get());
+        super.playHurtSound(p_21493_);
+    }
+
 
     @Override
     public boolean isDeadOrDying() {
@@ -166,8 +193,8 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
     }
     protected void registerGoals() {//设置生物行为
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(2,new LaunchTreeClawGoal(this));
-       this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.2D, false));
+        this.goalSelector.addGoal(2,new spawnTreeClawAtPointPositionGoal(this));
+//       this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.2D, false));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 
@@ -180,7 +207,6 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
          * 如果是Creeper，则与村民逻辑相同，但优先级低于村民（按需修改）
          * */
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
-//        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this,AbstractVillager.class,true));
     }

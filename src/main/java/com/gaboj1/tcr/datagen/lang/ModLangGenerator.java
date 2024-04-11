@@ -257,6 +257,10 @@ public class ModLangGenerator extends ModLangProvider {
         this.addSubtitle(TCRModSounds.TREE_MONSTERS_DEATH,"树怪死亡");
         this.addSubtitle(TCRModSounds.TREE_MONSTERS_HURT,"树怪受伤");
         this.addSubtitle(TCRModSounds.YGGDRASIL_AMBIENT_SOUND,"伊格德拉希尔叫声");
+        this.addSubtitle(TCRModSounds.YGGDRASIL_CRY,"伊格德拉希尔:嚎啕大哭");
+        this.addSubtitle(TCRModSounds.YGGDRASIL_ATTACK_ONE,"伊格德拉希尔:发起攻击");
+        this.addSubtitle(TCRModSounds.YGGDRASIL_ATTACK_TWO,"伊格德拉希尔:发起攻击");
+        this.addSubtitle(TCRModSounds.YGGDRASIL_RECOVER_LAUGHTER,"伊格德拉希尔:治愈一笑");
         this.addSubtitle(TCRModSounds.FEMALE_VILLAGER_HELLO, "女村民：你好");
         this.addSubtitle(TCRModSounds.FEMALE_VILLAGER_EI, "女村民：嗯");
         this.addSubtitle(TCRModSounds.FEMALE_VILLAGER_HI, "女村民：嗨");

@@ -47,7 +47,7 @@ public class TreeGuardianEntity extends IronGolem implements GeoEntity {
                 .add(Attributes.MAX_HEALTH, 100.0D)//最大血量
                 .add(Attributes.ATTACK_DAMAGE, 6.0f)//单次攻击伤害
                 .add(Attributes.ATTACK_SPEED, 1.0f)//攻速
-                .add(Attributes.MOVEMENT_SPEED, 0.4f)//移速
+                .add(Attributes.MOVEMENT_SPEED, 0.35f)//移速
                 .build();
     }
 

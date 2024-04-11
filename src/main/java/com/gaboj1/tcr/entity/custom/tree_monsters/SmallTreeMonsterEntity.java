@@ -47,7 +47,7 @@ public class SmallTreeMonsterEntity extends TamableAnimal implements GeoEntity ,
                 .add(Attributes.MAX_HEALTH, 8D)
                 .add(Attributes.ATTACK_DAMAGE, 3.0f)
                 .add(Attributes.ATTACK_SPEED, 1.0f)
-                .add(Attributes.MOVEMENT_SPEED, 0.4f)
+                .add(Attributes.MOVEMENT_SPEED, 0.3f)
                 .build();
     }
     @Override

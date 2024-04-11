@@ -14,6 +14,11 @@ public final class TCRModSounds {
 	public static final RegistryObject<SoundEvent> TREE_MONSTERS_DEATH = createEvent("entity.tcr.tree_monsters_death");
 	public static final RegistryObject<SoundEvent> TREE_MONSTERS_HURT = createEvent("entity.tcr.tree_monsters_hurt");
 	public static final RegistryObject<SoundEvent> YGGDRASIL_AMBIENT_SOUND = createEvent("entity.tcr.first_boss_ambient_sound");
+	public static final RegistryObject<SoundEvent> YGGDRASIL_ATTACK_ONE = createEvent("entity.tcr.first_boss_attack1");
+	public static final RegistryObject<SoundEvent> YGGDRASIL_ATTACK_TWO = createEvent("entity.tcr.first_boss_attack2");
+	public static final RegistryObject<SoundEvent> YGGDRASIL_CRY = createEvent("entity.tcr.first_boss_cry");
+
+	public static final RegistryObject<SoundEvent> YGGDRASIL_RECOVER_LAUGHTER = createEvent("entity.tcr.first_boss_recover_laughter");
 	public static final RegistryObject<SoundEvent> FEMALE_VILLAGER_HELLO = createEvent("entity.tcr.female_villager_hello");
 	public static final RegistryObject<SoundEvent> FEMALE_VILLAGER_EI = createEvent("entity.tcr.female_villager_ei");
 	public static final RegistryObject<SoundEvent> FEMALE_VILLAGER_HI = createEvent("entity.tcr.female_villager_hi");
