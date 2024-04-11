@@ -30,9 +30,9 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.EnumSet;
 import java.util.Random;
@@ -44,7 +44,7 @@ import java.util.Random;
  */
 public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity {
 
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     //0 代表 正常，1代表闭眼，2代表跑动、受攻击 > <
     private FaceID faceID = FaceID.IDLE;

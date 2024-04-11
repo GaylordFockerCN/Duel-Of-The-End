@@ -5,12 +5,14 @@ import com.gaboj1.tcr.block.renderer.PortalBedRenderer;
 import com.gaboj1.tcr.entity.client.boss.YggdrasilRenderer;
 import com.gaboj1.tcr.entity.client.boss.tree_clawRenderer;
 import com.gaboj1.tcr.entity.client.dreamspirit.JellyCatRenderer;
+import com.gaboj1.tcr.entity.client.dreamspirit.SquirrelRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.MiddleTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.SmallTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.TreeGuardianRenderer;
 import com.gaboj1.tcr.entity.client.villager.TCRVillagerRenderer;
 import com.gaboj1.tcr.entity.custom.Yggdrasil.YggdrasilEntity;
 import com.gaboj1.tcr.entity.custom.dreamspirit.JellyCat;
+import com.gaboj1.tcr.entity.custom.dreamspirit.Squirrel;
 import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
@@ -147,6 +149,7 @@ public class TheCasketOfReveriesMod {
             EntityRenderers.register(TCRModEntities.TREE_GUARDIAN.get(), TreeGuardianRenderer::new);
             EntityRenderers.register(TCRModEntities.SMALL_TREE_MONSTER.get(), SmallTreeMonsterRenderer::new);
             EntityRenderers.register(TCRModEntities.JELLY_CAT.get(), JellyCatRenderer::new);
+            EntityRenderers.register(TCRModEntities.SQUIRREL.get(), SquirrelRenderer::new);
 
             EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), TCRVillagerRenderer::new);
             EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER1.get(), TCRVillagerRenderer::new);
@@ -165,6 +168,7 @@ public class TheCasketOfReveriesMod {
             event.put(TCRModEntities.TREE_GUARDIAN.get(), TreeGuardianEntity.setAttributes());//设置生物属性功能在此被调用
             event.put(TCRModEntities.MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterEntity.setAttributes());
             event.put(TCRModEntities.JELLY_CAT.get(), JellyCat.setAttributes());
+            event.put(TCRModEntities.SQUIRREL.get(), Squirrel.setAttributes());
             event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(),PastoralPlainVillager.setAttributes());
             event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER1.get(),PastoralPlainVillager.setAttributes());
             event.put(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1.get(), PastoralPlainTalkableVillager1.setAttributes());
@@ -183,6 +187,8 @@ public class TheCasketOfReveriesMod {
                     PastoralPlainVillagerElder::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 
             event.register(TCRModEntities.JELLY_CAT.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    JellyCat::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+            event.register(TCRModEntities.SQUIRREL.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                     JellyCat::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 
             event.register(TCRModEntities.SMALL_TREE_MONSTER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
