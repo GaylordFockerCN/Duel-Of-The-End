@@ -38,8 +38,10 @@ public class TreeClawEntity extends Mob implements GeoEntity {
         this.target = target;
         catchTimer = catchTimerMax;
         isCatching = false;
-        setNoGravity(true);
-        catchPlayer();
+        setNoAi(true);
+//        if(world instanceof ServerLevel){
+//            catchPlayer();
+//        }
     }
 
     public static AttributeSupplier setAttributes() {
@@ -54,11 +56,11 @@ public class TreeClawEntity extends Mob implements GeoEntity {
         catchTimer--;
         if(catchTimer < 0 && !isCatching && this.target != null && !level().isClientSide && checkHit(target.getOnPos(),1)){
             target.hurt(level().damageSources().magic(),10f);
-            target.setSpeed(0);// TODO 禁锢
+            target.setSpeed(0);// TODO 禁锢。实在不行就加个缓慢效果
             isCatching = true;
         }
         if(catchTimer < -catchTimerMax * 10){
-            this.discard();
+            this.discard();//时间够久就自毁
         }
     }
     public boolean checkHit(BlockPos pos1, int offSet){

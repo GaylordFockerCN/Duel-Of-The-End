@@ -6,7 +6,6 @@ import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -79,7 +78,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
     public void die(DamageSource p_21014_) {
         super.die(p_21014_);
         if (this.level() instanceof ServerLevel server){
-        this.getBossBar().setProgress(0.0F);
+            this.getBossBar().setProgress(0.0F);
         }
     }
 
@@ -91,6 +90,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
         return super.hurt(p_21016_, p_21017_);
     }
 
+    //时间过了就恢复无敌状态
     @Override
     public void tick() {
         super.tick();
@@ -102,15 +102,11 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
         }
     }
 
+    //特定机制下（比如树爪被破坏）才能被打
     public void setCanBeHurt() {
         this.canBeHurt = true;
         hurtTimer = hurtTimerMax;
     }
-
-    public SoundSource getSoundSource() {
-        return SoundSource.HOSTILE;
-    }
-
 
     public static AttributeSupplier setAttributes() {//生物属性
         return Animal.createMobAttributes()
@@ -125,16 +121,16 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         //非攻击状态动画
-        controllers.add(new AnimationController(this, "controller",
+        controllers.add(new AnimationController<>(this, "controller",
                 0, this::predicate));
 
         //攻击状态动画
-        controllers.add(new AnimationController(this, "attackController",
+        controllers.add(new AnimationController<>(this, "attackController",
                 0, this::attackPredicate));
 
     }
 
-public class spawnTreeClawAtPointPositionGoal extends Goal {
+public static class spawnTreeClawAtPointPositionGoal extends Goal {
     private final YggdrasilEntity yggdrasil;
     private int shootInterval;
 
@@ -154,7 +150,6 @@ public class spawnTreeClawAtPointPositionGoal extends Goal {
         LivingEntity target = this.yggdrasil.getTarget();
 //        YggdrasilEntity.this.level().getNearbyPlayers(); TODO 换成群伤
         if (target instanceof Player player) {
-            System.out.println("wHYnot !!?");
             double x = target.getX();
             double y = target.getY();
             double z = target.getZ();
@@ -162,9 +157,10 @@ public class spawnTreeClawAtPointPositionGoal extends Goal {
 //        this.yggdrasil.playSound(this.sunSpirit.getShootSound(), 1.0F, this.sunSpirit.level().getRandom().nextFloat() - this.sunSpirit.level().getRandom().nextFloat() * 0.2F + 1.2F);
             treeClaw.setPos(x,y+1,z);
             yggdrasil.level().addFreshEntity(treeClaw);
-            this.shootInterval = 60;
+            treeClaw.catchPlayer();
+
         }
-        else System.out.println("fuck !!!!!!!!!!!!!!!");
+        this.shootInterval = 60;
     }
 
     @Override
@@ -213,7 +209,7 @@ public class spawnTreeClawAtPointPositionGoal extends Goal {
     }
     protected void registerGoals() {//设置生物行为
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(2,new spawnTreeClawAtPointPositionGoal(this));
+        this.goalSelector.addGoal(2, new spawnTreeClawAtPointPositionGoal(this));
 //       this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.2D, false));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
