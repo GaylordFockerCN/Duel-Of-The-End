@@ -93,7 +93,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
             super.hurt(damageSource, v);
         }
         if(!canBeHurt){
-            if(damageSource.getEntity() instanceof Player player){
+            if(damageSource.getEntity() instanceof ServerPlayer player){
                 player.displayClientMessage(Component.translatable("info.the_casket_of_reveries.boss1invincible"),true);
             }
             return false;
