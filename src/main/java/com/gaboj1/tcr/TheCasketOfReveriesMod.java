@@ -1,9 +1,10 @@
 package com.gaboj1.tcr;
+
 import com.gaboj1.tcr.block.entity.client.PortalBlockRenderer;
 import com.gaboj1.tcr.block.renderer.BetterStructureBlockRenderer;
 import com.gaboj1.tcr.block.renderer.PortalBedRenderer;
-import com.gaboj1.tcr.entity.client.boss.YggdrasilRenderer;
 import com.gaboj1.tcr.entity.client.boss.TreeClawRenderer;
+import com.gaboj1.tcr.entity.client.boss.YggdrasilRenderer;
 import com.gaboj1.tcr.entity.client.dreamspirit.JellyCatRenderer;
 import com.gaboj1.tcr.entity.client.dreamspirit.SquirrelRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.MiddleTreeMonsterRenderer;
@@ -53,6 +54,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -61,10 +63,15 @@ import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.Locale;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import static com.gaboj1.tcr.worldgen.biome.BiomeMap.README;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(TheCasketOfReveriesMod.MOD_ID)
@@ -111,10 +118,29 @@ public class TheCasketOfReveriesMod {
 
     private void commonSetup(final FMLCommonSetupEvent event){
         TCRPacketHandler.register();
-
         event.enqueueWork(() -> {
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.getId(), TCRModBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER);
         });
+        try{
+            File dir = FMLPaths.CONFIGDIR.get().resolve(TheCasketOfReveriesMod.MOD_ID).toFile();
+            if(!dir.exists()){
+                System.out.println("creating dir : "+dir.mkdirs());
+            }
+            File readme = new File(README);
+            if(!readme.exists()){
+                System.out.println("creating ReadMe : "+readme.createNewFile());
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(readme))) {
+                    writer.write("图片请命名为“map.png”，透明为空域其余为大陆。建议图片大小1600x1600（但是加载比较缓慢）。可以在config/the_casket_of_reveries-common.toml中设置是否使用缩放，如果开启则地图大小固定，图片越大锯齿越少。图片不存在则按默认预设生成地图。\n" +
+                            "\n" +
+                            "Please name the image \"map. png\", with transparent indicating airspace and the rest indicating mainland. Suggest an image size of 1600x1600(However, loading is relatively slow). You can set whether to use scaling in config/the_casket_of_reveries-common.toml. If enabled, the map size is fixed, and the larger the image, the less jagged it will be. If the image does not exist, generate a map according to the default preset.");
+                }
+                System.out.println("created.");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
     }
 
     // Add the example block item to the building blocks tab

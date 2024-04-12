@@ -2,13 +2,17 @@ package com.gaboj1.tcr.worldgen.biome;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.InputStream;
 import java.util.Random;
 
 /**
@@ -76,7 +80,7 @@ public class BiomeMap {
     boolean isImage;
 
     public static final String DIR = "config/"+TheCasketOfReveriesMod.MOD_ID+"/";
-    public static final String README = DIR+"图片请命名为“map.png”，近透明或白色为空域其余为大陆。建议地图大小320x320。图片不存在则按默认预设生成地图";
+    public static final String README = DIR+"MAP_README以图生图注意事项.txt";
     public static final String FILE = DIR+"map.png";
 
     public static BiomeMap getInstance(){
@@ -99,17 +103,19 @@ public class BiomeMap {
     public double[][] createImageMap(NoiseMapGenerator generator){
 
         try {
-            File dir = new File(DIR);
-            if(!dir.exists()){
-                System.out.println("mkdir:"+dir.mkdirs());
-            }
-            System.out.println(dir.getAbsolutePath());
-            File readme = new File(README);
-            if(!readme.exists()){
-                System.out.println("mk ReadMe:"+readme.createNewFile());
-            }
+//            File dir = new File(DIR);
 
-            BufferedImage image = ImageIO.read(new File(FILE));
+
+            File file = new File(FILE);
+            BufferedImage image;
+            if(!file.exists()){//如果自定义地图图片不存在则用资源包自带的默认地图生成
+                ResourceManager manager = Minecraft.getInstance().getResourceManager();
+                InputStream inputStream = manager.getResource(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"default_map.png")).get().open();
+                image = ImageIO.read(inputStream);
+                System.out.println("reading default_map");
+            }else {
+                image = ImageIO.read(file);
+            }
             int height = image.getHeight();
             int width = image.getWidth();
             double[][] map = new double[height][width];
@@ -127,10 +133,12 @@ public class BiomeMap {
 
         } catch (Exception e) {
             //FIXME 想办法输出信息
-            System.out.println("维度地图图片\""+FILE+"\"文件异常！将以默认预设生成地图");
+            e.printStackTrace();
+            System.out.println("维度地图图片文件异常！将以默认预设生成地图");
             if(!GraphicsEnvironment.isHeadless())
-                JOptionPane.showMessageDialog(null,"维度地图图片\""+FILE+"\"文件异常！将以默认预设生成地图","The Casket Of Reveries：提示",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,"维度地图图片文件异常！将以默认预设生成地图","The Casket Of Reveries：提示",JOptionPane.INFORMATION_MESSAGE);
             isImage = false;
+            //如果还是不行就输出默认噪声地图
             return createNoiseMap(generator);
         }
     }
