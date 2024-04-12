@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.worldgen.structure;
 
+import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 
 import java.awt.Point;
@@ -10,6 +11,7 @@ public enum EnumStructures {
     FINAL(2, 26, 26),
     CHURCH(2,0,0),
     SWORD(2,0,12),
+    VILLAGE1(2,0,0),
     FLOWER_ALTAR();
 
     int size = 0;
@@ -43,9 +45,9 @@ public enum EnumStructures {
             case FINAL: point = provider.getMainCenter();break;
             case CHURCH: point = provider.getCenter1();break;
             case SWORD: point = provider.getCenter2();break;
+            case VILLAGE1: point = BiomeMap.getInstance().getVillage1();break;
             default:point = new Point(0,0);
         }
-
         return point;
     }
 

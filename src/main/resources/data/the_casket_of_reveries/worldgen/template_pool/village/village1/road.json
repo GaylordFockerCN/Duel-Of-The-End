@@ -18,7 +18,7 @@
 			"element_type": "minecraft:single_pool_element"
 		}
 	},{
-		"weight": 2,
+		"weight": 1,
 		"element": {
 			"location": "the_casket_of_reveries:village/village1/road/village1_ljoint",
 			"processors": "minecraft:empty",

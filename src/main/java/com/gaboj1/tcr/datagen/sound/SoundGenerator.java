@@ -28,10 +28,17 @@ public class SoundGenerator extends TCRSoundProvider {
         this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_HENG, "entity/female_villager/heng", 2);
         this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_DEATH, "entity/female_villager/female_die", 1);
         this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_HURT, "entity/female_villager/female_hurt", 3);
+        this.generateNewSoundWithSubtitle(TCRModSounds.FEMALE_VILLAGER_OHAYO, "entity/female_villager/female_ohayo", 1);
         this.generateNewSoundWithSubtitle(TCRModSounds.JELLY_CAT_AMBIENT, "entity/jelly_cat/jelly_cat_ambient", 4);
         this.generateNewSoundWithSubtitle(TCRModSounds.JELLY_CAT_HURT, "entity/jelly_cat/jelly_cat_hurt", 1);
         this.generateNewSoundWithSubtitle(TCRModSounds.JELLY_CAT_DEATH, "entity/jelly_cat/jelly_cat_die", 1);
-
+        generateNewSoundWithSubtitle(TCRModSounds.MALE_DEATH, "entity/male_villager/male_death", 2);
+        generateNewSoundWithSubtitle(TCRModSounds.MALE_EYO, "entity/male_villager/male_eyo", 1);
+        generateNewSoundWithSubtitle(TCRModSounds.MALE_GET_HURT, "entity/male_villager/male_get_hurt", 3);
+        generateNewSoundWithSubtitle(TCRModSounds.MALE_HELLO, "entity/male_villager/male_hello", 2);
+        generateNewSoundWithSubtitle(TCRModSounds.MALE_HENG, "entity/male_villager/male_heng", 1);
+        generateNewSoundWithSubtitle(TCRModSounds.MALE_HI, "entity/male_villager/male_hi", 2);
+        generateNewSoundWithSubtitle(TCRModSounds.MALE_SIGH, "entity/male_villager/male_sigh", 1);
 //        this.generateExistingSoundWithSubtitle(TFSounds.ACID_RAIN_BURNS, SoundEvents.FIRE_EXTINGUISH);
 //        this.generateNewSoundWithSubtitle(TFSounds.ALPHA_YETI_ALERT, "mob/alpha_yeti/alert", 1);
 //        this.generateNewSoundWithSubtitle(TFSounds.ALPHA_YETI_DEATH, "mob/alpha_yeti/death", 1);

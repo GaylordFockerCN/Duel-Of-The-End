@@ -1,20 +1,15 @@
 
 package com.gaboj1.tcr.entity.custom;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.datagen.ModAdvancementData;
-import com.gaboj1.tcr.headshot.BoundingBoxManager;
-import com.gaboj1.tcr.headshot.IHeadshotBox;
+import com.gaboj1.tcr.util.headshot.BoundingBoxManager;
+import com.gaboj1.tcr.util.headshot.IHeadshotBox;
 import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.init.TCRModItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.client.resources.language.I18n;
-import net.minecraft.commands.CommandSource;
-import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;

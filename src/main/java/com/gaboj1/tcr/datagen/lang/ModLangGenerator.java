@@ -270,6 +270,14 @@ public class ModLangGenerator extends ModLangProvider {
         this.addSubtitle(TCRModSounds.FEMALE_VILLAGER_HENG, "女村民：哼");
         this.addSubtitle(TCRModSounds.FEMALE_VILLAGER_DEATH, "女性村民死亡");
         this.addSubtitle(TCRModSounds.FEMALE_VILLAGER_HURT, "女性村民受伤");
+        this.addSubtitle(TCRModSounds.FEMALE_VILLAGER_OHAYO, "女性村民：早上好");
+        this.addSubtitle(TCRModSounds.MALE_DEATH, "男村民死亡");
+        this.addSubtitle(TCRModSounds.MALE_HI, "男村民：嗨");
+        this.addSubtitle(TCRModSounds.MALE_EYO, "男村民：哟！");
+        this.addSubtitle(TCRModSounds.MALE_GET_HURT, "男村民受伤");
+        this.addSubtitle(TCRModSounds.MALE_HENG, "男村民：哼");
+        this.addSubtitle(TCRModSounds.MALE_SIGH, "男村民：叹气");
+        this.addSubtitle(TCRModSounds.MALE_HELLO, "男村民：你好");
         this.addSubtitle(TCRModSounds.JELLY_CAT_AMBIENT, "猫猫果冻叫声");
         this.addSubtitle(TCRModSounds.JELLY_CAT_HURT, "猫猫果冻受伤");
         this.addSubtitle(TCRModSounds.JELLY_CAT_DEATH, "猫猫果冻死亡");

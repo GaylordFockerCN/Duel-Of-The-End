@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.headshot;
+package com.gaboj1.tcr.util.headshot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.AABB;
 

@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.headshot;
+package com.gaboj1.tcr.util.headshot;
 //import com.mrcrayfish.guns.Config;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;

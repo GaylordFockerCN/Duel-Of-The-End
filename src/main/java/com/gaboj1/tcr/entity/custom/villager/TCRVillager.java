@@ -113,8 +113,8 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        SoundEvent sound = TCRModSounds.FEMALE_VILLAGER_HI.get();
-        int i = random.nextInt(5);
+        SoundEvent sound = TCRModSounds.FEMALE_VILLAGER_OHAYO.get();
+        int i = random.nextInt(6);
         sound = switch (i) {
             case 0 -> TCRModSounds.FEMALE_VILLAGER_HI.get();
             case 1 -> TCRModSounds.FEMALE_VILLAGER_HELLO.get();
@@ -123,7 +123,16 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
             case 4 -> TCRModSounds.FEMALE_VILLAGER_EI.get();
             default -> sound;
         };
-        return skinID < 0 ? sound : super.getAmbientSound();
+        SoundEvent sound2 = TCRModSounds.MALE_HELLO.get();
+        int j = random.nextInt(5);
+        sound2 = switch (j) {
+            case 0 -> TCRModSounds.MALE_EYO.get();
+            case 1 -> TCRModSounds.MALE_HI.get();
+            case 2 -> TCRModSounds.MALE_HENG.get();
+            case 3 -> TCRModSounds.MALE_SIGH.get();
+            default -> sound2;
+        };
+        return skinID < 0 ? sound : sound2;
     }
 
     @Override
@@ -131,12 +140,12 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
         if(pDamageSource.getEntity() instanceof Player player && this.isClientSide()) {
             talkFuck(player);
         }
-        return skinID < 0 ? TCRModSounds.FEMALE_VILLAGER_HURT.get() : SoundEvents.VILLAGER_HURT;
+        return skinID < 0 ? TCRModSounds.FEMALE_VILLAGER_HURT.get() : TCRModSounds.MALE_GET_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return skinID < 0 ?  TCRModSounds.FEMALE_VILLAGER_DEATH.get() : SoundEvents.VILLAGER_DEATH;
+        return skinID < 0 ?  TCRModSounds.FEMALE_VILLAGER_DEATH.get() : TCRModSounds.MALE_DEATH.get();
     }
 
     /**

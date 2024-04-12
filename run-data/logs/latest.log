@@ -1,47 +1,47 @@
-[124月2024 10:53:48.110] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\LZY\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.2.0, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, -mixin.config=the_casket_of_reveries.mixins.json, --mod, the_casket_of_reveries, --all, --output, E:\JavaProject\The-Casket-of-Reveries\src\generated\resources, --existing, E:\JavaProject\The-Casket-of-Reveries\src\main\resources, --mixin.config, the_casket_of_reveries.mixins.json]
-[124月2024 10:53:48.114] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.10 by Amazon.com Inc.; OS Windows 10 arch amd64 version 10.0
-[124月2024 10:53:48.221] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
-[124月2024 10:53:48.267] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/LZY/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23134!/ Service=ModLauncher Env=CLIENT
-[124月2024 10:53:48.552] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\LZY\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.2.0\7f9181f85acc66547685a72020713fc8cbde98\javafmllanguage-1.20.1-47.2.0.jar is missing mods.toml file
-[124月2024 10:53:48.559] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\LZY\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.2.0\7872f5205685fdd26fae39b1be79b0e60ca5b7bd\lowcodelanguage-1.20.1-47.2.0.jar is missing mods.toml file
-[124月2024 10:53:48.565] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\LZY\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.2.0\d501d161cabed08b3c139a2c6217b02a39f3c3e9\mclanguage-1.20.1-47.2.0.jar is missing mods.toml file
-[124月2024 10:53:48.571] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\LZY\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.2.0\ffd3c6debac0a388c9e33ac43c9f5eafb91cb466\fmlcore-1.20.1-47.2.0.jar is missing mods.toml file
-[124月2024 10:53:48.672] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: No dependencies to load found. Skipping!
-[124月2024 10:53:49.708] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
-[124月2024 10:53:49.714] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\LZY\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, the_casket_of_reveries, --all, --output, E:\JavaProject\The-Casket-of-Reveries\src\generated\resources, --existing, E:\JavaProject\The-Casket-of-Reveries\src\main\resources]
-[124月2024 10:53:49.785] [main/WARN] [mixin/]: Reference map 'the_casket_of_reveries.mixin-refmap.json' for the_casket_of_reveries.mixins.json could not be read. If this is a development environment you can ignore this message
-[124月2024 10:53:49.974] [main/INFO] [mixin/]: Remapping refMap geckolib.refmap.json using E:\JavaProject\The-Casket-of-Reveries\build\createSrgToMcp\output.srg
-[124月2024 10:53:50.276] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [the_casket_of_reveries]
-[124月2024 10:53:53.419] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.2.0, for MC 1.20.1 with MCP 20230612.114412
-[124月2024 10:53:53.421] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.2.0 Initialized
-[124月2024 10:53:53.550] [modloading-worker-0/WARN] [software.bernie.geckolib.GeckoLib/]: Minecraft.getInstance() was null, could not register reload listeners
-[124月2024 10:53:53.923] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/E:/JavaProject/The-Casket-of-Reveries/build/fg_cache/net/minecraftforge/forge/1.20.1-47.2.0_mapped_official_1.20.1/forge-1.20.1-47.2.0_mapped_official_1.20.1.jar%23193!/assets/.mcassetsroot' uses unexpected schema
-[124月2024 10:53:53.923] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/E:/JavaProject/The-Casket-of-Reveries/build/fg_cache/net/minecraftforge/forge/1.20.1-47.2.0_mapped_official_1.20.1/forge-1.20.1-47.2.0_mapped_official_1.20.1.jar%23193!/data/.mcassetsroot' uses unexpected schema
-[124月2024 10:53:54.068] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: the_casket_of_reveries
-[124月2024 10:53:54.206] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: the_casket_of_reveries finished after 137 ms
-[124月2024 10:53:54.206] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: the_casket_of_reveries
-[124月2024 10:53:54.215] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: the_casket_of_reveries finished after 9 ms
-[124月2024 10:53:54.216] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Languages: en_us
-[124月2024 10:53:54.219] [main/INFO] [net.minecraft.data.DataGenerator/]: Languages: en_us finished after 3 ms
-[124月2024 10:53:54.219] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Sound Definitions
-[124月2024 10:53:54.226] [main/INFO] [net.minecraft.data.DataGenerator/]: Sound Definitions finished after 6 ms
-[124月2024 10:53:54.227] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
-[124月2024 10:53:54.250] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 22 ms
-[124月2024 10:53:54.250] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
-[124月2024 10:53:54.333] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 82 ms
-[124月2024 10:53:54.333] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Advancements
-[124月2024 10:53:54.349] [main/INFO] [net.minecraft.data.DataGenerator/]: Advancements finished after 16 ms
-[124月2024 10:53:54.349] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: The Casket Of Reveries Entity Tags
-[124月2024 10:53:54.365] [main/INFO] [net.minecraft.data.DataGenerator/]: The Casket Of Reveries Entity Tags finished after 15 ms
-[124月2024 10:53:54.365] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id the_casket_of_reveries
-[124月2024 10:53:54.366] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id the_casket_of_reveries finished after 0 ms
-[124月2024 10:53:54.366] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id the_casket_of_reveries
-[124月2024 10:53:54.367] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id the_casket_of_reveries finished after 1 ms
-[124月2024 10:53:54.367] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:point_of_interest_type mod id the_casket_of_reveries
-[124月2024 10:53:54.369] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:point_of_interest_type mod id the_casket_of_reveries finished after 2 ms
-[124月2024 10:53:54.370] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: The Casket Of Reveries Biome Tags
-[124月2024 10:53:54.371] [main/INFO] [net.minecraft.data.DataGenerator/]: The Casket Of Reveries Biome Tags finished after 1 ms
-[124月2024 10:53:54.371] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Registries
-[124月2024 10:53:54.393] [main/INFO] [net.minecraft.data.DataGenerator/]: Registries finished after 22 ms
-[124月2024 10:53:54.393] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 325 ms
-[124月2024 10:53:54.404] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 162, old count: 162, new count: 163, removed stale: 0, written: 3
+[124月2024 23:43:34.669] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\LZY\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.2.0, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, -mixin.config=the_casket_of_reveries.mixins.json, --mod, the_casket_of_reveries, --all, --output, E:\JavaProject\The-Casket-of-Reveries\src\generated\resources, --existing, E:\JavaProject\The-Casket-of-Reveries\src\main\resources, --mixin.config, the_casket_of_reveries.mixins.json]
+[124月2024 23:43:34.679] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.10 by Amazon.com Inc.; OS Windows 10 arch amd64 version 10.0
+[124月2024 23:43:34.779] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
+[124月2024 23:43:34.820] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/LZY/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23134!/ Service=ModLauncher Env=CLIENT
+[124月2024 23:43:35.089] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\LZY\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.2.0\7f9181f85acc66547685a72020713fc8cbde98\javafmllanguage-1.20.1-47.2.0.jar is missing mods.toml file
+[124月2024 23:43:35.095] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\LZY\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.2.0\7872f5205685fdd26fae39b1be79b0e60ca5b7bd\lowcodelanguage-1.20.1-47.2.0.jar is missing mods.toml file
+[124月2024 23:43:35.126] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\LZY\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.2.0\d501d161cabed08b3c139a2c6217b02a39f3c3e9\mclanguage-1.20.1-47.2.0.jar is missing mods.toml file
+[124月2024 23:43:35.136] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\LZY\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.2.0\ffd3c6debac0a388c9e33ac43c9f5eafb91cb466\fmlcore-1.20.1-47.2.0.jar is missing mods.toml file
+[124月2024 23:43:35.252] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: No dependencies to load found. Skipping!
+[124月2024 23:43:36.632] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
+[124月2024 23:43:36.636] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\LZY\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, the_casket_of_reveries, --all, --output, E:\JavaProject\The-Casket-of-Reveries\src\generated\resources, --existing, E:\JavaProject\The-Casket-of-Reveries\src\main\resources]
+[124月2024 23:43:36.689] [main/WARN] [mixin/]: Reference map 'the_casket_of_reveries.mixin-refmap.json' for the_casket_of_reveries.mixins.json could not be read. If this is a development environment you can ignore this message
+[124月2024 23:43:36.921] [main/INFO] [mixin/]: Remapping refMap geckolib.refmap.json using E:\JavaProject\The-Casket-of-Reveries\build\createSrgToMcp\output.srg
+[124月2024 23:43:37.181] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [the_casket_of_reveries]
+[124月2024 23:43:40.442] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.2.0, for MC 1.20.1 with MCP 20230612.114412
+[124月2024 23:43:40.444] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.2.0 Initialized
+[124月2024 23:43:40.583] [modloading-worker-0/WARN] [software.bernie.geckolib.GeckoLib/]: Minecraft.getInstance() was null, could not register reload listeners
+[124月2024 23:43:41.022] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/E:/JavaProject/The-Casket-of-Reveries/build/fg_cache/net/minecraftforge/forge/1.20.1-47.2.0_mapped_official_1.20.1/forge-1.20.1-47.2.0_mapped_official_1.20.1.jar%23193!/assets/.mcassetsroot' uses unexpected schema
+[124月2024 23:43:41.022] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/E:/JavaProject/The-Casket-of-Reveries/build/fg_cache/net/minecraftforge/forge/1.20.1-47.2.0_mapped_official_1.20.1/forge-1.20.1-47.2.0_mapped_official_1.20.1.jar%23193!/data/.mcassetsroot' uses unexpected schema
+[124月2024 23:43:41.189] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: the_casket_of_reveries
+[124月2024 23:43:41.307] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: the_casket_of_reveries finished after 117 ms
+[124月2024 23:43:41.307] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: the_casket_of_reveries
+[124月2024 23:43:41.316] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: the_casket_of_reveries finished after 8 ms
+[124月2024 23:43:41.316] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Languages: en_us
+[124月2024 23:43:41.320] [main/INFO] [net.minecraft.data.DataGenerator/]: Languages: en_us finished after 3 ms
+[124月2024 23:43:41.320] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Sound Definitions
+[124月2024 23:43:41.328] [main/INFO] [net.minecraft.data.DataGenerator/]: Sound Definitions finished after 8 ms
+[124月2024 23:43:41.329] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
+[124月2024 23:43:41.352] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 23 ms
+[124月2024 23:43:41.352] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
+[124月2024 23:43:41.421] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 68 ms
+[124月2024 23:43:41.421] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Advancements
+[124月2024 23:43:41.434] [main/INFO] [net.minecraft.data.DataGenerator/]: Advancements finished after 12 ms
+[124月2024 23:43:41.434] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: The Casket Of Reveries Entity Tags
+[124月2024 23:43:41.446] [main/INFO] [net.minecraft.data.DataGenerator/]: The Casket Of Reveries Entity Tags finished after 11 ms
+[124月2024 23:43:41.446] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id the_casket_of_reveries
+[124月2024 23:43:41.447] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id the_casket_of_reveries finished after 0 ms
+[124月2024 23:43:41.447] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id the_casket_of_reveries
+[124月2024 23:43:41.448] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id the_casket_of_reveries finished after 0 ms
+[124月2024 23:43:41.448] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:point_of_interest_type mod id the_casket_of_reveries
+[124月2024 23:43:41.450] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:point_of_interest_type mod id the_casket_of_reveries finished after 1 ms
+[124月2024 23:43:41.450] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: The Casket Of Reveries Biome Tags
+[124月2024 23:43:41.451] [main/INFO] [net.minecraft.data.DataGenerator/]: The Casket Of Reveries Biome Tags finished after 1 ms
+[124月2024 23:43:41.451] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Registries
+[124月2024 23:43:41.471] [main/INFO] [net.minecraft.data.DataGenerator/]: Registries finished after 19 ms
+[124月2024 23:43:41.471] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 282 ms
+[124月2024 23:43:41.481] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 162, old count: 163, new count: 163, removed stale: 0, written: 2

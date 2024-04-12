@@ -142,8 +142,6 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
 
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-
-//        System.out.println("get");
         consumer.accept(new IClientItemExtensions() {
             private TreeSpiritWandRenderer renderer;
             @Override
