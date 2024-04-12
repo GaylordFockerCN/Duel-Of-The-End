@@ -1,7 +1,6 @@
 package com.gaboj1.tcr.item.custom.boss_loot;
 
 import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.datagen.ModAdvancementData;
 import com.gaboj1.tcr.init.TCRModBlocks;
 import com.gaboj1.tcr.init.TCRModEntities;
@@ -9,15 +8,11 @@ import com.gaboj1.tcr.item.renderer.TreeSpiritWandRenderer;
 import com.gaboj1.tcr.util.ItemUtil;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -50,6 +45,10 @@ import software.bernie.geckolib.util.RenderUtils;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * 右键空气消耗饱食度来回血
+ * 右键方块消耗原木和生命召唤小树怪
+ */
 public class TreeSpiritWand extends MagicWeapon implements GeoItem {
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);

@@ -4,26 +4,52 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.*;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 
-public class HolySword extends MagicWeapon {
+/**
+ * 随着速度增大而加伤
+ * 右键地面引雷
+ * 可选附魔引雷
+ * 右键御剑飞行
+ */
+public class HolySword extends MagicWeapon implements GeoItem {
 
     private final float damage = 5.0f;
-
+    private boolean isFlying;
+    AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public HolySword() {
         super(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).defaultDurability(1428));
+    }
+
+    public boolean isFlying() {
+        return isFlying;
+    }
+
+    //御剑飞行
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        isFlying = !isFlying;
+        return super.use(level, player, hand);
     }
 
     //平A伤害调整
@@ -62,4 +88,17 @@ public class HolySword extends MagicWeapon {
 //        pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage3"));
     }
 
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        if(isFlying){
+
+        }else {
+
+        }
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
 }

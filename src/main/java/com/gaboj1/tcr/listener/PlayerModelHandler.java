@@ -1,8 +1,11 @@
 package com.gaboj1.tcr.listener;
+
 import com.gaboj1.tcr.item.custom.DesertEagleItem;
+import com.gaboj1.tcr.item.custom.boss_loot.HolySword;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -23,9 +26,13 @@ public class PlayerModelHandler {
         @SubscribeEvent
         public static void renderPlayer(PlayerModelEvent.SetupAngles.Post event) {
             Player player = event.getEntity();
+            Item mainHand = player.getMainHandItem().getItem();
+            Item offHand = player.getOffhandItem().getItem();
             boolean right = player.getMainArm() == HumanoidArm.RIGHT;
             PlayerModel model = event.getModelPlayer();
-            if(player.getMainHandItem().getItem() instanceof DesertEagleItem){
+
+            //持枪姿势
+            if(mainHand instanceof DesertEagleItem){
                 if(right){
                     model.rightArm.xRot = model.head.xRot + (float) Math.toRadians(-90);
                     model.rightArm.zRot = model.head.zRot;
@@ -37,7 +44,7 @@ public class PlayerModelHandler {
                 }
             }
 
-            if(player.getOffhandItem().getItem() instanceof DesertEagleItem){
+            if(offHand instanceof DesertEagleItem){
                 if(right){
                     model.leftArm.xRot = model.head.xRot + (float) Math.toRadians(-90);
                     model.leftArm.zRot = model.head.zRot;
@@ -49,6 +56,14 @@ public class PlayerModelHandler {
                 }
 
             }
+
+            //御剑飞行的姿势 TODO
+            if(mainHand instanceof HolySword mainHandSword && mainHandSword.isFlying()){
+
+            }else if(offHand instanceof HolySword offHandSword && offHandSword.isFlying()){
+
+            }
+
 
         }
 
