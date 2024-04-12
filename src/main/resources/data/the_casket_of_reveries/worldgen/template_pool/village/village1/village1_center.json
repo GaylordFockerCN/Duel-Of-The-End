@@ -6,7 +6,7 @@
 		"element": {
 			"location": "the_casket_of_reveries:village/village1/center/village1_center",
 			"processors": "minecraft:empty",
-			"projection": "terrain_matching",
+			"projection": "rigid",
 			"element_type": "minecraft:single_pool_element"
 		}
 	}]

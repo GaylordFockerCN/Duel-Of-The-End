@@ -164,8 +164,9 @@ public static class spawnTreeClawAtPointPositionGoal extends Goal {
         List<Player> players = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.DEFAULT, yggdrasil, getPlayerAABB(yggdrasil.getOnPos(),attackRange));
         for(Player target : players){
             TreeClawEntity treeClaw = new TreeClawEntity(this.yggdrasil.level(), this.yggdrasil, target);
-            treeClaw.setPos(target.getX(),target.getY()+1,target.getZ());
+            treeClaw.setPos(target.getX(),target.getY(),target.getZ());
             yggdrasil.level().addFreshEntity(treeClaw);//树爪继承自Mob，和平模式无法召唤！！
+            treeClaw.setDeltaMovement(target.getDeltaMovement().scale(0.1));//追一下
             treeClaw.catchPlayer();
             yggdrasil.level().playSound(null,treeClaw.getOnPos(), SoundEvents.PLAYER_HURT, SoundSource.BLOCKS,1.0f,1.0f);
         }
