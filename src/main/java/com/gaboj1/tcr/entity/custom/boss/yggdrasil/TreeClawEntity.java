@@ -20,12 +20,15 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import software.bernie.geckolib.util.RenderUtils;
 
+/**
+ * 树爪继承自Mob，和平模式无法召唤！！
+ */
 public class TreeClawEntity extends Mob implements GeoEntity {
     private YggdrasilEntity yggdrasilEntity;
     private Player target;
     private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private int catchTimer;
-    private final int catchTimerMax = 10;
+    private final int catchTimerMax = 20;//逃离时间
     private boolean isCatching;
     public TreeClawEntity(EntityType<? extends TreeClawEntity> p_37466_, Level p_37467_) {
          super(p_37466_, p_37467_);
@@ -56,10 +59,12 @@ public class TreeClawEntity extends Mob implements GeoEntity {
         catchTimer--;
         if(catchTimer < 0 && !isCatching && this.target != null && !level().isClientSide && checkHit(target.getOnPos(),1)){
             target.hurt(level().damageSources().magic(),10f);
-            target.setSpeed(0);// TODO 禁锢。实在不行就加个缓慢效果
             isCatching = true;
         }
-        if(catchTimer < -catchTimerMax * 20){
+        if(isCatching && this.target != null && !level().isClientSide){
+            target.teleportTo(target.getX(),target.getY(),target.getZ());
+        }
+        if(catchTimer < -catchTimerMax * 10){//禁锢十秒
             this.discard();//时间够久就自毁
         }
     }

@@ -44,7 +44,6 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
 
     private boolean canBeHurt;
     private int hurtTimer;
-    private final int hurtTimerMax = 200;
 
     public YggdrasilEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_);
@@ -89,11 +88,18 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
     }
 
     @Override
-    public boolean hurt(DamageSource p_21016_, float p_21017_) {
+    public boolean hurt(DamageSource damageSource, float v) {
+        if(damageSource.isCreativePlayer()){
+            super.hurt(damageSource, v);
+        }
         if(!canBeHurt){
+            if(damageSource.getEntity() instanceof Player player){
+                player.displayClientMessage(Component.translatable("info.the_casket_of_reveries.boss1invincible"),true);
+            }
             return false;
         }
-        return super.hurt(p_21016_, p_21017_);
+
+        return super.hurt(damageSource, v);
     }
 
     //时间过了就恢复无敌状态
@@ -111,7 +117,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
     //特定机制下（比如树爪被破坏）才能被打
     public void setCanBeHurt() {
         this.canBeHurt = true;
-        hurtTimer = hurtTimerMax;
+        hurtTimer = 200;
     }
 
     public static AttributeSupplier setAttributes() {//生物属性
@@ -139,12 +145,12 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
 public static class spawnTreeClawAtPointPositionGoal extends Goal {
     private final YggdrasilEntity yggdrasil;
     private int shootInterval;
-    public final int shootIntervalMax = 60;
+    public final int shootIntervalMax = 200;
     public static final int attackRange = 10;
 
     public spawnTreeClawAtPointPositionGoal(YggdrasilEntity yggdrasil) {
         this.yggdrasil = yggdrasil;
-        shootInterval = shootIntervalMax;
+//        shootInterval = shootIntervalMax;//开局就发射一个树爪，方便调试
     }
 
     @Override
@@ -159,7 +165,7 @@ public static class spawnTreeClawAtPointPositionGoal extends Goal {
         for(Player target : players){
             TreeClawEntity treeClaw = new TreeClawEntity(this.yggdrasil.level(), this.yggdrasil, target);
             treeClaw.setPos(target.getX(),target.getY()+1,target.getZ());
-            yggdrasil.level().addFreshEntity(treeClaw);
+            yggdrasil.level().addFreshEntity(treeClaw);//树爪继承自Mob，和平模式无法召唤！！
             treeClaw.catchPlayer();
             yggdrasil.level().playSound(null,treeClaw.getOnPos(), SoundEvents.PLAYER_HURT, SoundSource.BLOCKS,1.0f,1.0f);
         }

@@ -19,7 +19,7 @@ public class TreeClawRenderer extends GeoEntityRenderer<TreeClawEntity> {
 
     @Override
     public void render(TreeClawEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-        poseStack.scale(2f, 2f, 2f);
+        poseStack.scale(4f, 4f, 4f);
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 }
