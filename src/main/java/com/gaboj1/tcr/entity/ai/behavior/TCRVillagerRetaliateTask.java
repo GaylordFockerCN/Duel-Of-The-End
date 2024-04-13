@@ -59,11 +59,11 @@ public class TCRVillagerRetaliateTask extends Behavior<Mob> {
                     if(tcrVillager.distanceTo(target) > 5){
                         return;
                     }
+
+                //太远了不能造成伤害
                 }else if(!tcrVillager.isWithinMeleeAttackRange(target)){
                     return;
                 }
-                System.out.println("Chase0");
-                //男的和村长才会追（
 
                 tcrVillager.getLookControl().setLookAt(target ,30.0F, 30.0F);
                 tcrVillager.doHurtTarget(Objects.requireNonNull(target));
