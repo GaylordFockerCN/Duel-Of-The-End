@@ -18,6 +18,7 @@ import com.gaboj1.tcr.entity.custom.dreamspirit.Squirrel;
 import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
+import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainTalkableVillager1;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
@@ -196,8 +197,8 @@ public class TheCasketOfReveriesMod {
             event.put(TCRModEntities.MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterEntity.setAttributes());
             event.put(TCRModEntities.JELLY_CAT.get(), JellyCat.setAttributes());
             event.put(TCRModEntities.SQUIRREL.get(), Squirrel.setAttributes());
-            event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(),PastoralPlainVillager.setAttributes());
-            event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER1.get(),PastoralPlainVillager.setAttributes());
+            event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), TCRVillager.setAttributes());
+            event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER1.get(),TCRVillager.setAttributes());
             event.put(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1.get(), PastoralPlainTalkableVillager1.setAttributes());
             event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),PastoralPlainVillagerElder.setAttributes());
             event.put(TCRModEntities.YGGDRASIL.get(), YggdrasilEntity.setAttributes());

@@ -37,4 +37,17 @@ public class PacketRelay {
             return dimension;
         }), message);
     }
+
+//    public static void sendDelay(int delayMillis, Runnable runnable){
+//        new Thread(()->{
+//            try {
+//                Thread.sleep(delayMillis);//等两端实体数据互通完才能进行同步操作
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//            runnable.run();
+//        }).start();
+//
+//    }
+
 }

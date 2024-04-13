@@ -13,12 +13,10 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
@@ -33,7 +31,7 @@ public class TCRStationaryVillager extends TCRVillager implements NpcDialogue {
 
     protected boolean alreadyAddTrade = false;
 
-    public TCRStationaryVillager(EntityType<? extends Villager> pEntityType, Level pLevel, int skinID) {
+    public TCRStationaryVillager(EntityType<? extends TCRStationaryVillager> pEntityType, Level pLevel, int skinID) {
         super(pEntityType, pLevel,skinID);
     }
 
@@ -49,14 +47,14 @@ public class TCRStationaryVillager extends TCRVillager implements NpcDialogue {
         super.load(tag);
     }
 
-    @Override
-    protected void registerBrainGoals(Brain<Villager> pVillagerBrain) {
-
-    }
+//    @Override
+//    protected void registerBrainGoals(Brain<Villager> pVillagerBrain) {
+//
+//    }
 
     public static AttributeSupplier setAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 20.0D)//最大血量
+                .add(Attributes.MAX_HEALTH, 100.0D)//最大血量
                 .build();
     }
     @Override

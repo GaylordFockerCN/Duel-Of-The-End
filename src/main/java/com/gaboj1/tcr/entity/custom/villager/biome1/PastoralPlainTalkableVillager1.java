@@ -14,7 +14,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
@@ -31,7 +30,7 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
 
     EntityType<?> entityType = TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1.get();
 
-    public PastoralPlainTalkableVillager1(EntityType<? extends Villager> entityType, Level level) {
+    public PastoralPlainTalkableVillager1(EntityType<? extends PastoralPlainTalkableVillager1> entityType, Level level) {
         super(entityType, level,1);
     }
 

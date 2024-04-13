@@ -21,6 +21,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -36,15 +37,15 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     @Nullable
     private Player conversingPlayer;
 
-    public PastoralPlainVillagerElder(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
+    public PastoralPlainVillagerElder(EntityType<? extends PastoralPlainVillagerElder> pEntityType, Level pLevel) {
         super(pEntityType, pLevel, -114514);
 //        this.setItemInHand(InteractionHand.MAIN_HAND,TCRModItems.ELDER_STAFF.get().getDefaultInstance());
     }
 
     public static AttributeSupplier setAttributes() {//生物属性
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 50.0D)//最大血量
-                .add(Attributes.ATTACK_DAMAGE, 1.0f)//单次攻击伤害
+                .add(Attributes.MAX_HEALTH, 200.0D)//最大血量
+                .add(Attributes.ATTACK_DAMAGE, 10.0f)//单次攻击伤害
                 .add(Attributes.ATTACK_SPEED, 1.0f)//攻速
                 .add(Attributes.MOVEMENT_SPEED, 0.4f)//移速
                 .build();
@@ -52,6 +53,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new NpcDialogueGoal<>(this));
+        this.goalSelector.addGoal(4, new MoveTowardsRestrictionGoal(this, 0.35D));
         super.registerGoals();
     }
 
