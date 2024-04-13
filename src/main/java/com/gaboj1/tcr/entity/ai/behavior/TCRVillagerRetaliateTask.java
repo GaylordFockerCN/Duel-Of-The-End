@@ -25,14 +25,20 @@ public class TCRVillagerRetaliateTask extends Behavior<Mob> {
         super(ImmutableMap.of());
     }
 
+    /**
+     *
+     * @param serverLevel
+     * @param mob
+     * @return 村民生气或者有攻击目标
+     */
     @Override
     protected boolean checkExtraStartConditions(ServerLevel serverLevel, Mob mob) {
-        return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry());
+        return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry() || mob.getTarget()!=null);
     }
 
     @Override
     protected boolean canStillUse(ServerLevel serverLevel, Mob mob, long l) {
-        return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry());
+        return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry()|| mob.getTarget()!=null);
     }
 
     @Override
