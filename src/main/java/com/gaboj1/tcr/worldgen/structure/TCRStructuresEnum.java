@@ -5,7 +5,14 @@ import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 
 import java.awt.Point;
 
-public enum EnumStructures {
+/**
+ * 有新的建筑加进来只要在这里添加枚举类型即可，BiomeForceLandmark类和ChunkGenerator类会遍历这个枚举类型（顶级优化哈哈）
+ * 以后看看能不能优化成json里面直接写类型而不是写数字（EnumCodec还不会）
+ * @author LZY
+ * @see BiomeForcedLandmarkPlacement
+ * @see com.gaboj1.tcr.worldgen.dimension.TCRChunkGenerator
+ */
+public enum TCRStructuresEnum {
 
     //offset应为偏移的方块数量除以四。举例：FINAL偏移104格，应填26。
     FINAL(2, 26, 26),
@@ -18,9 +25,9 @@ public enum EnumStructures {
     int offsetX = 0;
     int offsetZ = 0;
 
-    EnumStructures() {
+    TCRStructuresEnum() {
     }
-    EnumStructures(int size, int offsetX, int offsetZ) {
+    TCRStructuresEnum(int size, int offsetX, int offsetZ) {
         this.size = size;
         this.offsetX = offsetX;
         this.offsetZ = offsetZ;

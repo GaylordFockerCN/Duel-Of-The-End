@@ -5,7 +5,6 @@ import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
 import com.gaboj1.tcr.worldgen.structure.BiomeForcedLandmarkPlacement;
-import com.gaboj1.tcr.worldgen.structure.EnumStructures;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -15,7 +14,6 @@ import net.minecraft.core.*;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.WorldGenRegion;
-import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.biome.Biome;
@@ -41,8 +39,6 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.function.Predicate;
-
-import static com.gaboj1.tcr.worldgen.structure.EnumStructures.CHURCH;
 
 public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
 

@@ -4,11 +4,8 @@ import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import com.gaboj1.tcr.worldgen.dimension.TCRChunkGenerator;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.chunk.ChunkGeneratorStructureState;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacementType;
@@ -40,7 +37,7 @@ public class BiomeForcedLandmarkPlacement extends StructurePlacement {
             int correctX = provider.getCorrectValue(chunkX << 2);
             int correctZ = provider.getCorrectValue(chunkZ << 2);
 
-            for(EnumStructures structure : EnumStructures.values()){
+            for(TCRStructuresEnum structure : TCRStructuresEnum.values()){
                 if(checkStructure(structure, structure.getPoint(provider), correctX, correctZ))
                     return true;
             }
@@ -51,7 +48,7 @@ public class BiomeForcedLandmarkPlacement extends StructurePlacement {
     }
 
     //判断该区块是否复合map所指定的结构的位置
-    private boolean checkStructure(EnumStructures structure, Point point, int correctX, int correctZ){
+    private boolean checkStructure(TCRStructuresEnum structure, Point point, int correctX, int correctZ){
 
         int deOffsetX = point.x - structure.getOffsetX();
         int deOffsetZ = point.y - structure.getOffsetZ();
