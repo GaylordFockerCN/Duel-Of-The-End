@@ -235,7 +235,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
         }
 
         //删除工作目标，增加自卫目标，其他和原版一致
-        pVillagerBrain.addActivity(Activity.CORE, TCRVillagerTasks.getGuardCorePackage(this));
+        pVillagerBrain.addActivity(Activity.CORE, TCRVillagerTasks.getGuardCorePackage());
 
         pVillagerBrain.addActivity(Activity.CORE, VillagerGoalPackages.getCorePackage(villagerprofession, 0.5F));
         pVillagerBrain.addActivityWithConditions(Activity.MEET, VillagerGoalPackages.getMeetPackage(villagerprofession, 0.5F), ImmutableSet.of(Pair.of(MemoryModuleType.MEETING_POINT, MemoryStatus.VALUE_PRESENT)));
