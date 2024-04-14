@@ -87,6 +87,8 @@ public class TCRModBlocks {
     //注意：拿在手上是没有完整模型的，这里偷懒了，本来应该新建一个物品类的。不过反正生存模式用不到，开发者才用得到，就懒得做了hh
     public static final RegistryObject<Block> PORTAL_BLOCK = registerBlock("portal_block",
             () -> new PortalBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(-1.0F, 3600000.0F).noOcclusion().noLootTable()));
+    public static final RegistryObject<Block> YGGDRASIL_BLOCK = registerBlock("yggdrasil_block",
+            () -> new PortalBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(-1.0F, 3600000.0F).noOcclusion().noLootTable()));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){

@@ -1,7 +1,9 @@
 package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
+import com.gaboj1.tcr.block.entity.spawner.EnforcedHomePoint;
 import com.gaboj1.tcr.init.TCRModSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
@@ -38,10 +40,11 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.List;
 
 
-public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
+public class YggdrasilEntity extends PathfinderMob implements GeoEntity, EnforcedHomePoint {
     private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.PINK, BossEvent.BossBarOverlay.PROGRESS);
 
+    private int shootInterval;
     private boolean canBeHurt;
     private int hurtTimer;
 
@@ -142,7 +145,24 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
 
     }
 
-public static class spawnTreeClawAtPointPositionGoal extends Goal {
+    @Override
+    public @Nullable GlobalPos getRestrictionPoint() {
+        return null;
+    }
+
+    @Override
+    public void setRestrictionPoint(@Nullable GlobalPos pos) {
+
+    }
+
+    @Override
+    public int getHomeRadius() {
+        return 0;
+    }
+
+
+
+    public static class spawnTreeClawAtPointPositionGoal extends Goal {
     private final YggdrasilEntity yggdrasil;
     private int shootInterval;
     public final int shootIntervalMax = 200;

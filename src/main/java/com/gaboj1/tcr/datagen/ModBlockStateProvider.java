@@ -39,6 +39,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockItem(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD);
         blockWithItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS);
         blockWithItem(TCRModBlocks.PORTAL_BLOCK);
+        blockItem(TCRModBlocks.YGGDRASIL_BLOCK);
         leavesBlock(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES);
         saplingBlock(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING);
 
