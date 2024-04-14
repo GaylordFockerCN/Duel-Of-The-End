@@ -34,13 +34,15 @@ public class TCRVillagerRetaliateTask extends Behavior<Mob> {
      */
     @Override
     protected boolean checkExtraStartConditions(ServerLevel serverLevel, Mob mob) {
-        //如果村民生气或者存在攻击目标，则进行。（不知道出了什么bug，Target在愤怒结束后不会消失？
-        return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry() || (mob.getTarget()!=null && !(mob.getTarget() instanceof Player)));
+        LivingEntity target = mob.getTarget();
+        //如果村民生气或者存在攻击目标，则进行。（不知道出了什么bug，Target在愤怒结束后不会消失？所以只能判断target非玩家或非村民）
+        return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry() || (target!=null && !(target instanceof Player) && !(target instanceof TCRVillager)));
     }
 
     @Override
     protected boolean canStillUse(ServerLevel serverLevel, Mob mob, long l) {
-        return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry() || (mob.getTarget()!=null && !(mob.getTarget() instanceof Player)));
+        LivingEntity target = mob.getTarget();
+        return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry() || (target!=null && !(target instanceof Player) && !(target instanceof TCRVillager)));
     }
 
     @Override
@@ -66,7 +68,7 @@ public class TCRVillagerRetaliateTask extends Behavior<Mob> {
                 }else if(!tcrVillager.isWithinMeleeAttackRange(target)){
                     return;
                 }
-                System.out.println(target);
+
                 tcrVillager.getLookControl().setLookAt(target ,30.0F, 30.0F);
                 tcrVillager.doHurtTarget(Objects.requireNonNull(target));
                 tcrVillager.playAttackAnim();

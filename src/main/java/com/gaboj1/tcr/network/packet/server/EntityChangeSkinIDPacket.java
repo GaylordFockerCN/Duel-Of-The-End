@@ -28,25 +28,20 @@ public record EntityChangeSkinIDPacket(int id, int skinID) implements BasePacket
 
     @Override
     public void execute(Player playerEntity) {
-//        new Thread(()->{
-//            while (Minecraft.getInstance().level == null || Minecraft.getInstance().player == null) {
-//                try {
-//                    Thread.sleep(200);//等两端实体数据互通完才能进行同步操作
-//                } catch (InterruptedException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//            Entity entity = Minecraft.getInstance().player.level().getEntity(id);
-//            if(entity instanceof TCRVillager tcrVillager){
-//                tcrVillager.setVillagerId(skinID());
-//            }
-//        }).start();
-        if(Minecraft.getInstance().level != null && Minecraft.getInstance().player != null){
-            Entity entity = Minecraft.getInstance().player.level().getEntity(id);
-            if(entity instanceof ManySkinEntity manySkinEntity){
-                manySkinEntity.setSkinID(skinID());
-            }
+
+        //就硬耗，宁愿耗性能也得让客户端同步皮肤。等两端实体数据互通完才能进行同步操作
+        while (!(Minecraft.getInstance().level != null && Minecraft.getInstance().player != null));
+        Entity entity = Minecraft.getInstance().player.level().getEntity(id);
+        if(entity instanceof TCRVillager tcrVillager){
+            tcrVillager.setSkinID(skinID());
         }
+
+//        if(Minecraft.getInstance().level != null && Minecraft.getInstance().player != null){
+//            Entity entity = Minecraft.getInstance().player.level().getEntity(id);
+//            if(entity instanceof ManySkinEntity manySkinEntity){
+//                manySkinEntity.setSkinID(skinID());
+//            }
+//        }
 
     }
 }

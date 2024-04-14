@@ -139,7 +139,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
 //        PacketRelay.sendDelay(500,()->PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new EntityChangeSkinIDPacket(this.getId(), skinID)));
         new Thread(()->{
             try {
-                Thread.sleep(200);//等两端实体数据互通完才能进行同步操作
+                Thread.sleep(200);//等两端实体数据互通完才能进行同步操作（更新了EntityChangeSkinIDPacket逻辑后sleep可有可无）
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

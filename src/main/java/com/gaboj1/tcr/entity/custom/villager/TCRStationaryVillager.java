@@ -13,10 +13,12 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
@@ -47,10 +49,21 @@ public class TCRStationaryVillager extends TCRVillager implements NpcDialogue {
         super.load(tag);
     }
 
-//    @Override
-//    protected void registerBrainGoals(Brain<Villager> pVillagerBrain) {
-//
-//    }
+    /**
+     * 不会动的村民不能带脑子！
+     */
+    @Override
+    protected void registerBrainGoals(Brain<Villager> pVillagerBrain) {
+
+    }
+
+    /**
+     * 固定位置的NPC应该显示名字
+     */
+    @Override
+    public boolean shouldShowName() {
+        return true;
+    }
 
     public static AttributeSupplier setAttributes() {
         return Mob.createMobAttributes()
