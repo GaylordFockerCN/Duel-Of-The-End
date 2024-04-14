@@ -50,6 +50,7 @@ public class TCRModItemTabs {
 						tabData.accept(TCRModItems.SMALL_TREE_MONSTER_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.MIDDLE_TREE_MONSTER_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.TREE_GUARDIAN_SPAWN_EGG.get());
+						tabData.accept(TCRModItems.YGGDRASIL_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.PASTORAL_PLAIN_VILLAGER_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.PASTORAL_PLAIN_VILLAGER_ELDER_SPAWN_EGG.get());
 
