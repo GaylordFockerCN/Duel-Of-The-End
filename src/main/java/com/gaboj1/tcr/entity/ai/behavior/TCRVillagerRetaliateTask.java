@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.behavior.Behavior;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.Objects;
 
@@ -33,12 +34,13 @@ public class TCRVillagerRetaliateTask extends Behavior<Mob> {
      */
     @Override
     protected boolean checkExtraStartConditions(ServerLevel serverLevel, Mob mob) {
-        return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry() || mob.getTarget()!=null);
+        //如果村民生气或者存在攻击目标，则进行。（不知道出了什么bug，Target在愤怒结束后不会消失？
+        return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry() || (mob.getTarget()!=null && !(mob.getTarget() instanceof Player)));
     }
 
     @Override
     protected boolean canStillUse(ServerLevel serverLevel, Mob mob, long l) {
-        return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry()|| mob.getTarget()!=null);
+        return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry() || (mob.getTarget()!=null && !(mob.getTarget() instanceof Player)));
     }
 
     @Override
@@ -64,9 +66,10 @@ public class TCRVillagerRetaliateTask extends Behavior<Mob> {
                 }else if(!tcrVillager.isWithinMeleeAttackRange(target)){
                     return;
                 }
-
+                System.out.println(target);
                 tcrVillager.getLookControl().setLookAt(target ,30.0F, 30.0F);
                 tcrVillager.doHurtTarget(Objects.requireNonNull(target));
+                tcrVillager.playAttackAnim();
                 attackTimer = attackInterval;
             } else {
                 attackTimer--;

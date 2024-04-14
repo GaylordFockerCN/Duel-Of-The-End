@@ -56,6 +56,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
@@ -95,6 +96,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
     public static final int MAX_FEMALE_TYPES = 3;//女性数量
     public TCRVillager(EntityType<? extends TCRVillager> pEntityType, Level pLevel, int skinID) {
         super(pEntityType, pLevel);
+        SingletonGeoAnimatable.registerSyncedAnimatable(this);
         ((GroundPathNavigation)this.getNavigation()).setCanOpenDoors(true);//抛弃大脑后最后的尊严...
 //        if(!this.getPersistentData().getBoolean("hasSkinID")){
             this.skinID = skinID;
@@ -153,6 +155,9 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
             if(isAngry){
                 if(angryTick < 0){
                     isAngry = false;
+                    if(!isClientSide()){//不限制好像不会在服务端生效？
+                        setTarget(null);
+                    }
                     setTarget(null);
                 }else {
                     angryTick--;
@@ -395,32 +400,28 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
 //        this.getServer().getSingleplayerProfile().getProperties();
     }
 
-    @Override
-    protected void updateTrades() {
-        VillagerData villagerdata = this.getVillagerData();
-        Int2ObjectMap<VillagerTrades.ItemListing[]> int2objectmap = VillagerTrades.TRADES.get(villagerdata.getProfession());
-        if (int2objectmap != null && !int2objectmap.isEmpty()) {
-            VillagerTrades.ItemListing[] avillagertrades$itemlisting = int2objectmap.get(villagerdata.getLevel());
-            if (avillagertrades$itemlisting != null) {
-                MerchantOffers merchantoffers = this.getOffers();
-                this.addOffersFromItemListings(merchantoffers, avillagertrades$itemlisting, 2);
-            }
-        }
+    public void playAttackAnim(){
+        triggerAnim("Attack","attack");
     }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller",
+        controllers.add(new AnimationController<>(this, "controller",
                 0, this::predicate));
+        controllers.add(new AnimationController<>(this, "Attack", 0, state -> PlayState.STOP)
+                .triggerableAnim("attack", RawAnimation.begin().thenPlay("animation.model.attack")));
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
+//        if(isAngry) {
+//            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.attack", Animation.LoopType.LOOP));
+//        } else
         if(tAnimationState.isMoving()) {
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.move", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
+        } else {
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.idle", Animation.LoopType.LOOP));
         }
 
-        tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
 
