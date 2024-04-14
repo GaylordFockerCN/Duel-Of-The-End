@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.AABB;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class TreeGuardianRenderer extends GeoEntityRenderer<TreeGuardianEntity> {
