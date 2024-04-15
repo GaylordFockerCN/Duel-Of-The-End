@@ -1,9 +1,15 @@
 package com.gaboj1.tcr.util;
 
+import com.gaboj1.tcr.network.PacketRelay;
+import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.packet.server.PersistentBoolDataSyncPacket;
+import com.gaboj1.tcr.network.packet.server.PersistentIntDataSyncPacket;
+import com.gaboj1.tcr.network.packet.server.PersistentStringDataSyncPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -69,19 +75,12 @@ public class DataManager {
 
         public void lock(Player player) {
             player.getPersistentData().putBoolean(key+"isLocked",true);
-            LocalPlayer localPlayer = Minecraft.getInstance().player;
-            if(localPlayer != null){
-                localPlayer.getPersistentData().putBoolean(key+"isLocked", true);
-            }
             isLocked = true;
         }
 
         public void unLock(Player player) {
             player.getPersistentData().putBoolean(key+"isLocked",false);
             LocalPlayer localPlayer = Minecraft.getInstance().player;
-            if(localPlayer != null){
-                localPlayer.getPersistentData().putBoolean(key+"isLocked", false);
-            }
             isLocked = false;
         }
 
@@ -128,9 +127,8 @@ public class DataManager {
         public void putString(Player player, String value){
             if(!isLocked){
                 player.getPersistentData().putString(key, value);
-                LocalPlayer localPlayer = Minecraft.getInstance().player;
-                if(localPlayer != null){
-                    localPlayer.getPersistentData().putString(key, value);
+                if(player instanceof ServerPlayer serverPlayer){
+                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PersistentStringDataSyncPacket(key, isLocked,value),serverPlayer);
                 }
             }
         }
@@ -157,9 +155,8 @@ public class DataManager {
         public void putInt(Player player, int value){
             if(!isLocked){
                 player.getPersistentData().putInt(key, value);
-                LocalPlayer localPlayer = Minecraft.getInstance().player;
-                if(localPlayer != null){
-                    localPlayer.getPersistentData().putInt(key, value);
+                if(player instanceof ServerPlayer serverPlayer){
+                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PersistentIntDataSyncPacket(key, isLocked,value),serverPlayer);
                 }
             }
         }
@@ -187,21 +184,9 @@ public class DataManager {
             if(isLocked)
                 return;
 
-//            CompoundTag tag = player.getPersistentData();
-//            if(!tag.contains("bool")){
-//                ListTag boolTagsList = new ListTag();
-//                for (int i = 0; i < maxNum; i++) {
-//                    boolTagsList.add(new CompoundTag());
-//                }
-//                tag.put("bool", boolTagsList);
-//            }
-//            ListTag bool = tag.getList("bool", maxNum);
-//            bool.getCompound(id).putBoolean(key,value);
-
             player.getPersistentData().putBoolean(key, value);
-            LocalPlayer localPlayer = Minecraft.getInstance().player;
-            if(localPlayer != null){
-                localPlayer.getPersistentData().putBoolean(key, value);
+            if(player instanceof ServerPlayer serverPlayer){
+                PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PersistentBoolDataSyncPacket(key, isLocked,value),serverPlayer);
             }
         }
 

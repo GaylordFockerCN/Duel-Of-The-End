@@ -4,9 +4,7 @@ import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.network.packet.*;
 import com.gaboj1.tcr.network.packet.client.NpcPlayerInteractPacket;
 import com.gaboj1.tcr.network.packet.client.PortalBlockTeleportPacket;
-import com.gaboj1.tcr.network.packet.server.NPCDialoguePacket;
-import com.gaboj1.tcr.network.packet.server.PortalBlockScreenPacket;
-import com.gaboj1.tcr.network.packet.server.EntityChangeSkinIDPacket;
+import com.gaboj1.tcr.network.packet.server.*;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
@@ -28,6 +26,9 @@ public class TCRPacketHandler {
         register(NPCDialoguePacket.class, NPCDialoguePacket::decode);
         register(PortalBlockScreenPacket.class, PortalBlockScreenPacket::decode);
         register(EntityChangeSkinIDPacket.class, EntityChangeSkinIDPacket::decode);
+        register(PersistentBoolDataSyncPacket.class, PersistentBoolDataSyncPacket::decode);
+        register(PersistentIntDataSyncPacket.class, PersistentIntDataSyncPacket::decode);
+        register(PersistentStringDataSyncPacket.class, PersistentStringDataSyncPacket::decode);
 
         // 发给服务端
         register(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);
