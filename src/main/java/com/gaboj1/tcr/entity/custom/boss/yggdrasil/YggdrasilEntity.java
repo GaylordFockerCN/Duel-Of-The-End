@@ -1,7 +1,15 @@
 package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
+import com.gaboj1.tcr.block.entity.spawner.EnforcedHomePoint;
+import com.gaboj1.tcr.entity.NpcDialogue;
+import com.gaboj1.tcr.gui.screen.DialogueComponentBuilder;
+import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
+import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.init.TCRModSounds;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.GlobalPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
@@ -37,11 +45,17 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 
+import static com.gaboj1.tcr.gui.screen.DialogueComponentBuilder.BUILDER;
 
-public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
+
+public class YggdrasilEntity extends PathfinderMob implements GeoEntity, EnforcedHomePoint, NpcDialogue {
+    @Nullable
+    protected Player conversingPlayer;
+    EntityType<?> entityType = TCRModEntities.YGGDRASIL.get();
     private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.PINK, BossEvent.BossBarOverlay.PROGRESS);
 
+    private int shootInterval;
     private boolean canBeHurt;
     private int hurtTimer;
 
@@ -142,7 +156,82 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity {
 
     }
 
-public static class spawnTreeClawAtPointPositionGoal extends Goal {
+    @Override
+    public @Nullable GlobalPos getRestrictionPoint() {
+        return null;
+    }
+
+    @Override
+    public void setRestrictionPoint(@Nullable GlobalPos pos) {
+
+    }
+
+    @Override
+    public int getHomeRadius() {
+        return 0;
+    }
+
+    @Override
+    public void openDialogueScreen(CompoundTag senderData) {
+        LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
+        Component greet1 = BUILDER.buildDialogueDialog(entityType,0);
+        Component greet2 = BUILDER.buildDialogueDialog(entityType,3);
+        Component greet3 = BUILDER.buildDialogueDialog(entityType,5);
+        builder.start(greet1)
+                .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,1))
+                .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,2))
+                .addFinalChoice(BUILDER.buildDialogueChoice(entityType,0),(byte)0);
+        builder.start(greet2)
+                .addChoice(BUILDER.buildDialogueChoice(entityType,1),BUILDER.buildDialogueDialog(entityType,4))
+                .addFinalChoice(BUILDER.buildDialogueChoice(entityType,-2),(byte)1);
+        builder.start(greet3)
+                .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,6))
+                .addChoice(BUILDER.buildDialogueChoice(entityType,2),BUILDER.buildDialogueDialog(entityType,7))
+                .addChoice(BUILDER.buildDialogueChoice(entityType,3),BUILDER.buildDialogueDialog(entityType,8))
+                .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,9))
+                .addChoice(BUILDER.buildDialogueChoice(entityType,4),BUILDER.buildDialogueDialog(entityType,10))
+                .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,11))
+                .addFinalChoice(BUILDER.buildDialogueChoice(entityType,-3),(byte)2);
+
+
+
+
+    }
+
+    @Override
+    public void handleNpcInteraction(Player player, byte interactionID) {
+        switch (interactionID){
+            case 0:
+                return;
+            case 1:
+                return;
+            case 2:
+                break;
+        }
+        this.setConversingPlayer(null);
+    }
+
+    @Override
+    public void setConversingPlayer(@Nullable Player player) {
+        this.conversingPlayer = player;
+    }
+
+    @Nullable
+    @Override
+    public Player getConversingPlayer() {
+        return this.conversingPlayer;
+    }
+
+    @Nullable
+    @Override
+    public void chat(Component component) {
+        if(conversingPlayer != null) {
+            conversingPlayer.sendSystemMessage(BUILDER.buildDialogue(this, component));
+        }
+    }
+
+
+    public static class spawnTreeClawAtPointPositionGoal extends Goal {
     private final YggdrasilEntity yggdrasil;
     private int shootInterval;
     public final int shootIntervalMax = 200;

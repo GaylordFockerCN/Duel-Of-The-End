@@ -4,6 +4,7 @@ import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.entity.BetterStructureBlockEntity;
 import com.gaboj1.tcr.block.entity.PortalBedEntity;
 import com.gaboj1.tcr.block.entity.PortalBlockEntity;
+import com.gaboj1.tcr.block.entity.spawner.YggdrasilSpawnerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -27,5 +28,11 @@ public class TCRModBlockEntities {
             REGISTRY.register("portal_block_entity", () ->
                     BlockEntityType.Builder.of(PortalBlockEntity::new,
                             TCRModBlocks.PORTAL_BLOCK.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<YggdrasilSpawnerBlockEntity>> YGGDRASIL_SPAWNER_BLOCK_ENTITY =
+            REGISTRY.register("yggdrasil_spawner_block_entity", () ->
+                    BlockEntityType.Builder.of(YggdrasilSpawnerBlockEntity::new,
+                            TCRModBlocks.YGGDRASIL_BLOCK.get()).build(null));
+
 
 }
