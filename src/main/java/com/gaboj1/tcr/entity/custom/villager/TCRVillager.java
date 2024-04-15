@@ -16,6 +16,8 @@ import com.mojang.realmsclient.gui.task.DataFetcher;
 import com.mojang.serialization.Dynamic;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -174,6 +176,27 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
+
+        LocalPlayer player = Minecraft.getInstance().player;
+        //是坏人就唉声叹气一下
+        if(DataManager.isWhite.isLocked() && player!=null && DataManager.isWhite.getBool(player)){
+            SoundEvent sound = TCRModSounds.FEMALE_SIGH.get();
+            int i = random.nextInt(2);
+            sound = switch (i) {
+                case 0 -> TCRModSounds.FEMALE_SIGH.get();
+                case 1 -> TCRModSounds.FEMALE_HENG.get();
+                default -> sound;
+            };
+            SoundEvent sound2 = TCRModSounds.MALE_SIGH.get();
+            int j = random.nextInt(2);
+            sound2 = switch (j) {
+                case 0 -> TCRModSounds.MALE_HENG.get();
+                case 1 -> TCRModSounds.MALE_SIGH.get();
+                default -> sound2;
+            };
+            return skinID < 0 ? sound : sound2;
+        }
+
         SoundEvent sound = TCRModSounds.FEMALE_VILLAGER_OHAYO.get();
         int i = random.nextInt(6);
         sound = switch (i) {
@@ -185,12 +208,10 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
             default -> sound;
         };
         SoundEvent sound2 = TCRModSounds.MALE_HELLO.get();
-        int j = random.nextInt(5);
+        int j = random.nextInt(3);
         sound2 = switch (j) {
             case 0 -> TCRModSounds.MALE_EYO.get();
             case 1 -> TCRModSounds.MALE_HI.get();
-            case 2 -> TCRModSounds.MALE_HENG.get();
-            case 3 -> TCRModSounds.MALE_SIGH.get();
             default -> sound2;
         };
         return skinID < 0 ? sound : sound2;

@@ -28,6 +28,8 @@ public final class TCRModSounds {
 	public static final RegistryObject<SoundEvent> FEMALE_VILLAGER_DEATH = createEvent("entity.tcr.female_villager_die");
 	public static final RegistryObject<SoundEvent> FEMALE_VILLAGER_HURT = createEvent("entity.tcr.female_villager_hurt");
 	public static final RegistryObject<SoundEvent> FEMALE_VILLAGER_OHAYO = createEvent("entity.tcr.female_villager_ohayo");
+	public static final RegistryObject<SoundEvent> FEMALE_HENG = createEvent("entity.female_villager.female_heng");
+	public static final RegistryObject<SoundEvent> FEMALE_SIGH = createEvent("entity.female_villager.female_sigh");
 	public static final RegistryObject<SoundEvent> JELLY_CAT_DEATH = createEvent("entity.jelly_cat.die");
 	public static final RegistryObject<SoundEvent> JELLY_CAT_HURT = createEvent("entity.jelly_cat.hurt");
 	public static final RegistryObject<SoundEvent> MALE_DEATH = createEvent("entity.male_villager.male_death");
