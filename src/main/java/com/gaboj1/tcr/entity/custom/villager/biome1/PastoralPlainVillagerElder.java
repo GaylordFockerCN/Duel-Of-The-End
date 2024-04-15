@@ -160,4 +160,9 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         }
         super.die(pCause);
     }
+
+    @Override
+    public boolean shouldShowName() {
+        return true;
+    }
 }

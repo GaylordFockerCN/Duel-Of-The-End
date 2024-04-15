@@ -83,6 +83,18 @@
 					}
 				}
 			}
+		},
+		"animation.treeguardian - Converted.idle": {
+			"loop": true,
+			"animation_length": 0.5,
+			"bones": {
+				"bone7": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.5": [0, 0, 0]
+					}
+				}
+			}
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.entity.custom.tree_monsters;
 
 import com.gaboj1.tcr.init.TCRModSounds;
+import com.gaboj1.tcr.util.BoundingBoxHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -20,6 +21,7 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -27,6 +29,7 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Random;
 import java.util.UUID;
@@ -36,11 +39,22 @@ import java.util.UUID;
  * 接口NeutralMob用于调用激怒方法
  * */
 public class TreeGuardianEntity extends IronGolem implements GeoEntity {
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public TreeGuardianEntity(EntityType<? extends IronGolem> entityType, Level level) {
+    public TreeGuardianEntity(EntityType<? extends TreeGuardianEntity> entityType, Level level) {
         super(entityType, level);
+//        AABB boundingBox = this.getBoundingBox();
+//        boundingBox.setMaxX(boundingBox.getXsize() * 3.5 + boundingBox.minX);
+//        boundingBox.setMaxZ(boundingBox.getZsize() * 3.5 + boundingBox.minZ);
+//        boundingBox.setMaxY(boundingBox.getYsize() * 3.5 + boundingBox.minY);
+        setBoundingBox(BoundingBoxHelper.scaleAABB(getBoundingBox(),3.5));//无效
     }
+
+//    @Override
+//    public void tick() {
+//        setBoundingBox(BoundingBoxHelper.scaleAABB(getBoundingBox(),3.5));
+//        System.out.println(level().isClientSide?"Client ":"Server "+ getBoundingBox());
+//    }
 
     public static AttributeSupplier setAttributes() {//生物属性
         return Animal.createMobAttributes()
@@ -66,7 +80,7 @@ public class TreeGuardianEntity extends IronGolem implements GeoEntity {
          */
 
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.2D, false));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 

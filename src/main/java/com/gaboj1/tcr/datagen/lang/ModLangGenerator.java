@@ -132,6 +132,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addEntityAndEgg(TCRModEntities.SQUIRREL,"松鼠");
         this.addEntityAndEgg(TCRModEntities.YGGDRASIL,"伊格德拉希尔");
         this.addEntityAndEgg(TCRModEntities.TREE_GUARDIAN,"森林守护者");
+        this.addEntityAndEgg(TCRModEntities.YGGDRASIL,"伊格德拉希尔");
         this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_VILLAGER,"牧歌原野-村民");
         this.addVillagerChat(TCRModEntities.PASTORAL_PLAIN_VILLAGER, 0, false, "今天天气真好，让我们一起飞快地跑！");
         this.addVillagerChat(TCRModEntities.PASTORAL_PLAIN_VILLAGER, 1, false, "小猫……小斗（狗）……今天是要养只小猫还是小斗？");
