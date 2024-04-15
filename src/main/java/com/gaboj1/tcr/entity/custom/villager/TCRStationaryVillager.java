@@ -96,7 +96,7 @@ public class TCRStationaryVillager extends TCRVillager implements NpcDialogue {
                 this.lookAt(player, 180.0F, 180.0F);
                 if (player instanceof ServerPlayer serverPlayer) {
                     if (this.getConversingPlayer() == null) {
-                        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(),serverPlayer.getPersistentData().copy()), serverPlayer);
+                        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(),serverPlayer.getPersistentData().copy(),skinID), serverPlayer);
                         this.setConversingPlayer(serverPlayer);
                     }
                 }
