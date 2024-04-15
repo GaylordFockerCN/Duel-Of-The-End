@@ -11,7 +11,9 @@ import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.packet.server.NPCDialoguePacket;
 import com.gaboj1.tcr.util.DataManager;
+import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -102,8 +104,11 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     .addChoice(BUILDER.buildDialogueChoice(entityType,4),BUILDER.buildDialogueDialog(entityType,6))
                     .addFinalChoice(BUILDER.buildDialogueChoice(entityType,5),(byte)0);
         }else {
+            BiomeMap biomeMap = BiomeMap.getInstance();
+            BlockPos biome1Center = biomeMap.getBlockPos(biomeMap.getCenter1(),0);
+            String position = "("+biome1Center.getX()+","+biome1Center.getZ()+")";
             builder.start(BUILDER.buildDialogueDialog(entityType,0))
-                    .addChoice(BUILDER.buildDialogueChoice(entityType,0),BUILDER.buildDialogueDialog(entityType,1,"(x,y)"))
+                    .addChoice(BUILDER.buildDialogueChoice(entityType,0),BUILDER.buildDialogueDialog(entityType,1,position))//告诉玩家密林方位
                     .addChoice(BUILDER.buildDialogueChoice(entityType,1),BUILDER.buildDialogueDialog(entityType,2))
                     .addChoice(BUILDER.buildDialogueChoice(entityType,1),BUILDER.buildDialogueDialog(entityType,3))
                     .addFinalChoice(BUILDER.buildDialogueChoice(entityType,2),(byte)0);

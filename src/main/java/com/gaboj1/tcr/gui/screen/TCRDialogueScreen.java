@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.gui.screen;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
@@ -35,12 +36,14 @@ public class TCRDialogueScreen extends Screen {
     public static final ResourceLocation MY_BACKGROUND_LOCATION = new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"textures/gui/background.png");
     protected final DialogueAnswerComponent dialogueAnswer;
     protected final Entity entity;
-
+    public final int typewriterInterval;
+    private int typewriterTimer = 0;
     EntityType<?> entityType;
 
     public TCRDialogueScreen(Entity entity, EntityType<?> entityType) {
         super(entity.getDisplayName());
-        this.dialogueAnswer = new DialogueAnswerComponent(this.buildDialogueAnswerName(entity.getDisplayName().copy().withStyle(ChatFormatting.YELLOW)));
+        typewriterInterval = TCRConfig.TYPEWRITER_EFFECT_INTERVAL.get();
+        this.dialogueAnswer = new DialogueAnswerComponent(this.buildDialogueAnswerName(entity.getDisplayName().copy().withStyle(ChatFormatting.YELLOW)).append(": "));
         this.entity = entity;
         this.entityType = entityType;
     }
@@ -97,9 +100,14 @@ public class TCRDialogueScreen extends Screen {
      */
     protected void setDialogueAnswer(Component component) {
         if(entity instanceof NpcDialogue npc){
-            npc.chat(component);//左下角重复一下，方便回看
+            npc.chat(component);//左下角重复一下，方便回看，但是没生效。。。
         }
-        this.dialogueAnswer.updateDialogue(this.buildDialogueAnswerName(this.entity.getDisplayName()).append(": ").append(component));
+        if(TCRConfig.ENABLE_TYPEWRITER_EFFECT.get()){
+            this.dialogueAnswer.updateTypewriterDialogue(component);
+        }else {
+            this.dialogueAnswer.updateDialogue(component);
+        }
+
     }
 
     /**
@@ -169,6 +177,15 @@ public class TCRDialogueScreen extends Screen {
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(guiGraphics);
         //guiGraphics.blit(MY_BACKGROUND_LOCATION, this.width/2 - 214/2, this.height/2 - 252/2, 0, 0, 214, 252);
+
+        if(TCRConfig.ENABLE_TYPEWRITER_EFFECT.get() && typewriterTimer < 0){
+            this.dialogueAnswer.updateTypewriterDialogue();
+            positionDialogue();
+            typewriterTimer = typewriterInterval;
+        }else {
+            typewriterTimer--;
+        }
+
         this.dialogueAnswer.render(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }

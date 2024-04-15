@@ -3,21 +3,35 @@ package com.gaboj1.tcr.gui.screen.component;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * LZY:添加了实现打字机效果
  * A widget to handle an NPC's name and their response inside the dialogue screen.
+ * @author LZY
+ * @author The Aether
  */
 public class DialogueAnswerComponent {
     private final List<NpcDialogueElement> splitLines;
+    private Component message,name;
     public int height;
+    //打字机效果的下标
+    private int index;
+    //打字机效果的最大值
+    private int max;
 
     public DialogueAnswerComponent(Component message) {
         this.splitLines = new ArrayList<>();
-        this.updateDialogue(message);
+        name = message;
+        this.updateDialogue(Component.empty());
+    }
+
+    public Component getMessage() {
+        return message;
     }
 
     public void render(GuiGraphics guiGraphics) {
@@ -42,9 +56,32 @@ public class DialogueAnswerComponent {
 
     public void updateDialogue(Component message) {
         this.splitLines.clear();
-        List<FormattedCharSequence> list = Minecraft.getInstance().font.split(message, 300);
+        List<FormattedCharSequence> list = Minecraft.getInstance().font.split(name.copy().append(message), 300);
         this.height = list.size() * 12;
         list.forEach(text -> this.splitLines.add(new NpcDialogueElement(0, 0, 0, text)));
+    }
+
+    /**
+     * 更新打字机效果的完整文本内容，并且执行一次打印机效果。
+     */
+    public void updateTypewriterDialogue(Component message) {
+        this.message = message;
+//        index = name.getString().length();//名字就不用打字机了
+        index = 0;
+        max = message.getString().length();
+        updateTypewriterDialogue();
+    }
+
+    /**
+     * 添加打字机效果，一次更新一个字
+     * 不知道为什么Component提供根据下标截取String的方法，太感人了
+     */
+    public void updateTypewriterDialogue() {
+        Style style = message.getStyle();
+        updateDialogue(Component.literal(message.getString(index++)).withStyle(style));
+        if(index > max){
+            index--;
+        }
     }
 
     /**
