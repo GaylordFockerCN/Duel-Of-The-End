@@ -41,6 +41,7 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
     @OnlyIn(Dist.CLIENT)
     public void openDialogueScreen(CompoundTag serverPlayerData) {
 
+        //构建对话系统
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
         Random random = new Random();
         switch (skinID){
@@ -114,7 +115,7 @@ public class PastoralPlainTalkableVillager1 extends TCRStationaryVillager {
                 break;
 
         }
-
+        
         Minecraft.getInstance().setScreen(builder.build());
 
     }

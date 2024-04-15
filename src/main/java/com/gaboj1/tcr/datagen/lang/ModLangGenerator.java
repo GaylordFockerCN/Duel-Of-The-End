@@ -230,6 +230,30 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,4,"所谓进化就是这么回事，进化总是苦涩而寂寞的。不可能有令人心旷神怡的进化。进化是严峻的。");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,5,"愿我们不受魔鬼伤害");
 
+        //Yggdrasil
+        this.addEntityAndEgg(TCRModEntities.YGGDRASIL,"伊格德拉希尔");
+        this.addDialog(TCRModEntities.YGGDRASIL,0,"可怜的年轻人，你还是来了……");
+        this.addDialog(TCRModEntities.YGGDRASIL,1,"不对，你的气息和普通的孩子都不一样！你竟然已经成长到如此地步。");
+        this.addDialog(TCRModEntities.YGGDRASIL,2,"将你同化已经是不可能的了。看来只有消灭你了啊孩子……");
+        this.addDialog(TCRModEntities.YGGDRASIL,3,"你是村子以前的孩子吧……你能突破我的限制回到世界尽头也着实厉害");
+        this.addDialog(TCRModEntities.YGGDRASIL,4,"哈哈，我用了极大代价恳请世界主做的抹除记忆还是成功的。都到这个地步了，我就将一切告诉你吧……");
+        this.addDialog(TCRModEntities.YGGDRASIL,5,"在来的路上，你击杀了不少小树魔吧，他们曾经也是可怜的孩童啊。我既然无法给他们创造长久的幸福，只能将他们定格在二十来岁的年纪了，这样，至少他们短暂的一生是幸福的。");
+        this.addDialog(TCRModEntities.YGGDRASIL,6,"我保证，我将他们同化的时候他们不曾受到一点痛苦，他们不过是带着美梦完成重构罢了……");
+        this.addDialog(TCRModEntities.YGGDRASIL,7,"你要知道，我利用我独特的生命之力与世界尽头已融为一体，孩子们所祈祷的东西都经由我的力量创造。我无所谓他们对生命之源密林的恐惧，我也无需他们的爱戴，我只希望孩子们快乐啊……");
+        this.addDialog(TCRModEntities.YGGDRASIL,8,"是的。杀了我，就是杀了世界尽头。是要毁灭孩子们们的美梦，还是去杀了那个村子中格格不入的美梦破坏者，你知道我说的是谁……世界尽头的未来，就系在你的剑上了。");
+        this.addDialog(TCRModEntities.YGGDRASIL,9,"欢迎你，与我们一同创造一个美好的世界……");
+        this.addDialog(TCRModEntities.YGGDRASIL,10,"想知道答案的话，用村长的鲜血来换取吧……");
+        this.addDialog(TCRModEntities.YGGDRASIL,11,"早在成为生命使者的时候，我已经用我的血生成誓言，不得踏入世界尽头一步。这也是每一任守护者都必须遵守的规则……");
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,-3,"结束对话");
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,-2,"查看真相");
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,-1,"下一句");
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,0,"什么是同化？？等等……");
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,1,"村子以前的孩子？");
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,2,"所以，杀了你，孩子们依赖的祈祷将再也发挥不了作用？");
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,3,"你们？你们是谁？");
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,4,"(冷笑)对于你而言，杀死村长不是轻而易举的事情吗？");
+
+
         this.addBookAndContents("book1","Test","Test1","Test1.1");
         this.addBookAndContents("book2","Test2","Test2","Test2.2");
         this.addBookAndAuthorAndContents("biome1_elder_diary3","海拉","海拉长老的日记3","那个怪物说的话是真的吗？怪物竟然是守护着我们的守护神？没有了它，这个地方的生命之力就会消失？那孩子们要怎么活下去啊？真该死啊！","是愿望？还是生存？这是我能决定的吗？可怜的孩子啊……不，最可怜的不是我吗？为什么这样的重任只能我独自承担啊？我长眠的伙伴们……");
