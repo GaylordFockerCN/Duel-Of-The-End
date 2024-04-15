@@ -1,5 +1,7 @@
 package com.gaboj1.tcr.util;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.player.Player;
@@ -67,11 +69,19 @@ public class DataManager {
 
         public void lock(Player player) {
             player.getPersistentData().putBoolean(key+"isLocked",true);
+            LocalPlayer localPlayer = Minecraft.getInstance().player;
+            if(localPlayer != null){
+                localPlayer.getPersistentData().putBoolean(key+"isLocked", true);
+            }
             isLocked = true;
         }
 
         public void unLock(Player player) {
             player.getPersistentData().putBoolean(key+"isLocked",false);
+            LocalPlayer localPlayer = Minecraft.getInstance().player;
+            if(localPlayer != null){
+                localPlayer.getPersistentData().putBoolean(key+"isLocked", false);
+            }
             isLocked = false;
         }
 
@@ -116,8 +126,13 @@ public class DataManager {
         }
 
         public void putString(Player player, String value){
-            if(!isLocked)
+            if(!isLocked){
                 player.getPersistentData().putString(key, value);
+                LocalPlayer localPlayer = Minecraft.getInstance().player;
+                if(localPlayer != null){
+                    localPlayer.getPersistentData().putString(key, value);
+                }
+            }
         }
 
         public String getString(Player player){
@@ -140,8 +155,13 @@ public class DataManager {
         }
 
         public void putInt(Player player, int value){
-            if(!isLocked)
+            if(!isLocked){
                 player.getPersistentData().putInt(key, value);
+                LocalPlayer localPlayer = Minecraft.getInstance().player;
+                if(localPlayer != null){
+                    localPlayer.getPersistentData().putInt(key, value);
+                }
+            }
         }
 
         public int getInt(Player player){
@@ -179,7 +199,10 @@ public class DataManager {
 //            bool.getCompound(id).putBoolean(key,value);
 
             player.getPersistentData().putBoolean(key, value);
-
+            LocalPlayer localPlayer = Minecraft.getInstance().player;
+            if(localPlayer != null){
+                localPlayer.getPersistentData().putBoolean(key, value);
+            }
         }
 
         public void putBool(CompoundTag playerData ,boolean bool){
