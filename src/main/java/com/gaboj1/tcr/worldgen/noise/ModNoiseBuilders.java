@@ -18,8 +18,10 @@ public class ModNoiseBuilders {
     private static final SurfaceRules.RuleSource GRASS_BLOCK = SurfaceRules.state(Blocks.GRASS_BLOCK.defaultBlockState());
     private static final SurfaceRules.RuleSource DIRT = SurfaceRules.state(Blocks.DIRT.defaultBlockState());
     private static final SurfaceRules.RuleSource AIR = SurfaceRules.state(Blocks.AIR.defaultBlockState());
+    private static final SurfaceRules.RuleSource STONE = SurfaceRules.state(Blocks.STONE.defaultBlockState());
 
-    public static NoiseGeneratorSettings skylandsNoiseSettings(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noise) {
+
+    public static NoiseGeneratorSettings skyIslandsNoiseSettings(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noise) {
         return new NoiseGeneratorSettings(
                 new NoiseSettings(32, 48, 1, 1), // noiseSettings default:0 128 2 1
                 Blocks.STONE.defaultBlockState(), // defaultBlock
@@ -35,19 +37,48 @@ public class ModNoiseBuilders {
         );
     }
 
+    public static NoiseGeneratorSettings plainNoiseSettings(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noise) {
+        return new NoiseGeneratorSettings(
+                new NoiseSettings(32, 48, 1, 1), // noiseSettings default:0 128 2 1
+                Blocks.STONE.defaultBlockState(), // defaultBlock
+                Blocks.GRASS_BLOCK.defaultBlockState(), // defaultFluid default:water
+                new NoiseRouter(
+                        DensityFunctions.zero(),
+                        DensityFunctions.zero(),
+                        DensityFunctions.zero(),
+                        DensityFunctions.zero(),
+                        DensityFunctions.zero(),
+                        DensityFunctions.zero(),
+                        DensityFunctions.zero(),
+                        DensityFunctions.zero(),
+                        DensityFunctions.zero(),
+                        DensityFunctions.zero(),
+                        DensityFunctions.zero(),
+                        DensityFunctions.zero(),
+                        DensityFunctions.zero(),
+                        DensityFunctions.zero(),
+                        DensityFunctions.zero()
+                ),
+                pSurfaceRules(), // surfaceRule
+                List.of(), // spawnTarget
+                -64, // seaLevel
+                false, // disableMobGeneration
+                false, // aquifersEnabled
+                false, // oreVeinsEnabled
+                false  // useLegacyRandomSource
+        );
+    }
 
-    //TODO 填补空隙
+    //普通群系地表规则（瞎填
     public static SurfaceRules.RuleSource surfaceRules() {
+
+        //让边界和中心群系全为空气
         SurfaceRules.RuleSource air = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.AIR),AIR));
-
         SurfaceRules.RuleSource finalBiome = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.FINAL),AIR));
-//        SurfaceRules.RuleSource finalBiome = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.FINAL),DIRT));
 
+        //瞎几把操作..
         SurfaceRules.RuleSource noWater = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.waterBlockCheck(-1, 0), GRASS_BLOCK), DIRT);
-
         SurfaceRules.RuleSource surface = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, noWater), SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DIRT));
-//        SurfaceRules.RuleSource surface = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.yBlockCheck(VerticalAnchor.aboveBottom(10),10),DIRT));
-
         SurfaceRules.RuleSource denseForest = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.DENSE_FOREST),GRASS_BLOCK), SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DIRT));
         SurfaceRules.RuleSource all = SurfaceRules.sequence(finalBiome,surface,air,denseForest);
 
@@ -57,8 +88,55 @@ public class ModNoiseBuilders {
                 .add(air)
                 .add(surface)
                 .add(denseForest)
-//                .add(SurfaceRules.ifTrue(SurfaceRules.abovePreliminarySurface(), all))//试试看abovePre这个
+                .add(SurfaceRules.ifTrue(SurfaceRules.abovePreliminarySurface(), all))//试试看abovePre这个
                 ;
+
+
+        return SurfaceRules.sequence(builder.build().toArray(SurfaceRules.RuleSource[]::new));
+    }
+
+    //平坦模式地表规则（较为单调，但是村庄能正常生成）
+    public static SurfaceRules.RuleSource pSurfaceRules() {
+
+        //让边界和中心群系全为空气
+        SurfaceRules.RuleSource air = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.AIR),AIR));
+        SurfaceRules.RuleSource finalBiome = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.FINAL),AIR));
+
+        SurfaceRules.RuleSource overworldLike = SurfaceRules.sequence(
+                SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
+                        SurfaceRules.sequence(
+                                //make everything else grass
+                                SurfaceRules.ifTrue(SurfaceRules.waterBlockCheck(-1, 0),
+                                        SurfaceRules.sequence(
+                                                SurfaceRules.ifTrue(
+                                                        //check if we're above ground, so hollow hills dont have grassy floors
+                                                        SurfaceRules.yStartCheck(VerticalAnchor.absolute(-4), 1), GRASS_BLOCK))),
+
+                                //if we're around the area hollow hill floors are, check if we're underwater. If so place some dirt.
+                                //This fixes streams having weird stone patches
+                                SurfaceRules.ifTrue(
+                                        SurfaceRules.not(
+                                                SurfaceRules.yStartCheck(VerticalAnchor.absolute(-4), 1)),
+                                        SurfaceRules.sequence(
+                                                SurfaceRules.ifTrue(
+                                                        SurfaceRules.not(
+                                                                SurfaceRules.waterBlockCheck(-1, 0)), DIRT))))),
+                //dirt goes under the grass of course!
+                //check if we're above ground, so hollow hills dont have dirt floors
+                SurfaceRules.ifTrue(SurfaceRules.waterStartCheck(-6, -1),
+                        SurfaceRules.sequence(
+                                SurfaceRules.ifTrue(
+                                        SurfaceRules.yStartCheck(VerticalAnchor.absolute(-4), 1),
+                                        SurfaceRules.sequence(
+                                                SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DIRT))))));
+
+        ImmutableList.Builder<SurfaceRules.RuleSource> builder = ImmutableList.builder();
+        builder
+                .add(finalBiome)
+                .add(air)
+                .add(overworldLike)
+                .add(SurfaceRules.ifTrue(SurfaceRules.verticalGradient("stone", VerticalAnchor.absolute(0), VerticalAnchor.absolute(8)), STONE));
+        ;
 
 
         return SurfaceRules.sequence(builder.build().toArray(SurfaceRules.RuleSource[]::new));

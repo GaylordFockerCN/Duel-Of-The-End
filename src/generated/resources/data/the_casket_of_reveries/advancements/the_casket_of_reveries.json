@@ -1,12 +1,5 @@
 {
-  "criteria": {
-    "the_casket_of_reveries": {
-      "conditions": {
-        "to": "the_casket_of_reveries:realm_of_the_dream"
-      },
-      "trigger": "minecraft:changed_dimension"
-    }
-  },
+  "criteria": {},
   "display": {
     "announce_to_chat": false,
     "background": "the_casket_of_reveries:textures/block/dense_forest_dirt.png",
@@ -23,10 +16,6 @@
       "translate": "advancement.the_casket_of_reveries.the_casket_of_reveries"
     }
   },
-  "requirements": [
-    [
-      "the_casket_of_reveries"
-    ]
-  ],
+  "requirements": [],
   "sends_telemetry_event": true
 }

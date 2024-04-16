@@ -1,13 +1,6 @@
 {
   "parent": "the_casket_of_reveries:the_casket_of_reveries",
-  "criteria": {
-    "enter_realm_of_the_dream": {
-      "conditions": {
-        "to": "the_casket_of_reveries:realm_of_the_dream"
-      },
-      "trigger": "minecraft:changed_dimension"
-    }
-  },
+  "criteria": {},
   "display": {
     "announce_to_chat": true,
     "description": {
@@ -23,11 +16,7 @@
       "translate": "advancement.the_casket_of_reveries.enter_realm_of_the_dream"
     }
   },
-  "requirements": [
-    [
-      "enter_realm_of_the_dream"
-    ]
-  ],
+  "requirements": [],
   "rewards": {
     "loot": [
       "the_casket_of_reveries:advancements/enter_realm_of_the_dream"

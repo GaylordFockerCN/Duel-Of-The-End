@@ -43,7 +43,8 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
                             Component.translatable(pre+TheCasketOfReveriesMod.MOD_ID+".desc"),
                             new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/block/dense_forest_dirt.png"),
                             FrameType.TASK, false, false, false)
-                    .addCriterion(TheCasketOfReveriesMod.MOD_ID, ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.SKY_ISLAND_LEVEL_KEY))
+//                    .addCriterion(TheCasketOfReveriesMod.MOD_ID, ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.SKY_ISLAND_LEVEL_KEY))
+//                    .addCriterion(TheCasketOfReveriesMod.MOD_ID, ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.P_SKY_ISLAND_LEVEL_KEY))
                     .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, TheCasketOfReveriesMod.MOD_ID), existingFileHelper);
 
             Advancement enterRealmOfTheDream = Advancement.Builder.advancement()
@@ -53,14 +54,15 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
                             Component.translatable(pre+"enter_realm_of_the_dream.desc"),
                             null,
                             FrameType.TASK, true, true, false)
-                    .addCriterion("enter_realm_of_the_dream", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.SKY_ISLAND_LEVEL_KEY))
+//                    .addCriterion("enter_realm_of_the_dream", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.SKY_ISLAND_LEVEL_KEY))
+//                    .addCriterion("enter_realm_of_the_dream", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.P_SKY_ISLAND_LEVEL_KEY))
                     .rewards(new AdvancementRewards(0, new ResourceLocation[]{TCRLoot.ENTER_REALM_OF_THE_DREAM}, new ResourceLocation[0], CommandFunction.CacheableFunction.NONE))
                     .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "enter_realm_of_the_dream"), existingFileHelper);
 
             String name = "wow";
             Advancement wow = Advancement.Builder.advancement()
                     .parent(enterRealmOfTheDream)
-                    .display(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get(),//TODO:换成小树怪图标
+                    .display(TCRModItems.SMALL_TREE_MONSTER_SPAWN_EGG.get(),
                             Component.translatable(pre+name),
                             Component.translatable(pre+name+".desc"),
                             null,
