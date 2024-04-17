@@ -51,7 +51,7 @@ public class TCRDimension {
                 1.0, // coordinateScale
                 true, // bedWorks
                 true, // respawnAnchorWorks
-                -64, // minY
+                32, // minY
                 1024, // height
                 1024, // logicalHeight
                 BlockTags.INFINIBURN_OVERWORLD, // infiniburn
