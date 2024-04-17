@@ -57,6 +57,7 @@ public class PortalBed extends BedBlock {
                 if (portalDimension != null && !pPlayer.isPassenger()) {
                     if(resourcekey == (TCRConfig.MORE_HOLE.get()?TCRDimension.SKY_ISLAND_LEVEL_KEY:TCRDimension.P_SKY_ISLAND_LEVEL_KEY)) {
                         pPlayer.changeDimension(portalDimension, new TCRTeleporter(pPos, true));
+                        ModAdvancementData.getAdvancement(TheCasketOfReveriesMod.MOD_ID, (ServerPlayer) pPlayer);
                         ModAdvancementData.getAdvancement("enter_realm_of_the_dream", (ServerPlayer) pPlayer);
                     } else {
 //                      pPlayer.changeDimension(portalDimension, new TCRTeleporter(pPos, false));

@@ -45,6 +45,7 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
                             FrameType.TASK, false, false, false)
 //                    .addCriterion(TheCasketOfReveriesMod.MOD_ID, ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.SKY_ISLAND_LEVEL_KEY))
 //                    .addCriterion(TheCasketOfReveriesMod.MOD_ID, ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.P_SKY_ISLAND_LEVEL_KEY))
+                    .addCriterion(TheCasketOfReveriesMod.MOD_ID, new ImpossibleTrigger.TriggerInstance())
                     .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, TheCasketOfReveriesMod.MOD_ID), existingFileHelper);
 
             Advancement enterRealmOfTheDream = Advancement.Builder.advancement()
@@ -56,6 +57,7 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
                             FrameType.TASK, true, true, false)
 //                    .addCriterion("enter_realm_of_the_dream", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.SKY_ISLAND_LEVEL_KEY))
 //                    .addCriterion("enter_realm_of_the_dream", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.P_SKY_ISLAND_LEVEL_KEY))
+                    .addCriterion("enter_realm_of_the_dream", new ImpossibleTrigger.TriggerInstance())
                     .rewards(new AdvancementRewards(0, new ResourceLocation[]{TCRLoot.ENTER_REALM_OF_THE_DREAM}, new ResourceLocation[0], CommandFunction.CacheableFunction.NONE))
                     .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "enter_realm_of_the_dream"), existingFileHelper);
 
@@ -186,6 +188,10 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
 
     public static void getAdvancement(String name, ServerPlayer serverPlayer){
         Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,name));
+        if(_adv == null){
+            System.out.println("advancement:\""+name+"\" is null!");
+            return;
+        }
         AdvancementProgress _ap = serverPlayer.getAdvancements().getOrStartProgress(_adv);
         if (!_ap.isDone()) {
             for (String criteria : _ap.getRemainingCriteria())
