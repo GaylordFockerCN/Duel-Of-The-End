@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.worldgen.noise;
 
+import com.gaboj1.tcr.util.map.ContinentMovement;
 import org.spongepowered.noise.NoiseQuality;
 import org.spongepowered.noise.module.source.Perlin;
 
@@ -78,7 +79,7 @@ public class NoiseMapGenerator {
     private double[][] map;
 
     int aCenterR = 0;//统一半径，否则有的中心群系过大
-    public static final int VILLAGER_SIZE = 128 / 4;
+    public static final int VILLAGER_SIZE = 32;
     public static final double CURVE_INTENSITY = 0.1;
     public static final double SCALE_OF_CENTER_R = 0.05;//相对宽度width的比例，中心空岛半径即为width*scaleOfCenterR
     public static final double SCALE_OF_A_CENTER_R = 0.9;//相对各个中心到整体中心的距离的比例， 各群系的中心群系的噪声半径 即 center.distance(aCenter)*scaleOfaCenterR
@@ -168,6 +169,11 @@ public class NoiseMapGenerator {
         return map;
     }
 
+    /**
+     * 分割地图。先计算整个大陆的中心，然后按四个象限划分，各个群系之间分界线为sin函数变体。
+     * @param map1 原先的地图
+     * @return 切割后的地图（不改变原对象）
+     */
     public double [][] divide(double [][]map1) {
         double[][] map = map1.clone();
         int width = map.length;
@@ -239,8 +245,14 @@ public class NoiseMapGenerator {
         return map;
     }
 
-    //TODO 调整合适数值
-    //FIXME 有一条边会残留直线
+    /**
+     * 根据参数获得群系分界线曲度
+     * TODO 调整合适数值
+     * FIXME 有一条边会残留直线
+     * @param distance
+     * @param angle
+     * @return
+     */
     private double getSinAngle(double distance, double angle) {
 
         // 定义曲线参数
@@ -282,7 +294,9 @@ public class NoiseMapGenerator {
 //        return angle;
     }
 
-    //给四个扇形分别添加中心群系
+    /**
+     *给四个扇形分别添加中心群系。关于群系的形状，群系1用老噪声生成，群系二为方形，为了生成山。
+     */
     public double[][] addCenter(double[][] map){
         double[][] map1 = map.clone();
 //        double[][] map1 = new double[map.length][map[0].length];
@@ -297,12 +311,13 @@ public class NoiseMapGenerator {
         center4 = computeCenter(dPoints);
         center4=copyMap(center4,map1,8,false);
 
-        village1 = calculateVillage(center1); // 计算村庄1的位置
-        village2 = calculateVillage(center2); // 计算村庄2的位置
-        village3 = calculateVillage(center3); // 计算村庄3的位置
-        village4 = calculateVillage(center4); // 计算村庄4的位置
+        this.map = map1.clone();//计算村庄需要用到map，所以得先更新地图
 
-        this.map = map1.clone();
+        village1 = calculateVillage(center1);
+        village2 = calculateVillage(center2);
+        village3 = calculateVillage(center3);
+        village4 = calculateVillage(center4);
+
         return map1;
     }
 
@@ -321,18 +336,51 @@ public class NoiseMapGenerator {
             return calculateVillage(center);
         }
 
-        //矫正村庄位置，防止离虚空太近。
-        while(map[village.x-- + VILLAGER_SIZE][village.y] == 0);
-        while(map[village.x++ - VILLAGER_SIZE][village.y] == 0);
-        while(map[village.x][village.y-- + VILLAGER_SIZE] == 0);
-        while(map[village.x][village.y++ - VILLAGER_SIZE] == 0);
+        // 矫正村庄位置，防止离虚空太近。
 
+        if(ContinentMovement.isAllInRange(map,village.x,village.y,VILLAGER_SIZE)){
+            return village;
+        }
 
-        // 返回村庄的位置
+        if(ContinentMovement.isIsolate(map,village.x,village.y,VILLAGER_SIZE)){
+            village = ContinentMovement.moveTowardsLand(map,village.x,village.y,100);
+        }
+
+        //防止本来就越界
+        if (village.x-VILLAGER_SIZE < 0) {
+            village.x = VILLAGER_SIZE;
+        } else if (village.x >= map.length - VILLAGER_SIZE) {
+            village.x = map.length - 1 - VILLAGER_SIZE;
+        }
+        if (village.y-VILLAGER_SIZE < 0) {
+            village.y = VILLAGER_SIZE;
+        } else if (village.y >= map[0].length - VILLAGER_SIZE) {
+            village.y = map[0].length - 1 - VILLAGER_SIZE;
+        }
+
+        //向非虚空靠拢
+        while (map[village.x - VILLAGER_SIZE][village.y] == 0 && map[village.x + VILLAGER_SIZE][village.y] != 0) {
+            village.x++;
+        }
+
+        while (map[village.x - VILLAGER_SIZE][village.y] != 0 && map[village.x + VILLAGER_SIZE][village.y] == 0) {
+            village.x--;
+        }
+
+        while (map[village.x][village.y - VILLAGER_SIZE] == 0 && map[village.x][village.y + VILLAGER_SIZE] != 0) {
+            village.y++;
+        }
+
+        while (map[village.x][village.y - VILLAGER_SIZE] != 0 && map[village.x][village.y + VILLAGER_SIZE] == 0) {
+            village.y--;
+        }
+
         return village;
     }
 
-    //生成中心并且把中心复制到各个区域
+    /**
+     *噪声生成中心群系范围，并且把中心复制到各个扇形。
+     */
     public Point copyMap(Point aCenter, double[][] map, double tag, boolean rotate){
         //再以各个点为中心生成噪声图，比较自然一点~
         NoiseMapGenerator generator = new NoiseMapGenerator();
@@ -354,6 +402,7 @@ public class NoiseMapGenerator {
             generator.setOctaves(6);
         }else {
             generator.setSeed(getDifferRandom());
+//            generator.setSeed(3);
         }
 
 
@@ -376,7 +425,9 @@ public class NoiseMapGenerator {
         return computeCenter(newPoints);
     }
 
-    //确保四个群系获得不一样的种子，具体待定 FIXME 在0-4内生成的图像差不多。。
+    /**
+     *确保四个群系获得不一样的种子，具体待定 FIXME 在0-4内生成的图像差不多。。
+     */
     ArrayList<Integer> last = new ArrayList<>();//确保每一个都不一样（虽然收效甚微）
     public int getDifferRandom(){
         int a = random.nextInt(5);
@@ -388,9 +439,11 @@ public class NoiseMapGenerator {
         return a;
     }
 
-    //计算重心（所有x之和除以2即为重心的x，所有y之和除以2即为重心的y）
+    /**
+     *计算重心（所有x之和除以2即为重心的x，所有y之和除以2即为重心的y）
+     */
     public static Point computeCenter(List<Point> points) {
-        if(points.size() == 0)return new Point(0,0);
+        if(points.isEmpty())return new Point(0,0);
         int sumX = 0;
         int sumY = 0;
         for (Point point : points) {
@@ -401,7 +454,6 @@ public class NoiseMapGenerator {
         int centerY = sumY / points.size();
         return new Point(centerX, centerY);
     }
-
 
     private double noise(double x, double y, int octaves, double persistence, double lacunarity) {
         double total = 0;
@@ -454,7 +506,7 @@ public class NoiseMapGenerator {
     }
 
     private double noise2D(int x, int y) {
-        random.setSeed(x * 49632 + y * 325176 + seed);
+        random.setSeed(x * 49632L + y * 325176L + seed);
         return random.nextDouble() * 2 - 1;
     }
 
@@ -462,7 +514,7 @@ public class NoiseMapGenerator {
         return Math.exp(-((x - peakX) * (x - peakX) + (y - peakY) * (y - peakY)) / (2 * variance * variance));
     }
 
-    public static void main(String args[]){
+    public static void main(String[] args){
 
         Perlin perlin = new Perlin();
         perlin.setNoiseQuality(NoiseQuality.BEST);
@@ -474,7 +526,7 @@ public class NoiseMapGenerator {
         int size = 100;
         for(int i = 0 ; i < size ; i++){
             for(int j = 0 ; j < size ; j++){
-                System.out.print(String.format("%.2f ",Math.abs(perlin.get(i * 0.01,0,j*0.01)-1)));
+                System.out.printf("%.2f ",Math.abs(perlin.get(i * 0.01,0,j*0.01)-1));
             }
             System.out.println();
 
