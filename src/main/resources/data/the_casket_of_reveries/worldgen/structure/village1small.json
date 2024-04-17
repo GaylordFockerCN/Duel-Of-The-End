@@ -3,9 +3,9 @@
 
   "start_pool": "the_casket_of_reveries:village/village1/village1_center",
 
-  "size": 2,
+  "size": 3,
 
-  "max_distance_from_center": 120,
+  "max_distance_from_center": 128,
 
   "biomes": "the_casket_of_reveries:pastoral_plains_biome",
 
