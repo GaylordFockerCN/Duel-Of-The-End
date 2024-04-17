@@ -47,15 +47,13 @@ public enum TCRStructuresEnum {
     }
 
     public Point getPoint(TCRBiomeProvider provider) {
-        Point point;
-        switch (this){
-            case FINAL: point = provider.getMainCenter();break;
-            case CHURCH: point = provider.getCenter1();break;
-            case SWORD: point = provider.getCenter2();break;
-            case VILLAGE1: point = BiomeMap.getInstance().getVillage1();break;
-            default:point = new Point(0,0);
-        }
-        return point;
+        return switch (this) {
+            case FINAL -> provider.getMainCenter();
+            case CHURCH -> provider.getCenter1();
+            case SWORD -> provider.getCenter2();
+            case VILLAGE1 -> BiomeMap.getInstance().getVillage1();
+            default -> new Point(0, 0);
+        };
     }
 
 }
