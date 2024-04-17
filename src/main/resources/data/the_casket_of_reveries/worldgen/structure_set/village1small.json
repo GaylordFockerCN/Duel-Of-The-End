@@ -1,13 +1,13 @@
 {
   "structures": [
     {
-      "structure": "the_casket_of_reveries:village1",
+      "structure": "the_casket_of_reveries:village1small",
       "weight": 1
     }
   ],
   "placement": {
         // Make sure this is unique and does not match any other structure set's salt
-        "salt": 114564191,
+        "salt": 114514191,
 
         // The average distance apart in chunks for spawn attempts
         "spacing": 56,

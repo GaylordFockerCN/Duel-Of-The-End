@@ -41,7 +41,7 @@ public class ModNoiseBuilders {
 
     public static NoiseGeneratorSettings plainNoiseSettings(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noise) {
         return new NoiseGeneratorSettings(
-                new NoiseSettings(-32, 256, 1, 2), // noiseSettings default:0 128 2 1
+                new NoiseSettings(32, 256, 1, 2), // noiseSettings default:0 128 2 1
                 Blocks.STONE.defaultBlockState(), // defaultBlock
                 Blocks.GRASS_BLOCK.defaultBlockState(), // defaultFluid default:water
 //                pMakeNoiseRouter(densityFunctions, noise), // noiseRouter

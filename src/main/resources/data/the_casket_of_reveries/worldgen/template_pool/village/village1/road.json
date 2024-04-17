@@ -2,7 +2,7 @@
 	"name": "the_casket_of_reveries:village/village1/road",
 	"fallback": "minecraft:empty",
 	"elements": [{
-		"weight": 2,
+		"weight": 3,
 		"element": {
 			"location": "the_casket_of_reveries:village/village1/road/village1_straight",
 			"processors": "minecraft:empty",
@@ -18,7 +18,7 @@
 			"element_type": "minecraft:single_pool_element"
 		}
 	},{
-		"weight": 1,
+		"weight": 2,
 		"element": {
 			"location": "the_casket_of_reveries:village/village1/road/village1_ljoint",
 			"processors": "minecraft:empty",

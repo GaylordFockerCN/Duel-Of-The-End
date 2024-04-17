@@ -44,8 +44,8 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
                             new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/block/dense_forest_dirt.png"),
                             FrameType.TASK, false, false, false)
 //                    .addCriterion(TheCasketOfReveriesMod.MOD_ID, ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.SKY_ISLAND_LEVEL_KEY))
-//                    .addCriterion(TheCasketOfReveriesMod.MOD_ID, ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.P_SKY_ISLAND_LEVEL_KEY))
-                    .addCriterion(TheCasketOfReveriesMod.MOD_ID, new ImpossibleTrigger.TriggerInstance())
+                    .addCriterion(TheCasketOfReveriesMod.MOD_ID, ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.P_SKY_ISLAND_LEVEL_KEY))
+//                    .addCriterion(TheCasketOfReveriesMod.MOD_ID, new ImpossibleTrigger.TriggerInstance())
                     .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, TheCasketOfReveriesMod.MOD_ID), existingFileHelper);
 
             Advancement enterRealmOfTheDream = Advancement.Builder.advancement()
@@ -56,8 +56,8 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
                             null,
                             FrameType.TASK, true, true, false)
 //                    .addCriterion("enter_realm_of_the_dream", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.SKY_ISLAND_LEVEL_KEY))
-//                    .addCriterion("enter_realm_of_the_dream", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.P_SKY_ISLAND_LEVEL_KEY))
-                    .addCriterion("enter_realm_of_the_dream", new ImpossibleTrigger.TriggerInstance())
+                    .addCriterion("enter_realm_of_the_dream", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.P_SKY_ISLAND_LEVEL_KEY))
+//                    .addCriterion("enter_realm_of_the_dream", new ImpossibleTrigger.TriggerInstance())
                     .rewards(new AdvancementRewards(0, new ResourceLocation[]{TCRLoot.ENTER_REALM_OF_THE_DREAM}, new ResourceLocation[0], CommandFunction.CacheableFunction.NONE))
                     .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "enter_realm_of_the_dream"), existingFileHelper);
 
