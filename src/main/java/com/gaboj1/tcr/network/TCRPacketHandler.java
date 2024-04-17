@@ -29,6 +29,7 @@ public class TCRPacketHandler {
         register(PersistentBoolDataSyncPacket.class, PersistentBoolDataSyncPacket::decode);
         register(PersistentIntDataSyncPacket.class, PersistentIntDataSyncPacket::decode);
         register(PersistentStringDataSyncPacket.class, PersistentStringDataSyncPacket::decode);
+        register(YggdrasilDialoguePacket.class,YggdrasilDialoguePacket::decode);
 
         // 发给服务端
         register(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);

@@ -2,15 +2,20 @@ package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
 import com.gaboj1.tcr.block.entity.spawner.EnforcedHomePoint;
 import com.gaboj1.tcr.entity.NpcDialogue;
-import com.gaboj1.tcr.gui.screen.DialogueComponentBuilder;
 import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.init.TCRModSounds;
+import com.gaboj1.tcr.network.PacketRelay;
+import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.packet.server.YggdrasilDialoguePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,6 +23,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
@@ -35,6 +42,8 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -53,14 +62,26 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     protected Player conversingPlayer;
     EntityType<?> entityType = TCRModEntities.YGGDRASIL.get();
     private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.COMPONENT);
+    private static final EntityDataAccessor<Boolean> DATA_IS_READY = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.BOOLEAN);
+
+
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.PINK, BossEvent.BossBarOverlay.PROGRESS);
 
-    private int shootInterval;
+//    private final ServerBossEvent bossFight;
     private boolean canBeHurt;
     private int hurtTimer;
 
     public YggdrasilEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_);
+//        this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
+    }
+
+//    private boolean isBossFight() {
+//        return this.bossFight.isVisible();
+//    }
+    private Component getBossName() {
+        return this.getEntityData().get(DATA_BOSS_NAME);
     }
 
     public ServerBossEvent getBossBar() {
@@ -100,6 +121,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
             this.getBossBar().setProgress(0.0F);
         }
     }
+
 
     @Override
     public boolean hurt(DamageSource damageSource, float v) {
@@ -156,6 +178,10 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
 
     }
 
+    public boolean isReady() {
+        return this.getEntityData().get(DATA_IS_READY);
+    }
+
     @Override
     public @Nullable GlobalPos getRestrictionPoint() {
         return null;
@@ -172,7 +198,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     }
 
     @Override
-    public void openDialogueScreen(CompoundTag senderData) {
+    public void openDialogueScreen(CompoundTag serverPlayerData) {
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
         Component greet1 = BUILDER.buildDialogueDialog(entityType,0);
         Component greet2 = BUILDER.buildDialogueDialog(entityType,3);
@@ -192,10 +218,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
                 .addChoice(BUILDER.buildDialogueChoice(entityType,4),BUILDER.buildDialogueDialog(entityType,10))
                 .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,11))
                 .addFinalChoice(BUILDER.buildDialogueChoice(entityType,-3),(byte)2);
-
-
-
-
+        Minecraft.getInstance().setScreen(builder.build());
     }
 
     @Override
@@ -209,6 +232,28 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
                 break;
         }
         this.setConversingPlayer(null);
+    }
+
+    @Override
+    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if (hand == InteractionHand.MAIN_HAND) {
+            if (!this.level().isClientSide()) {
+                if (!this.isReady()) {
+                    this.lookAt(player, 180.0F, 180.0F);
+                    if (player instanceof ServerPlayer serverPlayer) {
+                        if (this.getConversingPlayer() == null) {
+                            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new YggdrasilDialoguePacket(this.getId(),serverPlayer.getPersistentData().copy()), serverPlayer);
+                            this.setConversingPlayer(serverPlayer);
+                        }
+                    }
+                }
+//                else {
+//                    this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.ready"));
+//                }
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return InteractionResult.PASS;
     }
 
     @Override
@@ -229,6 +274,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
             conversingPlayer.sendSystemMessage(BUILDER.buildDialogue(this, component));
         }
     }
+
 
 
     public static class spawnTreeClawAtPointPositionGoal extends Goal {
