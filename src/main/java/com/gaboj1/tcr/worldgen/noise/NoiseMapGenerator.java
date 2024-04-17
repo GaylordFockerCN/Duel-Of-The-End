@@ -71,7 +71,14 @@ public class NoiseMapGenerator {
 
     private Point center1, center2, center3, center4, village1,village2,village3,village4;
 
+    public double[][] getMap() {
+        return map;
+    }
+
+    private double[][] map;
+
     int aCenterR = 0;//统一半径，否则有的中心群系过大
+    public static final int VILLAGER_SIZE = 128 / 4;
     public static final double CURVE_INTENSITY = 0.1;
     public static final double SCALE_OF_CENTER_R = 0.05;//相对宽度width的比例，中心空岛半径即为width*scaleOfCenterR
     public static final double SCALE_OF_A_CENTER_R = 0.9;//相对各个中心到整体中心的距离的比例， 各群系的中心群系的噪声半径 即 center.distance(aCenter)*scaleOfaCenterR
@@ -119,7 +126,7 @@ public class NoiseMapGenerator {
     public double[][] generateNoiseMap() {
         maxHeight /= scale;
         setSeed(seed);
-        double[][] skyIsland = new double[length][width];
+        map = new double[length][width];
         int centerX = width / 2;
         int centerY = length / 2;
         double maxDistance = Math.sqrt(Math.pow(centerX, 2) + Math.pow(centerY, 2));
@@ -131,38 +138,37 @@ public class NoiseMapGenerator {
                 double distanceToCenter = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
                 double normalizedDistance = distanceToCenter / maxDistance;
                 if (normalizedDistance >= 1) {
-                    skyIsland[y][x] = 0;
+                    map[y][x] = 0;
                     continue;
                 }
                 double value = noise(nx, ny, octaves, persistence, lacunarity) * (1 - normalizedDistance) * maxHeight;
 
-                skyIsland[y][x] = value;
+                map[y][x] = value;
             }
         }
 
         // 找出最高值
         double maxEdgeValue = -Double.MAX_VALUE;
         for (int x = 0; x < width; x++) {
-            maxEdgeValue = Math.max(maxEdgeValue, skyIsland[0][x]);
-            maxEdgeValue = Math.max(maxEdgeValue, skyIsland[length - 1][x]);
+            maxEdgeValue = Math.max(maxEdgeValue, map[0][x]);
+            maxEdgeValue = Math.max(maxEdgeValue, map[length - 1][x]);
         }
         for (int y = 0; y < length; y++) {
-            maxEdgeValue = Math.max(maxEdgeValue, skyIsland[y][0]);
-            maxEdgeValue = Math.max(maxEdgeValue, skyIsland[y][width - 1]);
+            maxEdgeValue = Math.max(maxEdgeValue, map[y][0]);
+            maxEdgeValue = Math.max(maxEdgeValue, map[y][width - 1]);
         }
 
         // 减去最高值并设为0
         for (int y = 0; y < length; y++) {
             for (int x = 0; x < width; x++) {
-                skyIsland[y][x] = Math.max(skyIsland[y][x] - maxEdgeValue, 0);
+                map[y][x] = Math.max(map[y][x] - maxEdgeValue, 0);
             }
         }
 
-        return skyIsland;
+        return map;
     }
 
     public double [][] divide(double [][]map1) {
-
         double[][] map = map1.clone();
         int width = map.length;
         int length = map[0].length;
@@ -229,6 +235,7 @@ public class NoiseMapGenerator {
                 }
             }
         }
+        this.map = map.clone();
         return map;
     }
 
@@ -295,6 +302,7 @@ public class NoiseMapGenerator {
         village3 = calculateVillage(center3); // 计算村庄3的位置
         village4 = calculateVillage(center4); // 计算村庄4的位置
 
+        this.map = map1.clone();
         return map1;
     }
 
@@ -312,6 +320,14 @@ public class NoiseMapGenerator {
         if(village.distance(centerPoint) < village.distance(center)){//防止距离过近
             return calculateVillage(center);
         }
+
+        //矫正村庄位置，防止离虚空太近。
+        while(map[village.x-- + VILLAGER_SIZE][village.y] == 0);
+        while(map[village.x++ - VILLAGER_SIZE][village.y] == 0);
+        while(map[village.x][village.y-- + VILLAGER_SIZE] == 0);
+        while(map[village.x][village.y++ - VILLAGER_SIZE] == 0);
+
+
         // 返回村庄的位置
         return village;
     }
