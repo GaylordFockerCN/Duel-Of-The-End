@@ -66,7 +66,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
 
     private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    EntityType<? extends TCRVillager> entityType;
+    protected EntityType<? extends TCRVillager> entityType;
     boolean canTalk = true;
 
     protected Random r = new Random();

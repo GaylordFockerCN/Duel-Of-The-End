@@ -29,6 +29,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -102,16 +103,19 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
             builder.start(BUILDER.buildDialogueDialog(entityType,4))
                     .addChoice(BUILDER.buildDialogueChoice(entityType,3),BUILDER.buildDialogueDialog(entityType,5))
                     .addChoice(BUILDER.buildDialogueChoice(entityType,4),BUILDER.buildDialogueDialog(entityType,6))
-                    .addFinalChoice(BUILDER.buildDialogueChoice(entityType,5),(byte)0);
+                    .addFinalChoice(BUILDER.buildDialogueChoice(entityType,-1),(byte)0);
         }else {
             BiomeMap biomeMap = BiomeMap.getInstance();
             BlockPos biome1Center = biomeMap.getBlockPos(biomeMap.getCenter1(),0);
             String position = "("+biome1Center.getX()+","+biome1Center.getZ()+")";
             builder.start(BUILDER.buildDialogueDialog(entityType,0))
+                    .addChoice(BUILDER.buildDialogueChoice(entityType,2),BUILDER.buildDialogueDialog(entityType,-1))
+                    .addChoice(BUILDER.buildDialogueChoice(entityType,1),BUILDER.buildDialogueDialog(entityType,-2))
+                    .addChoice(BUILDER.buildDialogueChoice(entityType,2),BUILDER.buildDialogueDialog(entityType,-3))
                     .addChoice(BUILDER.buildDialogueChoice(entityType,0),BUILDER.buildDialogueDialog(entityType,1,position))//告诉玩家密林方位
-                    .addChoice(BUILDER.buildDialogueChoice(entityType,1),BUILDER.buildDialogueDialog(entityType,2))
-                    .addChoice(BUILDER.buildDialogueChoice(entityType,1),BUILDER.buildDialogueDialog(entityType,3))
-                    .addFinalChoice(BUILDER.buildDialogueChoice(entityType,2),(byte)0);
+                    .addChoice(BUILDER.buildDialogueChoice(entityType,5),BUILDER.buildDialogueDialog(entityType,2))
+                    .addChoice(BUILDER.buildDialogueChoice(entityType,2),BUILDER.buildDialogueDialog(entityType,3))
+                    .addFinalChoice(BUILDER.buildDialogueChoice(entityType,-1),(byte)0);
         }
 
         Minecraft.getInstance().setScreen(builder.build());
@@ -120,8 +124,8 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID) {
-            case 0: //白方未击败boss
-                this.chat(Component.translatable("0"));
+            case 0: //对话中断！
+                this.chat(Component.translatable("刚刚说到哪儿来着？"));
                 break;
             case 1: //白方 击败boss
                 this.chat(Component.translatable("1"));
@@ -170,4 +174,12 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     public boolean shouldShowName() {
         return true;
     }
+
+    //不用加id
+    @Override
+    public @NotNull Component getDisplayName() {
+        return Component.translatable(entityType.getDescriptionId());
+    }
+
+
 }
