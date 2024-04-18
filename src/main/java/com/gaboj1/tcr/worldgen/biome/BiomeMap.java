@@ -25,6 +25,7 @@ public class BiomeMap {
     private static BiomeMap INSTANCE;
 
     private NoiseMapGenerator generator;
+    private double[][] map;
     public Point getCenter1() {
         return generator.getCenter1();
     }
@@ -161,9 +162,16 @@ public class BiomeMap {
     }
 
     public static double[][] createImageMapStatic(NoiseMapGenerator generator){
+//        //FIXME 还是会nullPointerException
+//        if(INSTANCE != null){
+//            //平坦世界也会用，重复加载浪费时间，所以这里直接对接一下。
+//            generator = INSTANCE.generator;
+//            return INSTANCE.map;
+//        }
         INSTANCE = new BiomeMap();
         INSTANCE.generator = generator;
-        return INSTANCE.createImageMap(generator);
+        INSTANCE.map = INSTANCE.createImageMap(generator);
+        return INSTANCE.map;
 //        try {
 //            File dir = new File(DIR);
 //            if(!dir.exists()){

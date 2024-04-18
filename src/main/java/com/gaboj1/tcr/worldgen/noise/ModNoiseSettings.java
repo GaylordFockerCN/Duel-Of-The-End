@@ -9,10 +9,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
 
-import java.util.List;
-
 public class ModNoiseSettings {
-    public static final ResourceKey<NoiseGeneratorSettings> SKY_ISLANDS = createKey("sky_islands_noise_gen");//the Aether
+    public static final ResourceKey<NoiseGeneratorSettings> SKY_ISLANDS = createKey("sky_islands_noise_gen");//空岛
+    public static final ResourceKey<NoiseGeneratorSettings> PLAIN = createKey("plain_noise_gen");//大平地
 
     private static ResourceKey<NoiseGeneratorSettings> createKey(String name) {
         return ResourceKey.create(Registries.NOISE_SETTINGS, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name));
@@ -21,7 +20,8 @@ public class ModNoiseSettings {
     public static void bootstrap(BootstapContext<NoiseGeneratorSettings> context) {
         HolderGetter<DensityFunction> densityFunctions = context.lookup(Registries.DENSITY_FUNCTION);
         HolderGetter<NormalNoise.NoiseParameters> noise = context.lookup(Registries.NOISE);
-        context.register(SKY_ISLANDS, ModNoiseBuilders.skylandsNoiseSettings(densityFunctions, noise));
+        context.register(SKY_ISLANDS, ModNoiseBuilders.skyIslandsNoiseSettings(densityFunctions, noise));
+        context.register(PLAIN, ModNoiseBuilders.plainNoiseSettings(densityFunctions, noise));
     }
 
 }

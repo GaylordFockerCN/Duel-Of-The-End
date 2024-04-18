@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.block.custom;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.entity.PortalBedEntity;
 import com.gaboj1.tcr.datagen.ModAdvancementData;
@@ -39,19 +40,25 @@ public class PortalBed extends BedBlock {
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+
         if (pLevel.isClientSide)
             return InteractionResult.CONSUME;
         if (pPlayer.canChangeDimensions()) {
             if (pPlayer.level() instanceof ServerLevel serverlevel && canSetSpawn(serverlevel) && !(Boolean)pState.getValue(OCCUPIED) ) {
 
                 MinecraftServer minecraftserver = serverlevel.getServer();
-                ResourceKey<Level> resourcekey = pPlayer.level().dimension() == TCRDimension.SKY_ISLAND_LEVEL_KEY ?
-                        Level.OVERWORLD : TCRDimension.SKY_ISLAND_LEVEL_KEY;
+                ResourceKey<Level> resourcekey = TCRConfig.MORE_HOLE.get()?
+                        (pPlayer.level().dimension() == TCRDimension.SKY_ISLAND_LEVEL_KEY ?
+                                Level.OVERWORLD : TCRDimension.SKY_ISLAND_LEVEL_KEY):
+                        (pPlayer.level().dimension() == TCRDimension.P_SKY_ISLAND_LEVEL_KEY ?
+                                Level.OVERWORLD : TCRDimension.P_SKY_ISLAND_LEVEL_KEY);
 
                 ServerLevel portalDimension = minecraftserver.getLevel(resourcekey);
                 if (portalDimension != null && !pPlayer.isPassenger()) {
-                    if(resourcekey == TCRDimension.SKY_ISLAND_LEVEL_KEY) {
+                    if(resourcekey == (TCRConfig.MORE_HOLE.get()?TCRDimension.SKY_ISLAND_LEVEL_KEY:TCRDimension.P_SKY_ISLAND_LEVEL_KEY)) {
                         pPlayer.changeDimension(portalDimension, new TCRTeleporter(pPos, true));
+                        ModAdvancementData.getAdvancement(TheCasketOfReveriesMod.MOD_ID, (ServerPlayer) pPlayer);
+                        ModAdvancementData.getAdvancement("enter_realm_of_the_dream", (ServerPlayer) pPlayer);
                     } else {
 //                      pPlayer.changeDimension(portalDimension, new TCRTeleporter(pPos, false));
 

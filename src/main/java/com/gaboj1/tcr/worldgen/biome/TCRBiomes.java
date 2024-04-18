@@ -135,7 +135,7 @@ public class TCRBiomes {
                         .waterColor(0x000000)
                         .waterFogColor(0x1b8bbf)
                         .grassColorOverride(0x000000)
-                        .foliageColorOverride(0xd203fc)
+//                        .foliageColorOverride(0xd203fc)
                         .fogColor(0x000000)
                         .skyColor(0x000000)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)

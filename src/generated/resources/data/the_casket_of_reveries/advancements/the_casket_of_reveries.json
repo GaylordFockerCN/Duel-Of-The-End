@@ -2,7 +2,7 @@
   "criteria": {
     "the_casket_of_reveries": {
       "conditions": {
-        "to": "the_casket_of_reveries:realm_of_the_dream"
+        "to": "the_casket_of_reveries:p_realm_of_the_dream"
       },
       "trigger": "minecraft:changed_dimension"
     }

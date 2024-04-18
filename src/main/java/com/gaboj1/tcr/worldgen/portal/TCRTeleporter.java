@@ -4,6 +4,7 @@ import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.ITeleporter;
@@ -29,7 +30,11 @@ public class TCRTeleporter implements ITeleporter {
     public @Nullable PortalInfo getPortalInfo(Entity entity, ServerLevel destinationLevel, Function<ServerLevel, PortalInfo> defaultPortalInfo) {
         PortalInfo pos;
         BiomeMap biomeMap = BiomeMap.getInstance();
-        BlockPos destinationPos = biomeMap.getBlockPos(biomeMap.getVillage1(),80);
+        int y = 100;
+        BlockPos destinationPos = biomeMap.getBlockPos(biomeMap.getVillage1(),y);
+        while (!destinationLevel.getBlockState(destinationPos).is(Blocks.AIR)){
+            destinationPos = destinationPos.above();
+        }
         pos = new PortalInfo(destinationPos.getCenter(), Vec3.ZERO, entity.getYRot(), entity.getXRot());
         return pos == null ? ITeleporter.super.getPortalInfo(entity, destinationLevel, defaultPortalInfo) : pos;
     }
