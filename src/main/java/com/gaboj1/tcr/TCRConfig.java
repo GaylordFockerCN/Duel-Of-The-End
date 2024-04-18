@@ -20,7 +20,7 @@ public class TCRConfig
     //更好的结构方块是否立即刷新（默认开启，开发时关闭）
     public static final ForgeConfigSpec.BooleanValue ENABLE_BETTER_STRUCTURE_BLOCK_LOAD = createBool("enable_better_structure_block_load",true);
     //游戏内对话框是否使用打字机效果（对话逐字出现）
-    public static final ForgeConfigSpec.BooleanValue ENABLE_TYPEWRITER_EFFECT = createBool("ENABLE_TYPEWRITER_EFFECT",true);
+    public static final ForgeConfigSpec.BooleanValue ENABLE_TYPEWRITER_EFFECT = createBool("enable_typewriter_effect",true);
     //打字机效果的速度
     public static final ForgeConfigSpec.IntValue TYPEWRITER_EFFECT_INTERVAL = createInt("typewriter_effect_interval",5,1);
 

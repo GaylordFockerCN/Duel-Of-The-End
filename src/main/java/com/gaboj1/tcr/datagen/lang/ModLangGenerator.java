@@ -31,6 +31,8 @@ public class ModLangGenerator extends ModLangProvider {
         this.addConfig("enable_better_structure_block_load","更好的结构方块是否立即刷新（默认开启，开发时关闭）");
         this.addConfig("more_hole","是否启用更多空洞的世界（地图更像空岛，类似天境，但是陆地较少）");
         this.addConfig("enable_scaling","是否启用地图缩放。若启用，则无论用何种尺寸的图片生成的地图大小固定");
+        this.addConfig("enable_typewriter_effect","是否启用打字机效果（即对话文本是否逐字出现");
+        this.addConfig("typewriter_effect_interval","打字机效果间隔。越大语速越慢。");
         this.addConfig("repair_value","基础树脂的修理值");
         this.addConfig("tree_spirit_wand_hungry_consume","树灵法杖回血时的饥饿值消耗");
         this.addConfig("tree_spirit_wand_heal","树灵法杖回血量");
@@ -145,74 +147,74 @@ public class ModLangGenerator extends ModLangProvider {
         this.addVillagerChat(TCRModEntities.PASTORAL_PLAIN_VILLAGER, 4, true, "你的逻辑就像威廉先生的羊一样跑偏");
         this.addVillagerChat(TCRModEntities.PASTORAL_PLAIN_VILLAGER, 5, true, "你的观点让人想起了安妮小姐家的鸭子闹剧");
 
-        this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,"牧歌原野-村民");
-        this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,-1,"牧歌原野-舞女");
-        this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,-2,"牧歌原野-服务生");
-        this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,-3,"牧歌原野-商人");
-        this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,-4,"牧歌原野-商人");
-        this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,0,"牧歌原野-商人");
-        this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,1,"牧歌原野-工匠");
-        this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,2,"牧歌原野-学者");
-        this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,3,"牧歌原野-牧羊人");
-        this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,4,"牧歌原野-猎人");
+        this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,"牧歌原野-村民");
+        this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-1,"牧歌原野-舞女");
+        this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-2,"牧歌原野-服务生");
+        this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-3,"牧歌原野-商人");
+        this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-4,"牧歌原野-商人");
+        this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,0,"牧歌原野-商人");
+        this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,1,"牧歌原野-工匠");
+        this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,2,"牧歌原野-学者");
+        this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,3,"牧歌原野-牧羊人");
+        this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,4,"牧歌原野-猎人");
 
         //商人
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,-3,"这里的人们都是能幸福地许愿日常用品。至于我为什么要当商人？只是享受这种以物易物的感觉");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,-2,"最近来找我交易的人变多了。许愿的能力为什么……哦有什么事吗");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,-1,"很欢迎你来与我交易");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-3,"这里的人们都是能幸福地许愿日常用品。至于我为什么要当商人？只是享受这种以物易物的感觉");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-2,"最近来找我交易的人变多了。许愿的能力为什么……哦有什么事吗");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-1,"很欢迎你来与我交易");
         //工匠
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,0,"不许伤害猫猫果冻！");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,1,"上天……上天给我的……这不是祈祷就有了吗？");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,2,"做梦吧你！火铳是我帮你祈祷出来的");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,3,"......");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,4,"我赌你的枪里没有子弹！");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,5,"不要拿去干坏事哦~");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,0,"不许伤害猫猫果冻！");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,1,"上天……上天给我的……这不是祈祷就有了吗？");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,2,"做梦吧你！火铳是我帮你祈祷出来的");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,3,"......");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,4,"我赌你的枪里没有子弹！");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,5,"不要拿去干坏事哦~");
         //学者
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,7,"抱歉没注意到你，我一思考就容易陷进去了呢，哈哈");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,8,"知识从不对人吝啬");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,9,"愿我的智慧为你扫开前路");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,7,"抱歉没注意到你，我一思考就容易陷进去了呢，哈哈");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,8,"知识从不对人吝啬");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,9,"愿我的智慧为你扫开前路");
         //牧羊人
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,10,"云朵和羊…都是软绵绵的，要跟我一起躲在云里晒太阳吗");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,11,"一只羊，两只羊…….抱歉又睡着了，没给你添麻烦吧");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,12,"真是有干劲啊，那我也要全力以赴了，朋友");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,10,"云朵和羊…都是软绵绵的，要跟我一起躲在云里晒太阳吗");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,11,"一只羊，两只羊…….抱歉又睡着了，没给你添麻烦吧");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,12,"真是有干劲啊，那我也要全力以赴了，朋友");
         //猎人
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,13,"今天出去解决了几只小“猎物”呢");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,14,"要来和我比赛打猎吗，您看上去可是相当强大啊，真是按耐不住想比试的心");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,15,"我这边可是有很多帮助您打猎的好东西呢，呵呵");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,13,"今天出去解决了几只小“猎物”呢");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,14,"要来和我比赛打猎吗，您看上去可是相当强大啊，真是按耐不住想比试的心");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,15,"我这边可是有很多帮助您打猎的好东西呢，呵呵");
         //舞者
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,16,"嘿，你是来看我跳舞的吗？在这个小镇上我可是最出名的舞者哦。");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,17,"当然可以！这支舞是我从外地学来的，希望你喜欢！顺便问一下，你是来这里做什么的呢？");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,18,"哦，那你一定要小心，那些传说听起来让人直做噩梦。 ");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,16,"嘿，你是来看我跳舞的吗？在这个小镇上我可是最出名的舞者哦。");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,17,"当然可以！这支舞是我从外地学来的，希望你喜欢！顺便问一下，你是来这里做什么的呢？");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,18,"哦，那你一定要小心，那些传说听起来让人直做噩梦。 ");
         //侍者
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,19,"哦，你是新来的旅人吗？欢迎来到我们的小镇！需要我为你倒杯酒吗？");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,20,"当然，这是我们特制的饮料，品尝一下吧！顺便问一句，你是来冒险的还是仅仅路过这里？");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,21,"那座教堂？那可不是个想去就去的地方，我祝你好运。 ");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,22,"（你已经白嫖过饮料了~）");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,23,"想喝点什么？");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,19,"哦，你是新来的旅人吗？欢迎来到我们的小镇！需要我为你倒杯酒吗？");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,20,"当然，这是我们特制的饮料，品尝一下吧！顺便问一句，你是来冒险的还是仅仅路过这里？");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,21,"那座教堂？那可不是个想去就去的地方，我祝你好运。 ");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,22,"（你已经白嫖过饮料了~）");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,23,"想喝点什么？");
 
         //商人
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,-3,"我想买点东西");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-3,"我想买点东西");
         //工匠
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,0,"那你汉堡里面的牛肉是哪来的？");
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,1,"我也可以吗？我想要把火铳！");
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,2,"【获得 火铳*1 弹药*20】");
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,3,"我还想要个女朋友！");
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,4,"......");
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,5,"快给我，不然嘣了你");
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,6,"谢谢你的火铳~");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,0,"那你汉堡里面的牛肉是哪来的？");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,1,"我也可以吗？我想要把火铳！");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,2,"【获得 火铳*1 弹药*20】");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,3,"我还想要个女朋友！");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,4,"......");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,5,"快给我，不然嘣了你");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,6,"谢谢你的火铳~");
         //学者
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,7,"询问");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,7,"询问");
         //牧羊人
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,10,"我要去忙了");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,10,"我要去忙了");
         //猎人
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,13,"交易");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,13,"交易");
         //舞者
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,16,"你跳的舞一定很精彩");
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,17,"我是来探险的，听说这个小镇有很多古老的传说。");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,16,"你跳的舞一定很精彩");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,17,"我是来探险的，听说这个小镇有很多古老的传说。");
         //侍者
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,19,"谢谢，我想来一杯你们这里最畅销的饮料。");
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,20,"我是来探险的，听说这附近有个古老的教堂，我想去看看。");
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1,21,"购买饮料");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,19,"谢谢，我想来一杯你们这里最畅销的饮料。");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,20,"我是来探险的，听说这附近有个古老的教堂，我想去看看。");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,21,"购买饮料");
 
         this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,"牧歌原野-海拉长老");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,0,"勇者啊，我所期盼的勇者啊你终于来了。你可知我这十年来的心在仇恨的尖刀上是如何滴血的么。密林中的魔物危害着这个村子呵。恳请您前去剿除。");
