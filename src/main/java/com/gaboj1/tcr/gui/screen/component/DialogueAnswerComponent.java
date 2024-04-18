@@ -28,6 +28,7 @@ public class DialogueAnswerComponent {
     private int index;
     //打字机效果的最大值
     private int max;
+    private int maxWidth;
 
     private boolean shouldRenderOption = false;
 
@@ -69,14 +70,18 @@ public class DialogueAnswerComponent {
             NpcDialogueElement dialogue = splitLines.get(i);
             dialogue.width = Minecraft.getInstance().font.width(dialogue.text) + 2;
 
-            int maxWidth = dialogue.width;
+//            int maxWidth = dialogue.width
+//
+//            //如果启动打字机效果，则以完整文本的位置来，即字从左到右出现，而不是从中间往两边延展。比较好看
+//            if(TCRConfig.ENABLE_TYPEWRITER_EFFECT.get() && fullSplitLines.size() > 1 && i != 0){//因为第一个变量是NPC名字，所以要取下标1。
+//                maxWidth = Minecraft.getInstance().font.width(fullSplitLines.get(1).text) + 2;
+//            }
 
-            //如果启动打字机效果，则以完整文本的位置来，即字从左到右出现，而不是从中间往两边延展。比较好看
-            if(TCRConfig.ENABLE_TYPEWRITER_EFFECT.get() && fullSplitLines.size() > 1 && i != 0){//因为第一个变量是NPC名字，所以要取下标1。
-                maxWidth = Minecraft.getInstance().font.width(fullSplitLines.get(1).text) + 2;
+            if(TCRConfig.ENABLE_TYPEWRITER_EFFECT.get()){
+                dialogue.x = width / 2 - maxWidth / 2;
+            } else {
+                dialogue.x = width / 2 - dialogue.width / 2;
             }
-
-            dialogue.x = width / 2 - maxWidth / 2;
             dialogue.y = height / 2 + j * 12;
             j++;
         }
@@ -100,6 +105,14 @@ public class DialogueAnswerComponent {
     public void updateTypewriterDialogue(Component message) {
         this.message = message;
         updateSplitLines(fullSplitLines,message);
+
+        //以最长那句话的最左边为最左边。
+        maxWidth = 0;
+        for(NpcDialogueElement element:fullSplitLines){
+            maxWidth = Math.max(Minecraft.getInstance().font.width(element.text) + 2, maxWidth);
+        }
+        maxWidth = Minecraft.getInstance().font.width(fullSplitLines.get(1).text) + 2;
+
         shouldRenderOption = false;
 //        index = name.getString().length();//名字就不用打字机了
         index = 0;
