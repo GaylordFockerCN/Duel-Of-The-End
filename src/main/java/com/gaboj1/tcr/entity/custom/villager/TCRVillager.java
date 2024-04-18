@@ -1,20 +1,18 @@
 package com.gaboj1.tcr.entity.custom.villager;
 
 import com.gaboj1.tcr.entity.ManySkinEntity;
+import com.gaboj1.tcr.entity.ai.behavior.TCRVillagerTasks;
 import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
 import com.gaboj1.tcr.init.TCRModSounds;
-import com.gaboj1.tcr.init.TCRModVillagers;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.server.EntityChangeSkinIDPacket;
 import com.gaboj1.tcr.util.DataManager;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
-import com.mojang.realmsclient.gui.task.DataFetcher;
 import com.mojang.serialization.Dynamic;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -46,14 +44,11 @@ import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.npc.VillagerData;
 import net.minecraft.world.entity.npc.VillagerProfession;
-import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.entity.schedule.Schedule;
-import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -70,6 +65,8 @@ import java.util.Random;
 public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
 
     private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    EntityType<? extends TCRVillager> entityType;
     boolean canTalk = true;
 
     protected Random r = new Random();
@@ -98,6 +95,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
     public static final int MAX_FEMALE_TYPES = 4;//女性数量
     public TCRVillager(EntityType<? extends TCRVillager> pEntityType, Level pLevel, int skinID) {
         super(pEntityType, pLevel);
+        this.entityType = pEntityType;
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
         ((GroundPathNavigation)this.getNavigation()).setCanOpenDoors(true);//抛弃大脑后最后的尊严...
 //        if(!this.getPersistentData().getBoolean("hasSkinID")){
@@ -449,6 +447,12 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
+    }
+
+
+    @Override
+    public @NotNull Component getDisplayName() {
+        return Component.translatable(entityType.getDescriptionId()+skinID);
     }
 
 }

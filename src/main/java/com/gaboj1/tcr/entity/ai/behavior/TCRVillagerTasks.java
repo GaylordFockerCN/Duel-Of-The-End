@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.entity.custom.villager;
+package com.gaboj1.tcr.entity.ai.behavior;
 
 import com.gaboj1.tcr.entity.ai.behavior.TCRVillagerRetaliateTask;
 import com.google.common.collect.ImmutableList;

@@ -20,7 +20,7 @@ import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
-import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainTalkableVillager1;
+import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainTalkableVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.init.*;
@@ -181,8 +181,8 @@ public class TheCasketOfReveriesMod {
             EntityRenderers.register(TCRModEntities.SQUIRREL.get(), SquirrelRenderer::new);
 
             EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER1.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), TCRVillagerRenderer::new);
             EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(), TCRVillagerRenderer::new);
 
             EntityRenderers.register(TCRModEntities.YGGDRASIL.get(), YggdrasilRenderer::new);
@@ -199,8 +199,8 @@ public class TheCasketOfReveriesMod {
             event.put(TCRModEntities.JELLY_CAT.get(), JellyCat.setAttributes());
             event.put(TCRModEntities.SQUIRREL.get(), Squirrel.setAttributes());
             event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), TCRVillager.setAttributes());
-            event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER1.get(),TCRVillager.setAttributes());
-            event.put(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1.get(), PastoralPlainTalkableVillager1.setAttributes());
+            event.put(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), PastoralPlainTalkableVillager.setAttributes());
+            event.put(TCRModEntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), PastoralPlainTalkableVillager.setAttributes());
             event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),PastoralPlainVillagerElder.setAttributes());
             event.put(TCRModEntities.YGGDRASIL.get(), YggdrasilEntity.setAttributes());
             event.put(TCRModEntities.TREE_CLAW.get(), TreeClawEntity.setAttributes());
@@ -209,8 +209,10 @@ public class TheCasketOfReveriesMod {
         //刷新规则
         @SubscribeEvent
         public static void entitySpawnRestriction(SpawnPlacementRegisterEvent event) {
-            event.register(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER_1.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                    PastoralPlainTalkableVillager1::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+            event.register(TCRModEntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    PastoralPlainTalkableVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+            event.register(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    PastoralPlainTalkableVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                     PastoralPlainVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
             event.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,

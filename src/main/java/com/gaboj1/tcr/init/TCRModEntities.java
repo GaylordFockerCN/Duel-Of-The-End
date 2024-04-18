@@ -8,8 +8,8 @@ import com.gaboj1.tcr.entity.custom.dreamspirit.Squirrel;
 import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
-import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainTalkableVillager1;
-import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillager1;
+import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainStationaryVillager;
+import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainTalkableVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.entity.custom.*;
 
@@ -53,13 +53,10 @@ public class TCRModEntities {
 
 	public static final RegistryObject<EntityType<PastoralPlainVillager>> PASTORAL_PLAIN_VILLAGER = register("pastoral_plain_villager",
 			EntityType.Builder.of(PastoralPlainVillager::new, MobCategory.CREATURE));
-
-	public static final RegistryObject<EntityType<PastoralPlainVillager1>> PASTORAL_PLAIN_VILLAGER1 = register("pastoral_plain_villager1",
-			EntityType.Builder.of(PastoralPlainVillager1::new, MobCategory.CREATURE));
-
-	public static final RegistryObject<EntityType<PastoralPlainTalkableVillager1>> PASTORAL_PLAIN_TALKABLE_VILLAGER_1 = register("pastoral_plain_talkable_villager_1",
-			EntityType.Builder.of(PastoralPlainTalkableVillager1::new, MobCategory.CREATURE));
-
+	public static final RegistryObject<EntityType<PastoralPlainTalkableVillager>> PASTORAL_PLAIN_TALKABLE_VILLAGER = register("pastoral_plain_talkable_villager",
+			EntityType.Builder.of(PastoralPlainTalkableVillager::new, MobCategory.CREATURE));
+	public static final RegistryObject<EntityType<PastoralPlainStationaryVillager>> PASTORAL_PLAIN_STATIONARY_VILLAGER = register("pastoral_plain_stationary_villager",
+			EntityType.Builder.of(PastoralPlainStationaryVillager::new, MobCategory.CREATURE));
 	public static final RegistryObject<EntityType<PastoralPlainVillagerElder>> PASTORAL_PLAIN_VILLAGER_ELDER = register("pastoral_plain_villager_elder",
 			EntityType.Builder.of(PastoralPlainVillagerElder::new, MobCategory.CREATURE));
 

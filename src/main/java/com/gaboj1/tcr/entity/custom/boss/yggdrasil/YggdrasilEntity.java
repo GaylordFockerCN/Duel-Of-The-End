@@ -7,7 +7,7 @@ import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.init.TCRModSounds;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.server.YggdrasilDialoguePacket;
+import com.gaboj1.tcr.network.packet.server.NPCDialoguePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
@@ -42,8 +42,6 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -224,8 +222,9 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID){
+            //NOTE: 0为默认返回值，无论做什么最后都得this.setConversingPlayer(null);不然无法再次对话
             case 0:
-                return;
+//                return;
             case 1:
                 return;
             case 2:
@@ -238,15 +237,15 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (hand == InteractionHand.MAIN_HAND) {
             if (!this.level().isClientSide()) {
-                if (!this.isReady()) {
+//                if (!this.isReady()) {
                     this.lookAt(player, 180.0F, 180.0F);
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (this.getConversingPlayer() == null) {
-                            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new YggdrasilDialoguePacket(this.getId(),serverPlayer.getPersistentData().copy()), serverPlayer);
+                            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(),serverPlayer.getPersistentData().copy()), serverPlayer);
                             this.setConversingPlayer(serverPlayer);
                         }
                     }
-                }
+//                }
 //                else {
 //                    this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.ready"));
 //                }

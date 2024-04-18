@@ -1,53 +1,45 @@
 package com.gaboj1.tcr.entity.custom.villager;
 
-import com.gaboj1.tcr.entity.NpcDialogue;
-import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
-import com.gaboj1.tcr.gui.screen.DialogueComponentBuilder;
-import com.gaboj1.tcr.network.PacketRelay;
-import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.server.NPCDialoguePacket;
+import com.gaboj1.tcr.datagen.ModAdvancementData;
+import com.gaboj1.tcr.entity.custom.villager.TCRTalkableVillager;
+import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
+import com.gaboj1.tcr.gui.screen.TreeNode;
+import com.gaboj1.tcr.init.TCRModEntities;
+import com.gaboj1.tcr.init.TCRModItems;
+import com.gaboj1.tcr.util.DataManager;
+import com.gaboj1.tcr.util.ItemUtil;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.Brain;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-public class TCRStationaryVillager extends TCRVillager implements NpcDialogue {
+import java.util.Random;
 
-    @Nullable
-    protected Player conversingPlayer;
+import static com.gaboj1.tcr.gui.screen.DialogueComponentBuilder.BUILDER;
 
-    protected boolean alreadyAddTrade = false;
+/**
+ * 不可移动的村民
+ * 不注册大脑
+ * @author LZY
+ */
+public abstract class TCRStationaryVillager extends TCRTalkableVillager {
 
-    public TCRStationaryVillager(EntityType<? extends TCRStationaryVillager> pEntityType, Level pLevel, int skinID) {
-        super(pEntityType, pLevel,skinID);
+
+    public TCRStationaryVillager(EntityType<? extends TCRStationaryVillager> entityType, Level level) {
+        super(entityType, level,1);
     }
 
-    @Override
-    public boolean save(CompoundTag tag) {
-        tag.putBoolean("alreadyAddTrade",alreadyAddTrade);
-        return super.save(tag);
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        alreadyAddTrade = tag.getBoolean("alreadyAddTrade");
-        super.load(tag);
-    }
 
     /**
      * 不会动的村民不能带脑子！
@@ -57,109 +49,13 @@ public class TCRStationaryVillager extends TCRVillager implements NpcDialogue {
 
     }
 
-    /**
-     * 固定位置的NPC应该显示名字
-     */
-    @Override
-    public boolean shouldShowName() {
-        return true;
-    }
-
-    public static AttributeSupplier setAttributes() {
-        return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 100.0D)//最大血量
-                .build();
-    }
-    @Override
-    protected void registerGoals() {
-
-        this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(5, new NpcDialogueGoal<>(this));
-
-    }
-
-    @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if(player.isCreative() ){//潜行右键切换村民种类，客户端服务端都需要改变。单单右键则输出当前id
-            if(player.isShiftKeyDown()){
-                skinID++;
-                if(skinID >= TCRVillager.MAX_TYPES){
-                    skinID = -TCRVillager.MAX_FEMALE_TYPES;//无法区分0 和 -0
-                }
-            }
-            player.sendSystemMessage(Component.literal("current skin ID "+(level().isClientSide?"Client:":"Server:")+ skinID));
-            return InteractionResult.SUCCESS;
-        }
-        if (hand == InteractionHand.MAIN_HAND) {
-            if (!this.level().isClientSide()) {
-                this.lookAt(player, 180.0F, 180.0F);
-                if (player instanceof ServerPlayer serverPlayer) {
-                    if (this.getConversingPlayer() == null) {
-                        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(),serverPlayer.getPersistentData().copy(),skinID), serverPlayer);
-                        this.setConversingPlayer(serverPlayer);
-                    }
-                }
-                return InteractionResult.SUCCESS;
-            }
-        }
-        return InteractionResult.PASS;
-    }
-
-    /**
-     * 重写这里以调用对应的对话框
-     */
     @Override
     @OnlyIn(Dist.CLIENT)
     public void openDialogueScreen(CompoundTag serverPlayerData) {
-
     }
 
-    /**
-     * 重写这里以处理对应的对话结束代码
-     */
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
-        this.setConversingPlayer(null);
-    }
-
-
-    @Override
-    public void setConversingPlayer(@org.jetbrains.annotations.Nullable Player player) {
-        this.conversingPlayer = player;
-    }
-
-    @Nullable
-    @Override
-    public Player getConversingPlayer() {
-        return this.conversingPlayer;
-    }
-
-    @Override
-    public void chat(Component component) {
-        if(conversingPlayer != null) {
-            conversingPlayer.sendSystemMessage(DialogueComponentBuilder.BUILDER.buildDialogue(this, component));
-        }
-    }
-
-    public void startCustomTrade(Player player, MerchantOffer... merchantOffers){
-        if(!alreadyAddTrade){
-            for(MerchantOffer offer:merchantOffers){
-                this.getOffers().add(offer);
-            }
-        }
-        alreadyAddTrade = true;
-
-        this.setTradingPlayer(player);
-        this.openTradingScreen(player, this.getDisplayName(), this.getVillagerData().getLevel());
-    }
-
-    /**
-     * 为了防止交易被中断而强制不让它取消。。
-     */
-    @Override
-    protected void stopTrading() {
-
     }
 
 }

@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.gui.screen;
 
+import com.gaboj1.tcr.entity.custom.villager.TCRTalkableVillager;
 import com.gaboj1.tcr.gui.screen.component.DialogueChoiceComponent;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  *
  * 用多叉树来优化流式对话框（我自己起的名词，就是没有多个分支几乎都是一条直线的对话，不过好像带有分支的也可以用？
- * 如果要构建树状对话就手动设置answerRoot即可。可以参考 {@link com.gaboj1.tcr.entity.custom.villager.TCRStationaryVillager}
+ * 如果要构建树状对话就手动设置answerRoot即可。可以参考 {@link TCRTalkableVillager}
  * 从Command中得到启发{@link net.minecraft.commands.Commands}
  * @author LZY
  */

@@ -23,13 +23,13 @@ public class TCRPacketHandler {
 
     public static synchronized void register() {
         // 发给客户端
+        register(NPCDialoguePacketWithSkinID.class, NPCDialoguePacketWithSkinID::decode);
         register(NPCDialoguePacket.class, NPCDialoguePacket::decode);
         register(PortalBlockScreenPacket.class, PortalBlockScreenPacket::decode);
         register(EntityChangeSkinIDPacket.class, EntityChangeSkinIDPacket::decode);
         register(PersistentBoolDataSyncPacket.class, PersistentBoolDataSyncPacket::decode);
         register(PersistentIntDataSyncPacket.class, PersistentIntDataSyncPacket::decode);
         register(PersistentStringDataSyncPacket.class, PersistentStringDataSyncPacket::decode);
-        register(YggdrasilDialoguePacket.class,YggdrasilDialoguePacket::decode);
 
         // 发给服务端
         register(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);

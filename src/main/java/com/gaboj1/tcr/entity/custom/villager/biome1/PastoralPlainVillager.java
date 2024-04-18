@@ -11,6 +11,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
+/**
+ * 牧歌原野村民。继承主要是为了更好分配id
+ * @author LZY
+ */
 public class PastoralPlainVillager extends TCRVillager {
 
     public PastoralPlainVillager(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {

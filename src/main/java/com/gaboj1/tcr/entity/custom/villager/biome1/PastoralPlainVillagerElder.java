@@ -9,7 +9,7 @@ import com.gaboj1.tcr.init.TCRModItems;
 import com.gaboj1.tcr.item.custom.Book;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.PacketRelay;
-import com.gaboj1.tcr.network.packet.server.NPCDialoguePacket;
+import com.gaboj1.tcr.network.packet.server.NPCDialoguePacketWithSkinID;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.client.Minecraft;
@@ -80,7 +80,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     this.lookAt(player, 180.0F, 180.0F);
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (this.getConversingPlayer() == null) {
-                            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(),serverPlayer.getPersistentData().copy(),this.skinID), serverPlayer);
+                            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacketWithSkinID(this.getId(),serverPlayer.getPersistentData().copy(),this.skinID), serverPlayer);
                             this.setConversingPlayer(serverPlayer);
                         }
                     }
