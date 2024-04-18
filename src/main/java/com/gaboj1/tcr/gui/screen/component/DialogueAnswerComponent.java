@@ -100,6 +100,7 @@ public class DialogueAnswerComponent {
     public void updateTypewriterDialogue(Component message) {
         this.message = message;
         updateSplitLines(fullSplitLines,message);
+        shouldRenderOption = false;
 //        index = name.getString().length();//名字就不用打字机了
         index = 0;
         max = message.getString().length();

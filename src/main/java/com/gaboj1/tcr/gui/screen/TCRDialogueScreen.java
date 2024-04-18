@@ -38,7 +38,6 @@ public class TCRDialogueScreen extends Screen {
     protected final Entity entity;
     public final int typewriterInterval;
     private int typewriterTimer = 0;
-    private boolean shouldRenderOption;
     EntityType<?> entityType;
 
     public TCRDialogueScreen(Entity entity, EntityType<?> entityType) {
@@ -179,9 +178,8 @@ public class TCRDialogueScreen extends Screen {
         this.renderBackground(guiGraphics);
         //guiGraphics.blit(MY_BACKGROUND_LOCATION, this.width/2 - 214/2, this.height/2 - 252/2, 0, 0, 214, 252);
 
-        shouldRenderOption = true;
         if(TCRConfig.ENABLE_TYPEWRITER_EFFECT.get() && typewriterTimer < 0){
-            shouldRenderOption = this.dialogueAnswer.updateTypewriterDialogue();
+            this.dialogueAnswer.updateTypewriterDialogue();
             positionDialogue();
             typewriterTimer = typewriterInterval;
         }else {
@@ -189,8 +187,10 @@ public class TCRDialogueScreen extends Screen {
         }
 
         this.dialogueAnswer.render(guiGraphics);
+
+        //如果回答还没显示完则不渲染选项
         for(Renderable renderable : this.renderables) {
-            if(renderable instanceof DialogueChoiceComponent && !shouldRenderOption){
+            if(renderable instanceof DialogueChoiceComponent && !dialogueAnswer.shouldRenderOption()){
                 continue;
             }
             renderable.render(guiGraphics, mouseX, mouseY, partialTicks);
