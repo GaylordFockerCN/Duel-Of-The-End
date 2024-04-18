@@ -132,7 +132,7 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
     @Override
     public void chat(Component component) {
         if(conversingPlayer != null) {
-            conversingPlayer.sendSystemMessage(DialogueComponentBuilder.BUILDER.buildDialogue(this, component));
+            conversingPlayer.displayClientMessage(DialogueComponentBuilder.BUILDER.buildDialogue(this, component),false);
         }
     }
 

@@ -36,6 +36,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
 
     /**
      * 对话窗口内容。为了防止做太多的类而挤到一起（何尝不是一种屎qwq）
+     * 后来因为对话越来越多，才推出了皮肤id+对话id的写法，但是旧的懒得改了。。
      */
     @Override
     @OnlyIn(Dist.CLIENT)
@@ -52,7 +53,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                         .addFinalChoice((BUILDER.buildDialogueChoice(entityType,-3)), (byte) -1);
                 break;
 
-            //工匠 对话id分配：0~6 返回值分配：0~2
+            //工匠 对话id分配：0~6 返回值分配：0~2,110
             case 1:
                 if(!DataManager.gunGot.getBool(serverPlayerData)){
                     builder.start(BUILDER.buildDialogueDialog(entityType,0))//不许伤害小羊小牛小猪！（我们好像没有这些生物）
@@ -74,6 +75,17 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 break;
             //学者 对话id分配：7~9 返回值分配：3
             case 2:
+                if(!serverPlayerData.getBoolean("hasTalkedTo"+skinID)){
+                    builder.setAnswerRoot(new TreeNode(BUILDER.buildDialogueDialog(entityType,skinID, 1))
+                            .addChild(new TreeNode(BUILDER.buildDialogueDialog(entityType,skinID, 2),BUILDER.buildDialogueChoice(entityType,skinID, 1))
+                                    .addLeaf(BUILDER.buildDialogueChoice(entityType,skinID, 3),(byte) 0)
+                                    .addLeaf(BUILDER.buildDialogueChoice(entityType,skinID, 4),(byte) 0))
+                            .addChild(new TreeNode(BUILDER.buildDialogueDialog(entityType,skinID, 2),BUILDER.buildDialogueChoice(entityType,skinID, 2))
+                                    .addLeaf(BUILDER.buildDialogueChoice(entityType,skinID, 3),(byte) 0)
+                                    .addLeaf(BUILDER.buildDialogueChoice(entityType,skinID, 4),(byte) 0))
+                    );
+                    break;
+                }
                 Component greeting2 = BUILDER.buildDialogueDialog(entityType,7 + random.nextInt(2));
                 builder.start(greeting2)
                         .addFinalChoice((BUILDER.buildDialogueChoice(entityType,7)), (byte) 3);
@@ -81,9 +93,16 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
 
             //牧羊人 对话id分配：10~12 返回值分配：4
             case 3:
-                Component greeting3 = BUILDER.buildDialogueDialog(entityType,10 + random.nextInt(2));
-                builder.start(greeting3)
-                        .addFinalChoice((BUILDER.buildDialogueChoice(entityType,10)), (byte) 4);
+                if(serverPlayerData.getBoolean("hasTalkedTo"+skinID)){
+                    Component greeting3 = BUILDER.buildDialogueDialog(entityType,10 + random.nextInt(2));
+                    builder.start(greeting3)
+                            .addFinalChoice((BUILDER.buildDialogueChoice(entityType,10)), (byte) 4);
+                } else {
+                    builder.setAnswerRoot(new TreeNode(BUILDER.buildDialogueDialog(entityType,skinID, 1))
+                            .addLeaf(BUILDER.buildDialogueChoice(entityType, skinID,1), (byte) 9)
+                            .addLeaf(BUILDER.buildDialogueChoice(entityType, skinID,2), (byte) 10)
+                    );
+                }
                 break;
             //猎人 对话id分配：13~15 返回值分配：5
             case 4:
@@ -99,7 +118,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                         .addFinalChoice((BUILDER.buildDialogueChoice(entityType,17)), (byte) 6);
                 break;
 
-            //服务生 对话id分配：19~21 返回值分配：7
+            //服务生 对话id分配：19~21 返回值分配：7,8,112
             case -2:
                 Component greeting_2 = BUILDER.buildDialogueDialog(entityType,19);
                 builder.setAnswerRoot(
@@ -115,6 +134,11 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 break;
 
         }
+
+        //TODO 如果是黑方并且杀死了村长的话则对话改变，禁止交易。
+        if(!DataManager.isWhite.getBool(serverPlayerData) && DataManager.isWhite.isLocked() && DataManager.elder1Defeated.getBool(serverPlayerData) && DataManager.elder1Defeated.isLocked()){
+            builder.start(Component.literal(""));
+        }
         
         Minecraft.getInstance().setScreen(builder.build());
 
@@ -122,6 +146,9 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
 
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
+
+        //记录为已对话过。用于丰富对话多样性。
+        player.getPersistentData().putBoolean("hasTalkedTo"+skinID,true);
 
         switch (interactionID){
             case -1:
@@ -146,6 +173,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 break;
 
             case 110:
+                chat(BUILDER.buildDialogueDialog(entityType,1,1,false));
                 startCustomTrade(player,
                         new MerchantOffer(
                                 new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 64),
@@ -188,6 +216,12 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 break;
             case 4:
                 chat(BUILDER.buildDialogueDialog(entityType,12,false));//真是有干劲啊，那我也要全力以赴了，朋友
+                break;
+            case 9:
+                chat(BUILDER.buildDialogueDialog(entityType,skinID, 2,false));//异乡人，你怎么了？
+                break;
+            case 10:
+                chat(BUILDER.buildDialogueDialog(entityType,skinID, 3,false));//啊，欸，很厉害的样子
                 break;
             case 5:
                 chat(BUILDER.buildDialogueDialog(entityType,15,false));

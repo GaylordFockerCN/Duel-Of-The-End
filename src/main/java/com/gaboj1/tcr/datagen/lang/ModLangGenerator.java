@@ -163,20 +163,26 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-2,"最近来找我交易的人变多了。许愿的能力为什么……哦有什么事吗");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-1,"很欢迎你来与我交易");
         //工匠
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,0,"不许伤害猫猫果冻！");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,1,"上天……上天给我的……这不是祈祷就有了吗？");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,2,"做梦吧你！火铳是我帮你祈祷出来的");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,0,"人们都以我的手艺自豪呢。");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,1,"我可是能像许愿一样满足大家的愿望呢，你要不要试试啊？");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,2,"刚刚那把火铳是我加工许愿物得到的家伙。即便如此，也别对许愿成真太贪心了");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,3,"......");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,4,"我赌你的枪里没有子弹！");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,5,"不要拿去干坏事哦~");
+        this.addVillagerDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,1,1,"我可是能创造所有人希冀的奇迹，交给我吧！");
         //学者
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,7,"抱歉没注意到你，我一思考就容易陷进去了呢，哈哈");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,8,"知识从不对人吝啬");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,9,"愿我的智慧为你扫开前路");
+        this.addVillagerDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,2, 1,"哦？新面孔。你也是来听长老讲述大地的故事吗？");
+        this.addVillagerDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,2, 2,"长老说我们的双脚要从轻飘飘的空中落到大地上。大地上有着半人高的蜘蛛，跑得飞快黑瘦人，但是PVP大佬会通通横扫干净。在那里有地底的宝藏，异世界召唤的巨龙，都是火的下界。怎么样，是不是很新奇");
         //牧羊人
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,10,"云朵和羊…都是软绵绵的，要跟我一起躲在云里晒太阳吗");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,11,"一只羊，两只羊…….抱歉又睡着了，没给你添麻烦吧");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,12,"真是有干劲啊，那我也要全力以赴了，朋友");
+        this.addVillagerDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,3, 1,"异乡人，你来自何方？可以和我说说你的过往吗？");
+        this.addVillagerDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,3, 2,"异乡人，你怎么了？");
+        this.addVillagerDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,3, 3,"啊，欸，很厉害的样子");
         //猎人
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,13,"今天出去解决了几只小“猎物”呢");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,14,"要来和我比赛打猎吗，您看上去可是相当强大啊，真是按耐不住想比试的心");
@@ -188,15 +194,15 @@ public class ModLangGenerator extends ModLangProvider {
         //侍者
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,19,"哦，你是新来的旅人吗？欢迎来到我们的小镇！需要我为你倒杯酒吗？");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,20,"当然，这是我们特制的饮料，品尝一下吧！顺便问一句，你是来冒险的还是仅仅路过这里？");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,21,"那座教堂？那可不是个想去就去的地方，我祝你好运。 ");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,21,"那座教堂？嘘……你知道前面那片森林有些古怪的东西吗？千万不要进去！从来没看到有人从那片森林走出来过…… ");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,22,"（你已经白嫖过饮料了~）");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,23,"想喝点什么？");
 
         //商人
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-3,"我想买点东西");
         //工匠
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,0,"那你汉堡里面的牛肉是哪来的？");
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,1,"我也可以吗？我想要把火铳！");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,0,"哦？");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,1,"我也可以想要什么有什么吗？我想要一只火枪！");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,2,"【获得 火铳*1 弹药*20】");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,3,"我还想要个女朋友！");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,4,"......");
@@ -204,8 +210,15 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,6,"谢谢你的火铳~");
         //学者
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,7,"询问");
+        this.addVillagerDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,2,1,"大地？");
+        this.addVillagerDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,2,2,"长老？");
+        this.addVillagerDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,2,3,"妈妈我上电视了！");
+        this.addVillagerDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,2,4,"天啊，这简直就是我");
+
         //牧羊人
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,10,"我要去忙了");
+        this.addVillagerDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,3,1,"我的过往……我的过往……为何这里让我……");
+        this.addVillagerDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,3,2,"站在你面前的是——村庄英雄，下界统帅，伟大的遗迹探险家，英勇的巨龙讨伐者，穿越无数世界的旅者是也！");
         //猎人
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,13,"交易");
         //舞者

@@ -21,18 +21,28 @@ public class DialogueAnswerComponent {
     private final List<NpcDialogueElement> splitLines;
     //完整的分割后的对话
     private final List<NpcDialogueElement> fullSplitLines;
-    private Component message,name;
+    private Component message;
+    private final Component name;
     public int height;
     //打字机效果的下标
     private int index;
     //打字机效果的最大值
     private int max;
 
+    private boolean shouldRenderOption = false;
+
     public DialogueAnswerComponent(Component message) {
         this.splitLines = new ArrayList<>();
         this.fullSplitLines = new ArrayList<>();
         name = message;
         this.updateDialogue(Component.empty());
+    }
+
+    public boolean shouldRenderOption() {
+        if(!TCRConfig.ENABLE_TYPEWRITER_EFFECT.get()){
+            return true;
+        }
+        return shouldRenderOption;
     }
 
     public Component getMessage() {
@@ -101,14 +111,13 @@ public class DialogueAnswerComponent {
      * 不知道为什么Component提供根据下标截取String的方法，太感人了
      * @return 字是否全显示完了
      */
-    public boolean updateTypewriterDialogue() {
+    public void updateTypewriterDialogue() {
         Style style = message.getStyle();
         updateDialogue(Component.literal(message.getString(index++)).withStyle(style));
         if(index > max){
             index--;
-            return true;
+            shouldRenderOption = true;
         }
-        return false;
     }
 
     /**

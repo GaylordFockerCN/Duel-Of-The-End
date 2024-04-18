@@ -130,6 +130,14 @@ public abstract class ModLangProvider extends LanguageProvider {
     public void addDialogChoice(RegistryObject<? extends EntityType<?>> entity, int i, String text) {
         this.add(entity.get()+".choice" + i, text);
     }
+
+    public void addVillagerDialog(RegistryObject<? extends EntityType<?>> entity, int skinID, int i, String text) {
+        this.add(entity.get()+".dialog" + skinID + "_"+ i, text);
+    }
+    public void addVillagerDialogChoice(RegistryObject<? extends EntityType<?>> entity,int skinID, int i, String text) {
+        this.add(entity.get()+".choice" + skinID + "_"+ i, text);
+    }
+
     public void addDialogChoice(RegistryObject<? extends EntityType<?>> entity, String choice, String text) {
         this.add(entity.get()+".choice." + choice, text);
     }
