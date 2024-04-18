@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.gui.screen.component;
 
+import com.gaboj1.tcr.TCRConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -16,7 +17,10 @@ import java.util.List;
  * @author The Aether
  */
 public class DialogueAnswerComponent {
+    //分割后的对话
     private final List<NpcDialogueElement> splitLines;
+    //完整的分割后的对话
+    private final List<NpcDialogueElement> fullSplitLines;
     private Component message,name;
     public int height;
     //打字机效果的下标
@@ -26,6 +30,7 @@ public class DialogueAnswerComponent {
 
     public DialogueAnswerComponent(Component message) {
         this.splitLines = new ArrayList<>();
+        this.fullSplitLines = new ArrayList<>();
         name = message;
         this.updateDialogue(Component.empty());
     }
@@ -40,25 +45,43 @@ public class DialogueAnswerComponent {
 
     /**
      * Repositions the dialogue to the center of the screen.
+     * 如果启动打字机效果，则所有文本按完整文本第一行出现的文本的最左侧定位。因为这样阅读比较舒服
+     * 先保存一份完整文本，在沿用天堂的计算定位，我真是天才
      * @param width The {@link Integer} for the parent screen width.
      * @param height The {@link Integer} for the parent screen height.
      */
     public void reposition(int width, int height) {
-        int i = 0;
-        for (NpcDialogueElement dialogue : this.splitLines) {
+
+        //不用Foreach是为了打字机效果能够跳过boss名
+//        int i = 0;
+//        for (NpcDialogueElement dialogue : this.splitLines) {
+        for (int i = 0, j = 0 ;i < splitLines.size(); i++) {
+            NpcDialogueElement dialogue = splitLines.get(i);
             dialogue.width = Minecraft.getInstance().font.width(dialogue.text) + 2;
-            dialogue.x = width / 2 - dialogue.width / 2;
-            dialogue.y = height / 2 + i * 12;
-            i++;
+
+            int maxWidth = dialogue.width;
+
+            //如果启动打字机效果，则以完整文本的位置来，即字从左到右出现，而不是从中间往两边延展。比较好看
+            if(TCRConfig.ENABLE_TYPEWRITER_EFFECT.get() && fullSplitLines.size() > 1 && i != 0){//因为第一个变量是NPC名字，所以要取下标1。
+                maxWidth = Minecraft.getInstance().font.width(fullSplitLines.get(1).text) + 2;
+            }
+
+            dialogue.x = width / 2 - maxWidth / 2;
+            dialogue.y = height / 2 + j * 12;
+            j++;
         }
         this.height = this.splitLines.size() * 12;
     }
 
     public void updateDialogue(Component message) {
-        this.splitLines.clear();
+        updateSplitLines(splitLines,message);
+    }
+
+    private void updateSplitLines(List<NpcDialogueElement> pSplitLine, Component message){
+        pSplitLine.clear();
         List<FormattedCharSequence> list = Minecraft.getInstance().font.split(name.copy().append(message), 300);
         this.height = list.size() * 12;
-        list.forEach(text -> this.splitLines.add(new NpcDialogueElement(0, 0, 0, text)));
+        list.forEach(text -> pSplitLine.add(new NpcDialogueElement(0, 0, 0, text)));
     }
 
     /**
@@ -66,6 +89,7 @@ public class DialogueAnswerComponent {
      */
     public void updateTypewriterDialogue(Component message) {
         this.message = message;
+        updateSplitLines(fullSplitLines,message);
 //        index = name.getString().length();//名字就不用打字机了
         index = 0;
         max = message.getString().length();
