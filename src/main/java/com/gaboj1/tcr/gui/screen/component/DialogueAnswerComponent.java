@@ -77,7 +77,7 @@ public class DialogueAnswerComponent {
 //                maxWidth = Minecraft.getInstance().font.width(fullSplitLines.get(1).text) + 2;
 //            }
 
-            if(TCRConfig.ENABLE_TYPEWRITER_EFFECT.get()){
+            if(TCRConfig.ENABLE_TYPEWRITER_EFFECT.get() && i != 0){//因为第一个变量是NPC名字，所以要取下标1。
                 dialogue.x = width / 2 - maxWidth / 2;
             } else {
                 dialogue.x = width / 2 - dialogue.width / 2;
@@ -111,7 +111,6 @@ public class DialogueAnswerComponent {
         for(NpcDialogueElement element:fullSplitLines){
             maxWidth = Math.max(Minecraft.getInstance().font.width(element.text) + 2, maxWidth);
         }
-        maxWidth = Minecraft.getInstance().font.width(fullSplitLines.get(1).text) + 2;
 
         shouldRenderOption = false;
 //        index = name.getString().length();//名字就不用打字机了
