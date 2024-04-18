@@ -99,13 +99,16 @@ public class DialogueAnswerComponent {
     /**
      * 添加打字机效果，一次更新一个字
      * 不知道为什么Component提供根据下标截取String的方法，太感人了
+     * @return 字是否全显示完了
      */
-    public void updateTypewriterDialogue() {
+    public boolean updateTypewriterDialogue() {
         Style style = message.getStyle();
         updateDialogue(Component.literal(message.getString(index++)).withStyle(style));
         if(index > max){
             index--;
+            return true;
         }
+        return false;
     }
 
     /**
