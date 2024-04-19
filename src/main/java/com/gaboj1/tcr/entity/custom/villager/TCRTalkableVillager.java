@@ -54,20 +54,22 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
     }
 
     /**
+     * 带大脑的生物Goal会失效，所以只能在tick中实现这个操作
+     */
+    @Override
+    public void tick() {
+        super.tick();
+        if(this.conversingPlayer!=null){
+            this.navigation.stop();
+        }
+    }
+
+    /**
      * 会讲话的NPC应该显示名字
      */
     @Override
     public boolean shouldShowName() {
         return true;
-    }
-
-    @Override
-    protected void registerGoals() {
-
-        this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(5, new NpcDialogueGoal<>(this));
-
     }
 
     @Override
