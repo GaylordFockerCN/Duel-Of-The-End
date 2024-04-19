@@ -37,7 +37,7 @@
 					]
 				},
 				{
-					"name": "bone4",
+					"name": "bone",
 					"parent": "LeftLeg",
 					"pivot": [0, 0, 0],
 					"cubes": [
@@ -79,7 +79,7 @@
 					]
 				},
 				{
-					"name": "bone3",
+					"name": "bone2",
 					"parent": "RightLeg",
 					"pivot": [0, 0, 0],
 					"cubes": [
@@ -131,7 +131,7 @@
 					]
 				},
 				{
-					"name": "bone",
+					"name": "bone3",
 					"parent": "LeftArm",
 					"pivot": [0, 0, 0],
 					"cubes": [
@@ -172,7 +172,7 @@
 					]
 				},
 				{
-					"name": "bone2",
+					"name": "bone4",
 					"parent": "RightArm",
 					"pivot": [0, 0, 0],
 					"cubes": [
