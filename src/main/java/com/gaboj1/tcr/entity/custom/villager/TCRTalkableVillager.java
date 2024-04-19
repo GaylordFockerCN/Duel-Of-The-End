@@ -3,6 +3,7 @@ package com.gaboj1.tcr.entity.custom.villager;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.gui.screen.DialogueComponentBuilder;
+import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.server.NPCDialoguePacketWithSkinID;
@@ -22,6 +23,7 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -154,6 +156,15 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
     @Override
     protected void stopTrading() {
 
+    }
+
+    /**
+     * 需要带上skinID
+     * @return 带skinID的名称（译名）
+     */
+    @Override
+    public @NotNull Component getDisplayName() {
+        return Component.translatable(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get().getDescriptionId()+skinID);
     }
 
 }

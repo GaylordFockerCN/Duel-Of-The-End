@@ -291,9 +291,4 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
         this.setConversingPlayer(null);
     }
 
-    @Override
-    public @NotNull Component getDisplayName() {
-        return Component.translatable(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get().getDescriptionId()+skinID);
-    }
-
 }

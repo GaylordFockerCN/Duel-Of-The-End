@@ -34,8 +34,4 @@ public class PastoralPlainVillager extends TCRVillager {
         talk(player, Component.translatable(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get().getDescriptionId()+".fuck_chat"+(r.nextInt(whatCanISay))));
     }
 
-    public @NotNull Component getDisplayName() {
-        return Component.translatable(entityType.getDescriptionId()+skinID);
-    }
-
 }
