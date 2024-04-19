@@ -61,11 +61,6 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
         return true;
     }
 
-    public static AttributeSupplier setAttributes() {
-        return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 100.0D)//最大血量
-                .build();
-    }
     @Override
     protected void registerGoals() {
 

@@ -199,8 +199,8 @@ public class TheCasketOfReveriesMod {
             event.put(TCRModEntities.JELLY_CAT.get(), JellyCat.setAttributes());
             event.put(TCRModEntities.SQUIRREL.get(), Squirrel.setAttributes());
             event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), TCRVillager.setAttributes());
-            event.put(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), PastoralPlainTalkableVillager.setAttributes());
-            event.put(TCRModEntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), PastoralPlainTalkableVillager.setAttributes());
+            event.put(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), TCRVillager.setAttributes());
+            event.put(TCRModEntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), TCRVillager.setAttributes());
             event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),PastoralPlainVillagerElder.setAttributes());
             event.put(TCRModEntities.YGGDRASIL.get(), YggdrasilEntity.setAttributes());
             event.put(TCRModEntities.TREE_CLAW.get(), TreeClawEntity.setAttributes());
