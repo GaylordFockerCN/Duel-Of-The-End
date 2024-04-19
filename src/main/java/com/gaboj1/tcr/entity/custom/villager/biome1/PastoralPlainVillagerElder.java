@@ -61,7 +61,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     }
 
     /**
-     * 因为不知为何Goal失效，所以只能在tick中实现这个操作
+     * 带大脑的生物Goal会失效，所以只能在tick中实现这个操作
      */
     @Override
     public void tick() {

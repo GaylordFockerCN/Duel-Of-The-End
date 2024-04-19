@@ -8,6 +8,7 @@ import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
 import com.gaboj1.tcr.init.TCRModSounds;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.packet.server.AddVillagerParticlePacket;
 import com.gaboj1.tcr.network.packet.server.EntityChangeSkinIDPacket;
 import com.gaboj1.tcr.util.DataManager;
 import com.google.common.collect.ImmutableSet;
@@ -17,6 +18,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -148,27 +150,35 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
         super.load(tag);
     }
 
-    //实现控制生气
+    /**
+     * 实现控制生气
+     * 因为如果分别判断服务端和客户端的话，setTarget容易出错，所以发个包来实现客户端粒子效果。
+     */
     @Override
     public void tick() {
-//        if(!isClientSide()){
+        if(!isClientSide()){
             if(isAngry){
                 if(angryTick < 0){
                     isAngry = false;
-                    if(!isClientSide()){//不限制好像不会在服务端生效？
-                        setTarget(null);
-                    }
                     setTarget(null);
                 }else {
                     angryTick--;
-                    this.addParticlesAroundSelf(ParticleTypes.ANGRY_VILLAGER);//似乎只在客户端生效
+
+                    //不要太频繁产生粒子特效
+                    if(angryTick%5 == 0){
+                        PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new AddVillagerParticlePacket(this.getId()));
+                    }
                 }
             }else {
                 angryTick = 100;
             }
-//        }
+        }
 
         super.tick();
+    }
+
+    public void addParticlesAroundSelf(SimpleParticleType particleTypes){
+        super.addParticlesAroundSelf(particleTypes);
     }
 
     @Nullable
@@ -247,7 +257,8 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
 
 
     /**
-     * copy from 原版
+     * copy from 原版,增加自卫目标 {@link com.gaboj1.tcr.entity.ai.behavior.TCRVillagerRetaliateTask}
+     * 村民带大脑的生物，普通goal无效，只能通过注册大脑goal来影响村民行为。
      * */
     protected void registerBrainGoals(Brain<Villager> pVillagerBrain) {
         VillagerProfession villagerprofession = this.getVillagerData().getProfession();
@@ -274,22 +285,6 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
         pVillagerBrain.setDefaultActivity(Activity.IDLE);
         pVillagerBrain.setActiveActivityIfPossible(Activity.IDLE);
         pVillagerBrain.updateActivityFromSchedule(this.level().getDayTime(), this.level().getGameTime());
-    }
-
-    //如果继承自村民则Goal无效。。。。把村民降级成普通生物处理又太弱智。。最后被迫去学Brain怎么写
-    protected void registerGoals() {
-        this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false,
-                e->isAngry||(e instanceof ServerPlayer player && !DataManager.isWhite.getBool(player))));//被激怒或者是坏人就攻击（别惹村民！）
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Mob.class, false));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, SmallTreeMonsterEntity.class, false));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MiddleTreeMonsterEntity.class, false));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, TreeGuardianEntity.class, false));
-//        this.goalSelector.addGoal(5, new PanicGoal(this, 0.5D));
-        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this, Raider.class)).setAlertOthers());
-        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
-        super.registerGoals();
     }
 
     public static AttributeSupplier setAttributes() {//生物属性
@@ -396,13 +391,14 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
                     return false;
                 }
             }
-            isAngry = true;//不限制服务端是为了客户端要渲染生气
+//            isAngry = true;//不限制服务端是为了客户端要渲染生气
         }
 
         //设置反击目标
         if(entity instanceof LivingEntity livingEntity){
             setTarget(livingEntity);
         }
+        isAngry = true;
 
         return super.hurt(source, v);
     }
@@ -452,7 +448,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
 
     @Override
     public @NotNull Component getDisplayName() {
-        return Component.translatable(entityType.getDescriptionId()+skinID);
+        return Component.translatable(entityType.getDescriptionId());
     }
 
 }

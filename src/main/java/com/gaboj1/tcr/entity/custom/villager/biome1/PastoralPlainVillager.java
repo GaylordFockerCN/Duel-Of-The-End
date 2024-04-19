@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -31,6 +32,10 @@ public class PastoralPlainVillager extends TCRVillager {
     @OnlyIn(Dist.CLIENT)
     public void talkFuck(Player player){
         talk(player, Component.translatable(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get().getDescriptionId()+".fuck_chat"+(r.nextInt(whatCanISay))));
+    }
+
+    public @NotNull Component getDisplayName() {
+        return Component.translatable(entityType.getDescriptionId()+skinID);
     }
 
 }
