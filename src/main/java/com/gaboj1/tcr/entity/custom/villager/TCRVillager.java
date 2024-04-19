@@ -428,7 +428,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
         controllers.add(new AnimationController<>(this, "controller",
                 0, this::predicate));
         controllers.add(new AnimationController<>(this, "Attack", 0, state -> PlayState.STOP)
-                .triggerableAnim("attack", RawAnimation.begin().thenPlay("animation.model.attack")));
+                .triggerableAnim("attack", RawAnimation.begin().thenPlay("fight")));
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
