@@ -20,6 +20,7 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -44,7 +45,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
         //构建对话系统
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
         Random random = new Random();
-        switch (skinID){
+        switch (getSkinID()){
             //商人 对话id分配：-3~-1 返回值分配：-1 (被工匠抢先了awa只能用负数了awa）
             case 0:
                 Component greeting1 = BUILDER.buildDialogueAnswer(entityType,-3 + random.nextInt(2));
@@ -74,14 +75,14 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 break;
             //学者 对话id分配：7~9 返回值分配：3
             case 2:
-                if(!serverPlayerData.getBoolean("hasTalkedTo"+skinID)){
-                    builder.setAnswerRoot(new TreeNode(BUILDER.buildDialogueAnswer(entityType,skinID, 1))
-                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,skinID, 2),BUILDER.buildDialogueOption(entityType,skinID, 1))
-                                    .addLeaf(BUILDER.buildDialogueOption(entityType,skinID, 3),(byte) 0)
-                                    .addLeaf(BUILDER.buildDialogueOption(entityType,skinID, 4),(byte) 0))
-                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,skinID, 2),BUILDER.buildDialogueOption(entityType,skinID, 2))
-                                    .addLeaf(BUILDER.buildDialogueOption(entityType,skinID, 3),(byte) 0)
-                                    .addLeaf(BUILDER.buildDialogueOption(entityType,skinID, 4),(byte) 0))
+                if(!serverPlayerData.getBoolean("hasTalkedTo"+getSkinID())){
+                    builder.setAnswerRoot(new TreeNode(BUILDER.buildDialogueAnswer(entityType,getSkinID(), 1))
+                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,getSkinID(), 2),BUILDER.buildDialogueOption(entityType,getSkinID(), 1))
+                                    .addLeaf(BUILDER.buildDialogueOption(entityType,getSkinID(), 3),(byte) 0)
+                                    .addLeaf(BUILDER.buildDialogueOption(entityType,getSkinID(), 4),(byte) 0))
+                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,getSkinID(), 2),BUILDER.buildDialogueOption(entityType,getSkinID(), 2))
+                                    .addLeaf(BUILDER.buildDialogueOption(entityType,getSkinID(), 3),(byte) 0)
+                                    .addLeaf(BUILDER.buildDialogueOption(entityType,getSkinID(), 4),(byte) 0))
                     );
                     break;
                 }
@@ -92,14 +93,14 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
 
             //牧羊人 对话id分配：10~12 返回值分配：4
             case 3:
-                if(serverPlayerData.getBoolean("hasTalkedTo"+skinID)){
+                if(serverPlayerData.getBoolean("hasTalkedTo"+getSkinID())){
                     Component greeting3 = BUILDER.buildDialogueAnswer(entityType,10 + random.nextInt(2));
                     builder.start(greeting3)
                             .addFinalChoice((BUILDER.buildDialogueOption(entityType,10)), (byte) 4);
                 } else {
-                    builder.setAnswerRoot(new TreeNode(BUILDER.buildDialogueAnswer(entityType,skinID, 1))
-                            .addLeaf(BUILDER.buildDialogueOption(entityType, skinID,1), (byte) 9)
-                            .addLeaf(BUILDER.buildDialogueOption(entityType, skinID,2), (byte) 10)
+                    builder.setAnswerRoot(new TreeNode(BUILDER.buildDialogueAnswer(entityType,getSkinID(), 1))
+                            .addLeaf(BUILDER.buildDialogueOption(entityType, getSkinID(),1), (byte) 9)
+                            .addLeaf(BUILDER.buildDialogueOption(entityType, getSkinID(),2), (byte) 10)
                     );
                 }
                 break;
@@ -147,7 +148,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
     public void handleNpcInteraction(Player player, byte interactionID) {
 
         //记录为已对话过。用于丰富对话多样性。
-        player.getPersistentData().putBoolean("hasTalkedTo"+skinID,true);
+        player.getPersistentData().putBoolean("hasTalkedTo"+getSkinID(),true);
 
         switch (interactionID){
             case -1:
@@ -217,10 +218,10 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 chat(BUILDER.buildDialogueAnswer(entityType,12,false));//真是有干劲啊，那我也要全力以赴了，朋友
                 break;
             case 9:
-                chat(BUILDER.buildDialogueAnswer(entityType,skinID, 2,false));//异乡人，你怎么了？
+                chat(BUILDER.buildDialogueAnswer(entityType,getSkinID(), 2,false));//异乡人，你怎么了？
                 break;
             case 10:
-                chat(BUILDER.buildDialogueAnswer(entityType,skinID, 3,false));//啊，欸，很厉害的样子
+                chat(BUILDER.buildDialogueAnswer(entityType,getSkinID(), 3,false));//啊，欸，很厉害的样子
                 break;
             case 5:
                 chat(BUILDER.buildDialogueAnswer(entityType,15,false));
@@ -289,5 +290,15 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
 
         this.setConversingPlayer(null);
     }
+
+    /**
+     * 防止子类名称错误
+     * @return 带skinID的名称（译名）
+     */
+    @Override
+    public @NotNull Component getDisplayName() {
+        return Component.translatable(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get().getDescriptionId() + getSkinID());
+    }
+
 
 }

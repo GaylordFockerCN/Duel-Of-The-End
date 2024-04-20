@@ -1,23 +1,16 @@
 package com.gaboj1.tcr.entity.custom.villager;
 
 import com.gaboj1.tcr.entity.NpcDialogue;
-import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.gui.screen.DialogueComponentBuilder;
-import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.server.NPCDialoguePacketWithSkinID;
+import com.gaboj1.tcr.network.packet.server.NPCDialoguePacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
@@ -76,12 +69,12 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if(player.isCreative() ){//潜行右键切换村民种类，客户端服务端都需要改变。单单右键则输出当前id
             if(player.isShiftKeyDown()){
-                skinID++;
-                if(skinID >= TCRVillager.MAX_TYPES){
-                    skinID = -TCRVillager.MAX_FEMALE_TYPES;//无法区分0 和 -0
+                setSkinID(getSkinID()+1);
+                if(getSkinID() >= TCRVillager.MAX_TYPES){
+                    setSkinID(-TCRVillager.MAX_FEMALE_TYPES);//无法区分0 和 -0
                 }
             }
-            player.sendSystemMessage(Component.literal("current skin ID "+(level().isClientSide?"Client:":"Server:")+ skinID));
+            player.sendSystemMessage(Component.literal("current skin ID：" + getSkinID() + "; name:" + getDisplayName().getString()));
             return InteractionResult.SUCCESS;
         }
         if (hand == InteractionHand.MAIN_HAND) {
@@ -89,7 +82,7 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
                 this.lookAt(player, 180.0F, 180.0F);
                 if (player instanceof ServerPlayer serverPlayer) {
                     if (this.getConversingPlayer() == null) {
-                        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacketWithSkinID(this.getId(),serverPlayer.getPersistentData().copy(),skinID), serverPlayer);
+                        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(),serverPlayer.getPersistentData().copy()), serverPlayer);
                         this.setConversingPlayer(serverPlayer);
                     }
                 }
@@ -161,7 +154,7 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
      */
     @Override
     public @NotNull Component getDisplayName() {
-        return Component.translatable(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get().getDescriptionId()+skinID);
+        return Component.translatable(entityType.getDescriptionId() + getSkinID());
     }
 
 }

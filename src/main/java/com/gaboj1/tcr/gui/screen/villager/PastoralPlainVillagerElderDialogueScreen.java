@@ -5,7 +5,7 @@ import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.gui.screen.TCRDialogueScreen;
 import com.gaboj1.tcr.gui.screen.component.DialogueChoiceComponent;
 import com.gaboj1.tcr.init.TCRModEntities;
-import com.gaboj1.tcr.network.packet.server.NPCDialoguePacketWithSkinID;
+import com.gaboj1.tcr.network.packet.server.NPCDialoguePacket;
 import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +23,7 @@ public class PastoralPlainVillagerElderDialogueScreen extends TCRDialogueScreen 
 
     /**
      * @param serverPlayerData 从服务端发送来的玩家数据
-     * @see NPCDialoguePacketWithSkinID#execute(Player)
+     * @see NPCDialoguePacket#execute(Player)
      */
     public PastoralPlainVillagerElderDialogueScreen(PastoralPlainVillagerElder elder, CompoundTag serverPlayerData) {
         super(elder, TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get());

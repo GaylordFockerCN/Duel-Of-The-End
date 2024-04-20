@@ -3,10 +3,12 @@ package com.gaboj1.tcr.entity.custom.dreamspirit;
 import com.gaboj1.tcr.datagen.ModAdvancementData;
 import com.gaboj1.tcr.entity.ManySkinEntity;
 import com.gaboj1.tcr.init.TCRModSounds;
-import com.gaboj1.tcr.network.PacketRelay;
-import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.server.EntityChangeSkinIDPacket;
+import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
+import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -27,6 +29,7 @@ import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -45,49 +48,47 @@ import java.util.Random;
  */
 public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity {
 
-    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
+    //负数代表球形手
+    private static final EntityDataAccessor<Integer> DATA_SKIN_ID = SynchedEntityData.defineId(JellyCat.class, EntityDataSerializers.INT);
     //0 代表 正常，1代表闭眼，2代表跑动、受攻击 > <
     private FaceID faceID = FaceID.IDLE;
-    //负数代表球形手
-    private int skinID;
 
     //猫猫皮肤总数
     private final int maxSkinID = 3;
-    private final int winkIntervalMax = 5;
-    private int winkInterval;
-    private final int useTimeMax = 10;
-    private int useTime;
-    private boolean isWinking = false;
 
     public JellyCat(EntityType<? extends TamableAnimal> entityType, Level level) {
         super(entityType, level);
+        var biome = level.getBiome(this.getOnPos());
+        int skinID;
+        if(biome.is(TCRBiomes.PASTORAL_PLAINS)){
+            skinID = 1;
+        }
+//        this.getEntityData().define(DATA_SKIN_ID, skinID); TODO 根据群系来生成不同的猫猫
         this.moveControl = new JellyCatMoveControl(this);
-        this.skinID = -maxSkinID + new Random().nextInt(maxSkinID * 2 + 1);//随机产生皮肤，负数代表球形手
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putInt("TCRVillagerSkinID", this.getEntityData().get(DATA_SKIN_ID));
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        this.getEntityData().set(DATA_SKIN_ID,tag.getInt("TCRVillagerSkinID"));
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        int skinID = -maxSkinID + new Random().nextInt(maxSkinID * 2 + 1);//随机产生皮肤，负数代表球形手
         if(skinID == 0){
             skinID = -1;
         }
-    }
-    @Override
-    public boolean save(CompoundTag tag) {
-        tag.putInt("TCRJellyCatSkinID", skinID);
-        this.getPersistentData().putBoolean("hasSkinID", true);
-        return super.save(tag);
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        skinID = tag.getInt("TCRJellyCatSkinID");
-
-        new Thread(()->{
-            try {
-                Thread.sleep(200);//等两端实体数据互通完才能进行同步操作
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new EntityChangeSkinIDPacket(this.getId(), skinID));
-        }).start();
-        super.load(tag);
+        this.getEntityData().define(DATA_SKIN_ID, skinID);
+        super.defineSynchedData();
     }
 
     /**
@@ -96,24 +97,6 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
      */
     @Override
     public void tick() {
-//        if(this.hurtMarked){
-//            setFaceID(FaceID.HURT);
-//        }else {
-//            if(!isWinking && isAlive() && !hurtMarked && !(this.winkInterval --> 0)){
-//                isWinking = true;
-//                this.winkInterval = winkIntervalMax+random.nextInt(100);
-//                this.useTime = useTimeMax;
-//            }
-//            if(isWinking){
-//                if(useTime-->0){
-//                    setFaceID(FaceID.WINK);
-//                }else {
-//                    useTime = useTimeMax;
-//                    isWinking = false;
-//                    setFaceID(FaceID.IDLE);
-//                }
-//            }
-//        }
         if(!isAlive()){
             setFaceID(FaceID.DIE);
         } else if(this.hurtTime > 0){//hurtMark好像不起作用
@@ -126,16 +109,18 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
         super.tick();
     }
 
+    /**
+     * 集齐所有猫猫还有成就哦
+     * 只看肤色不看手型
+     * @param player
+     */
     @Override
     public void tame(Player player) {
         if(player instanceof ServerPlayer serverPlayer){
-            serverPlayer.getPersistentData().putBoolean("tamed_jelly_cat"+skinID,true);
+            serverPlayer.getPersistentData().putBoolean("tamed_jelly_cat"+Math.abs(getSkinID()),true);
             boolean isAllTamed = true;
             //没有-0所以从1开始编号
-            for(int i = -maxSkinID;i <= maxSkinID;i++){
-                if(i == 0){
-                    continue;
-                }
+            for(int i = 1 ; i <= maxSkinID ; i++){
                 if(!serverPlayer.getPersistentData().getBoolean("tamed_jelly_cat"+i)){
                     isAllTamed = false;
                     break;
@@ -158,13 +143,13 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
 
     @Override
     public int getSkinID() {
-        return skinID;
+        return this.getEntityData().get(DATA_SKIN_ID);
+    }
+    @Override
+    public void setSkinID(int newSkinID) {
+        this.getEntityData().set(DATA_SKIN_ID, newSkinID);
     }
 
-    @Override
-    public void setSkinID(int skinID) {
-        this.skinID = skinID;
-    }
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()

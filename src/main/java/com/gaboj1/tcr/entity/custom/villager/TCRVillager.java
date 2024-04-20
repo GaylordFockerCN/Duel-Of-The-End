@@ -2,14 +2,10 @@ package com.gaboj1.tcr.entity.custom.villager;
 
 import com.gaboj1.tcr.entity.ManySkinEntity;
 import com.gaboj1.tcr.entity.ai.behavior.TCRVillagerTasks;
-import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
-import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
-import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
 import com.gaboj1.tcr.init.TCRModSounds;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.server.AddVillagerParticlePacket;
-import com.gaboj1.tcr.network.packet.server.EntityChangeSkinIDPacket;
 import com.gaboj1.tcr.util.DataManager;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
@@ -17,10 +13,12 @@ import com.mojang.serialization.Dynamic;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -31,16 +29,10 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.behavior.VillagerGoalPackages;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
@@ -48,7 +40,6 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.entity.schedule.Schedule;
 import net.minecraft.world.level.Level;
@@ -66,7 +57,7 @@ import java.util.Random;
 
 public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
 
-    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     protected EntityType<? extends TCRVillager> entityType;
     boolean canTalk = true;
@@ -75,22 +66,12 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
     protected int whatCanISay = 6;//真的不是玩牢大的梗（
     private boolean isAngry;
     private int angryTick = 10;
-    public boolean isAngry() {
-        return isAngry;
-    }
 
-    //区别于getID
-    @Override
-    public int getSkinID() {
-        return skinID;
-    }
-    @Override
-    public void setSkinID(int newSkinID) {
-        skinID = newSkinID;
-    }
-
-    //用于随机生成不同的皮肤和声音
-    protected int skinID = 0;
+    /**
+     * 用于区别村民的外貌和声音，负数代表女性
+     * 这玩意儿发现得太晚，之前自己写了个skinID，发包什么的都写好了，现在全删了T T
+     */
+    private static final EntityDataAccessor<Integer> DATA_SKIN_ID = SynchedEntityData.defineId(TCRVillager.class, EntityDataSerializers.INT);
 
     //共有多少种村民，会根据村民数量来随机一个id，从[0,TYPES]中取。负数代表女性
     public static final int MAX_TYPES = 5;//男性数量
@@ -100,24 +81,26 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
         this.entityType = pEntityType;
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
         ((GroundPathNavigation)this.getNavigation()).setCanOpenDoors(true);//抛弃大脑后最后的尊严...
-//        if(!this.getPersistentData().getBoolean("hasSkinID")){
-            this.skinID = skinID;
-//        }
-        if(!pLevel.isClientSide){
-            new Thread(()->{
-                try {
-                    Thread.sleep(200);//等两端实体数据互通完才能进行同步操作
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new EntityChangeSkinIDPacket(this.getId(), skinID));
-            }).start();
-        }
+        this.getEntityData().define(DATA_SKIN_ID, skinID);
 
     }
 
+    public boolean isAngry() {
+        return isAngry;
+    }
+
+    //区别于getID
+    @Override
+    public int getSkinID() {
+        return this.getEntityData().get(DATA_SKIN_ID);
+    }
+    @Override
+    public void setSkinID(int newSkinID) {
+        this.getEntityData().set(DATA_SKIN_ID, newSkinID);
+    }
+
     public boolean isFemale(){
-        return skinID < 0;
+        return getSkinID() < 0;
     }
 
     /**
@@ -125,29 +108,19 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
      * @return 是否是尊者（所有村庄的头领）
      */
     public boolean isElder(){
-        return skinID == -114514;
+        return getSkinID() == -114514;
     }
 
     @Override
-    public boolean save(CompoundTag tag) {
-        tag.putInt("TCRVillagerSkinID", skinID);
-        this.getPersistentData().putBoolean("hasSkinID", true);
-        return super.save(tag);
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putInt("TCRVillagerSkinID", this.getEntityData().get(DATA_SKIN_ID));
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        skinID = tag.getInt("TCRVillagerSkinID");
-//        PacketRelay.sendDelay(500,()->PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new EntityChangeSkinIDPacket(this.getId(), skinID)));
-        new Thread(()->{
-            try {
-                Thread.sleep(200);//等两端实体数据互通完才能进行同步操作（更新了EntityChangeSkinIDPacket逻辑后sleep可有可无）
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new EntityChangeSkinIDPacket(this.getId(), skinID));
-        }).start();
-        super.load(tag);
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        this.getEntityData().set(DATA_SKIN_ID,tag.getInt("TCRVillagerSkinID"));
     }
 
     /**
@@ -202,7 +175,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
                 case 1 -> TCRModSounds.MALE_SIGH.get();
                 default -> sound2;
             };
-            return skinID < 0 ? sound : sound2;
+            return getSkinID() < 0 ? sound : sound2;
         }
 
         SoundEvent sound = TCRModSounds.FEMALE_VILLAGER_OHAYO.get();
@@ -222,17 +195,17 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
             case 1 -> TCRModSounds.MALE_HI.get();
             default -> sound2;
         };
-        return skinID < 0 ? sound : sound2;
+        return getSkinID() < 0 ? sound : sound2;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        return skinID < 0 ? TCRModSounds.FEMALE_VILLAGER_HURT.get() : TCRModSounds.MALE_GET_HURT.get();
+        return getSkinID() < 0 ? TCRModSounds.FEMALE_VILLAGER_HURT.get() : TCRModSounds.MALE_GET_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return skinID < 0 ?  TCRModSounds.FEMALE_VILLAGER_DEATH.get() : TCRModSounds.MALE_DEATH.get();
+        return getSkinID() < 0 ?  TCRModSounds.FEMALE_VILLAGER_DEATH.get() : TCRModSounds.MALE_DEATH.get();
     }
 
     /**
@@ -344,7 +317,8 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
 
     //用于Geckolib模型区分贴图
     public String getResourceName() {
-        return "pastoral_plain_villager"+ skinID;
+//        return "pastoral_plain_villager"+ skinID;
+        return "pastoral_plain_villager" + this.getEntityData().get(DATA_SKIN_ID);
     }
 
     private void setUnhappy() {
