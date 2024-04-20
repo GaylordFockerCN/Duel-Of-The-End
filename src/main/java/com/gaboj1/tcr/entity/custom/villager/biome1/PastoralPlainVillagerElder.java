@@ -26,6 +26,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -99,11 +100,13 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     public void openDialogueScreen(CompoundTag serverPlayerData) {
         var entityType = TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get();
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
-        if(DataManager.boss1Defeated.getBool(serverPlayerData)){
+        if(DataManager.boss1Defeated.getBool(serverPlayerData) && DataManager.isWhite.getBool(serverPlayerData) /*&& DataManager.isWhite.isLocked()*/){
             builder.start(BUILDER.buildDialogueDialog(entityType,4))
                     .addChoice(BUILDER.buildDialogueChoice(entityType,3),BUILDER.buildDialogueDialog(entityType,5))
                     .addChoice(BUILDER.buildDialogueChoice(entityType,4),BUILDER.buildDialogueDialog(entityType,6))
-                    .addFinalChoice(BUILDER.buildDialogueChoice(entityType,-1),(byte)0);
+                    .addChoice(BUILDER.buildDialogueChoice(entityType,5),BUILDER.buildDialogueDialog(entityType,8))
+                    .addChoice(BUILDER.buildDialogueChoice(entityType,2),BUILDER.buildDialogueDialog(entityType,9))
+                    .addFinalChoice(BUILDER.buildDialogueChoice(entityType,6),(byte)1);
         }else {
             BiomeMap biomeMap = BiomeMap.getInstance();
             BlockPos biome1Center = biomeMap.getBlockPos(biomeMap.getCenter1(),0);
@@ -112,10 +115,11 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     .addChoice(BUILDER.buildDialogueChoice(entityType,2),BUILDER.buildDialogueDialog(entityType,-1))
                     .addChoice(BUILDER.buildDialogueChoice(entityType,1),BUILDER.buildDialogueDialog(entityType,-2))
                     .addChoice(BUILDER.buildDialogueChoice(entityType,2),BUILDER.buildDialogueDialog(entityType,-3))
+                    .addChoice(BUILDER.buildDialogueChoice(entityType,2),BUILDER.buildDialogueDialog(entityType,-4))
                     .addChoice(BUILDER.buildDialogueChoice(entityType,0),BUILDER.buildDialogueDialog(entityType,1,position))//告诉玩家密林方位
-                    .addChoice(BUILDER.buildDialogueChoice(entityType,5),BUILDER.buildDialogueDialog(entityType,2))
+                    .addChoice(BUILDER.buildDialogueChoice(entityType,7),BUILDER.buildDialogueDialog(entityType,2))
                     .addChoice(BUILDER.buildDialogueChoice(entityType,2),BUILDER.buildDialogueDialog(entityType,3))
-                    .addFinalChoice(BUILDER.buildDialogueChoice(entityType,-1),(byte)0);
+                    .addFinalChoice(BUILDER.buildDialogueChoice(entityType,-2),(byte)-1);
         }
 
         Minecraft.getInstance().setScreen(builder.build());
@@ -124,17 +128,24 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID) {
-            case 0: //对话中断！
-                this.chat(Component.translatable("刚刚说到哪儿来着？"));
+            case -1:
+                player.addItem(TCRModItems.ELDER_CAKE.get().getDefaultInstance());
+                player.addItem(Items.DIAMOND.getDefaultInstance().copyWithCount(5));
+                this.chat(BUILDER.buildDialogueDialog(entityType,7));
+                break;
+            case 0: //对话中断的代码！
+//                this.chat(Component.translatable("刚刚说到哪儿来着？"));
                 break;
             case 1: //白方 击败boss
-                this.chat(Component.translatable("1"));
+                this.chat(BUILDER.buildDialogueDialog(entityType,10));//再会，勇者！
+                player.addItem(Items.DIAMOND.getDefaultInstance().copyWithCount(5));
+                //TODO 获得进度
                 break;
             case 2: //黑方 未击败boss
-                this.chat(Component.translatable("2"));
+                this.chat(BUILDER.buildDialogueDialog(entityType,11));
                 break;
             case 3: //黑方 击败boss
-                this.chat(Component.translatable("3"));
+                this.chat(BUILDER.buildDialogueDialog(entityType,12));
                 break;
         }
         this.setConversingPlayer(null);
@@ -152,6 +163,12 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     public void talkFuck(Player player){
         talk(player, Component.translatable(entityType.getDescriptionId()+".fuck_chat"+(r.nextInt(whatCanISay))));
     }
+
+    @OnlyIn(Dist.CLIENT)
+    public void talkFuck(Player player, int i){
+        talk(player, Component.translatable(entityType.getDescriptionId()+".fuck_chat"+i));
+    }
+
     @Override
     public void setConversingPlayer(@org.jetbrains.annotations.Nullable Player player) {
         this.conversingPlayer = player;
@@ -164,11 +181,32 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     }
 
     @Override
+    public boolean hurt(DamageSource source, float v) {
+        if(this.getHealth() < v){
+            if(source.getEntity() instanceof ServerPlayer serverPlayer){
+                if (this.getConversingPlayer() == null) {
+                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacketWithSkinID(this.getId(),serverPlayer.getPersistentData().copy(),this.skinID), serverPlayer);
+                    this.setConversingPlayer(serverPlayer);
+                }
+            }
+            return false;
+        }
+        return super.hurt(source, v);
+    }
+
+    @Override
     public void die(DamageSource pCause) {
         //如果玩家为黑方（接受boss任务）则获取村长日记真相
-        if(pCause.getEntity() instanceof Player player && !DataManager.isWhite.getBool(player) && DataManager.isWhite.isLocked()){
-            player.addItem(Book.getBook("biome1_elder_diary3",2));
+        if(pCause.getEntity() instanceof Player player){
+            if(!DataManager.isWhite.getBool(player) && DataManager.isWhite.isLocked()){
+                player.addItem(Book.getBook("biome1_elder_diary3",2));
+            }else {
+                talkFuck(player,1);//你为何选择这样的道路？
+            }
         }
+    }
+
+    public void realDie(DamageSource pCause){
         super.die(pCause);
     }
 

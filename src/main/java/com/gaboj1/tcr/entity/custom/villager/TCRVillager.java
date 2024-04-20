@@ -339,7 +339,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
 
     public void talk(Player player, Component component){
         if(player != null)
-            player.sendSystemMessage(Component.literal("[").append(this.getDisplayName().copy().withStyle(ChatFormatting.YELLOW)).append("]: ").append(component));
+            player.displayClientMessage(Component.literal("[").append(this.getDisplayName().copy().withStyle(ChatFormatting.YELLOW)).append("]: ").append(component),false);
     }
 
     //用于Geckolib模型区分贴图
@@ -412,7 +412,6 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
                 DataManager.isWhite.lock(player);
             }
         }
-//        this.getServer().getSingleplayerProfile().getProperties();
     }
 
     public void playAttackAnim(){

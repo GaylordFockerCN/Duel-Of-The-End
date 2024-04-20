@@ -92,6 +92,7 @@ public class TCRModItemTabs {
 				tabData.accept(TCRModItems.DREAM_TA.get());
 				tabData.accept(TCRModItems.BEER.get());
 				tabData.accept(TCRModItems.COOKIE.get());
+				tabData.accept(TCRModItems.ELDER_CAKE.get());
 				//说出来你可能不信，以下的小物品是训练chatGPT3.5仿写后修改的（大力解放生产力！）
 				tabData.accept(TCRModItems.EDEN_APPLE.get());
 				tabData.accept(TCRModItems.DRINK1.get());

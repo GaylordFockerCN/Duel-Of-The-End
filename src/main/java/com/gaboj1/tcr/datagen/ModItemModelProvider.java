@@ -35,6 +35,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(TCRModItems.DREAM_TA);
         simpleItem(TCRModItems.BEER);
         simpleItem(TCRModItems.COOKIE);
+        simpleItem(TCRModItems.ELDER_CAKE);
         //说出来你可能不信，以下的小物品是训练chatGPT3.5仿写后修改的（大力解放生产力！）
         simpleItem(TCRModItems.EDEN_APPLE);
         simpleItem(TCRModItems.DRINK1);
