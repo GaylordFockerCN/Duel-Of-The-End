@@ -79,11 +79,11 @@ public class NoiseMapGenerator {
     private double[][] map;
 
     int aCenterR = 0;//统一半径，否则有的中心群系过大
-    public static final int VILLAGER_SIZE = 32;
+    public static final int VILLAGER_SIZE = 36;// 128 / 4 + 2
     public static final double CURVE_INTENSITY = 0.1;
     public static final double SCALE_OF_CENTER_R = 0.05;//相对宽度width的比例，中心空岛半径即为width*scaleOfCenterR
     public static final double SCALE_OF_A_CENTER_R = 0.9;//相对各个中心到整体中心的距离的比例， 各群系的中心群系的噪声半径 即 center.distance(aCenter)*scaleOfaCenterR
-    private Random random;
+    private final Random random;
     private Point centerPoint = new Point();
     public void setLength(int length) {
         this.length = length;

@@ -35,6 +35,7 @@ public class TCRTeleporter implements ITeleporter {
         while (!destinationLevel.getBlockState(destinationPos).is(Blocks.AIR)){
             destinationPos = destinationPos.above();
         }
+        destinationPos = destinationPos.offset(18,0,0);//不然会诞生在房子里（
         pos = new PortalInfo(destinationPos.getCenter(), Vec3.ZERO, entity.getYRot(), entity.getXRot());
         return pos == null ? ITeleporter.super.getPortalInfo(entity, destinationLevel, defaultPortalInfo) : pos;
     }
