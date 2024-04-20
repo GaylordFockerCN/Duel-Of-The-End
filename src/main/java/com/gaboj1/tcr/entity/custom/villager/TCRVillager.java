@@ -187,7 +187,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
 
         LocalPlayer player = Minecraft.getInstance().player;
         //是坏人就唉声叹气一下
-        if(DataManager.isWhite.isLocked() && player!=null && DataManager.isWhite.getBool(player)){
+        if(player!=null && DataManager.isWhite.isLocked(player) && DataManager.isWhite.getBool(player)){
             SoundEvent sound = TCRModSounds.FEMALE_SIGH.get();
             int i = random.nextInt(2);
             sound = switch (i) {
@@ -386,7 +386,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
                 talkFuck(player);
             }else {
                 //如果已经锁定好人方则无法伤害村民
-                if(DataManager.isWhite.isLocked() && DataManager.isWhite.getBool(player)){
+                if(DataManager.isWhite.isLocked(player) && DataManager.isWhite.getBool(player)){
                     player.displayClientMessage(Component.literal("info.the_casket_of_reveries.alreadyAddWhite"),true);
                     return false;
                 }
@@ -407,7 +407,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
     public void die(DamageSource pCause) {
         super.die(pCause);
         if(pCause.getEntity() instanceof Player player) {
-            if(!DataManager.isWhite.isLocked()){
+            if(!DataManager.isWhite.isLocked(player)){
                 DataManager.isWhite.putBool(player, false);
                 DataManager.isWhite.lock(player);
             }

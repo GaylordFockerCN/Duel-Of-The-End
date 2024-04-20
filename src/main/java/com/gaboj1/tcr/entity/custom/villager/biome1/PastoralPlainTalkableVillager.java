@@ -136,7 +136,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
         }
 
         //TODO 如果是黑方并且杀死了村长的话则对话改变，禁止交易。
-        if(!DataManager.isWhite.getBool(serverPlayerData) && DataManager.isWhite.isLocked() && DataManager.elder1Defeated.getBool(serverPlayerData) && DataManager.elder1Defeated.isLocked()){
+        if(!DataManager.isWhite.getBool(serverPlayerData) && DataManager.isWhite.isLocked(serverPlayerData) && DataManager.elder1Defeated.getBool(serverPlayerData) && DataManager.elder1Defeated.isLocked(serverPlayerData)){
             builder.start(Component.literal(""));
         }
         

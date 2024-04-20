@@ -16,7 +16,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -40,6 +42,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
     @Nullable
     private Player conversingPlayer;
+    private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.PURPLE, BossEvent.BossBarOverlay.PROGRESS);
 
     public PastoralPlainVillagerElder(EntityType<? extends PastoralPlainVillagerElder> pEntityType, Level pLevel) {
         super(pEntityType, pLevel, -114514);
@@ -72,6 +75,23 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         }
     }
 
+    /**
+     * 实现血条显示控制
+     */
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        if (!this.level().isClientSide()) {
+            this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
+        }
+    }
+
+    @Override
+    public void stopSeenByPlayer(ServerPlayer serverPlayer) {
+        super.stopSeenByPlayer(serverPlayer);
+        this.bossInfo.removePlayer(serverPlayer);
+    }
+
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         this.setItemInHand(InteractionHand.MAIN_HAND, TCRModItems.ELDER_STAFF.get().getDefaultInstance());
@@ -98,7 +118,9 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     @Override
     @OnlyIn(Dist.CLIENT)
     public void openDialogueScreen(CompoundTag serverPlayerData) {
-        var entityType = TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get();
+
+
+
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
         if(DataManager.boss1Defeated.getBool(serverPlayerData) && DataManager.isWhite.getBool(serverPlayerData) /*&& DataManager.isWhite.isLocked()*/){
             builder.start(BUILDER.buildDialogueDialog(entityType,4))
@@ -182,32 +204,44 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
     @Override
     public boolean hurt(DamageSource source, float v) {
-        if(this.getHealth() < v){
-            if(source.getEntity() instanceof ServerPlayer serverPlayer){
-                if (this.getConversingPlayer() == null) {
-                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacketWithSkinID(this.getId(),serverPlayer.getPersistentData().copy(),this.skinID), serverPlayer);
-                    this.setConversingPlayer(serverPlayer);
-                }
-            }
-            return false;
+        if(source.getEntity() instanceof ServerPlayer serverPlayer){
+            bossInfo.addPlayer(serverPlayer);//亮血条！
         }
         return super.hurt(source, v);
     }
 
+    /**
+     * 濒死则进入对话
+     * @param source
+     */
     @Override
-    public void die(DamageSource pCause) {
+    public void die(DamageSource source) {
+        setHealth(1);
+        setInvulnerable(true);//无敌
+        if(source.getEntity() instanceof ServerPlayer serverPlayer) {
+            if (this.getConversingPlayer() == null) {
+                PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacketWithSkinID(this.getId(), serverPlayer.getPersistentData().copy(), this.skinID), serverPlayer);
+                this.setConversingPlayer(serverPlayer);
+            }
+        }
+    }
+
+    /**
+     * 真的死亡
+     * @param pCause
+     */
+    public void realDie(DamageSource pCause){
+        super.die(pCause);
         //如果玩家为黑方（接受boss任务）则获取村长日记真相
-        if(pCause.getEntity() instanceof Player player){
-            if(!DataManager.isWhite.getBool(player) && DataManager.isWhite.isLocked()){
+        if(pCause.getEntity() instanceof ServerPlayer player){
+            DataManager.elder1Defeated.putBool(player,true);
+            DataManager.elder1Defeated.lock(player);
+            if(!DataManager.isWhite.getBool(player) && DataManager.isWhite.isLocked(player)){
                 player.addItem(Book.getBook("biome1_elder_diary3",2));
             }else {
                 talkFuck(player,1);//你为何选择这样的道路？
             }
         }
-    }
-
-    public void realDie(DamageSource pCause){
-        super.die(pCause);
     }
 
     @Override

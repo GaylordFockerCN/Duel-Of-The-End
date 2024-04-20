@@ -71,8 +71,12 @@ public class DataManager {
 
         }
 
-        public boolean isLocked() {
-            return isLocked;
+        public boolean isLocked(Player player) {
+            return player.getPersistentData().getBoolean(key+"isLocked");
+        }
+
+        public boolean isLocked(CompoundTag playerData) {
+            return playerData.getBoolean(key+"isLocked");
         }
 
         public void lock(Player player) {
