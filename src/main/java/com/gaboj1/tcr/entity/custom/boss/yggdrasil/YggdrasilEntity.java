@@ -65,7 +65,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     private static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.COMPONENT);
     private static final EntityDataAccessor<Boolean> DATA_IS_READY = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.BOOLEAN);
     private int conversationStage = 0;
-    private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.PINK, BossEvent.BossBarOverlay.PROGRESS);
+    private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.BLUE, BossEvent.BossBarOverlay.PROGRESS);
 
     private boolean canBeHurt;
     private int hurtTimer;
