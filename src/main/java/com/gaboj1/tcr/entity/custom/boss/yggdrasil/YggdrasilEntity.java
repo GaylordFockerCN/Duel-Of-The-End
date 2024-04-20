@@ -244,8 +244,6 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
             case 0:
                 DataManager.boss1ConversationStage.putInt(player,-1);
                 this.setConversingPlayer(null);
-
-                //开始战斗
                 return;
             case 1:
                 DataManager.boss1ConversationStage.putInt(player,-1);
@@ -257,6 +255,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
                 if(!bossChallenged(player)){
                     DataManager.boss1Defeated.putBool(player,true);
                 }
+                this.realDie(player.getLastDamageSource());
                 break;
         }
         this.setConversingPlayer(null);
