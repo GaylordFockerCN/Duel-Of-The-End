@@ -121,11 +121,11 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
         //长老濒死
         if(DataManager.elder1Defeated.getBool(serverPlayerData)){
-
+            builder.start(4).addFinalChoice(6,(byte) 2);
         }
 
         //击杀完boss1后回来见长老
-        if(DataManager.boss1Defeated.getBool(serverPlayerData) && DataManager.isWhite.getBool(serverPlayerData) /*&& DataManager.isWhite.isLocked()*/){
+        else if(DataManager.boss1Defeated.getBool(serverPlayerData) && DataManager.isWhite.getBool(serverPlayerData) /*&& DataManager.isWhite.isLocked()*/){
             builder.start(4)
                     .addChoice(3,5)
                     .addChoice(4,6)
@@ -167,11 +167,17 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                 player.addItem(Items.DIAMOND.getDefaultInstance().copyWithCount(5));
                 //TODO 获得进度
                 break;
-            case 2: //黑方 未击败boss
+            case 2: //看长老不爽而杀死长老
                 this.chat(BUILDER.buildDialogueAnswer(entityType,11));
+                this.setInvulnerable(false);
+                this.setHealth(0);
+                player.addItem(Book.getBook("biome1_elder_diary3",2));
                 break;
-            case 3: //黑方 击败boss
+            case 3: //受到boss指派杀死长老
                 this.chat(BUILDER.buildDialogueAnswer(entityType,12));
+                this.setInvulnerable(false);
+                this.setHealth(0);
+                player.addItem(Book.getBook("biome1_elder_diary3",2));
                 break;
         }
         this.setConversingPlayer(null);
@@ -223,6 +229,8 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         setHealth(1);
         setInvulnerable(true);//无敌
         if(source.getEntity() instanceof ServerPlayer serverPlayer) {
+            DataManager.elder1Defeated.putBool(serverPlayer,true);
+            DataManager.elder1Defeated.lock(serverPlayer);
             if (this.getConversingPlayer() == null) {
                 PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverPlayer.getPersistentData().copy()), serverPlayer);
                 this.setConversingPlayer(serverPlayer);
@@ -238,8 +246,6 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         super.die(pCause);
         //如果玩家为黑方（接受boss任务）则获取村长日记真相
         if(pCause.getEntity() instanceof ServerPlayer player){
-            DataManager.elder1Defeated.putBool(player,true);
-            DataManager.elder1Defeated.lock(player);
             if(!DataManager.isWhite.getBool(player) && DataManager.isWhite.isLocked(player)){
                 player.addItem(Book.getBook("biome1_elder_diary3",2));
             }else {
