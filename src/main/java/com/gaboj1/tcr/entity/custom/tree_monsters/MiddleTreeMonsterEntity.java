@@ -81,27 +81,11 @@ public class MiddleTreeMonsterEntity extends TamableAnimal implements GeoEntity 
         if(this.swinging && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
             state.getController().forceAnimationReset();
             Random r = new Random();
-            int attackSkill = r.nextInt(2);//生成随机数
-
-            switch (attackSkill){//随机关联攻击动画
-                case 0:
-                    state.getController().setAnimation(RawAnimation.begin().then("animation.m_tree_monster - Converted.attack1", Animation.LoopType.PLAY_ONCE));//攻击动作不循环
-                    setAttackDamage(8.0f);//设置伤害
-                    break;
-                case 1:
-                    state.getController().setAnimation(RawAnimation.begin().then("animation.m_tree_monster - Converted.attack2", Animation.LoopType.PLAY_ONCE));
-                    setAttackDamage(10.0f);
-                    break;
-            }
+                    state.getController().setAnimation(RawAnimation.begin().then("animation.middle_tree_monster.attack", Animation.LoopType.PLAY_ONCE));//攻击动作不循环
             this.swinging = false;
         }
 
         return PlayState.CONTINUE;
-    }
-
-    private void setAttackDamage(float damage) {
-        // 设置生物的攻击伤害值
-        this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(damage);
     }
 
 
@@ -116,16 +100,16 @@ public class MiddleTreeMonsterEntity extends TamableAnimal implements GeoEntity 
     //@SubscribeEvent
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
         if(tAnimationState.isMoving()) {
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.m_treemonster - Converted.move", Animation.LoopType.LOOP));
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.middle_tree_monster.move", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         LivingEntity target = this.getTarget();
         if(target != null){
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.tree_guardian - Converted.attack1", Animation.LoopType.LOOP));
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.middle_tree_monster.attack", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
 
-        tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.m_treemonster - Converted.idle", Animation.LoopType.LOOP));
+        tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.middle_tree_monster.idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
 

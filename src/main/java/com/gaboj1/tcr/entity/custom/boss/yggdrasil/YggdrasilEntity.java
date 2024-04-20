@@ -2,12 +2,14 @@ package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
 import com.gaboj1.tcr.block.entity.spawner.EnforcedHomePoint;
 import com.gaboj1.tcr.entity.NpcDialogue;
+import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.init.TCRModSounds;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.server.NPCDialoguePacket;
+import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
@@ -62,11 +64,9 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.COMPONENT);
     private static final EntityDataAccessor<Boolean> DATA_IS_READY = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.BOOLEAN);
-
-
+    private int conversationStage = 0;
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.PINK, BossEvent.BossBarOverlay.PROGRESS);
 
-//    private final ServerBossEvent bossFight;
     private boolean canBeHurt;
     private int hurtTimer;
 
@@ -78,9 +78,6 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
 //    private boolean isBossFight() {
 //        return this.bossFight.isVisible();
 //    }
-    private Component getBossName() {
-        return this.getEntityData().get(DATA_BOSS_NAME);
-    }
 
     public ServerBossEvent getBossBar() {
         return this.bossInfo;
@@ -114,10 +111,23 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
 
     @Override
     public void die(DamageSource p_21014_) {
-        super.die(p_21014_);
-        if (this.level() instanceof ServerLevel server){
-            this.getBossBar().setProgress(0.0F);
+        if (!this.level().isClientSide){
+            DataManager.boss1ConversationStage.putInt((Player) this.getTarget(),1);
+            this.setHealth(40.0F);
+            if (this.getTarget() instanceof ServerPlayer) {
+                ServerPlayer player = (ServerPlayer) this.getTarget();
+                if (this.getConversingPlayer() == null) {
+                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(),player.getPersistentData().copy()), player);
+                    this.setConversingPlayer(player);
+                }
+            }
+            canBeHurt = false;
+
         }
+    }
+
+    public void realDie(DamageSource damageSource){
+        super.die(damageSource);
     }
 
 
@@ -201,54 +211,71 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
         Component greet1 = BUILDER.buildDialogueDialog(entityType,0);
         Component greet2 = BUILDER.buildDialogueDialog(entityType,3);
         Component greet3 = BUILDER.buildDialogueDialog(entityType,5);
-        builder.start(greet1)
-                .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,1))
-                .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,2))
-                .addFinalChoice(BUILDER.buildDialogueChoice(entityType,0),(byte)0);
-        builder.start(greet2)
-                .addChoice(BUILDER.buildDialogueChoice(entityType,1),BUILDER.buildDialogueDialog(entityType,4))
-                .addFinalChoice(BUILDER.buildDialogueChoice(entityType,-2),(byte)1);
-        builder.start(greet3)
-                .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,6))
-                .addChoice(BUILDER.buildDialogueChoice(entityType,2),BUILDER.buildDialogueDialog(entityType,7))
-                .addChoice(BUILDER.buildDialogueChoice(entityType,3),BUILDER.buildDialogueDialog(entityType,8))
-                .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,9))
-                .addChoice(BUILDER.buildDialogueChoice(entityType,4),BUILDER.buildDialogueDialog(entityType,10))
-                .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,11))
-                .addFinalChoice(BUILDER.buildDialogueChoice(entityType,-3),(byte)2);
-        Minecraft.getInstance().setScreen(builder.build());
+        if (DataManager.boss1ConversationStage.getInt(serverPlayerData) == 0) {
+            builder.start(greet1)
+                    .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,1))
+                    .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,2))
+                    .addFinalChoice(BUILDER.buildDialogueChoice(entityType,0),(byte)0);
+            Minecraft.getInstance().setScreen(builder.build());
+        }
+        else if(DataManager.boss1ConversationStage.getInt(serverPlayerData) == 1){
+            builder.start(greet2)
+                    .addChoice(BUILDER.buildDialogueChoice(entityType,1),BUILDER.buildDialogueDialog(entityType,4))
+                    .addFinalChoice(BUILDER.buildDialogueChoice(entityType,-2),(byte)1);
+            Minecraft.getInstance().setScreen(builder.build());
+        }
+       else if (DataManager.boss1ConversationStage.getInt(serverPlayerData) == 2){
+           builder.start(greet3)
+                   .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,6))
+                   .addChoice(BUILDER.buildDialogueChoice(entityType,2),BUILDER.buildDialogueDialog(entityType,7))
+                   .addChoice(BUILDER.buildDialogueChoice(entityType,3),BUILDER.buildDialogueDialog(entityType,8))
+                   .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,9))
+                   .addChoice(BUILDER.buildDialogueChoice(entityType,4),BUILDER.buildDialogueDialog(entityType,10))
+                   .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,11))
+                   .addFinalChoice(BUILDER.buildDialogueChoice(entityType,-3),(byte)2);
+           Minecraft.getInstance().setScreen(builder.build());
+       }
+
     }
 
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID){
-            //NOTE: 0为默认返回值，无论做什么最后都得this.setConversingPlayer(null);不然无法再次对话
             case 0:
-//                return;
+                DataManager.boss1ConversationStage.putInt(player,-1);
+                this.setConversingPlayer(null);
+                return;
             case 1:
+                DataManager.boss1ConversationStage.putInt(player,-1);
+                this.setConversingPlayer(null);
+                //播放旁白
+                //旁白结束后conversationStage = 2;
                 return;
             case 2:
+                if(!bossChallenged(player)){
+                    DataManager.boss1Defeated.putBool(player,true);
+                }
+                this.realDie(player.getLastDamageSource());
                 break;
         }
         this.setConversingPlayer(null);
     }
 
+    public boolean bossChallenged(Player player){
+        return DataManager.boss1Defeated.getBool(player);
+    }
+
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (hand == InteractionHand.MAIN_HAND) {
-            if (!this.level().isClientSide()) {
-//                if (!this.isReady()) {
+            if (!this.level().isClientSide() && !bossChallenged(player)) {
                     this.lookAt(player, 180.0F, 180.0F);
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (this.getConversingPlayer() == null) {
                             PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(),serverPlayer.getPersistentData().copy()), serverPlayer);
                             this.setConversingPlayer(serverPlayer);
-                        }
                     }
-//                }
-//                else {
-//                    this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.ready"));
-//                }
+                }
                 return InteractionResult.SUCCESS;
             }
         }
@@ -266,6 +293,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
         return this.conversingPlayer;
     }
 
+
     @Nullable
     @Override
     public void chat(Component component) {
@@ -274,6 +302,38 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
         }
     }
 
+    public static class conversationTriggerGoal extends Goal{
+        private final YggdrasilEntity yggdrasil;
+        ServerPlayer player;
+
+        public conversationTriggerGoal(YggdrasilEntity yggdrasil) {
+            this.yggdrasil = yggdrasil;
+        }
+        @Override
+        public boolean canUse() {
+            player = null;
+            if (yggdrasil.getTarget() instanceof ServerPlayer) {
+                player = (ServerPlayer) yggdrasil.getTarget();
+            }
+            if (player == null) {
+                return false;
+            }
+            double distance = yggdrasil.distanceTo(player);
+            if (distance < 20 && !yggdrasil.bossChallenged(player)) {
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public void start() {
+                if (yggdrasil.getConversingPlayer() == null && yggdrasil.conversationStage != -1) {
+                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(yggdrasil.getId(),player.getPersistentData().copy()),player);
+                    yggdrasil.setConversingPlayer(player);
+                }
+
+        }
+    }
 
 
     public static class spawnTreeClawAtPointPositionGoal extends Goal {
@@ -364,10 +424,13 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     }
     protected void registerGoals() {//设置生物行为
         this.goalSelector.addGoal(1, new FloatGoal(this));
+        this.goalSelector.addGoal(2,new NpcDialogueGoal<>(this));
+        this.goalSelector.addGoal(1,new conversationTriggerGoal(this));
         this.goalSelector.addGoal(2, new spawnTreeClawAtPointPositionGoal(this));
 //       this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.2D, false));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+
 
 
         /*
