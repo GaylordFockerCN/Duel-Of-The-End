@@ -5,7 +5,7 @@ import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.init.TCRModItems;
-import com.gaboj1.tcr.item.custom.Book;
+import com.gaboj1.tcr.util.BookManager;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.packet.server.NPCDialoguePacket;
@@ -169,15 +169,11 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                 break;
             case 2: //看长老不爽而杀死长老
                 this.chat(BUILDER.buildDialogueAnswer(entityType,11));
-                this.setInvulnerable(false);
-                this.setHealth(0);
-                player.addItem(Book.getBook("biome1_elder_diary3",2));
+                realDie(player);
                 break;
             case 3: //受到boss指派杀死长老
                 this.chat(BUILDER.buildDialogueAnswer(entityType,12));
-                this.setInvulnerable(false);
-                this.setHealth(0);
-                player.addItem(Book.getBook("biome1_elder_diary3",2));
+                realDie(player);
                 break;
         }
         this.setConversingPlayer(null);
@@ -238,21 +234,28 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         }
     }
 
-    /**
-     * 真的死亡
-     * @param pCause
-     */
-    public void realDie(DamageSource pCause){
-        super.die(pCause);
-        //如果玩家为黑方（接受boss任务）则获取村长日记真相
-        if(pCause.getEntity() instanceof ServerPlayer player){
-            if(!DataManager.isWhite.getBool(player) && DataManager.isWhite.isLocked(player)){
-                player.addItem(Book.getBook("biome1_elder_diary3",2));
-            }else {
-                talkFuck(player,1);//你为何选择这样的道路？
-            }
-        }
+    public void realDie(Player killer){
+        this.setInvulnerable(false);
+        this.setHealth(0);
+        DataManager.isWhite.putBool(killer, false);
+        DataManager.isWhite.lock(killer);
+        killer.addItem(BookManager.BIOME1_ELDER_DIARY_3.get());
     }
+//    /**
+//     * 真的死亡
+//     * @param pCause
+//     */
+//    public void realDie(DamageSource pCause){
+//        super.die(pCause);
+//        //如果玩家为黑方（接受boss任务）则获取村长日记真相
+//        if(pCause.getEntity() instanceof ServerPlayer player){
+//            if(!DataManager.isWhite.getBool(player) && DataManager.isWhite.isLocked(player)){
+//                player.addItem(Book.getBook("biome1_elder_diary3",2));
+//            }else {
+//                talkFuck(player,1);//你为何选择这样的道路？
+//            }
+//        }
+//    }
 
     @Override
     public boolean shouldShowName() {
