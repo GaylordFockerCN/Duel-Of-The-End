@@ -13,6 +13,12 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
+/**
+ * 玩家的PersistentData管理
+ * 本质上只是管理key。由于NBT标签不存在null，所以我加入了一个lock变量，如果还没lock就表示不确定性。比如isWhite，在玩家做出选择之前你不能确定是哪个阵营。
+ * 虽然使用的时候麻烦了一点，但是多了个lock相当于把bool拆成四个量来用。
+ * @author LZY
+ */
 public class DataManager {
 
     public static void putData(Player player, String key, int value){
@@ -90,29 +96,6 @@ public class DataManager {
             isLocked = false;
         }
 
-//        public void putData(Player player, int value){
-//            if(!isLocked)
-//                player.getPersistentData().putInt(key, value);
-//        }
-//        public void putData(Player player, String value){
-//            if(!isLocked)
-//                player.getPersistentData().putString(key, value);
-//        }
-//        public void putData(Player player, boolean value){
-//            if(!isLocked)
-//                player.getPersistentData().putBoolean(key, value);
-//        }
-//
-//        public boolean getBool(Player player){
-//            return player.getPersistentData().getBoolean(key);
-//        }
-//        public int getInt(Player player){
-//            return player.getPersistentData().getInt(key);
-//        }
-//        public String getString(Player player){
-//            return player.getPersistentData().getString(key);
-//        }
-
     }
 
     public static class StringData extends Data {
@@ -131,7 +114,7 @@ public class DataManager {
         }
 
         public void putString(Player player, String value){
-            if(!isLocked){
+            if(!isLocked(player)){
                 player.getPersistentData().putString(key, value);
                 if(player instanceof ServerPlayer serverPlayer){
                     PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PersistentStringDataSyncPacket(key, isLocked,value),serverPlayer);
@@ -141,6 +124,10 @@ public class DataManager {
 
         public String getString(Player player){
            return player.getPersistentData().getString(key);
+        }
+
+        public String getString(CompoundTag playerData){
+            return playerData.getString(key);
         }
 
     }
@@ -159,7 +146,7 @@ public class DataManager {
         }
 
         public void putInt(Player player, int value){
-            if(!isLocked){
+            if(!isLocked(player)){
                 player.getPersistentData().putInt(key, value);
                 if(player instanceof ServerPlayer serverPlayer){
                     PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PersistentIntDataSyncPacket(key, isLocked,value),serverPlayer);
@@ -191,7 +178,7 @@ public class DataManager {
         }
 
         public void putBool(Player player, boolean value){
-            if(isLocked)
+            if(isLocked(player))
                 return;
 
             player.getPersistentData().putBoolean(key, value);
@@ -201,7 +188,7 @@ public class DataManager {
         }
 
         public void putBool(CompoundTag playerData ,boolean bool){
-            if(isLocked)
+            if(isLocked(playerData))
                 return;
             playerData.putBoolean(key,bool);
 
