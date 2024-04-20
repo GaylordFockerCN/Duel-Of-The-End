@@ -109,7 +109,7 @@ public class LinkListStreamDialogueScreenBuilder {
      * @param answer 选择该选项后的回答内容编号
      */
     public LinkListStreamDialogueScreenBuilder addChoice(int option, int answer){
-        return addChoice(BUILDER.buildDialogueAnswer(entityType,answer),BUILDER.buildDialogueOption(entityType,option));
+        return addChoice(BUILDER.buildDialogueOption(entityType,option), BUILDER.buildDialogueAnswer(entityType,answer));
     }
 
     /**
