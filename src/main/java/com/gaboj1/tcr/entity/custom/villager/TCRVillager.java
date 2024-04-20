@@ -360,6 +360,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
                 talkFuck(player);
             }else {
                 //如果已经锁定好人方则无法伤害村民
+                //Boss1Defeated不一定是好人，可能只是通过了boss的试炼。
                 if(DataManager.isWhite.isLocked(player) && DataManager.isWhite.getBool(player)){
                     player.displayClientMessage(Component.literal("info.the_casket_of_reveries.alreadyAddWhite"),true);
                     return false;

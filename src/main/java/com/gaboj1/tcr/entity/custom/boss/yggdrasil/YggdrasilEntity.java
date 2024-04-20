@@ -109,20 +109,18 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     }
 
     @Override
-    public void die(DamageSource p_21014_) {
-        if (!this.level().isClientSide){
-            DataManager.boss1ConversationStage.putInt((Player) this.getTarget(),1);
-            this.setHealth(40.0F);
-            if (this.getTarget() instanceof ServerPlayer) {
-                ServerPlayer player = (ServerPlayer) this.getTarget();
-                if (this.getConversingPlayer() == null) {
-                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(),player.getPersistentData().copy()), player);
-                    this.setConversingPlayer(player);
-                }
+    public void die(DamageSource source) {
+        this.setHealth(1);
+        if (source.getEntity() instanceof ServerPlayer player) {
+            DataManager.boss1Defeated.putBool(player,true);
+            DataManager.boss1Defeated.lock(player);
+            DataManager.boss1ConversationStage.putInt(player,1);
+            if (this.getConversingPlayer() == null) {
+                PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(),player.getPersistentData().copy()), player);
+                this.setConversingPlayer(player);
             }
-            canBeHurt = false;
-
         }
+        canBeHurt = false;
     }
 
     public void realDie(DamageSource damageSource){
