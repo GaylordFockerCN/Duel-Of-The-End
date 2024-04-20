@@ -19,7 +19,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -208,31 +207,31 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     @Override
     public void openDialogueScreen(CompoundTag serverPlayerData) {
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
-        Component greet1 = BUILDER.buildDialogueDialog(entityType,0);
-        Component greet2 = BUILDER.buildDialogueDialog(entityType,3);
-        Component greet3 = BUILDER.buildDialogueDialog(entityType,5);
+        Component greet1 = BUILDER.buildDialogueAnswer(entityType,0);
+        Component greet2 = BUILDER.buildDialogueAnswer(entityType,3);
+        Component greet3 = BUILDER.buildDialogueAnswer(entityType,5);
         if (DataManager.boss1ConversationStage.getInt(serverPlayerData) == 0) {
             builder.start(greet1)
-                    .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,1))
-                    .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,2))
-                    .addFinalChoice(BUILDER.buildDialogueChoice(entityType,0),(byte)0);
+                    .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,1))
+                    .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,2))
+                    .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)0);
             Minecraft.getInstance().setScreen(builder.build());
         }
         else if(DataManager.boss1ConversationStage.getInt(serverPlayerData) == 1){
             builder.start(greet2)
-                    .addChoice(BUILDER.buildDialogueChoice(entityType,1),BUILDER.buildDialogueDialog(entityType,4))
-                    .addFinalChoice(BUILDER.buildDialogueChoice(entityType,-2),(byte)1);
+                    .addChoice(BUILDER.buildDialogueOption(entityType,1),BUILDER.buildDialogueAnswer(entityType,4))
+                    .addFinalChoice(BUILDER.buildDialogueOption(entityType,-2),(byte)1);
             Minecraft.getInstance().setScreen(builder.build());
         }
        else if (DataManager.boss1ConversationStage.getInt(serverPlayerData) == 2){
            builder.start(greet3)
-                   .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,6))
-                   .addChoice(BUILDER.buildDialogueChoice(entityType,2),BUILDER.buildDialogueDialog(entityType,7))
-                   .addChoice(BUILDER.buildDialogueChoice(entityType,3),BUILDER.buildDialogueDialog(entityType,8))
-                   .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,9))
-                   .addChoice(BUILDER.buildDialogueChoice(entityType,4),BUILDER.buildDialogueDialog(entityType,10))
-                   .addChoice(BUILDER.buildDialogueChoice(entityType,-1),BUILDER.buildDialogueDialog(entityType,11))
-                   .addFinalChoice(BUILDER.buildDialogueChoice(entityType,-3),(byte)2);
+                   .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,6))
+                   .addChoice(BUILDER.buildDialogueOption(entityType,2),BUILDER.buildDialogueAnswer(entityType,7))
+                   .addChoice(BUILDER.buildDialogueOption(entityType,3),BUILDER.buildDialogueAnswer(entityType,8))
+                   .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,9))
+                   .addChoice(BUILDER.buildDialogueOption(entityType,4),BUILDER.buildDialogueAnswer(entityType,10))
+                   .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,11))
+                   .addFinalChoice(BUILDER.buildDialogueOption(entityType,-3),(byte)2);
            Minecraft.getInstance().setScreen(builder.build());
        }
 

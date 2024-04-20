@@ -4,7 +4,6 @@ import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
-import com.gaboj1.tcr.init.TCRModEntities;
 import com.gaboj1.tcr.init.TCRModItems;
 import com.gaboj1.tcr.item.custom.Book;
 import com.gaboj1.tcr.network.TCRPacketHandler;
@@ -118,30 +117,35 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     @Override
     @OnlyIn(Dist.CLIENT)
     public void openDialogueScreen(CompoundTag serverPlayerData) {
-
-
-
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
+
+        //长老濒死
+        if(DataManager.elder1Defeated.getBool(serverPlayerData)){
+
+        }
+
+        //击杀完boss1后回来见长老
         if(DataManager.boss1Defeated.getBool(serverPlayerData) && DataManager.isWhite.getBool(serverPlayerData) /*&& DataManager.isWhite.isLocked()*/){
-            builder.start(BUILDER.buildDialogueDialog(entityType,4))
-                    .addChoice(BUILDER.buildDialogueChoice(entityType,3),BUILDER.buildDialogueDialog(entityType,5))
-                    .addChoice(BUILDER.buildDialogueChoice(entityType,4),BUILDER.buildDialogueDialog(entityType,6))
-                    .addChoice(BUILDER.buildDialogueChoice(entityType,5),BUILDER.buildDialogueDialog(entityType,8))
-                    .addChoice(BUILDER.buildDialogueChoice(entityType,2),BUILDER.buildDialogueDialog(entityType,9))
-                    .addFinalChoice(BUILDER.buildDialogueChoice(entityType,6),(byte)1);
-        }else {
+            builder.start(4)
+                    .addChoice(3,5)
+                    .addChoice(4,6)
+                    .addChoice(5,8)
+                    .addChoice(2,9)
+                    .addFinalChoice(6,(byte)1);
+        //初次与长老对话
+        } else {
             BiomeMap biomeMap = BiomeMap.getInstance();
             BlockPos biome1Center = biomeMap.getBlockPos(biomeMap.getCenter1(),0);
             String position = "("+biome1Center.getX()+","+biome1Center.getZ()+")";
-            builder.start(BUILDER.buildDialogueDialog(entityType,0))
-                    .addChoice(BUILDER.buildDialogueChoice(entityType,2),BUILDER.buildDialogueDialog(entityType,-1))
-                    .addChoice(BUILDER.buildDialogueChoice(entityType,1),BUILDER.buildDialogueDialog(entityType,-2))
-                    .addChoice(BUILDER.buildDialogueChoice(entityType,2),BUILDER.buildDialogueDialog(entityType,-3))
-                    .addChoice(BUILDER.buildDialogueChoice(entityType,2),BUILDER.buildDialogueDialog(entityType,-4))
-                    .addChoice(BUILDER.buildDialogueChoice(entityType,0),BUILDER.buildDialogueDialog(entityType,1,position))//告诉玩家密林方位
-                    .addChoice(BUILDER.buildDialogueChoice(entityType,7),BUILDER.buildDialogueDialog(entityType,2))
-                    .addChoice(BUILDER.buildDialogueChoice(entityType,2),BUILDER.buildDialogueDialog(entityType,3))
-                    .addFinalChoice(BUILDER.buildDialogueChoice(entityType,-2),(byte)-1);
+            builder.start(0)
+                    .addChoice(2,-1)
+                    .addChoice(1,-2)
+                    .addChoice(2,-3)
+                    .addChoice(2,-4)
+                    .addChoice(BUILDER.buildDialogueOption(entityType,0),BUILDER.buildDialogueAnswer(entityType,1,position))//告诉玩家密林方位
+                    .addChoice(7,2)
+                    .addChoice(2,3)
+                    .addFinalChoice(-2,(byte)-1);
         }
 
         Minecraft.getInstance().setScreen(builder.build());
@@ -153,21 +157,21 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
             case -1:
                 player.addItem(TCRModItems.ELDER_CAKE.get().getDefaultInstance());
                 player.addItem(Items.DIAMOND.getDefaultInstance().copyWithCount(5));
-                this.chat(BUILDER.buildDialogueDialog(entityType,7));
+                this.chat(BUILDER.buildDialogueAnswer(entityType,7));
                 break;
             case 0: //对话中断的代码！
 //                this.chat(Component.translatable("刚刚说到哪儿来着？"));
                 break;
             case 1: //白方 击败boss
-                this.chat(BUILDER.buildDialogueDialog(entityType,10));//再会，勇者！
+                this.chat(BUILDER.buildDialogueAnswer(entityType,10));//再会，勇者！
                 player.addItem(Items.DIAMOND.getDefaultInstance().copyWithCount(5));
                 //TODO 获得进度
                 break;
             case 2: //黑方 未击败boss
-                this.chat(BUILDER.buildDialogueDialog(entityType,11));
+                this.chat(BUILDER.buildDialogueAnswer(entityType,11));
                 break;
             case 3: //黑方 击败boss
-                this.chat(BUILDER.buildDialogueDialog(entityType,12));
+                this.chat(BUILDER.buildDialogueAnswer(entityType,12));
                 break;
         }
         this.setConversingPlayer(null);

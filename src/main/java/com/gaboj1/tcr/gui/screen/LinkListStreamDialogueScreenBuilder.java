@@ -11,6 +11,8 @@ import net.minecraft.world.entity.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.gaboj1.tcr.gui.screen.DialogueComponentBuilder.BUILDER;
+
 /**
  *
  * 用多叉树来优化流式对话框（我自己起的名词，就是没有多个分支几乎都是一条直线的对话，不过好像带有分支的也可以用？
@@ -22,11 +24,12 @@ public class LinkListStreamDialogueScreenBuilder {
 
     protected TCRDialogueScreen screen;//封装一下防止出现一堆杂七杂八的方法
     private TreeNode answerRoot;
-
     private TreeNode answerNode;
+    private final EntityType<?> entityType;
 
     public LinkListStreamDialogueScreenBuilder(Entity entity, EntityType<?> entityType) {
         screen = new TCRDialogueScreen(entity,entityType);
+        this.entityType = entityType;
         init();
     }
 
@@ -53,6 +56,13 @@ public class LinkListStreamDialogueScreenBuilder {
         answerNode = answerRoot;
         return this;
     }
+    /**
+     * 初始化对话框，得先start才能做后面的操作
+     * @param greeting 初始时显示的话的编号
+     */
+    public LinkListStreamDialogueScreenBuilder start(int greeting){
+        return start(BUILDER.buildDialogueAnswer(entityType,greeting));
+    }
 
     /**
      * @param finalOption 最后显示的话
@@ -63,6 +73,14 @@ public class LinkListStreamDialogueScreenBuilder {
             return null;
         answerNode.addChild(new TreeNode.FinalNode(finalOption, returnValue));
         return this;
+    }
+
+    /**
+     * @param finalOption 最后显示的话
+     * @param returnValue 选项的返回值，默认返回0。用于处理 {@link com.gaboj1.tcr.entity.NpcDialogue#handleNpcInteraction(Player, byte)}
+     */
+    public LinkListStreamDialogueScreenBuilder addFinalChoice(int finalOption, byte returnValue){
+        return addFinalChoice(BUILDER.buildDialogueOption(entityType,finalOption), returnValue);
     }
 
     /**
@@ -82,6 +100,16 @@ public class LinkListStreamDialogueScreenBuilder {
         }
 
         return this;
+    }
+
+    /**
+     * 使用BUILDER构建
+     * 添加选项进树并返回下一个节点
+     * @param option 该选项的内容编号
+     * @param answer 选择该选项后的回答内容编号
+     */
+    public LinkListStreamDialogueScreenBuilder addChoice(int option, int answer){
+        return addChoice(BUILDER.buildDialogueAnswer(entityType,answer),BUILDER.buildDialogueOption(entityType,option));
     }
 
     /**

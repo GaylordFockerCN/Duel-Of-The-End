@@ -1,6 +1,5 @@
 package com.gaboj1.tcr.gui.screen.villager;
 
-import com.gaboj1.tcr.gui.screen.DialogueComponentBuilder;
 import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.init.TCRModEntities;
 import net.minecraft.world.entity.Entity;
@@ -16,9 +15,9 @@ public class PastoralPlainElderLinkListStreamScreen extends LinkListStreamDialog
     @Override
     public LinkListStreamDialogueScreenBuilder init() {
         return start(screen.buildDialogueDialog(0))
-        .addChoice(screen.buildDialogueChoice(0), BUILDER.buildDialogueDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),1,"(x,y)"))
-        .addChoice(screen.buildDialogueChoice(1),BUILDER.buildDialogueDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),2))
-        .addChoice(screen.buildDialogueChoice(1),BUILDER.buildDialogueDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),3))
+        .addChoice(screen.buildDialogueChoice(0), BUILDER.buildDialogueAnswer(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),1,"(x,y)"))
+        .addChoice(screen.buildDialogueChoice(1),BUILDER.buildDialogueAnswer(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),2))
+        .addChoice(screen.buildDialogueChoice(1),BUILDER.buildDialogueAnswer(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),3))
         .addFinalChoice(screen.buildDialogueChoice(2),(byte)0);
     }
 }
