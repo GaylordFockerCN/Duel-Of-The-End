@@ -146,6 +146,12 @@ public class ModLangGenerator extends ModLangProvider {
         this.addVillagerChat(TCRModEntities.PASTORAL_PLAIN_VILLAGER, 3, true, "你的决策能力仿佛受到了汤姆先生的鹅的影响");
         this.addVillagerChat(TCRModEntities.PASTORAL_PLAIN_VILLAGER, 4, true, "你的逻辑就像威廉先生的羊一样跑偏");
         this.addVillagerChat(TCRModEntities.PASTORAL_PLAIN_VILLAGER, 5, true, "你的观点让人想起了安妮小姐家的鸭子闹剧");
+        this.addVillagerChat(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER, 0, true, "暴力解决不了问题！");
+        this.addVillagerChat(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER, 1, true, "你为何选择这样的道路？");
+        this.addVillagerChat(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER, 2, true, "即使受到攻击，我也不会动摇我的信念！");
+        this.addVillagerChat(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER, 3, true, "暴力是愚蠢的选择，它只会导致更多的痛苦！");
+        this.addVillagerChat(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER, 4, true, "你为何选择这样的道路？");
+        this.addVillagerChat(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER, 5, true, "收手吧！让我们冷静下来，找到解决问题的方法，而不是互相伤害！");
 
         this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,"牧歌原野-村民");
         this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-1,"牧歌原野-舞女");

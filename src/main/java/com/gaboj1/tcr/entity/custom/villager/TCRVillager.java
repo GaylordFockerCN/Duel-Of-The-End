@@ -72,7 +72,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
     boolean canTalk = true;
 
     protected Random r = new Random();
-    protected int whatCanISay = 2;//真的不是玩牢大的梗（
+    protected int whatCanISay = 6;//真的不是玩牢大的梗（
     private boolean isAngry;
     private int angryTick = 10;
     public boolean isAngry() {

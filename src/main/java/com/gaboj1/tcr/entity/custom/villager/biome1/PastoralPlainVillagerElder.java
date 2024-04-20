@@ -144,11 +144,13 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         this.talk(conversingPlayer,component);
     }
 
-    //长老被打也是会生气滴！
+    /**
+     *长老被打也是会生气滴！
+     */
     @Override
     @OnlyIn(Dist.CLIENT)
     public void talkFuck(Player player){
-        talk(player, Component.translatable(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get().getDescriptionId()+".fuck_chat"+(r.nextInt(whatCanISay))));
+        talk(player, Component.translatable(entityType.getDescriptionId()+".fuck_chat"+(r.nextInt(whatCanISay))));
     }
     @Override
     public void setConversingPlayer(@org.jetbrains.annotations.Nullable Player player) {
