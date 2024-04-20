@@ -71,7 +71,7 @@ public class TCRVillagerRetaliateTask extends Behavior<Mob> {
                 }
 
                 tcrVillager.getLookControl().setLookAt(target ,30.0F, 30.0F);
-                tcrVillager.doHurtTarget(target);
+                tcrVillager.doHurtTarget(target);//FIXME 有时候无法造成伤害，hurt返回false...
                 tcrVillager.playAttackAnim();
                 attackTimer = attackInterval;
             } else {
