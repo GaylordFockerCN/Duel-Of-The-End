@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 
@@ -27,10 +28,12 @@ public record PortalBlockTeleportPacket(byte interactionID) implements BasePacke
         return new PortalBlockTeleportPacket(buf.readByte());
     }
 
+    //TODO 修改不同的高度，修正偏移值。
     @Override
-    public void execute(@Nullable Player playerEntity) {
+    public void execute(Player playerEntity) {
         CompoundTag serverPlayerData = playerEntity.getPersistentData();
         Point destination;
+        Vec3 offset = Vec3.ZERO;
         boolean unlocked;
         int height;
         switch (this.interactionID()){
@@ -41,12 +44,12 @@ public record PortalBlockTeleportPacket(byte interactionID) implements BasePacke
             default:destination = BiomeMap.getInstance().getMainCenter();unlocked = true;height = 200;//主城欢迎您（
         }
 
-        //BiomeMap直接获取的是群系坐标
+        //BiomeMap直接获取的是群系坐标，所以需要矫正一下。
         destination = BiomeMap.getInstance().getBlockPos(destination);
 
         if(unlocked || playerEntity.isCreative()){
             Level level = playerEntity.level();
-            playerEntity.teleportTo(destination.x,height,destination.y);
+            playerEntity.teleportTo(destination.x + offset.x,height + offset.y,destination.y + offset.z);
             level.playSound(null,playerEntity.getX(),playerEntity.getY(),playerEntity.getZ(), SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS,1,1);//播放传送音效
         }else {
             playerEntity.sendSystemMessage(Component.translatable("info.the_casket_of_reveries.teleport_lock"));

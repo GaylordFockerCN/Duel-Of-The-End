@@ -1,7 +1,6 @@
 package com.gaboj1.tcr.datagen.loot;
 
 import com.gaboj1.tcr.init.TCRModBlocks;
-import com.gaboj1.tcr.loot.TCRLoot;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;

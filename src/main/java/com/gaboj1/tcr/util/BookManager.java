@@ -26,7 +26,7 @@ public class BookManager {
 
     /**
      * 获取书籍，key和LangGenerator里面的bookKey对应。
-     * {@link com.gaboj1.tcr.datagen.lang.ModLangGenerator#addBookAndContents(String, String, String...)}
+     * {@link com.gaboj1.tcr.datagen.lang.ModLangGenerator#addBookAndContents(String bookKey, String bookTitle, String... pages)}
      */
     public static ItemStack getBook(String key, int pageCount){
         ItemStack book = new ItemStack(Items.WRITTEN_BOOK);
@@ -36,10 +36,9 @@ public class BookManager {
         for (int i = 1; i <= pageCount; i++)
             bookPages.add(StringTag.valueOf(Component.Serializer.toJson(Component.translatable(TheCasketOfReveriesMod.MOD_ID + ".book." + key + "." + i))));
 
-        book.addTagElement("pages", bookPages);
-        book.addTagElement("generation", IntTag.valueOf(3));
+        book.addTagElement("pages", bookPages);//页数
+        book.addTagElement("generation", IntTag.valueOf(3));//破损度
         //不用I18n不知道为什么书会失效.....
-        System.out.println(I18n.get(TheCasketOfReveriesMod.MOD_ID + ".book.author." + key));
         book.addTagElement("author", StringTag.valueOf(I18n.get(TheCasketOfReveriesMod.MOD_ID + ".book.author." + key)));
         book.addTagElement("title", StringTag.valueOf(I18n.get(TheCasketOfReveriesMod.MOD_ID + ".book." + key)));
         return book;

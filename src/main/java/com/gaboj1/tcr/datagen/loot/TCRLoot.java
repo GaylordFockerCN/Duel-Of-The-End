@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.loot;
+package com.gaboj1.tcr.datagen.loot;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import net.minecraft.resources.ResourceLocation;

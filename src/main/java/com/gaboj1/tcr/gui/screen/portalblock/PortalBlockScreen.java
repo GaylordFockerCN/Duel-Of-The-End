@@ -13,6 +13,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
+/**
+ * 传送石窗口，目前只实现了五个传送点（应该够了吧背景图都画了），
+ *
+ * @author LZY
+ */
 public class PortalBlockScreen extends Screen {
     public static final ResourceLocation MY_BACKGROUND_LOCATION = new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"textures/gui/portal_background.png");
 
@@ -73,6 +78,9 @@ public class PortalBlockScreen extends Screen {
         this.positionButton();
     }
 
+    /**
+     * 反正就五个按钮手动来啦
+     */
     private void positionButton() {
         //正中
         bossFinal.setX(this.width / 2 - bossFinal.getWidth() / 2);

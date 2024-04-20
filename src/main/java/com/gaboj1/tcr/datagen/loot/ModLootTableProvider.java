@@ -1,6 +1,5 @@
 package com.gaboj1.tcr.datagen.loot;
 
-import com.gaboj1.tcr.loot.TCRLoot;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;

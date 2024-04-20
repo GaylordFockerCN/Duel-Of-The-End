@@ -3,7 +3,7 @@ package com.gaboj1.tcr.datagen;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.init.TCRModBlocks;
 import com.gaboj1.tcr.init.TCRModItems;
-import com.gaboj1.tcr.loot.TCRLoot;
+import com.gaboj1.tcr.datagen.loot.TCRLoot;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
