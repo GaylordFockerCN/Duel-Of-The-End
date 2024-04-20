@@ -105,15 +105,15 @@ public class TreeGuardianEntity extends IronGolem implements GeoEntity {
 
             switch (attackSkill){//随机关联攻击动画
                 case 0:
-                    state.getController().setAnimation(RawAnimation.begin().then("animation.tree_guardian - Converted.attack1", Animation.LoopType.PLAY_ONCE));//攻击动作不循环
+                    state.getController().setAnimation(RawAnimation.begin().then("animation.tree_guardian.attack1", Animation.LoopType.PLAY_ONCE));//攻击动作不循环
                     setAttackDamage(8.0f);//设置伤害
                     break;
                 case 1:
-                    state.getController().setAnimation(RawAnimation.begin().then("animation.tree_guardian - Converted.attack2", Animation.LoopType.PLAY_ONCE));
+                    state.getController().setAnimation(RawAnimation.begin().then("animation.tree_guardian.attack2", Animation.LoopType.PLAY_ONCE));
                     setAttackDamage(10.0f);
                     break;
                 case 2:
-                    state.getController().setAnimation(RawAnimation.begin().then("animation.tree_guardian - Converted.attack3", Animation.LoopType.PLAY_ONCE));
+                    state.getController().setAnimation(RawAnimation.begin().then("animation.tree_guardian.attack3", Animation.LoopType.PLAY_ONCE));
                     setAttackDamage(12.0f);
                     break;
             }
@@ -154,11 +154,11 @@ public class TreeGuardianEntity extends IronGolem implements GeoEntity {
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
         if(tAnimationState.isMoving()) {//播放移动动画
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.treeguardian - Converted.move", Animation.LoopType.LOOP));
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.tree_guardian.move", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
 
-        tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.treeguardian - Converted.idle", Animation.LoopType.LOOP));
+        tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.tree_guardian.idle", Animation.LoopType.LOOP));
         return PlayState.STOP;//停
     }
 

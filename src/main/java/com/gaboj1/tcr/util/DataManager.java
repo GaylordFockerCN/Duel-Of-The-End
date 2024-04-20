@@ -42,6 +42,7 @@ public class DataManager {
     public static BoolData gunGot =  new BoolData("gun_got",false,4);
     public static BoolData ammoGot =  new BoolData("ammo_got",false,5);
     public static BoolData drinkGot =  new BoolData("drink_got",false,6);
+    public static IntData boss1ConversationStage = new IntData("boss1_conversation_stage",0,7);
 
     //给予初始值
     public static void init(Player player){
@@ -164,6 +165,10 @@ public class DataManager {
 
         public int getInt(Player player){
             return player.getPersistentData().getInt(key);
+        }
+
+        public int getInt(CompoundTag playerData){
+            return playerData.getInt(key);
         }
 
     }

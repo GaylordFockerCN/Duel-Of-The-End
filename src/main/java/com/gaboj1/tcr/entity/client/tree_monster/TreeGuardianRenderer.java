@@ -17,7 +17,7 @@ public class TreeGuardianRenderer extends GeoEntityRenderer<TreeGuardianEntity> 
 
     @Override
     public void render(TreeGuardianEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-        poseStack.scale(3.5f, 3.5f, 3.5f);//设置缩放大小
+        poseStack.scale(1f, 1f, 1f);//设置缩放大小
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 }

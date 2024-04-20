@@ -22,7 +22,7 @@ public class MiddleTreeMonsterRenderer extends GeoEntityRenderer<MiddleTreeMonst
     @Override
     public void render(MiddleTreeMonsterEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
                        MultiBufferSource bufferSource, int packedLight) {
-            poseStack.scale(2f, 2f, 2f);
+            poseStack.scale(1f, 1f, 1f);
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 }
