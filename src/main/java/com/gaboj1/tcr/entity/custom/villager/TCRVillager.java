@@ -366,7 +366,6 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
                     return false;
                 }
             }
-//            isAngry = true;//不限制服务端是为了客户端要渲染生气
         }
 
         //设置反击目标
@@ -382,10 +381,8 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
     public void die(DamageSource pCause) {
         super.die(pCause);
         if(pCause.getEntity() instanceof Player player) {
-            if(!DataManager.isWhite.isLocked(player)){
-                DataManager.isWhite.putBool(player, false);
-                DataManager.isWhite.lock(player);
-            }
+            DataManager.isWhite.putBool(player, false);
+            DataManager.isWhite.lock(player);
         }
     }
 

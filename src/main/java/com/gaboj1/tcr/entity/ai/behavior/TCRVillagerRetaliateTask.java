@@ -2,8 +2,10 @@ package com.gaboj1.tcr.entity.ai.behavior;
 
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
+import com.gaboj1.tcr.util.DataManager;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.behavior.Behavior;
@@ -19,6 +21,7 @@ import java.util.Objects;
  */
 public class TCRVillagerRetaliateTask extends Behavior<Mob> {
 
+    //攻击间隔
     private final int attackInterval = 20;
     private int attackTimer = 0;
 
@@ -27,7 +30,7 @@ public class TCRVillagerRetaliateTask extends Behavior<Mob> {
     }
 
     /**
-     *
+     *判断反击目标
      * @param serverLevel
      * @param mob
      * @return 村民生气或者有攻击目标
@@ -35,14 +38,28 @@ public class TCRVillagerRetaliateTask extends Behavior<Mob> {
     @Override
     protected boolean checkExtraStartConditions(ServerLevel serverLevel, Mob mob) {
         LivingEntity target = mob.getTarget();
+        //是坏人也要往死里打！
+        if(target instanceof ServerPlayer serverPlayer){
+            return !DataManager.isWhite.getBool(serverPlayer) && DataManager.isWhite.isLocked(serverPlayer);
+        }
         //如果村民生气或者存在攻击目标，则进行。（不知道出了什么bug，Target在愤怒结束后不会消失？所以只能判断target非玩家或非村民）
 //        return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry() || (target!=null && !(target instanceof Player) && !(target instanceof TCRVillager)));
         return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry() && target!=null && !(target instanceof TCRVillager));
     }
 
+    /**
+     * 同 {@link TCRVillagerRetaliateTask#checkExtraStartConditions(ServerLevel, Mob)}
+     * @param serverLevel
+     * @param mob
+     * @param l
+     * @return
+     */
     @Override
     protected boolean canStillUse(ServerLevel serverLevel, Mob mob, long l) {
         LivingEntity target = mob.getTarget();
+        if(target instanceof ServerPlayer serverPlayer){
+            return !DataManager.isWhite.getBool(serverPlayer) && DataManager.isWhite.isLocked(serverPlayer);
+        }
         return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry() && target!=null && !(target instanceof TCRVillager));
     }
 
@@ -79,14 +96,5 @@ public class TCRVillagerRetaliateTask extends Behavior<Mob> {
             }
         }
     }
-
-//    public static OneShot<Mob> create(TCRVillager villager) {
-//        return BehaviorBuilder.create((mobInstance) -> mobInstance.group(mobInstance.registered(MemoryModuleType.LOOK_TARGET), mobInstance.present(MemoryModuleType.ATTACK_TARGET), mobInstance.absent(MemoryModuleType.ATTACK_COOLING_DOWN), mobInstance.present(MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES)).apply(mobInstance, (positionTrackerMemoryAccessor, entity, booleanMemoryAccessor, nearestVisibleLivingEntitiesMemoryAccessor) -> (serverLevel, mob, l) -> {
-//            LivingEntity livingentity = mobInstance.get(entity);
-//            System.out.println("okTask"+(livingentity instanceof TCRVillager tcrVillager && tcrVillager.isAngry()));
-////            return livingentity instanceof TCRVillager tcrVillager && tcrVillager.isAngry();
-//            return villager.isAngry();
-//        }));
-//    }
 
 }
