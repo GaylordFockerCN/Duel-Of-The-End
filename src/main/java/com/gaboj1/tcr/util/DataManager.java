@@ -45,10 +45,15 @@ public class DataManager {
     public static BoolData isWhite =  new BoolData("is_white",true,1);
     public static BoolData boss1Defeated =  new BoolData("boss1_defeated",false,2);
     public static BoolData elder1Defeated =  new BoolData("elder1_defeated",false,3);
+    //工匠送的火枪
     public static BoolData gunGot =  new BoolData("gun_got",false,4);
     public static BoolData ammoGot =  new BoolData("ammo_got",false,5);
+    //侍者送的饮料
     public static BoolData drinkGot =  new BoolData("drink_got",false,6);
-    public static IntData boss1ConversationStage = new IntData("boss1_conversation_stage",0,7);
+    //长老送的
+    public static BoolData elderLoot1Got =  new BoolData("elder_loot1_got",false,7);
+    public static BoolData elderLoot2Got =  new BoolData("elder_loot2_got",false,8);
+    public static IntData boss1ConversationStage = new IntData("boss1_conversation_stage",0,9);
 
     //给予初始值
     public static void init(Player player){

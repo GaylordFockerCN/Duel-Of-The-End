@@ -253,6 +253,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,8,"我所知道的都告诉你了。我听说剩下三使者的管理区，有不少被他们阻止前往地面的人们。如果不让精神的投影尽早回归肉体，现实人的意志也会相应的被干扰。");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,9,"您也是我们的先驱，愿您能引领像我一样这些止步不前的后辈！也许他们能给你答案。");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,10,"再会，勇者！");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,111,"你已经收过了哦~");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,0,"请你告诉我前往密林的路径。");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,1,"完全的人？魔物？");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,2,"继续");

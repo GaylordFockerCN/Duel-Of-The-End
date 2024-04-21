@@ -155,16 +155,26 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID) {
             case -1:
-                player.addItem(TCRModItems.ELDER_CAKE.get().getDefaultInstance());
-                player.addItem(Items.DIAMOND.getDefaultInstance().copyWithCount(5));
+                if(!DataManager.elderLoot1Got.getBool(player)){
+                    player.addItem(TCRModItems.ELDER_CAKE.get().getDefaultInstance());
+                    player.addItem(Items.DIAMOND.getDefaultInstance().copyWithCount(5));
+                    DataManager.elderLoot1Got.putBool(player,true);
+                }else {
+                    chat(111);
+                }
                 this.chat(BUILDER.buildDialogueAnswer(entityType,7));
                 break;
             case 0: //对话中断的代码！
 //                this.chat(Component.translatable("刚刚说到哪儿来着？"));
                 break;
             case 1: //白方 击败boss
-                this.chat(BUILDER.buildDialogueAnswer(entityType,10));//再会，勇者！
-                player.addItem(Items.DIAMOND.getDefaultInstance().copyWithCount(5));
+                if(!DataManager.elderLoot2Got.getBool(player)){
+                    player.addItem(Items.DIAMOND.getDefaultInstance().copyWithCount(20));
+                    DataManager.elderLoot2Got.putBool(player,true);
+                }else {
+                    chat(BUILDER.buildDialogueAnswer(entityType,22,false));
+                }
+                this.chat(BUILDER.buildDialogueAnswer(entityType,10));//再会，勇者！=
                 //TODO 获得进度
                 break;
             case 2: //看长老不爽而杀死长老
@@ -181,6 +191,9 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
     public void chat(Component component){
         this.talk(conversingPlayer,component);
+    }
+    public void chat(int index){
+        this.talk(conversingPlayer,BUILDER.buildDialogueAnswer(entityType,index));
     }
 
     /**
