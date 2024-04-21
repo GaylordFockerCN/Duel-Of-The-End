@@ -37,6 +37,22 @@ public class TCRVillagerRetaliateTask extends Behavior<Mob> {
      */
     @Override
     protected boolean checkExtraStartConditions(ServerLevel serverLevel, Mob mob) {
+        return check(mob);
+    }
+
+    /**
+     * 同 {@link TCRVillagerRetaliateTask#checkExtraStartConditions(ServerLevel, Mob)}
+     * @param serverLevel
+     * @param mob
+     * @param l 持续时间。因为已经搞了angry所以这个没用了。。
+     * @return
+     */
+    @Override
+    protected boolean canStillUse(ServerLevel serverLevel, Mob mob, long l) {
+        return check(mob);
+    }
+
+    private boolean check(Mob mob){
         LivingEntity target = mob.getTarget();
         //是坏人也要往死里打！
         if(target instanceof ServerPlayer serverPlayer){
@@ -46,24 +62,6 @@ public class TCRVillagerRetaliateTask extends Behavior<Mob> {
         }
         //如果村民生气或者存在攻击目标，则进行。（不知道出了什么bug，Target在愤怒结束后不会消失？所以只能判断target非玩家或非村民）
 //        return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry() || (target!=null && !(target instanceof Player) && !(target instanceof TCRVillager)));
-        return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry() && target!=null && !(target instanceof TCRVillager));
-    }
-
-    /**
-     * 同 {@link TCRVillagerRetaliateTask#checkExtraStartConditions(ServerLevel, Mob)}
-     * @param serverLevel
-     * @param mob
-     * @param l
-     * @return
-     */
-    @Override
-    protected boolean canStillUse(ServerLevel serverLevel, Mob mob, long l) {
-        LivingEntity target = mob.getTarget();
-        if(target instanceof ServerPlayer serverPlayer){
-            if(!DataManager.isWhite.getBool(serverPlayer) && DataManager.isWhite.isLocked(serverPlayer)){
-                return true;
-            }
-        }
         return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry() && target!=null && !(target instanceof TCRVillager));
     }
 
