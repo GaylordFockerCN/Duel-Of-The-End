@@ -60,7 +60,9 @@ public class TCRVillagerRetaliateTask extends Behavior<Mob> {
     protected boolean canStillUse(ServerLevel serverLevel, Mob mob, long l) {
         LivingEntity target = mob.getTarget();
         if(target instanceof ServerPlayer serverPlayer){
-            return !DataManager.isWhite.getBool(serverPlayer) && DataManager.isWhite.isLocked(serverPlayer);
+            if(!DataManager.isWhite.getBool(serverPlayer) && DataManager.isWhite.isLocked(serverPlayer)){
+                return true;
+            }
         }
         return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry() && target!=null && !(target instanceof TCRVillager));
     }
