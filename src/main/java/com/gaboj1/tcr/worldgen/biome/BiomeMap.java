@@ -21,6 +21,12 @@ import java.util.Random;
 
 public class BiomeMap {
 
+    /**
+     *世界的seed，为了使得不同seed生成的分布一致。
+     * 在{@link com.gaboj1.tcr.mixin.WorldOptionsMixin}中实现
+     */
+    public static long seed;
+
     //方便全局调用
     private static BiomeMap INSTANCE;
 
@@ -89,7 +95,8 @@ public class BiomeMap {
     }
 
     public double[][] createNoiseMap(NoiseMapGenerator generator){
-        generator.setSeed(new Random().nextInt(3));//TODO: 改成世界种子
+//        generator.setSeed(new Random().nextInt(3));
+        generator.setSeed(seed);
         generator.setLength(SIZE);
         generator.setWidth(SIZE);
         generator.setLacunarity(12);//TODO 调整合适大小

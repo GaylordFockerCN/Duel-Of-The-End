@@ -19,7 +19,7 @@ public class NoiseMapGenerator {
     private int octaves = 6;//default 6
     private double persistence = 0.5;//default 0.5
     private double lacunarity = 2;//default 2.0
-    private int seed = 2;
+    private long seed = 2;
 
     private List<Point> aPoints = new ArrayList<>();
     private List<Point> bPoints = new ArrayList<>();
@@ -115,7 +115,7 @@ public class NoiseMapGenerator {
         this.lacunarity = lacunarity;
     }
 
-    public void setSeed(int seed) {
+    public void setSeed(long seed) {
         this.seed = seed;
         random.setSeed(seed);
     }
