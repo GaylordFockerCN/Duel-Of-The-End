@@ -29,10 +29,14 @@ public class ServerGamePacketListenerImplMixin  {
     /**
      * 如果隐藏的话，内容空还不行，还得在武器栏上面显示。不然左边还是会有带背景的空白消息。
      */
-    @ModifyArgs(method = "handleSetStructureBlock(Lnet/minecraft/network/protocol/game/ServerboundSetStructureBlockPacket;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;displayClientMessage(Lnet/minecraft/network/chat/Component;Z)V"))
-    private void injected(Args args) {
-        args.set(0, TCRConfig.ENABLE_BETTER_STRUCTURE_BLOCK_LOAD.get() ? Component.empty() : args.get(0));
-        args.set(1, TCRConfig.ENABLE_BETTER_STRUCTURE_BLOCK_LOAD.get() || (boolean)args.get(1));
+    @ModifyArg(method = "handleSetStructureBlock(Lnet/minecraft/network/protocol/game/ServerboundSetStructureBlockPacket;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;displayClientMessage(Lnet/minecraft/network/chat/Component;Z)V"), index = 0)
+    private Component injected(Component arg) {
+        return TCRConfig.ENABLE_BETTER_STRUCTURE_BLOCK_LOAD.get() ? Component.empty() : arg;
+    }
+
+    @ModifyArg(method = "handleSetStructureBlock(Lnet/minecraft/network/protocol/game/ServerboundSetStructureBlockPacket;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;displayClientMessage(Lnet/minecraft/network/chat/Component;Z)V"), index = 1)
+    private boolean injected(boolean arg) {
+        return TCRConfig.ENABLE_BETTER_STRUCTURE_BLOCK_LOAD.get() || arg;
     }
 
 }
