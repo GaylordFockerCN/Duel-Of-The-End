@@ -239,17 +239,17 @@ public class TCRBiomeProvider extends BiomeSource {
     * */
     public int getCorrectValue(int biomeX){
         if(!isImage || TCRConfig.ENABLE_SCALING.get()){
-            biomeX *= SCALE * map.length / BiomeMap.SIZE;//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
+            biomeX *= (int) (SCALE * map.length / BiomeMap.SIZE);//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
         }
         return biomeX+R;
     }
 
     //还原回去
-    public int deCorrectValue(int biomeX){
+    public int deCorrectValue(int biomeXorZ){
         if(!isImage || TCRConfig.ENABLE_SCALING.get()){
-            biomeX /= SCALE * map.length / BiomeMap.SIZE;//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
+            biomeXorZ /= (int) (SCALE * map.length / BiomeMap.SIZE);//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
         }
-        return biomeX-R;
+        return biomeXorZ-R;
     }
 
     /**

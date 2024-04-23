@@ -5,6 +5,7 @@ import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
 import com.gaboj1.tcr.worldgen.structure.BiomeForcedLandmarkPlacement;
+import com.gaboj1.tcr.worldgen.structure.TCRStructuresEnum;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -292,12 +293,13 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
         if(this.getBiomeSource() instanceof TCRBiomeProvider provider){
             for (Map.Entry<BiomeForcedLandmarkPlacement, Set<Holder<Structure>>> landmarkPlacement : placementSetMap.entrySet()) {
                 BiomeForcedLandmarkPlacement placement = landmarkPlacement.getKey();
-                int structure = placement.structure;
                 Point p = new Point(0,0);
                 //在这里判断结构是什么，并且返回对应的点
-                switch (structure){
-                    case 0: p = provider.getMainCenter(); break;
-                    case 1: p = provider.getCenter1(); break;
+                for(TCRStructuresEnum structure : TCRStructuresEnum.values()){
+                    if(structure.ordinal() == placement.structure){
+                        p = structure.getPoint(provider);
+                        break;
+                    }
                 }
                 int chunkX = provider.deCorrectValue(p.x)>>2;
                 int chunkZ = provider.deCorrectValue(p.y)>>2;

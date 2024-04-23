@@ -13,6 +13,10 @@ import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement
 import java.awt.*;
 import java.util.Optional;
 
+/**
+ * 从暮色得到灵感，在关键方法判断该区是否是指定的位置。
+ * @author LZY
+ */
 //TODO 改判断区域逻辑
 public class BiomeForcedLandmarkPlacement extends StructurePlacement {
     public static final Codec<BiomeForcedLandmarkPlacement> CODEC = RecordCodecBuilder.create(inst -> inst.group(
