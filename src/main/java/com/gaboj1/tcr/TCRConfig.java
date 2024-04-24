@@ -22,7 +22,7 @@ public class TCRConfig
     //游戏内对话框是否使用打字机效果（对话逐字出现）
     public static final ForgeConfigSpec.BooleanValue ENABLE_TYPEWRITER_EFFECT = createBool("enable_typewriter_effect",true);
     //打字机效果的速度（一次出现几个字）
-    public static final ForgeConfigSpec.IntValue TYPEWRITER_EFFECT_SPEED = createInt("typewriter_effect_speed",2,1);
+    public static final ForgeConfigSpec.IntValue TYPEWRITER_EFFECT_SPEED = createInt("typewriter_effect_speed",1,1);
 
     //基础树脂的修复值
     public static final ForgeConfigSpec.IntValue REPAIR_VALUE = createInt("repair_value",1,1);

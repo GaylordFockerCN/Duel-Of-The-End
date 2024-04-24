@@ -126,12 +126,13 @@ public class TCRBiomeProvider extends BiomeSource {
                 generator = (NoiseMapGenerator) ois.readObject();
                 mapName = (String) ois.readObject();
                 BiomeMap.init(generator);
+                isImage = generator.isImage();
                 ois.close();
                 fis.close();
             } catch (Exception e) {
                 createBiomeMap(mapFile);
             }
-            isImage = generator.isImage();
+
         }else {
             createBiomeMap(mapFile);
         }
@@ -145,6 +146,8 @@ public class TCRBiomeProvider extends BiomeSource {
     private void createBiomeMap(File mapFile){
         //因为存在平和不平两种世界，所以避免重复读取。
         if(generator != null){
+            BiomeMap.init(generator);
+            isImage = generator.isImage();
             return;
         }
         generator = new NoiseMapGenerator();

@@ -75,11 +75,9 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
 
         BlockState snow = Blocks.SNOW.defaultBlockState();
 
-        Perlin perlin = new Perlin();
-        perlin.setFrequency(0.03);
+//        Perlin perlin = new Perlin();
+//        perlin.setFrequency(0.03);
         if(this.getBiomeSource() instanceof TCRBiomeProvider provider){
-            //群系噪声半径。另外计算，不按群系一的半径来。
-            int r = (int) (BiomeMap.getInstance().getCenter2().distance(BiomeMap.getInstance().getMainCenter()) * NoiseMapGenerator.SCALE_OF_A_CENTER_R);
 
             for (int z = 0; z < 16; z++) {
                 for (int x = 0; x < 16; x++) {
