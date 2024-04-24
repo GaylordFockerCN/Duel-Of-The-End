@@ -189,7 +189,7 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
     public static void getAdvancement(String name, ServerPlayer serverPlayer){
         Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,name));
         if(_adv == null){
-            System.out.println("advancement:\""+name+"\" is null!");
+            TheCasketOfReveriesMod.LOGGER.info("advancement:\""+name+"\" is null!");
             return;
         }
         AdvancementProgress _ap = serverPlayer.getAdvancements().getOrStartProgress(_adv);

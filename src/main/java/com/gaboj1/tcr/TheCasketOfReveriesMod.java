@@ -126,20 +126,20 @@ public class TheCasketOfReveriesMod {
         try{
             File dir = FMLPaths.CONFIGDIR.get().resolve(TheCasketOfReveriesMod.MOD_ID).toFile();
             if(!dir.exists()){
-                System.out.println("creating dir : "+dir.mkdirs());
+                TheCasketOfReveriesMod.LOGGER.info("creating dir : "+dir.mkdirs());
             }
             File readme = new File(README);
             if(!readme.exists()){
-                System.out.println("creating ReadMe : "+readme.createNewFile());
+                TheCasketOfReveriesMod.LOGGER.info("creating README : "+readme.createNewFile());
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(readme))) {
                     writer.write("图片请命名为“map.png”，透明为空域其余为大陆。建议图片大小1600x1600（但是加载比较缓慢）。可以在config/the_casket_of_reveries-common.toml中设置是否使用缩放，如果开启则地图大小固定，图片越大锯齿越少。图片不存在则按默认预设生成地图。\n" +
                             "\n" +
                             "Please name the image \"map. png\", with transparent indicating airspace and the rest indicating mainland. Suggest an image size of 1600x1600(However, loading is relatively slow). You can set whether to use scaling in config/the_casket_of_reveries-common.toml. If enabled, the map size is fixed, and the larger the image, the less jagged it will be. If the image does not exist, generate a map according to the default preset.");
                 }
-                System.out.println("created.");
+                TheCasketOfReveriesMod.LOGGER.info("created.");
             }
         }catch (Exception e){
-            e.printStackTrace();
+            TheCasketOfReveriesMod.LOGGER.error("Failed to read map！",e);
         }
 
 

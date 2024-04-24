@@ -17,18 +17,17 @@ import java.util.Optional;
  * 从暮色得到灵感，在关键方法判断该区是否是指定的位置。
  * @author LZY
  */
-//TODO 改判断区域逻辑
-public class BiomeForcedLandmarkPlacement extends StructurePlacement {
-    public static final Codec<BiomeForcedLandmarkPlacement> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+public class PositionPlacement extends StructurePlacement {
+    public static final Codec<PositionPlacement> CODEC = RecordCodecBuilder.create(inst -> inst.group(
             Codec.INT.fieldOf("structure").forGetter(p -> p.structure)//对不起太菜了只能用数字枚举然后一个个判断
 //            ,Codec.BOOL.fieldOf("hasGenerated").forGetter(p -> p.hasGenerated)//好像不是很有必要写进去来着
-    ).apply(inst, BiomeForcedLandmarkPlacement::new));
+    ).apply(inst, PositionPlacement::new));
 
     public final int structure;
 
     public boolean hasGenerated;
 
-    public BiomeForcedLandmarkPlacement(int structure) {
+    public PositionPlacement(int structure) {
         super(Vec3i.ZERO, FrequencyReductionMethod.DEFAULT, 1f, 0, Optional.empty()); // None of these params matter except for possibly flat-world or whatever
         this.structure = structure;
 //        this.hasGenerated = hasGenerated;
@@ -42,7 +41,7 @@ public class BiomeForcedLandmarkPlacement extends StructurePlacement {
             int correctZ = provider.getCorrectValue(chunkZ << 2);
 
             for(TCRStructuresEnum structure : TCRStructuresEnum.values()){
-                if(checkStructure(structure, structure.getPoint(provider), correctX, correctZ))
+                if(checkStructure(structure, structure.getPoint(), correctX, correctZ))
                     return true;
             }
 
@@ -77,7 +76,7 @@ public class BiomeForcedLandmarkPlacement extends StructurePlacement {
 
     @Override
     public StructurePlacementType<?> type() {
-        return TCRStructurePlacementTypes.FORCED_LANDMARK_PLACEMENT_TYPE.get();
+        return TCRStructurePlacementTypes.SPECIFIC_LOCATION_PLACEMENT_TYPE.get();
     }
 
 }

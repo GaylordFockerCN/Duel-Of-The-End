@@ -6,7 +6,7 @@
     }
   ],
   "placement": {
-    "type": "the_casket_of_reveries:forced_landmark",
+    "type": "the_casket_of_reveries:specific_location",
     "structure": 2,
     "hasGenerated": false
   }
