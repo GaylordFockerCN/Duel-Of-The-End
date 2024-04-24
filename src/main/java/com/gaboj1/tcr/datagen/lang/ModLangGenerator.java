@@ -311,7 +311,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addBiome(TCRBiomes.DARK_SAKURA,"深暗之樱");
         this.addBiome(TCRBiomes.GALLERY_OF_SERENE,"山水画廊");
         this.addBiome(TCRBiomes.AZURE_SKIES,"青云之巅");
-        this.addBiome(TCRBiomes.AQUATIC_MAJESTY,"威严之水");
+        this.addBiome(TCRBiomes.AQUATIC_MAJESTY,"蓝礁海");
         this.addBiome(TCRBiomes.ATLANTIS,"亚特兰蒂斯");
         this.addBiome(TCRBiomes.AIR,"空");
         this.addBiome(TCRBiomes.FINAL,"终焉之地");
