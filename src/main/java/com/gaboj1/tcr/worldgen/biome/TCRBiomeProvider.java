@@ -24,13 +24,13 @@ import java.util.stream.Stream;
 
 /**
  * 研究暮色源码获得灵感，仿照末地{@link net.minecraft.world.level.biome.TheEndBiomeSource}写的。
+ * 并且在此实现对地图生成的控制，对地图数据的读写。
  * 重点方法是getNoiseBiome，这个方法实现了从自己的map读取什么位置是什么群系，然后返回给ChunkGenerator。
  * @author LZY
  */
 public class TCRBiomeProvider extends BiomeSource {
 
     public static final Codec<TCRBiomeProvider> TCR_CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-//            Codec.INT.fieldOf("seed").forGetter((o) -> o.seed),//如果编码进去的话地图会固定住
             RegistryOps.retrieveElement(TCRBiomes.biomeBorder),
             RegistryOps.retrieveElement(TCRBiomes.biome1),
             RegistryOps.retrieveElement(TCRBiomes.biome2),
@@ -45,7 +45,7 @@ public class TCRBiomeProvider extends BiomeSource {
 
     //地图名，用于加载世界窗口绘制。
     public static String mapName = "";
-    //存档名，用于分文件夹存储。
+    //存档名，用于分文件存储。
     public static String worldName = "";
     private int[][] peakMap;
     private static NoiseMapGenerator generator;
@@ -112,15 +112,19 @@ public class TCRBiomeProvider extends BiomeSource {
      */
     @Override
     protected Stream<Holder<Biome>> collectPossibleBiomes() {
-        File mapFile = new File(FMLPaths.CONFIGDIR.get().resolve(TheCasketOfReveriesMod.MOD_ID).toFile() + "/" + worldName + ".dat");
-        boolean mapExist = mapFile.exists();
+        File dir = FMLPaths.CONFIGDIR.get().resolve(TheCasketOfReveriesMod.MOD_ID).toFile();
+        if(!dir.exists()){
+            TheCasketOfReveriesMod.LOGGER.info("try mkdir : " + dir.mkdir());
+        }
+        File mapFile = new File(dir + "/" + worldName + ".dat");
         //二次进入游戏从文件直接读取数组较快，否则每次进世界都得加载，地图大的话很慢
-        if(mapExist){
+        if(mapFile.exists()){
             try {
                 TheCasketOfReveriesMod.LOGGER.info("Loading existing map data form : " + mapFile.getAbsolutePath());
                 FileInputStream fis = new FileInputStream(mapFile);
                 ObjectInputStream ois = new ObjectInputStream(fis);
                 generator = (NoiseMapGenerator) ois.readObject();
+                mapName = (String) ois.readObject();
                 BiomeMap.init(generator);
                 ois.close();
                 fis.close();
@@ -139,6 +143,7 @@ public class TCRBiomeProvider extends BiomeSource {
     }
 
     private void createBiomeMap(File mapFile){
+        //因为存在平和不平两种世界，所以避免重复读取。
         if(generator != null){
             return;
         }
@@ -149,6 +154,7 @@ public class TCRBiomeProvider extends BiomeSource {
             FileOutputStream fos = new FileOutputStream(mapFile);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(generator);
+            oos.writeObject(mapName);
             oos.close();
             fos.close();
         } catch (IOException e) {
@@ -208,7 +214,8 @@ public class TCRBiomeProvider extends BiomeSource {
     }
 
     /**
-     * 仅针对第二群系
+     * 仅针对第二群系，获取具体坐标对应位置的山的高度值。
+     * 先转换为正确的坐标（群系坐标），再去peakMap中查找对应的点。
      */
     public int getMountainHeight(BlockPos pos){
         int offsetX = pos.getX()+R*4-(((generator.getCenter2().x)*4) - (generator.getaCenterR()*2));

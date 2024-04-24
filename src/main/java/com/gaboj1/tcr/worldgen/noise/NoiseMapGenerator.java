@@ -14,7 +14,6 @@ public class NoiseMapGenerator implements Serializable {
 
     private int length = 50;
     private int width = 50;
-
     private int maxHeight = 50;
     private double scale = 0.1;//default 0.1
     private int octaves = 6;//default 6
@@ -36,13 +35,7 @@ public class NoiseMapGenerator implements Serializable {
     private List<Point> cPoints = new ArrayList<>();
     private List<Point> dPoints = new ArrayList<>();
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getLength() {
-        return length;
-    }
+    private Point center1, center2, center3, center4, village1,village2,village3,village4;
 
     public Point getCenter1() {
         return center1;
@@ -60,10 +53,6 @@ public class NoiseMapGenerator implements Serializable {
         return center4;
     }
 
-    public Point getCenter() {
-        return centerPoint;
-    }
-
     public Point getVillage1() {
         return village1;
     }
@@ -79,29 +68,31 @@ public class NoiseMapGenerator implements Serializable {
     public Point getVillage4() {
         return village4;
     }
-
-    public int getaCenterR() {
-        return aCenterR;
-    }
     public int getR(){
         return map[0].length / 2;
     }
 
-    private Point center1, center2, center3, center4, village1,village2,village3,village4;
-
+    private double[][] map;
     public double[][] getMap() {
         return map;
     }
 
-    private double[][] map;
-
     private int aCenterR = 0;//统一半径，否则有的中心群系过大
+
+    public int getaCenterR() {
+        return aCenterR;
+    }
     public static final int VILLAGER_SIZE = 36;// 128 / 4 + 2
     public static final double CURVE_INTENSITY = 0.1;
     public static final double SCALE_OF_CENTER_R = 0.05;//相对宽度width的比例，中心空岛半径即为width*scaleOfCenterR
     public static final double SCALE_OF_A_CENTER_R = 0.9;//相对各个中心到整体中心的距离的比例， 各群系的中心群系的噪声半径 即 center.distance(aCenter)*scaleOfaCenterR
     private final Random random;
     private Point centerPoint = new Point();
+
+    public Point getCenter() {
+        return centerPoint;
+    }
+
     public void setLength(int length) {
         this.length = length;
         centerPoint.x=length/2;
@@ -110,6 +101,14 @@ public class NoiseMapGenerator implements Serializable {
     public void setWidth(int width) {
         this.width = width;
         centerPoint.y=width/2;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getLength() {
+        return length;
     }
 
     public void setMaxHeight(int maxHeight) {
@@ -309,6 +308,7 @@ public class NoiseMapGenerator implements Serializable {
 //        double randomOffset = random.nextDouble() * 0.1 - 0.05; // 随机偏移值
 //        angle += sigmoidValue + randomOffset; // 添加 S 型曲线值和随机偏移值到角度
 //        return angle;
+
     }
 
     /**
@@ -316,11 +316,9 @@ public class NoiseMapGenerator implements Serializable {
      */
     public double[][] addCenter(double[][] map){
         double[][] map1 = map.clone();
-//        double[][] map1 = new double[map.length][map[0].length];
         //生成各个群系的中心群系位置并应用到原地图
-        center1 = computeCenter(aPoints);//center1以后有用
+        center1 = computeCenter(aPoints);
         center1=copyMap(center1,map1,5,false);
-//        copyMap(center1,map1,5,false);
         center2 = computeCenter(bPoints);
         center2=copyMap(center2,map1,6,false);
         center3 = computeCenter(cPoints);
@@ -353,7 +351,7 @@ public class NoiseMapGenerator implements Serializable {
             return calculateVillage(center);
         }
 
-        // 矫正村庄位置，防止离虚空太近。
+        // 矫正村庄位置，防止离虚空太近。TODO 为什么不直接把这个村庄附近的群系变为对应群系呢。。。
 
         if(ContinentMovement.isAllInRange(map,village.x,village.y,VILLAGER_SIZE)){
             return village;
@@ -548,8 +546,6 @@ public class NoiseMapGenerator implements Serializable {
             System.out.println();
 
         }
-
-
 
 //        int size = 100;
 //        double[][] map = getDoubles(size);
