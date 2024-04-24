@@ -23,13 +23,15 @@ public class TCRConfig
     public static final ForgeConfigSpec.BooleanValue ENABLE_TYPEWRITER_EFFECT = createBool("enable_typewriter_effect",true);
     //打字机效果的速度（一次出现几个字）
     public static final ForgeConfigSpec.IntValue TYPEWRITER_EFFECT_SPEED = createInt("typewriter_effect_speed",1,1);
+    //打字机效果间隔（几个tick更新一次）
+    public static final ForgeConfigSpec.IntValue TYPEWRITER_EFFECT_INTERVAL = createInt("typewriter_effect_interval",2,1);
 
     //基础树脂的修复值
     public static final ForgeConfigSpec.IntValue REPAIR_VALUE = createInt("repair_value",1,1);
 
     //树灵法杖参数
     public static final ForgeConfigSpec.IntValue TREE_SPIRIT_WAND_HUNGRY_CONSUME = createInt("tree_spirit_wand_hungry_consume",2,1);
-    public static final ForgeConfigSpec.IntValue TREE_SPIRIT_WAND_HEAL = createInt("tree_spirit_wand_heal",5,1);
+    public static final ForgeConfigSpec.IntValue TREE_SPIRIT_WAND_HEAL = createInt("tree_spirit_wand_heal",10,1);
     public static final ForgeConfigSpec.IntValue SPIRIT_LOG_CONSUME = createInt("spirit_log_consume",1,1);
 
     static final ForgeConfigSpec SPEC = BUILDER.build();
