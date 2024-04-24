@@ -23,8 +23,9 @@ import java.util.List;
 import java.util.stream.Stream;
 
 /**
+ * 研究暮色源码获得灵感，仿照末地{@link net.minecraft.world.level.biome.TheEndBiomeSource}写的。
+ * 重点方法是getNoiseBiome，这个方法实现了从自己的map读取什么位置是什么群系，然后返回给ChunkGenerator。
  * @author LZY
- * 学暮色写了个BiomeProvider来用自己生成的map给指定位置生成指定的群系，具体群系长什么样可以运行{@link NoiseMapGenerator#main(String[])}
  */
 public class TCRBiomeProvider extends BiomeSource {
 
@@ -42,10 +43,13 @@ public class TCRBiomeProvider extends BiomeSource {
             RegistryOps.retrieveElement(TCRBiomes.finalBiome)
     ).apply(instance, instance.stable(TCRBiomeProvider::new)));
 
-    private double[][] map;
+    //地图名，用于加载世界窗口绘制。
+    public static String mapName = "";
+    //存档名，用于分文件夹存储。
+    public static String worldName = "";
     private int[][] peakMap;
-
-    private int R,aCenterR;//总体半径和中心群系噪声半径
+    private static NoiseMapGenerator generator;
+    private int R;//总体半径和中心群系噪声半径
     public static final double SCALE = 0.2;
     private boolean isImage = true;
 
@@ -59,28 +63,6 @@ public class TCRBiomeProvider extends BiomeSource {
     private final Holder<Biome> biomeHolder7;
     private final Holder<Biome> biomeHolder8;
     private final Holder<Biome> biomeHolder9;
-
-    public Point getCenter1() {
-        return center1;
-    }
-
-    public Point getCenter2() {
-        return center2;
-    }
-
-    public Point getCenter3() {
-        return center3;
-    }
-
-    public Point getCenter4() {
-        return center4;
-    }
-
-    public Point getMainCenter() {
-        return mainCenter;
-    }
-
-    private Point center1, center2, center3, center4, mainCenter;
 
     private final List<Holder<Biome>> biomeList;
 
@@ -122,88 +104,54 @@ public class TCRBiomeProvider extends BiomeSource {
         biomeList.add(biomeHolder7);
         biomeList.add(biomeHolder8);
         biomeList.add(biomeHolder9);
-
     }
 
-    //不在这里生成map的话map会被清空
+    /**
+     * 这里需要给出所有可能的群系。
+     * 成员变量最好在这里初始化
+     */
     @Override
     protected Stream<Holder<Biome>> collectPossibleBiomes() {
-//        String levelName = Minecraft.getInstance().getCurrentServer().name;服务端还没创建，无法获取名字......
-        //FIXME 换成存档名字，很重要！！
-
-        File mapFileDir = FMLPaths.CONFIGDIR.get().resolve(TheCasketOfReveriesMod.MOD_ID).toFile();
-//        while(Minecraft.getInstance().getCurrentServer()==null){
-//            try {
-//                Thread.sleep(200);
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-        File mapFile = new File(Minecraft.getInstance().gameDirectory.getAbsoluteFile() +"Map.dat");
-//        boolean mapExist = mapFile.exists();
-        boolean mapExist = false;//先默认不用读取的
-
-        //二次进入游戏从文件直接读取数组较快，否则每次进世界都得加载，地图大的话很慢 TODO:有bug，二次读取会出现很大偏移
-
+        File mapFile = new File(FMLPaths.CONFIGDIR.get().resolve(TheCasketOfReveriesMod.MOD_ID).toFile() + "/" + worldName + ".dat");
+        boolean mapExist = mapFile.exists();
+        //二次进入游戏从文件直接读取数组较快，否则每次进世界都得加载，地图大的话很慢
         if(mapExist){
             try {
                 FileInputStream fis = new FileInputStream(mapFile);
                 ObjectInputStream ois = new ObjectInputStream(fis);
-                map = (double[][]) ois.readObject();
-                center1 = (Point) ois.readObject();
-                center2 = (Point) ois.readObject();
-                center3 = (Point) ois.readObject();
-                center4 = (Point) ois.readObject();
-                mainCenter = (Point) ois.readObject();
+                generator = (NoiseMapGenerator) ois.readObject();
                 ois.close();
                 fis.close();
-            } catch (IOException | ClassNotFoundException e) {
+            } catch (Exception e) {
                 createBiomeMap(mapFile);
             }
+            isImage = BiomeMap.getInstance().isImage;
         }else {
             createBiomeMap(mapFile);
         }
-        aCenterR = (int) (center1.distance(mainCenter)*NoiseMapGenerator.SCALE_OF_A_CENTER_R);
-        int mountainsR = (aCenterR<<2);
+        int mountainsR = (generator.getaCenterR()<<2);
+        //第二群系山的高度图
         peakMap = RandomMountainGenerator.getMountains(mountainsR,mountainsR);
 
         return Stream.of(biomeHolder0,biomeHolder1,biomeHolder2,biomeHolder3,biomeHolder4,biomeHolder5,biomeHolder6,biomeHolder7,biomeHolder8,biomeHolder9);
     }
 
-    private void saveMap(){
-
-    }
-
     private void createBiomeMap(File mapFile){
-        NoiseMapGenerator generator = new NoiseMapGenerator();
-//        BiomeMap biomeMap = new BiomeMap();
-//        map = biomeMap.createImageMap(generator);
-        map = BiomeMap.createImageMapStatic(generator);
-        isImage = BiomeMap.getInstance().isImage;
-        R = map[0].length / 2;
-        //以便获取主建筑摆放位置
-        center1 = generator.getCenter1();
-        center2 = generator.getCenter2();
-        center3 = generator.getCenter3();
-        center4 = generator.getCenter4();
-        mainCenter = generator.getCenter();
-
+        if(generator != null){
+            return;
+        }
+        generator = new NoiseMapGenerator();
+        BiomeMap.createImageMapStatic(generator);
         try {
-//            new File(BiomeMap.DIR).mkdir();
             mapFile.createNewFile();
             FileOutputStream fos = new FileOutputStream(mapFile);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(map);
-            oos.writeObject(center1);
-            oos.writeObject(center2);
-            oos.writeObject(center3);
-            oos.writeObject(center4);
-            oos.writeObject(mainCenter);
+            oos.writeObject(generator);
             oos.close();
             fos.close();
-
         } catch (IOException e) {
-            e.printStackTrace();
+            TheCasketOfReveriesMod.LOGGER.error("Failed to save map", e);
+            mapName = "SAVE_ERROR!!";
         }
     }
 
@@ -225,29 +173,34 @@ public class TCRBiomeProvider extends BiomeSource {
     public Holder<Biome> getNoiseBiome(int x, int y, int z, Climate.Sampler sampler) {
         x = getCorrectValue(x);
         z = getCorrectValue(z);
-        if(0 <= x && x <map.length && 0 <= z && z < map[0].length ){
-            int index = (int)map[x][z];
+        if(0 <= x && x <generator.getMap().length && 0 <= z && z < generator.getMap()[0].length ){
+            int index = (int)generator.getMap()[x][z];
             if(index < biomeList.size())
-                return biomeList.get((int)map[x][z]);
+                return biomeList.get((int)generator.getMap()[x][z]);
         }
         return biomeHolder0;
     }
 
     /**
+     * 因为实际出生地是(0,0)，所以应该进行偏移
      * 对于chunkX，应该使用getCorrectValue(chunkX<<2)
      * 对于blockPosX，应该使用getCorrectValue(blockPosX>>2)
     * */
-    public int getCorrectValue(int biomeX){
+    public int getCorrectValue(int biomeXorZ){
         if(!isImage || TCRConfig.ENABLE_SCALING.get()){
-            biomeX *= (int) (SCALE * map.length / BiomeMap.SIZE);//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
+            biomeXorZ *= (int) (SCALE * generator.getMap().length / BiomeMap.SIZE);//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
         }
-        return biomeX+R;
+        return biomeXorZ+R;
     }
 
-    //还原回去
+    /**
+     * 偏移回去
+     * @param biomeXorZ
+     * @return
+     */
     public int deCorrectValue(int biomeXorZ){
         if(!isImage || TCRConfig.ENABLE_SCALING.get()){
-            biomeXorZ /= (int) (SCALE * map.length / BiomeMap.SIZE);//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
+            biomeXorZ /= (int) (SCALE * generator.getMap().length / BiomeMap.SIZE);//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
         }
         return biomeXorZ-R;
     }
@@ -256,8 +209,8 @@ public class TCRBiomeProvider extends BiomeSource {
      * 仅针对第二群系
      */
     public int getMountainHeight(BlockPos pos){
-        int offsetX = pos.getX()+R*4-(((center2.x)*4) - (aCenterR*2));
-        int offsetZ = pos.getZ()+R*4-(((center2.y)*4) - (aCenterR*2));
+        int offsetX = pos.getX()+R*4-(((generator.getCenter2().x)*4) - (generator.getaCenterR()*2));
+        int offsetZ = pos.getZ()+R*4-(((generator.getCenter2().y)*4) - (generator.getaCenterR()*2));
         if(offsetX > 0 && offsetX < peakMap.length && offsetZ > 0 && offsetZ < peakMap[0].length){
             return Math.abs(peakMap[offsetX][offsetZ]);
         }

@@ -5,11 +5,12 @@ import org.spongepowered.noise.NoiseQuality;
 import org.spongepowered.noise.module.source.Perlin;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class NoiseMapGenerator {
+public class NoiseMapGenerator implements Serializable {
 
     private int length = 50;
     private int width = 50;
@@ -70,6 +71,13 @@ public class NoiseMapGenerator {
         return village4;
     }
 
+    public int getaCenterR() {
+        return aCenterR;
+    }
+    public int getR(){
+        return map[0].length / 2;
+    }
+
     private Point center1, center2, center3, center4, village1,village2,village3,village4;
 
     public double[][] getMap() {
@@ -78,7 +86,7 @@ public class NoiseMapGenerator {
 
     private double[][] map;
 
-    int aCenterR = 0;//统一半径，否则有的中心群系过大
+    private int aCenterR = 0;//统一半径，否则有的中心群系过大
     public static final int VILLAGER_SIZE = 36;// 128 / 4 + 2
     public static final double CURVE_INTENSITY = 0.1;
     public static final double SCALE_OF_CENTER_R = 0.05;//相对宽度width的比例，中心空岛半径即为width*scaleOfCenterR
@@ -387,7 +395,7 @@ public class NoiseMapGenerator {
 
         //生成中心群系，统一半径
         if(aCenterR == 0){
-            aCenterR = (int)( aCenter.distance(centerPoint) * SCALE_OF_A_CENTER_R);
+            aCenterR = (int)(aCenter.distance(centerPoint) * SCALE_OF_A_CENTER_R);
         }
 
         generator.setWidth(aCenterR);

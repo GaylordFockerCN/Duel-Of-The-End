@@ -111,8 +111,6 @@ public class BiomeMap {
     public double[][] createImageMap(NoiseMapGenerator generator){
 
         try {
-//            File dir = new File(DIR);
-
 
             File file = new File(FILE);
             BufferedImage image;
@@ -120,9 +118,11 @@ public class BiomeMap {
                 ResourceManager manager = Minecraft.getInstance().getResourceManager();
                 InputStream inputStream = manager.getResource(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"default_map.png")).get().open();
                 image = ImageIO.read(inputStream);
-                System.out.println("reading default_map");
+                TheCasketOfReveriesMod.LOGGER.info("reading default_map");
+                TCRBiomeProvider.mapName = "default_map";
             }else {
                 image = ImageIO.read(file);
+                TCRBiomeProvider.mapName = file.getName();
             }
             int height = image.getHeight();
             int width = image.getWidth();
@@ -140,11 +140,7 @@ public class BiomeMap {
             return map;
 
         } catch (Exception e) {
-            //FIXME 想办法输出信息
-            e.printStackTrace();
-            System.out.println("维度地图图片文件异常！将以默认预设生成地图");
-            if(!GraphicsEnvironment.isHeadless())
-                JOptionPane.showMessageDialog(null,"维度地图图片文件异常！将以默认预设生成地图","The Casket Of Reveries：提示",JOptionPane.INFORMATION_MESSAGE);
+            TheCasketOfReveriesMod.LOGGER.error("维度地图图片文件异常！将以默认噪声生成地图",e);
             isImage = false;
             //如果还是不行就输出默认噪声地图
             return createNoiseMap(generator);
@@ -155,66 +151,19 @@ public class BiomeMap {
     public static double[][] createNoiseMapStatic(NoiseMapGenerator generator){
         INSTANCE = new BiomeMap();
         INSTANCE.generator = generator;
+        TCRBiomeProvider.mapName = "noise";
         return INSTANCE.createNoiseMap(generator);
-//        generator.setSeed(new Random().nextInt(3));//TODO: 改成世界种子
-//        generator.setLength(SIZE);
-//        generator.setWidth(SIZE);
-//        generator.setLacunarity(12);//TODO 调整合适大小
-//        generator.setPersistence(0.5);
-//        generator.setOctaves(8);
-//        double[][] map = generator.generateNoiseMap();
-//        map = generator.divide(map);
-//        map = generator.addCenter(map);
-//        return map;
     }
 
     public static double[][] createImageMapStatic(NoiseMapGenerator generator){
-//        //FIXME 还是会nullPointerException
-//        if(INSTANCE != null){
-//            //平坦世界也会用，重复加载浪费时间，所以这里直接对接一下。
-//            generator = INSTANCE.generator;
-//            return INSTANCE.map;
-//        }
         INSTANCE = new BiomeMap();
         INSTANCE.generator = generator;
         INSTANCE.map = INSTANCE.createImageMap(generator);
         return INSTANCE.map;
-//        try {
-//            File dir = new File(DIR);
-//            if(!dir.exists()){
-//                System.out.println("mkdir:"+dir.mkdirs());
-//            }
-//            System.out.println(dir.getAbsolutePath());
-//            File readme = new File(README);
-//            if(!readme.exists()){
-//                System.out.println("mk ReadMe:"+readme.createNewFile());
-//            }
-//
-//            BufferedImage image = ImageIO.read(new File(FILE));
-//            int height = image.getHeight();
-//            int width = image.getWidth();
-//            double[][] map = new double[height][width];
-//            for(int i = 0;i < height; i++){
-//                for(int j = 0;j < width; j++){
-//                    map[i][j] = ((image.getRGB(i,j) == 0xffffff || ((image.getRGB(i,j)>>24)&0xff) < 50) ? 0 : 1);//白色或近透明则为空域
-//                }
-//            }
-//
-//            map = generator.divide(map);
-//            map = generator.addCenter(map);
-//            return map;
-//
-//        } catch (Exception e) {
-//            //FIXME 想办法输出信息
-//            System.out.println("维度地图图片\""+FILE+"\"文件异常！将以默认预设生成地图");
-//            if(!GraphicsEnvironment.isHeadless())
-//                JOptionPane.showMessageDialog(null,"维度地图图片\""+FILE+"\"文件异常！将以默认预设生成地图","The Casket Of Reveries：提示",JOptionPane.INFORMATION_MESSAGE);
-//            return createNoiseMapStatic(generator);
-//        }
     }
 
-    public static void main(String args[]) {
-        for(double a[] : BiomeMap.createImageMapStatic(new NoiseMapGenerator())){
+    public static void main(String[] args) {
+        for(double[] a : BiomeMap.createImageMapStatic(new NoiseMapGenerator())){
             for (double b:a){
                 System.out.print(b+" ");
             }

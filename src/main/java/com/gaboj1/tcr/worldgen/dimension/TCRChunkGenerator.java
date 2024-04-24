@@ -1,10 +1,12 @@
 package com.gaboj1.tcr.worldgen.dimension;
 
 import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
-import com.gaboj1.tcr.worldgen.structure.BiomeForcedLandmarkPlacement;
+import com.gaboj1.tcr.worldgen.structure.PositionPlacement;
 import com.gaboj1.tcr.worldgen.structure.TCRStructuresEnum;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
@@ -76,8 +78,8 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
         Perlin perlin = new Perlin();
         perlin.setFrequency(0.03);
         if(this.getBiomeSource() instanceof TCRBiomeProvider provider){
-            //群系噪声半径
-            int r = (int) (provider.getCenter2().distance(provider.getMainCenter()) * NoiseMapGenerator.SCALE_OF_A_CENTER_R);
+            //群系噪声半径。另外计算，不按群系一的半径来。
+            int r = (int) (BiomeMap.getInstance().getCenter2().distance(BiomeMap.getInstance().getMainCenter()) * NoiseMapGenerator.SCALE_OF_A_CENTER_R);
 
             for (int z = 0; z < 16; z++) {
                 for (int x = 0; x < 16; x++) {
@@ -132,6 +134,7 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
 
     }
 
+    //填补原始地形。因为非平原的情况下地形一言难尽。。
     private void fixPrimerSurface(WorldGenRegion primer){
         Perlin perlin = new Perlin();
 
@@ -186,6 +189,9 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
         return CODEC;
     }
 
+    /**
+     * 从原版抄的，重点在判断StructurePlacement的时候加入自己的判断。如果返回true即可在该位置生成结构。
+     */
     @Override
     public void createStructures(RegistryAccess pRegistryAccess, ChunkGeneratorStructureState pStructureState, StructureManager pStructureManager, ChunkAccess pChunk, StructureTemplateManager pStructureTemplateManager) {
         ChunkPos pos = pChunk.getPos();
@@ -205,12 +211,12 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
             }
 
             //此处加一行判断即可，其他全是抄原版的
-            if ((structurePlacement instanceof BiomeForcedLandmarkPlacement biomeForcedLandmarkPlacement && biomeForcedLandmarkPlacement.isTCRPlacementChunk(this,pChunk,pos.x,pos.z)) || structurePlacement.isStructureChunk(pStructureState, pos.x, pos.z)) {
-                System.out.println("Ok"+pos+" "+sectionPos+structurePlacement);
+            if ((structurePlacement instanceof PositionPlacement positionPlacement && positionPlacement.isTCRPlacementChunk(this,pChunk,pos.x,pos.z)) || structurePlacement.isStructureChunk(pStructureState, pos.x, pos.z)) {
+                TheCasketOfReveriesMod.LOGGER.info("Ok"+pos+" "+sectionPos+structurePlacement);
                 if (iterator.size() == 1) {
                     this.tryGenerateStructure(iterator.get(0), pStructureManager, pRegistryAccess, randomState, pStructureTemplateManager, pStructureState.getLevelSeed(), pChunk, pos, sectionPos);
              } else {
-                    ArrayList<StructureSet.StructureSelectionEntry> list = new ArrayList(iterator.size());
+                    ArrayList<StructureSet.StructureSelectionEntry> list = new ArrayList<>(iterator.size());
                     list.addAll(iterator);
                     WorldgenRandom worldgenRandom = new WorldgenRandom(new LegacyRandomSource(0L));
                     worldgenRandom.setLargeFeatureSeed(pStructureState.getLevelSeed(), pos.x, pos.z);
@@ -259,10 +265,10 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
             return true;
         } else {
 //            //NOTE: 非常之危险，但是应该可以保证生成率？每次递归x多一格区块
-            System.out.println("Try Again");
+            TheCasketOfReveriesMod.LOGGER.info("Try Again");
             if(tries-->0)
                 tryGenerateStructure(pStructureSelectionEntry,pStructureManager,pRegistryAccess,pRandom,pStructureTemplateManager,pSeed,pChunk,new ChunkPos(pChunkPos.x+1,pChunkPos.z), pSectionPos);
-            System.out.println("give up");
+            TheCasketOfReveriesMod.LOGGER.info("give up");
             return false;
         }
     }
@@ -281,23 +287,23 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
         @Nullable
         Pair<BlockPos, Holder<Structure>> nearest = super.findNearestMapStructure(level, targetStructures, pos, searchRadius, skipKnownStructures);
 
-        Map<BiomeForcedLandmarkPlacement, Set<Holder<Structure>>> placementSetMap = new Object2ObjectArrayMap<>();
+        Map<PositionPlacement, Set<Holder<Structure>>> placementSetMap = new Object2ObjectArrayMap<>();
         for (Holder<Structure> holder : targetStructures) {
             for (StructurePlacement structureplacement : state.getPlacementsForStructure(holder)) {
-                if (structureplacement instanceof BiomeForcedLandmarkPlacement landmarkPlacement) {
+                if (structureplacement instanceof PositionPlacement landmarkPlacement) {
                     placementSetMap.computeIfAbsent(landmarkPlacement, v -> new ObjectArraySet<>()).add(holder);
                 }
             }
         }
         if (placementSetMap.isEmpty()) return nearest;
         if(this.getBiomeSource() instanceof TCRBiomeProvider provider){
-            for (Map.Entry<BiomeForcedLandmarkPlacement, Set<Holder<Structure>>> landmarkPlacement : placementSetMap.entrySet()) {
-                BiomeForcedLandmarkPlacement placement = landmarkPlacement.getKey();
+            for (Map.Entry<PositionPlacement, Set<Holder<Structure>>> landmarkPlacement : placementSetMap.entrySet()) {
+                PositionPlacement placement = landmarkPlacement.getKey();
                 Point p = new Point(0,0);
                 //在这里判断结构是什么，并且返回对应的点
                 for(TCRStructuresEnum structure : TCRStructuresEnum.values()){
                     if(structure.ordinal() == placement.structure){
-                        p = structure.getPoint(provider);
+                        p = structure.getPoint();
                         break;
                     }
                 }

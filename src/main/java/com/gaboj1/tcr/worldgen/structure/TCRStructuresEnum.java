@@ -1,7 +1,6 @@
 package com.gaboj1.tcr.worldgen.structure;
 
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
-import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 
 import java.awt.Point;
 
@@ -9,7 +8,7 @@ import java.awt.Point;
  * 有新的建筑加进来只要在这里添加枚举类型即可，BiomeForceLandmark类和ChunkGenerator类会遍历这个枚举类型（顶级优化哈哈）
  * 以后看看能不能优化成json里面直接写类型而不是写数字（EnumCodec还不会）
  * @author LZY
- * @see BiomeForcedLandmarkPlacement
+ * @see PositionPlacement
  * @see com.gaboj1.tcr.worldgen.dimension.TCRChunkGenerator
  */
 public enum TCRStructuresEnum {
@@ -46,11 +45,11 @@ public enum TCRStructuresEnum {
         return offsetZ;
     }
 
-    public Point getPoint(TCRBiomeProvider provider) {
+    public Point getPoint() {
         return switch (this) {
-            case FINAL -> provider.getMainCenter();
-            case CHURCH -> provider.getCenter1();
-            case SWORD -> provider.getCenter2();
+            case FINAL -> BiomeMap.getInstance().getMainCenter();
+            case CHURCH -> BiomeMap.getInstance().getCenter1();
+            case SWORD -> BiomeMap.getInstance().getCenter2();
             case VILLAGE1 -> BiomeMap.getInstance().getVillage1();
             default -> new Point(0, 0);
         };
