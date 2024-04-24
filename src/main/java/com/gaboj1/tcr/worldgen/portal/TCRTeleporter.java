@@ -47,9 +47,9 @@ public class TCRTeleporter implements ITeleporter {
         while (!destinationLevel.getBlockState(destinationPos).is(Blocks.AIR)){
             destinationPos = destinationPos.above();
         }
-        destinationPos = destinationPos.offset(20,20,0);//偏移一下不然会诞生在房子里（
+        destinationPos = destinationPos.offset(20,70,0);//偏移一下不然会诞生在房子里（
         if(entity instanceof ServerPlayer player){
-            player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 200, 1, false, true));
+            player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 700, 1, false, true));
         }
         pos = new PortalInfo(destinationPos.getCenter(), Vec3.ZERO, entity.getYRot(), entity.getXRot());
         //NOTE不要相信IDE，这里判空是必须的！

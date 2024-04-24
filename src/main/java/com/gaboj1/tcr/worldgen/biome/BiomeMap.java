@@ -116,7 +116,7 @@ public class BiomeMap {
                 ResourceManager manager = Minecraft.getInstance().getResourceManager();
                 InputStream inputStream = manager.getResource(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"default_map.png")).get().open();
                 image = ImageIO.read(inputStream);
-                TheCasketOfReveriesMod.LOGGER.info("reading default_map");
+                TCRBiomeProvider.LOGGER.info("reading default_map");
                 TCRBiomeProvider.mapName = "default_map";
             }else {
                 image = ImageIO.read(file);
@@ -138,7 +138,7 @@ public class BiomeMap {
             return map;
 
         } catch (Exception e) {
-            TheCasketOfReveriesMod.LOGGER.error("维度地图图片文件异常！将以默认噪声生成地图",e);
+            TCRBiomeProvider.LOGGER.error("Dimension map image file exception! Map will be generated with default noise.",e);
             generator.setImage(false);
             //如果还是不行就输出默认噪声地图
             return createNoiseMap(generator);

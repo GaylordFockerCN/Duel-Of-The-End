@@ -4,6 +4,7 @@ import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
 import com.gaboj1.tcr.util.map.RandomMountainGenerator;
+import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -14,6 +15,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
 import net.minecraftforge.fml.loading.FMLPaths;
+import org.slf4j.Logger;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -41,6 +43,8 @@ public class TCRBiomeProvider extends BiomeSource {
             RegistryOps.retrieveElement(TCRBiomes.finalBiome)
     ).apply(instance, instance.stable(TCRBiomeProvider::new)));
 
+    public static final Logger LOGGER = LogUtils.getLogger();
+
     //地图名，用于加载世界窗口绘制。
     public static String mapName = "";
     //存档名，用于分文件存储。
@@ -49,6 +53,9 @@ public class TCRBiomeProvider extends BiomeSource {
     private static NoiseMapGenerator generator;
     public static final double SCALE = 0.2;
     private boolean isImage = true;
+
+    public static final File DIR = FMLPaths.CONFIGDIR.get().resolve(TheCasketOfReveriesMod.MOD_ID).toFile();
+    private File mapFile;
 
     private final Holder<Biome> biomeHolder0;
     private final Holder<Biome> biomeHolder1;
@@ -109,15 +116,14 @@ public class TCRBiomeProvider extends BiomeSource {
      */
     @Override
     protected Stream<Holder<Biome>> collectPossibleBiomes() {
-        File dir = FMLPaths.CONFIGDIR.get().resolve(TheCasketOfReveriesMod.MOD_ID).toFile();
-        if(!dir.exists()){
-            TheCasketOfReveriesMod.LOGGER.info("try mkdir : " + dir.mkdir());
+        if(!DIR.exists()){
+            LOGGER.info("try mkdir : " + DIR.mkdir());
         }
-        File mapFile = new File(dir + "/" + worldName + ".dat");
+        mapFile = getLevelFile();
         //二次进入游戏从文件直接读取数组较快，否则每次进世界都得加载，地图大的话很慢
         if(mapFile.exists()){
             try {
-                TheCasketOfReveriesMod.LOGGER.info("Loading existing map data form : " + mapFile.getAbsolutePath());
+                LOGGER.info("Loading existing map data form : " + mapFile.getAbsolutePath());
                 FileInputStream fis = new FileInputStream(mapFile);
                 ObjectInputStream ois = new ObjectInputStream(fis);
                 generator = (NoiseMapGenerator) ois.readObject();
@@ -159,9 +165,21 @@ public class TCRBiomeProvider extends BiomeSource {
             oos.close();
             fos.close();
         } catch (IOException e) {
-            TheCasketOfReveriesMod.LOGGER.error("Failed to save map", e);
+            LOGGER.error("Failed to save map", e);
             mapName = "SAVE_ERROR!!";
         }
+    }
+
+    public static boolean deleteCache(String levelName){
+        return getLevelFile(levelName).delete();
+    }
+
+    public static File getLevelFile(){
+        return new File(DIR + "/" + worldName + ".dat");
+    }
+
+    public static File getLevelFile(String worldName){
+        return new File(DIR + "/" + worldName + ".dat");
     }
 
 
