@@ -6,7 +6,6 @@ import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
 import com.gaboj1.tcr.util.map.RandomMountainGenerator;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
@@ -16,7 +15,6 @@ import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
 import net.minecraftforge.fml.loading.FMLPaths;
 
-import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +47,6 @@ public class TCRBiomeProvider extends BiomeSource {
     public static String worldName = "";
     private int[][] peakMap;
     private static NoiseMapGenerator generator;
-    private int R;//总体半径和中心群系噪声半径
     public static final double SCALE = 0.2;
     private boolean isImage = true;
 
@@ -152,6 +149,7 @@ public class TCRBiomeProvider extends BiomeSource {
         }
         generator = new NoiseMapGenerator();
         BiomeMap.createImageMapStatic(generator);
+        isImage = generator.isImage();
         try {
             mapFile.createNewFile();
             FileOutputStream fos = new FileOutputStream(mapFile);
@@ -201,19 +199,17 @@ public class TCRBiomeProvider extends BiomeSource {
         if(!isImage || TCRConfig.ENABLE_SCALING.get()){
             biomeXorZ *= (int) (SCALE * generator.getMap().length / BiomeMap.SIZE);//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
         }
-        return biomeXorZ+R;
+        return biomeXorZ + generator.getR();
     }
 
     /**
      * 偏移回去
-     * @param biomeXorZ
-     * @return
      */
     public int deCorrectValue(int biomeXorZ){
         if(!isImage || TCRConfig.ENABLE_SCALING.get()){
             biomeXorZ /= (int) (SCALE * generator.getMap().length / BiomeMap.SIZE);//数组不能放大，只能这里放大（你就说妙不妙）缺点就是图衔接处有点方。。
         }
-        return biomeXorZ-R;
+        return biomeXorZ - generator.getR();
     }
 
     /**
@@ -221,8 +217,8 @@ public class TCRBiomeProvider extends BiomeSource {
      * 先转换为正确的坐标（群系坐标），再去peakMap中查找对应的点。
      */
     public int getMountainHeight(BlockPos pos){
-        int offsetX = pos.getX()+R*4-(((generator.getCenter2().x)*4) - (generator.getaCenterR()*2));
-        int offsetZ = pos.getZ()+R*4-(((generator.getCenter2().y)*4) - (generator.getaCenterR()*2));
+        int offsetX = pos.getX()+generator.getR()*4-(((generator.getCenter2().x)*4) - (generator.getaCenterR()*2));
+        int offsetZ = pos.getZ()+generator.getR()*4-(((generator.getCenter2().y)*4) - (generator.getaCenterR()*2));
         if(offsetX > 0 && offsetX < peakMap.length && offsetZ > 0 && offsetZ < peakMap[0].length){
             return Math.abs(peakMap[offsetX][offsetZ]);
         }
