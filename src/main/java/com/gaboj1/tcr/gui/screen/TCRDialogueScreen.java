@@ -35,10 +35,13 @@ public class TCRDialogueScreen extends Screen {
     public static final ResourceLocation MY_BACKGROUND_LOCATION = new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"textures/gui/background.png");
     protected final DialogueAnswerComponent dialogueAnswer;
     protected final Entity entity;
+    public final int typewriterInterval;
+    private int typewriterTimer = 0;
     EntityType<?> entityType;
 
     public TCRDialogueScreen(Entity entity, EntityType<?> entityType) {
         super(entity.getDisplayName());
+        typewriterInterval = TCRConfig.TYPEWRITER_EFFECT_INTERVAL.get();
         this.dialogueAnswer = new DialogueAnswerComponent(this.buildDialogueAnswerName(entity.getDisplayName().copy().withStyle(ChatFormatting.YELLOW)).append(": "));
         this.entity = entity;
         this.entityType = entityType;
@@ -173,12 +176,17 @@ public class TCRDialogueScreen extends Screen {
         this.renderBackground(guiGraphics);
         //guiGraphics.blit(MY_BACKGROUND_LOCATION, this.width/2 - 214/2, this.height/2 - 252/2, 0, 0, 214, 252);
 
-        if(TCRConfig.ENABLE_TYPEWRITER_EFFECT.get()){
-            this.dialogueAnswer.updateTypewriterDialogue();
-            positionDialogue();
+        if(TCRConfig.ENABLE_TYPEWRITER_EFFECT.get() && typewriterTimer < 0) {
+            if (TCRConfig.ENABLE_TYPEWRITER_EFFECT.get()) {
+                this.dialogueAnswer.updateTypewriterDialogue();
+                positionDialogue();
+                typewriterTimer = typewriterInterval;
+            } else {
+                typewriterTimer--;
+            }
         }
 
-        this.dialogueAnswer.render(guiGraphics);
+            this.dialogueAnswer.render(guiGraphics);
 
         //如果回答还没显示完则不渲染选项
         for(Renderable renderable : this.renderables) {

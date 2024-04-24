@@ -23,6 +23,8 @@ public class TCRConfig
     public static final ForgeConfigSpec.BooleanValue ENABLE_TYPEWRITER_EFFECT = createBool("enable_typewriter_effect",true);
     //打字机效果的速度（一次出现几个字）
     public static final ForgeConfigSpec.IntValue TYPEWRITER_EFFECT_SPEED = createInt("typewriter_effect_speed",1,1);
+    //打字机效果间隔（几个tick更新一次）
+    public static final ForgeConfigSpec.IntValue TYPEWRITER_EFFECT_INTERVAL = createInt("typewriter_effect_interval",3,1);
 
     //基础树脂的修复值
     public static final ForgeConfigSpec.IntValue REPAIR_VALUE = createInt("repair_value",1,1);
