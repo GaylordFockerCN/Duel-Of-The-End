@@ -117,15 +117,17 @@ public class TCRBiomeProvider extends BiomeSource {
         //二次进入游戏从文件直接读取数组较快，否则每次进世界都得加载，地图大的话很慢
         if(mapExist){
             try {
+                TheCasketOfReveriesMod.LOGGER.info("Loading existing map data form : " + mapFile.getAbsolutePath());
                 FileInputStream fis = new FileInputStream(mapFile);
                 ObjectInputStream ois = new ObjectInputStream(fis);
                 generator = (NoiseMapGenerator) ois.readObject();
+                BiomeMap.init(generator);
                 ois.close();
                 fis.close();
             } catch (Exception e) {
                 createBiomeMap(mapFile);
             }
-            isImage = BiomeMap.getInstance().isImage;
+            isImage = generator.isImage();
         }else {
             createBiomeMap(mapFile);
         }

@@ -21,6 +21,15 @@ public class NoiseMapGenerator implements Serializable {
     private double persistence = 0.5;//default 0.5
     private double lacunarity = 2;//default 2.0
     private long seed = 2;
+    private boolean isImage;
+
+    public boolean isImage() {
+        return isImage;
+    }
+
+    public void setImage(boolean image) {
+        isImage = image;
+    }
 
     private List<Point> aPoints = new ArrayList<>();
     private List<Point> bPoints = new ArrayList<>();

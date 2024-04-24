@@ -84,8 +84,6 @@ public class BiomeMap {
 
     public static final int SIZE = 320;
 
-    boolean isImage;
-
     public static final String DIR = "config/"+TheCasketOfReveriesMod.MOD_ID+"/";
     public static final String README = DIR+"MAP_README以图生图注意事项.txt";
     public static final String FILE = DIR+"map.png";
@@ -136,12 +134,12 @@ public class BiomeMap {
             generator.setWidth(width);
             map = generator.divide(map);
             map = generator.addCenter(map);
-            isImage = true;
+            generator.setImage(true);
             return map;
 
         } catch (Exception e) {
             TheCasketOfReveriesMod.LOGGER.error("维度地图图片文件异常！将以默认噪声生成地图",e);
-            isImage = false;
+            generator.setImage(false);
             //如果还是不行就输出默认噪声地图
             return createNoiseMap(generator);
         }
@@ -160,6 +158,12 @@ public class BiomeMap {
         INSTANCE.generator = generator;
         INSTANCE.map = INSTANCE.createImageMap(generator);
         return INSTANCE.map;
+    }
+
+    public static void init(NoiseMapGenerator generator){
+        INSTANCE = new BiomeMap();
+        INSTANCE.generator = generator;
+        INSTANCE.map = generator.getMap();
     }
 
     public static void main(String[] args) {
