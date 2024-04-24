@@ -126,9 +126,10 @@ public class DialogueAnswerComponent {
      */
     public void updateTypewriterDialogue() {
         Style style = message.getStyle();
-        updateDialogue(Component.literal(message.getString(index++)).withStyle(style));
+        updateDialogue(Component.literal(message.getString(index)).withStyle(style));
+        index += TCRConfig.TYPEWRITER_EFFECT_SPEED.get();
         if(index > max){
-            index--;
+            index = max;
             shouldRenderOption = true;
         }
     }

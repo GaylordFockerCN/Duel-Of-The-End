@@ -32,7 +32,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addConfig("more_hole","是否启用更多空洞的世界（地图更像空岛，类似天境，但是陆地较少）");
         this.addConfig("enable_scaling","是否启用地图缩放。若启用，则无论用何种尺寸的图片生成的地图大小固定");
         this.addConfig("enable_typewriter_effect","是否启用打字机效果（即对话文本是否逐字出现");
-        this.addConfig("typewriter_effect_interval","打字机效果间隔。越大语速越慢。");
+        this.addConfig("typewriter_effect_interval","打字机效果逐次出现的字数。越大语速越快。");
         this.addConfig("repair_value","基础树脂的修理值");
         this.addConfig("tree_spirit_wand_hungry_consume","树灵法杖回血时的饥饿值消耗");
         this.addConfig("tree_spirit_wand_heal","树灵法杖回血量");
