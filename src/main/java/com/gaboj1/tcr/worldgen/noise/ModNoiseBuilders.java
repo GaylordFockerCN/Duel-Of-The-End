@@ -20,6 +20,7 @@ public class ModNoiseBuilders {
     private static final SurfaceRules.RuleSource GRASS_BLOCK = SurfaceRules.state(Blocks.GRASS_BLOCK.defaultBlockState());
     private static final SurfaceRules.RuleSource DIRT = SurfaceRules.state(Blocks.DIRT.defaultBlockState());
     private static final SurfaceRules.RuleSource AIR = SurfaceRules.state(Blocks.AIR.defaultBlockState());
+    private static final SurfaceRules.RuleSource WATER = SurfaceRules.state(Blocks.WATER.defaultBlockState());
     private static final SurfaceRules.RuleSource STONE = SurfaceRules.state(Blocks.STONE.defaultBlockState());
 
 
@@ -63,6 +64,8 @@ public class ModNoiseBuilders {
         SurfaceRules.RuleSource air = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.AIR),AIR));
         SurfaceRules.RuleSource finalBiome = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.FINAL),AIR));
 
+        //海洋
+        SurfaceRules.RuleSource water = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.biome4),WATER));
         //瞎几把操作..
         SurfaceRules.RuleSource noWater = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.waterBlockCheck(-1, 0), GRASS_BLOCK), DIRT);
         SurfaceRules.RuleSource surface = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, noWater), SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DIRT));
@@ -73,6 +76,7 @@ public class ModNoiseBuilders {
         builder
                 .add(finalBiome)
                 .add(air)
+                .add(water)
                 .add(surface)
                 .add(denseForest)
                 .add(SurfaceRules.ifTrue(SurfaceRules.abovePreliminarySurface(), all))//试试看abovePre这个

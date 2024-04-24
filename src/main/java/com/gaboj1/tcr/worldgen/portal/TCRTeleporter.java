@@ -3,6 +3,9 @@ package com.gaboj1.tcr.worldgen.portal;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.portal.PortalInfo;
@@ -44,7 +47,10 @@ public class TCRTeleporter implements ITeleporter {
         while (!destinationLevel.getBlockState(destinationPos).is(Blocks.AIR)){
             destinationPos = destinationPos.above();
         }
-        destinationPos = destinationPos.offset(20,0,0);//偏移一下不然会诞生在房子里（
+        destinationPos = destinationPos.offset(20,20,0);//偏移一下不然会诞生在房子里（
+        if(entity instanceof ServerPlayer player){
+            player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 200, 1, false, true));
+        }
         pos = new PortalInfo(destinationPos.getCenter(), Vec3.ZERO, entity.getYRot(), entity.getXRot());
         //NOTE不要相信IDE，这里判空是必须的！
         return pos == null ? ITeleporter.super.getPortalInfo(entity, destinationLevel, defaultPortalInfo) : pos;

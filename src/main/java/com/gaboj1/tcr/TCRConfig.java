@@ -1,67 +1,65 @@
 package com.gaboj1.tcr;
 
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 
-@Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class TCRConfig
-{
-    private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+public class TCRConfig {
+    // 是否启用自定义地图生成时缩放
+    public static final ForgeConfigSpec.BooleanValue ENABLE_SCALING;
+    // 是否启用更多空洞的世界（地图更像空岛，类似天境，但是陆地较少）
+    public static final ForgeConfigSpec.BooleanValue MORE_HOLE;
+    // 更好的结构方块是否立即刷新（默认开启，开发时关闭）
+    public static final ForgeConfigSpec.BooleanValue ENABLE_BETTER_STRUCTURE_BLOCK_LOAD;
+    // 游戏内对话框是否使用打字机效果（对话逐字出现）
+    public static final ForgeConfigSpec.BooleanValue ENABLE_TYPEWRITER_EFFECT;
+    // 打字机效果的速度（一次出现几个字）
+    public static final ForgeConfigSpec.IntValue TYPEWRITER_EFFECT_SPEED;
+    // 打字机效果间隔（几个tick更新一次）
+    public static final ForgeConfigSpec.IntValue TYPEWRITER_EFFECT_INTERVAL;
+    // 基础树脂的修复值
+    public static final ForgeConfigSpec.IntValue REPAIR_VALUE;
+    // 树灵法杖参数
+    public static final ForgeConfigSpec.IntValue TREE_SPIRIT_WAND_HUNGRY_CONSUME;
+    // 树灵法杖恢复值
+    public static final ForgeConfigSpec.IntValue TREE_SPIRIT_WAND_HEAL;
+    // 树灵木消耗值
+    public static final ForgeConfigSpec.IntValue SPIRIT_LOG_CONSUME;
+    // 配置规格
+    public static final ForgeConfigSpec SPEC;
 
-    //是否启用自定义地图生成时缩放
-    public static final ForgeConfigSpec.BooleanValue ENABLE_SCALING = createBool("enable_scaling",false);
-    //是否启用更多空洞的世界（地图更像空岛，类似天境，但是陆地较少）
-    public static final ForgeConfigSpec.BooleanValue MORE_HOLE = createBool("more_hole",false);
-    //更好的结构方块是否立即刷新（默认开启，开发时关闭）
-    public static final ForgeConfigSpec.BooleanValue ENABLE_BETTER_STRUCTURE_BLOCK_LOAD = createBool("enable_better_structure_block_load",true);
-    //游戏内对话框是否使用打字机效果（对话逐字出现）
-    public static final ForgeConfigSpec.BooleanValue ENABLE_TYPEWRITER_EFFECT = createBool("enable_typewriter_effect",true);
-    //打字机效果的速度（一次出现几个字）
-    public static final ForgeConfigSpec.IntValue TYPEWRITER_EFFECT_SPEED = createInt("typewriter_effect_speed",1,1);
-    //打字机效果间隔（几个tick更新一次）
-    public static final ForgeConfigSpec.IntValue TYPEWRITER_EFFECT_INTERVAL = createInt("typewriter_effect_interval",2,1);
+    static {
+        ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
 
-    //基础树脂的修复值
-    public static final ForgeConfigSpec.IntValue REPAIR_VALUE = createInt("repair_value",1,1);
+        builder.push("Game Setting");
+        ENABLE_SCALING = createBool(builder, "enable_scaling", false);
+        MORE_HOLE = createBool(builder, "more_hole", false);
+        ENABLE_BETTER_STRUCTURE_BLOCK_LOAD = createBool(builder, "enable_better_structure_block_load", true);
+        ENABLE_TYPEWRITER_EFFECT = createBool(builder, "enable_typewriter_effect", true);
+        TYPEWRITER_EFFECT_SPEED = createInt(builder, "typewriter_effect_speed", 1, 1);
+        TYPEWRITER_EFFECT_INTERVAL = createInt(builder, "typewriter_effect_interval", 2, 1);
+        builder.pop();
 
-    //树灵法杖参数
-    public static final ForgeConfigSpec.IntValue TREE_SPIRIT_WAND_HUNGRY_CONSUME = createInt("tree_spirit_wand_hungry_consume",2,1);
-    public static final ForgeConfigSpec.IntValue TREE_SPIRIT_WAND_HEAL = createInt("tree_spirit_wand_heal",10,1);
-    public static final ForgeConfigSpec.IntValue SPIRIT_LOG_CONSUME = createInt("spirit_log_consume",1,1);
+        builder.push("Attribute Value");
+        REPAIR_VALUE = createInt(builder, "repair_value", 1, 1);
+        TREE_SPIRIT_WAND_HUNGRY_CONSUME = createInt(builder, "tree_spirit_wand_hungry_consume", 2, 1);
+        TREE_SPIRIT_WAND_HEAL = createInt(builder, "tree_spirit_wand_heal", 10, 1);
+        SPIRIT_LOG_CONSUME = createInt(builder, "spirit_log_consume", 1, 1);
+        builder.pop();
 
-    static final ForgeConfigSpec SPEC = BUILDER.build();
+        SPEC = builder.build();
+    }
 
-    private static ForgeConfigSpec.BooleanValue createBool(String key, boolean defaultValue){
-        return BUILDER
-                .comment(I18n.get("config."+TheCasketOfReveriesMod.MOD_ID+"."+key))
-                .translation("config."+TheCasketOfReveriesMod.MOD_ID+"."+key)
+    private static ForgeConfigSpec.BooleanValue createBool(ForgeConfigSpec.Builder builder, String key, boolean defaultValue) {
+        return builder
+                .comment(I18n.get("config."+TheCasketOfReveriesMod.MOD_ID+".common."+key))
+                .translation("config."+TheCasketOfReveriesMod.MOD_ID+".common."+key)
                 .define(key, defaultValue);
     }
 
-    private static ForgeConfigSpec.IntValue createInt(String key, int defaultValue, int min){
-        return BUILDER
-                .comment(I18n.get("config."+TheCasketOfReveriesMod.MOD_ID+"."+key))
-                .translation("config."+TheCasketOfReveriesMod.MOD_ID+"."+key)
-                .defineInRange(key,defaultValue,min, Integer.MAX_VALUE);
-    }
-
-    private static ForgeConfigSpec.IntValue createInt(String key, int defaultValue, int min, int max){
-        return BUILDER
-                .translation("config."+TheCasketOfReveriesMod.MOD_ID+"."+key)
-                .defineInRange(key,defaultValue,min,max);
-    }
-
-    private static boolean validateItemName(final Object obj){
-        return obj instanceof final String itemName && ForgeRegistries.ITEMS.containsKey(new ResourceLocation(itemName));
-    }
-
-    @SubscribeEvent
-    static void onLoad(final ModConfigEvent event){
-
+    private static ForgeConfigSpec.IntValue createInt(ForgeConfigSpec.Builder builder, String key, int defaultValue, int min) {
+        return builder
+                .comment(I18n.get("config."+TheCasketOfReveriesMod.MOD_ID+".common."+key))
+                .translation("config."+TheCasketOfReveriesMod.MOD_ID+".common."+key)
+                .defineInRange(key, defaultValue, min, Integer.MAX_VALUE);
     }
 }

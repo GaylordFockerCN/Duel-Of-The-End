@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.listener;
+package com.gaboj1.tcr.event.listeners;
 
 import com.gaboj1.tcr.item.custom.DesertEagleItem;
 import com.gaboj1.tcr.item.custom.boss_loot.HolySword;

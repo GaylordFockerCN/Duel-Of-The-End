@@ -192,7 +192,7 @@ public abstract class ModLangProvider extends LanguageProvider {
     }
 
     public void addConfig(String key, String name) {
-        this.add("config."+TheCasketOfReveriesMod.MOD_ID+"." + key, name);
+        this.add("config."+TheCasketOfReveriesMod.MOD_ID+".common." + key, name);
     }
 
     public void addDrinkName(Item item, String name) {

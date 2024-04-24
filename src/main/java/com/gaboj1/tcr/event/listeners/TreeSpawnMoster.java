@@ -1,13 +1,9 @@
-package com.gaboj1.tcr.listener;
+package com.gaboj1.tcr.event.listeners;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.custom.DenseForestTreeBlock;
 import com.gaboj1.tcr.datagen.ModAdvancementData;
 import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.init.TCRModEntities;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.MobSpawnType;

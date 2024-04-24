@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.listener;
+package com.gaboj1.tcr.event.listeners;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
