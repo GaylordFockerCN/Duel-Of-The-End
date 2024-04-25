@@ -28,11 +28,22 @@ public class WorldListEntryMixin {
         TCRBiomeProvider.LOGGER.info("Deleting : " + summary.getLevelId() + ".dat -> "+ (TCRBiomeProvider.deleteCache(summary.getLevelId())?"SUCCESS":"FAILED"));
     }
 
-    @Inject(method = "loadWorld()V", at = @At("HEAD"))
-    private void injectedLoadWorld(CallbackInfo ci){
-        TCRBiomeProvider.worldName = summary.getLevelId();
+    /**
+     * 先进窗口再读取，不然会先卡在选世界界面。。
+     */
+    @Inject(method = "queueLoadScreen()V", at = @At("RETURN"))
+    private void injectedQueueLoadScreen(CallbackInfo ci){
         TCRBiomeProvider.LOGGER.info("On loadWorld Sync : " + summary.getLevelId() + " >> TCRBiomeProvider.worldName");
+        TCRBiomeProvider.LOGGER.info("Trying update biome map by new worldName");
+        TCRBiomeProvider.updateBiomeMap(summary.getLevelId());
     }
+
+//    @Inject(method = "loadWorld()V", at = @At("HEAD"))
+//    private void injectedLoadWorld(CallbackInfo ci){
+//        TCRBiomeProvider.LOGGER.info("On loadWorld Sync : " + summary.getLevelId() + " >> TCRBiomeProvider.worldName");
+//        TCRBiomeProvider.LOGGER.info("Trying update biome map by new worldName");
+//        TCRBiomeProvider.updateBiomeMap(summary.getLevelId());
+//    }
 
 //    @Inject(method = "joinWorld()V", at = @At("HEAD"))
 //    private void injectedJoinWorld(CallbackInfo ci){

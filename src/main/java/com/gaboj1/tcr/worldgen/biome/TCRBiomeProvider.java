@@ -52,10 +52,10 @@ public class TCRBiomeProvider extends BiomeSource {
     private int[][] peakMap;
     private static NoiseMapGenerator generator;
     public static final double SCALE = 0.2;
-    private boolean isImage = true;
+    private static boolean isImage = true;
 
     public static final File DIR = FMLPaths.CONFIGDIR.get().resolve(TheCasketOfReveriesMod.MOD_ID).toFile();
-    private File mapFile;
+    private static File mapFile;
 
     private final Holder<Biome> biomeHolder0;
     private final Holder<Biome> biomeHolder1;
@@ -116,28 +116,8 @@ public class TCRBiomeProvider extends BiomeSource {
      */
     @Override
     protected Stream<Holder<Biome>> collectPossibleBiomes() {
-        if(!DIR.exists()){
-            LOGGER.info("try mkdir : " + DIR.mkdir());
-        }
-        mapFile = getLevelFile();
-        //二次进入游戏从文件直接读取数组较快，否则每次进世界都得加载，地图大的话很慢
-        if(mapFile.exists()){
-            try {
-                LOGGER.info("Loading existing map data form : " + mapFile.getAbsolutePath());
-                FileInputStream fis = new FileInputStream(mapFile);
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                generator = (NoiseMapGenerator) ois.readObject();
-                mapName = (String) ois.readObject();
-                BiomeMap.init(generator);
-                isImage = generator.isImage();
-                ois.close();
-                fis.close();
-            } catch (Exception e) {
-                createBiomeMap(mapFile);
-            }
-
-        }else {
-            createBiomeMap(mapFile);
+        if(generator==null){
+            updateBiomeMap(worldName);
         }
         int mountainsR = (generator.getaCenterR()<<2);
         //第二群系山的高度图
@@ -146,7 +126,11 @@ public class TCRBiomeProvider extends BiomeSource {
         return Stream.of(biomeHolder0,biomeHolder1,biomeHolder2,biomeHolder3,biomeHolder4,biomeHolder5,biomeHolder6,biomeHolder7,biomeHolder8,biomeHolder9);
     }
 
-    private void createBiomeMap(File mapFile){
+    /**
+     * 从图片创建BiomeMap并保存
+     * @param mapFile
+     */
+    private static void createBiomeMap(File mapFile){
         //因为存在平和不平两种世界，所以避免重复读取。
         if(generator != null){
             BiomeMap.init(generator);
@@ -160,13 +144,45 @@ public class TCRBiomeProvider extends BiomeSource {
             mapFile.createNewFile();
             FileOutputStream fos = new FileOutputStream(mapFile);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(generator);
             oos.writeObject(mapName);
+            oos.writeObject(generator);
             oos.close();
             fos.close();
         } catch (IOException e) {
             LOGGER.error("Failed to save map", e);
             mapName = "SAVE_ERROR!!";
+        }
+    }
+
+    /**
+     * 为了防止有人不重启而直接换存档玩而写的。。
+     * 二次进游戏它不会重置BiomeProvider，对于原版来说只要seed不一样即可。。
+     * @param levelID 世界的id，可以理解为存档名。
+     */
+    public static void updateBiomeMap(String levelID){
+        if(!DIR.exists()){
+            LOGGER.info("try mkdir : " + DIR.mkdir());
+        }
+        worldName = levelID;
+        mapFile = getLevelFile();
+        //二次进入游戏从文件直接读取数组较快，否则每次进世界都得加载，地图大的话很慢
+        if(mapFile.exists()){
+            try {
+                LOGGER.info("Loading existing map data form : " + mapFile.getAbsolutePath());
+                FileInputStream fis = new FileInputStream(mapFile);
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                mapName = (String) ois.readObject();
+                generator = (NoiseMapGenerator) ois.readObject();
+                BiomeMap.init(generator);
+                isImage = generator.isImage();
+                ois.close();
+                fis.close();
+            } catch (Exception e) {
+                createBiomeMap(mapFile);
+            }
+
+        }else {
+            createBiomeMap(mapFile);
         }
     }
 
