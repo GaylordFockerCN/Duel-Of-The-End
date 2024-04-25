@@ -8,6 +8,7 @@
     "WorldOptionsMixin"
   ],
   "client": [
+    "CreateWorldScreenMixin",
     "PlayerModelMixin",
     "WorldListEntryMixin"
   ],
