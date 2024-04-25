@@ -7,6 +7,7 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.*;
@@ -93,6 +94,10 @@ public class ModNoiseBuilders {
         SurfaceRules.RuleSource air = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.AIR),AIR));
         SurfaceRules.RuleSource finalBiome = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.FINAL),AIR));
 
+        //海洋
+//        SurfaceRules.RuleSource water = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.biome4),WATER));
+//        SurfaceRules.RuleSource water = SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.biome4), SurfaceRules.sequence(SurfaceRules.ifTrue(surfaceNoiseAbove(1.75), STONE), SurfaceRules.ifTrue(surfaceNoiseAbove(-0.5), WATER)));
+        SurfaceRules.RuleSource water = SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.biome4), SurfaceRules.sequence(SurfaceRules.ifTrue(surfaceNoiseAbove(-1.75), WATER)));
         SurfaceRules.RuleSource overworldLike = SurfaceRules.sequence(
                 SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
                         SurfaceRules.sequence(
@@ -125,12 +130,17 @@ public class ModNoiseBuilders {
         builder
                 .add(finalBiome)
                 .add(air)
+                .add(water)
                 .add(overworldLike)
                 .add(SurfaceRules.ifTrue(SurfaceRules.verticalGradient("stone", VerticalAnchor.absolute(0), VerticalAnchor.absolute(8)), STONE));
         ;
 
 
         return SurfaceRules.sequence(builder.build().toArray(SurfaceRules.RuleSource[]::new));
+    }
+
+    private static SurfaceRules.ConditionSource surfaceNoiseAbove(double value) {
+        return SurfaceRules.noiseCondition(Noises.SURFACE, value / 8.25, Double.MAX_VALUE);
     }
 
     private static NoiseRouter makeNoiseRouter(HolderGetter<DensityFunction> pDensityFunctions, HolderGetter<NormalNoise.NoiseParameters> pNoiseParameters) {
