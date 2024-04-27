@@ -128,13 +128,23 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
         }
     }
 
+    /**
+     * 开始贸易。
+     * 首先会清空所有交易物品，再进行添加。为的是防止村民碰到工作方块而自动添加交易物品
+     * @param player 交易对象
+     * @param merchantOffers 交易货物表
+     */
     public void startCustomTrade(Player player, MerchantOffer... merchantOffers){
-        if(!alreadyAddTrade){
-            for(MerchantOffer offer:merchantOffers){
-                this.getOffers().add(offer);
-            }
+        this.getOffers().clear();
+        for(MerchantOffer offer:merchantOffers){
+            this.getOffers().add(offer);
         }
-        alreadyAddTrade = true;
+//        if(!alreadyAddTrade){
+//            for(MerchantOffer offer:merchantOffers){
+//                this.getOffers().add(offer);
+//            }
+//        }
+//        alreadyAddTrade = true;
 
         this.setTradingPlayer(player);
         this.openTradingScreen(player, this.getDisplayName(), this.getVillagerData().getLevel());
