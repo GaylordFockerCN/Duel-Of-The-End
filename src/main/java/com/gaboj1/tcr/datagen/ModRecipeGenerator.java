@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.datagen;
 
-import com.gaboj1.tcr.init.TCRModBlocks;
-import com.gaboj1.tcr.init.TCRModItems;
+import com.gaboj1.tcr.block.TCRModBlocks;
+import com.gaboj1.tcr.item.TCRModItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;

@@ -1,9 +1,14 @@
 package com.gaboj1.tcr;
 
+import com.gaboj1.tcr.block.TCRModBlockEntities;
+import com.gaboj1.tcr.block.TCRModBlocks;
 import com.gaboj1.tcr.block.entity.client.PortalBlockRenderer;
 import com.gaboj1.tcr.block.entity.client.YggdrasilBlockRenderer;
 import com.gaboj1.tcr.block.renderer.BetterStructureBlockRenderer;
 import com.gaboj1.tcr.block.renderer.PortalBedRenderer;
+import com.gaboj1.tcr.effect.TCREffects;
+import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.TCRModVillagers;
 import com.gaboj1.tcr.entity.client.boss.TreeClawRenderer;
 import com.gaboj1.tcr.entity.client.boss.YggdrasilRenderer;
 import com.gaboj1.tcr.entity.client.dreamspirit.JellyCatRenderer;
@@ -23,7 +28,8 @@ import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainTalkableVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
-import com.gaboj1.tcr.init.*;
+import com.gaboj1.tcr.item.TCRModItemTabs;
+import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import com.gaboj1.tcr.worldgen.dimension.TCRChunkGenerator;
@@ -96,9 +102,9 @@ public class TheCasketOfReveriesMod {
         TCRModBlockEntities.REGISTRY.register(bus);
         TCRModEntities.REGISTRY.register(bus);
         TCRModItemTabs.REGISTRY.register(bus);
+        TCREffects.REGISTRY.register(bus);
         TCRStructurePlacementTypes.STRUCTURE_PLACEMENT_TYPES.register(bus);
         TCRModVillagers.register(bus);
-
         bus.addListener(this::commonSetup);
         bus.addListener(this::registerExtraStuff);
         bus.addListener(this::setRegistriesForDatapack);

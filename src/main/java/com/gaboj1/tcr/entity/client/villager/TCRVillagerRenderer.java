@@ -2,7 +2,7 @@ package com.gaboj1.tcr.entity.client.villager;
 
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
-import com.gaboj1.tcr.init.TCRModItems;
+import com.gaboj1.tcr.item.TCRModItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;

@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.datagen.sound;
 
-import com.gaboj1.tcr.init.TCRModSounds;
+import com.gaboj1.tcr.TCRModSounds;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 

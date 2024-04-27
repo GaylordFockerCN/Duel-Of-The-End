@@ -3,14 +3,11 @@ package com.gaboj1.tcr.block.custom;
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.entity.PortalBedEntity;
-import com.gaboj1.tcr.datagen.ModAdvancementData;
+import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import com.gaboj1.tcr.worldgen.portal.TCRTeleporter;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -31,7 +28,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class PortalBed extends BedBlock {
     public PortalBed(DyeColor pColor, Properties pProperties) {
@@ -57,8 +53,8 @@ public class PortalBed extends BedBlock {
                 if (portalDimension != null && !pPlayer.isPassenger()) {
                     if(resourcekey == (TCRConfig.MORE_HOLE.get()?TCRDimension.SKY_ISLAND_LEVEL_KEY:TCRDimension.P_SKY_ISLAND_LEVEL_KEY)) {
                         pPlayer.changeDimension(portalDimension, new TCRTeleporter(pPos, true));
-                        ModAdvancementData.getAdvancement(TheCasketOfReveriesMod.MOD_ID, (ServerPlayer) pPlayer);
-                        ModAdvancementData.getAdvancement("enter_realm_of_the_dream", (ServerPlayer) pPlayer);
+                        TCRAdvancementData.getAdvancement(TheCasketOfReveriesMod.MOD_ID, (ServerPlayer) pPlayer);
+                        TCRAdvancementData.getAdvancement("enter_realm_of_the_dream", (ServerPlayer) pPlayer);
                     } else {
 //                      pPlayer.changeDimension(portalDimension, new TCRTeleporter(pPos, false));
 
@@ -71,7 +67,7 @@ public class PortalBed extends BedBlock {
                         Vec3 $$7 = pPos.getCenter();
                         pLevel.explode((Entity)null, pLevel.damageSources().badRespawnPointExplosion($$7), (ExplosionDamageCalculator)null, $$7, 5.0F, true, Level.ExplosionInteraction.BLOCK);
 
-                        ModAdvancementData.getAdvancement("try_wake_up",(ServerPlayer) pPlayer);
+                        TCRAdvancementData.getAdvancement("try_wake_up",(ServerPlayer) pPlayer);
 
                     }
                 }

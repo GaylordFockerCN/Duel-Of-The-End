@@ -1,19 +1,16 @@
 package com.gaboj1.tcr.block.entity;
 
 import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.init.TCRModBlockEntities;
-import com.gaboj1.tcr.init.TCRModBlocks;
+import com.gaboj1.tcr.block.TCRModBlockEntities;
+import com.gaboj1.tcr.block.TCRModBlocks;
 import com.google.common.collect.Lists;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.StructureBlockEditScreen;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.game.ServerboundSetStructureBlockPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.StructureBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -24,13 +21,10 @@ import net.minecraft.world.level.block.state.properties.StructureMode;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
-import net.minecraft.world.phys.AABB;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class BetterStructureBlockEntity extends StructureBlockEntity {
 

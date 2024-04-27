@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
-import com.gaboj1.tcr.init.TCRModEntities;
+import com.gaboj1.tcr.entity.TCRModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;

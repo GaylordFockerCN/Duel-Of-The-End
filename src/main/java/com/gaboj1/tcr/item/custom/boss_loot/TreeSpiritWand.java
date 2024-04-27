@@ -1,10 +1,9 @@
 package com.gaboj1.tcr.item.custom.boss_loot;
 
 import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.datagen.ModAdvancementData;
-import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
-import com.gaboj1.tcr.init.TCRModBlocks;
-import com.gaboj1.tcr.init.TCRModEntities;
+import com.gaboj1.tcr.datagen.TCRAdvancementData;
+import com.gaboj1.tcr.block.TCRModBlocks;
+import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.item.renderer.TreeSpiritWandRenderer;
 import com.gaboj1.tcr.util.ItemUtil;
 import com.google.common.collect.ImmutableMultimap;
@@ -94,7 +93,7 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
             }
             player.hurt(level.damageSources().magic(), 2f);
             if(player.isDeadOrDying()){
-                ModAdvancementData.getAdvancement("die_for_summon",(ServerPlayer) player);
+                TCRAdvancementData.getAdvancement("die_for_summon",(ServerPlayer) player);
             }
             ItemStack itemStack = player.getItemInHand(pContext.getHand());//pContext.getItemInHand()不知道ok不ok
             summonAnim(serverLevel,player,itemStack);
@@ -130,7 +129,7 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
     public boolean hurtEnemy(ItemStack itemStack, LivingEntity pTarget, LivingEntity pAttacker) {
         itemStack.setDamageValue(itemStack.getDamageValue()+1);
         if(pAttacker instanceof ServerPlayer serverPlayer) {
-            ModAdvancementData.getAdvancement("melee_mage", serverPlayer);
+            TCRAdvancementData.getAdvancement("melee_mage", serverPlayer);
         }
 
         return super.hurtEnemy(itemStack, pTarget, pAttacker);

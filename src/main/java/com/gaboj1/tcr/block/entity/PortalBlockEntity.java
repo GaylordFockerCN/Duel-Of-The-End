@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.block.entity;
 
-import com.gaboj1.tcr.init.TCRModBlockEntities;
+import com.gaboj1.tcr.block.TCRModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

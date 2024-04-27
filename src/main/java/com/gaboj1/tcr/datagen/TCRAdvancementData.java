@@ -1,8 +1,8 @@
 package com.gaboj1.tcr.datagen;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.init.TCRModBlocks;
-import com.gaboj1.tcr.init.TCRModItems;
+import com.gaboj1.tcr.block.TCRModBlocks;
+import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.datagen.loot.TCRLoot;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import net.minecraft.advancements.Advancement;
@@ -17,6 +17,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeAdvancementProvider;
@@ -25,17 +26,21 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-public class ModAdvancementData extends ForgeAdvancementProvider {
-    public ModAdvancementData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, ExistingFileHelper helper) {
+public class TCRAdvancementData extends ForgeAdvancementProvider {
+    public TCRAdvancementData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, ExistingFileHelper helper) {
         super(output, registries, helper, List.of(new AetherAdvancements()));
     }
 
     public static class AetherAdvancements implements AdvancementGenerator {
 
         public final String pre = "advancement."+TheCasketOfReveriesMod.MOD_ID+".";
+        private Consumer<Advancement> consumer;
+        private ExistingFileHelper helper;
         @SuppressWarnings("unused")
         @Override
         public void generate(HolderLookup.Provider provider, Consumer<Advancement> consumer, ExistingFileHelper existingFileHelper) {
+            this.consumer = consumer;
+            this.helper = existingFileHelper;
 
             Advancement theCasketOfReveries = Advancement.Builder.advancement()
                     .display(TCRModBlocks.PORTAL_BED.get(),
@@ -116,6 +121,8 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
                     .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
 
+            Advancement spend_money_like_water = registerAdvancement(enterRealmOfTheDream, "spend_money_like_water", FrameType.GOAL, TCRModItems.ORICHALCUM.get());
+
             name = "die_for_summon";
             Advancement die_for_summon = Advancement.Builder.advancement()
                     .parent(enterRealmOfTheDream)//TODO 换成打过树妖后
@@ -162,25 +169,20 @@ public class ModAdvancementData extends ForgeAdvancementProvider {
 
         }
 
-        /**
-         * 备用
-         * @param parent
-         * @param name
-         * @param consumer
-         * @param helper
-         * @param type
-         * @return
-         */
-        public Advancement registerAdvancement(Advancement parent, String name, Consumer<Advancement> consumer , ExistingFileHelper helper, FrameType type){
+        public Advancement registerAdvancement(Advancement parent, String name, FrameType type, Item display, boolean showToast, boolean announceToChat, boolean hidden){
             return Advancement.Builder.advancement()
                     .parent(parent)
-                    .display(TCRModItems.JELLY_CAT_SPAWN_EGG.get(),
+                    .display(display,
                             Component.translatable(pre+name),
                             Component.translatable(pre+name+".desc"),
                             null,
                             type, true, true, true)
                     .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
                     .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), helper);
+        }
+
+        public Advancement registerAdvancement(Advancement parent, String name, FrameType type, Item display){
+            return registerAdvancement(parent, name, type, display, true, true, true);
         }
 
 

@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.datagen.tags;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.init.TCRModEntities;
+import com.gaboj1.tcr.entity.TCRModEntities;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;

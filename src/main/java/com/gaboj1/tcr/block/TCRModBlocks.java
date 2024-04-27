@@ -1,7 +1,8 @@
-package com.gaboj1.tcr.init;
+package com.gaboj1.tcr.block;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.custom.*;
+import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.worldgen.tree.DenseSpiritTreeGrower;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

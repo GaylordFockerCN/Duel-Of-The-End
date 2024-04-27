@@ -4,7 +4,7 @@ import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
-import com.gaboj1.tcr.init.TCRModItems;
+import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.util.BookManager;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.PacketRelay;

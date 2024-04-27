@@ -38,6 +38,9 @@ import java.util.function.Consumer;
  * 右键地面引雷
  * 可选附魔引雷
  * 右键御剑飞行
+ *
+ *
+ * @see ValkyrieArmor#handleFlight(LivingEntity entity)
  */
 public class HolySword extends MagicWeapon implements GeoItem {
 

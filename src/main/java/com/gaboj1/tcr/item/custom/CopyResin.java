@@ -1,11 +1,7 @@
 package com.gaboj1.tcr.item.custom;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.datagen.ModAdvancementData;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementProgress;
+import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -33,10 +29,10 @@ public class CopyResin extends Item {
             pPlayer.getItemInHand(pUsedHand).shrink(1);
             pPlayer.addItem(otherHandItem.copyWithCount(1));
 
-            ModAdvancementData.getAdvancement("mass_production",(ServerPlayer) pPlayer);
+            TCRAdvancementData.getAdvancement("mass_production",(ServerPlayer) pPlayer);
 
             if(otherHandItem.isEmpty()) {
-                ModAdvancementData.getAdvancement("so_rich", (ServerPlayer) pPlayer);
+                TCRAdvancementData.getAdvancement("so_rich", (ServerPlayer) pPlayer);
             }
         }
 

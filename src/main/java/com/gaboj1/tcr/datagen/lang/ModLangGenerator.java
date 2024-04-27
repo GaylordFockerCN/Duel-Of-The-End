@@ -1,10 +1,11 @@
 package com.gaboj1.tcr.datagen.lang;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.init.TCRModBlocks;
-import com.gaboj1.tcr.init.TCRModEntities;
-import com.gaboj1.tcr.init.TCRModItems;
-import com.gaboj1.tcr.init.TCRModSounds;
+import com.gaboj1.tcr.block.TCRModBlocks;
+import com.gaboj1.tcr.effect.TCREffects;
+import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.TCRModSounds;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import net.minecraft.data.PackOutput;
 
@@ -15,6 +16,8 @@ public class ModLangGenerator extends ModLangProvider {
 
     @Override
     protected void addTranslations() {
+
+        this.addEffect(TCREffects.ORICHALCUM, "神金");
 
         this.add("info.the_casket_of_reveries.enter_forbidden_biome","前面的区域，以后再来探索吧~");
         this.add("info.the_casket_of_reveries.teleport_lock","该区域尚未解锁");
@@ -83,6 +86,15 @@ public class ModLangGenerator extends ModLangProvider {
         this.addItemUsageInfo(TCRModItems.RAW_ORICHALCUM.get(),"神金，怎么在梦里还要挖矿？");
         this.add(TCRModItems.ORICHALCUM.get(),"神金");
         this.addItemUsageInfo(TCRModItems.ORICHALCUM.get(),"神金，能让人突然想笑一下。");
+
+        this.add(TCRModItems.ORICHALCUM_HELMET.get(),"神金头盔");
+        this.add(TCRModItems.ORICHALCUM_CHESTPLATE.get(),"神金胸甲");
+        this.add(TCRModItems.ORICHALCUM_LEGGINGS.get(),"神金护腿");
+        this.add(TCRModItems.ORICHALCUM_BOOTS.get(),"神金靴子");
+        this.addItemUsageInfo(TCRModItems.ORICHALCUM_HELMET.get(),"神金套装，拥有非常高的韧性和击退抗性，但是护甲值较低。");
+        this.addItemUsageInfo(TCRModItems.ORICHALCUM_CHESTPLATE.get(),"神金套装，拥有非常高的韧性和击退抗性，但是护甲值较低。");
+        this.addItemUsageInfo(TCRModItems.ORICHALCUM_LEGGINGS.get(),"神金套装，拥有非常高的韧性和击退抗性，但是护甲值较低。");
+        this.addItemUsageInfo(TCRModItems.ORICHALCUM_BOOTS.get(),"神金套装，拥有非常高的韧性和击退抗性，但是护甲值较低。");
 
 
         this.add(TCRModItems.DREAMSCAPE_COIN.get(),"奇梦币");
@@ -311,6 +323,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addAdvancement("day_dreamer","白日梦想家","通过村民帮助获得火铳");
         this.addAdvancement("can_double_hold","原来这也行？","双持火铳");
         this.addAdvancement("cats_friend","猫猫之友","驯服所有种类的猫猫果冻");
+        this.addAdvancement("spend_money_like_water","挥金如土","合成一套神金套装。神金，不拿去换钱却换一个普通的盔甲。");
 
         this.addBiome(TCRBiomes.PASTORAL_PLAINS,"牧歌原野");
         this.addBiome(TCRBiomes.DENSE_FOREST,"回溯密林");

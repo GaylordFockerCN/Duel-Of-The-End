@@ -34,7 +34,7 @@ public class DataGenerators {
         //Server
         generator.addProvider(event.includeServer(), new ModRecipeGenerator(output));
         generator.addProvider(event.includeServer(), ModLootTableProvider.create(output));
-        generator.addProvider(event.includeServer(), new ModAdvancementData(output, lookupProvider, helper));
+        generator.addProvider(event.includeServer(), new TCRAdvancementData(output, lookupProvider, helper));
         generator.addProvider(event.includeServer(), new ModEntityTagGenerator(output, lookupProvider, helper));
 
         ModBlockTagGenerator blockTagGenerator = generator.addProvider(event.includeServer(),

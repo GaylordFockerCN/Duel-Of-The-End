@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.init;
+package com.gaboj1.tcr.particle;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import net.minecraft.core.particles.ParticleType;

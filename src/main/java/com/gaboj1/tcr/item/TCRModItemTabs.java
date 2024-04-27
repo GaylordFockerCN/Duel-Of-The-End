@@ -1,6 +1,8 @@
-package com.gaboj1.tcr.init;
+package com.gaboj1.tcr.item;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.block.TCRModBlocks;
+import com.gaboj1.tcr.item.TCRModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -74,9 +76,15 @@ public class TCRModItemTabs {
 				tabData.accept(TCRModItems.SUPER_RESIN.get());
 				tabData.accept(TCRModItems.COPY_RESIN.get());
 
-
+				//掉落物
 				tabData.accept(TCRModItems.ELDER_STAFF.get());
 				tabData.accept(TCRModItems.TREE_DEMON_HORN.get());
+
+				//盔甲
+				tabData.accept(TCRModItems.ORICHALCUM_HELMET.get());
+				tabData.accept(TCRModItems.ORICHALCUM_CHESTPLATE.get());
+				tabData.accept(TCRModItems.ORICHALCUM_LEGGINGS.get());
+				tabData.accept(TCRModItems.ORICHALCUM_BOOTS.get());
 
 				//货币
 				tabData.accept(TCRModItems.DREAMSCAPE_COIN.get());

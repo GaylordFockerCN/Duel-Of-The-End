@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.datagen.loot;
 
-import com.gaboj1.tcr.init.TCRModEntities;
-import com.gaboj1.tcr.init.TCRModItems;
+import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.item.TCRModItems;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;

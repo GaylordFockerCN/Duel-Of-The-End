@@ -1,8 +1,8 @@
 package com.gaboj1.tcr.block.entity.spawner;
 
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
-import com.gaboj1.tcr.init.TCRModBlockEntities;
-import com.gaboj1.tcr.init.TCRModEntities;
+import com.gaboj1.tcr.block.TCRModBlockEntities;
+import com.gaboj1.tcr.entity.TCRModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;

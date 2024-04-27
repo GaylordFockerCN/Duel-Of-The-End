@@ -1,6 +1,7 @@
-package com.gaboj1.tcr.init;
+package com.gaboj1.tcr.entity;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.block.TCRModBlocks;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.ai.village.poi.PoiType;

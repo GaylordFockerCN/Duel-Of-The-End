@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.block.custom;
 
-import com.gaboj1.tcr.init.TCRModBlocks;
+import com.gaboj1.tcr.block.TCRModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.AxeItem;

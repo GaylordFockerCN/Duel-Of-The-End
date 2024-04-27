@@ -1,11 +1,11 @@
 package com.gaboj1.tcr.entity.custom.villager.biome1;
 
-import com.gaboj1.tcr.datagen.ModAdvancementData;
+import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.custom.villager.TCRTalkableVillager;
 import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.gui.screen.TreeNode;
-import com.gaboj1.tcr.init.TCRModEntities;
-import com.gaboj1.tcr.init.TCRModItems;
+import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.ItemUtil;
 import net.minecraft.ChatFormatting;
@@ -151,6 +151,8 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
         player.getPersistentData().putBoolean("hasTalkedTo"+getSkinID(),true);
 
         switch (interactionID){
+
+            //商人
             case -1:
                 chat(BUILDER.buildDialogueAnswer(entityType,-1,false));
 //                VillagerData data = getVillagerData();
@@ -159,12 +161,12 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
 //                System.out.println(getVillagerData().getProfession());
                 startCustomTrade(player,
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
-                                new ItemStack(TCRModItems.BEER.get(), 1),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 64),
+                                new ItemStack(TCRModItems.ORICHALCUM.get(), 1),
                                 16, 0, 0),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
-                                new ItemStack(TCRModItems.DRINK2.get(), 1),
+                                new ItemStack(TCRModItems.ORICHALCUM.get(), 1),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 48),
                                 16, 0, 1)
                 );
                 break;
@@ -182,6 +184,22 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                         new MerchantOffer(
                                 new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
                                 new ItemStack(TCRModItems.DESERT_EAGLE_AMMO.get(), 2),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.ORICHALCUM.get(), 5),
+                                new ItemStack(TCRModItems.ORICHALCUM_HELMET.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.ORICHALCUM.get(), 8),
+                                new ItemStack(TCRModItems.ORICHALCUM_CHESTPLATE.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.ORICHALCUM.get(), 7),
+                                new ItemStack(TCRModItems.ORICHALCUM_LEGGINGS.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.ORICHALCUM.get(), 4),
+                                new ItemStack(TCRModItems.ORICHALCUM_BOOTS.get(), 1),
                                 16, 0, 0.02f)
                 );
                 break;
@@ -193,7 +211,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 DataManager.gunGot.putBool(player,true);//存入得用玩家
 
                 if(player instanceof ServerPlayer serverPlayer){
-                    ModAdvancementData.getAdvancement("day_dreamer",serverPlayer);
+                    TCRAdvancementData.getAdvancement("day_dreamer",serverPlayer);
                 }
 
                 return;//NOTE 记得返回，否则对话中断！

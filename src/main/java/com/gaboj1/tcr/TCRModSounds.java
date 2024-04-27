@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.init;
+package com.gaboj1.tcr;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import net.minecraft.sounds.SoundEvent;

@@ -1,9 +1,8 @@
 package com.gaboj1.tcr.entity.custom.dreamspirit;
 
-import com.gaboj1.tcr.datagen.ModAdvancementData;
+import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.ManySkinEntity;
-import com.gaboj1.tcr.init.TCRModSounds;
-import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
+import com.gaboj1.tcr.TCRModSounds;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -29,7 +28,6 @@ import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.biome.Biome;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -127,7 +125,7 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
                 }
             }
             if(isAllTamed){
-                ModAdvancementData.getAdvancement("cats_friend",serverPlayer);
+                TCRAdvancementData.getAdvancement("cats_friend",serverPlayer);
             }
         }
         super.tame(player);

@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.init;
+package com.gaboj1.tcr.entity;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.TreeClawEntity;

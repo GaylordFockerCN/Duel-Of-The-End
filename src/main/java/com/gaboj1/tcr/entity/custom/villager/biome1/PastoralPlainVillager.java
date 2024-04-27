@@ -1,14 +1,13 @@
 package com.gaboj1.tcr.entity.custom.villager.biome1;
 
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
-import com.gaboj1.tcr.init.TCRModEntities;
+import com.gaboj1.tcr.entity.TCRModEntities;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 

@@ -1,7 +1,8 @@
 package com.gaboj1.tcr.datagen.tags;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.init.TCRModBlocks;
+import com.gaboj1.tcr.block.TCRModBlocks;
+import com.gaboj1.tcr.item.TCRModItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -30,5 +31,10 @@ public class ModItemTagGenerator extends ItemTagsProvider {
         this.tag(ItemTags.PLANKS)
                 .add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get().asItem());
 
+        this.tag(ItemTags.TRIMMABLE_ARMOR)
+                .add(TCRModItems.ORICHALCUM_HELMET.get())
+                .add(TCRModItems.ORICHALCUM_CHESTPLATE.get())
+                .add(TCRModItems.ORICHALCUM_LEGGINGS.get())
+                .add(TCRModItems.ORICHALCUM_BOOTS.get());
     }
 }

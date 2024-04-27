@@ -1,24 +1,19 @@
 
 package com.gaboj1.tcr.item.custom;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.datagen.ModAdvancementData;
-import com.gaboj1.tcr.init.TCRModItems;
+import com.gaboj1.tcr.datagen.TCRAdvancementData;
+import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.keymapping.KeyMappings;
 import com.gaboj1.tcr.entity.custom.DesertEagleBulletEntity;
-import com.gaboj1.tcr.init.TCRModEntities;
-import com.gaboj1.tcr.init.TCRModSounds;
+import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.TCRModSounds;
 import com.gaboj1.tcr.item.renderer.DesertEagleItemRenderer;
 import com.gaboj1.tcr.util.ItemUtil;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -49,7 +44,7 @@ import software.bernie.geckolib.util.RenderUtils;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static com.gaboj1.tcr.init.TCRModItems.DESERT_EAGLE_AMMO;
+import static com.gaboj1.tcr.item.TCRModItems.DESERT_EAGLE_AMMO;
 
 /**
  * 为了子沙鹰类做准备，省的写很多重复的代码
@@ -174,7 +169,7 @@ public class DesertEagleItem extends Item implements GeoItem {
                             //双持伤害翻倍。不发射两发是因为有霸体时间..
                             if(player.getItemInHand((hand == InteractionHand.MAIN_HAND?InteractionHand.OFF_HAND:InteractionHand.MAIN_HAND)).getItem() instanceof DesertEagleItem){
                                 entityToSpawn.setBaseDamage(damage*2);
-                                ModAdvancementData.getAdvancement("can_double_hold",(ServerPlayer) player);
+                                TCRAdvancementData.getAdvancement("can_double_hold",(ServerPlayer) player);
 
                             }
                             entityToSpawn.setKnockback(knockBack);

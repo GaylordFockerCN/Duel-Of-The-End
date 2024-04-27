@@ -1,8 +1,8 @@
 //package com.gaboj1.tcr.listener;
 //
 //import com.gaboj1.tcr.TheCasketOfReveriesMod;
-//import com.gaboj1.tcr.init.TCRModItems;
-//import com.gaboj1.tcr.init.TCRModVillagers;
+//import com.gaboj1.tcr.item.TCRModItems;
+//import com.gaboj1.tcr.entity.TCRModVillagers;
 //import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 //import net.minecraft.world.entity.npc.VillagerTrades;
 //import net.minecraft.world.item.ItemStack;

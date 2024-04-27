@@ -1,9 +1,9 @@
 package com.gaboj1.tcr.event.listeners;
 
 import com.gaboj1.tcr.block.custom.DenseForestTreeBlock;
-import com.gaboj1.tcr.datagen.ModAdvancementData;
+import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
-import com.gaboj1.tcr.init.TCRModEntities;
+import com.gaboj1.tcr.entity.TCRModEntities;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.MobSpawnType;
@@ -42,7 +42,7 @@ public class TreeSpawnMoster {
                 SmallTreeMonsterEntity entity =  TCRModEntities.SMALL_TREE_MONSTER.get().spawn(serverLevel,event.getPos(), MobSpawnType.NATURAL);
                 entity.hurt(((ServerLevel) level).damageSources().playerAttack(player),1f);
                 entity.setTarget(player);
-                ModAdvancementData.getAdvancement("wow",serverPlayer);
+                TCRAdvancementData.getAdvancement("wow",serverPlayer);
             }
         }
 

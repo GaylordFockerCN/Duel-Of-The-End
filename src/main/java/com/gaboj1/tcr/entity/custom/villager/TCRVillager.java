@@ -2,7 +2,7 @@ package com.gaboj1.tcr.entity.custom.villager;
 
 import com.gaboj1.tcr.entity.ManySkinEntity;
 import com.gaboj1.tcr.entity.ai.behavior.TCRVillagerTasks;
-import com.gaboj1.tcr.init.TCRModSounds;
+import com.gaboj1.tcr.TCRModSounds;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.server.AddVillagerParticlePacket;

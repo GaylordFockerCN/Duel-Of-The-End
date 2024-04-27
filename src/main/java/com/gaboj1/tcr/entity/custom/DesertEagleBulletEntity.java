@@ -1,11 +1,11 @@
 
 package com.gaboj1.tcr.entity.custom;
 
-import com.gaboj1.tcr.datagen.ModAdvancementData;
+import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.util.headshot.BoundingBoxManager;
 import com.gaboj1.tcr.util.headshot.IHeadshotBox;
-import com.gaboj1.tcr.init.TCRModEntities;
-import com.gaboj1.tcr.init.TCRModItems;
+import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.item.TCRModItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.network.chat.Component;
@@ -82,7 +82,7 @@ public class DesertEagleBulletEntity extends AbstractArrow implements ItemSuppli
 			this.discard();
 
 			if (this.getOwner() instanceof ServerPlayer _player && distanceTo(_player) >= 100) {
-				ModAdvancementData.getAdvancement("shoot_hundred_meters",_player);
+				TCRAdvancementData.getAdvancement("shoot_hundred_meters",_player);
 			}
 
 		}
