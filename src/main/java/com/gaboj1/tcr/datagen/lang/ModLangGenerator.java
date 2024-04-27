@@ -79,6 +79,11 @@ public class ModLangGenerator extends ModLangProvider {
         this.add(TCRModItems.ADVANCED_RESIN.get(),"高级树脂");
         this.add(TCRModItems.SUPER_RESIN.get(),"超级树脂");
 
+        this.add(TCRModItems.RAW_ORICHALCUM.get(),"粗神金");
+        this.addItemUsageInfo(TCRModItems.RAW_ORICHALCUM.get(),"神金，怎么在梦里还要挖矿？");
+        this.add(TCRModItems.ORICHALCUM.get(),"神金");
+        this.addItemUsageInfo(TCRModItems.ORICHALCUM.get(),"神金，能让人突然想笑一下。");
+
 
         this.add(TCRModItems.DREAMSCAPE_COIN.get(),"奇梦币");
         this.addItemUsageInfo(TCRModItems.DREAMSCAPE_COIN.get(),"在梦之领域通用的货币，闪闪发光十分珍贵。九个奇梦币可以合成一个大奇梦币");
@@ -129,6 +134,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.add(TCRModBlocks.PORTAL_BED.get(),"灵梦床");//等等，灵梦？
         this.add(TCRModBlocks.PORTAL_BLOCK.get(),"天域凭证");//传送石碑
         this.add(TCRModBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER.get(),"密林灵花盆栽");
+        this.add(TCRModBlocks.ORICHALCUM_ORE.get(),"神金矿");
         this.add(TCRModBlocks.YGGDRASIL_BLOCK.get(),"Yggdrasil召唤石");
 
         this.addEntityAndEgg(TCRModEntities.JELLY_CAT,"猫猫果冻");

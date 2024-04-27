@@ -38,6 +38,8 @@ public class ModRecipeGenerator extends ModRecipeProvider implements IConditionB
         woodBlockStorageRecipes(consumer, RecipeCategory.DECORATIONS, TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get(), TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
         woodBlockStorageRecipes(consumer, RecipeCategory.DECORATIONS, TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get(), TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
 
+        this.oreSmelting(TCRModItems.ORICHALCUM.get(), TCRModItems.RAW_ORICHALCUM.get(), 0.7f, 200, consumer);
+
     }
 
 }

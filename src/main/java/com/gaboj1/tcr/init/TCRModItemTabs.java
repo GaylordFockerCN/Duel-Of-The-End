@@ -34,8 +34,7 @@ public class TCRModItemTabs {
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get());
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING.get());
-
-
+				tabData.accept(TCRModBlocks.ORICHALCUM_ORE.get());
 
 			}).build());
 
@@ -82,6 +81,8 @@ public class TCRModItemTabs {
 				//货币
 				tabData.accept(TCRModItems.DREAMSCAPE_COIN.get());
 				tabData.accept(TCRModItems.DREAMSCAPE_COIN_PLUS.get());
+				tabData.accept(TCRModItems.RAW_ORICHALCUM.get());
+				tabData.accept(TCRModItems.ORICHALCUM.get());
 
 				//法宝
 				tabData.accept(TCRModItems.TREE_SPIRIT_WAND.get());
@@ -93,7 +94,6 @@ public class TCRModItemTabs {
 				tabData.accept(TCRModItems.BEER.get());
 				tabData.accept(TCRModItems.COOKIE.get());
 				tabData.accept(TCRModItems.ELDER_CAKE.get());
-				//说出来你可能不信，以下的小物品是训练chatGPT3.5仿写后修改的（大力解放生产力！）
 				tabData.accept(TCRModItems.EDEN_APPLE.get());
 				tabData.accept(TCRModItems.DRINK1.get());
 				tabData.accept(TCRModItems.DRINK2.get());

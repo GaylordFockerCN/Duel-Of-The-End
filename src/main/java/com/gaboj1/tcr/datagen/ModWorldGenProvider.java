@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.datagen;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.worldgen.TCRBiomeModifiers;
 import com.gaboj1.tcr.worldgen.TCRConfiguredFeatures;
 import com.gaboj1.tcr.worldgen.TCRPlacedFeatures;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
@@ -15,6 +16,7 @@ import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -26,6 +28,7 @@ public class ModWorldGenProvider extends DatapackBuiltinEntriesProvider {
 //            .add(Registries.STRUCTURE_SET, TCRStructureSets::bootstrap)
             .add(Registries.CONFIGURED_FEATURE, TCRConfiguredFeatures::bootstrap)
             .add(Registries.PLACED_FEATURE, TCRPlacedFeatures::bootstrap)
+            .add(ForgeRegistries.Keys.BIOME_MODIFIERS, TCRBiomeModifiers::bootstrap)
             .add(Registries.DENSITY_FUNCTION, ModDensityFunctions::bootstrap)
             .add(Registries.NOISE, ModNoises::bootstrap)
             .add(Registries.NOISE_SETTINGS, ModNoiseSettings::bootstrap)
