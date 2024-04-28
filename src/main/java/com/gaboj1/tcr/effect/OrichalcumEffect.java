@@ -4,6 +4,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
 
 public class OrichalcumEffect extends MobEffect {
 
@@ -17,6 +18,7 @@ public class OrichalcumEffect extends MobEffect {
         if(livingEntity instanceof ServerPlayer player){
             if(effectDuration == 0){
                 player.setSwimming(false);
+                player.setPose(Pose.SWIMMING);//神金，不知道行不行
             }
             player.setSwimming(true);
         }
