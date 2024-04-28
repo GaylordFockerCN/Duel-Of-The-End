@@ -18,6 +18,7 @@ public class ModLangGenerator extends ModLangProvider {
     protected void addTranslations() {
 
         this.addEffect(TCREffects.ORICHALCUM, "神金");
+        this.addEffect(TCREffects.FLY_SPEED, "御剑飞行");
 
         this.add("info.the_casket_of_reveries.enter_forbidden_biome","前面的区域，以后再来探索吧~");
         this.add("info.the_casket_of_reveries.teleport_lock","该区域尚未解锁");

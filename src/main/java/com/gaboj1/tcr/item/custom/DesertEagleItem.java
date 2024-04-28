@@ -326,12 +326,8 @@ public class DesertEagleItem extends Item implements GeoItem {
     }
 
     public static void setBulletItemStack(ItemStack gun, ItemStack bullet, int id) {
-        // 如果枪械没有 NBT 标签，给它添加一个
-        if (!gun.hasTag()) {
-            gun.setTag(new CompoundTag());
-        }
         // 如果枪械的 NBT 标签中没有 "ammo" 标签，给它添加一个
-        if (!gun.getTag().contains("ammo")) {
+        if (!gun.getOrCreateTag().contains("ammo")) {
             ListTag ammoTagsList = new ListTag();
             for (int i = 0; i < numAmmoItemsInGun; i++) {
                 ammoTagsList.add(new CompoundTag());

@@ -1,13 +1,19 @@
 package com.gaboj1.tcr.item.custom.boss_loot;
 
+import com.gaboj1.tcr.effect.TCREffects;
 import com.gaboj1.tcr.item.renderer.HolySwordRenderer;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,7 +36,9 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.ArrayDeque;
 import java.util.List;
+import java.util.Queue;
 import java.util.function.Consumer;
 
 /**
@@ -38,14 +46,14 @@ import java.util.function.Consumer;
  * 右键地面引雷
  * 可选附魔引雷
  * 右键御剑飞行
- *
- *
- * @see ValkyrieArmor#handleFlight(LivingEntity entity)
+ * @author LZY
  */
 public class HolySword extends MagicWeapon implements GeoItem {
 
     private final float damage = 5.0f;
     private boolean isFlying;
+    //最长记录向量的时间
+    private static final int maxTick = 10;
     AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public HolySword() {
         super(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).defaultDurability(1428));
@@ -55,34 +63,140 @@ public class HolySword extends MagicWeapon implements GeoItem {
         return isFlying;
     }
 
-    //御剑飞行
+    /**
+     * 右键实现飞行模式的开关
+     * 关闭时获得短暂的缓降效果。
+     */
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if(!level.isClientSide){
             isFlying = !isFlying;
-            player.setNoGravity(isFlying);
+//            player.setNoGravity(isFlying);
+            if(!isFlying){
+                player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 10, 1, false, true));
+            }
         }
         return super.use(level, player, hand);
     }
 
+    /**
+     * 如果在飞行模式下，直接向朝向加速。
+     */
     @Override
     public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int slotId, boolean isSelected) {
-        if(isFlying && entity instanceof ServerPlayer player){
-            if(player.isShiftKeyDown() && !player.onGround()){
-                player.setPos(player.getX(),player.getY() - 0.1,player.getZ());
-                AttributeInstance gravity =  player.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+//        if(!(slotId == EquipmentSlot.FEET.ordinal())) {
+//            return;
+//        }
+        if(isFlying && entity instanceof Player player){
 
-//                player.teleportTo(player.getX(),player.getY() - 0.1,player.getZ());
-            } else {//TODO 按空格再飞
-                player.setNoGravity(true);
-                player.setPos(player.getX(),player.getY() + 0.2,player.getZ());
-//                player.teleportTo(player.getX(),player.getY() + 0.1,player.getZ());
+//            Vec3 d = player.getDeltaMovement();
+//            player.addEffect(new MobEffectInstance(TCREffects.FLY_SPEED.get(), 10, 1, false, true));
+//            if(player.isShiftKeyDown() && !player.onGround()){
+//                player.setDeltaMovement(d.x(), Math.max(d.y() - 0.1, -0.3), d.z());
+//            } else {
+////                double pX,pZ;
+////                //取最大的为比例
+////                if(Math.abs(d.x)>Math.abs(d.z)){
+////                    pX = d.x > 0 ? 0.5 : -0.5;
+////                    pZ = pX * (d.z / d.x);
+////                }else {
+////                    pZ = d.z > 0 ? 0.5 : -0.5;
+////                    pX = pZ * (d.x / d.z);
+////                }
+////                player.setDeltaMovement(pX, Math.min(d.y() + 0.1, 0.3), pZ);
+//
+//                player.setDeltaMovement(d.x, Math.min(d.y() + 0.1, 0.3), d.z);
+//            }
+
+            //还是直接读这个省事，鼠标控制不比方向键舒服多了
+//            player.setDeltaMovement(player.getViewVector(0));
+            if(getViewVec(itemStack).length() != 0){
+                player.setDeltaMovement(getViewVec(itemStack));
             }
+            updateViewVec(itemStack, player.getViewVector(0));
         }
         super.inventoryTick(itemStack, level, entity, slotId, isSelected);
     }
 
-    //平A伤害调整
+    /**
+     * 获取前n个tick前的方向向量
+     * @param sword
+     * @param tick
+     * @return
+     */
+    public static Vec3 getViewVec(ItemStack sword, int tick){
+        checkOrCreateTag(sword);
+        return getQueue(sword).toArray(new Vec3[maxTick-tick])[maxTick-tick];
+    }
+
+    public static Vec3 getViewVec(ItemStack sword){
+        return getQueue(sword).peek();
+    }
+
+    /**
+     * 保存很多个tick前的方向向量，实现惯性效果
+     * 通过队列来保存。
+     * 并作插值，实现惯性漂移（太妙了）
+     */
+    public static void updateViewVec(ItemStack sword, Vec3 viewVec){
+        checkOrCreateTag(sword);
+        Queue<Vec3> tickValues = getQueue(sword);
+        tickValues.add(viewVec);
+        Vec3 old = tickValues.poll();
+        Queue<Vec3> newTickValues = new ArrayDeque<>();
+        for(double i = 1; i <= tickValues.size(); i++){
+            Vec3 newVec3 = old.lerp(viewVec, i / tickValues.size());
+            newTickValues.add(newVec3);
+        }
+        saveQueue(sword, newTickValues);
+    }
+
+    /**
+     * 获取前几个tick内的方向向量队列
+     */
+    public static Queue<Vec3> getQueue(ItemStack sword){
+        CompoundTag tag = checkOrCreateTag(sword);
+        Queue<Vec3> tickValues = new ArrayDeque<>();
+        for(int i = 0; i < maxTick; i++){
+            CompoundTag tickVec = tag.getList("view_vec_queue", Tag.TAG_COMPOUND).getCompound(i);
+            tickValues.add(new Vec3(tickVec.getDouble("x"),tickVec.getDouble("y"),tickVec.getDouble("z")));
+        }
+        return tickValues;
+    }
+
+    /**
+     * 保存前几个tick内的方向向量队列
+     */
+    public static void saveQueue(ItemStack sword, Queue<Vec3> tickValues){
+        CompoundTag tag = checkOrCreateTag(sword);
+        for(int i = 0; i < maxTick; i++){
+            CompoundTag tickVecTag = tag.getList("view_vec_queue", Tag.TAG_COMPOUND).getCompound(i);
+            Vec3 tickVec = tickValues.remove();
+            tickVecTag.putDouble("x", tickVec.x);
+            tickVecTag.putDouble("y", tickVec.y);
+            tickVecTag.putDouble("z", tickVec.z);
+        }
+    }
+
+    /**
+     * 检查是否为空标签，是则创建一个完备的给它。防止异常。
+     */
+    public static CompoundTag checkOrCreateTag(ItemStack sword){
+        CompoundTag tag = sword.getOrCreateTag();
+        if (!tag.contains("view_vec_queue")) {
+            ListTag tickTagsList = new ListTag();
+            for (int i = 0; i < maxTick; i++) {
+                tickTagsList.add(new CompoundTag());
+            }
+            tag.put("view_vec_queue", tickTagsList);
+        }
+        return tag;
+    }
+
+
+    /**
+     *平A伤害调整
+     */
     @Override
     public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot equipmentSlot) {
         if (equipmentSlot == EquipmentSlot.MAINHAND || equipmentSlot == EquipmentSlot.OFFHAND) {
@@ -96,7 +210,9 @@ public class HolySword extends MagicWeapon implements GeoItem {
         return super.getDefaultAttributeModifiers(equipmentSlot);
     }
 
-    //天下武功，唯快不破！
+    /**
+     * 天下武功，唯快不破！
+     */
     @Override
     public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
         if(pAttacker instanceof ServerPlayer serverPlayer) {
