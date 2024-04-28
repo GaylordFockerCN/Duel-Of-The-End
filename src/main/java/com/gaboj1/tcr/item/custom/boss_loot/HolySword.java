@@ -71,7 +71,6 @@ public class HolySword extends MagicWeapon implements GeoItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if(!level.isClientSide){
             isFlying = !isFlying;
-//            player.setNoGravity(isFlying);
             if(!isFlying){
                 player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 10, 1, false, true));
             }
@@ -111,7 +110,7 @@ public class HolySword extends MagicWeapon implements GeoItem {
             //还是直接读这个省事，鼠标控制不比方向键舒服多了
 //            player.setDeltaMovement(player.getViewVector(0));
             if(getViewVec(itemStack).length() != 0){
-                player.setDeltaMovement(getViewVec(itemStack));
+                player.setDeltaMovement(getViewVec(itemStack));//add(new Vec3(1, 0, 0)
             }
             updateViewVec(itemStack, player.getViewVector(0));
         }
