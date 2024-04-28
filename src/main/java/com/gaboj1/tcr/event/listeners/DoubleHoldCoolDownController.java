@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.event.listeners;
 
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.item.custom.DesertEagleItem;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -16,46 +17,29 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
  * 有一点很关键，开始是没有判断canFire的，会导致左手可以开火但是由于右手先点击而导致左手武器被禁用
  *
  */
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID)
 public class DoubleHoldCoolDownController {
 
 	@SubscribeEvent
-	public static void init(FMLCommonSetupEvent event) {
-		new DoubleHoldCoolDownController();
-	}
+	public static void doubleHoldCoolDownController(PlayerInteractEvent event) {
 
-	@Mod.EventBusSubscriber
-	private static class ForgeBusEvents {
+		Player player = event.getEntity();
+		ItemStack offHandStack = player.getOffhandItem();
+		ItemStack mainHandStack = player.getMainHandItem();
+		if (offHandStack.getItem().getClass() == mainHandStack.getItem().getClass())return;
+		if(mainHandStack.getItem() instanceof DesertEagleItem mainHandItem&& offHandStack.getItem() instanceof DesertEagleItem offHandItem){
 
-		@SubscribeEvent
-		public static void doubleHoldCoolDownController(PlayerInteractEvent event) {
-
-			Player player = event.getEntity();
-			ItemStack offHandStack = player.getOffhandItem();
-			ItemStack mainHandStack = player.getMainHandItem();
-			if (offHandStack.getItem().getClass() == mainHandStack.getItem().getClass())return;
-			if(mainHandStack.getItem() instanceof DesertEagleItem mainHandItem&& offHandStack.getItem() instanceof DesertEagleItem offHandItem){
-
-				if(event.getHand() == InteractionHand.MAIN_HAND){
-					if(!player.getCooldowns().isOnCooldown(offHandItem)&& !mainHandItem.isReloading){
-						player.getCooldowns().addCooldown(offHandItem,1);
-					}
-				}else{
-					if((!player.getCooldowns().isOnCooldown(mainHandItem)) && !offHandItem.isReloading){
-						player.getCooldowns().addCooldown(mainHandItem,1);
-					}
+			if(event.getHand() == InteractionHand.MAIN_HAND){
+				if(!player.getCooldowns().isOnCooldown(offHandItem)&& !mainHandItem.isReloading){
+					player.getCooldowns().addCooldown(offHandItem,1);
 				}
-
+			}else{
+				if((!player.getCooldowns().isOnCooldown(mainHandItem)) && !offHandItem.isReloading){
+					player.getCooldowns().addCooldown(mainHandItem,1);
+				}
 			}
+
 		}
-
-//		@SubscribeEvent
-//		public static void onHoldHeavy(TickEvent.PlayerTickEvent event) {
-//			Player player = event.player;
-//			if(player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof HeavyDesertEagleItem ||player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof HeavyDesertEagleItem){
-//				player.setSpeed(0.5f);
-//			}else player.setSpeed(1);
-//		}
-
 	}
+
 }

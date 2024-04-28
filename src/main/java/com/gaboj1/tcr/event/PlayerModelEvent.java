@@ -9,8 +9,7 @@ import net.minecraftforge.eventbus.api.Cancelable;
 
 /**
  * The base class for player model events.
- *
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public abstract class PlayerModelEvent extends PlayerEvent
 {
