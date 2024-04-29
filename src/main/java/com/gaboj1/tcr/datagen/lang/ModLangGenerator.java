@@ -73,6 +73,7 @@ public class ModLangGenerator extends ModLangProvider {
 
         this.add(TCRModItems.HOLY_SWORD.get(),"额滴圣剑");
         this.addItemUsageInfo(TCRModItems.HOLY_SWORD.get(),"某位高人留下的圣剑",1);
+        this.addItemUsageInfo(TCRModItems.HOLY_SWORD.get(),"灵气值 ： %d",3);
 
         this.add(TCRModItems.COPY_RESIN.get(),"复制树脂");
         this.addItemUsageInfo(TCRModItems.COPY_RESIN.get(),"右键消耗以复制另一只手的物品");

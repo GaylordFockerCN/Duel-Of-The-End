@@ -2,8 +2,10 @@ package com.gaboj1.tcr.event.listeners;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.event.PlayerModelEvent;
+import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.item.custom.DesertEagleItem;
 import com.gaboj1.tcr.item.custom.boss_loot.HolySword;
+import com.gaboj1.tcr.util.ItemUtil;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.HumanoidArm;
@@ -55,7 +57,7 @@ public class PlayerModelHandler {
         }
 
         //御剑飞行的姿势
-        if(mainHand instanceof HolySword mainHandSword && mainHandSword.isFlying()){
+        if(ItemUtil.searchItem(player, TCRModItems.HOLY_SWORD.get()).getOrCreateTag().getBoolean("isFlying")){
 
             Consumer<ModelPart> setRot = (modelPart)->{
                 modelPart.xRot = 0;
@@ -73,7 +75,6 @@ public class PlayerModelHandler {
 //                System.out.println(modelPart.x+" "+modelPart.y+" "+modelPart.z);
 //            };
 //            handleModelPart(printXYZ, model.rightArm);
-
         }
 
     }

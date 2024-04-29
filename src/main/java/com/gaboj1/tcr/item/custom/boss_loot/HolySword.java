@@ -1,9 +1,12 @@
 package com.gaboj1.tcr.item.custom.boss_loot;
 
-import com.gaboj1.tcr.effect.TCREffects;
 import com.gaboj1.tcr.item.renderer.HolySwordRenderer;
+import com.gaboj1.tcr.network.PacketRelay;
+import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.packet.client.UpdateFlySpeedPacket;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -18,7 +21,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -51,16 +53,43 @@ import java.util.function.Consumer;
 public class HolySword extends MagicWeapon implements GeoItem {
 
     private final float damage = 5.0f;
-    private boolean isFlying;
     //最长记录向量的时间
-    private static final int maxTick = 10;
+    private static final int maxTick = 40;
+    //最大灵力值
+    private static final int maxSpiritValue = 10000;
     AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public HolySword() {
         super(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).defaultDurability(1428));
     }
 
-    public boolean isFlying() {
-        return isFlying;
+    public boolean isFlying(ItemStack sword) {
+        return sword.getOrCreateTag().getBoolean("isFlying");
+    }
+
+    public void setFlying(ItemStack sword, boolean isFlying) {
+        sword.getOrCreateTag().putBoolean("isFlying", isFlying);
+    }
+
+    public int getLeftTick(ItemStack sword) {
+        return sword.getOrCreateTag().getInt("leftTick");
+    }
+
+    public void setLeftTick(ItemStack sword, int leftTick) {
+        if(leftTick<0){
+            return;
+        }
+        sword.getOrCreateTag().putInt("leftTick", leftTick);
+    }
+
+    public int getSpiritValue(ItemStack sword) {
+        return sword.getOrCreateTag().getInt("spiritValue");
+    }
+
+    public void setSpiritValue(ItemStack sword, int spiritValue) {
+        if(spiritValue<0 || spiritValue > maxSpiritValue){
+            return;
+        }
+        sword.getOrCreateTag().putInt("spiritValue", spiritValue);
     }
 
     /**
@@ -70,9 +99,13 @@ public class HolySword extends MagicWeapon implements GeoItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if(!level.isClientSide){
+            ItemStack sword = player.getItemInHand(hand);
+            boolean isFlying = sword.getOrCreateTag().getBoolean("isFlying");
             isFlying = !isFlying;
-            if(!isFlying){
+            setFlying(sword, isFlying);
+            if(!isFlying && getLeftTick(sword) == 0){
                 player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 10, 1, false, true));
+                setLeftTick(sword, maxTick);
             }
         }
         return super.use(level, player, hand);
@@ -80,52 +113,73 @@ public class HolySword extends MagicWeapon implements GeoItem {
 
     /**
      * 如果在飞行模式下，直接向朝向加速。
+     * 空格加速shift减速
      */
     @Override
     public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int slotId, boolean isSelected) {
 //        if(!(slotId == EquipmentSlot.FEET.ordinal())) {
 //            return;
 //        }
-        if(isFlying && entity instanceof Player player){
-
-//            Vec3 d = player.getDeltaMovement();
-//            player.addEffect(new MobEffectInstance(TCREffects.FLY_SPEED.get(), 10, 1, false, true));
-//            if(player.isShiftKeyDown() && !player.onGround()){
-//                player.setDeltaMovement(d.x(), Math.max(d.y() - 0.1, -0.3), d.z());
-//            } else {
-////                double pX,pZ;
-////                //取最大的为比例
-////                if(Math.abs(d.x)>Math.abs(d.z)){
-////                    pX = d.x > 0 ? 0.5 : -0.5;
-////                    pZ = pX * (d.z / d.x);
-////                }else {
-////                    pZ = d.z > 0 ? 0.5 : -0.5;
-////                    pX = pZ * (d.x / d.z);
-////                }
-////                player.setDeltaMovement(pX, Math.min(d.y() + 0.1, 0.3), pZ);
-//
-//                player.setDeltaMovement(d.x, Math.min(d.y() + 0.1, 0.3), d.z);
-//            }
-
-            //还是直接读这个省事，鼠标控制不比方向键舒服多了
-//            player.setDeltaMovement(player.getViewVector(0));
-            if(getViewVec(itemStack).length() != 0){
-                player.setDeltaMovement(getViewVec(itemStack));//add(new Vec3(1, 0, 0)
-            }
-            updateViewVec(itemStack, player.getViewVector(0));
+        double flySpeedScale = itemStack.getOrCreateTag().getDouble("flySpeedScale");
+        if(flySpeedScale == 0){
+            flySpeedScale = 1;
         }
+        if(entity instanceof Player player){
+            //空格加速
+            if(player instanceof LocalPlayer localPlayer){
+                if(localPlayer.input.jumping){
+                    PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new UpdateFlySpeedPacket(slotId, flySpeedScale+0.1));
+                }
+            }
+            //再次获取一遍，等待客户端的修改。
+            flySpeedScale = itemStack.getOrCreateTag().getDouble("flySpeedScale");
+            //shift减速，不低于0.5倍
+            if(player.isShiftKeyDown() && flySpeedScale > 0.5){
+                flySpeedScale-=0.1;
+                itemStack.getOrCreateTag().putDouble("flySpeedScale", flySpeedScale);
+            }
+
+            //往朝向加速
+            if(isFlying(itemStack)){
+                //获取10tick前的速度并且根据按键对其缩放。
+                if(getViewVec(itemStack).length() != 0){
+                    //灵力够才能起飞
+                    int spiritValue = getSpiritValue(itemStack) - (int) (getViewVec(itemStack).length() * 10);
+                    if(spiritValue > 0){
+                        setSpiritValue(itemStack, spiritValue);
+                        player.setDeltaMovement(getViewVec(itemStack, maxTick / 4).scale(flySpeedScale));
+                    } else {
+                        setFlying(itemStack,false);
+                        setLeftTick(itemStack, maxTick);
+                    }
+                }
+                //更新前几个tick的向量队列
+                updateViewVec(itemStack, player.getViewVector(0));
+            } else {
+                //缓冲
+                if(getLeftTick(itemStack) > 0){
+                    int leftTick = getLeftTick(itemStack);
+                    setLeftTick(itemStack,leftTick-1);
+                    if(getViewVec(itemStack).length() != 0){
+                        //速度越来越慢
+                        player.setDeltaMovement(getViewVec(itemStack).lerp(Vec3.ZERO, (double) (maxTick-leftTick) /maxTick));
+                    }
+                    updateViewVec(itemStack, Vec3.ZERO);
+                }
+                //回复灵力
+                setSpiritValue(itemStack, getSpiritValue(itemStack) + 10);
+            }
+        }
+
         super.inventoryTick(itemStack, level, entity, slotId, isSelected);
     }
 
     /**
      * 获取前n个tick前的方向向量
-     * @param sword
-     * @param tick
-     * @return
      */
-    public static Vec3 getViewVec(ItemStack sword, int tick){
+    public static Vec3 getViewVec(ItemStack sword, int tickBefore){
         checkOrCreateTag(sword);
-        return getQueue(sword).toArray(new Vec3[maxTick-tick])[maxTick-tick];
+        return getQueue(sword).toArray(new Vec3[maxTick])[maxTick-tickBefore];
     }
 
     public static Vec3 getViewVec(ItemStack sword){
@@ -230,7 +284,7 @@ public class HolySword extends MagicWeapon implements GeoItem {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage1"));
 //        pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage2"));
-//        pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage3"));
+        pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage3", pStack.getOrCreateTag().getInt("spiritValue")));
     }
 
     @Override
@@ -241,11 +295,11 @@ public class HolySword extends MagicWeapon implements GeoItem {
     }
 
     private PlayState predicate(AnimationState<HolySword> holySwordAnimationState) {
-        if(isFlying){
-            holySwordAnimationState.getController().setAnimation(RawAnimation.begin().then("fly", Animation.LoopType.LOOP));
-        }else {
+//        if(){
+//            holySwordAnimationState.getController().setAnimation(RawAnimation.begin().then("fly", Animation.LoopType.LOOP));
+//        }else {
             holySwordAnimationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-        }
+//        }
         return PlayState.CONTINUE;
     }
     @Override
