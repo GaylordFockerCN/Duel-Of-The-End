@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.item.custom.boss_loot;
 
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.item.renderer.HolySwordRenderer;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
@@ -54,7 +55,7 @@ public class HolySword extends MagicWeapon implements GeoItem {
 
     private final float damage = 5.0f;
     //最长记录向量的时间
-    private static final int maxTick = 40;
+    private static final int maxRecordTick = 100;
     //最大灵力值
     private static final int maxSpiritValue = 10000;
     AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -62,50 +63,85 @@ public class HolySword extends MagicWeapon implements GeoItem {
         super(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).defaultDurability(1428));
     }
 
-    public boolean isFlying(ItemStack sword) {
+    public static boolean isFlying(ItemStack sword) {
         return sword.getOrCreateTag().getBoolean("isFlying");
     }
 
-    public void setFlying(ItemStack sword, boolean isFlying) {
+    public static void setFlying(ItemStack sword, boolean isFlying) {
         sword.getOrCreateTag().putBoolean("isFlying", isFlying);
     }
 
-    public int getLeftTick(ItemStack sword) {
+    public static double getFlySpeedScale(ItemStack sword) {
+        return sword.getOrCreateTag().getDouble("flySpeedScale");
+    }
+
+    public static void setFlySpeedScale(ItemStack sword, double flySpeedScale) {
+        sword.getOrCreateTag().putDouble("flySpeedScale", flySpeedScale);
+    }
+
+    public static int getLeftTick(ItemStack sword) {
         return sword.getOrCreateTag().getInt("leftTick");
     }
 
-    public void setLeftTick(ItemStack sword, int leftTick) {
+    public static void setLeftTick(ItemStack sword, int leftTick) {
         if(leftTick<0){
             return;
         }
-        sword.getOrCreateTag().putInt("leftTick", leftTick);
+        sword.getOrCreateTag().putInt("leftTick", Math.min(leftTick, maxRecordTick));
     }
 
-    public int getSpiritValue(ItemStack sword) {
+    public static int getSpiritValue(ItemStack sword) {
         return sword.getOrCreateTag().getInt("spiritValue");
     }
 
-    public void setSpiritValue(ItemStack sword, int spiritValue) {
+    public static void setSpiritValue(ItemStack sword, int spiritValue) {
         if(spiritValue<0 || spiritValue > maxSpiritValue){
             return;
         }
         sword.getOrCreateTag().putInt("spiritValue", spiritValue);
     }
 
+    public static Vec3 getEndVec(ItemStack sword) {
+        CompoundTag tag = sword.getOrCreateTag();
+        return new Vec3(tag.getDouble("endX"),tag.getDouble("endY"),tag.getDouble("endZ"));
+    }
+
+    public static void setEndVec(ItemStack sword, Vec3 endVec) {
+        CompoundTag tag = sword.getOrCreateTag();
+        tag.putDouble("endX", endVec.x);
+        tag.putDouble("endY", endVec.y);
+        tag.putDouble("endZ", endVec.z);
+    }
+
+    /**
+     * 进行停止飞行的一系列操作，设置飞行状态为false，设置末速度，设置结束飞行缓冲时间。
+     */
+    public static void stopFly(ItemStack sword){
+        setFlying(sword,false);
+        Vec3 endVec = getViewVec(sword,1).scale(getFlySpeedScale(sword));
+        setEndVec(sword, endVec);
+        double leftTick = endVec.length() * maxRecordTick / 2;
+        setLeftTick(sword, ((int) leftTick));
+    }
+
     /**
      * 右键实现飞行模式的开关
-     * 关闭时获得短暂的缓降效果。
+     * 关闭时将缓冲
      */
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if(!level.isClientSide){
             ItemStack sword = player.getItemInHand(hand);
-            boolean isFlying = sword.getOrCreateTag().getBoolean("isFlying");
+            boolean isFlying = isFlying(sword);
             isFlying = !isFlying;
             setFlying(sword, isFlying);
+
+            //重置初速度，防止太快起飞不了的bug。
+            setFlySpeedScale(sword,1);
+
             if(!isFlying && getLeftTick(sword) == 0){
                 player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 10, 1, false, true));
-                setLeftTick(sword, maxTick);
+                stopFly(sword);
             }
         }
         return super.use(level, player, hand);
@@ -113,14 +149,12 @@ public class HolySword extends MagicWeapon implements GeoItem {
 
     /**
      * 如果在飞行模式下，直接向朝向加速。
-     * 空格加速shift减速
+     * 空格加速，shift减速
+     *
      */
     @Override
     public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int slotId, boolean isSelected) {
-//        if(!(slotId == EquipmentSlot.FEET.ordinal())) {
-//            return;
-//        }
-        double flySpeedScale = itemStack.getOrCreateTag().getDouble("flySpeedScale");
+        double flySpeedScale = getFlySpeedScale(itemStack);
         if(flySpeedScale == 0){
             flySpeedScale = 1;
         }
@@ -132,43 +166,56 @@ public class HolySword extends MagicWeapon implements GeoItem {
                 }
             }
             //再次获取一遍，等待客户端的修改。
-            flySpeedScale = itemStack.getOrCreateTag().getDouble("flySpeedScale");
+            flySpeedScale = getFlySpeedScale(itemStack);
+            if(flySpeedScale == 0){
+                flySpeedScale = 1;
+            }
             //shift减速，不低于0.5倍
             if(player.isShiftKeyDown() && flySpeedScale > 0.5){
                 flySpeedScale-=0.1;
-                itemStack.getOrCreateTag().putDouble("flySpeedScale", flySpeedScale);
+                setFlySpeedScale(itemStack, flySpeedScale);
             }
 
             //往朝向加速
             if(isFlying(itemStack)){
                 //获取10tick前的速度并且根据按键对其缩放。
-                if(getViewVec(itemStack).length() != 0){
+                Vec3 targetVec = getViewVec(itemStack, 10).scale(flySpeedScale);
+                if(targetVec.length() != 0){//, maxTick / 4
                     //灵力够才能起飞
-                    int spiritValue = getSpiritValue(itemStack) - (int) (getViewVec(itemStack).length() * 10);
+                    int spiritValue = getSpiritValue(itemStack) - (int) (targetVec.length() * 10);
                     if(spiritValue > 0){
-                        setSpiritValue(itemStack, spiritValue);
-                        player.setDeltaMovement(getViewVec(itemStack, maxTick / 4).scale(flySpeedScale));
+                        if(!player.isCreative()){
+                            setSpiritValue(itemStack, spiritValue);
+                        }
+                        player.setDeltaMovement(targetVec);
                     } else {
-                        setFlying(itemStack,false);
-                        setLeftTick(itemStack, maxTick);
+                        stopFly(itemStack);
                     }
                 }
-                //更新前几个tick的向量队列
-                updateViewVec(itemStack, player.getViewVector(0));
             } else {
                 //缓冲
                 if(getLeftTick(itemStack) > 0){
                     int leftTick = getLeftTick(itemStack);
                     setLeftTick(itemStack,leftTick-1);
-                    if(getViewVec(itemStack).length() != 0){
-                        //速度越来越慢
-                        player.setDeltaMovement(getViewVec(itemStack).lerp(Vec3.ZERO, (double) (maxTick-leftTick) /maxTick));
+//                    if(getViewVec(itemStack).length() != 0){
+//                        //速度越来越慢
+//                        player.setDeltaMovement(getViewVec(itemStack).lerp(Vec3.ZERO, (double) (maxTick-leftTick) /maxTick));
+//                    }
+                    //改用末速度来计算
+                    double endVecLength = getEndVec(itemStack).length();
+                    if(endVecLength != 0){
+                        double max = endVecLength * maxRecordTick / 2;
+                        player.setDeltaMovement(getEndVec(itemStack).lerp(Vec3.ZERO,  (max-leftTick) /max));
+//                        player.setDeltaMovement(getEndVec(itemStack));
                     }
-                    updateViewVec(itemStack, Vec3.ZERO);
                 }
                 //回复灵力
                 setSpiritValue(itemStack, getSpiritValue(itemStack) + 10);
             }
+
+            //更新前几个tick的向量队列
+            updateViewVec(itemStack, player.getViewVector(0));
+
         }
 
         super.inventoryTick(itemStack, level, entity, slotId, isSelected);
@@ -178,10 +225,17 @@ public class HolySword extends MagicWeapon implements GeoItem {
      * 获取前n个tick前的方向向量
      */
     public static Vec3 getViewVec(ItemStack sword, int tickBefore){
+        if(tickBefore > maxRecordTick){
+            TheCasketOfReveriesMod.LOGGER.error("tickBefore larger than maxTick");
+            return Vec3.ZERO;
+        }
         checkOrCreateTag(sword);
-        return getQueue(sword).toArray(new Vec3[maxTick])[maxTick-tickBefore];
+        return getQueue(sword).toArray(new Vec3[maxRecordTick])[maxRecordTick -tickBefore];
     }
 
+    /**
+     * 获取有记录的最初向量
+     */
     public static Vec3 getViewVec(ItemStack sword){
         return getQueue(sword).peek();
     }
@@ -210,7 +264,7 @@ public class HolySword extends MagicWeapon implements GeoItem {
     public static Queue<Vec3> getQueue(ItemStack sword){
         CompoundTag tag = checkOrCreateTag(sword);
         Queue<Vec3> tickValues = new ArrayDeque<>();
-        for(int i = 0; i < maxTick; i++){
+        for(int i = 0; i < maxRecordTick; i++){
             CompoundTag tickVec = tag.getList("view_vec_queue", Tag.TAG_COMPOUND).getCompound(i);
             tickValues.add(new Vec3(tickVec.getDouble("x"),tickVec.getDouble("y"),tickVec.getDouble("z")));
         }
@@ -222,7 +276,7 @@ public class HolySword extends MagicWeapon implements GeoItem {
      */
     public static void saveQueue(ItemStack sword, Queue<Vec3> tickValues){
         CompoundTag tag = checkOrCreateTag(sword);
-        for(int i = 0; i < maxTick; i++){
+        for(int i = 0; i < maxRecordTick; i++){
             CompoundTag tickVecTag = tag.getList("view_vec_queue", Tag.TAG_COMPOUND).getCompound(i);
             Vec3 tickVec = tickValues.remove();
             tickVecTag.putDouble("x", tickVec.x);
@@ -238,7 +292,7 @@ public class HolySword extends MagicWeapon implements GeoItem {
         CompoundTag tag = sword.getOrCreateTag();
         if (!tag.contains("view_vec_queue")) {
             ListTag tickTagsList = new ListTag();
-            for (int i = 0; i < maxTick; i++) {
+            for (int i = 0; i < maxRecordTick; i++) {
                 tickTagsList.add(new CompoundTag());
             }
             tag.put("view_vec_queue", tickTagsList);
