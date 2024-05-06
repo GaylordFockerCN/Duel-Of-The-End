@@ -182,8 +182,6 @@ public class DesertEagleItem extends Item implements GeoItem {
                     _entityToSpawn.setPos(x, player.getEyeY() - (double)0.15F, z);
                     _entityToSpawn.shoot(player.getViewVector(1).x, player.getViewVector(1).y, player.getViewVector(1).z, handItem.getPower(), 0);
                     projectileLevel.addFreshEntity(_entityToSpawn);
-
-
                 }
 
                 if (world instanceof ServerLevel serverLevel) {

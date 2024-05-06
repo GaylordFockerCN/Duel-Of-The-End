@@ -83,7 +83,7 @@ public class ItemUtil {
     }
 
     /**
-     * 递归搜索第一个物品所在的物品栈
+     * 搜索第一个物品所在的物品栈
      * @return 返回物品栈
      */
     public static ItemStack searchItem(Player player, Item item) {
