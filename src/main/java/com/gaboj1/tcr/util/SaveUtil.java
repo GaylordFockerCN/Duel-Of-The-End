@@ -38,12 +38,12 @@ public class SaveUtil {
 
     }
 
-    public static String fileName = "config/"+TheCasketOfReveriesMod.MOD_ID+"/save.dat";
+    public static final String FILE_NAME = "config/"+TheCasketOfReveriesMod.MOD_ID+"/save.dat";
 
     public static void save(){
 
         try {
-            FileOutputStream fos = new FileOutputStream(fileName);
+            FileOutputStream fos = new FileOutputStream(FILE_NAME);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(firstChoiceBiome);
             oos.writeObject(biome1);
@@ -60,7 +60,7 @@ public class SaveUtil {
 
     public static void read(){
         try {
-            FileInputStream fis = new FileInputStream(fileName);
+            FileInputStream fis = new FileInputStream(FILE_NAME);
             ObjectInputStream ois = new ObjectInputStream(fis);
             firstChoiceBiome = (Biome) ois.readObject();
             biome1 = ((BiomeData) ois.readObject());
