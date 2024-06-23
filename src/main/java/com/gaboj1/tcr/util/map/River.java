@@ -1,21 +1,53 @@
 package com.gaboj1.tcr.util.map;
+import java.util.Arrays;
 import java.util.Random;
 
 public class River {
 
     public static void main(String[] args) {
-        int width = 100;
-        int height = 100;
-        double[][] river = generateIntersectingRivers(width, height, 8); // 生成5条交错的河流
+        int n = 100; // 数组边长
 
-        // 打印河流数组
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                System.out.print((river[i][j] == 1 ? "1" : "0") + " ");
+        // 两个点的坐标
+        int x1 = 12, y1 = 12;
+        int x2 = 80, y2 = 80;
+
+        int[][] grid = new int[n][n];
+        grid[x1][y1] = 8;
+        grid[x2][y2] = 8;
+        // 使用 sigmoid 函数连接两个点
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                double val = Math.abs(sigmoid(i, x1, x2, n) - sigmoid(j, y1, y2, n));
+                if (val < 0.1) {
+                    grid[i][j] = 1;
+                }
             }
-            System.out.println();
+        }
+
+        // 打印结果
+        for (int i = 0; i < n; i++) {
+            System.out.println(Arrays.toString(grid[i]));
         }
     }
+
+    // Sigmoid 函数
+    private static double sigmoid(int x, int x1, int x2, int n) {
+        return 1 / (1 + Math.exp(-4 * (x - (x1 + x2) / 2.0) / n));
+    }
+
+//    public static void main(String[] args) {
+//        int width = 100;
+//        int height = 100;
+//        double[][] river = generateIntersectingRivers(width, height, 8); // 生成5条交错的河流
+//
+//        // 打印河流数组
+//        for (int i = 0; i < height; i++) {
+//            for (int j = 0; j < width; j++) {
+//                System.out.print((river[i][j] == 1 ? "1" : "0") + " ");
+//            }
+//            System.out.println();
+//        }
+//    }
 
     public static double[][] generateIntersectingRivers(int width, int height, int numRivers) {
         double[][] river = new double[height][width];

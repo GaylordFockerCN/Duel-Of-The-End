@@ -1,15 +1,17 @@
 package com.gaboj1.tcr.event.listeners;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
+import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID)
-public class ServerStartListener {
+public class ServerStartOrStopListener {
 
     /**
      * 获取存档名字，用于二次读取地图时用。
@@ -22,6 +24,12 @@ public class ServerStartListener {
         if(TCRBiomeProvider.worldName.isEmpty()){
             TCRBiomeProvider.worldName = event.getServer().getWorldData().getLevelName();
         }
+        SaveUtil.read();
+    }
+
+    @SubscribeEvent
+    public static void onServerAboutToStop(ServerStoppedEvent event){
+        SaveUtil.save();
     }
 
 }

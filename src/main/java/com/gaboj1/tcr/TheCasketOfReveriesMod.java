@@ -31,6 +31,7 @@ import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.item.TCRModItemTabs;
 import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import com.gaboj1.tcr.worldgen.dimension.TCRChunkGenerator;
 import com.gaboj1.tcr.worldgen.structure.TCRStructurePlacementTypes;
@@ -107,12 +108,10 @@ public class TheCasketOfReveriesMod {
         TCRModVillagers.register(bus);
         bus.addListener(this::commonSetup);
         bus.addListener(this::registerExtraStuff);
-        bus.addListener(this::setRegistriesForDatapack);
 
         GeckoLib.initialize();
 
         MinecraftForge.EVENT_BUS.register(this);
-        bus.addListener(this::addCreative);
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, TCRConfig.SPEC);
@@ -149,14 +148,6 @@ public class TheCasketOfReveriesMod {
         }
 
 
-    }
-
-    // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event){
-
-    }
-
-    public void setRegistriesForDatapack(DataPackRegistryEvent.NewRegistry event) {
     }
 
     public void registerExtraStuff(RegisterEvent evt) {
