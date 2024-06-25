@@ -21,6 +21,7 @@ import com.gaboj1.tcr.entity.custom.boss.yggdrasil.TreeClawEntity;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
 import com.gaboj1.tcr.entity.custom.dreamspirit.JellyCat;
 import com.gaboj1.tcr.entity.custom.dreamspirit.Squirrel;
+import com.gaboj1.tcr.entity.custom.sword.SwordEntityRenderer;
 import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
@@ -171,6 +172,10 @@ public class TheCasketOfReveriesMod {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event){
 
+            EntityRenderers.register(TCRModEntities.SWORD.get(), SwordEntityRenderer::new);
+            EntityRenderers.register(TCRModEntities.RAIN_SCREEN_SWORD.get(), SwordEntityRenderer::new);
+            EntityRenderers.register(TCRModEntities.RAIN_CUTTER_SWORD.get(), SwordEntityRenderer::new);
+
             EntityRenderers.register(TCRModEntities.MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterRenderer::new);
             EntityRenderers.register(TCRModEntities.TREE_GUARDIAN.get(), TreeGuardianRenderer::new);
             EntityRenderers.register(TCRModEntities.SMALL_TREE_MONSTER.get(), SmallTreeMonsterRenderer::new);
@@ -190,6 +195,7 @@ public class TheCasketOfReveriesMod {
 
         @SubscribeEvent
         public static void entityAttributeEvent(EntityAttributeCreationEvent event) {
+
             event.put(TCRModEntities.SMALL_TREE_MONSTER.get(), SmallTreeMonsterEntity.setAttributes());
             event.put(TCRModEntities.TREE_GUARDIAN.get(), TreeGuardianEntity.setAttributes());//设置生物属性功能在此被调用
             event.put(TCRModEntities.MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterEntity.setAttributes());

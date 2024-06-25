@@ -30,6 +30,7 @@ public class TCRPacketHandler {
         register(PersistentIntDataSyncPacket.class, PersistentIntDataSyncPacket::decode);
         register(PersistentStringDataSyncPacket.class, PersistentStringDataSyncPacket::decode);
         register(AddVillagerParticlePacket.class, AddVillagerParticlePacket::decode);
+        register(SyncSwordOwnerPacket.class, SyncSwordOwnerPacket::decode);
 
         // 发给服务端
         register(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);
