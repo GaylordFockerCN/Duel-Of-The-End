@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.network.packet.server;
 
-import com.gaboj1.tcr.gui.screen.portalblock.PortalBlockScreen;
+import com.gaboj1.tcr.gui.screen.custom.PortalBlockScreen;
 import com.gaboj1.tcr.network.packet.BasePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;

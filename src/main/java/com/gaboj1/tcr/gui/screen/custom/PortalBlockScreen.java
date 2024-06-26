@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.gui.screen.portalblock;
+package com.gaboj1.tcr.gui.screen.custom;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.gui.screen.component.PortalScreenComponent;
