@@ -46,12 +46,11 @@ import java.util.function.Consumer;
 
 /**
  * 随着速度增大而加伤
- * 右键地面引雷
- * 可选附魔引雷
  * 右键御剑飞行
- * @author LZY
+ *备注：这是在御剑飞行模组出来之前做的，所以建议有条件还是用史诗战斗御剑飞行吧这个太垃了
+ * @author <a href="https://github.com/GaylordFockerCN">p1nero</a>
  */
-public class HolySword extends MagicWeapon implements GeoItem {
+public class FlySword extends MagicWeapon implements GeoItem {
 
     private final float damage = 5.0f;
     //最长记录向量的时间
@@ -59,7 +58,7 @@ public class HolySword extends MagicWeapon implements GeoItem {
     //最大灵力值
     private static final int maxSpiritValue = 10000;
     AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    public HolySword() {
+    public FlySword() {
         super(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).defaultDurability(1428));
     }
 
@@ -90,16 +89,16 @@ public class HolySword extends MagicWeapon implements GeoItem {
         sword.getOrCreateTag().putInt("leftTick", Math.min(leftTick, maxRecordTick));
     }
 
-    public static int getSpiritValue(ItemStack sword) {
-        return sword.getOrCreateTag().getInt("spiritValue");
-    }
-
-    public static void setSpiritValue(ItemStack sword, int spiritValue) {
-        if(spiritValue<0 || spiritValue > maxSpiritValue){
-            return;
-        }
-        sword.getOrCreateTag().putInt("spiritValue", spiritValue);
-    }
+//    public static int getSpiritValue(ItemStack sword) {
+//        return sword.getOrCreateTag().getInt("spiritValue");
+//    }
+//
+//    public static void setSpiritValue(ItemStack sword, int spiritValue) {
+//        if(spiritValue<0 || spiritValue > maxSpiritValue){
+//            return;
+//        }
+//        sword.getOrCreateTag().putInt("spiritValue", spiritValue);
+//    }
 
     public static Vec3 getEndVec(ItemStack sword) {
         CompoundTag tag = sword.getOrCreateTag();
@@ -149,8 +148,6 @@ public class HolySword extends MagicWeapon implements GeoItem {
 
     /**
      * 如果在飞行模式下，直接向朝向加速。
-     * 空格加速，shift减速
-     *
      */
     @Override
     public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int slotId, boolean isSelected) {
@@ -181,16 +178,18 @@ public class HolySword extends MagicWeapon implements GeoItem {
                 //获取10tick前的速度并且根据按键对其缩放。
                 Vec3 targetVec = getViewVec(itemStack, 10).scale(flySpeedScale);
                 if(targetVec.length() != 0){//, maxTick / 4
-                    //灵力够才能起飞
-                    int spiritValue = getSpiritValue(itemStack) - (int) (targetVec.length() * 10);
-                    if(spiritValue > 0){
-                        if(!player.isCreative()){
-                            setSpiritValue(itemStack, spiritValue);
-                        }
-                        player.setDeltaMovement(targetVec);
-                    } else {
-                        stopFly(itemStack);
-                    }
+//                    //灵力够才能起飞
+//                    int spiritValue = getSpiritValue(itemStack) - (int) (targetVec.length() * 10);
+//                    if(spiritValue > 0){
+//                        if(!player.isCreative()){
+//                            setSpiritValue(itemStack, spiritValue);
+//                        }
+//                        player.setDeltaMovement(targetVec);
+//                    } else {
+//                        stopFly(itemStack);
+//                    }
+
+                    player.setDeltaMovement(targetVec);
                 }
             } else {
                 //缓冲
@@ -209,8 +208,8 @@ public class HolySword extends MagicWeapon implements GeoItem {
 //                        player.setDeltaMovement(getEndVec(itemStack));
                     }
                 }
-                //回复灵力
-                setSpiritValue(itemStack, getSpiritValue(itemStack) + 10);
+//                //回复灵力
+//                setSpiritValue(itemStack, getSpiritValue(itemStack) + 10);
             }
 
             //更新前几个tick的向量队列
@@ -319,6 +318,7 @@ public class HolySword extends MagicWeapon implements GeoItem {
 
     /**
      * 天下武功，唯快不破！
+     * Ek = mv²/2
      */
     @Override
     public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
@@ -338,7 +338,7 @@ public class HolySword extends MagicWeapon implements GeoItem {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage1"));
 //        pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage2"));
-        pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage3", pStack.getOrCreateTag().getInt("spiritValue")));
+//        pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage3", pStack.getOrCreateTag().getInt("spiritValue")));
     }
 
     @Override
@@ -348,7 +348,7 @@ public class HolySword extends MagicWeapon implements GeoItem {
 
     }
 
-    private PlayState predicate(AnimationState<HolySword> holySwordAnimationState) {
+    private PlayState predicate(AnimationState<FlySword> holySwordAnimationState) {
 //        if(){
 //            holySwordAnimationState.getController().setAnimation(RawAnimation.begin().then("fly", Animation.LoopType.LOOP));
 //        }else {
