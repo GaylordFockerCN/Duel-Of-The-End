@@ -54,7 +54,7 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public TreeSpiritWand() {
-        super(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).defaultDurability(128));
+        super(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).defaultDurability(128), 7d);
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 

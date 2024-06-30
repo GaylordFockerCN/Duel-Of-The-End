@@ -59,7 +59,7 @@ public class FlySword extends MagicWeapon implements GeoItem {
     private static final int maxSpiritValue = 10000;
     AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public FlySword() {
-        super(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).defaultDurability(1428));
+        super(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).defaultDurability(1428), 5.0);
     }
 
     public static boolean isFlying(ItemStack sword) {

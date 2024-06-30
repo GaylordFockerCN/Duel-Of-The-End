@@ -19,7 +19,7 @@ public class RainSword extends MagicWeapon{
     public static final int CD = 40;
 
     public RainSword(Properties pProperties) {
-        super(pProperties);
+        super(pProperties, 7.0);
     }
 
     /**

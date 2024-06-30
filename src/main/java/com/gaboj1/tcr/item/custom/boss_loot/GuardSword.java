@@ -24,7 +24,7 @@ public class GuardSword extends MagicWeapon{
     public static final int CD = 400;
 
     public GuardSword(Properties pProperties) {
-        super(pProperties);
+        super(pProperties, 5.0);
     }
 
     /**

@@ -6,9 +6,7 @@ import net.minecraft.world.level.biome.Biome;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * 保存游戏进度，这玩意儿应该所有人统一，所以用了自己的数据管理。
@@ -16,7 +14,9 @@ import java.util.Objects;
 public class SaveUtil {
 
     public static int worldLevel = 0;
-    private static List<Dialog> conversationsRecord = new ArrayList<>();
+    private static List<Dialog> dialogList = new ArrayList<>();
+
+    private static HashSet<Dialog> dialogSet = new HashSet<>();
 
     @Nullable
     public static Biome firstChoiceBiome = null;//0 means null
@@ -35,10 +35,22 @@ public class SaveUtil {
             return Objects.equals(name.toString(), dialog.name.toString()) && Objects.equals(content.toString(), dialog.content.toString());
         }
 
+        @Override
+        public int hashCode() {
+            return Objects.hash(name.toString(), content.toString());
+        }
     }
 
     public static void addDialog(Component name, Component content){
-        conversationsRecord.add(new Dialog(name, content));
+        Dialog dialog = new Dialog(name, content);
+        if(!dialogSet.contains(dialog)){
+            dialogList.add(dialog);
+            dialogSet.add(dialog);
+        }
+    }
+
+    public static List<Dialog> getDialogList() {
+        return dialogList;
     }
 
     public static class BiomeData implements Serializable{
@@ -100,7 +112,8 @@ public class SaveUtil {
             FileOutputStream fos = new FileOutputStream(FILE_NAME);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeInt(worldLevel);
-            oos.writeObject(conversationsRecord);
+            oos.writeObject(dialogList);
+            oos.writeObject(dialogSet);
             oos.writeObject(firstChoiceBiome);
             oos.writeObject(biome1);
             oos.writeObject(biome2);
@@ -127,7 +140,8 @@ public class SaveUtil {
             FileInputStream fis = new FileInputStream(FILE_NAME);
             ObjectInputStream ois = new ObjectInputStream(fis);
             worldLevel = ois.readInt();
-            conversationsRecord = (List<Dialog>) ois.readObject();
+            dialogList = (ArrayList<Dialog>)ois.readObject();
+            dialogSet = (HashSet<Dialog>)ois.readObject();
             firstChoiceBiome = (Biome) ois.readObject();
             biome1 = ((Biome1Data) ois.readObject());
             biome2 = ((Biome2Data) ois.readObject());
