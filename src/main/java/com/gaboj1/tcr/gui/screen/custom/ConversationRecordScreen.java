@@ -9,8 +9,8 @@ import net.minecraft.network.chat.Component;
  */
 public class ConversationRecordScreen extends Screen {
 
-    public ConversationRecordScreen(Component p_96550_) {
-        super(p_96550_);
+    public ConversationRecordScreen(Component component) {
+        super(component);
     }
 
 

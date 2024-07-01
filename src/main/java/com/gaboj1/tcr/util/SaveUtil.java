@@ -59,23 +59,21 @@ public class SaveUtil {
 
         }
 
-        public BiomeData(int choice, boolean isBossDie, boolean isBossTalked, boolean isBossFought, boolean isElderDie, boolean isElderTalked, boolean isElderFought) {
+        public BiomeData(int choice, boolean isBossDie, boolean isBossTalked, boolean isBossFought, boolean isElderDie, boolean isElderTalked) {
             this.choice = choice;
             this.isBossDie = isBossDie;
             this.isBossTalked = isBossTalked;
             this.isBossFought = isBossFought;
             this.isElderDie = isElderDie;
             this.isElderTalked = isElderTalked;
-            this.isElderFought = isElderFought;
         }
 
-        int choice = 0;//0:no sure 1:boss 2:villager
-        boolean isBossDie = false;
-        boolean isBossTalked = false;
-        boolean isBossFought = false;
-        boolean isElderDie = false;
-        boolean isElderTalked = false;
-        boolean isElderFought = false;
+        protected int choice = 0;//0:no sure 1:boss 2:villager
+        protected boolean isBossDie = false;//boss是否死亡
+        protected boolean isBossTalked = false;//好像没用
+        protected boolean isBossFought = false;//是否和boss战斗过
+        protected boolean isElderDie = false;
+        protected boolean isElderTalked = false;
 
     }
 
@@ -85,10 +83,27 @@ public class SaveUtil {
         }
 
         public Biome1Data(int choice, boolean isBossDefeated, boolean isBossTalked, boolean isBossFought, boolean isElderDefeated, boolean isElderTalked, boolean isElderFought) {
-            super(choice, isBossDefeated, isBossTalked, isBossFought, isElderDefeated, isElderTalked, isElderFought);
+            super(choice, isBossDefeated, isBossTalked, isBossFought, isElderDefeated, isElderTalked);
         }
 
+        /**
+         * 判断boss是否能受伤，如果选择boss阵营则boss无法被打，杀死长老也视为boss阵营。
+         */
+        public boolean canAttackBoss(){
+//            return isBossTalked && !isBossDie;
+            return choice != 1 && !bossTaskReceived();
+        }
 
+        /**
+         * 没接树魔任务不能打长老，打过boss且选择不处决则视为选择接了刺杀长老任务
+         */
+        public boolean canAttackElder(){
+            return choice != 2 && bossTaskReceived();
+        }
+
+        public boolean bossTaskReceived(){
+            return isBossFought && !isBossDie;
+        }
 
     }
 
