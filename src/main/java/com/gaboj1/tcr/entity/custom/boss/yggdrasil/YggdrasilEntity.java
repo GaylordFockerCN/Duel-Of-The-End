@@ -10,6 +10,7 @@ import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.server.NPCDialoguePacket;
 import com.gaboj1.tcr.util.DataManager;
+import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
@@ -208,6 +209,21 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
         Component greet1 = BUILDER.buildDialogueAnswer(entityType,0);
         Component greet2 = BUILDER.buildDialogueAnswer(entityType,3);
         Component greet3 = BUILDER.buildDialogueAnswer(entityType,5);
+
+        //满足领奖条件
+        if(SaveUtil.biome1.canGetBossReward()){
+
+        //靠近就触发战斗
+        } else if(!SaveUtil.biome1.isBossFought){
+
+
+        //战斗过且boss没死说明选择了领任务
+        } else if(!SaveUtil.biome1.isBossDie){
+
+        } else {
+
+        }
+
         if (DataManager.boss1ConversationStage.getInt(serverPlayerData) == 0) {
             builder.start(greet1)
                     .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,1))

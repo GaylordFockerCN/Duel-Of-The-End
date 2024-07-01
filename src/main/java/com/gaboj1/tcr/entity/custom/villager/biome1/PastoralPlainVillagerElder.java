@@ -10,6 +10,7 @@ import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.packet.server.NPCDialoguePacket;
 import com.gaboj1.tcr.util.DataManager;
+import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -119,13 +120,8 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     public void openDialogueScreen(CompoundTag serverPlayerData) {
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
 
-        //长老濒死
-        if(DataManager.elder1Defeated.getBool(serverPlayerData)){
-            builder.start(4).addFinalChoice(6,(byte) 2);
-        }
-
         //击杀完boss1后回来见长老
-        else if(DataManager.boss1Defeated.getBool(serverPlayerData) && DataManager.isWhite.getBool(serverPlayerData) /*&& DataManager.isWhite.isLocked()*/){
+        if(SaveUtil.biome1.canGetElderReward()){
             builder.start(4)
                     .addChoice(3,5)
                     .addChoice(4,6)
@@ -133,7 +129,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     .addChoice(2,9)
                     .addFinalChoice(6,(byte)1);
         //初次与长老对话
-        } else {
+        } else if(!SaveUtil.biome1.isElderTalked){
             BiomeMap biomeMap = BiomeMap.getInstance();
             BlockPos biome1Center = biomeMap.getBlockPos(biomeMap.getCenter1(),0);
             String position = "("+biome1Center.getX()+","+biome1Center.getZ()+")";
@@ -146,6 +142,11 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     .addChoice(7,2)
                     .addChoice(2,3)
                     .addFinalChoice(-2,(byte)-1);
+            SaveUtil.biome1.isElderTalked =true;
+
+        //非初次对话
+        } else {
+
         }
 
         Minecraft.getInstance().setScreen(builder.build());
@@ -223,6 +224,9 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
     @Override
     public boolean hurt(DamageSource source, float v) {
+        if(!SaveUtil.biome1.canAttackElder()){
+            v = 0;
+        }
         if(source.getEntity() instanceof ServerPlayer serverPlayer){
             bossInfo.addPlayer(serverPlayer);//亮血条！
         }

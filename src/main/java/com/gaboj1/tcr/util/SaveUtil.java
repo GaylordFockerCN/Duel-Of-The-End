@@ -68,12 +68,12 @@ public class SaveUtil {
             this.isElderTalked = isElderTalked;
         }
 
-        protected int choice = 0;//0:no sure 1:boss 2:villager
-        protected boolean isBossDie = false;//boss是否死亡
-        protected boolean isBossTalked = false;//好像没用
-        protected boolean isBossFought = false;//是否和boss战斗过
-        protected boolean isElderDie = false;
-        protected boolean isElderTalked = false;
+        public int choice = 0;//0:no sure 1:boss 2:villager
+        public boolean isBossDie = false;//boss是否死亡
+        public boolean isBossTalked = false;//好像没用
+        public boolean isBossFought = false;//是否和boss战斗过
+        public boolean isElderDie = false;
+        public boolean isElderTalked = false;
 
     }
 
@@ -103,6 +103,14 @@ public class SaveUtil {
 
         public boolean bossTaskReceived(){
             return isBossFought && !isBossDie;
+        }
+
+        public boolean canGetBossReward(){
+            return isBossFought && !isBossDie && isElderDie;
+        }
+
+        public boolean canGetElderReward(){
+            return isBossDie;
         }
 
     }
