@@ -6,6 +6,7 @@ import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.TCRModSounds;
+import com.gaboj1.tcr.gui.screen.TreeNode;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.server.NPCDialoguePacket;
@@ -113,9 +114,10 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     public void die(DamageSource source) {
         this.setHealth(1);
         if (source.getEntity() instanceof ServerPlayer player) {
-            DataManager.boss1Defeated.putBool(player,true);
-            DataManager.boss1Defeated.lock(player);
-            DataManager.boss1ConversationStage.putInt(player,1);
+            SaveUtil.biome1.isBossDie = true;
+//            DataManager.boss1Defeated.putBool(player,true);
+//            DataManager.boss1Defeated.lock(player);
+//            DataManager.boss1ConversationStage.putInt(player,1);
             if (this.getConversingPlayer() == null) {
                 PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(),player.getPersistentData().copy()), player);
                 this.setConversingPlayer(player);
@@ -207,8 +209,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     public void openDialogueScreen(CompoundTag serverPlayerData) {
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
         Component greet1 = BUILDER.buildDialogueAnswer(entityType,0);
-        Component greet2 = BUILDER.buildDialogueAnswer(entityType,3);
-        Component greet3 = BUILDER.buildDialogueAnswer(entityType,5);
+        Component greet2 = BUILDER.buildDialogueAnswer(entityType,2);
 
         //满足领奖条件
         if(SaveUtil.biome1.canGetBossReward()){
@@ -224,52 +225,47 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
 
         }
 
-        if (DataManager.boss1ConversationStage.getInt(serverPlayerData) == 0) {
+        if (!SaveUtil.biome1.isBossTalked) {
             builder.start(greet1)
                     .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,1))
-                    .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,2))
                     .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)0);
             Minecraft.getInstance().setScreen(builder.build());
         }
-        else if(DataManager.boss1ConversationStage.getInt(serverPlayerData) == 1){
-            builder.start(greet2)
-                    .addChoice(BUILDER.buildDialogueOption(entityType,1),BUILDER.buildDialogueAnswer(entityType,4))
-                    .addFinalChoice(BUILDER.buildDialogueOption(entityType,-2),(byte)1);
+        else if(SaveUtil.biome1.isBossDie){
+           builder.setAnswerRoot(
+                   new TreeNode(BUILDER.buildDialogueAnswer(entityType,2))
+                           .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,3),BUILDER.buildDialogueOption(entityType,1))
+                                   .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,4),BUILDER.buildDialogueOption(entityType,2)))
+                                   .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,5),BUILDER.buildDialogueOption(entityType,3)))
+                                   .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,6),BUILDER.buildDialogueOption(entityType,4))
+                                           .addLeaf(BUILDER.buildDialogueOption(entityType,5),(byte) 1)
+                                           .addLeaf(BUILDER.buildDialogueOption(entityType,6),(byte) 1)
+                                   ))
+           );
             Minecraft.getInstance().setScreen(builder.build());
         }
-       else if (DataManager.boss1ConversationStage.getInt(serverPlayerData) == 2){
-           builder.start(greet3)
-                   .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,6))
-                   .addChoice(BUILDER.buildDialogueOption(entityType,2),BUILDER.buildDialogueAnswer(entityType,7))
-                   .addChoice(BUILDER.buildDialogueOption(entityType,3),BUILDER.buildDialogueAnswer(entityType,8))
-                   .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,9))
-                   .addChoice(BUILDER.buildDialogueOption(entityType,4),BUILDER.buildDialogueAnswer(entityType,10))
-                   .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,11))
-                   .addFinalChoice(BUILDER.buildDialogueOption(entityType,-3),(byte)2);
-           Minecraft.getInstance().setScreen(builder.build());
-       }
 
+        if (SaveUtil.biome1.isElderDie && SaveUtil.biome1.isElderDie){
+            builder.start(greet2)
+                    .addChoice(BUILDER.buildDialogueAnswer(entityType,8),BUILDER.buildDialogueOption(entityType,7))
+                    .addChoice(BUILDER.buildDialogueAnswer(entityType,9),BUILDER.buildDialogueOption(entityType,8))
+                    .addChoice(BUILDER.buildDialogueAnswer(entityType,10),BUILDER.buildDialogueOption(entityType,9));
+        }
     }
 
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID){
             case 0:
-                DataManager.boss1ConversationStage.putInt(player,-1);
+                SaveUtil.biome1.isBossTalked = true;
+
                 this.setConversingPlayer(null);
                 return;
             case 1:
-                DataManager.boss1ConversationStage.putInt(player,-1);
+
                 this.setConversingPlayer(null);
-                //播放旁白
-                //旁白结束后conversationStage = 2;
+
                 return;
-            case 2:
-                if(!bossChallenged(player)){
-                    DataManager.boss1Defeated.putBool(player,true);
-                }
-                this.realDie(player.getLastDamageSource());
-                break;
         }
         this.setConversingPlayer(null);
     }

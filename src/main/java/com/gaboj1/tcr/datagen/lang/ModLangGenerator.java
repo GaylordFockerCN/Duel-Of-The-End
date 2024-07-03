@@ -287,27 +287,29 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,7,"嗯？");
         //Yggdrasil
         this.addEntityAndEgg(TCRModEntities.YGGDRASIL,"伊格德拉希尔");
-        this.addDialog(TCRModEntities.YGGDRASIL,0,"可怜的年轻人，你还是来了……");
-        this.addDialog(TCRModEntities.YGGDRASIL,1,"不对，你的气息和普通的孩子都不一样！你竟然已经成长到如此地步。");
-        this.addDialog(TCRModEntities.YGGDRASIL,2,"将你同化已经是不可能的了。看来只有消灭你了啊孩子……");
-        this.addDialog(TCRModEntities.YGGDRASIL,3,"你是村子以前的孩子吧……你能突破我的限制回到世界尽头也着实厉害");
-        this.addDialog(TCRModEntities.YGGDRASIL,4,"哈哈，我用了极大代价恳请世界主做的抹除记忆还是成功的。都到这个地步了，我就将一切告诉你吧……");
-        this.addDialog(TCRModEntities.YGGDRASIL,5,"在来的路上，你击杀了不少小树魔吧，他们曾经也是可怜的孩童啊。我既然无法给他们创造长久的幸福，只能将他们定格在二十来岁的年纪了，这样，至少他们短暂的一生是幸福的。");
-        this.addDialog(TCRModEntities.YGGDRASIL,6,"我保证，我将他们同化的时候他们不曾受到一点痛苦，他们不过是带着美梦完成重构罢了……");
-        this.addDialog(TCRModEntities.YGGDRASIL,7,"你要知道，我利用我独特的生命之力与世界尽头已融为一体，孩子们所祈祷的东西都经由我的力量创造。我无所谓他们对生命之源密林的恐惧，我也无需他们的爱戴，我只希望孩子们快乐啊……");
-        this.addDialog(TCRModEntities.YGGDRASIL,8,"是的。杀了我，就是杀了世界尽头。是要毁灭孩子们们的美梦，还是去杀了那个村子中格格不入的美梦破坏者，你知道我说的是谁……世界尽头的未来，就系在你的剑上了。");
-        this.addDialog(TCRModEntities.YGGDRASIL,9,"欢迎你，与我们一同创造一个美好的世界……");
-        this.addDialog(TCRModEntities.YGGDRASIL,10,"想知道答案的话，用村长的鲜血来换取吧……");
-        this.addDialog(TCRModEntities.YGGDRASIL,11,"早在成为生命使者的时候，我已经用我的血生成誓言，不得踏入世界尽头一步。这也是每一任守护者都必须遵守的规则……");
-        this.addDialogChoice(TCRModEntities.YGGDRASIL,-3,"结束对话");
-        this.addDialogChoice(TCRModEntities.YGGDRASIL,-2,"查看真相");
+        this.addDialog(TCRModEntities.YGGDRASIL,0,"哦，可怜的年轻人，还是来了……，不对，你是完整的人");
+        this.addDialog(TCRModEntities.YGGDRASIL,1,"将你同化已经是不可能的了。看来只有消灭你了啊孩子……");
+        this.addDialog(TCRModEntities.YGGDRASIL,2,"我必须承认，你的能力超出了我的预期。但很遗憾，你的到来打破了我们的平衡。");
+        this.addDialog(TCRModEntities.YGGDRASIL,3,"你不明白……你的胜利将会带来灾难。我是孩子们愿望的实现者，他们的欢笑是我力量的源泉。");
+        this.addDialog(TCRModEntities.YGGDRASIL,4,"贪婪？不，不，这只是确保我们的世界持续繁荣的必要手段。来的路上，你击败了不少小树魔吧，他们曾经也是可怜的居民啊。我既然无法给他们创造长久的幸福，只能定格他们的年纪。至少让他们短暂的一生是幸福的。我保证，受生命之力同化的他们不曾受到一点痛苦，不过是带着美梦完成重构罢了……而海拉，那个背叛者，他一直在暗中削弱我的力量。但是我无法踏出密林，只有你，强大的冒险者，才能帮我结束这一切！");
+        this.addDialog(TCRModEntities.YGGDRASIL,5,"是的，海拉一直在欺骗我们。他利用孩子们的愿望，却从未真正实现过。他是个寄生虫，吸取着这片土地的生命力。杀了他，夺取他的力量，我将赋予你更多你无法想象的力量。而杀了我，就是杀了世界尽头的投影，许愿成真的力量将被世界主收回。");
+        this.addDialog(TCRModEntities.YGGDRASIL,6,"时间不多了，你必须做出选择。加入我，或者看着这个世界崩溃。");
+        this.addDialog(TCRModEntities.YGGDRASIL,7,"如何？我已经迫不及待吸收他的鲜血了！");
+        this.addDialog(TCRModEntities.YGGDRASIL,8,"很好，我将赐予你生命之力！");
+        this.addDialog(TCRModEntities.YGGDRASIL,9,"享受这强大的力量吧！");
+        this.addDialog(TCRModEntities.YGGDRASIL,10,"我可以为你介绍其他地区的现状，我能感应到每个地区都存在着动荡。位于%s的青云之巅（群系名）皇位不保，位于%s的樱之原野（群系名）也有一位智者现世，他将以他的才智狠狠压榨那群傻子。位于%s的亚特兰蒂斯（群系名）嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通");
+
         this.addDialogChoice(TCRModEntities.YGGDRASIL,-1,"下一句");
         this.addDialogChoice(TCRModEntities.YGGDRASIL,0,"什么是同化？？等等……");
-        this.addDialogChoice(TCRModEntities.YGGDRASIL,1,"村子以前的孩子？");
-        this.addDialogChoice(TCRModEntities.YGGDRASIL,2,"所以，杀了你，孩子们依赖的祈祷将再也发挥不了作用？");
-        this.addDialogChoice(TCRModEntities.YGGDRASIL,3,"你们？你们是谁？");
-        this.addDialogChoice(TCRModEntities.YGGDRASIL,4,"(冷笑)对于你而言，杀死村长不是轻而易举的事情吗？");
-
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,1,"你是谁？这里的平衡又是什么？");
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,2,"如果真是如此，为何你的眼中只有贪婪和欲望？为什么要吞噬那些孩子们？");
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,3,"海拉长老？背叛者？");
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,4,"你的话听起来更像是在为自己谋利。");
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,5,"你以为我会信了你的鬼话？（处决树魔）");
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,6,"守护森林我义不容辞！（刺杀海拉）");
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,7,"（提交物品）");
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,8,"万分感谢！");
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,9,"我将去往何方？");
 
         this.addBookAndContents("book1","Test","Test1","Test1.1");
         this.addBookAndContents("book2","Test2","Test2","Test2.2");

@@ -83,6 +83,19 @@ public class ModEntityLootTables extends EntityLootSubProvider {
 
         add(TCRModEntities.TREE_CLAW.get(), emptyLootTable());
 
+        add(TCRModEntities.SWORD.get(),
+                LootTable.lootTable()
+                        .withPool((LootPool.lootPool()
+                                .setRolls((UniformGenerator.between(0,2)))
+                                .add(LootItem.lootTableItem(TCRModItems.TREE_DEMON_HORN.get())))));
+
+        add(TCRModEntities.RAIN_SCREEN_SWORD.get(),
+                LootTable.lootTable()
+                        .withPool((LootPool.lootPool()
+                                .setRolls((UniformGenerator.between(0,2)))
+                                .add(LootItem.lootTableItem(TCRModItems.TREE_DEMON_HORN.get())))));
+
+
     }
 
     public LootTable.Builder emptyLootTable() {
