@@ -291,15 +291,17 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.YGGDRASIL,1,"将你同化已经是不可能的了。看来只有消灭你了啊孩子……");
         this.addDialog(TCRModEntities.YGGDRASIL,2,"我必须承认，你的能力超出了我的预期。但很遗憾，你的到来打破了我们的平衡。");
         this.addDialog(TCRModEntities.YGGDRASIL,3,"你不明白……你的胜利将会带来灾难。我是孩子们愿望的实现者，他们的欢笑是我力量的源泉。");
-        this.addDialog(TCRModEntities.YGGDRASIL,4,"贪婪？不，不，这只是确保我们的世界持续繁荣的必要手段。来的路上，你击败了不少小树魔吧，他们曾经也是可怜的居民啊。我既然无法给他们创造长久的幸福，只能定格他们的年纪。至少让他们短暂的一生是幸福的。我保证，受生命之力同化的他们不曾受到一点痛苦，不过是带着美梦完成重构罢了……而海拉，那个背叛者，他一直在暗中削弱我的力量。但是我无法踏出密林，只有你，强大的冒险者，才能帮我结束这一切！");
-        this.addDialog(TCRModEntities.YGGDRASIL,5,"是的，海拉一直在欺骗我们。他利用孩子们的愿望，却从未真正实现过。他是个寄生虫，吸取着这片土地的生命力。杀了他，夺取他的力量，我将赋予你更多你无法想象的力量。而杀了我，就是杀了世界尽头的投影，许愿成真的力量将被世界主收回。");
-        this.addDialog(TCRModEntities.YGGDRASIL,6,"时间不多了，你必须做出选择。加入我，或者看着这个世界崩溃。");
-        this.addDialog(TCRModEntities.YGGDRASIL,7,"如何？我已经迫不及待吸收他的鲜血了！");
-        this.addDialog(TCRModEntities.YGGDRASIL,8,"很好，我将赐予你生命之力！");
-        this.addDialog(TCRModEntities.YGGDRASIL,9,"享受这强大的力量吧！");
-        this.addDialog(TCRModEntities.YGGDRASIL,10,"我可以为你介绍其他地区的现状，我能感应到每个地区都存在着动荡。位于%s的青云之巅（群系名）皇位不保，位于%s的樱之原野（群系名）也有一位智者现世，他将以他的才智狠狠压榨那群傻子。位于%s的亚特兰蒂斯（群系名）嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通");
+        this.addDialog(TCRModEntities.YGGDRASIL,4,"贪婪？不，不，这只是确保我们的世界持续繁荣的必要手段。来的路上，你击败了不少小树魔吧，他们曾经也是可怜的居民啊。");
+        this.addDialog(TCRModEntities.YGGDRASIL,5,"我既然无法给他们创造长久的幸福，只能定格他们的年纪。至少让他们短暂的一生是幸福的。我保证，受生命之力同化的他们不曾受到一点痛苦，不过是带着美梦完成重构罢了……");
+        this.addDialog(TCRModEntities.YGGDRASIL,6,"而海拉，那个背叛者，他一直在暗中削弱我的力量。但是我无法踏出密林，只有你，强大的冒险者，才能帮我结束这一切！\n");
+        this.addDialog(TCRModEntities.YGGDRASIL,7,"是的，海拉一直在欺骗我们。他利用孩子们的愿望，却从未真正实现过。他是个寄生虫，吸取着这片土地的生命力。杀了他，夺取他的力量，我将赋予你更多你无法想象的力量。而杀了我，就是杀了世界尽头的投影，许愿成真的力量将被世界主收回。");
+        this.addDialog(TCRModEntities.YGGDRASIL,8,"时间不多了，你必须做出选择。加入我，或者看着这个世界崩溃。");
+        this.addDialog(TCRModEntities.YGGDRASIL,9,"如何？我已经迫不及待吸收他的鲜血了！");
+        this.addDialog(TCRModEntities.YGGDRASIL,10,"很好，我将赐予你生命之力！");
+        this.addDialog(TCRModEntities.YGGDRASIL,11,"享受这强大的力量吧！");
+        this.addDialog(TCRModEntities.YGGDRASIL,12,"我可以为你介绍其他地区的现状，我能感应到每个地区都存在着动荡。位于%s的青云之巅（群系名）皇位不保，位于%s的樱之原野（群系名）也有一位智者现世，他将以他的才智狠狠压榨那群傻子。位于%s的亚特兰蒂斯（群系名）嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通");
 
-        this.addDialogChoice(TCRModEntities.YGGDRASIL,-1,"下一句");
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,-1,"继续");
         this.addDialogChoice(TCRModEntities.YGGDRASIL,0,"什么是同化？？等等……");
         this.addDialogChoice(TCRModEntities.YGGDRASIL,1,"你是谁？这里的平衡又是什么？");
         this.addDialogChoice(TCRModEntities.YGGDRASIL,2,"如果真是如此，为何你的眼中只有贪婪和欲望？为什么要吞噬那些孩子们？");

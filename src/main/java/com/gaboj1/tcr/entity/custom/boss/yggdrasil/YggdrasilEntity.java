@@ -231,17 +231,23 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
                     .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)0);
             Minecraft.getInstance().setScreen(builder.build());
         }
-        else if(SaveUtil.biome1.isBossDie){
+        else if(true){
            builder.setAnswerRoot(
                    new TreeNode(BUILDER.buildDialogueAnswer(entityType,2))
                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,3),BUILDER.buildDialogueOption(entityType,1))
-                                   .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,4),BUILDER.buildDialogueOption(entityType,2)))
-                                   .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,5),BUILDER.buildDialogueOption(entityType,3)))
-                                   .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,6),BUILDER.buildDialogueOption(entityType,4))
-                                           .addLeaf(BUILDER.buildDialogueOption(entityType,5),(byte) 1)
-                                           .addLeaf(BUILDER.buildDialogueOption(entityType,6),(byte) 1)
-                                   ))
-           );
+                                   .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,4),BUILDER.buildDialogueOption(entityType,2))
+                                           .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,5),BUILDER.buildDialogueOption(entityType,-1))
+                                                   .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,6),BUILDER.buildDialogueOption(entityType,-1))
+                                                           .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,7),BUILDER.buildDialogueOption(entityType,3))
+                                                                   .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,8),BUILDER.buildDialogueOption(entityType,4))
+                                                                           .addLeaf(BUILDER.buildDialogueOption(entityType,5),(byte) 1)
+                                                                           .addLeaf(BUILDER.buildDialogueOption(entityType,6),(byte) 1))
+                                                                   )
+                                                   )
+                                   )
+
+                                   )
+           ));
             Minecraft.getInstance().setScreen(builder.build());
         }
 
