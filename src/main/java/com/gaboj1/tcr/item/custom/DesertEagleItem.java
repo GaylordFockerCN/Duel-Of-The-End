@@ -346,10 +346,10 @@ public class DesertEagleItem extends Item implements GeoItem {
 
     }
 
-    public static void reload(LevelAccessor world, Player player){
+    public static void reload(Player player){
         if (player == null)
             return;
-
+        Level world = player.level();
         //分别判断左右手是否满弹药并做出换弹处理（为什么当时打算搞双持啊啊啊）
         ItemStack mainHandItem = player.getMainHandItem();
         ItemStack offhandItem = player.getOffhandItem();

@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.datagen.lang;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
@@ -18,6 +19,15 @@ import java.util.function.Supplier;
 public abstract class ModLangProvider extends LanguageProvider {
     public ModLangProvider(PackOutput output) {
         super(output, TheCasketOfReveriesMod.MOD_ID, "en_us");
+    }
+
+    public void addKeyMapping(KeyMapping key, String name){
+        this.add(key.getName(), name);
+    }
+
+    public void addTask(String key, String task, String content){
+        this.add("task."+TheCasketOfReveriesMod.MOD_ID+".", task);
+        this.add("task_content."+TheCasketOfReveriesMod.MOD_ID+".", content);
     }
 
     public void addBiome(ResourceKey<Biome> biome, String name) {

@@ -160,6 +160,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID) {
+            //接取任务
             case -1:
                 if(!DataManager.elderLoot1Got.getBool(player)){
                     player.addItem(TCRModItems.ELDER_CAKE.get().getDefaultInstance());
@@ -169,6 +170,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     chat(111);
                 }
                 this.chat(BUILDER.buildDialogueAnswer(entityType,7));
+                SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskKillBoss);
                 break;
             case 0: //对话中断的代码！
 //                this.chat(Component.translatable("刚刚说到哪儿来着？"));

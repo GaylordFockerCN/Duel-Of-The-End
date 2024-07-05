@@ -32,7 +32,6 @@ import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.item.TCRModItemTabs;
 import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import com.gaboj1.tcr.worldgen.dimension.TCRChunkGenerator;
 import com.gaboj1.tcr.worldgen.structure.TCRStructurePlacementTypes;
@@ -43,7 +42,6 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.block.Blocks;
@@ -52,7 +50,6 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -65,10 +62,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
-import net.minecraftforge.registries.DataPackRegistryEvent;
 import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
@@ -77,9 +70,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Locale;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 import static com.gaboj1.tcr.worldgen.biome.BiomeMap.README;
 
@@ -92,8 +82,6 @@ public class TheCasketOfReveriesMod {
     public static final String REGISTRY_NAMESPACE = "tcr";
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
-    private static final String PROTOCOL_VERSION = "1";
-    public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(new ResourceLocation(MOD_ID, MOD_ID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
 
     public TheCasketOfReveriesMod(){
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -116,12 +104,6 @@ public class TheCasketOfReveriesMod {
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, TCRConfig.SPEC);
-    }
-
-    private static int messageID = 0;
-    public static <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> messageConsumer) {
-        PACKET_HANDLER.registerMessage(messageID, messageType, encoder, decoder, messageConsumer);
-        messageID++;
     }
 
     private void commonSetup(final FMLCommonSetupEvent event){

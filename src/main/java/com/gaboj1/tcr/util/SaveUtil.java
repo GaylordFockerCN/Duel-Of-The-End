@@ -1,17 +1,10 @@
 package com.gaboj1.tcr.util;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.mojang.authlib.GameProfile;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
-import net.minecraft.nbt.Tag;
-import net.minecraft.nbt.TagVisitor;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraftforge.common.MinecraftForge;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
 import java.util.*;
@@ -21,14 +14,10 @@ import java.util.*;
  */
 public class SaveUtil {
 
-    private static boolean isOld;//用于判断服务端是否更新过数据
-
     public static int worldLevel = 0;
-    private static List<Dialog> dialogList = new ArrayList<>();
-
-    private static HashSet<Dialog> dialogSet = new HashSet<>();
-
-    @Nullable
+    public static final List<Dialog> DIALOG_LIST = new ArrayList<>();
+    public static final HashSet<Dialog> DIALOG_SET = new HashSet<>();
+    public static final HashSet<Dialog> TASK_SET = new HashSet<>();
     public static int firstChoiceBiome = 0;//0 means null
 
     public static Biome1Data biome1 = new Biome1Data();
@@ -66,29 +55,42 @@ public class SaveUtil {
 
     public static void addDialog(Component name, Component content){
         Dialog dialog = new Dialog(name, content);
-        if(!dialogSet.contains(dialog)){
-            dialogList.add(dialog);
-            dialogSet.add(dialog);
+        if(!DIALOG_SET.contains(dialog)){
+            DIALOG_LIST.add(dialog);
+            DIALOG_SET.add(dialog);
         }
     }
 
     public static List<Dialog> getDialogList() {
-        return dialogList;
+        return DIALOG_LIST;
     }
 
     public static CompoundTag getDialogListNbt(){
         CompoundTag dialogListNbt = new CompoundTag();
-        for(int i = 0; i < dialogList.size(); i++){
-            dialogListNbt.put("dialog"+i, dialogList.get(i).toNbt());
+        for(int i = 0; i < DIALOG_LIST.size(); i++){
+            dialogListNbt.put("dialog"+i, DIALOG_LIST.get(i).toNbt());
+        }
+        return dialogListNbt;
+    }
+
+    public static CompoundTag getTaskListNbt(){
+        CompoundTag dialogListNbt = new CompoundTag();
+        for(int i = 0; i < DIALOG_LIST.size(); i++){
+            dialogListNbt.put("task"+i, DIALOG_LIST.get(i).toNbt());
         }
         return dialogListNbt;
     }
 
     public static void setDialogListFromNbt(CompoundTag serverData, int size){
         for(int i = 0; i < size; i++){
-            dialogList.set(i, Dialog.fromNbt(serverData.getCompound("dialog"+i)));
+            DIALOG_LIST.set(i, Dialog.fromNbt(serverData.getCompound("dialog"+i)));
         }
+    }
 
+    public static void setTaskListFromNbt(CompoundTag serverData, int size){
+        for(int i = 0; i < size; i++){
+            TASK_SET.add(Dialog.fromNbt(serverData.getCompound("task"+i)));
+        }
     }
 
     public static class BiomeData {
@@ -135,13 +137,15 @@ public class SaveUtil {
 
     }
 
+    public static Dialog buildTask(String task){
+        return new Dialog(Component.translatable( "task."+TheCasketOfReveriesMod.MOD_ID+task), Component.translatable( "task_content."+TheCasketOfReveriesMod.MOD_ID+task));
+    }
+
     public static class Biome1Data extends BiomeData{
 
+        public static Dialog taskKillBoss = buildTask("kill_boss1");
+        public static Dialog taskKillElder = buildTask("kill_elder1");
         public Biome1Data(){
-        }
-
-        public Biome1Data(int choice, boolean isBossDefeated, boolean isBossTalked, boolean isBossFought, boolean isElderDefeated, boolean isElderTalked, boolean isElderFought) {
-            super(choice, isBossDefeated, isBossTalked, isBossFought, isElderDefeated, isElderTalked);
         }
 
         /**
@@ -219,8 +223,10 @@ public class SaveUtil {
     public static CompoundTag toNbt(){
         CompoundTag serverData = new CompoundTag();
         serverData.putInt("worldLevel", worldLevel);
-        serverData.putInt("dialogLength", dialogList.size());
+        serverData.putInt("dialogLength", DIALOG_LIST.size());
         serverData.put("dialogList", getDialogListNbt());
+        serverData.putInt("taskLength", TASK_SET.size());
+        serverData.put("taskList", getTaskListNbt());
         serverData.putInt("firstChoiceBiome", firstChoiceBiome);
         serverData.put("biome1", biome1.toNbt());
         serverData.put("biome2", biome2.toNbt());
@@ -236,6 +242,7 @@ public class SaveUtil {
     public static void fromNbt(CompoundTag serverData){
         worldLevel = serverData.getInt("worldLevel");
         setDialogListFromNbt(serverData, serverData.getInt("dialogLength"));
+        setTaskListFromNbt(serverData, serverData.getInt("taskLength"));
         firstChoiceBiome = serverData.getInt("firstChoiceBiome");
         biome1.fromNbt(serverData.getCompound("biome1"));
         biome2.fromNbt(serverData.getCompound("biome2"));

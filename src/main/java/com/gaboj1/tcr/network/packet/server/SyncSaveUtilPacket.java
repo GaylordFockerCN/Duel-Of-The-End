@@ -1,10 +1,13 @@
 package com.gaboj1.tcr.network.packet.server;
 
+import com.gaboj1.tcr.network.PacketRelay;
+import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.BasePacket;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,8 +27,13 @@ public record SyncSaveUtilPacket(CompoundTag serverData) implements BasePacket {
 
     @Override
     public void execute(@Nullable Player playerEntity) {
+        //客户端
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             SaveUtil.fromNbt(serverData);
+        }
+        //服务端
+        if(playerEntity instanceof ServerPlayer serverPlayer){
+            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()), serverPlayer);
         }
     }
 }

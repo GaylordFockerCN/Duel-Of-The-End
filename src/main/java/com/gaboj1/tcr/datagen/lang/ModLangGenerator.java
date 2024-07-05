@@ -6,6 +6,7 @@ import com.gaboj1.tcr.effect.TCREffects;
 import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.TCRModSounds;
+import com.gaboj1.tcr.keymapping.KeyMappings;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import net.minecraft.data.PackOutput;
 
@@ -19,6 +20,12 @@ public class ModLangGenerator extends ModLangProvider {
 
         this.addEffect(TCREffects.ORICHALCUM, "神金");
         this.addEffect(TCREffects.FLY_SPEED, "御剑飞行");
+
+        this.addTask("kill_boss1", "清道夺邪魔", "杀死密林中危害牧歌原野安全的邪恶树魔");
+
+        this.add("key.categories.tcr", "远梦之棺按键");
+        this.addKeyMapping(KeyMappings.RELOAD, "沙鹰换弹");
+        this.addKeyMapping(KeyMappings.OPEN_PROGRESS, "打开进度");
 
         this.add("info.the_casket_of_reveries.enter_forbidden_biome","前面的区域，以后再来探索吧~");
         this.add("info.the_casket_of_reveries.teleport_lock","该区域尚未解锁");
