@@ -170,7 +170,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     chat(111);
                 }
                 this.chat(BUILDER.buildDialogueAnswer(entityType,7));
-                SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskKillBoss);
+                SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskKillElder);
                 break;
             case 0: //对话中断的代码！
 //                this.chat(Component.translatable("刚刚说到哪儿来着？"));

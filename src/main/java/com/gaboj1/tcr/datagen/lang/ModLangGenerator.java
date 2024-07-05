@@ -317,7 +317,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.YGGDRASIL,4,"你的话听起来更像是在为自己谋利。");
         this.addDialogChoice(TCRModEntities.YGGDRASIL,5,"你以为我会信了你的鬼话？（处决树魔）");
         this.addDialogChoice(TCRModEntities.YGGDRASIL,6,"守护森林我义不容辞！（刺杀海拉）");
-        this.addDialogChoice(TCRModEntities.YGGDRASIL,7,"（提交物品）");
+        this.addDialogChoice(TCRModEntities.YGGDRASIL,7,"（呈上人头）");
         this.addDialogChoice(TCRModEntities.YGGDRASIL,8,"万分感谢！");
         this.addDialogChoice(TCRModEntities.YGGDRASIL,9,"我将去往何方？");
 

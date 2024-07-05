@@ -108,7 +108,11 @@ public class SaveUtil {
             this.isElderTalked = isElderTalked;
         }
 
+        public static int BOSS = 1;
+        public static int VILLAGER = 2;
+
         public int choice = 0;//0:no sure 1:boss 2:villager
+        protected int biome = 0;
         public boolean isBossDie = false;//boss是否死亡
         public boolean isBossTalked = false;//好像没用
         public boolean isBossFought = false;//是否和boss战斗过
@@ -135,6 +139,14 @@ public class SaveUtil {
             isElderTalked = serverData.getBoolean("isElderTalked");
         }
 
+        public void finish(int choice){
+            this.choice = choice;
+            if(firstChoiceBiome == 0){
+                firstChoiceBiome = biome;
+            }
+            worldLevel++;
+        }
+
     }
 
     public static Dialog buildTask(String task){
@@ -143,9 +155,12 @@ public class SaveUtil {
 
     public static class Biome1Data extends BiomeData{
 
-        public static Dialog taskKillBoss = buildTask("kill_boss1");
         public static Dialog taskKillElder = buildTask("kill_elder1");
+        public static Dialog taskKillBoss = buildTask("kill_boss1");
+        public static Dialog taskBackToBoss = buildTask("back_boss1");//回去领赏
+        public static Dialog taskBackToElder = buildTask("back_elder1");
         public Biome1Data(){
+            biome = 1;
         }
 
         /**
@@ -169,6 +184,13 @@ public class SaveUtil {
 
         public boolean canGetBossReward(){
             return isBossFought && !isBossDie && isElderDie;
+        }
+
+        /**
+         * 战斗过且boss没死说明是接任务了。注意要做出选择后再标记战斗过，以免中断
+         */
+        public boolean killElderTaskGet(){
+            return (isBossFought && !isBossDie) || TASK_SET.contains(taskKillElder);
         }
 
         public boolean canGetElderReward(){

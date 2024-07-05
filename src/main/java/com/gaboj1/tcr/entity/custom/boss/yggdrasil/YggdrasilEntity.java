@@ -45,6 +45,8 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -110,24 +112,32 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
         this.getBossBar().removePlayer(player);
     }
 
+    /**
+     * 不能真的死，剩下一口气还要对话
+     * @param source
+     */
     @Override
     public void die(DamageSource source) {
         this.setHealth(1);
         if (source.getEntity() instanceof ServerPlayer player) {
-            SaveUtil.biome1.isBossDie = true;
-//            DataManager.boss1Defeated.putBool(player,true);
-//            DataManager.boss1Defeated.lock(player);
-//            DataManager.boss1ConversationStage.putInt(player,1);
+            SaveUtil.biome1.isBossFought = true;
             if (this.getConversingPlayer() == null) {
-                PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(),player.getPersistentData().copy()), player);
+                sendDialoguePacket(player);
                 this.setConversingPlayer(player);
             }
+        } else {
+            //TODO : 如果不是被玩家杀死的呢？获取附近玩家或服务器列表随机抽一个
         }
         canBeHurt = false;
     }
 
+    /**
+     * 真的死要用这个hhh
+     * @param damageSource
+     */
     public void realDie(DamageSource damageSource){
         super.die(damageSource);
+        SaveUtil.biome1.isBossDie = true;
     }
 
 
@@ -143,10 +153,17 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
             return false;
         }
 
+        //能不能打也得看进度，选了就不能背刺了
+        if(!SaveUtil.biome1.canAttackBoss()){
+            return false;
+        }
+
         return super.hurt(damageSource, v);
     }
 
-    //时间过了就恢复无敌状态
+    /**
+     * 时间过了就恢复无敌状态
+     */
     @Override
     public void tick() {
         super.tick();
@@ -158,7 +175,9 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
         }
     }
 
-    //特定机制下（比如树爪被破坏）才能被打
+    /**
+     * 特定机制下（比如树爪被破坏）才能被打
+     */
     public void setCanBeHurt() {
         this.canBeHurt = true;
         hurtTimer = 200;
@@ -205,88 +224,105 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
         return 0;
     }
 
+    public void sendDialoguePacket(ServerPlayer serverPlayer){
+        CompoundTag serverData = new CompoundTag();
+        serverData.putBoolean("canGetBossReward", SaveUtil.biome1.canGetBossReward());
+        serverData.putBoolean("isBossTalked", SaveUtil.biome1.isBossTalked);
+        serverData.putBoolean("isBossFought", SaveUtil.biome1.isBossFought);
+        serverData.putBoolean("isBossDie", SaveUtil.biome1.isBossDie);
+        serverData.putBoolean("killElderTaskGet", SaveUtil.biome1.killElderTaskGet());
+        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverData), serverPlayer);
+    }
+
+    @OnlyIn(Dist.CLIENT)
     @Override
-    public void openDialogueScreen(CompoundTag serverPlayerData) {
+    public void openDialogueScreen(CompoundTag serverData) {
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
-        Component greet1 = BUILDER.buildDialogueAnswer(entityType,0);
-        Component greet2 = BUILDER.buildDialogueAnswer(entityType,9);
 
-        //满足领奖条件
-        if(SaveUtil.biome1.canGetBossReward()){
+        if(serverData.getBoolean("canGetBossReward")) {
+            //满足领奖条件
+            builder.start(BUILDER.buildDialogueAnswer(entityType, 9))
+                    .addChoice(BUILDER.buildDialogueOption(entityType, 7), BUILDER.buildDialogueAnswer(entityType, 10))
+                    .thenExecute((byte) 3)//中途返回值进行处理但不结束对话
+                    .addChoice(BUILDER.buildDialogueOption(entityType, 8), BUILDER.buildDialogueAnswer(entityType, 11))
+                    .addChoice(BUILDER.buildDialogueOption(entityType, 9), BUILDER.buildDialogueAnswer(entityType, 12))
+                    .addChoice(BUILDER.buildDialogueOption(entityType, -1), BUILDER.buildDialogueAnswer(entityType, 13));
+        } else if(serverData.getBoolean("killElderTaskGet")){
+            //未满足领奖条件但是任务已经领了
+            builder.setAnswerRoot(
+                    new TreeNode(BUILDER.buildDialogueAnswer(entityType,2))
+                            .addLeaf(BUILDER.buildDialogueOption(entityType,-1),(byte) 114514));
 
-        //靠近就触发战斗
-        } else if(!SaveUtil.biome1.isBossFought){
-
-
-        //战斗过且boss没死说明选择了领任务
-        } else if(!SaveUtil.biome1.isBossDie){
-
-        } else {
-
-        }
-
-        if (!SaveUtil.biome1.isBossTalked) {
-            builder.start(greet1)
+        } else if(!serverData.getBoolean("isBossTalked")){
+            //靠近就触发战斗，初次对话
+            builder.start(BUILDER.buildDialogueAnswer(entityType, 9))
                     .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,1))
                     .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)0);
-            Minecraft.getInstance().setScreen(builder.build());
-        }
-        else if(SaveUtil.biome1.isBossFought){
-           builder.setAnswerRoot(
-                   new TreeNode(BUILDER.buildDialogueAnswer(entityType,2))
-                           .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,3),BUILDER.buildDialogueOption(entityType,1))
-                                   .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,4),BUILDER.buildDialogueOption(entityType,2))
-                                           .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,5),BUILDER.buildDialogueOption(entityType,-1))
-                                                   .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,6),BUILDER.buildDialogueOption(entityType,-1))
-                                                           .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,7),BUILDER.buildDialogueOption(entityType,3))
-                                                                   .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,8),BUILDER.buildDialogueOption(entityType,4))
-                                                                           .addLeaf(BUILDER.buildDialogueOption(entityType,5),(byte) 1)
-                                                                           .addLeaf(BUILDER.buildDialogueOption(entityType,6),(byte) 1))
-                                                                   )
-                                                   )
-                                   )
 
-                                   )
-           ));
-            Minecraft.getInstance().setScreen(builder.build());
+        } else if(!serverData.getBoolean("isBossFought")){
+            //战斗结束后的对话
+            builder.setAnswerRoot(
+                    new TreeNode(BUILDER.buildDialogueAnswer(entityType,2))
+                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,3),BUILDER.buildDialogueOption(entityType,1))
+                                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,4),BUILDER.buildDialogueOption(entityType,2))
+                                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,5),BUILDER.buildDialogueOption(entityType,-1))
+                                                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,6),BUILDER.buildDialogueOption(entityType,-1))
+                                                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,7),BUILDER.buildDialogueOption(entityType,3))
+                                                                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,8),BUILDER.buildDialogueOption(entityType,4))
+                                                                            .addLeaf(BUILDER.buildDialogueOption(entityType,5),(byte) 1)//处决
+                                                                            .addLeaf(BUILDER.buildDialogueOption(entityType,6),(byte) 2))//领任务
+                                                            )
+                                                    )
+                                            )
+                                    )
+                            )
+            );
+        } else {
+            //还有别的情况吗？有就当还没打过处理吧然后返回值随便搞一个表示不处理
+            builder.start(BUILDER.buildDialogueAnswer(entityType,0))
+                    .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,1))
+                    .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)114514);
         }
-
-        else if (SaveUtil.biome1.isBossFought && SaveUtil.biome1.isElderDie){
-            builder.start(greet2)
-                    .addChoice(BUILDER.buildDialogueOption(entityType,7),BUILDER.buildDialogueAnswer(entityType,10))
-                    .addChoice(BUILDER.buildDialogueOption(entityType,8),BUILDER.buildDialogueAnswer(entityType,11))
-                    .addChoice(BUILDER.buildDialogueOption(entityType,9),BUILDER.buildDialogueAnswer(entityType,12))
-                    .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,13));
-            Minecraft.getInstance().setScreen(builder.build());
-        }
+        Minecraft.getInstance().setScreen(builder.build());
     }
 
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID){
+            //初次对话结束，就是变成开始打了
             case 0:
                 SaveUtil.biome1.isBossTalked = true;
-                this.setConversingPlayer(null);
-                return;
+                break;
+            //选择处决
             case 1:
-                this.setConversingPlayer(null);
-                return;
+                SaveUtil.biome1.isBossFought = true;//注意要处决或者接任务后再调这个，注意考虑对话中断的情况
+                realDie(player.damageSources().playerAttack(player));
+                SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskKillBoss);
+                SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskBackToElder);
+                break;
+            //选择接任务
+            case 2:
+                SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskKillElder);
+                SaveUtil.biome1.isBossFought = true;//注意要处决或者接任务后再调这个，注意考虑对话中断的情况
+                break;
+            //任务成功
+            case 3:
+                SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskKillElder);
+                SaveUtil.biome1.choice = SaveUtil.BiomeData.BOSS;
+                //TODO: 颁奖了
+                return;//NOTE：颁奖后面还有对话，不能setConversingPlayer为Null
         }
         this.setConversingPlayer(null);
-    }
-
-    public boolean bossChallenged(Player player){
-        return DataManager.boss1Defeated.getBool(player);
     }
 
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (hand == InteractionHand.MAIN_HAND) {
-            if (!this.level().isClientSide() && !bossChallenged(player)) {
+            if (!this.level().isClientSide()) {
                     this.lookAt(player, 180.0F, 180.0F);
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (this.getConversingPlayer() == null) {
-                            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(),serverPlayer.getPersistentData().copy()), serverPlayer);
+                            sendDialoguePacket(serverPlayer);
                             this.setConversingPlayer(serverPlayer);
                     }
                 }
@@ -342,7 +378,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
         @Override
         public void start() {
                 if (yggdrasil.getConversingPlayer() == null && yggdrasil.conversationStage != -1) {
-                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(yggdrasil.getId(),player.getPersistentData().copy()),player);
+                    yggdrasil.sendDialoguePacket(player);
                     yggdrasil.setConversingPlayer(player);
                 }
 
