@@ -251,7 +251,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
             Minecraft.getInstance().setScreen(builder.build());
         }
 
-        else if (true){
+        else if (SaveUtil.biome1.isBossFought && SaveUtil.biome1.isElderDie){
             builder.start(greet2)
                     .addChoice(BUILDER.buildDialogueOption(entityType,7),BUILDER.buildDialogueAnswer(entityType,10))
                     .addChoice(BUILDER.buildDialogueOption(entityType,8),BUILDER.buildDialogueAnswer(entityType,11))
