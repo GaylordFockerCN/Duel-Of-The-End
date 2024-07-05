@@ -11,51 +11,20 @@ import java.util.Set;
  * 懒得换成DataKey了呜呜将就一下吧
  */
 public class TCRPlayer {
-
-    private boolean isHiding;
-    public boolean isPlayingAnim;
     private boolean isFlying;
     private boolean protectNextFall;
     private boolean hasSwordEntity;
     private int swordScreenEntityCount;
-    public int rainScreenCooldownTimer;
     private int rainCutterTimer;
-    public int rainCutterCooldownTimer;
     private boolean isScreenCutterCoolDown;
     private int yakshaMaskTimer;
-    public int yakshaMaskCooldownTimer;
-    public boolean canYakshaMask;
-    public boolean isYakshaFall;
-    public int stellarSwordID;
-    public int stayInAirTick;
     private int flyingTick;
-    public double flyHeight;
-    //客户端和服务端用途不一样
-    public boolean isStellarRestorationPressing;
-    public boolean isStellarRestorationSecondPressing;
-    public int stellarRestorationCooldownTimer;
     private Set<Integer> swordID;
     private int anticipationTick;
     private ItemStack sword;
 
     public boolean isFlying() {
         return isFlying;
-    }
-
-    public void setFlying(boolean flying) {
-        isFlying = flying;
-    }
-
-    public boolean isProtectNextFall() {
-        return protectNextFall;
-    }
-
-    public void setProtectNextFall(boolean protectNextFall) {
-        this.protectNextFall = protectNextFall;
-    }
-
-    public boolean hasSwordEntity() {
-        return hasSwordEntity;
     }
 
     public void setHasSwordEntity(boolean hasSwordEntity) {
@@ -73,30 +42,6 @@ public class TCRPlayer {
         this.swordScreenEntityCount = swordScreenEntityCount;
     }
 
-    public int getRainCutterTimer() {
-        return rainCutterTimer;
-    }
-
-    public void setRainCutterTimer(int rainCutterTimer) {
-        this.rainCutterTimer = rainCutterTimer;
-    }
-
-    public boolean isScreenCutterCoolDown() {
-        return isScreenCutterCoolDown;
-    }
-
-    public int getYakshaMaskTimer() {
-        return yakshaMaskTimer;
-    }
-
-    public void setYakshaMaskTimer(int yakshaMaskTimer) {
-        this.yakshaMaskTimer = yakshaMaskTimer;
-    }
-
-    public void setScreenCutterCoolDown(boolean screenCutterCoolDown) {
-        this.isScreenCutterCoolDown = screenCutterCoolDown;
-    }
-
     public void setSwordID(Set<Integer> swordID) {
         this.swordID = swordID;
     }
@@ -106,22 +51,6 @@ public class TCRPlayer {
             swordID = new HashSet<>();
         }
         return swordID;
-    }
-
-    public int getAnticipationTick() {
-        return anticipationTick;
-    }
-
-    public void setAnticipationTick(int anticipationTick) {
-        this.anticipationTick = anticipationTick;
-    }
-
-    public int getFlyingTick() {
-        return flyingTick;
-    }
-
-    public void setFlyingTick(int flyingTick) {
-        this.flyingTick = flyingTick;
     }
 
     public ItemStack getSword() {

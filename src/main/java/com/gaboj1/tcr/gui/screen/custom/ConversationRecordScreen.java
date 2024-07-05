@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.gui.screen.custom;
 
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 
 /**
@@ -9,8 +10,13 @@ import net.minecraft.network.chat.Component;
  */
 public class ConversationRecordScreen extends Screen {
 
-    public ConversationRecordScreen(Component component) {
+
+
+    public ConversationRecordScreen(Component component, CompoundTag serverData) {
         super(component);
+
+
+
     }
 
 
