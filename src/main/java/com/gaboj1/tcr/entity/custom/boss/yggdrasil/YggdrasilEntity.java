@@ -209,7 +209,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     public void openDialogueScreen(CompoundTag serverPlayerData) {
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
         Component greet1 = BUILDER.buildDialogueAnswer(entityType,0);
-        Component greet2 = BUILDER.buildDialogueAnswer(entityType,2);
+        Component greet2 = BUILDER.buildDialogueAnswer(entityType,9);
 
         //满足领奖条件
         if(SaveUtil.biome1.canGetBossReward()){
@@ -231,7 +231,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
                     .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)0);
             Minecraft.getInstance().setScreen(builder.build());
         }
-        else if(true){
+        else if(SaveUtil.biome1.isBossFought){
            builder.setAnswerRoot(
                    new TreeNode(BUILDER.buildDialogueAnswer(entityType,2))
                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,3),BUILDER.buildDialogueOption(entityType,1))
@@ -251,11 +251,13 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
             Minecraft.getInstance().setScreen(builder.build());
         }
 
-        if (SaveUtil.biome1.isElderDie && SaveUtil.biome1.isElderDie){
+        else if (true){
             builder.start(greet2)
-                    .addChoice(BUILDER.buildDialogueAnswer(entityType,8),BUILDER.buildDialogueOption(entityType,7))
-                    .addChoice(BUILDER.buildDialogueAnswer(entityType,9),BUILDER.buildDialogueOption(entityType,8))
-                    .addChoice(BUILDER.buildDialogueAnswer(entityType,10),BUILDER.buildDialogueOption(entityType,9));
+                    .addChoice(BUILDER.buildDialogueOption(entityType,7),BUILDER.buildDialogueAnswer(entityType,10))
+                    .addChoice(BUILDER.buildDialogueOption(entityType,8),BUILDER.buildDialogueAnswer(entityType,11))
+                    .addChoice(BUILDER.buildDialogueOption(entityType,9),BUILDER.buildDialogueAnswer(entityType,12))
+                    .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,13));
+            Minecraft.getInstance().setScreen(builder.build());
         }
     }
 
@@ -264,13 +266,10 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
         switch (interactionID){
             case 0:
                 SaveUtil.biome1.isBossTalked = true;
-
                 this.setConversingPlayer(null);
                 return;
             case 1:
-
                 this.setConversingPlayer(null);
-
                 return;
         }
         this.setConversingPlayer(null);

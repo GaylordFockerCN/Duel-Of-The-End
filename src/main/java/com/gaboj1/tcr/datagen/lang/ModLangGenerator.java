@@ -299,7 +299,8 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.YGGDRASIL,9,"如何？我已经迫不及待吸收他的鲜血了！");
         this.addDialog(TCRModEntities.YGGDRASIL,10,"很好，我将赐予你生命之力！");
         this.addDialog(TCRModEntities.YGGDRASIL,11,"享受这强大的力量吧！");
-        this.addDialog(TCRModEntities.YGGDRASIL,12,"我可以为你介绍其他地区的现状，我能感应到每个地区都存在着动荡。位于%s的青云之巅（群系名）皇位不保，位于%s的樱之原野（群系名）也有一位智者现世，他将以他的才智狠狠压榨那群傻子。位于%s的亚特兰蒂斯（群系名）嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通");
+        this.addDialog(TCRModEntities.YGGDRASIL,12,"我可以为你介绍其他地区的现状，我能感应到每个地区都存在着动荡。");
+        this.addDialog(TCRModEntities.YGGDRASIL,13,"位于%s的青云之巅（群系名）皇位不保，位于%s的樱之原野（群系名）也有一位智者现世，他将以他的才智狠狠压榨那群傻子。位于%s的亚特兰蒂斯（群系名）嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通");
 
         this.addDialogChoice(TCRModEntities.YGGDRASIL,-1,"继续");
         this.addDialogChoice(TCRModEntities.YGGDRASIL,0,"什么是同化？？等等……");
