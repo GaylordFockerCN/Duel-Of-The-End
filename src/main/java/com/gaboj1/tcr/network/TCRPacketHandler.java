@@ -2,6 +2,7 @@ package com.gaboj1.tcr.network;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.network.packet.*;
+import com.gaboj1.tcr.network.packet.client.AddDialogPacket;
 import com.gaboj1.tcr.network.packet.client.NpcPlayerInteractPacket;
 import com.gaboj1.tcr.network.packet.client.PortalBlockTeleportPacket;
 import com.gaboj1.tcr.network.packet.client.UpdateFlySpeedPacket;
@@ -36,6 +37,7 @@ public class TCRPacketHandler {
         register(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);
         register(PortalBlockTeleportPacket.class, PortalBlockTeleportPacket::decode);
         register(UpdateFlySpeedPacket.class, UpdateFlySpeedPacket::decode);
+        register(AddDialogPacket.class, AddDialogPacket::decode);
 
     }
 

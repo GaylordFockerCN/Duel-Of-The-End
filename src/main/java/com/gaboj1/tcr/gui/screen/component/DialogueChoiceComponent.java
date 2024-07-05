@@ -1,5 +1,8 @@
 package com.gaboj1.tcr.gui.screen.component;
 
+import com.gaboj1.tcr.network.PacketRelay;
+import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.packet.client.AddDialogPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -10,11 +13,29 @@ import net.minecraft.network.chat.MutableComponent;
  * A button widget that allows the player to select a line of dialogue to say to an NPC.
  */
 public class DialogueChoiceComponent extends Button {
+
+    private boolean broadcast;
+
     public DialogueChoiceComponent(MutableComponent message, Button.OnPress onPress) {
-
-
         super(Button.builder(appendBrackets(message), onPress).pos(0, 0).size(0, 12).createNarration(DEFAULT_NARRATION));
         this.width = Minecraft.getInstance().font.width(this.getMessage()) + 2;
+        this.broadcast = false;
+    }
+
+    public DialogueChoiceComponent(MutableComponent message, Button.OnPress onPress, boolean broadcast) {
+        this(message, onPress);
+        this.broadcast = broadcast;
+    }
+
+    /**
+     * 添加到对话记录并全服广播
+     */
+    @Override
+    public void onPress() {
+        super.onPress();
+        if(Minecraft.getInstance().player != null){
+            PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new AddDialogPacket(Minecraft.getInstance().player.getDisplayName(), getMessage(), broadcast));
+        }
     }
 
     @Override

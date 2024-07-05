@@ -8,6 +8,7 @@ import com.gaboj1.tcr.gui.screen.component.DialogueAnswerComponent;
 import com.gaboj1.tcr.gui.screen.component.DialogueChoiceComponent;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.packet.client.AddDialogPacket;
 import com.gaboj1.tcr.network.packet.client.NpcPlayerInteractPacket;
 import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.ChatFormatting;
@@ -93,13 +94,12 @@ public class TCRDialogueScreen extends Screen {
     }
 
     /**
+     * 顺便发包同步记录，以及全服广播对话
      * Sets what message to display for a dialogue answer.
      * @param component The message {@link Component}.
      */
     protected void setDialogueAnswer(Component component) {
-        if(entity instanceof NpcDialogue npc){
-            npc.chat(component);//左下角重复一下，方便回看，但是没生效。。。
-        }
+        PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new AddDialogPacket(entity.getDisplayName(), component, true));
         if(TCRConfig.ENABLE_TYPEWRITER_EFFECT.get()){
             this.dialogueAnswer.updateTypewriterDialogue(component);
         }else {
