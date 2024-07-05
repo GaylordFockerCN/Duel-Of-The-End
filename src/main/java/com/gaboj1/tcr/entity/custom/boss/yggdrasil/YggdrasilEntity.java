@@ -255,7 +255,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
 
         } else if(!serverData.getBoolean("isBossTalked")){
             //靠近就触发战斗，初次对话
-            builder.start(BUILDER.buildDialogueAnswer(entityType, 9))
+            builder.start(BUILDER.buildDialogueAnswer(entityType, 0))
                     .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,1))
                     .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)0);
 
@@ -369,10 +369,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
                 return false;
             }
             double distance = yggdrasil.distanceTo(player);
-            if (distance < 20 && !yggdrasil.bossChallenged(player)) {
-                return true;
-            }
-            return false;
+            return distance < 20 && !SaveUtil.biome1.isBossTalked;
         }
 
         @Override

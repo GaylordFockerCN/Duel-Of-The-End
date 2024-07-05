@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.keymapping;
 
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.gui.screen.custom.GameProgressScreen;
 import com.gaboj1.tcr.item.custom.DesertEagleItem;
 import com.gaboj1.tcr.network.PacketRelay;
@@ -53,11 +54,16 @@ public class KeyMappings {
 		event.register(RELOAD);
 	}
 
-	@SubscribeEvent
-	public static void onClientTick(TickEvent.ClientTickEvent event) {
-		if(OPEN_PROGRESS.isDown() && !(Minecraft.getInstance().screen instanceof GameProgressScreen)){
-			Minecraft.getInstance().setScreen(new GameProgressScreen());
+	@Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID, value = Dist.CLIENT)
+	public static class KeyPressHandler {
+		@SubscribeEvent
+		public static void onClientTick(TickEvent.ClientTickEvent event) {
+			if(OPEN_PROGRESS.isDown() && !(Minecraft.getInstance().screen instanceof GameProgressScreen)){
+				Minecraft.getInstance().setScreen(new GameProgressScreen());
+			}
 		}
 	}
+
+
 
 }
