@@ -242,8 +242,8 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
             pVillagerBrain.setSchedule(Schedule.VILLAGER_DEFAULT);
         }
 
-        //删除工作目标，增加自卫目标，其他和原版一致
-        pVillagerBrain.addActivity(Activity.CORE, TCRVillagerTasks.getGuardCorePackage());
+        //删除工作目标，增加自卫目标和对话目标，其他和原版一致
+        pVillagerBrain.addActivity(Activity.CORE, TCRVillagerTasks.getTCRVillagerCorePackage());
 
         pVillagerBrain.addActivity(Activity.CORE, VillagerGoalPackages.getCorePackage(villagerprofession, 0.5F));
         pVillagerBrain.addActivityWithConditions(Activity.MEET, VillagerGoalPackages.getMeetPackage(villagerprofession, 0.5F), ImmutableSet.of(Pair.of(MemoryModuleType.MEETING_POINT, MemoryStatus.VALUE_PRESENT)));
@@ -328,28 +328,12 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
         }
     }
 
-//    //不，你不想要铁傀儡
-//    public boolean wantsToSpawnGolem(long pGameTime) {
-//        return false;
-//    }
-
-
-//    TODO:替换成守卫
-//    @Override
-//    public void spawnGolemIfNeeded(ServerLevel p_35398_, long p_35399_, int p_35400_) {
-//        if (this.wantsToSpawnGolem(p_35399_)) {
-//            AABB aabb = this.getBoundingBox().inflate(10.0D, 10.0D, 10.0D);
-//            List<Villager> list = p_35398_.getEntitiesOfClass(Villager.class, aabb);
-//            List<Villager> list1 = list.stream().filter((p_186293_) -> {
-//                return p_186293_.wantsToSpawnGolem(p_35399_);
-//            }).limit(5L).collect(Collectors.toList());
-//            if (list1.size() >= p_35400_) {
-//                if (SpawnUtil.trySpawnMob(EntityType.IRON_GOLEM, MobSpawnType.MOB_SUMMONED, p_35398_, this.blockPosition(), 10, 8, 6, SpawnUtil.Strategy.LEGACY_IRON_GOLEM).isPresent()) {
-//                    list.forEach(GolemSensor::golemDetected);
-//                }
-//            }
-//        }
-//    }
+    /**
+     * 不，你不想要铁傀儡，你已经会反击了
+     */
+    public boolean wantsToSpawnGolem(long pGameTime) {
+        return false;
+    }
 
     @Override
     public boolean hurt(DamageSource source, float v) {

@@ -102,7 +102,12 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     this.lookAt(player, 180.0F, 180.0F);
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (this.getConversingPlayer() == null) {
-                            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(),serverPlayer.getPersistentData().copy()), serverPlayer);
+
+                            CompoundTag serverData = new CompoundTag();
+                            serverData.putBoolean("isElderTalked", SaveUtil.biome1.isElderTalked);
+                            serverData.putBoolean("canGetElderReward", SaveUtil.biome1.canGetElderReward());
+
+                            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverData), serverPlayer);
                             this.setConversingPlayer(serverPlayer);
                         }
                     }
@@ -117,11 +122,11 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void openDialogueScreen(CompoundTag serverPlayerData) {
+    public void openDialogueScreen(CompoundTag serverData) {
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
 
         //击杀完boss1后回来见长老
-        if(SaveUtil.biome1.canGetElderReward()){
+        if(serverData.getBoolean("canGetElderReward")){
             builder.start(4)
                     .addChoice(3,5)
                     .addChoice(4,6)
@@ -129,7 +134,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     .addChoice(2,9)
                     .addFinalChoice(6,(byte)1);
         //初次与长老对话
-        } else if(!SaveUtil.biome1.isElderTalked){
+        } else if(serverData.getBoolean("isElderTalked")){
             BiomeMap biomeMap = BiomeMap.getInstance();
             BlockPos biome1Center = biomeMap.getBlockPos(biomeMap.getCenter1(),0);
             String position = "("+biome1Center.getX()+","+biome1Center.getZ()+")";

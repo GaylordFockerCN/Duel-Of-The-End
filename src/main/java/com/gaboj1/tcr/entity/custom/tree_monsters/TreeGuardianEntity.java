@@ -16,7 +16,7 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -30,14 +30,9 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Random;
-import java.util.UUID;
 
-/*
- * 守卫，继承铁傀儡
- * 接口NeutralMob用于调用激怒方法
- * */
-public class TreeGuardianEntity extends IronGolem implements GeoEntity {
-    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+public class TreeGuardianEntity extends Monster implements GeoEntity {
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public TreeGuardianEntity(EntityType<? extends TreeGuardianEntity> entityType, Level level) {
         super(entityType, level);
@@ -142,11 +137,11 @@ public class TreeGuardianEntity extends IronGolem implements GeoEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         //非攻击状态动画
-        controllers.add(new AnimationController(this, "controller",
+        controllers.add(new AnimationController<>(this, "controller",
                 0, this::predicate));
 
         //攻击状态动画
-        controllers.add(new AnimationController(this, "attackController",
+        controllers.add(new AnimationController<>(this, "attackController",
                 0, this::attackPredicate));
     }
 
@@ -160,38 +155,9 @@ public class TreeGuardianEntity extends IronGolem implements GeoEntity {
         return PlayState.STOP;//停
     }
 
-
-    //下面的这些没有用
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
-    }
-
-
-    @Override
-    public int getRemainingPersistentAngerTime() {
-        return 0;
-    }
-
-    @Override
-    public void setRemainingPersistentAngerTime(int pRemainingPersistentAngerTime) {
-
-    }
-
-    @Nullable
-    @Override
-    public UUID getPersistentAngerTarget() {
-        return null;
-    }
-
-    @Override
-    public void setPersistentAngerTarget(@Nullable UUID pPersistentAngerTarget) {
-
-    }
-
-    @Override
-    public void startPersistentAngerTimer() {
-
     }
 
 }

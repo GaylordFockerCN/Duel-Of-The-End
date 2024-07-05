@@ -14,6 +14,7 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -29,10 +30,10 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.Random;
 import java.util.UUID;
 
-public class MiddleTreeMonsterEntity extends TamableAnimal implements GeoEntity , NeutralMob {
+public class MiddleTreeMonsterEntity extends Monster implements GeoEntity , NeutralMob {
     private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public MiddleTreeMonsterEntity(EntityType<? extends TamableAnimal> entityType, Level level) {
+    public MiddleTreeMonsterEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
     }
 
@@ -113,12 +114,6 @@ public class MiddleTreeMonsterEntity extends TamableAnimal implements GeoEntity 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
-    }
-
-    @Nullable
-    @Override
-    public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        return null;
     }
 
     @Override
