@@ -265,33 +265,29 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,20,"我是来探险的，听说这附近有个古老的教堂，我想去看看。");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,21,"购买饮料");
 
+        //长老
         this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,"牧歌原野-海拉长老");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,-4,"此外，我推测他们似乎用居民们许愿的力量在做什么，许愿给我们生活保障和愉悦的礼物，但许愿有时却不能灵验，这是以前没有的事");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,-3,"密林的魔物曾杀尽了穿过密林将抵达终点的人，只有我逃回了这里，他们在那徘徊太久了，再无人敢靠近，而这里的居民也忘记了为什么要穿达尽头。");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,-2,"只有梦中才有许愿成真。只有精神才能入梦。我们只是地面人们的投影，但你却是精神与肉体结合的完整之人。");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,-1,"若你曾冲破世界的蛋壳拥抱地面的身躯，那你一定能帮助我们解决危害着这个村子的密林魔物。恳请您助我们一臂之力!");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,0,"你，与我好像……不对，你不是投影，是完全的人！咳，你不是梦的居民。如果可以，请你倾听我这十年来的心在仇恨的尖刀上是如何滴血！");//
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,1,"密林，就在 %s 你要睁大眼睛侧起耳朵开动脑筋来揣度密林中提示之物的含义。你要是有心，那么就趁有心之时让它发挥作用。对了，尊敬的勇者……");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,2,"算了，有的东西不过很久，是不可能理解的。 有的东西等到理解了，又为时已晚。有些事情还无法言喻，有的则不便言喻。但你什么也不必担心，在某种意义上，村子和密林都是公平的。");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,3,"关于你所需要你所应该知道的，村子和密林以后将一一在你面前提示出来。若你要动身，请收下我刚做的蛋糕和珍藏的矿石。愿为勇士尽绵薄之力。");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,4,"你已然知晓了一切。村子所祈祷的力量来自于世界主和四座使者……这点我没告诉你，而是寄托于命运的安排……");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,5,"这是我的懦弱，是我在逃避对于村子的责任。我收取生命之力却不敢踏足密林，只能一直等待助力。我发誓，村里的孩子将由我来见证他们的终点，由我来引领他们的成长。");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,6,"前人能只靠许愿获得的材料加工建造这么多的建筑，脱离对梦境求哺，也是我们离开幼儿期的重要一步。");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,7,"出发吧，勇者！");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,8,"我所知道的都告诉你了。我听说剩下三使者的管理区，有不少被他们阻止前往地面的人们。如果不让精神的投影尽早回归肉体，现实人的意志也会相应的被干扰。");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,9,"您也是我们的先驱，愿您能引领像我一样这些止步不前的后辈！也许他们能给你答案。");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,10,"再会，勇者！");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,0,"你，与我好像……不对，你不是投影，是完全的人！咳，你不是梦的居民。你一定能帮助我们解决危害着这个村子的密林魔物！");//
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,1,"只有精神才能入梦，我们只是投影，但你却是精神与肉体结合的完整之人。密林的魔物曾杀尽了穿过密林之人，只有我逃回了这里。魔物无时不危害着村民，恳请您助我们一臂之力！");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,2,"密林，就在（x,y）。勇者，千万不要受了那魔物的蛊惑！请收下我的诚意，愿为勇士尽绵薄之力。");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,3,"（凝视着你，眼中充满了期待）");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,4,"（目光坚定）你带来的是希望的曙光，旅者。村庄的每个角落都感激你的勇气。");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,5,"你的名字将被铭记。请接受我们的祝福，愿你的道路永远光明！");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,6,"我将为你指引其他群系的位置。山水画廊（群系名）发生了天灾，位于（x，y），樱之原野（群系名）似乎在进行大选，位于（x，y）。亚特兰蒂斯（群系名）嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通。");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,111,"你已经收过了哦~");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,0,"请你告诉我前往密林的路径。");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,1,"完全的人？魔物？");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,2,"继续");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,-2,"收下");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,-1,"这里的一切都如此熟悉，你可以告诉我更多关于这里的真相吗？");
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,3,"这一切树魔已经都告诉我了……");
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,4,"所谓进化就是这么回事，进化总是苦涩而寂寞的。不可能有令人心旷神怡的进化。进化是严峻的。");
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,5,"我感觉这里如此熟悉而陌生，我将去往何方探寻真相？");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,3,"长老，我已将树魔击败，它不再威胁我们的村庄了。");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,4,"我只是做了应该做的事。");
+        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,5,"我将去往何方？");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,6,"感谢你，长老。");
-        this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,7,"嗯？");
         //Yggdrasil
         this.addEntityAndEgg(TCRModEntities.YGGDRASIL,"伊格德拉希尔");
         this.addDialog(TCRModEntities.YGGDRASIL,0,"哦，可怜的年轻人，还是来了……，不对，你是完整的人");

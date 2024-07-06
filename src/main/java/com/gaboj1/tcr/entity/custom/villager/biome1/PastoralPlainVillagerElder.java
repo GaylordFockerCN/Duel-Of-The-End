@@ -124,14 +124,12 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     @OnlyIn(Dist.CLIENT)
     public void openDialogueScreen(CompoundTag serverData) {
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
-
         //击杀完boss1后回来见长老
-        if(serverData.getBoolean("canGetElderReward")){
-            builder.start(4)
-                    .addChoice(3,5)
-                    .addChoice(4,6)
-                    .addChoice(5,8)
-                    .addChoice(2,9)
+        if(serverData.getBoolean("isElderTalked")){
+            builder.start(3)
+                    .addChoice(3,4)
+                    .addChoice(4,5)
+                    .addChoice(5,6)
                     .addFinalChoice(6,(byte)1);
         //初次与长老对话
         } else if(serverData.getBoolean("isElderTalked")){
@@ -139,13 +137,8 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
             BlockPos biome1Center = biomeMap.getBlockPos(biomeMap.getCenter1(),0);
             String position = "("+biome1Center.getX()+","+biome1Center.getZ()+")";
             builder.start(0)
-                    .addChoice(2,-1)
-                    .addChoice(1,-2)
-                    .addChoice(2,-3)
-                    .addChoice(2,-4)
-                    .addChoice(BUILDER.buildDialogueOption(entityType,0),BUILDER.buildDialogueAnswer(entityType,1,position))//告诉玩家密林方位
-                    .addChoice(7,2)
-                    .addChoice(2,3)
+                    .addChoice(1,1)
+                    .addChoice(BUILDER.buildDialogueOption(entityType,0),BUILDER.buildDialogueAnswer(entityType,2,position))
                     .addFinalChoice(-2,(byte)-1);
             SaveUtil.biome1.isElderTalked =true;
 

@@ -120,7 +120,6 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     public void die(DamageSource source) {
         this.setHealth(1);
         if (source.getEntity() instanceof ServerPlayer player) {
-            SaveUtil.biome1.isBossFought = true;
             if (this.getConversingPlayer() == null) {
                 sendDialoguePacket(player);
                 this.setConversingPlayer(player);
