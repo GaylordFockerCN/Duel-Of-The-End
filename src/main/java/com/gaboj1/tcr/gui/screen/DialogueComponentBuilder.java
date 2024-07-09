@@ -49,7 +49,6 @@ public class DialogueComponentBuilder {
 
     public MutableComponent buildDialogueAnswer(EntityType<?> entityType, int skinID , int i , boolean newLine) {
         Component component = Component.translatable(entityType+".dialog"+skinID+"_"+i);
-
         return Component.literal(newLine?"\n":"").append(component);//换行符有效
     }
 
@@ -57,5 +56,4 @@ public class DialogueComponentBuilder {
         Component component = Component.translatable(entityType + ".dialog" + i, s);
         return Component.literal("\n").append(component);
     }
-
 }

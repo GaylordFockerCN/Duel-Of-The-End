@@ -102,11 +102,9 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     this.lookAt(player, 180.0F, 180.0F);
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (this.getConversingPlayer() == null) {
-
                             CompoundTag serverData = new CompoundTag();
                             serverData.putBoolean("isElderTalked", SaveUtil.biome1.isElderTalked);
                             serverData.putBoolean("canGetElderReward", SaveUtil.biome1.canGetElderReward());
-
                             PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverData), serverPlayer);
                             this.setConversingPlayer(serverPlayer);
                         }
@@ -125,14 +123,19 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     public void openDialogueScreen(CompoundTag serverData) {
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
         //击杀完boss1后回来见长老
-        if(serverData.getBoolean("isElderTalked")){
+        if(serverData.getBoolean("canGetElderReward")){
+            BiomeMap biomeMap = BiomeMap.getInstance();
+            BlockPos biome2Center = biomeMap.getBlockPos(biomeMap.getCenter2(),0);
+            BlockPos biome3Center = biomeMap.getBlockPos(biomeMap.getCenter3(),0);
+            String position2 = "("+ biome2Center.getX()+","+biome2Center.getZ()+")";
+            String position3 = "("+ biome3Center.getX()+","+biome3Center.getZ()+")";
             builder.start(3)
                     .addChoice(3,4)
                     .addChoice(4,5)
-                    .addChoice(5,6)
+                    .addChoice(BUILDER.buildDialogueOption(entityType,5),Component.literal("\n").append(Component.translatable(entityType + ".dialog6",position2,position3)))
                     .addFinalChoice(6,(byte)1);
         //初次与长老对话
-        } else if(serverData.getBoolean("isElderTalked")){
+        } else if(!serverData.getBoolean("isElderTalked")){
             BiomeMap biomeMap = BiomeMap.getInstance();
             BlockPos biome1Center = biomeMap.getBlockPos(biomeMap.getCenter1(),0);
             String position = "("+biome1Center.getX()+","+biome1Center.getZ()+")";
@@ -140,11 +143,13 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     .addChoice(1,1)
                     .addChoice(BUILDER.buildDialogueOption(entityType,0),BUILDER.buildDialogueAnswer(entityType,2,position))
                     .addFinalChoice(-2,(byte)-1);
-            SaveUtil.biome1.isElderTalked =true;
-
         //非初次对话
         } else {
-
+            BiomeMap biomeMap = BiomeMap.getInstance();
+            BlockPos biome1Center = biomeMap.getBlockPos(biomeMap.getCenter1(),0);
+            String position = "("+biome1Center.getX()+","+biome1Center.getZ()+")";
+            builder.start(BUILDER.buildDialogueAnswer(entityType,2,position))
+                    .addFinalChoice(-2,(byte)114514);
         }
 
         Minecraft.getInstance().setScreen(builder.build());
@@ -159,6 +164,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     player.addItem(TCRModItems.ELDER_CAKE.get().getDefaultInstance());
                     player.addItem(Items.DIAMOND.getDefaultInstance().copyWithCount(5));
                     DataManager.elderLoot1Got.putBool(player,true);
+                    SaveUtil.biome1.isElderTalked = true;
                 }else {
                     chat(111);
                 }
@@ -175,6 +181,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                 }else {
                     chat(BUILDER.buildDialogueAnswer(entityType,22,false));
                 }
+
                 this.chat(BUILDER.buildDialogueAnswer(entityType,10));//再会，勇者！=
                 //TODO 获得进度
                 break;
@@ -254,6 +261,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     public void realDie(Player killer){
         this.setInvulnerable(false);
         this.setHealth(0);
+        SaveUtil.biome1.isElderDie = true;
         DataManager.isWhite.putBool(killer, false);
         DataManager.isWhite.lock(killer);
         killer.addItem(BookManager.BIOME1_ELDER_DIARY_3.get());

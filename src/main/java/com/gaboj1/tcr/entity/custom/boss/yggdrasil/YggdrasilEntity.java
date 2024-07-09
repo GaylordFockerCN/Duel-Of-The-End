@@ -269,7 +269,8 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
                                                             .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,7),BUILDER.buildDialogueOption(entityType,3))
                                                                     .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,8),BUILDER.buildDialogueOption(entityType,4))
                                                                             .addLeaf(BUILDER.buildDialogueOption(entityType,5),(byte) 1)//处决
-                                                                            .addLeaf(BUILDER.buildDialogueOption(entityType,6),(byte) 2))//领任务
+                                                                            .addLeaf(BUILDER.buildDialogueOption(entityType,6),(byte) 2)
+                                                                    )//领任务
                                                             )
                                                     )
                                             )

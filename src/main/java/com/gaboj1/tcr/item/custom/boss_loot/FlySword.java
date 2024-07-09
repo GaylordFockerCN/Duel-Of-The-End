@@ -356,19 +356,19 @@ public class FlySword extends MagicWeapon implements GeoItem {
 //        }
         return PlayState.CONTINUE;
     }
-    @Override
-    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        consumer.accept(new IClientItemExtensions() {
-            private HolySwordRenderer renderer;
-            @Override
-            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                if(this.renderer == null){
-                    renderer = new HolySwordRenderer();
-                }
-                return this.renderer;
-            }
-        });
-    }
+//    @Override
+//    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+//        consumer.accept(new IClientItemExtensions() {
+//            private HolySwordRenderer renderer;
+//            @Override
+//            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+//                if(this.renderer == null){
+////                    renderer = new HolySwordRenderer();
+//                }
+//                return this.renderer;
+//            }
+//        });
+//    }
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;

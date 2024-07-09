@@ -183,7 +183,7 @@ public class SaveUtil {
         }
 
         public boolean canGetBossReward(){
-            return isBossFought && !isBossDie && isElderDie;
+            return bossTaskReceived() && isElderDie;
         }
 
         /**
