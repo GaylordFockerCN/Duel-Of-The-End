@@ -1,6 +1,8 @@
 package com.gaboj1.tcr.util;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.network.PacketRelay;
+import com.gaboj1.tcr.network.TCRPacketHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.chat.Component;
@@ -17,7 +19,16 @@ public class SaveUtil {
     public static int worldLevel = 0;
     public static final List<Dialog> DIALOG_LIST = new ArrayList<>();
     public static final HashSet<Dialog> DIALOG_SET = new HashSet<>();
-    public static final HashSet<Dialog> TASK_SET = new HashSet<>();
+    public static final HashSet<Dialog> TASK_SET = new HashSet<>(){
+        @Override
+        public boolean remove(Object o) {
+            //TODO 播报任务完成
+            if(o instanceof Dialog dialog){
+//                PacketRelay.sendToServer(TCRPacketHandler.INSTANCE,);
+            }
+            return super.remove(o);
+        }
+    };
     public static int firstChoiceBiome = 0;//0 means null
 
     public static Biome1Data biome1 = new Biome1Data();
@@ -75,8 +86,9 @@ public class SaveUtil {
 
     public static CompoundTag getTaskListNbt(){
         CompoundTag dialogListNbt = new CompoundTag();
-        for(int i = 0; i < DIALOG_LIST.size(); i++){
-            dialogListNbt.put("task"+i, DIALOG_LIST.get(i).toNbt());
+        List<Dialog> tasks = TASK_SET.stream().toList();
+        for(int i = 0; i < tasks.size(); i++){
+            dialogListNbt.put("task"+i, tasks.get(i).toNbt());
         }
         return dialogListNbt;
     }
@@ -190,7 +202,7 @@ public class SaveUtil {
          * 战斗过且boss没死说明是接任务了。注意要做出选择后再标记战斗过，以免中断
          */
         public boolean killElderTaskGet(){
-            return (isBossFought && !isBossDie) || TASK_SET.contains(taskKillElder);
+            return TASK_SET.contains(taskKillElder);
         }
 
         public boolean canGetElderReward(){

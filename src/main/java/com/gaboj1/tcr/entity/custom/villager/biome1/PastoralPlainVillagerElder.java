@@ -160,38 +160,25 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         switch (interactionID) {
             //接取任务
             case -1:
+                //这个可以保留，每个玩家可以领一份
                 if(!DataManager.elderLoot1Got.getBool(player)){
                     player.addItem(TCRModItems.ELDER_CAKE.get().getDefaultInstance());
                     player.addItem(Items.DIAMOND.getDefaultInstance().copyWithCount(5));
                     DataManager.elderLoot1Got.putBool(player,true);
-                    SaveUtil.biome1.isElderTalked = true;
                 }else {
                     chat(111);
                 }
                 this.chat(BUILDER.buildDialogueAnswer(entityType,7));
-                SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskKillElder);
+                SaveUtil.biome1.isElderTalked = true;
+                SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskKillBoss);
                 break;
             case 0: //对话中断的代码！
 //                this.chat(Component.translatable("刚刚说到哪儿来着？"));
                 break;
-            case 1: //白方 击败boss
-                if(!DataManager.elderLoot2Got.getBool(player)){
-                    player.addItem(Items.DIAMOND.getDefaultInstance().copyWithCount(20));
-                    DataManager.elderLoot2Got.putBool(player,true);
-                }else {
-                    chat(BUILDER.buildDialogueAnswer(entityType,22,false));
-                }
-
+            case 1: //回来领奖
+                SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskBackToElder);
                 this.chat(BUILDER.buildDialogueAnswer(entityType,10));//再会，勇者！=
-                //TODO 获得进度
-                break;
-            case 2: //看长老不爽而杀死长老
-                this.chat(BUILDER.buildDialogueAnswer(entityType,11));
-                realDie(player);
-                break;
-            case 3: //受到boss指派杀死长老
-                this.chat(BUILDER.buildDialogueAnswer(entityType,12));
-                realDie(player);
+                //TODO 获得进度，给予奖励
                 break;
         }
         this.setConversingPlayer(null);
@@ -232,7 +219,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     @Override
     public boolean hurt(DamageSource source, float v) {
         if(!SaveUtil.biome1.canAttackElder()){
-            v = 0;
+            return false;
         }
         if(source.getEntity() instanceof ServerPlayer serverPlayer){
             bossInfo.addPlayer(serverPlayer);//亮血条！
@@ -246,41 +233,16 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
      */
     @Override
     public void die(DamageSource source) {
-        setHealth(1);
-        setInvulnerable(true);//无敌
-        if(source.getEntity() instanceof ServerPlayer serverPlayer) {
-            DataManager.elder1Defeated.putBool(serverPlayer,true);
-            DataManager.elder1Defeated.lock(serverPlayer);
-            if (this.getConversingPlayer() == null) {
-                PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverPlayer.getPersistentData().copy()), serverPlayer);
-                this.setConversingPlayer(serverPlayer);
-            }
-        }
-    }
 
-    public void realDie(Player killer){
-        this.setInvulnerable(false);
-        this.setHealth(0);
+        //TODO say遗言
         SaveUtil.biome1.isElderDie = true;
-        DataManager.isWhite.putBool(killer, false);
-        DataManager.isWhite.lock(killer);
-        killer.addItem(BookManager.BIOME1_ELDER_DIARY_3.get());
+        SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskKillElder);
+        SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskBackToBoss);
+        if(source.getEntity() instanceof Player player){
+            player.addItem(BookManager.BIOME1_ELDER_DIARY_3.get());
+        }
+        super.die(source);
     }
-//    /**
-//     * 真的死亡
-//     * @param pCause
-//     */
-//    public void realDie(DamageSource pCause){
-//        super.die(pCause);
-//        //如果玩家为黑方（接受boss任务）则获取村长日记真相
-//        if(pCause.getEntity() instanceof ServerPlayer player){
-//            if(!DataManager.isWhite.getBool(player) && DataManager.isWhite.isLocked(player)){
-//                player.addItem(Book.getBook("biome1_elder_diary3",2));
-//            }else {
-//                talkFuck(player,1);//你为何选择这样的道路？
-//            }
-//        }
-//    }
 
     @Override
     public boolean shouldShowName() {
@@ -292,6 +254,5 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     public @NotNull Component getDisplayName() {
         return Component.translatable(entityType.getDescriptionId());
     }
-
 
 }

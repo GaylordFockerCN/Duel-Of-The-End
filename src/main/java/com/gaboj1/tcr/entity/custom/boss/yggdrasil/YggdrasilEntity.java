@@ -47,6 +47,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -66,21 +67,29 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     EntityType<?> entityType = TCRModEntities.YGGDRASIL.get();
     private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.COMPONENT);
-    private static final EntityDataAccessor<Boolean> DATA_IS_READY = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.BOOLEAN);
-    private int conversationStage = 0;
+    private static final EntityDataAccessor<Boolean> IS_FIGHTING = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.BOOLEAN);
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.BLUE, BossEvent.BossBarOverlay.PROGRESS);
 
     private boolean canBeHurt;
+    private boolean isFighting;
     private int hurtTimer;
 
     public YggdrasilEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_);
-//        this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
+        getEntityData().define(IS_FIGHTING, false);
     }
 
-//    private boolean isBossFight() {
-//        return this.bossFight.isVisible();
-//    }
+    @Override
+    public void addAdditionalSaveData(@NotNull CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("is_fighting", this.getEntityData().get(IS_FIGHTING));
+    }
+
+    @Override
+    public void readAdditionalSaveData(@NotNull CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        this.getEntityData().set(IS_FIGHTING,tag.getBoolean("is_fighting"));
+    }
 
     public ServerBossEvent getBossBar() {
         return this.bossInfo;
@@ -114,29 +123,36 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
 
     /**
      * 不能真的死，剩下一口气还要对话
-     * @param source
      */
     @Override
-    public void die(DamageSource source) {
-        this.setHealth(1);
-        if (source.getEntity() instanceof ServerPlayer player) {
-            if (this.getConversingPlayer() == null) {
+    public void die(@NotNull DamageSource source) {
+        getEntityData().set(IS_FIGHTING, false);
+        if(!level().isClientSide){
+            this.setHealth(1);
+            ServerPlayer player;
+            if (source.getEntity() instanceof ServerPlayer serverPlayer) {
+                player = serverPlayer;
+            } else {
+                player = (ServerPlayer) level().players().iterator().next();
+            }
+            if (this.getConversingPlayer() == null && player != null) {
                 sendDialoguePacket(player);
                 this.setConversingPlayer(player);
             }
-        } else {
-            //TODO : 如果不是被玩家杀死的呢？获取附近玩家或服务器列表随机抽一个
+            canBeHurt = false;
         }
-        canBeHurt = false;
+
     }
 
     /**
      * 真的死要用这个hhh
-     * @param damageSource
      */
     public void realDie(DamageSource damageSource){
+        this.setHealth(0);
         super.die(damageSource);
         SaveUtil.biome1.isBossDie = true;
+        SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskKillBoss);
+        SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskBackToElder);
     }
 
 
@@ -166,6 +182,14 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     @Override
     public void tick() {
         super.tick();
+
+        if(!level().isClientSide){
+
+        }
+
+        if(conversingPlayer != null){
+            canBeHurt = false;
+        }
         if(canBeHurt){
             hurtTimer--;
         }
@@ -204,10 +228,6 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
 
     }
 
-    public boolean isReady() {
-        return this.getEntityData().get(DATA_IS_READY);
-    }
-
     @Override
     public @Nullable GlobalPos getRestrictionPoint() {
         return null;
@@ -224,6 +244,9 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     }
 
     public void sendDialoguePacket(ServerPlayer serverPlayer){
+        if(getEntityData().get(IS_FIGHTING)){
+            return;
+        }
         CompoundTag serverData = new CompoundTag();
         serverData.putBoolean("canGetBossReward", SaveUtil.biome1.canGetBossReward());
         serverData.putBoolean("isBossTalked", SaveUtil.biome1.isBossTalked);
@@ -249,8 +272,8 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
         } else if(serverData.getBoolean("killElderTaskGet")){
             //未满足领奖条件但是任务已经领了
             builder.setAnswerRoot(
-                    new TreeNode(BUILDER.buildDialogueAnswer(entityType,2))
-                            .addLeaf(BUILDER.buildDialogueOption(entityType,-1),(byte) 114514));
+                    new TreeNode(BUILDER.buildDialogueAnswer(entityType,9))
+                            .addLeaf(BUILDER.buildDialogueOption(entityType,6),(byte) 114514));
 
         } else if(!serverData.getBoolean("isBossTalked")){
             //靠近就触发战斗，初次对话
@@ -282,6 +305,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
             builder.start(BUILDER.buildDialogueAnswer(entityType,0))
                     .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,1))
                     .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)114514);
+            getEntityData().set(IS_FIGHTING, true);
         }
         Minecraft.getInstance().setScreen(builder.build());
     }
@@ -292,6 +316,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
             //初次对话结束，就是变成开始打了
             case 0:
                 SaveUtil.biome1.isBossTalked = true;
+                getEntityData().set(IS_FIGHTING, true);
                 break;
             //选择处决
             case 1:
@@ -307,7 +332,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
                 break;
             //任务成功
             case 3:
-                SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskKillElder);
+                SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskBackToBoss);
                 SaveUtil.biome1.choice = SaveUtil.BiomeData.BOSS;
                 //TODO: 颁奖了
                 return;//NOTE：颁奖后面还有对话，不能setConversingPlayer为Null
@@ -374,14 +399,13 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
 
         @Override
         public void start() {
-                if (yggdrasil.getConversingPlayer() == null && yggdrasil.conversationStage != -1) {
-                    yggdrasil.sendDialoguePacket(player);
+                if (yggdrasil.getConversingPlayer() == null) {
                     yggdrasil.setConversingPlayer(player);
+                    yggdrasil.sendDialoguePacket(player);
                 }
 
         }
     }
-
 
     public static class spawnTreeClawAtPointPositionGoal extends Goal {
     private final YggdrasilEntity yggdrasil;
@@ -396,7 +420,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
 
     @Override
     public boolean canUse() {
-        return --this.shootInterval <= 0;
+        return --this.shootInterval <= 0 && yggdrasil.getConversingPlayer() == null;
     }
 
 
@@ -458,6 +482,15 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
         return TCRModSounds.YGGDRASIL_CRY.get();
     }
 
+    /**
+     * TODO 补死亡音效
+     */
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return super.getDeathSound();
+    }
+
     @Override
     public boolean isDeadOrDying() {
         return super.isDeadOrDying();
@@ -470,8 +503,8 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
         return PlayState.CONTINUE;
     }
     protected void registerGoals() {//设置生物行为
+        this.goalSelector.addGoal(0,new NpcDialogueGoal<>(this));
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(2,new NpcDialogueGoal<>(this));
         this.goalSelector.addGoal(1,new conversationTriggerGoal(this));
         this.goalSelector.addGoal(2, new spawnTreeClawAtPointPositionGoal(this));
 //       this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.2D, false));

@@ -17,8 +17,10 @@ import net.minecraft.world.item.ItemStack;
  * 玩家的PersistentData管理
  * 本质上只是管理key。由于NBT标签不存在null，所以我加入了一个lock变量，如果还没lock就表示不确定性。比如isWhite，在玩家做出选择之前你不能确定是哪个阵营。
  * 虽然使用的时候麻烦了一点，但是多了个lock相当于把bool拆成四个量来用。
+ * @deprecated
  * @author LZY
  */
+@Deprecated
 public class DataManager {
 
     public static void putData(Player player, String key, int value){
