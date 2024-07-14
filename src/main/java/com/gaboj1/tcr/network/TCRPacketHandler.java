@@ -2,8 +2,8 @@ package com.gaboj1.tcr.network;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.network.packet.*;
-import com.gaboj1.tcr.network.packet.client.*;
-import com.gaboj1.tcr.network.packet.server.*;
+import com.gaboj1.tcr.network.packet.serverbound.*;
+import com.gaboj1.tcr.network.packet.clientbound.*;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;

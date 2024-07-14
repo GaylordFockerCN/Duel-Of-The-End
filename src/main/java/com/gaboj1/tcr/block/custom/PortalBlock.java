@@ -3,7 +3,7 @@ package com.gaboj1.tcr.block.custom;
 import com.gaboj1.tcr.block.entity.PortalBlockEntity;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.server.PortalBlockScreenPacket;
+import com.gaboj1.tcr.network.packet.clientbound.PortalBlockScreenPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;

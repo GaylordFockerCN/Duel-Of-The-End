@@ -2,7 +2,7 @@ package com.gaboj1.tcr.gui.screen.component;
 
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.client.AddDialogPacket;
+import com.gaboj1.tcr.network.packet.serverbound.AddDialogPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;

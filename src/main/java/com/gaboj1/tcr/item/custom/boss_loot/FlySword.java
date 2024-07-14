@@ -1,14 +1,8 @@
 package com.gaboj1.tcr.item.custom.boss_loot;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.item.renderer.HolySwordRenderer;
-import com.gaboj1.tcr.network.PacketRelay;
-import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.client.UpdateFlySpeedPacket;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -31,7 +25,6 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -42,7 +35,6 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
-import java.util.function.Consumer;
 
 /**
  * 随着速度增大而加伤
@@ -157,11 +149,11 @@ public class FlySword extends MagicWeapon implements GeoItem {
         }
         if(entity instanceof Player player){
             //空格加速
-            if(player instanceof LocalPlayer localPlayer){
-                if(localPlayer.input.jumping){
-                    PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new UpdateFlySpeedPacket(slotId, flySpeedScale+0.1));
-                }
-            }
+//            if(!level.isClientSide){
+//                if(localPlayer.input.jumping){
+//                    PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new UpdateFlySpeedPacket(slotId, flySpeedScale+0.1));
+//                }
+//            }
             //再次获取一遍，等待客户端的修改。
             flySpeedScale = getFlySpeedScale(itemStack);
             if(flySpeedScale == 0){

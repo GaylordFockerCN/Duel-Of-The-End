@@ -5,14 +5,13 @@ import com.gaboj1.tcr.entity.ai.behavior.TCRVillagerTasks;
 import com.gaboj1.tcr.TCRModSounds;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.server.AddVillagerParticlePacket;
+import com.gaboj1.tcr.network.packet.clientbound.AddVillagerParticlePacket;
 import com.gaboj1.tcr.util.DataManager;
+import com.gaboj1.tcr.util.SaveUtil;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -158,9 +157,8 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
     @Override
     protected SoundEvent getAmbientSound() {
 
-        LocalPlayer player = Minecraft.getInstance().player;
         //是坏人就唉声叹气一下
-        if(player!=null && DataManager.isWhite.isLocked(player) && DataManager.isWhite.getBool(player)){
+        if(SaveUtil.biome1.choice == 1){
             SoundEvent sound = TCRModSounds.FEMALE_SIGH.get();
             int i = random.nextInt(2);
             sound = switch (i) {

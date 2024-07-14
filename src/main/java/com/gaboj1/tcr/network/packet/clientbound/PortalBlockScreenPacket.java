@@ -1,8 +1,7 @@
-package com.gaboj1.tcr.network.packet.server;
+package com.gaboj1.tcr.network.packet.clientbound;
 
-import com.gaboj1.tcr.gui.screen.custom.PortalBlockScreen;
 import com.gaboj1.tcr.network.packet.BasePacket;
-import net.minecraft.client.Minecraft;
+import com.gaboj1.tcr.network.packet.clientbound.clienthelp.HandlePortalBlockScreenPacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
@@ -22,8 +21,6 @@ public record PortalBlockScreenPacket(CompoundTag tag) implements BasePacket {
 
     @Override
     public void execute(Player playerEntity) {
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            Minecraft.getInstance().setScreen(new PortalBlockScreen(this.tag()));
-        }
+        HandlePortalBlockScreenPacket.handle(tag);
     }
 }

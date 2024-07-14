@@ -1,6 +1,9 @@
 package com.gaboj1.tcr.event.listeners;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.network.PacketRelay;
+import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.packet.clientbound.SyncSaveUtilPacket;
 import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
@@ -25,6 +28,7 @@ public class ServerStartOrStopListener {
             TCRBiomeProvider.worldName = event.getServer().getWorldData().getLevelName();
         }
         SaveUtil.read();
+        PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()));
     }
 
     @SubscribeEvent

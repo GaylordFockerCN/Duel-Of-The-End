@@ -76,7 +76,7 @@ import static com.gaboj1.tcr.worldgen.biome.BiomeMap.README;
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(TheCasketOfReveriesMod.MOD_ID)
 public class TheCasketOfReveriesMod {
-    // Define mod id in a common place for everything to reference
+    // Define mod x in a common place for everything to reference
     public static final String MOD_ID = "the_casket_of_reveries";
 
     public static final String REGISTRY_NAMESPACE = "tcr";

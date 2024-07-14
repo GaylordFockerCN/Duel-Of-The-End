@@ -2,16 +2,14 @@ package com.gaboj1.tcr.util;
 
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.server.PersistentBoolDataSyncPacket;
-import com.gaboj1.tcr.network.packet.server.PersistentIntDataSyncPacket;
-import com.gaboj1.tcr.network.packet.server.PersistentStringDataSyncPacket;
+import com.gaboj1.tcr.network.packet.clientbound.PersistentBoolDataSyncPacket;
+import com.gaboj1.tcr.network.packet.clientbound.PersistentIntDataSyncPacket;
+import com.gaboj1.tcr.network.packet.clientbound.PersistentStringDataSyncPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 
 /**
  * 玩家的PersistentData管理
@@ -213,12 +211,12 @@ public class DataManager {
 //                return false;
 //            }
 //
-//            System.out.println(key+"local"+player.isLocalPlayer()+player.getPersistentData().getList("bool",maxNum).getCompound(id).getBoolean(key));//操你妈傻逼为啥这行输出不了也不给我报个错 后面发现原来是因为ServerPlayer不能在客户端用。。
+//            System.out.println(key+"local"+player.isLocalPlayer()+player.getPersistentData().getList("bool",maxNum).getCompound(x).getBoolean(key));//操你妈傻逼为啥这行输出不了也不给我报个错 后面发现原来是因为ServerPlayer不能在客户端用。。
 //
 //            System.out.println(key+player.getPersistentData().getBoolean(key));
 //            System.out.println("isLocked"+isLocked);
 //            ListTag bool = tag.getList("bool", maxNum);
-//            return bool.getCompound(id).getBoolean(key);
+//            return bool.getCompound(x).getBoolean(key);
 
 //            System.out.println("isLocked"+isLocked);
             return player.getPersistentData().getBoolean(key);

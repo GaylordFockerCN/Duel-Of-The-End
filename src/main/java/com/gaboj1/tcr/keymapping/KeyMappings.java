@@ -5,7 +5,7 @@ import com.gaboj1.tcr.gui.screen.custom.GameProgressScreen;
 import com.gaboj1.tcr.item.custom.DesertEagleItem;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.client.DesertEagleReloadPacket;
+import com.gaboj1.tcr.network.packet.serverbound.DesertEagleReloadPacket;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraftforge.fml.common.Mod;

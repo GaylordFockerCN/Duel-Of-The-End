@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.network.packet.server;
+package com.gaboj1.tcr.network.packet.clientbound;
 
 import com.gaboj1.tcr.entity.custom.sword.SwordEntity;
 import com.gaboj1.tcr.network.packet.BasePacket;

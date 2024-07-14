@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.network.packet.client;
+package com.gaboj1.tcr.network.packet.serverbound;
 
 import com.gaboj1.tcr.network.packet.BasePacket;
 import com.gaboj1.tcr.util.SaveUtil;

@@ -10,6 +10,8 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -22,6 +24,7 @@ public class PlayerModelHandler {
      * 实现手持物品时的角色姿势
      */
     @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     public static void renderPlayer(PlayerModelEvent.SetupAngles.Post event) {
         Player player = event.getEntity();
         Item mainHand = player.getMainHandItem().getItem();
@@ -81,6 +84,8 @@ public class PlayerModelHandler {
     /**
      * 懒得操作统一写了个consumer批处理
      */
+
+    @OnlyIn(Dist.CLIENT)
     public static void handleModelPart(Consumer<ModelPart> consumer, ModelPart... modelParts){
         for(ModelPart modelPart : modelParts)
             consumer.accept(modelPart);

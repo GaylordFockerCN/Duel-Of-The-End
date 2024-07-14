@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.network.packet.client;
+package com.gaboj1.tcr.network.packet.serverbound;
 
 import com.gaboj1.tcr.network.packet.BasePacket;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
@@ -10,8 +10,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-
-import javax.annotation.Nullable;
 
 import java.awt.Point;
 

@@ -2,7 +2,7 @@ package com.gaboj1.tcr.gui.screen.custom;
 
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.server.SyncSaveUtilPacket;
+import com.gaboj1.tcr.network.packet.clientbound.SyncSaveUtilPacket;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

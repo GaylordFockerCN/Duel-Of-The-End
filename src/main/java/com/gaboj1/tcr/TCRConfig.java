@@ -51,14 +51,12 @@ public class TCRConfig {
 
     private static ForgeConfigSpec.BooleanValue createBool(ForgeConfigSpec.Builder builder, String key, boolean defaultValue) {
         return builder
-                .comment(I18n.get("config."+TheCasketOfReveriesMod.MOD_ID+".common."+key))
                 .translation("config."+TheCasketOfReveriesMod.MOD_ID+".common."+key)
                 .define(key, defaultValue);
     }
 
     private static ForgeConfigSpec.IntValue createInt(ForgeConfigSpec.Builder builder, String key, int defaultValue, int min) {
         return builder
-                .comment(I18n.get("config."+TheCasketOfReveriesMod.MOD_ID+".common."+key))
                 .translation("config."+TheCasketOfReveriesMod.MOD_ID+".common."+key)
                 .defineInRange(key, defaultValue, min, Integer.MAX_VALUE);
     }

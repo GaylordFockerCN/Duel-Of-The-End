@@ -85,7 +85,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     // Shoutout to El_Redstoniano for making this
     private void trimmedArmorItem(RegistryObject<Item> itemRegistryObject) {
-        final String MOD_ID = TheCasketOfReveriesMod.MOD_ID; // Change this to your mod id
+        final String MOD_ID = TheCasketOfReveriesMod.MOD_ID; // Change this to your mod x
 
         if(itemRegistryObject.get() instanceof ArmorItem armorItem) {
             trimMaterials.entrySet().forEach(entry -> {
