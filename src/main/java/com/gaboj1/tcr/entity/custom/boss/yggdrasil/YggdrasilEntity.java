@@ -390,6 +390,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
             //初次对话结束，就是变成开始打了
             case 0:
                 SaveUtil.biome1.isBossTalked = true;
+                getEntityData().set(STATE, 1);
                 getEntityData().set(IS_FIGHTING, true);
                 break;
             //选择处决
@@ -570,6 +571,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
      */
     public void recover(){
         triggerAnim("Recover","recover");
+        getEntityData().set(STATE, 2);
         setHealth(getHealth()+getMaxHealth()/4);
     }
 
