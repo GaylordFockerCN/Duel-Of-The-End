@@ -22,6 +22,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -155,7 +156,7 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
     @Override
     public boolean saveStructure(boolean writeToDisk) {
 
-        if (this.getMode() == StructureMode.SAVE && !this.level.isClientSide && this.getStructureName() != null) {
+        if (this.getMode() == StructureMode.SAVE && !Objects.requireNonNull(this.level).isClientSide) {
             BlockPos $$1 = this.getBlockPos().offset(this.getStructurePos());
             ServerLevel $$2 = (ServerLevel)this.level;
             StructureTemplateManager $$3 = $$2.getStructureManager();
@@ -168,7 +169,7 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
             }
 
             $$6.fillFromWorld(this.level, $$1, this.getStructureSize(), !this.isIgnoreEntities(), Blocks.STRUCTURE_VOID);
-//          变成private方法了没法沿用了qwq（其实是不会改
+//          在独立的版本用at解决了↓
             $$6.setAuthor("Sorry It's Private");
             if (writeToDisk) {
                 try {

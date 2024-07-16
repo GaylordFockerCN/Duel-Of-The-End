@@ -1,8 +1,6 @@
 package com.gaboj1.tcr.util;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.network.PacketRelay;
-import com.gaboj1.tcr.network.TCRPacketHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.chat.Component;
@@ -47,6 +45,9 @@ public class SaveUtil {
 
         @Override
         public int hashCode() {
+            if(name == null || content == null){
+                return 0;
+            }
             return Objects.hash(name.toString(), content.toString());
         }
 
@@ -93,15 +94,18 @@ public class SaveUtil {
         return dialogListNbt;
     }
 
-    public static void setDialogListFromNbt(CompoundTag serverData, int size){
+    public static void setDialogListFromNbt(CompoundTag DialogListTag, int size){
+        DIALOG_LIST.clear();
         for(int i = 0; i < size; i++){
-            DIALOG_LIST.set(i, Dialog.fromNbt(serverData.getCompound("dialog"+i)));
+            Dialog dialog = Dialog.fromNbt(DialogListTag.getCompound("dialog"+i));
+            DIALOG_LIST.add(dialog);
+            DIALOG_SET.add(dialog);
         }
     }
 
-    public static void setTaskListFromNbt(CompoundTag serverData, int size){
+    public static void setTaskListFromNbt(CompoundTag taskListTag, int size){
         for(int i = 0; i < size; i++){
-            TASK_SET.add(Dialog.fromNbt(serverData.getCompound("task"+i)));
+            TASK_SET.add(Dialog.fromNbt(taskListTag.getCompound("task"+i)));
         }
     }
 
@@ -224,12 +228,15 @@ public class SaveUtil {
 
     }
 
-    public static final String FILE_NAME = "config/"+TheCasketOfReveriesMod.MOD_ID+"/save.dat";
+    public static final String FILE_NAME = "config/"+TheCasketOfReveriesMod.MOD_ID+"/save.nbt";
 
     public static void save(){
 
         try {
-            NbtIo.write(toNbt(), new File(FILE_NAME));
+            CompoundTag saveData = toNbt();
+            TheCasketOfReveriesMod.LOGGER.info("saving data:\n"+saveData);
+            NbtIo.write(saveData, new File(FILE_NAME));
+            TheCasketOfReveriesMod.LOGGER.info("over.");
         } catch (Exception e) {
             TheCasketOfReveriesMod.LOGGER.error("Can't save save serverData", e);
         }
@@ -240,10 +247,13 @@ public class SaveUtil {
 
         try {
             File save = new File(FILE_NAME);
-            if(save.exists()){
-                fromNbt(Objects.requireNonNull(NbtIo.read(save)));
-            } else {
+            CompoundTag saveData = NbtIo.read(save);
+            if(saveData == null){
                 save.createNewFile();
+            } else {
+                TheCasketOfReveriesMod.LOGGER.info("reading data:\n"+saveData);
+                fromNbt(saveData);
+                TheCasketOfReveriesMod.LOGGER.info("over.");
             }
         } catch (Exception e) {
             TheCasketOfReveriesMod.LOGGER.error("Can't read save serverData", e);
@@ -266,7 +276,7 @@ public class SaveUtil {
         serverData.put("biome2", biome2.toNbt());
         serverData.put("biome3", biome3.toNbt());
         serverData.put("biome4", biome4.toNbt());
-        return new CompoundTag();
+        return serverData;
     }
 
     /**
@@ -275,8 +285,8 @@ public class SaveUtil {
      */
     public static void fromNbt(CompoundTag serverData){
         worldLevel = serverData.getInt("worldLevel");
-        setDialogListFromNbt(serverData, serverData.getInt("dialogLength"));
-        setTaskListFromNbt(serverData, serverData.getInt("taskLength"));
+        setDialogListFromNbt(serverData.getCompound("dialogList"), serverData.getInt("dialogLength"));
+        setTaskListFromNbt(serverData.getCompound("taskList"), serverData.getInt("taskLength"));
         firstChoiceBiome = serverData.getInt("firstChoiceBiome");
         biome1.fromNbt(serverData.getCompound("biome1"));
         biome2.fromNbt(serverData.getCompound("biome2"));

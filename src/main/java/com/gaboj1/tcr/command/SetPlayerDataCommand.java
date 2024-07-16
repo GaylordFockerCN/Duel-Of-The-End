@@ -17,22 +17,7 @@ public class SetPlayerDataCommand {
         dispatcher.register(Commands.literal("tcr")
             .then(Commands.argument("player", EntityArgument.player())
                     .then(Commands.literal("data").requires((commandSourceStack) -> commandSourceStack.hasPermission(2))
-
-                            .then(Commands.literal("set").requires((commandSourceStack) -> commandSourceStack.isPlayer())
-                                    .then(Commands.literal("is_white")
-                                            .then(Commands.argument("value", BoolArgumentType.bool())
-                                                    .executes((context) -> setData(context.getSource(), EntityArgument.getPlayer(context,"player"), DataManager.isWhite.getKey(),BoolArgumentType.getBool(context, "value")))
-                                            )
-                                    )
-                                    .then(Commands.literal("boss1defeated")
-                                            .then(Commands.argument("value", BoolArgumentType.bool())
-                                                    .executes((context) -> setData(context.getSource(), EntityArgument.getPlayer(context,"player"), DataManager.boss1Defeated.getKey(),BoolArgumentType.getBool(context, "value")))
-                                            )
-                                    )
-                            ).then(Commands.literal("get")
-                                    .then(Commands.literal("is_white").executes((context) -> getBoolData(context.getSource(), EntityArgument.getPlayer(context,"player"),DataManager.isWhite.getKey())))
-                                    .then(Commands.literal("is_boss1defeated").executes((context) -> getBoolData(context.getSource(), EntityArgument.getPlayer(context,"player"),DataManager.boss1Defeated.getKey())))
-                            )
+                            
                     )
             )
         );

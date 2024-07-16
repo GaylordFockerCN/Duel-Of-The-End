@@ -134,7 +134,7 @@ public class TCRDialogueScreen extends Screen {
         if(entity instanceof NpcDialogue npc) {
             Player player1 = npc.getConversingPlayer();
             if (player1 instanceof LocalPlayer player)
-                player.sendSystemMessage(Component.literal("[").append(player.getCustomName().copy().withStyle(DataManager.isWhite.getBool(player) ? ChatFormatting.YELLOW : ChatFormatting.BLACK)).append("]: ").append(component));
+                player.sendSystemMessage(Component.literal("[").append(player.getCustomName().copy().withStyle( ChatFormatting.YELLOW ).append("]: ").append(component)));
         }
         return component.copy();
     }
@@ -144,7 +144,7 @@ public class TCRDialogueScreen extends Screen {
         if(entity instanceof NpcDialogue npc) {
             Player player1 = npc.getConversingPlayer();
             if (player1 instanceof LocalPlayer player)
-                player.sendSystemMessage(Component.literal("[").append(player.getCustomName().copy().withStyle(DataManager.isWhite.getBool(player) ? ChatFormatting.YELLOW : ChatFormatting.BLACK)).append("]: ").append(component));
+                player.sendSystemMessage(Component.literal("[").append(player.getCustomName().copy().withStyle(ChatFormatting.YELLOW).append("]: ").append(component)));
         }
         return component.copy();
     }

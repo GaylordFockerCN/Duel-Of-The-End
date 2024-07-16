@@ -54,15 +54,14 @@ public class TCRVillagerRetaliateTask extends Behavior<Mob> {
 
     private boolean check(Mob mob){
         LivingEntity target = mob.getTarget();
-        //是坏人也要往死里打！
-        if(target instanceof ServerPlayer serverPlayer){
-            if(!DataManager.isWhite.getBool(serverPlayer) && DataManager.isWhite.isLocked(serverPlayer)){
+        if(mob instanceof TCRVillager tcrVillager){
+            if(target instanceof ServerPlayer && !tcrVillager.isFriendly()){
                 return true;
+            }else {
+                return tcrVillager.isAngry() && target!=null && !(target instanceof TCRVillager);
             }
         }
-        //如果村民生气或者存在攻击目标，则进行。（不知道出了什么bug，Target在愤怒结束后不会消失？所以只能判断target非玩家或非村民）
-//        return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry() || (target!=null && !(target instanceof Player) && !(target instanceof TCRVillager)));
-        return (mob instanceof TCRVillager tcrVillager && tcrVillager.isAngry() && target!=null && !(target instanceof TCRVillager));
+        return false;
     }
 
     @Override

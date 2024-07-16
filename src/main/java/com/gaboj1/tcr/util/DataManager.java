@@ -12,13 +12,13 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 /**
+ * 用于单一玩家数据，而不是全体数据，SaveUtil用于全体数据{@link SaveUtil}
+ *
  * 玩家的PersistentData管理
  * 本质上只是管理key。由于NBT标签不存在null，所以我加入了一个lock变量，如果还没lock就表示不确定性。比如isWhite，在玩家做出选择之前你不能确定是哪个阵营。
  * 虽然使用的时候麻烦了一点，但是多了个lock相当于把bool拆成四个量来用。
- * @deprecated
  * @author LZY
  */
-@Deprecated
 public class DataManager {
 
     public static void putData(Player player, String key, int value){
@@ -41,10 +41,6 @@ public class DataManager {
         return player.getPersistentData().getString(key);
     }
 
-    //阵营判断
-    public static BoolData isWhite =  new BoolData("is_white",true,1);
-    public static BoolData boss1Defeated =  new BoolData("boss1_defeated",false,2);
-    public static BoolData elder1Defeated =  new BoolData("elder1_defeated",false,3);
     //工匠送的火枪
     public static BoolData gunGot =  new BoolData("gun_got",false,4);
     public static BoolData ammoGot =  new BoolData("ammo_got",false,5);
@@ -53,14 +49,12 @@ public class DataManager {
     //长老送的
     public static BoolData elderLoot1Got =  new BoolData("elder_loot1_got",false,7);
     public static BoolData elderLoot2Got =  new BoolData("elder_loot2_got",false,8);
-    public static IntData boss1ConversationStage = new IntData("boss1_conversation_stage",0,9);
 
     //给予初始值
     public static void init(Player player){
-        if(player == null)
-            return;
-        isWhite.init(player);
-        boss1Defeated.init(player);
+        if(player == null) {
+            //TODO
+        }
     }
 
     public static class Data {

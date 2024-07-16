@@ -6,6 +6,8 @@ import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.SyncSaveUtilPacket;
 import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -32,8 +34,18 @@ public class ServerStartOrStopListener {
     }
 
     @SubscribeEvent
-    public static void onServerAboutToStop(ServerStoppedEvent event){
+    public static void onServerStop(ServerStoppedEvent event){
         SaveUtil.save();
+    }
+
+    /**
+     * 玩家加入服务端时同步服务端和客户端的数据
+     */
+    @SubscribeEvent
+    public static void onPlayerIn(PlayerEvent.PlayerLoggedInEvent event){
+        if(event.getEntity() instanceof ServerPlayer player){
+            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()), player);
+        }
     }
 
 }

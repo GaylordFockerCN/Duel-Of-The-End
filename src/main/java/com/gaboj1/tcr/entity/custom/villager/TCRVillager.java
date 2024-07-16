@@ -279,34 +279,28 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
     @Override
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
         if ( this.isAlive() && !this.isTrading() && !this.isSleeping() && !pPlayer.isSecondaryUseActive()) {
-            if (this.isBaby()) {
-                this.setUnhappy();
-                return InteractionResult.sidedSuccess(this.level().isClientSide);
-            } else {
-                boolean flag = true;
-
-                if (flag && canTalk && pPlayer instanceof ServerPlayer player && pHand == InteractionHand.MAIN_HAND) {
-                    if(DataManager.isWhite.getBool(player)){//新增对话，其他和原版一样
-                        talk(pPlayer);
-                    }else {
-                        talkFuck(pPlayer);
-                    }
-
-                } else {
-                    if (!this.level().isClientSide && !this.offers.isEmpty()) {
-//                        this.startTrading(pPlayer);
-                    }
-
-                }
-                return InteractionResult.sidedSuccess(this.level().isClientSide);
+            if (canTalk && pPlayer instanceof ServerPlayer && pHand == InteractionHand.MAIN_HAND) {
+                talk(pPlayer, false);
             }
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else {
             return super.mobInteract(pPlayer, pHand);
         }
     }
-    public void talk(Player player){}
 
-    public void talkFuck(Player player){}
+    /**
+     *
+     * @param player 对话的玩家
+     * @param isFWord 是否说藏话
+     */
+    public void talk(Player player, boolean isFWord){}
+
+    /**
+     * 判断是否是友好的，如果选择boss阵营则为false，需要每个群系独自判断。。。
+     */
+    public boolean isFriendly(){
+        return true;
+    }
 
     public void talk(Player player, Component component){
         if(player != null)
@@ -317,13 +311,6 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
     public String getResourceName() {
 //        return "pastoral_plain_villager"+ skinID;
         return "pastoral_plain_villager" + this.getEntityData().get(DATA_SKIN_ID);
-    }
-
-    private void setUnhappy() {
-//        this.setUnhappyCounter(40);
-        if (!this.level().isClientSide()) {
-            this.playSound(SoundEvents.VILLAGER_NO, this.getSoundVolume(), this.getVoicePitch());//TODO 替换音效
-        }
     }
 
     /**
@@ -339,14 +326,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
         Entity entity = source.getEntity();
         if(entity instanceof Player player) {
             if(this.isClientSide()){
-                talkFuck(player);
-            }else {
-                //如果已经锁定好人方则无法伤害村民
-                //Boss1Defeated不一定是好人，可能只是通过了boss的试炼。
-                if(DataManager.isWhite.isLocked(player) && DataManager.isWhite.getBool(player)){
-                    player.displayClientMessage(Component.literal("info.the_casket_of_reveries.alreadyAddWhite"),true);
-                    return false;
-                }
+                talk(player, true);
             }
         }
 
@@ -357,15 +337,6 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
         isAngry = true;
 
         return super.hurt(source, v);
-    }
-
-    @Override
-    public void die(DamageSource pCause) {
-        super.die(pCause);
-        if(pCause.getEntity() instanceof Player player) {
-            DataManager.isWhite.putBool(player, false);
-            DataManager.isWhite.lock(player);
-        }
     }
 
     public void playAttackAnim(){

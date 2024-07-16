@@ -8,6 +8,7 @@ import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.ItemUtil;
+import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
@@ -135,9 +136,11 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
 
         }
 
-        //TODO 如果是黑方并且杀死了村长的话则对话改变，禁止交易。
-        if(!DataManager.isWhite.getBool(serverPlayerData) && DataManager.isWhite.isLocked(serverPlayerData) && DataManager.elder1Defeated.getBool(serverPlayerData) && DataManager.elder1Defeated.isLocked(serverPlayerData)){
-            builder.start(Component.literal(""));
+        if(SaveUtil.biome1.choice == 1){
+            if(Minecraft.getInstance().player != null){
+                talk(Minecraft.getInstance().player, true);
+            }
+            return;
         }
         
         Minecraft.getInstance().setScreen(builder.build());

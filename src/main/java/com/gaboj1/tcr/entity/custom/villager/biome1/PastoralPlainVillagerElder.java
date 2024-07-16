@@ -191,20 +191,6 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         this.talk(conversingPlayer,BUILDER.buildDialogueAnswer(entityType,index));
     }
 
-    /**
-     *长老被打也是会生气滴！
-     */
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void talkFuck(Player player){
-        talk(player, Component.translatable(entityType.getDescriptionId()+".fuck_chat"+(r.nextInt(whatCanISay))));
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public void talkFuck(Player player, int i){
-        talk(player, Component.translatable(entityType.getDescriptionId()+".fuck_chat"+i));
-    }
-
     @Override
     public void setConversingPlayer(@org.jetbrains.annotations.Nullable Player player) {
         this.conversingPlayer = player;
@@ -223,6 +209,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         }
         if(source.getEntity() instanceof ServerPlayer serverPlayer){
             bossInfo.addPlayer(serverPlayer);//亮血条！
+            talk(serverPlayer, Component.translatable(entityType.getDescriptionId()+".fuck_chat"+(r.nextInt(whatCanISay))));//长老被打也是会生气滴！
         }
         return super.hurt(source, v);
     }
