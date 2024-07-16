@@ -16,11 +16,15 @@ public class SaveUtil {
 
     public static int worldLevel = 0;
     public static final List<Dialog> DIALOG_LIST = new ArrayList<>();
-    public static final HashSet<Dialog> DIALOG_SET = new HashSet<>();
+    public static final HashSet<Dialog> DIALOG_SET = new HashSet<>();//优化用的，但是不知道能优化多少（
     public static final HashSet<Dialog> TASK_SET = new HashSet<>(){
+
+        /**
+         * 移除任务说明任务完成了
+         */
         @Override
         public boolean remove(Object o) {
-            //TODO 播报任务完成
+            //TODO 全局广播任务完成
             if(o instanceof Dialog dialog){
 //                PacketRelay.sendToServer(TCRPacketHandler.INSTANCE,);
             }
@@ -65,7 +69,13 @@ public class SaveUtil {
 
     }
 
+    /**
+     * 把对话添加到列表里
+     */
     public static void addDialog(Component name, Component content){
+        if(name == null || content == null){
+            return;
+        }
         Dialog dialog = new Dialog(name, content);
         if(!DIALOG_SET.contains(dialog)){
             DIALOG_LIST.add(dialog);

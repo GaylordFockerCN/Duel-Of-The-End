@@ -5,7 +5,11 @@ import com.gaboj1.tcr.gui.screen.custom.GameProgressScreen;
 import com.gaboj1.tcr.item.custom.DesertEagleItem;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.packet.RequestOpenProgressScreenPacket;
 import com.gaboj1.tcr.network.packet.serverbound.DesertEagleReloadPacket;
+import com.gaboj1.tcr.worldgen.biome.TCRBiomeTags;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraftforge.fml.common.Mod;
@@ -56,10 +60,18 @@ public class KeyMappings {
 
 	@Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID, value = Dist.CLIENT)
 	public static class KeyPressHandler {
+		/**
+		 * 在群系里才能打开窗口看，主世界没法打开
+		 */
 		@SubscribeEvent
 		public static void onClientTick(TickEvent.ClientTickEvent event) {
 			if(OPEN_PROGRESS.isDown() && !(Minecraft.getInstance().screen instanceof GameProgressScreen)){
-				Minecraft.getInstance().setScreen(new GameProgressScreen());
+				if(Minecraft.getInstance().level != null && Minecraft.getInstance().player != null){
+					BlockPos pos = Minecraft.getInstance().player.getOnPos();
+					if(Minecraft.getInstance().level.getBiome(pos).is(TCRBiomeTags.IS_TCR)){
+						PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new RequestOpenProgressScreenPacket(new CompoundTag()));
+					}
+				}
 			}
 		}
 	}

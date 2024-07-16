@@ -3,6 +3,7 @@ package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 import com.gaboj1.tcr.block.entity.spawner.EnforcedHomePoint;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
+import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
 import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.TCRModSounds;
@@ -55,6 +56,7 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.gaboj1.tcr.gui.screen.DialogueComponentBuilder.BUILDER;
@@ -64,13 +66,11 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     @Nullable
     protected Player conversingPlayer;
     EntityType<?> entityType = TCRModEntities.YGGDRASIL.get();
-    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    private static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.COMPONENT);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private static final EntityDataAccessor<Boolean> IS_FIGHTING = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.BOOLEAN);
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.BLUE, BossEvent.BossBarOverlay.PROGRESS);
 
     private boolean canBeHurt;
-    private boolean isFighting;
     private int hurtTimer;
 
     public YggdrasilEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
@@ -122,11 +122,15 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
 
     /**
      * 不能真的死，剩下一口气还要对话
+     * 如果boss已经死过了而再次死说明是历战，要直接死
      */
     @Override
     public void die(@NotNull DamageSource source) {
         getEntityData().set(IS_FIGHTING, false);
         if(!level().isClientSide){
+            if(SaveUtil.biome1.isBossDie){
+                super.die(source);
+            }
             this.setHealth(1);
             ServerPlayer player;
             if (source.getEntity() instanceof ServerPlayer serverPlayer) {
@@ -144,7 +148,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     }
 
     /**
-     * 真的死要用这个hhh
+     * 真的死要用这个hhh，在选项处决的时候调用
      */
     public void realDie(DamageSource damageSource){
         this.setHealth(0);
@@ -376,11 +380,14 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
         }
     }
 
-    public static class conversationTriggerGoal extends Goal{
+    /**
+     * 实现靠近就触发对话
+     */
+    public static class ConversationTriggerGoal extends Goal{
         private final YggdrasilEntity yggdrasil;
         ServerPlayer player;
 
-        public conversationTriggerGoal(YggdrasilEntity yggdrasil) {
+        public ConversationTriggerGoal(YggdrasilEntity yggdrasil) {
             this.yggdrasil = yggdrasil;
         }
         @Override
@@ -406,36 +413,113 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
         }
     }
 
-    public static class spawnTreeClawAtPointPositionGoal extends Goal {
-    private final YggdrasilEntity yggdrasil;
-    private int shootInterval;
-    public final int shootIntervalMax = 200;
-    public static final int attackRange = 10;
+    /**
+     * 定时召唤树爪，击破树爪才能攻击boss
+     */
+    public static class SpawnTreeClawAtPointPositionGoal extends Goal {
+        private final YggdrasilEntity yggdrasil;
+        private int shootInterval;
+        public final int shootIntervalMax = 200;
+        public static final int attackRange = 10;
 
-    public spawnTreeClawAtPointPositionGoal(YggdrasilEntity yggdrasil) {
-        this.yggdrasil = yggdrasil;
-//        shootInterval = shootIntervalMax;//开局就发射一个树爪，方便调试
-    }
-
-    @Override
-    public boolean canUse() {
-        return --this.shootInterval <= 0 && yggdrasil.getConversingPlayer() == null;
-    }
-
-
-    @Override
-    public void start() {
-        List<Player> players = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.DEFAULT, yggdrasil, getPlayerAABB(yggdrasil.getOnPos(),attackRange));
-        for(Player target : players){
-            TreeClawEntity treeClaw = new TreeClawEntity(this.yggdrasil.level(), this.yggdrasil, target);
-            treeClaw.setPos(target.getX(),target.getY(),target.getZ());
-            yggdrasil.level().addFreshEntity(treeClaw);//树爪继承自Mob，和平模式无法召唤！！
-            treeClaw.setDeltaMovement(target.getDeltaMovement().scale(0.1));//追一下
-            treeClaw.catchPlayer();
-            yggdrasil.level().playSound(null,treeClaw.getOnPos(), SoundEvents.PLAYER_HURT, SoundSource.BLOCKS,1.0f,1.0f);
+        public SpawnTreeClawAtPointPositionGoal(YggdrasilEntity yggdrasil) {
+            this.yggdrasil = yggdrasil;
+    //        shootInterval = shootIntervalMax;//开局就发射一个树爪，方便调试
         }
 
-        this.shootInterval = shootIntervalMax;
+        @Override
+        public boolean canUse() {
+            return --this.shootInterval <= 0 && yggdrasil.getConversingPlayer() == null;
+        }
+
+
+        @Override
+        public void start() {
+            List<Player> players = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.DEFAULT, yggdrasil, getPlayerAABB(yggdrasil.getOnPos(), attackRange));
+            for (Player target : players) {
+                TreeClawEntity treeClaw = new TreeClawEntity(this.yggdrasil.level(), this.yggdrasil, target);
+                treeClaw.setPos(target.getX(), target.getY(), target.getZ());
+                yggdrasil.level().addFreshEntity(treeClaw);//树爪继承自Mob，和平模式无法召唤！！
+                treeClaw.setDeltaMovement(target.getDeltaMovement().scale(0.1));//追一下
+                treeClaw.catchPlayer();
+                yggdrasil.level().playSound(null, treeClaw.getOnPos(), SoundEvents.PLAYER_HURT, SoundSource.BLOCKS, 1.0f, 1.0f);
+            }
+
+            this.shootInterval = shootIntervalMax;
+        }
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
+        }
+    }
+
+    /**
+     * 半血会触发回血，如果不限时击败小怪则boss会回血
+     */
+    public static class RecoverGoal extends Goal{
+
+        private final YggdrasilEntity yggdrasil;
+        private int timer = 200;
+        private int summonInterval;
+        private final List<TreeGuardianEntity> mobs = new ArrayList<>();
+        public RecoverGoal(YggdrasilEntity yggdrasil){
+            this.yggdrasil = yggdrasil;
+        }
+
+        /**
+         * 半血释放
+         */
+        @Override
+        public boolean canUse() {
+            return --this.summonInterval <= 0 && yggdrasil.getHealth() <= yggdrasil.getMaxHealth() / 2;
+        }
+
+        @Override
+        public void start() {
+            if(timer == 200){
+                List<Player> players = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.DEFAULT, yggdrasil, getPlayerAABB(yggdrasil.getOnPos(),10));
+                for(Player ignored : players){
+                    TreeGuardianEntity mob = new TreeGuardianEntity(TCRModEntities.TREE_GUARDIAN.get(), yggdrasil.level());
+                    mob.setPos(yggdrasil.getX(),yggdrasil.getY(),yggdrasil.getZ());
+                    yggdrasil.level().addFreshEntity(mob);
+                    mobs.add(mob);
+                }
+            }
+            this.summonInterval = 200;
+        }
+
+        /**
+         * 判断如果时间到了怪还没死就回血
+         */
+        @Override
+        public void tick() {
+            timer--;
+            if(timer <= 0){
+                boolean canRecover = true;
+                for(TreeGuardianEntity entity : mobs){
+                    if(entity != null && entity.getHealth() >= 0){
+                        canRecover = false;
+                    }
+                }
+                if(canRecover){
+                    yggdrasil.recover();
+                }
+            }
+        }
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
+        }
+    }
+
+    /**
+     * TODO
+     * 播放动画并回血
+     */
+    public void recover(){
+        setHealth(getHealth()+getMaxHealth()/4);
     }
 
     /**
@@ -444,15 +528,9 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
      * @param offset 半径
      * @return 以pos为中心offset的两倍为边长的一个正方体
      */
-    private AABB getPlayerAABB(BlockPos pos, int offset){
+    private static AABB getPlayerAABB(BlockPos pos, int offset){
         return new AABB(pos.offset(offset,offset,offset),pos.offset(-offset,-offset,-offset));
     }
-
-    @Override
-    public boolean requiresUpdateEveryTick() {
-        return true;
-    }
-}
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
         if(tAnimationState.isMoving()) {//播放移动动画
@@ -502,10 +580,11 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
         return PlayState.CONTINUE;
     }
     protected void registerGoals() {//设置生物行为
+        this.goalSelector.addGoal(0,new RecoverGoal(this));
         this.goalSelector.addGoal(0,new NpcDialogueGoal<>(this));
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(1,new conversationTriggerGoal(this));
-        this.goalSelector.addGoal(2, new spawnTreeClawAtPointPositionGoal(this));
+        this.goalSelector.addGoal(1,new ConversationTriggerGoal(this));
+        this.goalSelector.addGoal(2, new SpawnTreeClawAtPointPositionGoal(this));
 //       this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.2D, false));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
