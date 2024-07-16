@@ -77,7 +77,7 @@ public class TCRModEntities {
 	public static final RegistryObject<EntityType<YggdrasilEntity>> YGGDRASIL =
 			REGISTRY.register("yggdrasil",
 					() -> EntityType.Builder.of(YggdrasilEntity::new, MobCategory.CREATURE)
-							.sized(1.5f,5f)
+							.sized(1f,3f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "yggdrasil").toString()));
 
 	public static final RegistryObject<EntityType<TreeClawEntity>> TREE_CLAW =

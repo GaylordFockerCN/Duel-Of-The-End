@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class YggdrasilRenderer extends GeoEntityRenderer<YggdrasilEntity> {
@@ -13,14 +14,8 @@ public class YggdrasilRenderer extends GeoEntityRenderer<YggdrasilEntity> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(YggdrasilEntity animatable) {
-        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/yggdrasil.png");
-    }
-
-    @Override
-    public void render(YggdrasilEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
-                       MultiBufferSource bufferSource, int packedLight) {
-        poseStack.scale(2f, 2f, 2f);
+    public void render(@NotNull YggdrasilEntity entity, float entityYaw, float partialTick, PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight) {
+        poseStack.scale(1f, 1f, 1f);
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 }

@@ -290,6 +290,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,6,"感谢你，长老。");
         //Yggdrasil
         this.addEntityAndEgg(TCRModEntities.YGGDRASIL,"伊格德拉希尔");
+        this.addEntityShaderName(TCRModEntities.YGGDRASIL, "伊格德拉希尔-残影");
         this.addDialog(TCRModEntities.YGGDRASIL,0,"哦，可怜的年轻人，还是来了……，不对，你是完整的人");
         this.addDialog(TCRModEntities.YGGDRASIL,1,"将你同化已经是不可能的了。看来只有消灭你了啊孩子……");
         this.addDialog(TCRModEntities.YGGDRASIL,2,"我必须承认，你的能力超出了我的预期。但很遗憾，你的到来打破了我们的平衡。");

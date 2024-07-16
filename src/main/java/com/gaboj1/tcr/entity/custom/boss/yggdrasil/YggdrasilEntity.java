@@ -58,6 +58,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.gaboj1.tcr.gui.screen.DialogueComponentBuilder.BUILDER;
 
@@ -67,27 +68,66 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     protected Player conversingPlayer;
     EntityType<?> entityType = TCRModEntities.YGGDRASIL.get();
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    public static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> IS_FIGHTING = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IS_SHADER = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.BOOLEAN);
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.BLUE, BossEvent.BossBarOverlay.PROGRESS);
 
     private boolean canBeHurt;
     private int hurtTimer;
+    private int recoverTimer = 0;
+    private final List<TreeGuardianEntity> mobs = new ArrayList<>();
 
     public YggdrasilEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_);
-        getEntityData().define(IS_FIGHTING, false);
+    }
+
+    protected void registerGoals() {//设置生物行为
+        this.goalSelector.addGoal(0,new RecoverGoal(this));
+        this.goalSelector.addGoal(0,new NpcDialogueGoal<>(this));
+        this.goalSelector.addGoal(1, new FloatGoal(this));
+        this.goalSelector.addGoal(1,new ConversationTriggerGoal(this));
+        this.goalSelector.addGoal(2, new SpawnTreeClawAtPointPositionGoal(this));
+//       this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.2D, false));
+        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+
+        /*
+         * 下面设置攻击目标：（按需修改）
+         * 首先寻找攻击源
+         * 如果是玩家，且树怪被玩家激怒，则优先攻击玩家
+         * 如果是村民，不处于被激怒状态则也被攻击，优先级低于玩家（按需修改）
+         * 如果是Creeper，则与村民逻辑相同，但优先级低于村民（按需修改）
+         * */
+        this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this,AbstractVillager.class,true));
     }
 
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("is_fighting", this.getEntityData().get(IS_FIGHTING));
+        tag.putBoolean("is_shader", this.getEntityData().get(IS_SHADER));
     }
 
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.getEntityData().set(IS_FIGHTING,tag.getBoolean("is_fighting"));
+        this.getEntityData().set(IS_SHADER,tag.getBoolean("is_shader"));
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        getEntityData().define(IS_FIGHTING, false);
+        getEntityData().define(STATE, 0);
+        if(!level().isClientSide && SaveUtil.biome1.isBossDie){
+            getEntityData().define(IS_SHADER, true);
+        }else {
+            getEntityData().define(IS_SHADER, false);
+        }
+        super.defineSynchedData();
     }
 
     public ServerBossEvent getBossBar() {
@@ -96,7 +136,15 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     @Override
     public void setCustomName(@Nullable Component name) {
         super.setCustomName(name);
-        this.getBossBar().setName(this.getDisplayName());
+        this.getBossBar().setName(Objects.requireNonNull(this.getCustomName()));
+    }
+
+    @Override
+    public @NotNull Component getDisplayName() {
+        if(getEntityData().get(IS_SHADER)){
+           return Component.translatable(entityType.getDescriptionId()+"_shader");
+        }
+        return super.getDisplayName();
     }
 
     @Override
@@ -129,7 +177,9 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
         getEntityData().set(IS_FIGHTING, false);
         if(!level().isClientSide){
             if(SaveUtil.biome1.isBossDie){
+                triggerAnim("Death","death");
                 super.die(source);
+                return;
             }
             this.setHealth(1);
             ServerPlayer player;
@@ -152,6 +202,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
      */
     public void realDie(DamageSource damageSource){
         this.setHealth(0);
+        triggerAnim("Death","death");
         super.die(damageSource);
         SaveUtil.biome1.isBossDie = true;
         SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskKillBoss);
@@ -186,8 +237,20 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     public void tick() {
         super.tick();
 
+        //恢复倒计时，这个timer由goal触发
         if(!level().isClientSide){
-
+            recoverTimer--;
+            if(recoverTimer <= 0){
+                boolean canRecover = true;
+                for(TreeGuardianEntity entity : mobs){
+                    if(entity != null && entity.getHealth() >= 0){
+                        canRecover = false;
+                    }
+                }
+                if(canRecover){
+                    recover();
+                }
+            }
         }
 
         if(conversingPlayer != null){
@@ -218,19 +281,6 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
                 .build();
     }
 
-
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        //非攻击状态动画
-        controllers.add(new AnimationController<>(this, "controller",
-                0, this::predicate));
-
-        //攻击状态动画
-        controllers.add(new AnimationController<>(this, "attackController",
-                0, this::attackPredicate));
-
-    }
-
     @Override
     public @Nullable GlobalPos getRestrictionPoint() {
         return null;
@@ -244,6 +294,27 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     @Override
     public int getHomeRadius() {
         return 0;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return TCRModSounds.YGGDRASIL_AMBIENT_SOUND.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource p_21239_) {
+        return TCRModSounds.YGGDRASIL_CRY.get();
+    }
+
+    /**
+     * TODO 补死亡音效
+     */
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return super.getDeathSound();
     }
 
     public void sendDialoguePacket(ServerPlayer serverPlayer){
@@ -372,7 +443,6 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     }
 
 
-    @Nullable
     @Override
     public void chat(Component component) {
         if(conversingPlayer != null) {
@@ -460,9 +530,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     public static class RecoverGoal extends Goal{
 
         private final YggdrasilEntity yggdrasil;
-        private int timer = 200;
         private int summonInterval;
-        private final List<TreeGuardianEntity> mobs = new ArrayList<>();
         public RecoverGoal(YggdrasilEntity yggdrasil){
             this.yggdrasil = yggdrasil;
         }
@@ -477,35 +545,18 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
 
         @Override
         public void start() {
-            if(timer == 200){
+            if(yggdrasil.recoverTimer == 0){
+                yggdrasil.recoverTimer = 200;
+                yggdrasil.triggerAnim("Summon", "summon");
                 List<Player> players = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.DEFAULT, yggdrasil, getPlayerAABB(yggdrasil.getOnPos(),10));
                 for(Player ignored : players){
                     TreeGuardianEntity mob = new TreeGuardianEntity(TCRModEntities.TREE_GUARDIAN.get(), yggdrasil.level());
                     mob.setPos(yggdrasil.getX(),yggdrasil.getY(),yggdrasil.getZ());
-                    yggdrasil.level().addFreshEntity(mob);
-                    mobs.add(mob);
+                    System.out.println("Summoned!!!"+yggdrasil.level().addFreshEntity(mob));
+                    yggdrasil.mobs.add(mob);
                 }
             }
             this.summonInterval = 200;
-        }
-
-        /**
-         * 判断如果时间到了怪还没死就回血
-         */
-        @Override
-        public void tick() {
-            timer--;
-            if(timer <= 0){
-                boolean canRecover = true;
-                for(TreeGuardianEntity entity : mobs){
-                    if(entity != null && entity.getHealth() >= 0){
-                        canRecover = false;
-                    }
-                }
-                if(canRecover){
-                    yggdrasil.recover();
-                }
-            }
         }
 
         @Override
@@ -515,10 +566,10 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     }
 
     /**
-     * TODO
      * 播放动画并回血
      */
     public void recover(){
+        triggerAnim("Recover","recover");
         setHealth(getHealth()+getMaxHealth()/4);
     }
 
@@ -532,76 +583,36 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
         return new AABB(pos.offset(offset,offset,offset),pos.offset(-offset,-offset,-offset));
     }
 
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        //非攻击状态动画
+        controllers.add(new AnimationController<>(this, "controller",
+                0, this::predicate));
+
+        //自定义触发
+        controllers.add(new AnimationController<>(this, "Recover", 0, state -> PlayState.STOP)
+                .triggerableAnim("recover", RawAnimation.begin().then("recover", Animation.LoopType.PLAY_ONCE)));
+        controllers.add(new AnimationController<>(this, "Summon", 0, state -> PlayState.STOP)
+                .triggerableAnim("summon", RawAnimation.begin().then("attack1", Animation.LoopType.PLAY_ONCE)));
+        controllers.add(new AnimationController<>(this, "Death", 0, state -> PlayState.STOP)
+                .triggerableAnim("death", RawAnimation.begin().then("death", Animation.LoopType.PLAY_ONCE)));
+
+    }
+
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
         if(tAnimationState.isMoving()) {//播放移动动画
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("wander", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
-
-        if(isDeadOrDying()){//播放死亡动画
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("death", Animation.LoopType.LOOP));
-            return PlayState.STOP;
+        if(getTarget() != null){
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("attack", Animation.LoopType.PLAY_ONCE));
+            return PlayState.CONTINUE;
         }
 
         tAnimationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
         return PlayState.STOP;
     }
 
-    @Nullable
-    @Override
-    protected SoundEvent getAmbientSound() {
-        return TCRModSounds.YGGDRASIL_AMBIENT_SOUND.get();
-    }
-
-    @Nullable
-    @Override
-    protected SoundEvent getHurtSound(DamageSource p_21239_) {
-        return TCRModSounds.YGGDRASIL_CRY.get();
-    }
-
-    /**
-     * TODO 补死亡音效
-     */
-    @Nullable
-    @Override
-    protected SoundEvent getDeathSound() {
-        return super.getDeathSound();
-    }
-
-    @Override
-    public boolean isDeadOrDying() {
-        return super.isDeadOrDying();
-    }
-
-    private PlayState attackPredicate(AnimationState state) {
-        if(state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
-            state.getController().forceAnimationReset();
-        }
-        return PlayState.CONTINUE;
-    }
-    protected void registerGoals() {//设置生物行为
-        this.goalSelector.addGoal(0,new RecoverGoal(this));
-        this.goalSelector.addGoal(0,new NpcDialogueGoal<>(this));
-        this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(1,new ConversationTriggerGoal(this));
-        this.goalSelector.addGoal(2, new SpawnTreeClawAtPointPositionGoal(this));
-//       this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.2D, false));
-        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
-
-
-
-        /*
-         * 下面设置攻击目标：（按需修改）
-         * 首先寻找攻击源
-         * 如果是玩家，且树怪被玩家激怒，则优先攻击玩家
-         * 如果是村民，不处于被激怒状态则也被攻击，优先级低于玩家（按需修改）
-         * 如果是Creeper，则与村民逻辑相同，但优先级低于村民（按需修改）
-         * */
-        this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this,AbstractVillager.class,true));
-    }
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
