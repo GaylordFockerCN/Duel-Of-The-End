@@ -29,8 +29,6 @@ public class ServerStartOrStopListener {
         if(TCRBiomeProvider.worldName.isEmpty()){
             TCRBiomeProvider.worldName = event.getServer().getWorldData().getLevelName();
         }
-        SaveUtil.read();
-        PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()));
     }
 
     @SubscribeEvent

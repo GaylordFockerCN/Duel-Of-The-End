@@ -115,6 +115,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+        tag.putInt("state", this.getEntityData().get(STATE));
         tag.putBoolean("is_fighting", this.getEntityData().get(IS_FIGHTING));
         tag.putBoolean("is_shader", this.getEntityData().get(IS_SHADER));
     }
@@ -122,6 +123,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        this.getEntityData().set(STATE, tag.getInt("state"));
         this.getEntityData().set(IS_FIGHTING,tag.getBoolean("is_fighting"));
         this.getEntityData().set(IS_SHADER,tag.getBoolean("is_shader"));
     }
@@ -682,7 +684,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
                 .triggerableAnim("recover", RawAnimation.begin().then("recover", Animation.LoopType.PLAY_ONCE)));
         controllers.add(new AnimationController<>(this, "Summon", 0, state -> PlayState.STOP)
                 .triggerableAnim("summon", RawAnimation.begin().then("attack1", Animation.LoopType.PLAY_ONCE)));
-        controllers.add(new AnimationController<>(this, "Attack", 0, state -> PlayState.STOP)
+        controllers.add(new AnimationController<>(this, "Attack", 0, state -> PlayState.CONTINUE)
                 .triggerableAnim("attack", RawAnimation.begin().then("attack2", Animation.LoopType.PLAY_ONCE)));
         controllers.add(new AnimationController<>(this, "Death", 0, state -> PlayState.STOP)
                 .triggerableAnim("death", RawAnimation.begin().then("death", Animation.LoopType.PLAY_ONCE)));
