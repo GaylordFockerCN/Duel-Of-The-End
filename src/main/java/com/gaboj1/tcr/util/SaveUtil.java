@@ -290,7 +290,7 @@ public class SaveUtil {
     }
 
     public static boolean deleteCache(String fileName){
-        return new File(FILE_NAME).delete();
+        return getFile(fileName).delete();
     }
 
     /**
