@@ -3,8 +3,11 @@ package com.gaboj1.tcr.worldgen.biome;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.server.packs.resources.ResourceManager;
 
 import javax.imageio.ImageIO;
@@ -113,7 +116,9 @@ public class BiomeMap {
             File file = new File(FILE);
             BufferedImage image;
             if(!file.exists()){//如果自定义地图图片不存在则用资源包自带的默认地图生成
-                ResourceManager manager = Minecraft.getInstance().getResourceManager();
+                ReloadableResourceManager manager = new ReloadableResourceManager(PackType.CLIENT_RESOURCES);
+                manager.registerReloadListener(new TextureManager(manager));
+//                ResourceManager manager = Minecraft.getInstance().getResourceManager();//TODO 服务端启动有bug，服务端不能用这种方式读。只能把坤坤转成数据了，。
                 InputStream inputStream = manager.getResource(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"default_map.png")).get().open();
                 image = ImageIO.read(inputStream);
                 TCRBiomeProvider.LOGGER.info("reading default_map");

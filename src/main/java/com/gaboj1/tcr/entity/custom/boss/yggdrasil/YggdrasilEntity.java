@@ -98,7 +98,6 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
         this.goalSelector.addGoal(3,new RecoverGoal(this));
         this.goalSelector.addGoal(4, new SpawnTreeClawAtPointPositionGoal(this));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
 
         /*
          * 下面设置攻击目标：（按需修改）
@@ -124,6 +123,9 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.getEntityData().set(STATE, tag.getInt("state"));
+        if(tag.getInt("state") != 0){
+            SaveUtil.biome1.isBossTalked = true;//多余的保险措施？
+        }
         this.getEntityData().set(IS_FIGHTING,tag.getBoolean("is_fighting"));
         this.getEntityData().set(IS_SHADER,tag.getBoolean("is_shader"));
     }
@@ -184,6 +186,10 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
      */
     @Override
     public void die(@NotNull DamageSource source) {
+        if(getEntityData().get(IS_SHADER)){
+            //二次挑战则直接死
+            super.die(source);
+        }
         getEntityData().set(IS_FIGHTING, false);
         if(!level().isClientSide){
             if(SaveUtil.biome1.isBossDie){
@@ -232,8 +238,8 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
             return false;
         }
 
-        //能不能打也得看进度，选了就不能背刺了
-        if(!SaveUtil.biome1.canAttackBoss()){
+        //能不能打也得看进度，选了就不能背刺了，还没进战斗也不能打。
+        if(!getEntityData().get(IS_FIGHTING) || !SaveUtil.biome1.canAttackBoss()){
             return false;
         }
 
@@ -346,6 +352,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
 
         if(serverData.getBoolean("canGetBossReward")) {
+            System.out.println("满足领奖条件");
             //满足领奖条件
             builder.start(BUILDER.buildDialogueAnswer(entityType, 9))
                     .addChoice(BUILDER.buildDialogueOption(entityType, 7), BUILDER.buildDialogueAnswer(entityType, 10))
@@ -355,17 +362,20 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
                     .addChoice(BUILDER.buildDialogueOption(entityType, -1), BUILDER.buildDialogueAnswer(entityType, 13));
         } else if(serverData.getBoolean("killElderTaskGet")){
             //未满足领奖条件但是任务已经领了
+            System.out.println("未满足领奖条件但是任务已经领了");
             builder.setAnswerRoot(
                     new TreeNode(BUILDER.buildDialogueAnswer(entityType,9))
                             .addLeaf(BUILDER.buildDialogueOption(entityType,6),(byte) 114514));
 
         } else if(!serverData.getBoolean("isBossTalked")){
             //靠近就触发战斗，初次对话
+            System.out.println("靠近就触发战斗，初次对话");
             builder.start(BUILDER.buildDialogueAnswer(entityType, 0))
                     .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,1))
                     .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)0);
 
         } else if(!serverData.getBoolean("isBossFought")){
+            System.out.println("战斗结束后的对话");
             //战斗结束后的对话
             builder.setAnswerRoot(
                     new TreeNode(BUILDER.buildDialogueAnswer(entityType,2))
@@ -376,7 +386,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
                                                             .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,7),BUILDER.buildDialogueOption(entityType,3))
                                                                     .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,8),BUILDER.buildDialogueOption(entityType,4))
                                                                             .addLeaf(BUILDER.buildDialogueOption(entityType,5),(byte) 1)//处决
-                                                                            .addLeaf(BUILDER.buildDialogueOption(entityType,6),(byte) 2)
+                                                                            .addLeaf(BUILDER.buildDialogueOption(entityType,6),(byte) 2)//接任务
                                                                     )//领任务
                                                             )
                                                     )
@@ -385,10 +395,11 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
                             )
             );
         } else {
-            //还有别的情况吗？有就当还没打过处理吧然后返回值随便搞一个表示不处理
+            System.out.println("其他情况");
+            //还有别的情况吗？有就当还没打过处理吧，打的历战
             builder.start(BUILDER.buildDialogueAnswer(entityType,0))
                     .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,1))
-                    .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)114514);
+                    .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)0);
             getEntityData().set(IS_FIGHTING, true);
         }
         Minecraft.getInstance().setScreen(builder.build());
@@ -473,15 +484,11 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
         }
         @Override
         public boolean canUse() {
-            player = null;
-            if (yggdrasil.getTarget() instanceof ServerPlayer) {
-                player = (ServerPlayer) yggdrasil.getTarget();
+            if (yggdrasil.getTarget() instanceof ServerPlayer player) {
+                this.player = player;
+                return yggdrasil.distanceTo(player) < 10 && !SaveUtil.biome1.isBossTalked;
             }
-            if (player == null) {
-                return false;
-            }
-            double distance = yggdrasil.distanceTo(player);
-            return distance < 20 && !SaveUtil.biome1.isBossTalked;
+            return false;
         }
 
         @Override
@@ -510,7 +517,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
 
         @Override
         public boolean canUse() {
-            return --this.shootInterval <= 0 && yggdrasil.getConversingPlayer() == null;
+            return --this.shootInterval <= 0 && yggdrasil.getEntityData().get(IS_FIGHTING) && SaveUtil.biome1.canAttackBoss();
         }
 
         @Override
@@ -553,7 +560,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
          */
         @Override
         public boolean canUse() {
-            return --this.summonInterval <= 0 && yggdrasil.getHealth() <= yggdrasil.getMaxHealth() / 2;
+            return --this.summonInterval <= 0 && yggdrasil.getHealth() <= yggdrasil.getMaxHealth() / 2 && yggdrasil.getEntityData().get(IS_FIGHTING) && SaveUtil.biome1.canAttackBoss();
         }
 
         @Override
@@ -594,8 +601,13 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
         private final YggdrasilEntity yggdrasil;
         private int ticksUntilNextAttack;
         public ShootGoal(YggdrasilEntity yggdrasil){
-            super(yggdrasil, 1.0, true);
+            super(yggdrasil, 0.3, true);
             this.yggdrasil = yggdrasil;
+        }
+
+        @Override
+        public boolean canUse() {
+            return yggdrasil.getEntityData().get(IS_FIGHTING) && super.canUse() && SaveUtil.biome1.canAttackBoss();
         }
 
         @Override
@@ -696,7 +708,6 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("wander", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
-
         tAnimationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
         return PlayState.STOP;
     }

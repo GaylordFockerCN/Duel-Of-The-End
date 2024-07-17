@@ -103,6 +103,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (this.getConversingPlayer() == null) {
                             CompoundTag serverData = new CompoundTag();
+                            serverData.putBoolean("canAttackElder", SaveUtil.biome1.canAttackElder());
                             serverData.putBoolean("isElderTalked", SaveUtil.biome1.isElderTalked);
                             serverData.putBoolean("canGetElderReward", SaveUtil.biome1.canGetElderReward());
                             PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverData), serverPlayer);
@@ -121,6 +122,9 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     @Override
     @OnlyIn(Dist.CLIENT)
     public void openDialogueScreen(CompoundTag serverData) {
+        if(serverData.getBoolean("canAttackElder")){
+            return;
+        }
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
         //击杀完boss1后回来见长老
         if(serverData.getBoolean("canGetElderReward")){

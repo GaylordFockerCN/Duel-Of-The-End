@@ -26,14 +26,20 @@ public class ServerStartOrStopListener {
      */
     @SubscribeEvent
     public static void onServerAboutToStart(ServerAboutToStartEvent event){
+        //服务端读取
         if(TCRBiomeProvider.worldName.isEmpty()){
-            TCRBiomeProvider.worldName = event.getServer().getWorldData().getLevelName();
+            String levelName =  event.getServer().getWorldData().getLevelName();
+            TCRBiomeProvider.worldName = levelName;
+            SaveUtil.read(levelName);
         }
     }
 
+    /**
+     * stop的时候TCRBiomeProvider.worldName已经初始化了，无需处理
+     */
     @SubscribeEvent
     public static void onServerStop(ServerStoppedEvent event){
-        SaveUtil.save();
+        SaveUtil.save(TCRBiomeProvider.worldName);
     }
 
     /**

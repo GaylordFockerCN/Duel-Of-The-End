@@ -39,10 +39,11 @@ public class WorldListEntryMixin {
     @Inject(method = "queueLoadScreen()V", at = @At("RETURN"))
     private void injectedQueueLoadScreen(CallbackInfo ci){
         TCRBiomeProvider.LOGGER.info("On loadWorld Sync : " + summary.getLevelId() + " >> TCRBiomeProvider.worldName");
-        TCRBiomeProvider.LOGGER.info("Trying update biome map by new worldName");
+        TCRBiomeProvider.LOGGER.info("Try to update biome map by new worldName");
         TCRBiomeProvider.updateBiomeMap(summary.getLevelId());
 
-        SaveUtil.read();
+        //客户端读取
+        SaveUtil.read(summary.getLevelId());
     }
 
 //    @Inject(method = "loadWorld()V", at = @At("HEAD"))

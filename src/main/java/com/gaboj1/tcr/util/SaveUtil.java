@@ -2,7 +2,6 @@ package com.gaboj1.tcr.util;
 
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.chat.Component;
@@ -15,6 +14,15 @@ import java.util.*;
  * 保存游戏进度，这玩意儿应该所有人统一，所以用了自己的数据管理。
  */
 public class SaveUtil {
+
+    private static boolean alreadyInit = false;
+
+    /**
+     * 以服务端数据为准，如果已经被服务端同步过了，则不能读取客户端的数据，用于{@link SaveUtil#read(String)}
+     */
+    public static void setAlreadyInit() {
+        SaveUtil.alreadyInit = true;
+    }
 
     public static int worldLevel = 0;
 
@@ -210,7 +218,6 @@ public class SaveUtil {
          * 判断boss是否能受伤，如果选择boss阵营则boss无法被打，杀死长老也视为boss阵营。
          */
         public boolean canAttackBoss(){
-//            return isBossTalked && !isBossDie;
             return choice != 1 && !bossTaskReceived();
         }
 
@@ -259,28 +266,34 @@ public class SaveUtil {
         return new File("config/"+TheCasketOfReveriesMod.MOD_ID+"/"+ worldName +".nbt");
     }
 
-    public static void save(){
+    public static void save(String worldName){
 
         try {
             CompoundTag saveData = toNbt();
-            TheCasketOfReveriesMod.LOGGER.info("saving data:\n"+saveData);
-            NbtIo.write(saveData, getFile(TCRBiomeProvider.worldName));
+            File file = getFile(worldName);
+            TheCasketOfReveriesMod.LOGGER.info("saving data to {} :\n"+saveData, file.getAbsolutePath());
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            NbtIo.write(saveData, file);
             TheCasketOfReveriesMod.LOGGER.info("over.");
         } catch (Exception e) {
-            TheCasketOfReveriesMod.LOGGER.error("Can't save save serverData", e);
+            TheCasketOfReveriesMod.LOGGER.error("Can't save serverData", e);
         }
 
     }
 
-    public static void read(){
-
+    public static void read(String worldName){
+        if(alreadyInit){
+            return;
+        }
         try {
-            File save = getFile(TCRBiomeProvider.worldName);
+            File save = getFile(worldName);
             CompoundTag saveData = NbtIo.read(save);
             if(saveData == null){
-                TheCasketOfReveriesMod.LOGGER.info("save data not found. created new save data:\n"+save.createNewFile());
+                TheCasketOfReveriesMod.LOGGER.info("save data not found. created new save data: {}" + save.createNewFile(), save.getAbsolutePath());
             } else {
-                TheCasketOfReveriesMod.LOGGER.info("reading data:\n"+saveData);
+                TheCasketOfReveriesMod.LOGGER.info("reading data {} :\n"+saveData, save.getAbsolutePath());
                 fromNbt(saveData);
                 TheCasketOfReveriesMod.LOGGER.info("over.");
             }
