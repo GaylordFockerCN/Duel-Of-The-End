@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.properties.StructureMode;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -38,7 +39,7 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
     }
 
     @Override
-    public BlockEntityType<?> getType() {
+    public @NotNull BlockEntityType<?> getType() {
         return TCRModBlockEntities.BETTER_STRUCTURE_BLOCK_ENTITY.get();
     }
 

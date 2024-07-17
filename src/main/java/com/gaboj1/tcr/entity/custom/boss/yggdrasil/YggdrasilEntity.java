@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.block.entity.spawner.EnforcedHomePoint;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
@@ -21,6 +22,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -29,14 +31,13 @@ import net.minecraft.world.BossEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -63,7 +64,7 @@ import java.util.Objects;
 import static com.gaboj1.tcr.gui.screen.DialogueComponentBuilder.BUILDER;
 
 
-public class YggdrasilEntity extends PathfinderMob implements GeoEntity, EnforcedHomePoint, NpcDialogue {
+public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomePoint, NpcDialogue {
     @Nullable
     protected Player conversingPlayer;
     EntityType<?> entityType = TCRModEntities.YGGDRASIL.get();
@@ -76,21 +77,30 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     private boolean canBeHurt;
     private int hurtTimer;
     private int recoverTimer = 0;
-    private final List<TreeGuardianEntity> mobs = new ArrayList<>();
+    public final int maxRecoverTimer = 200;
+    private final List<Integer> mobs = new ArrayList<>();
 
     public YggdrasilEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_);
     }
 
+    public static AttributeSupplier setAttributes() {//生物属性
+        return Animal.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, SaveUtil.getMobMultiplier(200))//最大血量
+                .add(Attributes.ATTACK_DAMAGE, SaveUtil.getMobMultiplier(3))//单次攻击伤害
+                .add(Attributes.ATTACK_SPEED, 0.5f)//攻速
+                .add(Attributes.MOVEMENT_SPEED, 0.30f)//移速
+                .build();
+    }
+
     protected void registerGoals() {//设置生物行为
-        this.goalSelector.addGoal(0,new RecoverGoal(this));
-        this.goalSelector.addGoal(0,new NpcDialogueGoal<>(this));
-        this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(1,new ConversationTriggerGoal(this));
-        this.goalSelector.addGoal(2, new SpawnTreeClawAtPointPositionGoal(this));
-//       this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.2D, false));
-        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(0,new ConversationTriggerGoal(this));
+        this.goalSelector.addGoal(1,new NpcDialogueGoal<>(this));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, true));
+        this.goalSelector.addGoal(3,new RecoverGoal(this));
+        this.goalSelector.addGoal(4, new SpawnTreeClawAtPointPositionGoal(this));
+        this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
 
         /*
          * 下面设置攻击目标：（按需修改）
@@ -99,9 +109,9 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
          * 如果是村民，不处于被激怒状态则也被攻击，优先级低于玩家（按需修改）
          * 如果是Creeper，则与村民逻辑相同，但优先级低于村民（按需修改）
          * */
-        this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this,AbstractVillager.class,true));
+        this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this,AbstractVillager.class,true));
     }
 
     @Override
@@ -236,29 +246,38 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     @Override
     public void tick() {
         super.tick();
-
         //恢复倒计时，这个timer由goal触发
         if(!level().isClientSide){
-            recoverTimer--;
             if(recoverTimer <= 0){
-                boolean canRecover = true;
-                for(TreeGuardianEntity entity : mobs){
-                    if(entity != null && entity.getHealth() >= 0){
-                        canRecover = false;
+                boolean canRecover = false;
+                for(int entityID : mobs){
+                    Entity entity = level().getEntity(entityID);
+                    if(entity instanceof TreeGuardianEntity treeGuardian && treeGuardian.getHealth()>=treeGuardian.getMaxHealth()/2){
+                        canRecover = true;
+                        break;
+                    }else if(entity != null){
+                        entity.discard();
                     }
                 }
                 if(canRecover){
                     recover();
+                    recoverTimer = 114514;
                 }
+            } else if(recoverTimer <= maxRecoverTimer){
+                recoverTimer--;
             }
         }
 
+        //霸体时间判断
         if(conversingPlayer != null){
             canBeHurt = false;
+            navigation.stop();
         }
+
         if(canBeHurt){
             hurtTimer--;
         }
+
         if(hurtTimer<0){
             canBeHurt = false;
         }
@@ -270,15 +289,6 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     public void setCanBeHurt() {
         this.canBeHurt = true;
         hurtTimer = 200;
-    }
-
-    public static AttributeSupplier setAttributes() {//生物属性
-        return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 100.0D)//最大血量
-                .add(Attributes.ATTACK_DAMAGE, 6.0f)//单次攻击伤害
-                .add(Attributes.ATTACK_SPEED, 1.0f)//攻速
-                .add(Attributes.MOVEMENT_SPEED, 0.35f)//移速
-                .build();
     }
 
     @Override
@@ -490,12 +500,12 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     public static class SpawnTreeClawAtPointPositionGoal extends Goal {
         private final YggdrasilEntity yggdrasil;
         private int shootInterval;
-        public final int shootIntervalMax = 200;
+        public final int shootIntervalMax = 50;
         public static final int attackRange = 10;
 
         public SpawnTreeClawAtPointPositionGoal(YggdrasilEntity yggdrasil) {
             this.yggdrasil = yggdrasil;
-    //        shootInterval = shootIntervalMax;//开局就发射一个树爪，方便调试
+            shootInterval = (int) (55 + yggdrasil.getHealth()/2);//开局就发射一个树爪，方便调试，血越少越频繁
         }
 
         @Override
@@ -503,10 +513,12 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
             return --this.shootInterval <= 0 && yggdrasil.getConversingPlayer() == null;
         }
 
-
         @Override
         public void start() {
+            yggdrasil.triggerAnim("Summon", "summon");
             List<Player> players = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.DEFAULT, yggdrasil, getPlayerAABB(yggdrasil.getOnPos(), attackRange));
+            List<Player> players2 = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.forNonCombat(), yggdrasil, getPlayerAABB(yggdrasil.getOnPos(), attackRange));//创造测试用
+            players.addAll(players2);
             for (Player target : players) {
                 TreeClawEntity treeClaw = new TreeClawEntity(this.yggdrasil.level(), this.yggdrasil, target);
                 treeClaw.setPos(target.getX(), target.getY(), target.getZ());
@@ -531,7 +543,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
     public static class RecoverGoal extends Goal{
 
         private final YggdrasilEntity yggdrasil;
-        private int summonInterval;
+        private int summonInterval = 0;
         public RecoverGoal(YggdrasilEntity yggdrasil){
             this.yggdrasil = yggdrasil;
         }
@@ -546,18 +558,26 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
 
         @Override
         public void start() {
-            if(yggdrasil.recoverTimer == 0){
-                yggdrasil.recoverTimer = 200;
-                yggdrasil.triggerAnim("Summon", "summon");
-                List<Player> players = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.DEFAULT, yggdrasil, getPlayerAABB(yggdrasil.getOnPos(),10));
-                for(Player ignored : players){
-                    TreeGuardianEntity mob = new TreeGuardianEntity(TCRModEntities.TREE_GUARDIAN.get(), yggdrasil.level());
-                    mob.setPos(yggdrasil.getX(),yggdrasil.getY(),yggdrasil.getZ());
-                    System.out.println("Summoned!!!"+yggdrasil.level().addFreshEntity(mob));
-                    yggdrasil.mobs.add(mob);
+            if(yggdrasil.level().isClientSide){
+                return;
+            }
+            yggdrasil.triggerAnim("Summon", "summon");
+            List<Player> players = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.DEFAULT, yggdrasil, getPlayerAABB(yggdrasil.getOnPos(), 10));
+            List<Player> players2 = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.forNonCombat(), yggdrasil, getPlayerAABB(yggdrasil.getOnPos(), 10));//创造测试用
+            players.addAll(players2);
+            for(Player player : players){
+                TreeGuardianEntity mob = TCRModEntities.TREE_GUARDIAN.get().spawn(((ServerLevel) yggdrasil.level()), player.getOnPos().above(3), MobSpawnType.NATURAL);
+                if(mob == null){
+                    return;
+                }
+                mob.setIsSummonedByBoss();
+                yggdrasil.level().addFreshEntity(mob);
+                if(yggdrasil.mobs.size() <= 10){
+                    yggdrasil.mobs.add(mob.getId());
                 }
             }
-            this.summonInterval = 200;
+            yggdrasil.recoverTimer = yggdrasil.maxRecoverTimer;
+            this.summonInterval = yggdrasil.maxRecoverTimer * 2;
         }
 
         @Override
@@ -570,6 +590,7 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
      * 播放动画并回血
      */
     public void recover(){
+        System.out.println("play");
         triggerAnim("Recover","recover");
         getEntityData().set(STATE, 2);
         setHealth(getHealth()+getMaxHealth()/4);
@@ -606,8 +627,8 @@ public class YggdrasilEntity extends PathfinderMob implements GeoEntity, Enforce
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("wander", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
-        if(getTarget() != null){
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("attack", Animation.LoopType.PLAY_ONCE));
+        if(swinging){
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("attack2", Animation.LoopType.PLAY_ONCE));
             return PlayState.CONTINUE;
         }
 

@@ -1,8 +1,14 @@
 package com.gaboj1.tcr.entity.custom.tree_monsters;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TCRModSounds;
 import com.gaboj1.tcr.util.BoundingBoxHelper;
+import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -21,6 +27,7 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -34,25 +41,39 @@ import java.util.Random;
 public class TreeGuardianEntity extends Monster implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
+    public static final EntityDataAccessor<Boolean> IS_SUMMONED = SynchedEntityData.defineId(TreeGuardianEntity.class, EntityDataSerializers.BOOLEAN);//本来是记录用于判断回血的，但是发现后面没用了，不过可能有别的用处就先留着
+
     public TreeGuardianEntity(EntityType<? extends TreeGuardianEntity> entityType, Level level) {
         super(entityType, level);
-//        AABB boundingBox = this.getBoundingBox();
-//        boundingBox.setMaxX(boundingBox.getXsize() * 3.5 + boundingBox.minX);
-//        boundingBox.setMaxZ(boundingBox.getZsize() * 3.5 + boundingBox.minZ);
-//        boundingBox.setMaxY(boundingBox.getYsize() * 3.5 + boundingBox.minY);
         setBoundingBox(BoundingBoxHelper.scaleAABB(getBoundingBox(),3.5));//无效
     }
 
-//    @Override
-//    public void tick() {
-//        setBoundingBox(BoundingBoxHelper.scaleAABB(getBoundingBox(),3.5));
-//        System.out.println(level().isClientSide?"Client ":"Server "+ getBoundingBox());
-//    }
+    @Override
+    public void addAdditionalSaveData(@NotNull CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("is_summoned", this.getEntityData().get(IS_SUMMONED));
+    }
+
+    @Override
+    public void readAdditionalSaveData(@NotNull CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        this.getEntityData().set(IS_SUMMONED,tag.getBoolean("is_summoned"));
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        getEntityData().define(IS_SUMMONED, false);
+        super.defineSynchedData();
+    }
+
+    public void setIsSummonedByBoss(){
+        getEntityData().set(IS_SUMMONED, true);
+    }
 
     public static AttributeSupplier setAttributes() {//生物属性
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 100.0D)//最大血量
-                .add(Attributes.ATTACK_DAMAGE, 6.0f)//单次攻击伤害
+                .add(Attributes.MAX_HEALTH, SaveUtil.getMobMultiplier(50))//最大血量
+                .add(Attributes.ATTACK_DAMAGE, SaveUtil.getWeaponMultiplier(6))//单次攻击伤害
                 .add(Attributes.ATTACK_SPEED, 1.0f)//攻速
                 .add(Attributes.MOVEMENT_SPEED, 0.35f)//移速
                 .build();

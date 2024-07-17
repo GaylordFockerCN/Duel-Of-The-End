@@ -1,6 +1,8 @@
 package com.gaboj1.tcr.util;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.chat.Component;
@@ -15,6 +17,21 @@ import java.util.*;
 public class SaveUtil {
 
     public static int worldLevel = 0;
+
+    /**
+     * 获取随世界等级提升后的武器数值（即乘以倍率）
+     */
+    public static double getWeaponMultiplier(double weaponAttr){
+        return weaponAttr * (SaveUtil.worldLevel == 0 ? 1 : SaveUtil.worldLevel* TCRConfig.WEAPON_MULTIPLIER_WHEN_WORLD_LEVEL_UP.get());
+    }
+
+    /**
+     * 获取随世界等级提升后的怪物数值（即乘以倍率）
+     */
+    public static double getMobMultiplier(double mobAttr){
+        return mobAttr * (SaveUtil.worldLevel == 0 ? 1 : SaveUtil.worldLevel* TCRConfig.MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP.get());
+    }
+
     public static final List<Dialog> DIALOG_LIST = new ArrayList<>();
     public static final HashSet<Dialog> DIALOG_SET = new HashSet<>();//优化用的，但是不知道能优化多少（
     public static final HashSet<Dialog> TASK_SET = new HashSet<>(){
@@ -238,7 +255,7 @@ public class SaveUtil {
 
     }
 
-    public static final String FILE_NAME = "config/"+TheCasketOfReveriesMod.MOD_ID+"/save.nbt";
+    public static final String FILE_NAME = "config/"+TheCasketOfReveriesMod.MOD_ID+"/"+ TCRBiomeProvider.worldName +"/save.nbt";
 
     public static void save(){
 
@@ -259,7 +276,7 @@ public class SaveUtil {
             File save = new File(FILE_NAME);
             CompoundTag saveData = NbtIo.read(save);
             if(saveData == null){
-                save.createNewFile();
+                TheCasketOfReveriesMod.LOGGER.info("save data not found. created new save data:\n"+save.createNewFile());
             } else {
                 TheCasketOfReveriesMod.LOGGER.info("reading data:\n"+saveData);
                 fromNbt(saveData);

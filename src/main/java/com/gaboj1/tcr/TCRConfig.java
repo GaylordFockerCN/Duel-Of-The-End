@@ -1,6 +1,5 @@
 package com.gaboj1.tcr;
 
-import net.minecraft.client.resources.language.I18n;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class TCRConfig {
@@ -16,6 +15,8 @@ public class TCRConfig {
     public static final ForgeConfigSpec.IntValue TYPEWRITER_EFFECT_SPEED;
     // 打字机效果间隔（几个tick更新一次）
     public static final ForgeConfigSpec.IntValue TYPEWRITER_EFFECT_INTERVAL;
+    //武器随着世界等级提升的提升倍率
+    public static final ForgeConfigSpec.DoubleValue WEAPON_MULTIPLIER_WHEN_WORLD_LEVEL_UP;
     // 基础树脂的修复值
     public static final ForgeConfigSpec.IntValue REPAIR_VALUE;
     // 树灵法杖参数
@@ -24,7 +25,8 @@ public class TCRConfig {
     public static final ForgeConfigSpec.IntValue TREE_SPIRIT_WAND_HEAL;
     // 树灵木消耗值
     public static final ForgeConfigSpec.IntValue SPIRIT_LOG_CONSUME;
-    // 配置规格
+    //怪物随着世界等级提升的提升倍率
+    public static final ForgeConfigSpec.DoubleValue MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP;
     public static final ForgeConfigSpec SPEC;
 
     static {
@@ -44,20 +46,32 @@ public class TCRConfig {
         TREE_SPIRIT_WAND_HUNGRY_CONSUME = createInt(builder, "tree_spirit_wand_hungry_consume", 2, 1);
         TREE_SPIRIT_WAND_HEAL = createInt(builder, "tree_spirit_wand_heal", 10, 1);
         SPIRIT_LOG_CONSUME = createInt(builder, "spirit_log_consume", 1, 1);
+        WEAPON_MULTIPLIER_WHEN_WORLD_LEVEL_UP = createDouble(builder, "weapon_multiplier_when_world_level_up", 1.2, 1.0);
+        builder.pop();
+        builder.push("Monster Setting");
+        MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP = createDouble(builder, "mob_multiplier_when_world_level_up", 1.2, 1.0);
         builder.pop();
 
         SPEC = builder.build();
     }
 
-    private static ForgeConfigSpec.BooleanValue createBool(ForgeConfigSpec.Builder builder, String key, boolean defaultValue) {
+    private static ForgeConfigSpec.BooleanValue createBool(ForgeConfigSpec.Builder builder, String key, boolean defaultValue, String... comment) {
         return builder
                 .translation("config."+TheCasketOfReveriesMod.MOD_ID+".common."+key)
                 .define(key, defaultValue);
     }
 
-    private static ForgeConfigSpec.IntValue createInt(ForgeConfigSpec.Builder builder, String key, int defaultValue, int min) {
+    private static ForgeConfigSpec.IntValue createInt(ForgeConfigSpec.Builder builder, String key, int defaultValue, int min, String... comment) {
         return builder
                 .translation("config."+TheCasketOfReveriesMod.MOD_ID+".common."+key)
                 .defineInRange(key, defaultValue, min, Integer.MAX_VALUE);
     }
+
+    private static ForgeConfigSpec.DoubleValue createDouble(ForgeConfigSpec.Builder builder, String key, double defaultValue, double min, String... comment) {
+        return builder
+                .translation("config."+TheCasketOfReveriesMod.MOD_ID+".common."+key)
+                .comment(comment)
+                .defineInRange(key, defaultValue, min, Double.MAX_VALUE);
+    }
+
 }
