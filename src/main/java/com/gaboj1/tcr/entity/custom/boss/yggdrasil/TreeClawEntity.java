@@ -26,7 +26,7 @@ import software.bernie.geckolib.util.RenderUtils;
 public class TreeClawEntity extends Mob implements GeoEntity {
     private YggdrasilEntity yggdrasilEntity;
     private Player target;
-    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private int catchTimer;
     private final int catchTimerMax = 20;//逃离时间
     private boolean isCatching;
@@ -64,7 +64,7 @@ public class TreeClawEntity extends Mob implements GeoEntity {
         if(isCatching && this.target != null && !level().isClientSide){
             target.teleportTo(target.getX(),target.getY(),target.getZ());
         }
-        if(catchTimer < -catchTimerMax * 10){//禁锢十秒
+        if(catchTimer < -catchTimerMax * 5){//禁锢5秒
             this.discard();//时间够久就自毁
         }
     }

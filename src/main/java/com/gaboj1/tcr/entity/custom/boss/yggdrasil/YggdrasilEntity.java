@@ -1,9 +1,9 @@
 package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
-import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.block.entity.spawner.EnforcedHomePoint;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
+import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
 import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
 import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.entity.TCRModEntities;
@@ -31,10 +31,7 @@ import net.minecraft.world.BossEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -54,6 +51,7 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
@@ -96,7 +94,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     protected void registerGoals() {//设置生物行为
         this.goalSelector.addGoal(0,new ConversationTriggerGoal(this));
         this.goalSelector.addGoal(1,new NpcDialogueGoal<>(this));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, true));
+        this.goalSelector.addGoal(2, new ShootGoal(this));
         this.goalSelector.addGoal(3,new RecoverGoal(this));
         this.goalSelector.addGoal(4, new SpawnTreeClawAtPointPositionGoal(this));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
@@ -500,7 +498,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     public static class SpawnTreeClawAtPointPositionGoal extends Goal {
         private final YggdrasilEntity yggdrasil;
         private int shootInterval;
-        public final int shootIntervalMax = 50;
+        public final int shootIntervalMax = 100;
         public static final int attackRange = 10;
 
         public SpawnTreeClawAtPointPositionGoal(YggdrasilEntity yggdrasil) {
@@ -587,13 +585,80 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     }
 
     /**
+     * 远程普攻
+     */
+    public static class ShootGoal extends MeleeAttackGoal{
+
+        private final YggdrasilEntity yggdrasil;
+        private int ticksUntilNextAttack;
+        public ShootGoal(YggdrasilEntity yggdrasil){
+            super(yggdrasil, 1.0, true);
+            this.yggdrasil = yggdrasil;
+        }
+
+        @Override
+        public void start() {
+            super.start();
+            this.ticksUntilNextAttack = 0;
+        }
+
+        @Override
+        public void tick() {
+            super.tick();
+            this.ticksUntilNextAttack = Math.max(this.ticksUntilNextAttack - 1, 0);
+        }
+
+        @Override
+        protected void resetAttackCooldown() {
+            super.resetAttackCooldown();
+            this.ticksUntilNextAttack = this.adjustedTickDelay(20);
+        }
+
+        @Override
+        protected boolean isTimeToAttack() {
+            super.isTimeToAttack();
+            return this.ticksUntilNextAttack <= 0;
+        }
+
+        @Override
+        protected int getTicksUntilNextAttack() {
+            super.getTicksUntilNextAttack();
+            return this.ticksUntilNextAttack;
+        }
+
+        @Override
+        protected void checkAndPerformAttack(@NotNull LivingEntity entity, double p_25558_) {
+            LivingEntity target = yggdrasil.getTarget();
+            if (target != null && target.distanceTo(yggdrasil) < 10 && ticksUntilNextAttack <= 0) {
+                this.resetAttackCooldown();
+                this.yggdrasil.attack(yggdrasil.getTarget());
+            }
+
+        }
+
+    }
+
+    /**
      * 播放动画并回血
      */
     public void recover(){
-        System.out.println("play");
         triggerAnim("Recover","recover");
         getEntityData().set(STATE, 2);
         setHealth(getHealth()+getMaxHealth()/4);
+    }
+
+    /**
+     * 播放动画并发射
+     */
+    public void attack(LivingEntity target){
+        triggerAnim("Attack","attack");
+        MagicProjectile projectile = new MagicProjectile(level(), this);
+        double x = target.getX() - this.getX();
+        double y = target.getY(0.3333333333333333) - projectile.getY();
+        double z = target.getZ() - this.getZ();
+        double $$5 = Math.sqrt(x * x + z * z) * 0.20000000298023224;
+        projectile.shoot(x, y + $$5, z, 1.5F, 10.0F);
+        level().addFreshEntity(projectile);
     }
 
     /**
@@ -617,6 +682,8 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
                 .triggerableAnim("recover", RawAnimation.begin().then("recover", Animation.LoopType.PLAY_ONCE)));
         controllers.add(new AnimationController<>(this, "Summon", 0, state -> PlayState.STOP)
                 .triggerableAnim("summon", RawAnimation.begin().then("attack1", Animation.LoopType.PLAY_ONCE)));
+        controllers.add(new AnimationController<>(this, "Attack", 0, state -> PlayState.STOP)
+                .triggerableAnim("attack", RawAnimation.begin().then("attack2", Animation.LoopType.PLAY_ONCE)));
         controllers.add(new AnimationController<>(this, "Death", 0, state -> PlayState.STOP)
                 .triggerableAnim("death", RawAnimation.begin().then("death", Animation.LoopType.PLAY_ONCE)));
 
@@ -625,10 +692,6 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
         if(tAnimationState.isMoving()) {//播放移动动画
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("wander", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
-        if(swinging){
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("attack2", Animation.LoopType.PLAY_ONCE));
             return PlayState.CONTINUE;
         }
 

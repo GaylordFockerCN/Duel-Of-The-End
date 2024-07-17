@@ -3642,41 +3642,7 @@
 				}
 			}
 		},
-		"parallel1": {
-			"loop": true,
-			"bones": {
-				"RightEyesBase": {
-					"position": ["ysm.head_yaw/180", "ysm.head_pitch/360", 0]
-				},
-				"LeftEyesBase": {
-					"position": ["ysm.head_yaw/180", "ysm.head_pitch/360", 0]
-				},
-				"LongHair": {
-					"rotation": ["(ysm.head_pitch > 0) ? ysm.head_pitch : ((ysm.head_pitch < -55)?-55:ysm.head_pitch)", 0, 0]
-				}
-			}
-		},
-		"parallel2": {
-			"loop": true
-		},
-		"parallel3": {
-			"loop": true,
-			"bones": {
-				"LongHead": {
-					"rotation": [0, 0, 0]
-				}
-			}
-		},
-		"parallel4": {
-			"loop": true
-		},
-		"parallel5": {
-			"loop": true
-		},
-		"parallel6": {
-			"loop": true
-		},
-		"parallel7": {
+		"pre_parallel0": {
 			"loop": true
 		},
 		"recover": {
@@ -4265,18 +4231,23 @@
 				},
 				"RightArm": {
 					"rotation": {
-						"0.0": [-77.5, 0, 0],
+						"0.0": [0, 0, 5],
+						"0.0417": [0, 0, 5],
 						"0.25": [-82.5, 0, 0],
 						"0.5833": [-77.5, 0, 0],
 						"0.875": [-82.5, 0, 0],
-						"1.1667": [-77.5, 0, 0]
+						"1.125": [0, 0, 5],
+						"1.1667": [0, 0, 5]
 					}
 				},
 				"RightForeArm": {
 					"rotation": {
-						"0.0": [-4.61854, -0.07708, -1.91135],
+						"0.0": [0, 0, 12],
+						"0.0417": [-4.61854, -0.07708, -1.91135],
 						"0.25": [-11.82829, -12.7228, -2.21306],
-						"0.5833": [-4.6185, -0.0771, -1.9113]
+						"0.5833": [-4.6185, -0.0771, -1.9113],
+						"1.125": [-4.61854, -0.07708, -1.91135],
+						"1.1667": [0, 0, 12]
 					}
 				},
 				"Skirt": {

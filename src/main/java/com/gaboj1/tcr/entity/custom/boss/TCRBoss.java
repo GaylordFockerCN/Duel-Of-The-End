@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
+package com.gaboj1.tcr.entity.custom.boss;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;

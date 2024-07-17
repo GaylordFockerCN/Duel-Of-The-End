@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.mixin;
 
+import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.worldselection.WorldSelectionList;
@@ -26,6 +27,7 @@ public class WorldListEntryMixin {
     @Inject(method = "doDeleteWorld()V", at = @At("RETURN"))
     private void injectedDoDeleteWorld(CallbackInfo ci){
         TCRBiomeProvider.LOGGER.info("Deleting : " + summary.getLevelId() + ".dat -> "+ (TCRBiomeProvider.deleteCache(summary.getLevelId())?"SUCCESS":"FAILED"));
+        TCRBiomeProvider.LOGGER.info("Deleting : " + summary.getLevelId() + ".nbt -> "+ (SaveUtil.deleteCache(summary.getLevelId())?"SUCCESS":"FAILED"));
     }
 
     /**

@@ -38,6 +38,7 @@ import com.gaboj1.tcr.worldgen.structure.TCRStructurePlacementTypes;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.LlamaSpitRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -157,6 +158,7 @@ public class TheCasketOfReveriesMod {
             EntityRenderers.register(TCRModEntities.SWORD.get(), SwordEntityRenderer::new);
             EntityRenderers.register(TCRModEntities.RAIN_SCREEN_SWORD.get(), SwordEntityRenderer::new);
             EntityRenderers.register(TCRModEntities.RAIN_CUTTER_SWORD.get(), SwordEntityRenderer::new);
+            EntityRenderers.register(TCRModEntities.MAGIC_PROJECTILE.get(), LlamaSpitRenderer::new);
 
             EntityRenderers.register(TCRModEntities.MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterRenderer::new);
             EntityRenderers.register(TCRModEntities.TREE_GUARDIAN.get(), TreeGuardianRenderer::new);
@@ -175,49 +177,6 @@ public class TheCasketOfReveriesMod {
             BlockEntityRenderers.register(TCRModBlockEntities.PORTAL_BED.get(), PortalBedRenderer::new);
         }
 
-        @SubscribeEvent
-        public static void entityAttributeEvent(EntityAttributeCreationEvent event) {
-
-            event.put(TCRModEntities.SMALL_TREE_MONSTER.get(), SmallTreeMonsterEntity.setAttributes());
-            event.put(TCRModEntities.TREE_GUARDIAN.get(), TreeGuardianEntity.setAttributes());//设置生物属性功能在此被调用
-            event.put(TCRModEntities.MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterEntity.setAttributes());
-            event.put(TCRModEntities.JELLY_CAT.get(), JellyCat.setAttributes());
-            event.put(TCRModEntities.SQUIRREL.get(), Squirrel.setAttributes());
-            event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), TCRVillager.setAttributes());
-            event.put(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), TCRVillager.setAttributes());
-            event.put(TCRModEntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), TCRVillager.setAttributes());
-            event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),PastoralPlainVillagerElder.setAttributes());
-            event.put(TCRModEntities.YGGDRASIL.get(), YggdrasilEntity.setAttributes());
-            event.put(TCRModEntities.TREE_CLAW.get(), TreeClawEntity.setAttributes());
-        }
-
-        //刷新规则
-        @SubscribeEvent
-        public static void entitySpawnRestriction(SpawnPlacementRegisterEvent event) {
-            event.register(TCRModEntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                    PastoralPlainTalkableVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
-            event.register(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                    PastoralPlainTalkableVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
-            event.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                    PastoralPlainVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
-            event.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                    PastoralPlainVillagerElder::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
-
-            event.register(TCRModEntities.JELLY_CAT.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                    JellyCat::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
-            event.register(TCRModEntities.SQUIRREL.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                    JellyCat::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
-
-            event.register(TCRModEntities.SMALL_TREE_MONSTER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                    SmallTreeMonsterEntity::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
-            event.register(TCRModEntities.TREE_GUARDIAN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                    TreeGuardianEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
-            event.register(TCRModEntities.MIDDLE_TREE_MONSTER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                    MiddleTreeMonsterEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
-
-            event.register(TCRModEntities.TREE_CLAW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                    TreeClawEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
-        }
         @SubscribeEvent
         public static void onRendererSetup(EntityRenderersEvent.RegisterRenderers event){
             event.registerBlockEntityRenderer(TCRModBlockEntities.BETTER_STRUCTURE_BLOCK_ENTITY.get(), BetterStructureBlockRenderer::new);

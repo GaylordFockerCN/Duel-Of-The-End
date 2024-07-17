@@ -255,14 +255,16 @@ public class SaveUtil {
 
     }
 
-    public static final String FILE_NAME = "config/"+TheCasketOfReveriesMod.MOD_ID+"/"+ TCRBiomeProvider.worldName +"/save.nbt";
+    public static File getFile(String worldName){
+        return new File("config/"+TheCasketOfReveriesMod.MOD_ID+"/"+ worldName +".nbt");
+    }
 
     public static void save(){
 
         try {
             CompoundTag saveData = toNbt();
             TheCasketOfReveriesMod.LOGGER.info("saving data:\n"+saveData);
-            NbtIo.write(saveData, new File(FILE_NAME));
+            NbtIo.write(saveData, getFile(TCRBiomeProvider.worldName));
             TheCasketOfReveriesMod.LOGGER.info("over.");
         } catch (Exception e) {
             TheCasketOfReveriesMod.LOGGER.error("Can't save save serverData", e);
@@ -273,7 +275,7 @@ public class SaveUtil {
     public static void read(){
 
         try {
-            File save = new File(FILE_NAME);
+            File save = getFile(TCRBiomeProvider.worldName);
             CompoundTag saveData = NbtIo.read(save);
             if(saveData == null){
                 TheCasketOfReveriesMod.LOGGER.info("save data not found. created new save data:\n"+save.createNewFile());
@@ -285,6 +287,10 @@ public class SaveUtil {
         } catch (Exception e) {
             TheCasketOfReveriesMod.LOGGER.error("Can't read save serverData", e);
         }
+    }
+
+    public static boolean deleteCache(String fileName){
+        return new File(FILE_NAME).delete();
     }
 
     /**

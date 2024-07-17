@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.entity;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.entity.custom.boss.yggdrasil.MagicProjectile;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.TreeClawEntity;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
 import com.gaboj1.tcr.entity.custom.dreamspirit.JellyCat;
@@ -11,6 +12,7 @@ import com.gaboj1.tcr.entity.custom.sword.SwordEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
+import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainStationaryVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainTalkableVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
@@ -18,6 +20,13 @@ import com.gaboj1.tcr.entity.custom.*;
 
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillager;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.projectile.LlamaSpit;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.DeferredRegister;
@@ -26,10 +35,13 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 
+
+@Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TCRModEntities {
 	public static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, TheCasketOfReveriesMod.MOD_ID);
 	public static final RegistryObject<EntityType<DesertEagleBulletEntity>> DESERT_EAGLE_BULLET = register("projectile_desert_eagle_bullet", EntityType.Builder.<DesertEagleBulletEntity>of(DesertEagleBulletEntity::new, MobCategory.MISC)
 			.setCustomClientFactory(DesertEagleBulletEntity::new).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.1f, 0.1f));
+	public static final RegistryObject<EntityType<MagicProjectile>> MAGIC_PROJECTILE = register("magic_projectile", EntityType.Builder.<MagicProjectile>of(MagicProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10));
 
 	public static final RegistryObject<EntityType<SwordEntity>> SWORD = register("sword",
 			EntityType.Builder.of(SwordEntity::new, MobCategory.CREATURE));
@@ -87,8 +99,51 @@ public class TCRModEntities {
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "tree_claw").toString()));
 
 
-	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
-		return REGISTRY.register(registryname, () -> entityTypeBuilder.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, registryname).toString()));
+	private static <T extends Entity> RegistryObject<EntityType<T>> register(String name, EntityType.Builder<T> entityTypeBuilder) {
+		return REGISTRY.register(name, () -> entityTypeBuilder.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name).toString()));
+	}
+
+	@SubscribeEvent
+	public static void entityAttributeEvent(EntityAttributeCreationEvent event) {
+
+		event.put(TCRModEntities.SMALL_TREE_MONSTER.get(), SmallTreeMonsterEntity.setAttributes());
+		event.put(TCRModEntities.TREE_GUARDIAN.get(), TreeGuardianEntity.setAttributes());//设置生物属性功能在此被调用
+		event.put(TCRModEntities.MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterEntity.setAttributes());
+		event.put(TCRModEntities.JELLY_CAT.get(), JellyCat.setAttributes());
+		event.put(TCRModEntities.SQUIRREL.get(), Squirrel.setAttributes());
+		event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), TCRVillager.setAttributes());
+		event.put(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), TCRVillager.setAttributes());
+		event.put(TCRModEntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), TCRVillager.setAttributes());
+		event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),PastoralPlainVillagerElder.setAttributes());
+		event.put(TCRModEntities.YGGDRASIL.get(), YggdrasilEntity.setAttributes());
+		event.put(TCRModEntities.TREE_CLAW.get(), TreeClawEntity.setAttributes());
+	}
+
+	@SubscribeEvent
+	public static void entitySpawnRestriction(SpawnPlacementRegisterEvent event) {
+		event.register(TCRModEntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				PastoralPlainTalkableVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				PastoralPlainTalkableVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				PastoralPlainVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				PastoralPlainVillagerElder::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+
+		event.register(TCRModEntities.JELLY_CAT.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				JellyCat::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(TCRModEntities.SQUIRREL.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				JellyCat::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+
+		event.register(TCRModEntities.SMALL_TREE_MONSTER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				SmallTreeMonsterEntity::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(TCRModEntities.TREE_GUARDIAN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				TreeGuardianEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(TCRModEntities.MIDDLE_TREE_MONSTER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				MiddleTreeMonsterEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+
+		event.register(TCRModEntities.TREE_CLAW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				TreeClawEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 	}
 
 }
