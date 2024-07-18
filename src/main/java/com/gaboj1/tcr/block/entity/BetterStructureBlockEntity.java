@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.block.entity;
 
 import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.TCRModBlockEntities;
 import com.gaboj1.tcr.block.TCRModBlocks;
 import com.gaboj1.tcr.util.ClientHelper;
@@ -32,7 +33,10 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
     public static final int MAX_SIZE = 256;
 
     //用于判断有没有加载过，否则会一直重复加载
-    public boolean generated = false;
+    private boolean generated = false;
+    public boolean isGenerated() {
+        return generated;
+    }
 
     public BetterStructureBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(pPos, pBlockState);
@@ -103,9 +107,7 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
     }
 
     private List<StructureBlockEntity> filterRelatedCornerBlocks(List<StructureBlockEntity> structureBlocks) {
-        Predicate<StructureBlockEntity> predicate = (structureBlock) -> {
-            return structureBlock.getMode() == StructureMode.CORNER && this.getStructureName().equals(structureBlock.getStructureName());
-        };
+        Predicate<StructureBlockEntity> predicate = (structureBlock) -> structureBlock.getMode() == StructureMode.CORNER && this.getStructureName().equals(structureBlock.getStructureName());
         return structureBlocks.stream().filter(predicate).collect(Collectors.toList());
     }
 
@@ -149,6 +151,13 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
         //用button是因为StructureBlockEditScreen的sendToServer方法不知道怎么搞成public，比较复杂，不如按钮简单。
         if(this.level != null && this.level.isClientSide && !generated && TCRConfig.ENABLE_BETTER_STRUCTURE_BLOCK_LOAD.get()){
             HandleStructureBlockLoad.load(this);
+            generated = true;
+        }
+
+        //不知道为毛没用？
+        if(level instanceof ServerLevel serverLevel&& TCRConfig.ENABLE_BETTER_STRUCTURE_BLOCK_LOAD.get() && !generated){
+            TheCasketOfReveriesMod.LOGGER.info("try to load custom structure block on server: {}", getStructureName());
+            loadStructure(serverLevel);
             generated = true;
         }
 

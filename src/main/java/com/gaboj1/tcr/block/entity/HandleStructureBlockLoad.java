@@ -15,7 +15,7 @@ public class HandleStructureBlockLoad {
             StructureBlockEditScreen screen = new StructureBlockEditScreen(entity);
             Minecraft.getInstance().setScreen(screen);
             screen.loadButton.onPress();
-            TheCasketOfReveriesMod.LOGGER.info("try to load "+ entity.getStructureName());
+            TheCasketOfReveriesMod.LOGGER.info("post load request : {} ",entity.getStructureName());
         }
     }
 }

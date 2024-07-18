@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.server.packs.resources.ResourceManager;
+import org.jetbrains.annotations.NotNull;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -116,15 +117,37 @@ public class BiomeMap {
             File file = new File(FILE);
             BufferedImage image;
             if(!file.exists()){//如果自定义地图图片不存在则用资源包自带的默认地图生成
-                ReloadableResourceManager manager = new ReloadableResourceManager(PackType.CLIENT_RESOURCES);
-                manager.registerReloadListener(new TextureManager(manager));
-//                ResourceManager manager = Minecraft.getInstance().getResourceManager();//TODO 服务端启动有bug，服务端不能用这种方式读。只能把坤坤转成数据了，。
-                InputStream inputStream = manager.getResource(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"default_map.png")).get().open();
+//                ResourceManager manager = Minecraft.getInstance().getResourceManager();
+//                InputStream inputStream = manager.getResource(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"default_map.png")).get().open();
+                InputStream inputStream = getInputStream();
                 image = ImageIO.read(inputStream);
                 TCRBiomeProvider.LOGGER.info("reading default_map");
                 TCRBiomeProvider.mapName = "default_map";
             }else {
                 image = ImageIO.read(file);
+
+                int width = 100;
+                int height = 100;
+                BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+                Graphics2D g2d = resizedImage.createGraphics();
+                g2d.drawImage(image, 0, 0, width, height, null);
+                g2d.dispose();
+
+                // 3. 输出到控制台
+                int characterWidth = 1; // 每个字符宽度
+                int characterHeight = 2; // 每个字符高度
+                for (int y = 0; y < height; y += characterHeight) {
+                    for (int x = 0; x < width; x += characterWidth) {
+                        // 获取当前位置的像素灰度值
+                        int pixel = resizedImage.getRGB(x, y);
+                        int gray = (int) (0.21 * ((pixel >> 16) & 0xff) + 0.72 * ((pixel >> 8) & 0xff) + 0.07 * (pixel & 0xff));
+
+                        // 根据灰度值映射字符
+                        char ch = getCharForGray(gray);
+                        System.out.print(ch);
+                    }
+                    System.out.println(); // 换行
+                }
                 TCRBiomeProvider.mapName = file.getName();
             }
             int height = image.getHeight();
@@ -148,6 +171,23 @@ public class BiomeMap {
             //如果还是不行就输出默认噪声地图
             return createNoiseMap(generator);
         }
+    }
+
+    private static char getCharForGray(int gray) {
+        char[] chars = {'@', '#', '8', '&', 'o', ':', '*', '.', ' '}; // 字符按照灰度值从高到低排序
+        int index = gray * (chars.length - 1) / 255; // 灰度值映射到字符数组的索引范围
+        return chars[index];
+    }
+
+    /**
+     * 从类路径中获取图片资源的输入流
+     */
+    @NotNull
+    private static InputStream getInputStream() {
+        ClassLoader classLoader = TheCasketOfReveriesMod.class.getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream("/default_map.png");
+        assert inputStream != null;
+        return inputStream;
     }
 
 
