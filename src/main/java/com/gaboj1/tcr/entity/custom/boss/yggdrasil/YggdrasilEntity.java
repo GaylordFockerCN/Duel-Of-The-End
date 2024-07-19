@@ -5,10 +5,10 @@ import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
 import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
-import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
+import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.entity.TCRModEntities;
-import com.gaboj1.tcr.TCRModSounds;
-import com.gaboj1.tcr.gui.screen.TreeNode;
+import com.gaboj1.tcr.client.TCRModSounds;
+import com.gaboj1.tcr.client.gui.screen.TreeNode;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
@@ -59,7 +59,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.gaboj1.tcr.gui.screen.DialogueComponentBuilder.BUILDER;
+import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
 
 public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomePoint, NpcDialogue {

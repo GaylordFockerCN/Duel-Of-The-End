@@ -1,7 +1,7 @@
-package com.gaboj1.tcr.gui.screen.custom;
+package com.gaboj1.tcr.client.gui.screen.custom;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.gui.screen.component.PortalScreenComponent;
+import com.gaboj1.tcr.client.gui.screen.component.PortalScreenComponent;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.serverbound.PortalBlockTeleportPacket;

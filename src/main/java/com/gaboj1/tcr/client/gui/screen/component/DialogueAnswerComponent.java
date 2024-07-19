@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.gui.screen.component;
+package com.gaboj1.tcr.client.gui.screen.component;
 
 import com.gaboj1.tcr.TCRConfig;
 import net.minecraft.client.Minecraft;

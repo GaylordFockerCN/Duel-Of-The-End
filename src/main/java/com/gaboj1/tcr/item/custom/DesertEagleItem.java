@@ -3,10 +3,10 @@ package com.gaboj1.tcr.item.custom;
 
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.item.TCRModItems;
-import com.gaboj1.tcr.keymapping.KeyMappings;
+import com.gaboj1.tcr.client.keymapping.KeyMappings;
 import com.gaboj1.tcr.entity.custom.DesertEagleBulletEntity;
 import com.gaboj1.tcr.entity.TCRModEntities;
-import com.gaboj1.tcr.TCRModSounds;
+import com.gaboj1.tcr.client.TCRModSounds;
 import com.gaboj1.tcr.item.renderer.DesertEagleItemRenderer;
 import com.gaboj1.tcr.util.ItemUtil;
 import net.minecraft.client.resources.language.I18n;

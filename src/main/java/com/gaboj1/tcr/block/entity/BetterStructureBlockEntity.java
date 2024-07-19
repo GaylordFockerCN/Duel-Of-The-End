@@ -7,6 +7,7 @@ import com.gaboj1.tcr.block.TCRModBlocks;
 import com.gaboj1.tcr.util.ClientHelper;
 import com.google.common.collect.Lists;
 import net.minecraft.ResourceLocationException;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -142,6 +143,7 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
         setStructureSize(new BlockPos(l, i1, j1));
         this.updateBlockState();
 
+        generated = nbt.getBoolean("generated");
 //        if(generated && this.level != null && !this.level.isClientSide){
 //            this.level.destroyBlock(this.getBlockPos(),false);
 //        }
@@ -149,18 +151,23 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
 
         //当加载的时候强制加载一下区块，为了在结构内包含结构方块时以生成结构，省的调用红石。
         //用button是因为StructureBlockEditScreen的sendToServer方法不知道怎么搞成public，比较复杂，不如按钮简单。
-        if(this.level != null && this.level.isClientSide && !generated && TCRConfig.ENABLE_BETTER_STRUCTURE_BLOCK_LOAD.get()){
-            HandleStructureBlockLoad.load(this);
+        if(this.level != null && !generated && TCRConfig.ENABLE_BETTER_STRUCTURE_BLOCK_LOAD.get()){
+            if(this.level.isClientSide){
+                HandleStructureBlockLoad.load(this);
+            }else {
+                //不知道为毛没用？
+                TheCasketOfReveriesMod.LOGGER.info("try to load custom structure block on server: {}", getStructureName());
+                loadStructure(((ServerLevel) level));
+            }
             generated = true;
         }
 
-        //不知道为毛没用？
-        if(level instanceof ServerLevel serverLevel&& TCRConfig.ENABLE_BETTER_STRUCTURE_BLOCK_LOAD.get() && !generated){
-            TheCasketOfReveriesMod.LOGGER.info("try to load custom structure block on server: {}", getStructureName());
-            loadStructure(serverLevel);
-            generated = true;
-        }
+    }
 
+    @Override
+    protected void saveAdditional(@NotNull CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.putBoolean("generated", generated);
     }
 
     @Override
@@ -194,7 +201,6 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
             return false;
         }
     }
-
 
     private void updateBlockState() {
         if (this.level != null) {

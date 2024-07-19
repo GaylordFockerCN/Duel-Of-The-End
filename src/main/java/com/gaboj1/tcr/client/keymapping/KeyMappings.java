@@ -1,7 +1,7 @@
-package com.gaboj1.tcr.keymapping;
+package com.gaboj1.tcr.client.keymapping;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.gui.screen.custom.GameProgressScreen;
+import com.gaboj1.tcr.client.gui.screen.custom.GameProgressScreen;
 import com.gaboj1.tcr.item.custom.DesertEagleItem;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;

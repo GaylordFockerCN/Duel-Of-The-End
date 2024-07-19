@@ -1,7 +1,6 @@
 package com.gaboj1.tcr.entity.custom.tree_monsters;
 
-import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.TCRModSounds;
+import com.gaboj1.tcr.client.TCRModSounds;
 import com.gaboj1.tcr.util.BoundingBoxHelper;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.core.BlockPos;

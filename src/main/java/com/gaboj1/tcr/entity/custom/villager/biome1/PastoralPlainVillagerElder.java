@@ -3,7 +3,7 @@ package com.gaboj1.tcr.entity.custom.villager.biome1;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
-import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
+import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.util.BookManager;
 import com.gaboj1.tcr.network.TCRPacketHandler;
@@ -36,7 +36,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-import static com.gaboj1.tcr.gui.screen.DialogueComponentBuilder.BUILDER;
+import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
 public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialogue {
 

@@ -2,8 +2,8 @@ package com.gaboj1.tcr.entity.custom.villager.biome1;
 
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.custom.villager.TCRTalkableVillager;
-import com.gaboj1.tcr.gui.screen.LinkListStreamDialogueScreenBuilder;
-import com.gaboj1.tcr.gui.screen.TreeNode;
+import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
+import com.gaboj1.tcr.client.gui.screen.TreeNode;
 import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.util.DataManager;
@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-import static com.gaboj1.tcr.gui.screen.DialogueComponentBuilder.BUILDER;
+import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
 public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
 

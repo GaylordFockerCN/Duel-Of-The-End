@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.network.packet;
 
-import com.gaboj1.tcr.gui.screen.custom.GameProgressScreen;
+import com.gaboj1.tcr.client.gui.screen.custom.GameProgressScreen;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.util.SaveUtil;

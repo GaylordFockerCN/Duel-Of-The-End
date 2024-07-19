@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.keymapping;
+package com.gaboj1.tcr.client.keymapping;
 
 import net.minecraft.client.KeyMapping;
 

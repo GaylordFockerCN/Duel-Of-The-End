@@ -3,4 +3,4 @@
  * 而且对对话框组件也做了修改，实现了打字机效果
  * @author LZY
  */
-package com.gaboj1.tcr.gui.screen;
+package com.gaboj1.tcr.client.gui.screen;

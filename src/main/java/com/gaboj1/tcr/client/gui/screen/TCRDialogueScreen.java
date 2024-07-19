@@ -1,16 +1,15 @@
-package com.gaboj1.tcr.gui.screen;
+package com.gaboj1.tcr.client.gui.screen;
 
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
-import com.gaboj1.tcr.gui.screen.component.DialogueAnswerComponent;
-import com.gaboj1.tcr.gui.screen.component.DialogueChoiceComponent;
+import com.gaboj1.tcr.client.gui.screen.component.DialogueAnswerComponent;
+import com.gaboj1.tcr.client.gui.screen.component.DialogueChoiceComponent;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.serverbound.AddDialogPacket;
 import com.gaboj1.tcr.network.packet.serverbound.NpcPlayerInteractPacket;
-import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;

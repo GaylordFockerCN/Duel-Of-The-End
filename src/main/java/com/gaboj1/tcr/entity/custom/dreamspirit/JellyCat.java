@@ -2,7 +2,7 @@ package com.gaboj1.tcr.entity.custom.dreamspirit;
 
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.ManySkinEntity;
-import com.gaboj1.tcr.TCRModSounds;
+import com.gaboj1.tcr.client.TCRModSounds;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;

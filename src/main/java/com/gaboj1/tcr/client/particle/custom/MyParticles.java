@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.particle.custom;
+package com.gaboj1.tcr.client.particle.custom;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
@@ -6,8 +6,6 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
-
-import java.security.Provider;
 
 //粒子框架，还没具体应用，需要等材质再调试
 public class MyParticles extends TextureSheetParticle {

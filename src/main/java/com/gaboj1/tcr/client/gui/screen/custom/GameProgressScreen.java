@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.gui.screen.custom;
+package com.gaboj1.tcr.client.gui.screen.custom;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.util.SaveUtil;

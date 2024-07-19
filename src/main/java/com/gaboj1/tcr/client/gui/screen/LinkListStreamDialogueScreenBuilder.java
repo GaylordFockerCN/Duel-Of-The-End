@@ -1,7 +1,7 @@
-package com.gaboj1.tcr.gui.screen;
+package com.gaboj1.tcr.client.gui.screen;
 
+import com.gaboj1.tcr.client.gui.screen.component.DialogueChoiceComponent;
 import com.gaboj1.tcr.entity.custom.villager.TCRTalkableVillager;
-import com.gaboj1.tcr.gui.screen.component.DialogueChoiceComponent;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
@@ -10,8 +10,6 @@ import net.minecraft.world.entity.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.gaboj1.tcr.gui.screen.DialogueComponentBuilder.BUILDER;
 
 /**
  *
@@ -61,7 +59,7 @@ public class LinkListStreamDialogueScreenBuilder {
      * @param greeting 初始时显示的话的编号
      */
     public LinkListStreamDialogueScreenBuilder start(int greeting){
-        return start(BUILDER.buildDialogueAnswer(entityType,greeting));
+        return start(DialogueComponentBuilder.BUILDER.buildDialogueAnswer(entityType,greeting));
     }
 
     /**
@@ -80,7 +78,7 @@ public class LinkListStreamDialogueScreenBuilder {
      * @param returnValue 选项的返回值，默认返回0。用于处理 {@link com.gaboj1.tcr.entity.NpcDialogue#handleNpcInteraction(Player, byte)}
      */
     public LinkListStreamDialogueScreenBuilder addFinalChoice(int finalOption, byte returnValue){
-        return addFinalChoice(BUILDER.buildDialogueOption(entityType,finalOption), returnValue);
+        return addFinalChoice(DialogueComponentBuilder.BUILDER.buildDialogueOption(entityType,finalOption), returnValue);
     }
 
     /**
@@ -109,7 +107,7 @@ public class LinkListStreamDialogueScreenBuilder {
      * @param answer 选择该选项后的回答内容编号
      */
     public LinkListStreamDialogueScreenBuilder addChoice(int option, int answer){
-        return addChoice(BUILDER.buildDialogueOption(entityType,option), BUILDER.buildDialogueAnswer(entityType,answer));
+        return addChoice(DialogueComponentBuilder.BUILDER.buildDialogueOption(entityType,option), DialogueComponentBuilder.BUILDER.buildDialogueAnswer(entityType,answer));
     }
 
     /**

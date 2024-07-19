@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.entity.custom.villager;
 
 import com.gaboj1.tcr.entity.NpcDialogue;
-import com.gaboj1.tcr.gui.screen.DialogueComponentBuilder;
+import com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;

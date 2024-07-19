@@ -5,8 +5,8 @@ import com.gaboj1.tcr.block.TCRModBlocks;
 import com.gaboj1.tcr.effect.TCREffects;
 import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.item.TCRModItems;
-import com.gaboj1.tcr.TCRModSounds;
-import com.gaboj1.tcr.keymapping.KeyMappings;
+import com.gaboj1.tcr.client.TCRModSounds;
+import com.gaboj1.tcr.client.keymapping.KeyMappings;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import net.minecraft.data.PackOutput;
 

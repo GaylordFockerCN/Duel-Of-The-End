@@ -1,7 +1,6 @@
 package com.gaboj1.tcr.entity.custom.tree_monsters;
 
-import com.gaboj1.tcr.TCRModSounds;
-import net.minecraft.server.level.ServerLevel;
+import com.gaboj1.tcr.client.TCRModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;

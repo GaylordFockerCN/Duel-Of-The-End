@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.gui.screen;
+package com.gaboj1.tcr.client.gui.screen;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
