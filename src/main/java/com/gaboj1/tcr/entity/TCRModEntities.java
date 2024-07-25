@@ -6,6 +6,7 @@ import com.gaboj1.tcr.entity.custom.boss.yggdrasil.TreeClawEntity;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
 import com.gaboj1.tcr.entity.custom.dreamspirit.JellyCat;
 import com.gaboj1.tcr.entity.custom.dreamspirit.Squirrel;
+import com.gaboj1.tcr.entity.custom.sprite.SpriteEntity;
 import com.gaboj1.tcr.entity.custom.sword.RainCutterSwordEntity;
 import com.gaboj1.tcr.entity.custom.sword.RainScreenSwordEntity;
 import com.gaboj1.tcr.entity.custom.sword.SwordEntity;
@@ -72,6 +73,12 @@ public class TCRModEntities {
 							.sized(0.78f, 2f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "tree_guardian").toString()));
 
+	public static final RegistryObject<EntityType<SpriteEntity>> SPRITE =
+			REGISTRY.register("sprite",
+					() -> EntityType.Builder.of(SpriteEntity::new, MobCategory.CREATURE)
+							.sized(0.78f, 2f)
+							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "sprite").toString()));
+
 	public static final RegistryObject<EntityType<JellyCat>> JELLY_CAT = register("jelly_cat",
 			EntityType.Builder.of(JellyCat::new, MobCategory.CREATURE).sized(2.0f,1.75f));
 	public static final RegistryObject<EntityType<Squirrel>> SQUIRREL = register("squirrel",
@@ -117,6 +124,7 @@ public class TCRModEntities {
 		event.put(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),PastoralPlainVillagerElder.setAttributes());
 		event.put(TCRModEntities.YGGDRASIL.get(), YggdrasilEntity.setAttributes());
 		event.put(TCRModEntities.TREE_CLAW.get(), TreeClawEntity.setAttributes());
+		event.put(TCRModEntities.SPRITE.get(),SpriteEntity.setAttributes());
 	}
 
 	@SubscribeEvent
@@ -139,6 +147,8 @@ public class TCRModEntities {
 				SmallTreeMonsterEntity::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(TCRModEntities.TREE_GUARDIAN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				TreeGuardianEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(TCRModEntities.SPRITE.get(),SpawnPlacements.Type.ON_GROUND,Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				SpriteEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(TCRModEntities.MIDDLE_TREE_MONSTER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				MiddleTreeMonsterEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 

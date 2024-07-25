@@ -55,6 +55,7 @@ public class TCRModItemTabs {
 						tabData.accept(TCRModItems.YGGDRASIL_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.PASTORAL_PLAIN_VILLAGER_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.PASTORAL_PLAIN_VILLAGER_ELDER_SPAWN_EGG.get());
+						tabData.accept(TCRModItems.SPRITE_SPAWN_EGG.get());
 
 					}).build());
 

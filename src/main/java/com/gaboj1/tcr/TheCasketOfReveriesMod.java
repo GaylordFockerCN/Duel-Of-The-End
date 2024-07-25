@@ -14,6 +14,7 @@ import com.gaboj1.tcr.entity.client.boss.TreeClawRenderer;
 import com.gaboj1.tcr.entity.client.boss.YggdrasilRenderer;
 import com.gaboj1.tcr.entity.client.dreamspirit.JellyCatRenderer;
 import com.gaboj1.tcr.entity.client.dreamspirit.SquirrelRenderer;
+import com.gaboj1.tcr.entity.client.sprite.SpriteRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.MiddleTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.SmallTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.TreeGuardianRenderer;
@@ -141,6 +142,7 @@ public class TheCasketOfReveriesMod {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event){
 
+
             EntityRenderers.register(TCRModEntities.SWORD.get(), SwordEntityRenderer::new);
             EntityRenderers.register(TCRModEntities.RAIN_SCREEN_SWORD.get(), SwordEntityRenderer::new);
             EntityRenderers.register(TCRModEntities.RAIN_CUTTER_SWORD.get(), SwordEntityRenderer::new);
@@ -159,6 +161,9 @@ public class TheCasketOfReveriesMod {
 
             EntityRenderers.register(TCRModEntities.YGGDRASIL.get(), YggdrasilRenderer::new);
             EntityRenderers.register(TCRModEntities.TREE_CLAW.get(), TreeClawRenderer::new);
+
+            EntityRenderers.register(TCRModEntities.SPRITE.get(), SpriteRenderer::new);
+
 
             BlockEntityRenderers.register(TCRModBlockEntities.PORTAL_BED.get(), PortalBedRenderer::new);
         }

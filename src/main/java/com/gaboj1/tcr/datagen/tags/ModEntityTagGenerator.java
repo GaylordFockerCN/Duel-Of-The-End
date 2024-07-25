@@ -27,7 +27,8 @@ public class ModEntityTagGenerator extends EntityTypeTagsProvider {
         tag(MOB_IN_DENSE_FOREST).add(
                 TCRModEntities.SMALL_TREE_MONSTER.get(),
                 TCRModEntities.MIDDLE_TREE_MONSTER.get(),
-                TCRModEntities.TREE_GUARDIAN.get());
+                TCRModEntities.TREE_GUARDIAN.get(),
+                TCRModEntities.SPRITE.get());
     }
 
     private static TagKey<EntityType<?>> create(ResourceLocation rl) {

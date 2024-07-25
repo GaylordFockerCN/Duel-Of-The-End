@@ -83,6 +83,11 @@ public class TCRModItems {
 			() -> new ForgeSpawnEggItem(TCRModEntities.TREE_GUARDIAN, 0xD57E36, 0x1D0D00,
 					new Item.Properties()));
 
+	public static final RegistryObject<Item> SPRITE_SPAWN_EGG = REGISTRY.register("sprite_spawn_egg",
+			() -> new ForgeSpawnEggItem(TCRModEntities.SPRITE, 1, 0x1D0D00,
+					new Item.Properties()));
+
+
 	public static final RegistryObject<Item> YGGDRASIL_SPAWN_EGG = REGISTRY.register("yggdrasil_spawn_egg",
 			() -> new ForgeSpawnEggItem(TCRModEntities.YGGDRASIL, 1, 0x1D0D00,
 					new Item.Properties()));
