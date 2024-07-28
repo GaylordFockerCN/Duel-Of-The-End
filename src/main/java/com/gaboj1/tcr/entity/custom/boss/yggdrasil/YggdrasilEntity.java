@@ -689,7 +689,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         //非攻击状态动画
         controllers.add(new AnimationController<>(this, "controller",
-                0, this::predicate));
+                10, this::predicate));
 
         //自定义触发
         controllers.add(new AnimationController<>(this, "Recover", 0, state -> PlayState.STOP)
@@ -705,7 +705,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
         if(tAnimationState.isMoving()) {//播放移动动画
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("move", Animation.LoopType.LOOP));
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("wander", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         tAnimationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));

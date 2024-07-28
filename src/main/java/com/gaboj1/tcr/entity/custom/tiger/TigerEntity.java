@@ -64,7 +64,7 @@ public class TigerEntity extends TamableAnimal implements GeoAnimatable {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller",
-                0, this::predicate));
+                10, this::predicate));
     }
 
     @Override
