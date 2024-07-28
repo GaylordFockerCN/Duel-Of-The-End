@@ -15,6 +15,7 @@ import com.gaboj1.tcr.entity.client.boss.YggdrasilRenderer;
 import com.gaboj1.tcr.entity.client.dreamspirit.JellyCatRenderer;
 import com.gaboj1.tcr.entity.client.dreamspirit.SquirrelRenderer;
 import com.gaboj1.tcr.entity.client.sprite.SpriteRenderer;
+import com.gaboj1.tcr.entity.client.tiger.TigerRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.MiddleTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.SmallTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.TreeGuardianRenderer;
@@ -163,6 +164,8 @@ public class TheCasketOfReveriesMod {
             EntityRenderers.register(TCRModEntities.TREE_CLAW.get(), TreeClawRenderer::new);
 
             EntityRenderers.register(TCRModEntities.SPRITE.get(), SpriteRenderer::new);
+
+            EntityRenderers.register(TCRModEntities.TIGER.get(), TigerRenderer::new);
 
 
             BlockEntityRenderers.register(TCRModBlockEntities.PORTAL_BED.get(), PortalBedRenderer::new);
