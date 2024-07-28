@@ -29,7 +29,9 @@ public class ModEntityTagGenerator extends EntityTypeTagsProvider {
                 TCRModEntities.MIDDLE_TREE_MONSTER.get(),
                 TCRModEntities.TREE_GUARDIAN.get(),
                 TCRModEntities.SPRITE.get(),
-                TCRModEntities.TIGER.get());
+                TCRModEntities.TIGER.get(),
+                TCRModEntities.BOXER.get()
+        );
     }
 
     private static TagKey<EntityType<?>> create(ResourceLocation rl) {
