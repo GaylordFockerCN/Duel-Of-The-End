@@ -2,8 +2,8 @@ package com.gaboj1.tcr.worldgen.biome;
 
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.util.map.dla.DLA;
 import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
-import com.gaboj1.tcr.util.map.RandomMountainGenerator;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -15,6 +15,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
 import net.minecraftforge.fml.loading.FMLPaths;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import java.io.*;
@@ -115,13 +116,14 @@ public class TCRBiomeProvider extends BiomeSource {
      * 成员变量最好在这里初始化
      */
     @Override
-    protected Stream<Holder<Biome>> collectPossibleBiomes() {
+    protected @NotNull Stream<Holder<Biome>> collectPossibleBiomes() {
         if(generator==null){
             updateBiomeMap(worldName);
         }
         int mountainsR = (generator.getaCenterR()<<2);
         //第二群系山的高度图
-        peakMap = RandomMountainGenerator.getMountains(mountainsR,mountainsR);
+//        peakMap = RandomMountainGenerator.getMountains(mountainsR,mountainsR);
+        peakMap = new DLA(BiomeMap.seed, 5).getDefault(mountainsR);
 
         return Stream.of(biomeHolder0,biomeHolder1,biomeHolder2,biomeHolder3,biomeHolder4,biomeHolder5,biomeHolder6,biomeHolder7,biomeHolder8,biomeHolder9);
     }
@@ -209,11 +211,10 @@ public class TCRBiomeProvider extends BiomeSource {
      * @param x x坐标（并非1：1！！）
      * @param y y坐标（并非1：1！！）
      * @param z z坐标（并非1：1！！）
-     * @param sampler
      * @return 根据自己的噪声地图返回对应位置的群系
      */
     @Override
-    public Holder<Biome> getNoiseBiome(int x, int y, int z, Climate.Sampler sampler) {
+    public @NotNull Holder<Biome> getNoiseBiome(int x, int y, int z, Climate.@NotNull Sampler sampler) {
         x = getCorrectValue(x);
         z = getCorrectValue(z);
         if(0 <= x && x <generator.getMap().length && 0 <= z && z < generator.getMap()[0].length ){
@@ -254,7 +255,8 @@ public class TCRBiomeProvider extends BiomeSource {
         int offsetX = pos.getX()+generator.getR()*4-(((generator.getCenter2().x)*4) - (generator.getaCenterR()*2));
         int offsetZ = pos.getZ()+generator.getR()*4-(((generator.getCenter2().y)*4) - (generator.getaCenterR()*2));
         if(offsetX > 0 && offsetX < peakMap.length && offsetZ > 0 && offsetZ < peakMap[0].length){
-            return Math.abs(peakMap[offsetX][offsetZ]);
+            return Math.max(0, peakMap[offsetX][offsetZ]);
+//            return Math.abs(peakMap[offsetX][offsetZ]);
         }
         return 0;
     }
