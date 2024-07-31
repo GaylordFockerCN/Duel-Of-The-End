@@ -2,9 +2,8 @@ package com.gaboj1.tcr.worldgen.biome;
 
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.util.map.dla.DLATest;
+import com.gaboj1.tcr.util.map.dla.DLA;
 import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
-import com.gaboj1.tcr.util.map.RandomMountainGenerator;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -124,7 +123,7 @@ public class TCRBiomeProvider extends BiomeSource {
         int mountainsR = (generator.getaCenterR()<<2);
         //第二群系山的高度图
 //        peakMap = RandomMountainGenerator.getMountains(mountainsR,mountainsR);
-        peakMap = DLATest.getMap(mountainsR, BiomeMap.seed);
+        peakMap = new DLA(BiomeMap.seed, 5).getDefault(mountainsR);
 
         return Stream.of(biomeHolder0,biomeHolder1,biomeHolder2,biomeHolder3,biomeHolder4,biomeHolder5,biomeHolder6,biomeHolder7,biomeHolder8,biomeHolder9);
     }
@@ -256,7 +255,8 @@ public class TCRBiomeProvider extends BiomeSource {
         int offsetX = pos.getX()+generator.getR()*4-(((generator.getCenter2().x)*4) - (generator.getaCenterR()*2));
         int offsetZ = pos.getZ()+generator.getR()*4-(((generator.getCenter2().y)*4) - (generator.getaCenterR()*2));
         if(offsetX > 0 && offsetX < peakMap.length && offsetZ > 0 && offsetZ < peakMap[0].length){
-            return Math.abs(peakMap[offsetX][offsetZ]);
+            return Math.max(0, peakMap[offsetX][offsetZ]);
+//            return Math.abs(peakMap[offsetX][offsetZ]);
         }
         return 0;
     }
