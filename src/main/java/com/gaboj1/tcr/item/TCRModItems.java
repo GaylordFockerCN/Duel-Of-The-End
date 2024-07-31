@@ -95,6 +95,10 @@ public class TCRModItems {
 			() -> new ForgeSpawnEggItem(TCRModEntities.BOXER, 2, 0x1D0D00,
 					new Item.Properties()));
 
+	public static final RegistryObject<Item> BIG_HAMMER_EGG = REGISTRY.register("big_hammer_egg",
+			() -> new ForgeSpawnEggItem(TCRModEntities.BIG_HAMMER, 3, 0x1D0D00,
+					new Item.Properties()));
+
 
 
 	public static final RegistryObject<Item> YGGDRASIL_SPAWN_EGG = REGISTRY.register("yggdrasil_spawn_egg",

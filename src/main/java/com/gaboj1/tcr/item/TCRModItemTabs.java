@@ -58,6 +58,7 @@ public class TCRModItemTabs {
 						tabData.accept(TCRModItems.SPRITE_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.TIGER_EGG.get());
 						tabData.accept(TCRModItems.BOXER_EGG.get());
+						tabData.accept(TCRModItems.BIG_HAMMER_EGG.get());
 
 					}).build());
 

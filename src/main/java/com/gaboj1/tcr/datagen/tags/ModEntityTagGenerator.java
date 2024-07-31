@@ -30,7 +30,8 @@ public class ModEntityTagGenerator extends EntityTypeTagsProvider {
                 TCRModEntities.TREE_GUARDIAN.get(),
                 TCRModEntities.SPRITE.get(),
                 TCRModEntities.TIGER.get(),
-                TCRModEntities.BOXER.get()
+                TCRModEntities.BOXER.get(),
+                TCRModEntities.BIG_HAMMER.get()
         );
     }
 

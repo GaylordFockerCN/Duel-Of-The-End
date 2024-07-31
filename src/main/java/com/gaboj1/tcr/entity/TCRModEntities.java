@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.entity;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.entity.custom.big_hammer.BigHammerEntity;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.MagicProjectile;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.TreeClawEntity;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
@@ -95,6 +96,11 @@ public class TCRModEntities {
 							.sized(0.78f, 2f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "boxer").toString()));
 
+	public static final RegistryObject<EntityType<BigHammerEntity>> BIG_HAMMER =
+			REGISTRY.register("big_hammer",
+					() -> EntityType.Builder.of(BigHammerEntity::new, MobCategory.CREATURE)
+							.sized(0.78f, 2f)
+							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "big_hammer").toString()));
 	public static final RegistryObject<EntityType<JellyCat>> JELLY_CAT = register("jelly_cat",
 			EntityType.Builder.of(JellyCat::new, MobCategory.CREATURE).sized(2.0f,1.75f));
 	public static final RegistryObject<EntityType<Squirrel>> SQUIRREL = register("squirrel",
@@ -143,6 +149,7 @@ public class TCRModEntities {
 		event.put(TCRModEntities.SPRITE.get(),SpriteEntity.setAttributes());
 		event.put(TCRModEntities.TIGER.get(),TigerEntity.setAttributes());
 		event.put(TCRModEntities.BOXER.get(), BoxerEntity.setAttributes());
+		event.put(TCRModEntities.BIG_HAMMER.get(),BigHammerEntity.setAttributes());
 	}
 
 	@SubscribeEvent
@@ -170,6 +177,8 @@ public class TCRModEntities {
 		event.register(TCRModEntities.TIGER.get(),SpawnPlacements.Type.ON_GROUND,Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				TigerEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(TCRModEntities.BOXER.get(),SpawnPlacements.Type.ON_GROUND,Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				TigerEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(TCRModEntities.BIG_HAMMER.get(),SpawnPlacements.Type.ON_GROUND,Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				TigerEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(TCRModEntities.MIDDLE_TREE_MONSTER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				MiddleTreeMonsterEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);

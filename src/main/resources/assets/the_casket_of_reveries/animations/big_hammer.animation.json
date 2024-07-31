@@ -1,0 +1,238 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.model.move": {
+			"loop": true,
+			"animation_length": 1.2,
+			"bones": {
+				"rightarm": {
+					"rotation": {
+						"0.0": {
+							"vector": [22.5, 0, 0]
+						},
+						"0.6": {
+							"vector": [-42.5, 0, 0]
+						},
+						"1.2": {
+							"vector": [22.5, 0, 0]
+						}
+					}
+				},
+				"leftarm": {
+					"rotation": {
+						"0.0": {
+							"vector": [-35, 0, 0]
+						},
+						"0.6": {
+							"vector": [25, 0, 0]
+						},
+						"1.2": {
+							"vector": [-35, 0, 0]
+						}
+					}
+				},
+				"rightleg": {
+					"rotation": {
+						"0.0": {
+							"vector": [-22.5, 0, 0]
+						},
+						"0.6": {
+							"vector": [37.5, 0, 0]
+						},
+						"1.2": {
+							"vector": [-22.5, 0, 0]
+						}
+					}
+				},
+				"leftleg": {
+					"rotation": {
+						"0.0": {
+							"vector": [25, 0, 0]
+						},
+						"0.6": {
+							"vector": [-25, 0, 0]
+						},
+						"1.2": {
+							"vector": [25, 0, 0]
+						}
+					}
+				}
+			}
+		},
+		"animation.model.idle": {
+			"loop": true,
+			"animation_length": 1,
+			"bones": {
+				"shangbanshen": {
+					"position": {
+						"0.0": {
+							"vector": [0, -0.2, 0]
+						},
+						"0.48": {
+							"vector": [0, 0, 0]
+						},
+						"0.96": {
+							"vector": [0, -0.2, 0]
+						}
+					}
+				}
+			}
+		},
+		"animation.model.attack1": {
+			"animation_length": 1,
+			"bones": {
+				"shangbanshen": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.48": {
+							"vector": [-22.5, 0, 0]
+						},
+						"0.72": {
+							"vector": [40, 0, 0]
+						}
+					}
+				},
+				"rightarm": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.48": {
+							"vector": [-120, 0, 0]
+						},
+						"0.72": {
+							"vector": [-47.5, 0, 0]
+						}
+					}
+				},
+				"leftarm": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.72": {
+							"vector": [35, 0, 0]
+						}
+					}
+				}
+			}
+		},
+		"animation.model.attack2": {
+			"animation_length": 0.48,
+			"bones": {
+				"rightarm": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.24": {
+							"vector": [-80, 0, 0]
+						}
+					}
+				},
+				"chuizi": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.24": {
+							"vector": [64.48289, 12.46212, 77.92325]
+						}
+					}
+				}
+			}
+		},
+		"animation.model.attack3": {
+			"loop": true,
+			"animation_length": 0.48,
+			"bones": {
+				"all": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.24": {
+							"vector": [0, 187.5, 0]
+						},
+						"0.48": {
+							"vector": [0, 365, 0]
+						}
+					}
+				},
+				"rightarm": {
+					"rotation": {
+						"vector": [-80, 0, 0]
+					}
+				},
+				"chuizi": {
+					"rotation": {
+						"vector": [64.48289, 12.46212, 77.92325]
+					}
+				}
+			}
+		},
+		"animation.model.attack4": {
+			"animation_length": 0.96,
+			"bones": {
+				"all": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.24": {
+							"vector": [0, 15, 0]
+						},
+						"0.6": {
+							"vector": [0, 9, 0]
+						},
+						"0.72": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"shangbanshen": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.72": {
+							"vector": [40, 0, 0]
+						}
+					}
+				},
+				"rightarm": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.24": {
+							"vector": [-132.5, 0, 0]
+						},
+						"0.6": {
+							"vector": [-132.5, 0, 0]
+						},
+						"0.72": {
+							"vector": [-42.5, 0, 0]
+						}
+					}
+				},
+				"leftarm": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.24": {
+							"vector": [35, 0, 0]
+						},
+						"0.48": {
+							"vector": [35, 0, 0]
+						}
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

@@ -54,6 +54,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         eggItem(TCRModItems.SPRITE_SPAWN_EGG);
         eggItem(TCRModItems.TIGER_EGG);
         eggItem(TCRModItems.BOXER_EGG);
+        eggItem(TCRModItems.BIG_HAMMER_EGG);
 
         simpleItem(TCRModItems.DREAMSCAPE_COIN);
         simpleItem(TCRModItems.DREAMSCAPE_COIN_PLUS);
