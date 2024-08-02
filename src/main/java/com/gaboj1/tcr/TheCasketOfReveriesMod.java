@@ -16,12 +16,15 @@ import com.gaboj1.tcr.entity.client.boss.YggdrasilRenderer;
 import com.gaboj1.tcr.entity.client.boxer.BoxerRenderer;
 import com.gaboj1.tcr.entity.client.dreamspirit.JellyCatRenderer;
 import com.gaboj1.tcr.entity.client.dreamspirit.SquirrelRenderer;
+import com.gaboj1.tcr.entity.client.snow_swordman.SnowSwordmanRenderer;
 import com.gaboj1.tcr.entity.client.sprite.SpriteRenderer;
+import com.gaboj1.tcr.entity.client.sword_controller.SwordControllerRenderer;
 import com.gaboj1.tcr.entity.client.tiger.TigerRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.MiddleTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.SmallTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.TreeGuardianRenderer;
 import com.gaboj1.tcr.entity.client.villager.TCRVillagerRenderer;
+import com.gaboj1.tcr.entity.custom.snow_swordman.SnowSwordmanEntity;
 import com.gaboj1.tcr.entity.custom.sword.SwordEntityRenderer;
 import com.gaboj1.tcr.item.TCRModItemTabs;
 import com.gaboj1.tcr.item.TCRModItems;
@@ -168,6 +171,8 @@ public class TheCasketOfReveriesMod {
             EntityRenderers.register(TCRModEntities.SPRITE.get(), SpriteRenderer::new);
             EntityRenderers.register(TCRModEntities.BOXER.get(), BoxerRenderer::new);
             EntityRenderers.register(TCRModEntities.BIG_HAMMER.get(), BigHammerRenderer::new);
+            EntityRenderers.register(TCRModEntities.SNOW_SWORDMAN.get(), SnowSwordmanRenderer::new);
+            EntityRenderers.register(TCRModEntities.SWORD_CONTROLLER.get(), SwordControllerRenderer::new);
 
             EntityRenderers.register(TCRModEntities.TIGER.get(), TigerRenderer::new);
 

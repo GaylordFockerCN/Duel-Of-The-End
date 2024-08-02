@@ -165,6 +165,8 @@ public class ModLangGenerator extends ModLangProvider {
         this.addEntityAndEgg(TCRModEntities.TIGER,"老虎");
         this.addEntityAndEgg(TCRModEntities.BOXER,"拳师");
         this.addEntityAndEgg(TCRModEntities.BIG_HAMMER,"大锤子");
+        this.addEntityAndEgg(TCRModEntities.SNOW_SWORDMAN,"雪人剑客");
+        this.addEntityAndEgg(TCRModEntities.SWORD_CONTROLLER,"御剑者");
         this.addEntityAndEgg(TCRModEntities.SQUIRREL,"松鼠");
         this.addEntityAndEgg(TCRModEntities.TREE_GUARDIAN,"森林守护者");
         this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_VILLAGER,"牧歌原野-村民");

@@ -99,6 +99,14 @@ public class TCRModItems {
 			() -> new ForgeSpawnEggItem(TCRModEntities.BIG_HAMMER, 3, 0x1D0D00,
 					new Item.Properties()));
 
+	public static final RegistryObject<Item> SNOW_SWORDMAN_SPAWN_EGG = REGISTRY.register("snow_swordman_spawn_egg",
+			() -> new ForgeSpawnEggItem(TCRModEntities.SNOW_SWORDMAN, 26, 0x1D0D00,
+					new Item.Properties()));
+
+	public static final RegistryObject<Item> SWORD_CONTROLLER_SPAWN_EGG = REGISTRY.register("sword_controller_spawn_egg",
+			() -> new ForgeSpawnEggItem(TCRModEntities.SWORD_CONTROLLER, 50, 0x1D0D00,
+					new Item.Properties()));
+
 
 
 	public static final RegistryObject<Item> YGGDRASIL_SPAWN_EGG = REGISTRY.register("yggdrasil_spawn_egg",

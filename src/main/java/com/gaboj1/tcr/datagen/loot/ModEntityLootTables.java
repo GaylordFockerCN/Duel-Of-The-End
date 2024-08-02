@@ -76,6 +76,20 @@ public class ModEntityLootTables extends EntityLootSubProvider {
                                 .add(LootItem.lootTableItem(TCRModItems.BASIC_RESIN.get())))
         );
 
+        add(TCRModEntities.SNOW_SWORDMAN.get(),
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(0, 0))
+                                .add(LootItem.lootTableItem(TCRModItems.BASIC_RESIN.get())))
+        );
+
+        add(TCRModEntities.SWORD_CONTROLLER.get(),
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(0, 0))
+                                .add(LootItem.lootTableItem(TCRModItems.BASIC_RESIN.get())))
+        );
+
         add(TCRModEntities.MIDDLE_TREE_MONSTER.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()

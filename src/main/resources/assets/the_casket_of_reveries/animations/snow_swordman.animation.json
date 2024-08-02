@@ -1,0 +1,227 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.model.move": {
+			"loop": true,
+			"animation_length": 0.96,
+			"bones": {
+				"rightleg": {
+					"rotation": {
+						"0.0": {
+							"vector": [15, 0, 0]
+						},
+						"0.48": {
+							"vector": [-15, 0, 0]
+						},
+						"0.96": {
+							"vector": [15, 0, 0]
+						}
+					}
+				},
+				"leftleg": {
+					"rotation": {
+						"0.0": {
+							"vector": [-15, 0, 0]
+						},
+						"0.48": {
+							"vector": [15, 0, 0]
+						},
+						"0.96": {
+							"vector": [-15, 0, 0]
+						}
+					}
+				},
+				"leftarm": {
+					"rotation": {
+						"0.0": {
+							"vector": [12.5, 0, 0]
+						},
+						"0.48": {
+							"vector": [-17.5, 0, 0]
+						},
+						"0.96": {
+							"vector": [12.5, 0, 0]
+						}
+					}
+				},
+				"right": {
+					"rotation": {
+						"0.0": {
+							"vector": [-22.5, 0, 0]
+						},
+						"0.48": {
+							"vector": [20, 0, 0]
+						},
+						"0.96": {
+							"vector": [-25, 0, 0]
+						}
+					}
+				}
+			}
+		},
+		"animation.model.attack3": {
+			"animation_length": 1.04,
+			"bones": {
+				"leftarm": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.24": {
+							"vector": [22.5, 0, 0]
+						}
+					}
+				},
+				"rightleg": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.24": {
+							"vector": [-5, 0, 0]
+						}
+					}
+				},
+				"leftleg": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.24": {
+							"vector": [10, 0, 0]
+						}
+					}
+				},
+				"right": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.24": {
+							"vector": [2.31336, 4.43385, 27.58957]
+						},
+						"0.44": {
+							"vector": [-40.87038, 4.92385, -10.03742]
+						},
+						"0.64": {
+							"vector": [-73.30345, -7.05514, -13.61581]
+						},
+						"0.84": {
+							"vector": [-12.05552, -4.56849, -1.30111]
+						}
+					}
+				},
+				"sward": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.24": {
+							"vector": [-24.56283, -7.35559, -61.79333]
+						},
+						"0.44": {
+							"vector": [89.92855, 1.02056, -31.82855]
+						},
+						"0.64": {
+							"vector": [42.92684, -49.61415, 14.59295]
+						},
+						"0.84": {
+							"vector": [49.5745, -5.24093, 47.21088]
+						}
+					}
+				}
+			}
+		},
+		"animation.model.attack2": {
+			"animation_length": 0.8333,
+			"bones": {
+				"right": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.5833": {
+							"vector": [-53.45486, -9.06524, 12.0012]
+						},
+						"0.6667": {
+							"vector": [-30.95157, 9.09301, 25.34368]
+						}
+					}
+				},
+				"sward": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.5833": {
+							"vector": [-27.18481, -34.61746, 61.35467]
+						},
+						"0.6667": {
+							"vector": [79.49577, -14.95425, 39.98253]
+						}
+					}
+				}
+			}
+		},
+		"animation.model.attack4": {
+			"animation_length": 0.5,
+			"bones": {
+				"leftarm": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [12.5, 0, 0]
+						}
+					}
+				},
+				"rightleg": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [-20, 0, 0]
+						}
+					}
+				},
+				"leftleg": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [10, 0, 0]
+						}
+					}
+				},
+				"right": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [-52.5, 0, 0]
+						}
+					}
+				},
+				"sward": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [72.5, 0, 0]
+						}
+					}
+				}
+			}
+		},
+		"animation.model.idle": {
+			"loop": true,
+			"animation_length": 0.5
+		}
+	},
+	"geckolib_format_version": 2
+}
