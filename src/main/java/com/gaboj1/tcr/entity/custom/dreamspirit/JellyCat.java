@@ -54,7 +54,7 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
     private FaceID faceID = FaceID.IDLE;
 
     //猫猫皮肤总数
-    private final int maxSkinID = 3;
+    private final int maxSkinID = 7;
 
     public JellyCat(EntityType<? extends TamableAnimal> entityType, Level level) {
         super(entityType, level);

@@ -24,7 +24,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addTask("kill_boss1", "清道夺邪魔", "杀死密林中危害牧歌原野安全的邪恶树魔");
 
         this.add("key.categories.tcr", "远梦之棺按键");
-        this.addKeyMapping(KeyMappings.RELOAD, "沙鹰换弹");
+        this.addKeyMapping(KeyMappings.RELOAD, "火枪换弹");
         this.addKeyMapping(KeyMappings.OPEN_PROGRESS, "打开进度");
 
         this.add("info.the_casket_of_reveries.enter_forbidden_biome","前面的区域，以后再来探索吧~");
@@ -54,7 +54,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.add("item_group.the_casket_of_reveries.spawn_egg","远梦之棺-刷怪蛋");
         this.add("item_group.the_casket_of_reveries.loot","远梦之棺-战利品");
 
-        this.add(TCRModItems.DESERT_EAGLE.get(),"沙漠之鹰");
+        this.add(TCRModItems.DESERT_EAGLE.get(),"火枪");
         this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"headshot","爆头！");
         this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"ammo_count","剩余弹药数：");
         this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"ammo_cooldown","冷却时间: ");
@@ -65,7 +65,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"main_ammo_full","主手弹药充足！");
         this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"off_ammo_full","副手弹药充足！");
         this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"reloading","您正在换弹！");
-        this.add(TCRModItems.DESERT_EAGLE_AMMO.get(),"沙鹰弹药");
+        this.add(TCRModItems.DESERT_EAGLE_AMMO.get(),"火枪弹药");
 
         this.add(TCRModItems.ELDER_STAFF.get(),"长老的拐杖");
         this.addItemUsageInfo(TCRModItems.ELDER_STAFF.get(),"长老生前用过的拐杖，上面还带着点血迹。");
@@ -353,8 +353,8 @@ public class ModLangGenerator extends ModLangProvider {
         this.addBiome(TCRBiomes.AIR,"空");
         this.addBiome(TCRBiomes.FINAL,"终焉之地");
 
-        this.addSubtitle(TCRModSounds.DESERT_EAGLE_FIRE,"沙鹰开火");
-        this.addSubtitle(TCRModSounds.DESERT_EAGLE_RELOAD,"沙鹰换弹");
+        this.addSubtitle(TCRModSounds.DESERT_EAGLE_FIRE,"火枪开火");
+        this.addSubtitle(TCRModSounds.DESERT_EAGLE_RELOAD,"火枪换弹");
         this.addSubtitle(TCRModSounds.TREE_MONSTERS_DEATH,"树怪死亡");
         this.addSubtitle(TCRModSounds.TREE_MONSTERS_HURT,"树怪受伤");
         this.addSubtitle(TCRModSounds.YGGDRASIL_AMBIENT_SOUND,"伊格德拉希尔叫声");

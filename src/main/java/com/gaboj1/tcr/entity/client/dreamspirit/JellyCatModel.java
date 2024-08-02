@@ -14,7 +14,7 @@ public class JellyCatModel extends GeoModel<JellyCat> {
     @Override
     public ResourceLocation getTextureResource(JellyCat animatable) {
         String cat = "jelly_cat_"+Math.abs(animatable.getSkinID())+"_"+animatable.getFaceID().ordinal()+".png";
-        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/"+cat);
+        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/jelly_cat/"+cat);
     }
 
     @Override
