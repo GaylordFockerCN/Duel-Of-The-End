@@ -146,8 +146,12 @@ public class DLA {
             for(int j = 0; j < original[0].length; j++){
                 if(original[i][j]){
                     int distance = Math.abs(i - center) + Math.abs(j - center);
-//                    blur[i][j] += value * (1 - (1 / (1 + size-distance)));
-                    blur[i][j] += value;
+                    double sigma = size / 20.0;//3 sigma hhhh
+//                    blur[i][j] += value * (1 + (1 - (1 / (1 + size-distance))));
+                    double attenuation = Math.exp(-Math.pow(distance, 2) / (2 * Math.pow(sigma, 2)));
+//                    blur[i][j] += (int) (size / 5 * (1 + attenuation));
+                    blur[i][j] += (int) (value * (0.5 + attenuation));
+//                    blur[i][j] += value;
                 }
             }
         }
@@ -274,7 +278,7 @@ public class DLA {
     }
 
     public static void main(String[] args) {
-        int size = 500;
+        int size = 1600;
         DLA dla = new DLA(114514);
         int[][] grid = dla.getDefault(size);
 
