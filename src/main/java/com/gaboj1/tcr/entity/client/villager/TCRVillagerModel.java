@@ -15,7 +15,7 @@ public class TCRVillagerModel extends DefaultedEntityGeoModel<TCRVillager> {
 
     @Override
     public ResourceLocation getModelResource(TCRVillager animatable) {
-        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "geo/entity/pastoral_plain_villager"+((animatable.getSkinID() < 0)?"_slim":"")+".geo.json");
+        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "geo/entity/pastoral_plain_villager"+(animatable.isFemale()?"_slim":"")+".geo.json");
     }
 
     @Override

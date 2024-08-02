@@ -41,6 +41,11 @@ public class ModEntityLootTables extends EntityLootSubProvider {
         add(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), emptyLootTable());
         add(TCRModEntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), emptyLootTable());
 
+        add(TCRModEntities.CANG_LAN.get(), emptyLootTable());
+        add(TCRModEntities.ZHEN_YU.get(), emptyLootTable());
+        add(TCRModEntities.DUAN_SHAN.get(), emptyLootTable());
+        add(TCRModEntities.CUI_HUA.get(), emptyLootTable());
+
         add(TCRModEntities.SMALL_TREE_MONSTER.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()

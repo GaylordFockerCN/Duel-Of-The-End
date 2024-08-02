@@ -2,7 +2,6 @@ package com.gaboj1.tcr.entity.custom.villager.biome1;
 
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.entity.TCRModEntities;
-import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -13,8 +12,6 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.util.Random;
-
 /**
  * 牧歌原野村民。继承主要是为了更好分配id
  * @author LZY
@@ -22,7 +19,21 @@ import java.util.Random;
 public class PastoralPlainVillager extends TCRVillager {
 
     public PastoralPlainVillager(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel, new Random().nextInt(MAX_TYPES+MAX_FEMALE_TYPES)-MAX_FEMALE_TYPES);
+        super(pEntityType, pLevel, TCRVillager.RANDOM_SKIN);
+    }
+
+    @Override
+    public int getMaleTypeCnt() {
+        return 1;
+    }
+    @Override
+    public int getFemaleTypeCnt() {
+        return 1;
+    }
+
+    @Override
+    public String getResourceName() {
+        return "pastoral_plain_villager_"+getSkinID();
     }
 
     @Override

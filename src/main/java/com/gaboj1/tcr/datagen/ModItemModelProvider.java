@@ -24,7 +24,7 @@ import java.util.LinkedHashMap;
 public class ModItemModelProvider extends ItemModelProvider {
 
     //Thank you kaupenjoe & El_Redstoniano!
-    private static LinkedHashMap<ResourceKey<TrimMaterial>, Float> trimMaterials = new LinkedHashMap<>();
+    private static final LinkedHashMap<ResourceKey<TrimMaterial>, Float> trimMaterials = new LinkedHashMap<>();
     static {
         trimMaterials.put(TrimMaterials.QUARTZ, 0.1F);
         trimMaterials.put(TrimMaterials.IRON, 0.2F);

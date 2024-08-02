@@ -23,9 +23,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -47,6 +45,7 @@ import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
@@ -62,7 +61,8 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
     protected Random r = new Random();
     protected int whatCanISay = 6;//真的不是玩牢大的梗（
     private boolean isAngry;
-    private int angryTick = 10;
+    protected int angryTick = 10;
+    protected int maxAngryTick = 10;
 
     /**
      * 用于区别村民的外貌和声音，负数代表女性
@@ -71,15 +71,32 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
     private static final EntityDataAccessor<Integer> DATA_SKIN_ID = SynchedEntityData.defineId(TCRVillager.class, EntityDataSerializers.INT);
 
     //共有多少种村民，会根据村民数量来随机一个id，从[0,TYPES]中取。负数代表女性
-    public static final int MAX_TYPES = 5;//男性数量
-    public static final int MAX_FEMALE_TYPES = 4;//女性数量
+    public static final int RANDOM_SKIN = Integer.MAX_VALUE;
     public TCRVillager(EntityType<? extends TCRVillager> pEntityType, Level pLevel, int skinID) {
         super(pEntityType, pLevel);
         this.entityType = pEntityType;
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
         ((GroundPathNavigation)this.getNavigation()).setCanOpenDoors(true);//抛弃大脑后最后的尊严...
         this.getEntityData().define(DATA_SKIN_ID, skinID);
+        if(skinID == RANDOM_SKIN){
+            setSkinID(new Random().nextInt(getMaleTypeCnt()+getFemaleTypeCnt())-getFemaleTypeCnt());
+        }
 
+    }
+
+    /**
+     * 不关心skinID是多少
+     */
+    public TCRVillager(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
+        this(pEntityType, pLevel, 0);
+    }
+
+    public int getMaleTypeCnt(){
+        return 0;
+    }
+
+    public int getFemaleTypeCnt(){
+        return 0;
     }
 
     public boolean isAngry() {
@@ -127,7 +144,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
     @Override
     public void tick() {
         if(!isClientSide()){
-            if(isAngry){
+            if(isAngry()){
                 if(angryTick < 0){
                     isAngry = false;
                     setTarget(null);
@@ -140,7 +157,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
                     }
                 }
             }else {
-                angryTick = 100;
+                angryTick = maxAngryTick;
             }
         }
 
@@ -239,7 +256,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
         }
 
         //删除工作目标，增加自卫目标和对话目标，其他和原版一致
-        pVillagerBrain.addActivity(Activity.CORE, TCRVillagerTasks.getTCRVillagerCorePackage());
+        pVillagerBrain.addActivity(Activity.CORE, TCRVillagerTasks.getTCRVillagerCorePackage(this));
 
         pVillagerBrain.addActivity(Activity.CORE, VillagerGoalPackages.getCorePackage(villagerprofession, 0.5F));
         pVillagerBrain.addActivityWithConditions(Activity.MEET, VillagerGoalPackages.getMeetPackage(villagerprofession, 0.5F), ImmutableSet.of(Pair.of(MemoryModuleType.MEETING_POINT, MemoryStatus.VALUE_PRESENT)));
@@ -307,8 +324,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
 
     //用于Geckolib模型区分贴图
     public String getResourceName() {
-//        return "pastoral_plain_villager"+ skinID;
-        return "pastoral_plain_villager" + this.getEntityData().get(DATA_SKIN_ID);
+        return "";
     }
 
     /**
@@ -335,6 +351,21 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
         isAngry = true;
 
         return super.hurt(source, v);
+    }
+
+    /**
+     * 取消变女巫
+     */
+    @Override
+    public void thunderHit(@NotNull ServerLevel level, @NotNull LightningBolt lightningBolt) {
+
+        this.setRemainingFireTicks(this.getRemainingFireTicks() + 1);
+        if (this.getRemainingFireTicks() == 0) {
+            this.setSecondsOnFire(8);
+        }
+
+        this.hurt(this.damageSources().lightningBolt(), lightningBolt.getDamage());
+
     }
 
     public void playAttackAnim(){

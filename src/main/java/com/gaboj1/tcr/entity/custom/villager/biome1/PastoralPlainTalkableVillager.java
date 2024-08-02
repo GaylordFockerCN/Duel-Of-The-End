@@ -321,5 +321,8 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
         return Component.translatable(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get().getDescriptionId() + getSkinID());
     }
 
-
+    @Override
+    public String getResourceName() {
+        return "talkable/pastoral_plain_villager"+getSkinID();
+    }
 }

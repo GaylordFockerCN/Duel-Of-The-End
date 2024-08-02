@@ -59,8 +59,8 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
         if(player.isCreative() ){//潜行右键切换村民种类，客户端服务端都需要改变。单单右键则输出当前id
             if(player.isShiftKeyDown()){
                 setSkinID(getSkinID()+1);
-                if(getSkinID() >= TCRVillager.MAX_TYPES){
-                    setSkinID(-TCRVillager.MAX_FEMALE_TYPES);//无法区分0 和 -0
+                if(getSkinID() >= getMaleTypeCnt()){
+                    setSkinID(-getFemaleTypeCnt());//无法区分0 和 -0
                 }
             }
             player.sendSystemMessage(Component.literal("current skin ID：" + getSkinID() + "; name:" + getDisplayName().getString()));
