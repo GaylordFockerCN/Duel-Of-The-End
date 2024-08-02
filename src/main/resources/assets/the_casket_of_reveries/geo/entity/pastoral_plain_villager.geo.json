@@ -214,7 +214,7 @@
 					]
 				},
 				{
-					"name": "Head",
+					"name": "head",
 					"parent": "all",
 					"pivot": [0, 24, 0],
 					"cubes": [

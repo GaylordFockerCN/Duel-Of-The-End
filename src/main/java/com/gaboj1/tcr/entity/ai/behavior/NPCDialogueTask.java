@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.behavior.Behavior;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 对话的时候不能动还要看着玩家
@@ -15,12 +16,12 @@ public class NPCDialogueTask extends Behavior<Mob> {
     }
 
     @Override
-    protected boolean checkExtraStartConditions(ServerLevel p_22538_, Mob mob) {
+    protected boolean checkExtraStartConditions(@NotNull ServerLevel p_22538_, @NotNull Mob mob) {
         return check(mob);
     }
 
     @Override
-    protected boolean canStillUse(ServerLevel p_22545_, Mob mob, long p_22547_) {
+    protected boolean canStillUse(@NotNull ServerLevel p_22545_, @NotNull Mob mob, long p_22547_) {
         return check(mob);
     }
 
@@ -29,7 +30,7 @@ public class NPCDialogueTask extends Behavior<Mob> {
     }
 
     @Override
-    protected void tick(ServerLevel p_22551_, Mob mob, long p_22553_) {
+    protected void tick(@NotNull ServerLevel level, @NotNull Mob mob, long p_22553_) {
         if(mob instanceof NpcDialogue npc && npc.getConversingPlayer() != null){
             mob.lookAt(npc.getConversingPlayer(), 30, 30);
         }

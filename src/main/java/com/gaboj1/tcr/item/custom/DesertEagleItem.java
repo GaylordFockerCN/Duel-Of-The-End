@@ -52,8 +52,6 @@ import static com.gaboj1.tcr.item.TCRModItems.DESERT_EAGLE_AMMO;
 
 public class DesertEagleItem extends Item implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-
-    private String textureResource = "textures/item/texturecrc.png";
     public boolean isReloading = false;
     public static ItemDisplayContext transformType;
 
@@ -61,7 +59,7 @@ public class DesertEagleItem extends Item implements GeoItem {
 
     protected float fireDamage = (float) 0.45;;//伤害值
 
-    protected int coolDownTick = 10;
+    protected int coolDownTick = 20;
 
     protected float power = 15;//初速度
 
@@ -110,9 +108,9 @@ public class DesertEagleItem extends Item implements GeoItem {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar data) {
         data.add(new AnimationController<>(this, "Fire", 0, state -> PlayState.STOP)
-                .triggerableAnim("fire", RawAnimation.begin().thenPlay("animation.DesertEagle.fire")));
+                .triggerableAnim("fire", RawAnimation.begin().thenPlay("fire")));
         data.add(new AnimationController<>(this, "Reload", 0, state -> PlayState.STOP)
-                .triggerableAnim("reload", RawAnimation.begin().thenPlay("animation.DesertEagle.reload")));
+                .triggerableAnim("reload", RawAnimation.begin().thenPlay("reload")));
 
     }
 
@@ -256,7 +254,7 @@ public class DesertEagleItem extends Item implements GeoItem {
         if(!(handItemStake.getItem() instanceof DesertEagleItem)){
             return;
         }
-        if (world instanceof ServerLevel _level){
+        if (world instanceof ServerLevel){
 
             ItemStack anotherHandItemStake = player.getItemInHand(isMainHand?InteractionHand.OFF_HAND:InteractionHand.MAIN_HAND);
             String content = (isMainHand?I18n.get(TCRModItems.DESERT_EAGLE.get().getDescriptionId()+".main_hand_ammo"):" "+I18n.get(TCRModItems.DESERT_EAGLE.get().getDescriptionId()+".off_hand_ammo")) +getBulletCount(handItemStake)+ "/" + DesertEagleItem.MAX_AMMO;
@@ -370,22 +368,24 @@ public class DesertEagleItem extends Item implements GeoItem {
 
     }
 
-    private static void doReload(ItemStack handItemStake, Entity entity, LevelAccessor world, Item ammo, boolean isMainHand) {
-        double x = entity.getX();
-        double y = entity.getY();
-        double z = entity.getZ();
+    private static void doReload(ItemStack handItemStake, Player player, LevelAccessor world, Item ammo, boolean isMainHand) {
+        double x = player.getX();
+        double y = player.getY();
+        double z = player.getZ();
 
         //延迟实现换弹逻辑，等动画和音效放完
         new Thread(() -> {//防止sleep卡死
 
             try {
-                int need = 0;
+                int need = 1;
                 ItemStack bullet = DesertEagleItem.getBulletItemStack(handItemStake,0);
                 if(bullet.isEmpty()){
                     need = DesertEagleItem.MAX_AMMO;
-                }else need = bullet.getDamageValue();
-                Player player = (Player)entity;
-                int total = ItemUtil.searchAndConsumeItem(player,ammo,need);
+                } else {
+                    need = bullet.getDamageValue();
+                }
+//                int total = ItemUtil.searchAndConsumeItem(player,ammo,need);
+                int total = ItemUtil.searchAndConsumeItem(player,ammo,1);
                 if(total>0){
                     DesertEagleItem handItem = (DesertEagleItem) handItemStake.getItem();
                     handItem.isReloading = true;//限制同时换弹

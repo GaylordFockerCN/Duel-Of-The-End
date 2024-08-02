@@ -1,8 +1,10 @@
 package com.gaboj1.tcr.entity.custom.villager.biome1;
 
+import com.gaboj1.tcr.entity.ai.behavior.TCRVillagerTasks;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.level.Level;
 
 /**
@@ -19,7 +21,18 @@ public class PastoralPlainStationaryVillager extends PastoralPlainTalkableVillag
      */
     @Override
     protected void registerBrainGoals(Brain<Villager> pVillagerBrain) {
-
+        pVillagerBrain.addActivity(Activity.CORE, TCRVillagerTasks.getTCRVillagerCorePackage());
     }
 
+    /**
+     * 为毛无效。。？？
+     */
+    @Override
+    public void tick() {
+        super.tick();
+        if(this.conversingPlayer != null){
+//            this.lookAt(conversingPlayer, 180, 180);
+            this.getLookControl().setLookAt(conversingPlayer);
+        }
+    }
 }
