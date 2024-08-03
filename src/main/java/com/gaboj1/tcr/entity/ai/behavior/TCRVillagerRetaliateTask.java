@@ -21,9 +21,7 @@ import java.util.Objects;
  */
 public class TCRVillagerRetaliateTask extends Behavior<Mob> {
 
-    //攻击间隔
-    private final int attackInterval = 20;
-    private int attackTimer = 0;
+    protected int attackTimer = 0;
 
     public TCRVillagerRetaliateTask() {
         super(ImmutableMap.of());
@@ -77,25 +75,37 @@ public class TCRVillagerRetaliateTask extends Behavior<Mob> {
                 if(!tcrVillager.isFemale() || tcrVillager.isElder()){
                     tcrVillager.getNavigation().moveTo(target,1.0);
                 }
-                if(tcrVillager instanceof PastoralPlainVillagerElder){
-                    //长老打得远一点很合理
-                    if(tcrVillager.distanceTo(target) > 5){
-                        return;
-                    }
 
-                //太远了不能造成伤害
-                }else if(!tcrVillager.isWithinMeleeAttackRange(target)){
+                if(!checkRange(tcrVillager, target)){
                     return;
                 }
 
                 tcrVillager.getLookControl().setLookAt(target ,30.0F, 30.0F);
-                tcrVillager.doHurtTarget(target);//注意！和平模式无法攻击！
+                doAttack(tcrVillager, target, level);
                 tcrVillager.playAttackAnim();
-                attackTimer = attackInterval;
+                attackTimer = getAttackInterval();
             } else {
                 attackTimer--;
             }
         }
+    }
+
+    protected int getAttackInterval(){
+        return 20;
+    }
+
+    protected boolean checkRange(TCRVillager tcrVillager, LivingEntity target){
+        if(tcrVillager instanceof PastoralPlainVillagerElder){
+            //长老打得远一点很合理
+            return !(tcrVillager.distanceTo(target) > 5);
+        }else {
+            //太远了不能造成伤害
+            return tcrVillager.isWithinMeleeAttackRange(target);
+        }
+    }
+
+    protected void doAttack(TCRVillager tcrVillager, LivingEntity target, ServerLevel level){
+        tcrVillager.doHurtTarget(target);//注意！和平模式无法攻击！
     }
 
 }

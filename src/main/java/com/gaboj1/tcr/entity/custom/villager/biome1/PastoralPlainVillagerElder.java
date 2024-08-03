@@ -246,4 +246,8 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         return Component.translatable(entityType.getDescriptionId());
     }
 
+    @Override
+    public String getResourceName() {
+        return "pastoral_plain_villager_elder";
+    }
 }

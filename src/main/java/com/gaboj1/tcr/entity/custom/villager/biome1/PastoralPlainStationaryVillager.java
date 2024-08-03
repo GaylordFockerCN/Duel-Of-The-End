@@ -21,7 +21,7 @@ public class PastoralPlainStationaryVillager extends PastoralPlainTalkableVillag
      */
     @Override
     protected void registerBrainGoals(Brain<Villager> pVillagerBrain) {
-        pVillagerBrain.addActivity(Activity.CORE, TCRVillagerTasks.getTCRVillagerCorePackage());
+        pVillagerBrain.addActivity(Activity.CORE, TCRVillagerTasks.getTCRVillagerCorePackage(this));
     }
 
     /**

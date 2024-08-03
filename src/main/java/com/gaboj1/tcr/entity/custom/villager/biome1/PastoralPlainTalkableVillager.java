@@ -133,6 +133,8 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 break;
             case -3:
                 break;
+            case -4:
+                break;
 
         }
 
@@ -140,6 +142,10 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
             if(Minecraft.getInstance().player != null){
                 talk(Minecraft.getInstance().player, true);
             }
+            return;
+        }
+
+        if(builder.isEmpty()){
             return;
         }
         
@@ -321,5 +327,8 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
         return Component.translatable(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get().getDescriptionId() + getSkinID());
     }
 
-
+    @Override
+    public String getResourceName() {
+        return "talkable/pastoral_plain_villager"+getSkinID();
+    }
 }
