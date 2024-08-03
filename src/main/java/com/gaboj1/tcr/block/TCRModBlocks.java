@@ -6,6 +6,7 @@ import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.worldgen.tree.DenseSpiritTreeGrower;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
@@ -14,6 +15,8 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -64,6 +67,21 @@ public class TCRModBlocks {
                     return 5;
                 }
             });
+
+    public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_TREE_STAIRS = registerBlock("dense_forest_spirit_tree_stairs",
+            ()->new StairBlock(()-> TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.OAK_STAIRS)));
+    public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_TREE_SLAB = registerBlock("dense_forest_spirit_tree_slab",
+            ()->new SlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_SLAB)));
+
+    public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_TREE_FENCE = registerBlock("dense_forest_spirit_tree_fence",
+            ()->new FenceBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE)));
+    public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_TREE_FENCE_GATE = registerBlock("dense_forest_spirit_tree_fence_gate",
+            ()->new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE), WoodType.OAK));
+    public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_TREE_DOOR = registerBlock("dense_forest_spirit_tree_door",
+            ()->new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_DOOR), BlockSetType.OAK));
+    public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_TREE_TRAPDOOR = registerBlock("dense_forest_spirit_tree_trapdoor",
+            ()->new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_TRAPDOOR), BlockSetType.OAK));
+
     public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_TREE_LEAVES = registerBlock("dense_forest_spirit_tree_leaves",
             () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.JUNGLE_LEAVES)){
                 @Override

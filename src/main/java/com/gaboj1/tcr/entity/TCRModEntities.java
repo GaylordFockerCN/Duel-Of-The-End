@@ -25,10 +25,7 @@ import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.entity.custom.*;
 
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillager;
-import com.gaboj1.tcr.entity.custom.villager.biome2.FuryTideCangLan;
-import com.gaboj1.tcr.entity.custom.villager.biome2.IronfistDuanShan;
-import com.gaboj1.tcr.entity.custom.villager.biome2.SerpentWhispererCuiHua;
-import com.gaboj1.tcr.entity.custom.villager.biome2.ThunderclapZhenYu;
+import com.gaboj1.tcr.entity.custom.villager.biome2.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.projectile.LlamaSpit;
@@ -142,6 +139,10 @@ public class TCRModEntities {
 			EntityType.Builder.of(IronfistDuanShan::new, MobCategory.CREATURE));
 	public static final RegistryObject<EntityType<SerpentWhispererCuiHua>> CUI_HUA = register("cui_hua",
 			EntityType.Builder.of(SerpentWhispererCuiHua::new, MobCategory.CREATURE));
+	public static final RegistryObject<EntityType<WindwalkerYunYi>> YUN_YI = register("yun_yi",
+			EntityType.Builder.of(WindwalkerYunYi::new, MobCategory.CREATURE));
+	public static final RegistryObject<EntityType<BlazingFlameYanXin>> YAN_XIN = register("yan_xin",
+			EntityType.Builder.of(BlazingFlameYanXin::new, MobCategory.CREATURE));
 
 	public static final RegistryObject<EntityType<YggdrasilEntity>> YGGDRASIL =
 			REGISTRY.register("yggdrasil",
@@ -180,6 +181,8 @@ public class TCRModEntities {
 		event.put(DUAN_SHAN.get(),IronfistDuanShan.setAttributes());
 		event.put(ZHEN_YU.get(),ThunderclapZhenYu.setAttributes());
 		event.put(CUI_HUA.get(),SerpentWhispererCuiHua.setAttributes());
+		event.put(YUN_YI.get(),WindwalkerYunYi.setAttributes());
+		event.put(YAN_XIN.get(),BlazingFlameYanXin.setAttributes());
 		event.put(TIGER.get(),TigerEntity.setAttributes());
 		event.put(BOXER.get(), BoxerEntity.setAttributes());
 		event.put(BIG_HAMMER.get(),BigHammerEntity.setAttributes());
@@ -206,6 +209,10 @@ public class TCRModEntities {
 				ThunderclapZhenYu::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(CUI_HUA.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				SerpentWhispererCuiHua::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(YUN_YI.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				WindwalkerYunYi::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(YAN_XIN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				BlazingFlameYanXin::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 
 		event.register(JELLY_CAT.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				JellyCat::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);

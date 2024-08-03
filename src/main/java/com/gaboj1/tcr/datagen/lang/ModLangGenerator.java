@@ -150,6 +150,12 @@ public class ModLangGenerator extends ModLangProvider {
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get(),"密林木头");
         this.add(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get(),"去皮密林原木");
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get(),"密林原木");
+        this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_STAIRS.get(),"灵木楼梯");
+        this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB.get(),"灵木台阶");
+        this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE.get(),"灵木栅栏");
+        this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE_GATE.get(),"灵木栅栏门");
+        this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR.get(),"灵木门");
+        this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_TRAPDOOR.get(),"灵木活板门");
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get(),"密林灵花");
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING.get(),"密林灵树树苗");
         this.add(TCRModBlocks.PORTAL_BED.get(),"灵梦床");//等等，灵梦？
@@ -174,6 +180,9 @@ public class ModLangGenerator extends ModLangProvider {
         this.addEntityAndEgg(TCRModEntities.ZHEN_YU,"震雷宗：震宇");
         this.addEntityAndEgg(TCRModEntities.DUAN_SHAN,"破岩门：断山");
         this.addEntityAndEgg(TCRModEntities.CUI_HUA,"灵蛇门：翠华");
+        this.addEntityAndEgg(TCRModEntities.YUN_YI,"流云宗：云逸");
+        this.addEntityAndEgg(TCRModEntities.YAN_XIN,"炎阳宗：焱辛");
+
         this.addVillagerChat(TCRModEntities.PASTORAL_PLAIN_VILLAGER, 0, false, "今天天气真好，让我们一起飞快地跑！");
         this.addVillagerChat(TCRModEntities.PASTORAL_PLAIN_VILLAGER, 1, false, "小猫……小斗（狗）……今天是要养只小猫还是小斗？");
         this.addVillagerChat(TCRModEntities.PASTORAL_PLAIN_VILLAGER, 2, false, "今天要和小美去放烟花，你要一起吗！");

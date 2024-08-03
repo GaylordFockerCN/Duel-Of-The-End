@@ -188,7 +188,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
                 case 1 -> TCRModSounds.MALE_SIGH.get();
                 default -> sound2;
             };
-            return getSkinID() < 0 ? sound : sound2;
+            return isFemale() ? sound : sound2;
         }
 
         SoundEvent sound = TCRModSounds.FEMALE_VILLAGER_OHAYO.get();
@@ -208,17 +208,17 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
             case 1 -> TCRModSounds.MALE_HI.get();
             default -> sound2;
         };
-        return getSkinID() < 0 ? sound : sound2;
+        return isFemale() ? sound : sound2;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        return getSkinID() < 0 ? TCRModSounds.FEMALE_VILLAGER_HURT.get() : TCRModSounds.MALE_GET_HURT.get();
+        return isFemale() ? TCRModSounds.FEMALE_VILLAGER_HURT.get() : TCRModSounds.MALE_GET_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return getSkinID() < 0 ?  TCRModSounds.FEMALE_VILLAGER_DEATH.get() : TCRModSounds.MALE_DEATH.get();
+        return isFemale() ?  TCRModSounds.FEMALE_VILLAGER_DEATH.get() : TCRModSounds.MALE_DEATH.get();
     }
 
     /**

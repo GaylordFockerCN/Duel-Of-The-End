@@ -36,6 +36,12 @@ public class TCRModItemTabs {
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get());
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING.get());
+				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_STAIRS.get());
+				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB.get());
+				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE.get());
+				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE_GATE.get());
+				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR.get());
+				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_TRAPDOOR.get());
 				tabData.accept(TCRModBlocks.ORICHALCUM_ORE.get());
 
 			}).build());

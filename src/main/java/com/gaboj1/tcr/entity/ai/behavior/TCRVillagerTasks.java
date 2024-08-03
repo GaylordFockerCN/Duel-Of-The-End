@@ -1,13 +1,11 @@
 package com.gaboj1.tcr.entity.ai.behavior;
 
+import com.gaboj1.tcr.entity.ai.behavior.boss.ShootFireBallTask;
 import com.gaboj1.tcr.entity.ai.behavior.boss.ShootWaterBallTask;
 import com.gaboj1.tcr.entity.ai.behavior.boss.SummonLightningTask;
 import com.gaboj1.tcr.entity.ai.behavior.boss.ThrownPoisonPotionTask;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
-import com.gaboj1.tcr.entity.custom.villager.biome2.FuryTideCangLan;
-import com.gaboj1.tcr.entity.custom.villager.biome2.IronfistDuanShan;
-import com.gaboj1.tcr.entity.custom.villager.biome2.SerpentWhispererCuiHua;
-import com.gaboj1.tcr.entity.custom.villager.biome2.ThunderclapZhenYu;
+import com.gaboj1.tcr.entity.custom.villager.biome2.*;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.entity.ai.behavior.BehaviorControl;
@@ -29,6 +27,13 @@ public class TCRVillagerTasks {
         if(villager instanceof FuryTideCangLan){
             return ImmutableList.of(
                     Pair.of(0, new ShootWaterBallTask()),
+                    Pair.of(0, new NPCDialogueTask())
+            );
+        }
+
+        if(villager instanceof BlazingFlameYanXin){
+            return ImmutableList.of(
+                    Pair.of(0, new ShootFireBallTask()),
                     Pair.of(0, new NPCDialogueTask())
             );
         }

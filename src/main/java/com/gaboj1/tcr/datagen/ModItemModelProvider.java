@@ -79,8 +79,14 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(TCRModItems.MAO_DAI);
         simpleItem(TCRModItems.PINE_CONE);
         simpleItem(TCRModItems.RED_WINE);
+
         simpleBlockItemBlockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER);
         saplingItem(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING);
+        fenceItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE, TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS);
+        simpleBlockItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR);
+        evenSimplerBlockItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_STAIRS);
+        evenSimplerBlockItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB);
+        evenSimplerBlockItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE_GATE);
 
         trimmedArmorItem(TCRModItems.ORICHALCUM_HELMET);
         trimmedArmorItem(TCRModItems.ORICHALCUM_CHESTPLATE);
@@ -136,7 +142,6 @@ public class ModItemModelProvider extends ItemModelProvider {
             });
         }
     }
-
 
     private ItemModelBuilder eggItem(RegistryObject<Item> item) {
         return withExistingParent(item.getId().getPath(), mcLoc("item/template_spawn_egg"));

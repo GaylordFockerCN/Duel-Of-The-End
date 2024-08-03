@@ -4,8 +4,7 @@ import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.TCRModBlocks;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -43,7 +42,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockItem(TCRModBlocks.YGGDRASIL_BLOCK);
         leavesBlock(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES);
         saplingBlock(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING);
-
+        stairsBlock(((StairBlock) TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_STAIRS.get()), blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get()));
+        slabBlock(((SlabBlock) TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB.get()), blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB.get()), blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get()));
+        fenceBlock(((FenceBlock) TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE.get()), blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get()));
+        fenceGateBlock(((FenceGateBlock) TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE_GATE.get()), blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get()));
+        doorBlockWithRenderType(((DoorBlock) TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR.get()), modLoc("block/dense_forest_spirit_tree_door_bottom"), modLoc("block/dense_forest_spirit_tree_door_top"), "cutout");
+        trapdoorBlockWithRenderType(((TrapDoorBlock) TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_TRAPDOOR.get()), modLoc("block/dense_forest_spirit_tree_trapdoor"), true, "cutout");
     }
 
     private void saplingBlock(RegistryObject<Block> blockRegistryObject) {

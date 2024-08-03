@@ -45,6 +45,8 @@ public class ModEntityLootTables extends EntityLootSubProvider {
         add(TCRModEntities.ZHEN_YU.get(), emptyLootTable());
         add(TCRModEntities.DUAN_SHAN.get(), emptyLootTable());
         add(TCRModEntities.CUI_HUA.get(), emptyLootTable());
+        add(TCRModEntities.YUN_YI.get(), emptyLootTable());
+        add(TCRModEntities.YAN_XIN.get(), emptyLootTable());
 
         add(TCRModEntities.SMALL_TREE_MONSTER.get(),
                 LootTable.lootTable()

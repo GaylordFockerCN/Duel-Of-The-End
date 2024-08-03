@@ -15,6 +15,7 @@ import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
@@ -46,6 +47,15 @@ public class ModBlockLootTables extends BlockLootSubProvider {
                 createLeavesDrops(block, TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 
         this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING.get());
+        this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_STAIRS.get());
+        this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE.get());
+        this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE_GATE.get());
+        this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_TRAPDOOR.get());
+
+        this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB.get(),
+                block -> createSlabItemTable(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB.get()));
+        this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR.get(),
+                block -> createDoorTable(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR.get()));
 
     }
 
@@ -58,7 +68,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     }
 
     @Override
-    protected Iterable<Block> getKnownBlocks() {
+    protected @NotNull Iterable<Block> getKnownBlocks() {
         return TCRModBlocks.REGISTRY.getEntries().stream().map(RegistryObject::get)::iterator;
     }
 

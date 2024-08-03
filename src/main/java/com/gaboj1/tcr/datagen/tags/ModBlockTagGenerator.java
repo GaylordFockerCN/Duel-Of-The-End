@@ -35,6 +35,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
         this.tag(BlockTags.PLANKS)
                 .add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
 
+        this.tag(BlockTags.FENCES)
+                .add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE.get());
+        this.tag(BlockTags.FENCE_GATES)
+                .add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE_GATE.get());
+
         this.tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(TCRModBlocks.ORICHALCUM_ORE.get()).addTag(Tags.Blocks.ORES);
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)

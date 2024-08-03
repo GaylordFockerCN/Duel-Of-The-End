@@ -168,6 +168,8 @@ public class TheCasketOfReveriesMod {
             EntityRenderers.register(TCRModEntities.ZHEN_YU.get(), TCRVillagerRenderer::new);
             EntityRenderers.register(TCRModEntities.DUAN_SHAN.get(), TCRVillagerRenderer::new);
             EntityRenderers.register(TCRModEntities.CUI_HUA.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCRModEntities.YUN_YI.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCRModEntities.YAN_XIN.get(), TCRVillagerRenderer::new);
 
             EntityRenderers.register(TCRModEntities.YGGDRASIL.get(), YggdrasilRenderer::new);
             EntityRenderers.register(TCRModEntities.TREE_CLAW.get(), TreeClawRenderer::new);
