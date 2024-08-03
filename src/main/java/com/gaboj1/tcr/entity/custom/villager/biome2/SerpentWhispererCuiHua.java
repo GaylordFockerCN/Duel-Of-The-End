@@ -6,6 +6,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animation.Animation;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 public class SerpentWhispererCuiHua extends Master{
     public SerpentWhispererCuiHua(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
@@ -24,6 +29,17 @@ public class SerpentWhispererCuiHua extends Master{
                 .add(Attributes.ATTACK_SPEED, 2.0f)//攻速
                 .add(Attributes.MOVEMENT_SPEED, 0.6f)//移速
                 .build();
+    }
+
+    @Override
+    protected <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
+        if(tAnimationState.isMoving()) {
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("walk2", Animation.LoopType.LOOP));
+        } else {
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.idle", Animation.LoopType.LOOP));
+        }
+
+        return PlayState.CONTINUE;
     }
 
     @Override

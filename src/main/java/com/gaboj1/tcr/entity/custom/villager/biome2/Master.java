@@ -9,6 +9,10 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 /**
  * 不受彼此伤害
@@ -26,9 +30,23 @@ public class Master extends TCRVillager {
      */
     @Override
     public boolean hurt(DamageSource source, float v) {
+        //TODO 加一个用SaveUtil判断
         if(source.getEntity() instanceof Player || source.getEntity() instanceof YggdrasilEntity){
             return super.hurt(source, v);
         }
+        return false;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        super.registerControllers(controllers);
+        controllers.add(new AnimationController<>(this, "Summon", 10, state -> PlayState.STOP)
+                .triggerableAnim("summon", RawAnimation.begin().thenPlay("summon")));
+    }
+
+    @Override
+    public boolean isFriendly() {
+        //TODO 改为用SaveUtil判断
         return false;
     }
 

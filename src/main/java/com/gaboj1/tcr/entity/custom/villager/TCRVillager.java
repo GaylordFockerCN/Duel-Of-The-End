@@ -77,15 +77,14 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
         this.entityType = pEntityType;
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
         ((GroundPathNavigation)this.getNavigation()).setCanOpenDoors(true);//抛弃大脑后最后的尊严...
-        this.getEntityData().define(DATA_SKIN_ID, skinID);
         if(skinID == RANDOM_SKIN){
             if(random.nextBoolean()){
-                setSkinID(random.nextInt(getMaleTypeCnt())+1);
+                skinID = random.nextInt(getMaleTypeCnt())+1;
             }else {
-                setSkinID(-random.nextInt(getFemaleTypeCnt())-1);
+                skinID = -random.nextInt(getFemaleTypeCnt())-1;
             }
         }
-
+        this.getEntityData().define(DATA_SKIN_ID, skinID);
     }
 
     /**
@@ -279,7 +278,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
 
     public static AttributeSupplier setAttributes() {//生物属性
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 100.0D)//最大血量
+                .add(Attributes.MAX_HEALTH, 50.0D)//最大血量
                 .add(Attributes.ATTACK_DAMAGE, 2.0f)//单次攻击伤害
                 .add(Attributes.ATTACK_SPEED, 2.0f)//攻速
                 .add(Attributes.MOVEMENT_SPEED, 0.4f)//移速 0.5不匹配动画awa
@@ -379,12 +378,12 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller",
-                0, this::predicate));
-        controllers.add(new AnimationController<>(this, "Attack", 0, state -> PlayState.STOP)
+                10, this::predicate));
+        controllers.add(new AnimationController<>(this, "Attack", 10, state -> PlayState.STOP)
                 .triggerableAnim("attack", RawAnimation.begin().thenPlay("fight")));
     }
 
-    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
+    protected <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
 //        if(isAngry) {
 //            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.attack", Animation.LoopType.LOOP));
 //        } else
