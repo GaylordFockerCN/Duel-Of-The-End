@@ -24,11 +24,11 @@ public class PastoralPlainVillager extends TCRVillager {
 
     @Override
     public int getMaleTypeCnt() {
-        return 1;
+        return 2;
     }
     @Override
     public int getFemaleTypeCnt() {
-        return 1;
+        return 0;
     }
 
     @Override

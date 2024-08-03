@@ -31,6 +31,10 @@ public class LinkListStreamDialogueScreenBuilder {
         init();
     }
 
+    public boolean isEmpty(){
+        return answerRoot == null;
+    }
+
     /**
      * 用于构建树状对话
     * */

@@ -79,7 +79,11 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
         ((GroundPathNavigation)this.getNavigation()).setCanOpenDoors(true);//抛弃大脑后最后的尊严...
         this.getEntityData().define(DATA_SKIN_ID, skinID);
         if(skinID == RANDOM_SKIN){
-            setSkinID(new Random().nextInt(getMaleTypeCnt()+getFemaleTypeCnt())-getFemaleTypeCnt());
+            if(random.nextBoolean()){
+                setSkinID(random.nextInt(getMaleTypeCnt())+1);
+            }else {
+                setSkinID(-random.nextInt(getFemaleTypeCnt())-1);
+            }
         }
 
     }
