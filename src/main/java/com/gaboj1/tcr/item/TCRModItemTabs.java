@@ -61,6 +61,7 @@ public class TCRModItemTabs {
 						tabData.accept(TCRModItems.BIG_HAMMER_EGG.get());
 						tabData.accept(TCRModItems.SNOW_SWORDMAN_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.SWORD_CONTROLLER_SPAWN_EGG.get());
+						tabData.accept(TCRModItems.SECOND_BOSS_SPAWN_EGG.get());
 
 					}).build());
 

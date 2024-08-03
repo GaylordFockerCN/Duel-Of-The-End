@@ -57,6 +57,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         eggItem(TCRModItems.BIG_HAMMER_EGG);
         eggItem(TCRModItems.SNOW_SWORDMAN_SPAWN_EGG);
         eggItem(TCRModItems.SWORD_CONTROLLER_SPAWN_EGG);
+        eggItem(TCRModItems.SECOND_BOSS_SPAWN_EGG);
 
         simpleItem(TCRModItems.DREAMSCAPE_COIN);
         simpleItem(TCRModItems.DREAMSCAPE_COIN_PLUS);

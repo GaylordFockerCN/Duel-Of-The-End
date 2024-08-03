@@ -33,7 +33,8 @@ public class ModEntityTagGenerator extends EntityTypeTagsProvider {
                 TCRModEntities.BOXER.get(),
                 TCRModEntities.BIG_HAMMER.get(),
                 TCRModEntities.SNOW_SWORDMAN.get(),
-                TCRModEntities.SWORD_CONTROLLER.get()
+                TCRModEntities.SWORD_CONTROLLER.get(),
+                TCRModEntities.SECOND_BOSS.get()
         );
     }
 
