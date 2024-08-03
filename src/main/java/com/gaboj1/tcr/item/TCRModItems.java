@@ -107,6 +107,10 @@ public class TCRModItems {
 			() -> new ForgeSpawnEggItem(TCRModEntities.SWORD_CONTROLLER, 50, 0x1D0D00,
 					new Item.Properties()));
 
+	public static final RegistryObject<Item> SECOND_BOSS_SPAWN_EGG = REGISTRY.register("second_boss_spawn_egg",
+			() -> new ForgeSpawnEggItem(TCRModEntities.SECOND_BOSS, 800, 50,
+					new Item.Properties()));
+
 
 
 	public static final RegistryObject<Item> YGGDRASIL_SPAWN_EGG = REGISTRY.register("yggdrasil_spawn_egg",
