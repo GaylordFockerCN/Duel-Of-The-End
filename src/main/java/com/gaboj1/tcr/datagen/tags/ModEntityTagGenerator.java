@@ -28,13 +28,13 @@ public class ModEntityTagGenerator extends EntityTypeTagsProvider {
                 TCRModEntities.SMALL_TREE_MONSTER.get(),
                 TCRModEntities.MIDDLE_TREE_MONSTER.get(),
                 TCRModEntities.TREE_GUARDIAN.get(),
-                TCRModEntities.SPRITE.get(),
-                TCRModEntities.TIGER.get(),
-                TCRModEntities.BOXER.get(),
-                TCRModEntities.BIG_HAMMER.get(),
-                TCRModEntities.SNOW_SWORDMAN.get(),
-                TCRModEntities.SWORD_CONTROLLER.get(),
-                TCRModEntities.SECOND_BOSS.get()
+                TCRModEntities.SPRITE.get()
+//                TCRModEntities.TIGER.get(),
+//                TCRModEntities.BOXER.get(),
+//                TCRModEntities.BIG_HAMMER.get(),
+//                TCRModEntities.SNOW_SWORDMAN.get(),
+//                TCRModEntities.SWORD_CONTROLLER.get(),
+//                TCRModEntities.SECOND_BOSS.get()
         );
     }
 

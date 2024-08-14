@@ -32,6 +32,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.add("info.the_casket_of_reveries.teleport_unlock","成功激活此锚点！");
         this.add("info.the_casket_of_reveries.boss1invincible","摧毁树爪或小怪以解除伊格德拉希尔无敌状态");
         this.add("info.the_casket_of_reveries.alreadyAddWhite","你已经是村民阵营了，不能伤害村民哦");
+        this.add("info.the_casket_of_reveries.sureToSpawn","你已经是村民阵营了，不能伤害村民哦");
 
         this.add("the_casket_of_reveries.button.boss1","泰兰妮尔之心");
         this.add("the_casket_of_reveries.button.boss2","九霄");

@@ -2,6 +2,7 @@ package com.gaboj1.tcr.entity;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.custom.big_hammer.BigHammerEntity;
+import com.gaboj1.tcr.entity.custom.boss.second_boss.SecondBossEntity;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.MagicProjectile;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.TreeClawEntity;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
@@ -116,6 +117,12 @@ public class TCRModEntities {
 					() -> EntityType.Builder.of(SwordControllerEntity::new, MobCategory.CREATURE)
 							.sized(0.78f, 2f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "sword_controller").toString()));
+
+	public static final RegistryObject<EntityType<SecondBossEntity>> SECOND_BOSS =
+			REGISTRY.register("second_boss",
+					() -> EntityType.Builder.of(SecondBossEntity::new, MobCategory.CREATURE)
+							.sized(0.78f, 2f)
+							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "second_boss").toString()));
 	public static final RegistryObject<EntityType<JellyCat>> JELLY_CAT = register("jelly_cat",
 			EntityType.Builder.of(JellyCat::new, MobCategory.CREATURE).sized(2.0f,1.75f));
 	public static final RegistryObject<EntityType<Squirrel>> SQUIRREL = register("squirrel",
@@ -188,6 +195,7 @@ public class TCRModEntities {
 		event.put(BIG_HAMMER.get(),BigHammerEntity.setAttributes());
 		event.put(SNOW_SWORDMAN.get(),SnowSwordmanEntity.setAttributes());
 		event.put(SWORD_CONTROLLER.get(),SwordControllerEntity.setAttributes());
+		event.put(TCRModEntities.SECOND_BOSS.get(),SecondBossEntity.setAttributes());
 	}
 
 	@SubscribeEvent
@@ -237,6 +245,8 @@ public class TCRModEntities {
 				SnowSwordmanEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(SWORD_CONTROLLER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				SwordControllerEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(TCRModEntities.SECOND_BOSS.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				SecondBossEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 
 		event.register(TREE_CLAW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				TreeClawEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);

@@ -102,7 +102,7 @@ public class MiddleTreeMonsterEntity extends Monster implements GeoEntity , Neut
         }
         LivingEntity target = this.getTarget();
         if(target != null){
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.middle_tree_monster.attack", Animation.LoopType.LOOP));
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.middle_tree_monster.attack1", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
 

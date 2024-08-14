@@ -2,6 +2,7 @@ package com.gaboj1.tcr.block;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.custom.*;
+import com.gaboj1.tcr.block.custom.spawner.YggdrasilSpawnerBlock;
 import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.worldgen.tree.DenseSpiritTreeGrower;
 import net.minecraft.core.BlockPos;
@@ -111,7 +112,7 @@ public class TCRModBlocks {
     public static final RegistryObject<Block> PORTAL_BLOCK = registerBlock("portal_block",
             () -> new PortalBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(-1.0F, 3600000.0F).noOcclusion().noLootTable()));
     public static final RegistryObject<Block> YGGDRASIL_BLOCK = registerBlock("yggdrasil_block",
-            () -> new PortalBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(-1.0F, 3600000.0F).noOcclusion().noLootTable()));
+            () -> new YggdrasilSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(-1.0F, 3600000.0F).noOcclusion().noLootTable()));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){

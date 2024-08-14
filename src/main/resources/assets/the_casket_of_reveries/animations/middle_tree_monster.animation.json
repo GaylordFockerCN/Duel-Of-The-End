@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.m_treemonster - Converted.move": {
+		"animation.middle_tree_monster.move": {
 			"loop": true,
 			"animation_length": 1.2,
 			"bones": {
@@ -44,7 +44,7 @@
 				}
 			}
 		},
-		"animation.m_treemonster - Converted.attack1": {
+		"animation.middle_tree_monster.attack1": {
 			"animation_length": 0.48,
 			"bones": {
 				"group8": {
@@ -63,7 +63,7 @@
 				}
 			}
 		},
-		"animation.m_treemonster - Converted.attack2": {
+		"animation.middle_tree_monster.attack2": {
 			"animation_length": 0.64,
 			"bones": {
 				"all": {
@@ -82,7 +82,7 @@
 				}
 			}
 		},
-		"animation.m_treemonster - Converted.idle": {
+		"animation.middle_tree_monster.idle": {
 			"loop": true,
 			"animation_length": 1.44,
 			"bones": {

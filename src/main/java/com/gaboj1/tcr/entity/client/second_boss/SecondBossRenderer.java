@@ -14,9 +14,4 @@ public class SecondBossRenderer extends GeoEntityRenderer<SecondBossEntity> {
     public SecondBossRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new SecondBossModel());
     }
-
-    public void render(@NotNull SecondBossEntity entity, float entityYaw, float partialTick, PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight) {
-        poseStack.scale(3f, 3f, 3f);
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-    }
 }

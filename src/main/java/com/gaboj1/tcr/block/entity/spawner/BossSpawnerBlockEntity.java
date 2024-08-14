@@ -1,9 +1,11 @@
 package com.gaboj1.tcr.block.entity.spawner;
 
-import com.gaboj1.tcr.block.entity.spawner.EnforcedHomePoint;
+import com.gaboj1.tcr.entity.ShadowableEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.GlobalPos;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
@@ -19,12 +21,13 @@ import net.minecraftforge.event.ForgeEventFactory;
 
 import java.util.Objects;
 
-public abstract class BossSpawnerBlockEntity<T extends Mob & EnforcedHomePoint> extends BlockEntity {
+public abstract class BossSpawnerBlockEntity<T extends Mob & ShadowableEntity> extends BlockEntity {
 
 	protected static final int SHORT_RANGE = 9, LONG_RANGE = 50;
 
 	protected final EntityType<T> entityType;
 	protected boolean spawnedBoss = false;
+	protected boolean isReady = false;
 
 	protected BossSpawnerBlockEntity(BlockEntityType<?> type, EntityType<T> entityType, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -35,8 +38,31 @@ public abstract class BossSpawnerBlockEntity<T extends Mob & EnforcedHomePoint> 
 		return Objects.requireNonNull(this.getLevel()).hasNearbyAlivePlayer(this.getBlockPos().getX() + 0.5D, this.getBlockPos().getY() + 0.5D, this.getBlockPos().getZ() + 0.5D, this.getRange());
 	}
 
-	public static void tick(Level level, BlockPos pos, BlockState state, BossSpawnerBlockEntity<?> te) {
-		if (te.spawnedBoss || !te.anyPlayerInRange()) {
+	/**
+	 * 召唤历战版
+	 */
+	public void tryToSpawnShadow(ServerLevel level){
+		if(!canSpawnShadow()){
+			return;
+		}
+		if(!isReady){
+			isReady = true;
+			if(level.isClientSide){
+                assert Minecraft.getInstance().player != null;
+                Minecraft.getInstance().player.displayClientMessage(Component.literal("info.the_casket_of_reveries.sureToSpawn"), true);
+			}
+		}
+		isReady = false;
+		spawnMyShadowBoss(level);
+	}
+
+	/**
+	 * boss击败后才可以召唤历战
+	 */
+	public abstract boolean canSpawnShadow();
+
+	public static void tick(Level level, BlockPos pos,  BlockState state, BossSpawnerBlockEntity<?> blockEntity) {
+		if (blockEntity.spawnedBoss || !blockEntity.anyPlayerInRange()) {
 			return;
 		}
 		if (level.isClientSide()) {
@@ -44,37 +70,42 @@ public abstract class BossSpawnerBlockEntity<T extends Mob & EnforcedHomePoint> 
 			double rx = pos.getX() + level.getRandom().nextFloat();
 			double ry = pos.getY() + level.getRandom().nextFloat();
 			double rz = pos.getZ() + level.getRandom().nextFloat();
-			level.addParticle(te.getSpawnerParticle(), rx, ry, rz, 0.0D, 0.0D, 0.0D);
+			level.addParticle(blockEntity.getSpawnerParticle(), rx, ry, rz, 0.0D, 0.0D, 0.0D);
 		} else {
 			if (level.getDifficulty() != Difficulty.PEACEFUL) {
-				if (te.spawnMyBoss((ServerLevel) level)) {
+				if (blockEntity.spawnMyBoss((ServerLevel) level)) {
 					level.destroyBlock(pos, false);
-					te.spawnedBoss = true;
+					blockEntity.spawnedBoss = true;
 				}
 			}
 		}
+	}
+
+	protected boolean spawnMyShadowBoss(ServerLevelAccessor accessor) {
+		// create creature
+		T myCreature = this.makeMyCreature();
+		myCreature.setShadow();
+		BlockPos spawnPos = accessor.getBlockState(this.getBlockPos().above()).getCollisionShape(accessor, this.getBlockPos().above()).isEmpty() ? this.getBlockPos().above() : this.getBlockPos();
+		myCreature.moveTo(spawnPos, accessor.getLevel().getRandom().nextFloat() * 360F, 0.0F);
+		ForgeEventFactory.onFinalizeSpawn(myCreature, accessor, accessor.getCurrentDifficultyAt(spawnPos), MobSpawnType.SPAWNER, null, null);
+
+		// spawn it
+		return accessor.addFreshEntity(myCreature);
 	}
 
 	protected boolean spawnMyBoss(ServerLevelAccessor accessor) {
 		// create creature
 		T myCreature = this.makeMyCreature();
 
-		BlockPos spawnPos = accessor.getBlockState(this.getBlockPos().below()).getCollisionShape(accessor, this.getBlockPos().below()).isEmpty() ? this.getBlockPos().below() : this.getBlockPos();
+		BlockPos spawnPos = accessor.getBlockState(this.getBlockPos().above()).getCollisionShape(accessor, this.getBlockPos().above()).isEmpty() ? this.getBlockPos().above() : this.getBlockPos();
 		myCreature.moveTo(spawnPos, accessor.getLevel().getRandom().nextFloat() * 360F, 0.0F);
 		ForgeEventFactory.onFinalizeSpawn(myCreature, accessor, accessor.getCurrentDifficultyAt(spawnPos), MobSpawnType.SPAWNER, null, null);
-
-		// set creature's home to this
-		this.initializeCreature(myCreature);
 
 		// spawn it
 		return accessor.addFreshEntity(myCreature);
 	}
 
 	public abstract ParticleOptions getSpawnerParticle();
-
-	protected void initializeCreature(T myCreature) {
-		myCreature.setRestrictionPoint(GlobalPos.of(myCreature.level().dimension(), this.getBlockPos()));
-	}
 
 	protected int getRange() {
 		return SHORT_RANGE;
@@ -83,4 +114,5 @@ public abstract class BossSpawnerBlockEntity<T extends Mob & EnforcedHomePoint> 
 	protected T makeMyCreature() {
 		return Objects.requireNonNull(this.entityType.create(Objects.requireNonNull(this.getLevel())));
 	}
+
 }

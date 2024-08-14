@@ -2,6 +2,7 @@ package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
 import com.gaboj1.tcr.block.entity.spawner.EnforcedHomePoint;
 import com.gaboj1.tcr.entity.NpcDialogue;
+import com.gaboj1.tcr.entity.ShadowableEntity;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
 import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
@@ -62,7 +63,7 @@ import java.util.Objects;
 import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
 
-public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomePoint, NpcDialogue {
+public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomePoint, NpcDialogue, ShadowableEntity {
     @Nullable
     protected Player conversingPlayer;
     EntityType<?> entityType = TCRModEntities.YGGDRASIL.get();
@@ -168,14 +169,14 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     }
 
     @Override
-    public void startSeenByPlayer(ServerPlayer player) {
+    public void startSeenByPlayer(@NotNull ServerPlayer player) {
         super.startSeenByPlayer(player);
         this.getBossBar().addPlayer(player);
     }
 
 
     @Override
-    public void stopSeenByPlayer(ServerPlayer player) {
+    public void stopSeenByPlayer(@NotNull ServerPlayer player) {
         super.stopSeenByPlayer(player);
         this.getBossBar().removePlayer(player);
     }
@@ -470,6 +471,16 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
         if(conversingPlayer != null) {
             conversingPlayer.sendSystemMessage(BUILDER.buildDialogue(this, component));
         }
+    }
+
+    @Override
+    public boolean isShadow() {
+        return false;
+    }
+
+    @Override
+    public void setShadow() {
+
     }
 
     /**

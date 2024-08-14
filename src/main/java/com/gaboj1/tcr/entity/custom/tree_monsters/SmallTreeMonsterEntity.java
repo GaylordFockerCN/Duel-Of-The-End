@@ -112,16 +112,16 @@ public class SmallTreeMonsterEntity extends TamableAnimal implements GeoEntity ,
     //@SubscribeEvent
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
         if(tAnimationState.isMoving()) {
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.move", Animation.LoopType.LOOP));
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("move", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         LivingEntity target = this.getTarget();
         if(target != null){
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.attack", Animation.LoopType.LOOP));
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("attack1", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
 
-        tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.idle", Animation.LoopType.LOOP));
+        tAnimationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
 

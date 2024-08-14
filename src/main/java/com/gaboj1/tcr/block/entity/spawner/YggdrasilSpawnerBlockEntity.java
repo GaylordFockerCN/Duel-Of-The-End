@@ -21,32 +21,6 @@ public class YggdrasilSpawnerBlockEntity extends BossSpawnerBlockEntity<Yggdrasi
 	}
 
 	@Override
-	public boolean anyPlayerInRange() {
-		Player closestPlayer = this.getLevel().getNearestPlayer(this.getBlockPos().getX() + 0.5D, this.getBlockPos().getY() + 0.5D, this.getBlockPos().getZ() + 0.5D, this.getRange(), false);
-		return closestPlayer != null && closestPlayer.getY() > this.getBlockPos().getY() - 4;
-	}
-
-	@Override
-	protected boolean spawnMyBoss(ServerLevelAccessor accessor) {
-
-		YggdrasilEntity myCreature = this.makeMyCreature();
-
-		myCreature.moveTo(this.getBlockPos(), accessor.getLevel().random.nextFloat() * 360F, 0.0F);
-		ForgeEventFactory.onFinalizeSpawn(myCreature, accessor, accessor.getCurrentDifficultyAt(this.getBlockPos()), MobSpawnType.SPAWNER, null, null);
-
-		// set creature's home to this
-		this.initializeCreature(myCreature);
-
-		// spawn it
-		return accessor.addFreshEntity(myCreature);
-	}
-
-	@Override
-	public ParticleOptions getSpawnerParticle() {
-		return ParticleTypes.ANGRY_VILLAGER;
-	}
-
-	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
 
 	}
@@ -59,5 +33,15 @@ public class YggdrasilSpawnerBlockEntity extends BossSpawnerBlockEntity<Yggdrasi
 	@Override
 	public double getTick(Object o) {
 		return 0;
+	}
+
+	@Override
+	public boolean canSpawnShadow() {
+		return false;
+	}
+
+	@Override
+	public ParticleOptions getSpawnerParticle() {
+		return null;
 	}
 }
