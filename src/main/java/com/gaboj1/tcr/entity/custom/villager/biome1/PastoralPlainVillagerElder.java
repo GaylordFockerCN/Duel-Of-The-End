@@ -13,10 +13,12 @@ import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.InteractionHand;
@@ -51,7 +53,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
     public static AttributeSupplier setAttributes() {//生物属性
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 200.0D)//最大血量
+                .add(Attributes.MAX_HEALTH, 100.0D)//最大血量
                 .add(Attributes.ATTACK_DAMAGE, 10.0f)//单次攻击伤害
                 .add(Attributes.ATTACK_SPEED, 1.0f)//攻速
                 .add(Attributes.MOVEMENT_SPEED, 0.4f)//移速
@@ -164,7 +166,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         switch (interactionID) {
             //接取任务
             case -1:
-                //这个可以保留，每个玩家可以领一份
+                //这个DataManager可以保留，每个玩家可以领一份
                 if(!DataManager.elderLoot1Got.getBool(player)){
                     player.addItem(TCRModItems.ELDER_CAKE.get().getDefaultInstance());
                     player.addItem(Items.DIAMOND.getDefaultInstance().copyWithCount(5));
@@ -181,7 +183,8 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                 break;
             case 1: //回来领奖
                 SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskBackToElder);
-                this.chat(BUILDER.buildDialogueAnswer(entityType,10));//再会，勇者！=
+                this.chat(BUILDER.buildDialogueAnswer(entityType,10));//再会，勇者！
+                SaveUtil.biome1.finish(SaveUtil.BiomeData.VILLAGER, ((ServerLevel) level()));
                 //TODO 获得进度，给予奖励
                 break;
         }

@@ -2,9 +2,12 @@ package com.gaboj1.tcr.util;
 
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.entity.LevelableEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
@@ -190,12 +193,23 @@ public class SaveUtil {
             isElderTalked = serverData.getBoolean("isElderTalked");
         }
 
-        public void finish(int choice){
+        /**
+         * 群系事件完成，升级世界等级，而且只能进行一次
+         */
+        public void finish(int choice, ServerLevel level){
+            if(this.choice != 0){
+                return;
+            }
             this.choice = choice;
             if(firstChoiceBiome == 0){
                 firstChoiceBiome = biome;
             }
             worldLevel++;
+            for(Entity entity : level.getAllEntities()){
+                if(entity instanceof LevelableEntity levelableEntity){
+                    levelableEntity.levelUp(worldLevel);
+                }
+            }
         }
 
         public boolean isFinished(){

@@ -49,6 +49,7 @@ public class DataManager {
     //长老送的
     public static BoolData elderLoot1Got =  new BoolData("elder_loot1_got",false,7);
     public static BoolData elderLoot2Got =  new BoolData("elder_loot2_got",false,8);
+    public static BoolData boss1LootGot =  new BoolData("boss1_loot_got",false,9);
 
     //给予初始值
     public static void init(Player player){

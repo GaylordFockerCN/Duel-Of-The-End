@@ -321,7 +321,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
 
     @Nullable
     @Override
-    protected SoundEvent getHurtSound(DamageSource p_21239_) {
+    protected SoundEvent getHurtSound(@NotNull DamageSource pDamageSource) {
         return TCRModSounds.YGGDRASIL_CRY.get();
     }
 
@@ -353,7 +353,6 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
 
         if(serverData.getBoolean("canGetBossReward")) {
-            System.out.println("满足领奖条件");
             //满足领奖条件
             builder.start(BUILDER.buildDialogueAnswer(entityType, 9))
                     .addChoice(BUILDER.buildDialogueOption(entityType, 7), BUILDER.buildDialogueAnswer(entityType, 10))
@@ -363,20 +362,17 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
                     .addChoice(BUILDER.buildDialogueOption(entityType, -1), BUILDER.buildDialogueAnswer(entityType, 13));
         } else if(serverData.getBoolean("killElderTaskGet")){
             //未满足领奖条件但是任务已经领了
-            System.out.println("未满足领奖条件但是任务已经领了");
             builder.setAnswerRoot(
                     new TreeNode(BUILDER.buildDialogueAnswer(entityType,9))
                             .addLeaf(BUILDER.buildDialogueOption(entityType,6),(byte) 114514));
 
         } else if(!serverData.getBoolean("isBossTalked")){
             //靠近就触发战斗，初次对话
-            System.out.println("靠近就触发战斗，初次对话");
             builder.start(BUILDER.buildDialogueAnswer(entityType, 0))
                     .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,1))
                     .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)0);
 
         } else if(!serverData.getBoolean("isBossFought")){
-            System.out.println("战斗结束后的对话");
             //战斗结束后的对话
             builder.setAnswerRoot(
                     new TreeNode(BUILDER.buildDialogueAnswer(entityType,2))
@@ -396,7 +392,6 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
                             )
             );
         } else {
-            System.out.println("其他情况");
             //还有别的情况吗？有就当还没打过处理吧，打的历战
             builder.start(BUILDER.buildDialogueAnswer(entityType,0))
                     .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,1))
@@ -430,7 +425,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
             //任务成功
             case 3:
                 SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskBackToBoss);
-                SaveUtil.biome1.choice = SaveUtil.BiomeData.BOSS;
+                SaveUtil.biome1.finish(SaveUtil.BiomeData.BOSS, ((ServerLevel) level()));
                 //TODO: 颁奖了
                 return;//NOTE：颁奖后面还有对话，不能setConversingPlayer为Null
         }
@@ -438,7 +433,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     }
 
     @Override
-    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+    protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         if (hand == InteractionHand.MAIN_HAND) {
             if (!this.level().isClientSide()) {
                     this.lookAt(player, 180.0F, 180.0F);
