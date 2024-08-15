@@ -198,6 +198,10 @@ public class SaveUtil {
             worldLevel++;
         }
 
+        public boolean isFinished(){
+            return choice != 0;
+        }
+
     }
 
     public static Dialog buildTask(String task){

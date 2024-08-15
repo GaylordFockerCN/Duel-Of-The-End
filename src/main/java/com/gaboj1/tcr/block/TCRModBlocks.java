@@ -7,7 +7,6 @@ import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.worldgen.tree.DenseSpiritTreeGrower;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;

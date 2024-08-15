@@ -7,6 +7,8 @@ public class TCRConfig {
     public static final ForgeConfigSpec.BooleanValue ENABLE_SCALING;
     // 是否启用更多空洞的世界（地图更像空岛，类似天境，但是陆地较少）
     public static final ForgeConfigSpec.BooleanValue MORE_HOLE;
+    // Boss生成方块是否有效（默认开启，开发时关闭）
+    public static final ForgeConfigSpec.BooleanValue ENABLE_BOSS_SPAWN_BLOCK_LOAD;
     // 更好的结构方块是否立即刷新（默认开启，开发时关闭）
     public static final ForgeConfigSpec.BooleanValue ENABLE_BETTER_STRUCTURE_BLOCK_LOAD;
     // 游戏内对话框是否使用打字机效果（对话逐字出现）
@@ -36,6 +38,7 @@ public class TCRConfig {
         ENABLE_SCALING = createBool(builder, "enable_scaling", false);
         MORE_HOLE = createBool(builder, "more_hole", false);
         ENABLE_BETTER_STRUCTURE_BLOCK_LOAD = createBool(builder, "enable_better_structure_block_load", true);
+        ENABLE_BOSS_SPAWN_BLOCK_LOAD = createBool(builder, "enable_boss_spawn_block_load", true);
         ENABLE_TYPEWRITER_EFFECT = createBool(builder, "enable_typewriter_effect", true);
         TYPEWRITER_EFFECT_SPEED = createInt(builder, "typewriter_effect_speed", 1, 1);
         TYPEWRITER_EFFECT_INTERVAL = createInt(builder, "typewriter_effect_interval", 2, 1);

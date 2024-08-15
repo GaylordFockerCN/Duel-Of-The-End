@@ -17,7 +17,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import software.bernie.geckolib.util.RenderUtils;
 
 public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
-    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private int id = 0;
     public static final int maxID = 4;

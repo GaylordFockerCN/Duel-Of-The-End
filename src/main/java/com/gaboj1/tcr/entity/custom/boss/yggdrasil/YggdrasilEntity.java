@@ -187,8 +187,8 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
      */
     @Override
     public void die(@NotNull DamageSource source) {
-        if(getEntityData().get(IS_SHADER)){
-            //二次挑战则直接死
+        if(getEntityData().get(IS_SHADER) || source.isCreativePlayer()){
+            //二次挑战或者创哥则直接死
             super.die(source);
         }
         getEntityData().set(IS_FIGHTING, false);

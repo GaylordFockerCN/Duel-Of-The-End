@@ -1,12 +1,13 @@
 package com.gaboj1.tcr.block.entity.spawner;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.entity.ShadowableEntity;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -17,13 +18,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.ForgeEventFactory;
+import org.jetbrains.annotations.NotNull;
 
 
 import java.util.Objects;
 
 public abstract class BossSpawnerBlockEntity<T extends Mob & ShadowableEntity> extends BlockEntity {
 
-	protected static final int SHORT_RANGE = 9, LONG_RANGE = 50;
+	protected static final int DEFAULT_RANGE = 20;
 
 	protected final EntityType<T> entityType;
 	protected boolean spawnedBoss = false;
@@ -34,6 +36,18 @@ public abstract class BossSpawnerBlockEntity<T extends Mob & ShadowableEntity> e
 		this.entityType = entityType;
 	}
 
+	@Override
+	public void load(@NotNull CompoundTag pTag) {
+		super.load(pTag);
+		spawnedBoss = pTag.getBoolean("spawnedBoss");
+	}
+
+	@Override
+	protected void saveAdditional(@NotNull CompoundTag pTag) {
+		super.saveAdditional(pTag);
+		pTag.putBoolean("spawnedBoss", spawnedBoss);
+	}
+
 	public boolean anyPlayerInRange() {
 		return Objects.requireNonNull(this.getLevel()).hasNearbyAlivePlayer(this.getBlockPos().getX() + 0.5D, this.getBlockPos().getY() + 0.5D, this.getBlockPos().getZ() + 0.5D, this.getRange());
 	}
@@ -41,19 +55,16 @@ public abstract class BossSpawnerBlockEntity<T extends Mob & ShadowableEntity> e
 	/**
 	 * 召唤历战版
 	 */
-	public void tryToSpawnShadow(ServerLevel level){
+	public void tryToSpawnShadow(ServerPlayer player){
 		if(!canSpawnShadow()){
 			return;
 		}
 		if(!isReady){
 			isReady = true;
-			if(level.isClientSide){
-                assert Minecraft.getInstance().player != null;
-                Minecraft.getInstance().player.displayClientMessage(Component.literal("info.the_casket_of_reveries.sureToSpawn"), true);
-			}
+			player.displayClientMessage(Component.literal("info.the_casket_of_reveries.sureToSpawn"), true);
+			return;
 		}
-		isReady = false;
-		spawnMyShadowBoss(level);
+		isReady = !spawnMyShadowBoss(player.serverLevel());
 	}
 
 	/**
@@ -62,19 +73,19 @@ public abstract class BossSpawnerBlockEntity<T extends Mob & ShadowableEntity> e
 	public abstract boolean canSpawnShadow();
 
 	public static void tick(Level level, BlockPos pos,  BlockState state, BossSpawnerBlockEntity<?> blockEntity) {
-		if (blockEntity.spawnedBoss || !blockEntity.anyPlayerInRange()) {
+		if (!TCRConfig.ENABLE_BOSS_SPAWN_BLOCK_LOAD.get() || blockEntity.spawnedBoss || !blockEntity.anyPlayerInRange()) {
 			return;
 		}
 		if (level.isClientSide()) {
-			// particles
-			double rx = pos.getX() + level.getRandom().nextFloat();
-			double ry = pos.getY() + level.getRandom().nextFloat();
-			double rz = pos.getZ() + level.getRandom().nextFloat();
-			level.addParticle(blockEntity.getSpawnerParticle(), rx, ry, rz, 0.0D, 0.0D, 0.0D);
+			if(blockEntity.getSpawnerParticle() != null){
+				double rx = pos.getX() + level.getRandom().nextFloat();
+				double ry = pos.getY() + level.getRandom().nextFloat();
+				double rz = pos.getZ() + level.getRandom().nextFloat();
+				level.addParticle(blockEntity.getSpawnerParticle(), rx, ry, rz, 0.0D, 0.0D, 0.0D);
+			}
 		} else {
 			if (level.getDifficulty() != Difficulty.PEACEFUL) {
 				if (blockEntity.spawnMyBoss((ServerLevel) level)) {
-					level.destroyBlock(pos, false);
 					blockEntity.spawnedBoss = true;
 				}
 			}
@@ -108,7 +119,7 @@ public abstract class BossSpawnerBlockEntity<T extends Mob & ShadowableEntity> e
 	public abstract ParticleOptions getSpawnerParticle();
 
 	protected int getRange() {
-		return SHORT_RANGE;
+		return DEFAULT_RANGE;
 	}
 
 	protected T makeMyCreature() {
