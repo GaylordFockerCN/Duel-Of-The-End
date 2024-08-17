@@ -7,6 +7,7 @@ import com.gaboj1.tcr.entity.custom.boss.yggdrasil.MagicProjectile;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.TreeClawEntity;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
 import com.gaboj1.tcr.entity.custom.boxer.BoxerEntity;
+import com.gaboj1.tcr.entity.custom.dreamspirit.CrabCrabYou;
 import com.gaboj1.tcr.entity.custom.dreamspirit.JellyCat;
 import com.gaboj1.tcr.entity.custom.dreamspirit.Squirrel;
 import com.gaboj1.tcr.entity.custom.snow_swordman.SnowSwordmanEntity;
@@ -127,8 +128,8 @@ public class TCRModEntities {
 			EntityType.Builder.of(JellyCat::new, MobCategory.CREATURE).sized(2.0f,1.75f));
 	public static final RegistryObject<EntityType<Squirrel>> SQUIRREL = register("squirrel",
 			EntityType.Builder.of(Squirrel::new, MobCategory.CREATURE));
-//	public static final RegistryObject<EntityType<Squirrel>> CRAB = register("crab",
-//			EntityType.Builder.of(Squirrel::new, MobCategory.CREATURE));
+	public static final RegistryObject<EntityType<CrabCrabYou>> CRAB = register("crab",
+			EntityType.Builder.of(CrabCrabYou::new, MobCategory.CREATURE));
 
 	public static final RegistryObject<EntityType<PastoralPlainVillager>> PASTORAL_PLAIN_VILLAGER = register("pastoral_plain_villager",
 			EntityType.Builder.of(PastoralPlainVillager::new, MobCategory.CREATURE));
@@ -178,6 +179,7 @@ public class TCRModEntities {
 		event.put(MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterEntity.setAttributes());
 		event.put(JELLY_CAT.get(), JellyCat.setAttributes());
 		event.put(SQUIRREL.get(), Squirrel.setAttributes());
+		event.put(CRAB.get(), CrabCrabYou.setAttributes());
 		event.put(PASTORAL_PLAIN_VILLAGER.get(), TCRVillager.setAttributes());
 		event.put(PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), TCRVillager.setAttributes());
 		event.put(PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), TCRVillager.setAttributes());
@@ -227,7 +229,9 @@ public class TCRModEntities {
 		event.register(JELLY_CAT.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				JellyCat::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(SQUIRREL.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				JellyCat::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+				Squirrel::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(CRAB.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				CrabCrabYou::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 
 		event.register(SMALL_TREE_MONSTER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				SmallTreeMonsterEntity::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);

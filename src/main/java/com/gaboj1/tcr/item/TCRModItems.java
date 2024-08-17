@@ -75,6 +75,12 @@ public class TCRModItems {
 	public static final RegistryObject<Item> JELLY_CAT_SPAWN_EGG = REGISTRY.register("jelly_cat_spawn_egg",
 		() -> new ForgeSpawnEggItem(TCRModEntities.JELLY_CAT, 0xD57E36, 0x1D0D00,
 			new Item.Properties()));
+	public static final RegistryObject<Item> SQUIRREL_SPAWN_EGG = REGISTRY.register("squirrel_spawn_egg",
+			() -> new ForgeSpawnEggItem(TCRModEntities.SQUIRREL, 0xD57E36, 0x1D0D00,
+					new Item.Properties()));
+	public static final RegistryObject<Item> CRAB_SPAWN_EGG = REGISTRY.register("crab_spawn_egg",
+			() -> new ForgeSpawnEggItem(TCRModEntities.CRAB, 0xD57E36, 0x1D0D00,
+					new Item.Properties()));
 	public static final RegistryObject<Item> MIDDLE_TREE_MONSTER_SPAWN_EGG = REGISTRY.register("middle_tree_monster_spawn_egg",
 			() -> new ForgeSpawnEggItem(TCRModEntities.MIDDLE_TREE_MONSTER, 0xD57E36, 0x1D0D00,
 					new Item.Properties()));

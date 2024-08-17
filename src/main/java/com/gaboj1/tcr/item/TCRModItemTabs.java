@@ -55,6 +55,8 @@ public class TCRModItemTabs {
 					.icon(() -> new ItemStack(TCRModItems.JELLY_CAT_SPAWN_EGG.get()))
 					.displayItems((parameters, tabData) -> {
 						tabData.accept(TCRModItems.JELLY_CAT_SPAWN_EGG.get());
+						tabData.accept(TCRModItems.SQUIRREL_SPAWN_EGG.get());
+						tabData.accept(TCRModItems.CRAB_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.SMALL_TREE_MONSTER_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.MIDDLE_TREE_MONSTER_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.TREE_GUARDIAN_SPAWN_EGG.get());
