@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.network.packet.clientbound;
 
 import com.gaboj1.tcr.network.packet.BasePacket;
-import com.gaboj1.tcr.network.packet.clientbound.clienthelp.HandlePortalBlockScreenPacket;
+import com.gaboj1.tcr.network.packet.clientbound.clienthelp.HandlePackets;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
@@ -21,6 +21,6 @@ public record PortalBlockScreenPacket(CompoundTag tag) implements BasePacket {
 
     @Override
     public void execute(Player playerEntity) {
-        HandlePortalBlockScreenPacket.handle(tag);
+        HandlePackets.handlePortalBlockScreenPacket(tag);
     }
 }

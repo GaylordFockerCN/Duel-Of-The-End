@@ -25,7 +25,7 @@ public class ModLangGenerator extends ModLangProvider {
 
         this.add("key.categories.tcr", "远梦之棺按键");
         this.addKeyMapping(KeyMappings.RELOAD, "火枪换弹");
-        this.addKeyMapping(KeyMappings.OPEN_PROGRESS, "打开进度");
+        this.addKeyMapping(KeyMappings.OPEN_PROGRESS, "查看进度");
 
         this.add("info.the_casket_of_reveries.enter_forbidden_biome","前面的区域，以后再来探索吧~");
         this.add("info.the_casket_of_reveries.teleport_lock","该区域尚未解锁");
@@ -71,7 +71,15 @@ public class ModLangGenerator extends ModLangProvider {
         this.add(TCRModItems.ELDER_STAFF.get(),"长老的拐杖");
         this.addItemUsageInfo(TCRModItems.ELDER_STAFF.get(),"长老生前用过的拐杖，上面还带着点血迹。");
         this.add(TCRModItems.TREE_DEMON_HORN.get(),"树魔之角");
-        this.addItemUsageInfo(TCRModItems.TREE_DEMON_HORN.get(),"树魔头上的角，上面还带着点血迹。");
+        this.addItemUsageInfo(TCRModItems.TREE_DEMON_HORN.get(),"树魔头上的角，上面还带着点血迹。可于铁匠铺交换高阶材料。");
+        this.add(TCRModItems.TREE_DEMON_MASK.get(),"树魔面具");
+        this.addItemUsageInfo(TCRModItems.TREE_DEMON_MASK.get(),"树魔掉落的面具，上面还带着点血迹。可于铁匠铺交换高阶材料。");
+        this.add(TCRModItems.TREE_DEMON_BRANCH.get(),"树魔之枝");
+        this.addItemUsageInfo(TCRModItems.TREE_DEMON_BRANCH.get(),"树魔的掉落物，上面还带着点血迹。可于铁匠铺交换高阶材料。");
+        this.add(TCRModItems.TREE_DEMON_BARK.get(),"树魔之皮");
+        this.addItemUsageInfo(TCRModItems.TREE_DEMON_BARK.get(),"树魔的掉落物，上面还带着点血迹。可于铁匠铺交换高阶材料。");
+        this.add(TCRModItems.WITHERING_TOUCH.get(),"枯萎之触");
+        this.addItemUsageInfo(TCRModItems.WITHERING_TOUCH.get(),"手持枯萎之触时，可以削弱树魔的力量。");
         this.add(TCRModItems.TREE_SPIRIT_WAND.get(),"树灵法杖");
         this.addItemInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"no_spirit_tree","密林灵树原木不足，无法召唤小树妖");
         this.addItemUsageInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"右键地面消耗密林原木和生命值召唤小树妖",1);
@@ -294,7 +302,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,-1,"若你曾冲破世界的蛋壳拥抱地面的身躯，那你一定能帮助我们解决危害着这个村子的密林魔物。恳请您助我们一臂之力!");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,0,"你，与我好像……不对，你不是投影，是完全的人！咳，你不是梦的居民。你一定能帮助我们解决危害着这个村子的密林魔物！");//
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,1,"只有精神才能入梦，我们只是投影，但你却是精神与肉体结合的完整之人。密林的魔物曾杀尽了穿过密林之人，只有我逃回了这里。魔物无时不危害着村民，恳请您助我们一臂之力！");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,2,"密林，就在 %s。勇者，千万不要受了那魔物的蛊惑！请收下我的诚意，愿为勇士尽绵薄之力。");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,2,"密林，就在 %s。勇者，千万不要受了那魔物的蛊惑！请收下我的诚意，愿为勇士尽绵薄之力。记住，密林中存在能削弱树魔力量的『枯萎之触』，找到它们能让你更轻松地击败树魔！");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,3,"（凝视着你，眼中充满了期待）");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,4,"（目光坚定）你带来的是希望的曙光，旅者。村庄的每个角落都感激你的勇气。");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,5,"你的名字将被铭记。请接受我们的祝福，愿你的道路永远光明！");

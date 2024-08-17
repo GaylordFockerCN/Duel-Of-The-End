@@ -71,8 +71,8 @@ public class TreeGuardianEntity extends Monster implements GeoEntity {
 
     public static AttributeSupplier setAttributes() {//生物属性
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, SaveUtil.getMobMultiplier(50))//最大血量
-                .add(Attributes.ATTACK_DAMAGE, SaveUtil.getWeaponMultiplier(6))//单次攻击伤害
+                .add(Attributes.MAX_HEALTH, 50)//最大血量
+                .add(Attributes.ATTACK_DAMAGE, 6)//单次攻击伤害
                 .add(Attributes.ATTACK_SPEED, 1.0f)//攻速
                 .add(Attributes.MOVEMENT_SPEED, 0.35f)//移速
                 .build();

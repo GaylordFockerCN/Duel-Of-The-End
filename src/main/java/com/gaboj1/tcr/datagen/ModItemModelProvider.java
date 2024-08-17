@@ -63,6 +63,14 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(TCRModItems.DREAMSCAPE_COIN_PLUS);
         simpleItem(TCRModItems.ORICHALCUM);
         simpleItem(TCRModItems.RAW_ORICHALCUM);
+
+
+        simpleItem(TCRModItems.TREE_DEMON_MASK);
+        simpleItem(TCRModItems.TREE_DEMON_BRANCH);
+        simpleItem(TCRModItems.TREE_DEMON_BARK);
+
+        simpleItem(TCRModItems.WITHERING_TOUCH);
+
         //handheldItem()会变很大个，适合用于武器什么的
         simpleItem(TCRModItems.BLUE_BANANA);
         simpleItem(TCRModItems.DREAM_TA);

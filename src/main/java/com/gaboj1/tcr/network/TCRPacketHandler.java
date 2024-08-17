@@ -23,6 +23,7 @@ public class TCRPacketHandler {
     public static synchronized void register() {
         // 发给客户端
         register(NPCDialoguePacket.class, NPCDialoguePacket::decode);
+        register(RenderWorldLevelPacket.class, RenderWorldLevelPacket::decode);
         register(PortalBlockScreenPacket.class, PortalBlockScreenPacket::decode);
         register(PersistentBoolDataSyncPacket.class, PersistentBoolDataSyncPacket::decode);
         register(PersistentIntDataSyncPacket.class, PersistentIntDataSyncPacket::decode);

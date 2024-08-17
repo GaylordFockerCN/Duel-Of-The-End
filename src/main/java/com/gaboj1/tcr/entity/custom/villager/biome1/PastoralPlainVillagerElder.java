@@ -30,6 +30,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
@@ -185,7 +186,15 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                 SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskBackToElder);
                 this.chat(BUILDER.buildDialogueAnswer(entityType,10));//再会，勇者！
                 SaveUtil.biome1.finish(SaveUtil.BiomeData.VILLAGER, ((ServerLevel) level()));
-                //TODO 获得进度，给予奖励
+                if(!DataManager.elderLoot2Got.getBool(player)){
+                    int i = 5;
+                    while(i-->0){
+                        ItemStack ammo = TCRModItems.DESERT_EAGLE_AMMO.get().getDefaultInstance();
+                        ammo.setCount(64);
+                        player.addItem(ammo);
+                    }
+                    DataManager.elderLoot2Got.putBool(player, true);
+                }
                 break;
         }
         this.setConversingPlayer(null);

@@ -133,23 +133,42 @@ public class ModEntityLootTables extends EntityLootSubProvider {
 
         add(TCRModEntities.YGGDRASIL.get(),
                 LootTable.lootTable()
-                        .withPool((LootPool.lootPool()
-                                .setRolls((UniformGenerator.between(0,2)))
-                                .add(LootItem.lootTableItem(TCRModItems.TREE_DEMON_HORN.get())))));
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(0, 2))
+                                .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.2F, 1))
+                                .add(LootItem.lootTableItem(TCRModItems.TREE_DEMON_HORN.get())))
+
+                        .withPool(LootPool.lootPool()
+                                .setRolls(ConstantValue.exactly(1))
+                                .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.2F, 1))
+                                .add(LootItem.lootTableItem(TCRModItems.TREE_DEMON_MASK.get())))
+
+                        .withPool(LootPool.lootPool()
+                                .setRolls(ConstantValue.exactly(1))
+                                .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.3F, 1))
+                                .add(LootItem.lootTableItem(TCRModItems.TREE_DEMON_BRANCH.get())))
+
+                        .withPool(LootPool.lootPool()
+                                .setRolls(ConstantValue.exactly(1))
+                                .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.3F, 1))
+                                .add(LootItem.lootTableItem(TCRModItems.TREE_DEMON_BARK.get())))
+
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(0, 1))
+                                .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.1F, 1))
+                                .add(LootItem.lootTableItem(TCRModItems.COPY_RESIN.get())))
+        );
 
         add(TCRModEntities.TREE_CLAW.get(), emptyLootTable());
 
-        add(TCRModEntities.SWORD.get(),
-                LootTable.lootTable()
-                        .withPool((LootPool.lootPool()
-                                .setRolls((UniformGenerator.between(0,2)))
-                                .add(LootItem.lootTableItem(TCRModItems.TREE_DEMON_HORN.get())))));
+        add(TCRModEntities.SWORD.get(),emptyLootTable());
 
-        add(TCRModEntities.RAIN_SCREEN_SWORD.get(),
-                LootTable.lootTable()
-                        .withPool((LootPool.lootPool()
-                                .setRolls((UniformGenerator.between(0,2)))
-                                .add(LootItem.lootTableItem(TCRModItems.TREE_DEMON_HORN.get())))));
+        add(TCRModEntities.RAIN_SCREEN_SWORD.get(),emptyLootTable());
 
 
     }

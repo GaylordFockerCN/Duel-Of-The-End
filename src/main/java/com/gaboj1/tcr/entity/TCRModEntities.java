@@ -127,6 +127,8 @@ public class TCRModEntities {
 			EntityType.Builder.of(JellyCat::new, MobCategory.CREATURE).sized(2.0f,1.75f));
 	public static final RegistryObject<EntityType<Squirrel>> SQUIRREL = register("squirrel",
 			EntityType.Builder.of(Squirrel::new, MobCategory.CREATURE));
+//	public static final RegistryObject<EntityType<Squirrel>> CRAB = register("crab",
+//			EntityType.Builder.of(Squirrel::new, MobCategory.CREATURE));
 
 	public static final RegistryObject<EntityType<PastoralPlainVillager>> PASTORAL_PLAIN_VILLAGER = register("pastoral_plain_villager",
 			EntityType.Builder.of(PastoralPlainVillager::new, MobCategory.CREATURE));

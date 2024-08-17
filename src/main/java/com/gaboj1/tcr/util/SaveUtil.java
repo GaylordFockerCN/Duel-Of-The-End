@@ -205,6 +205,7 @@ public class SaveUtil {
                 firstChoiceBiome = biome;
             }
             worldLevel++;
+
             for(Entity entity : level.getAllEntities()){
                 if(entity instanceof LevelableEntity levelableEntity){
                     levelableEntity.levelUp(worldLevel);

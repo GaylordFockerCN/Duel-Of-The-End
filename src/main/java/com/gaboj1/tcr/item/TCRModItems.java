@@ -45,7 +45,11 @@ public class TCRModItems {
 	public static final RegistryObject<Item> ORICHALCUM_BOOTS = REGISTRY.register("orichalcum_boots",
 			() -> new OrichalcumArmorItem(TCRArmorMaterials.ORICHALCUM, ArmorItem.Type.BOOTS, new Item.Properties()));
 	public static final RegistryObject<Item> TREE_SPIRIT_WAND = REGISTRY.register("tree_spirit_wand", TreeSpiritWand::new);
-	public static final RegistryObject<Item> TREE_DEMON_HORN = REGISTRY.register("tree_demon_horn", DropItem::new);
+	public static final RegistryObject<Item> TREE_DEMON_HORN = REGISTRY.register("tree_demon_horn", () -> new DropItem(new Item.Properties().rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> TREE_DEMON_MASK = REGISTRY.register("tree_demon_mask", () -> new DropItem(new Item.Properties().rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> TREE_DEMON_BRANCH = REGISTRY.register("tree_demon_branch", () -> new DropItem(new Item.Properties().rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> TREE_DEMON_BARK = REGISTRY.register("tree_demon_bark", () -> new DropItem(new Item.Properties().rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> WITHERING_TOUCH = REGISTRY.register("withering_touch", () -> new DropItem(new Item.Properties().rarity(Rarity.EPIC)));
 	public static final RegistryObject<Item> ELDER_STAFF = REGISTRY.register("elder_staff", DropItem::new);
 	public static final RegistryObject<Item> HOLY_SWORD = REGISTRY.register("holy_sword", FlySword::new);
 	public static final RegistryObject<Item> DREAMSCAPE_COIN = REGISTRY.register("dreamscape_coin",() ->  new DropItem(new Item.Properties().setNoRepair().rarity(Rarity.RARE)));

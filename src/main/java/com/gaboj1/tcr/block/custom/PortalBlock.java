@@ -17,6 +17,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -84,19 +85,14 @@ public class PortalBlock extends BaseEntityBlock{
         super.appendHoverText(p_49816_, p_49817_, components, p_49819_);
     }
 
-    //    @Override
-//    public void onBlockStateChange(LevelReader level, BlockPos pos, BlockState oldState, BlockState newState) {
-//        super.onBlockStateChange(level, pos, oldState, newState);
-//    }
-
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos blockPos, CollisionContext p_60558_) {
+    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos blockPos, @NotNull CollisionContext p_60558_) {
         return Block.box(0,0,0,32,32,32);
     }
 
     //粒子特效
     @Override
-    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
+    public void animateTick(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull RandomSource pRandom) {
         VoxelShape $$4 = this.getShape(pState, pLevel, pPos, CollisionContext.empty());
         Vec3 $$5 = $$4.bounds().getCenter();
         double $$6 = (double)pPos.getX() + $$5.x;
@@ -119,7 +115,7 @@ public class PortalBlock extends BaseEntityBlock{
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState state) {
         return new PortalBlockEntity(blockPos, state);
     }
 

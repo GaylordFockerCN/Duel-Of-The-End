@@ -6,7 +6,7 @@ import software.bernie.geckolib.renderer.GeoItemRenderer;
 
 public class DesertEagleItemRenderer extends GeoItemRenderer<DesertEagleItem> {
     public DesertEagleItemRenderer() {
-        super(new DesertEagleItemModel("textures/item/texturecrc.png"));
+        super(new DesertEagleItemModel());
     }
 
 }

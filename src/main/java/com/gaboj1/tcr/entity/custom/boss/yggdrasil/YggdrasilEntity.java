@@ -1,18 +1,22 @@
 package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.entity.spawner.EnforcedHomePoint;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ShadowableEntity;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
+import com.gaboj1.tcr.entity.custom.sprite.SpriteEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.client.TCRModSounds;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
+import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
+import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -33,6 +37,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -42,10 +47,13 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ForgeHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -182,20 +190,58 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     }
 
     /**
+     * 抄自父类的die，取消死亡姿势的播放
+     */
+    public void superDie(@NotNull DamageSource pDamageSource){
+        if (!ForgeHooks.onLivingDeath(this, pDamageSource)) {
+            if (!this.isRemoved() && !this.dead) {
+                Entity entity = pDamageSource.getEntity();
+                LivingEntity livingentity = this.getKillCredit();
+                if (this.deathScore >= 0 && livingentity != null) {
+                    livingentity.awardKillScore(this, this.deathScore, pDamageSource);
+                }
+
+                if (this.isSleeping()) {
+                    this.stopSleeping();
+                }
+
+                if (!this.level().isClientSide && this.hasCustomName()) {
+                    TheCasketOfReveriesMod.LOGGER.info("Named entity {} died: {}", this, this.getCombatTracker().getDeathMessage().getString());
+                }
+
+                this.dead = true;
+                this.getCombatTracker().recheckStatus();
+                Level level = this.level();
+                if (level instanceof ServerLevel serverlevel) {
+                    if (entity == null || entity.killedEntity(serverlevel, this)) {
+                        this.gameEvent(GameEvent.ENTITY_DIE);
+                        this.dropAllDeathLoot(pDamageSource);
+                        this.createWitherRose(livingentity);
+                    }
+
+                    this.level().broadcastEntityEvent(this, (byte)3);
+                }
+
+            }
+
+        }
+    }
+
+    /**
      * 不能真的死，剩下一口气还要对话
      * 如果boss已经死过了而再次死说明是历战，要直接死
      */
     @Override
     public void die(@NotNull DamageSource source) {
-        if(getEntityData().get(IS_SHADER) || source.isCreativePlayer()){
-            //二次挑战或者创哥则直接死
-            super.die(source);
+        if(getEntityData().get(IS_SHADER)){
+            //二次挑战则直接死 TODO 不知道为什么无法杀死
+            superDie(source);
         }
         getEntityData().set(IS_FIGHTING, false);
         if(!level().isClientSide){
             if(SaveUtil.biome1.isBossDie){
                 triggerAnim("Death","death");
-                super.die(source);
+                superDie(source);
                 return;
             }
             this.setHealth(1);
@@ -220,7 +266,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     public void realDie(DamageSource damageSource){
         this.setHealth(0);
         triggerAnim("Death","death");
-        super.die(damageSource);
+        superDie(damageSource);
         SaveUtil.biome1.isBossDie = true;
         SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskKillBoss);
         SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskBackToElder);
@@ -275,7 +321,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
             }
         }
 
-        //霸体时间判断
+        //霸体时间判断 TODO 不起作用？
         if(conversingPlayer != null){
             canBeHurt = false;
             navigation.stop();
@@ -401,6 +447,24 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
         Minecraft.getInstance().setScreen(builder.build());
     }
 
+    /**
+     * 根据手持的枯萎之触的物品数量来削弱树魔的属性
+     */
+    private void modifyAttribute(int count){
+        AttributeModifier healthModifier = new AttributeModifier("health", -50, AttributeModifier.Operation.ADDITION);
+        AttributeModifier attackSpeedModifier = new AttributeModifier("attackSpeed", -5, AttributeModifier.Operation.ADDITION);
+        AttributeModifier attackDamageModifier = new AttributeModifier("attackDamage", -2, AttributeModifier.Operation.ADDITION);
+        switch (count){
+            case 0:break;
+            case 1:
+                Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).addPermanentModifier(healthModifier);break;
+            case 2:
+                Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_SPEED)).addPermanentModifier(attackSpeedModifier);break;
+            default:
+                Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).addPermanentModifier(attackDamageModifier);
+        }
+    }
+
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID){
@@ -409,6 +473,11 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
                 SaveUtil.biome1.isBossTalked = true;
                 getEntityData().set(STATE, 1);
                 getEntityData().set(IS_FIGHTING, true);
+                for(ItemStack itemStack : player.getInventory().items){
+                    if(itemStack.is(TCRModItems.WITHERING_TOUCH.get())){
+                        modifyAttribute(itemStack.getCount());
+                    }
+                }
                 break;
             //选择处决
             case 1:
@@ -426,7 +495,10 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
             case 3:
                 SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskBackToBoss);
                 SaveUtil.biome1.finish(SaveUtil.BiomeData.BOSS, ((ServerLevel) level()));
-                //TODO: 颁奖了
+                if(!DataManager.boss1LootGot.getBool(player)){
+                    player.addItem(TCRModItems.TREE_SPIRIT_WAND.get().getDefaultInstance());
+                    DataManager.boss1LootGot.putBool(player, true);
+                }
                 return;//NOTE：颁奖后面还有对话，不能setConversingPlayer为Null
         }
         this.setConversingPlayer(null);
@@ -579,13 +651,13 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
             List<Player> players2 = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.forNonCombat(), yggdrasil, getPlayerAABB(yggdrasil.getOnPos(), 10));//创造测试用
             players.addAll(players2);
             for(Player player : players){
-                TreeGuardianEntity mob = TCRModEntities.TREE_GUARDIAN.get().spawn(((ServerLevel) yggdrasil.level()), player.getOnPos().above(3), MobSpawnType.NATURAL);
-                if(mob == null){
-                    return;
-                }
-                mob.setIsSummonedByBoss();
-                yggdrasil.level().addFreshEntity(mob);
                 if(yggdrasil.mobs.size() <= 10){
+                    SpriteEntity mob = TCRModEntities.SPRITE.get().spawn(((ServerLevel) yggdrasil.level()), player.getOnPos().above(3), MobSpawnType.NATURAL);
+                    if(mob == null){
+                        return;
+                    }
+                    mob.setTarget(player);
+                    yggdrasil.level().addFreshEntity(mob);
                     yggdrasil.mobs.add(mob.getId());
                 }
             }
@@ -698,13 +770,13 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
                 10, this::predicate));
 
         //自定义触发
-        controllers.add(new AnimationController<>(this, "Recover", 0, state -> PlayState.STOP)
+        controllers.add(new AnimationController<>(this, "Recover", 10, state -> PlayState.STOP)
                 .triggerableAnim("recover", RawAnimation.begin().then("recover", Animation.LoopType.PLAY_ONCE)));
-        controllers.add(new AnimationController<>(this, "Summon", 0, state -> PlayState.STOP)
+        controllers.add(new AnimationController<>(this, "Summon", 10, state -> PlayState.STOP)
                 .triggerableAnim("summon", RawAnimation.begin().then("attack1", Animation.LoopType.PLAY_ONCE)));
-        controllers.add(new AnimationController<>(this, "Attack", 0, state -> PlayState.CONTINUE)
+        controllers.add(new AnimationController<>(this, "Attack", 10, state -> PlayState.CONTINUE)
                 .triggerableAnim("attack", RawAnimation.begin().then("attack2", Animation.LoopType.PLAY_ONCE)));
-        controllers.add(new AnimationController<>(this, "Death", 0, state -> PlayState.STOP)
+        controllers.add(new AnimationController<>(this, "Death", 10, state -> PlayState.STOP)
                 .triggerableAnim("death", RawAnimation.begin().then("death", Animation.LoopType.PLAY_ONCE)));
 
     }
