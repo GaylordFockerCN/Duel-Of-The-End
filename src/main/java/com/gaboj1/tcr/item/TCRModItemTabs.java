@@ -92,6 +92,10 @@ public class TCRModItemTabs {
 				//掉落物
 				tabData.accept(TCRModItems.ELDER_STAFF.get());
 				tabData.accept(TCRModItems.TREE_DEMON_HORN.get());
+				tabData.accept(TCRModItems.TREE_DEMON_MASK.get());
+				tabData.accept(TCRModItems.TREE_DEMON_FRUIT.get());
+				tabData.accept(TCRModItems.TREE_DEMON_BRANCH.get());
+				tabData.accept(TCRModItems.WITHERING_TOUCH.get());
 
 				//盔甲
 				tabData.accept(TCRModItems.ORICHALCUM_HELMET.get());

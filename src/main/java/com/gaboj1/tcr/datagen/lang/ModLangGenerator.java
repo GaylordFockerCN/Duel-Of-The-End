@@ -76,8 +76,8 @@ public class ModLangGenerator extends ModLangProvider {
         this.addItemUsageInfo(TCRModItems.TREE_DEMON_MASK.get(),"树魔掉落的面具，上面还带着点血迹。可于铁匠铺交换高阶材料。");
         this.add(TCRModItems.TREE_DEMON_BRANCH.get(),"树魔之枝");
         this.addItemUsageInfo(TCRModItems.TREE_DEMON_BRANCH.get(),"树魔的掉落物，上面还带着点血迹。可于铁匠铺交换高阶材料。");
-        this.add(TCRModItems.TREE_DEMON_BARK.get(),"树魔之皮");
-        this.addItemUsageInfo(TCRModItems.TREE_DEMON_BARK.get(),"树魔的掉落物，上面还带着点血迹。可于铁匠铺交换高阶材料。");
+        this.add(TCRModItems.TREE_DEMON_FRUIT.get(),"树魔之果");
+        this.addItemUsageInfo(TCRModItems.TREE_DEMON_FRUIT.get(),"树魔的掉落物，上面还带着点血迹。可于铁匠铺交换高阶材料。");
         this.add(TCRModItems.WITHERING_TOUCH.get(),"枯萎之触");
         this.addItemUsageInfo(TCRModItems.WITHERING_TOUCH.get(),"手持枯萎之触时，可以削弱树魔的力量。");
         this.add(TCRModItems.TREE_SPIRIT_WAND.get(),"树灵法杖");

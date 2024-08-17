@@ -48,7 +48,7 @@ public class TCRModItems {
 	public static final RegistryObject<Item> TREE_DEMON_HORN = REGISTRY.register("tree_demon_horn", () -> new DropItem(new Item.Properties().rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> TREE_DEMON_MASK = REGISTRY.register("tree_demon_mask", () -> new DropItem(new Item.Properties().rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> TREE_DEMON_BRANCH = REGISTRY.register("tree_demon_branch", () -> new DropItem(new Item.Properties().rarity(Rarity.RARE)));
-	public static final RegistryObject<Item> TREE_DEMON_BARK = REGISTRY.register("tree_demon_bark", () -> new DropItem(new Item.Properties().rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> TREE_DEMON_FRUIT = REGISTRY.register("tree_demon_fruit", () -> new DropItem(new Item.Properties().rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> WITHERING_TOUCH = REGISTRY.register("withering_touch", () -> new DropItem(new Item.Properties().rarity(Rarity.EPIC)));
 	public static final RegistryObject<Item> ELDER_STAFF = REGISTRY.register("elder_staff", DropItem::new);
 	public static final RegistryObject<Item> HOLY_SWORD = REGISTRY.register("holy_sword", FlySword::new);

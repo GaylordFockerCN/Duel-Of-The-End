@@ -155,7 +155,7 @@ public class ModEntityLootTables extends EntityLootSubProvider {
                                 .setRolls(ConstantValue.exactly(1))
                                 .when(LootItemKilledByPlayerCondition.killedByPlayer())
                                 .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.3F, 1))
-                                .add(LootItem.lootTableItem(TCRModItems.TREE_DEMON_BARK.get())))
+                                .add(LootItem.lootTableItem(TCRModItems.TREE_DEMON_FRUIT.get())))
 
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 1))

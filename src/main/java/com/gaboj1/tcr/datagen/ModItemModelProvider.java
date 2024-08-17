@@ -64,10 +64,10 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(TCRModItems.ORICHALCUM);
         simpleItem(TCRModItems.RAW_ORICHALCUM);
 
-
+        simpleItem(TCRModItems.TREE_DEMON_HORN);
         simpleItem(TCRModItems.TREE_DEMON_MASK);
         simpleItem(TCRModItems.TREE_DEMON_BRANCH);
-        simpleItem(TCRModItems.TREE_DEMON_BARK);
+        simpleItem(TCRModItems.TREE_DEMON_FRUIT);
 
         simpleItem(TCRModItems.WITHERING_TOUCH);
 
