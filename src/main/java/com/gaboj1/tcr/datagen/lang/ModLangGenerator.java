@@ -151,6 +151,8 @@ public class ModLangGenerator extends ModLangProvider {
         this.addItemUsageInfo(TCRModItems.PINE_CONE.get(), "一种装饰和美食兼备的植物果实，常用于节日装饰。");
         this.add(TCRModItems.RED_WINE.get(), "红酒");
         this.addItemUsageInfo(TCRModItems.RED_WINE.get(), "一种经过发酵的葡萄酒，风味独特，适合与美食搭配。");
+        this.add(TCRModItems.CATNIP.get(), "猫薄荷");
+        this.addItemUsageInfo(TCRModItems.CATNIP.get(), "可以用于驯服猫猫果冻");
 
         this.add(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get(),"更好的结构方块");
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get(),"密林灵叶");
@@ -166,10 +168,12 @@ public class ModLangGenerator extends ModLangProvider {
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR.get(),"灵木门");
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_TRAPDOOR.get(),"灵木活板门");
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get(),"密林灵花");
+        this.add(TCRModBlocks.CATNIP.get(),"猫薄荷");
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING.get(),"密林灵树树苗");
         this.add(TCRModBlocks.PORTAL_BED.get(),"灵梦床");//等等，灵梦？
         this.add(TCRModBlocks.PORTAL_BLOCK.get(),"天域凭证");//传送石碑
         this.add(TCRModBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER.get(),"密林灵花盆栽");
+        this.add(TCRModBlocks.POTTED_CATNIP.get(),"猫薄荷盆栽");
         this.add(TCRModBlocks.ORICHALCUM_ORE.get(),"神金矿");
         this.add(TCRModBlocks.YGGDRASIL_BLOCK.get(),"Yggdrasil召唤石");
 

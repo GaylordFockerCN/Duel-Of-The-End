@@ -71,6 +71,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(TCRModItems.TREE_DEMON_BRANCH);
         simpleItem(TCRModItems.TREE_DEMON_FRUIT);
 
+        simpleItem(TCRModItems.CATNIP);
         simpleItem(TCRModItems.WITHERING_TOUCH);
 
         //handheldItem()会变很大个，适合用于武器什么的
@@ -92,6 +93,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(TCRModItems.RED_WINE);
 
         simpleBlockItemBlockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER);
+        simpleBlockItemBlockTexture(TCRModBlocks.CATNIP);
         saplingItem(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING);
         fenceItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE, TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS);
         simpleBlockItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR);

@@ -28,6 +28,7 @@ public class TCRModItemTabs {
 				tabData.accept(TCRModBlocks.PORTAL_BED.get());
 				tabData.accept(TCRModBlocks.PORTAL_BLOCK.get());
 				tabData.accept(TCRModBlocks.YGGDRASIL_BLOCK.get());
+				tabData.accept(TCRModBlocks.CATNIP.get());
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get());
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get());
@@ -131,6 +132,7 @@ public class TCRModItemTabs {
 				tabData.accept(TCRModItems.MAO_DAI.get());
 				tabData.accept(TCRModItems.PINE_CONE.get());
 				tabData.accept(TCRModItems.RED_WINE.get());
+				tabData.accept(TCRModItems.CATNIP.get());
 
 			}).build());
 

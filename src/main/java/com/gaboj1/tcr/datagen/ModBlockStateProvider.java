@@ -24,6 +24,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(TCRModBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER.get(), models().singleTexture("potted_dense_forest_spirit_flower", new ResourceLocation("flower_pot_cross"), "plant",
                 blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get())).renderType("cutout"));
 
+        simpleBlockWithItem(TCRModBlocks.CATNIP.get(), models().cross(blockTexture(TCRModBlocks.CATNIP.get()).getPath(),
+                blockTexture(TCRModBlocks.CATNIP.get())).renderType("cutout"));
+        simpleBlockWithItem(TCRModBlocks.POTTED_CATNIP.get(), models().singleTexture("potted_catnip", new ResourceLocation("flower_pot_cross"), "plant",
+                blockTexture(TCRModBlocks.CATNIP.get())).renderType("cutout"));
+
         logBlock(((RotatedPillarBlock) TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()));
         axisBlock(((RotatedPillarBlock) TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get()),blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()),blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()));
 

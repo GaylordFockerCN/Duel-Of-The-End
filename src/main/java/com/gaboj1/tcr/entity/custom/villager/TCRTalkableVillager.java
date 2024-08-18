@@ -62,8 +62,10 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
                 if(getSkinID() >= getMaleTypeCnt()){
                     setSkinID(-getFemaleTypeCnt());//无法区分0 和 -0
                 }
+                player.sendSystemMessage(Component.literal("skin ID has changed to：" + getSkinID() + "; name:" + getDisplayName().getString()));
+            } else {
+                player.sendSystemMessage(Component.literal("current skin ID：" + getSkinID() + "; name:" + getDisplayName().getString()));
             }
-            player.sendSystemMessage(Component.literal("current skin ID：" + getSkinID() + "; name:" + getDisplayName().getString()));
             return InteractionResult.SUCCESS;
         }
         if (hand == InteractionHand.MAIN_HAND) {

@@ -35,7 +35,10 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
 //        this.dropSelf(TCRModBlocks.PORTAL_BLOCK.get());
         this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
+//        this.dropOther(TCRModBlocks.CATNIP.get(), TCRModItems.CATNIP.get());
+        this.add(TCRModBlocks.CATNIP.get(), (block) -> this.createCopperLikeOreDrops(block, TCRModItems.CATNIP.get(), 1, 3));
         this.add(TCRModBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER.get(), createPotFlowerItemTable(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get()));
+        this.add(TCRModBlocks.POTTED_CATNIP.get(), createPotFlowerItemTable(TCRModBlocks.CATNIP.get()));
 
         this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get());
         this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get());

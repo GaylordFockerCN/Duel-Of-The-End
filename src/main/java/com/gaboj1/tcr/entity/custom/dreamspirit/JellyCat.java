@@ -3,6 +3,7 @@ package com.gaboj1.tcr.entity.custom.dreamspirit;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.ManySkinEntity;
 import com.gaboj1.tcr.client.TCRModSounds;
+import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -12,6 +13,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
@@ -27,7 +30,9 @@ import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -113,7 +118,7 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
      * @param player
      */
     @Override
-    public void tame(Player player) {
+    public void tame(@NotNull Player player) {
         if(player instanceof ServerPlayer serverPlayer){
             serverPlayer.getPersistentData().putBoolean("tamed_jelly_cat"+Math.abs(getSkinID()),true);
             boolean isAllTamed = true;
@@ -129,6 +134,16 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
             }
         }
         super.tame(player);
+    }
+
+    @Override
+    public @NotNull InteractionResult mobInteract(@NotNull Player pPlayer, @NotNull InteractionHand pHand) {
+        ItemStack handItem = pPlayer.getItemInHand(pHand);
+        if(handItem.is(TCRModItems.CATNIP.get())){
+            handItem.shrink(1);
+            this.tame(pPlayer);
+        }
+        return super.mobInteract(pPlayer, pHand);
     }
 
     public FaceID getFaceID() {

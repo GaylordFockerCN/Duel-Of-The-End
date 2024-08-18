@@ -107,6 +107,7 @@ public class TheCasketOfReveriesMod {
         TCRPacketHandler.register();
         event.enqueueWork(() -> {
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.getId(), TCRModBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(TCRModBlocks.CATNIP.getId(), TCRModBlocks.POTTED_CATNIP);
         });
         try{
             File dir = FMLPaths.CONFIGDIR.get().resolve(TheCasketOfReveriesMod.MOD_ID).toFile();

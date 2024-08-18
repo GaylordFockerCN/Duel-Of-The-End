@@ -35,6 +35,15 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
         super(entityType, level,1);
     }
 
+    @Override
+    public int getMaleTypeCnt() {
+        return 5;
+    }
+    @Override
+    public int getFemaleTypeCnt() {
+        return 4;
+    }
+
     /**
      * 对话窗口内容。为了防止做太多的类而挤到一起（何尝不是一种屎qwq）
      * 后来因为对话越来越多，才推出了皮肤id+对话id的写法，但是旧的懒得改了。。
