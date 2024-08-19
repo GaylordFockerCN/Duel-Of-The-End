@@ -6,6 +6,7 @@ import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.state.BlockState;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -53,6 +54,6 @@ public class YggdrasilSpawnerBlockEntity extends BossSpawnerBlockEntity<Yggdrasi
 
 	@Override
 	public ParticleOptions getSpawnerParticle() {
-		return null;
+		return ParticleTypes.PORTAL;
 	}
 }

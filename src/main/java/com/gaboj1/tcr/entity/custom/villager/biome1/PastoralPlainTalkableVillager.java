@@ -55,10 +55,11 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
         //构建对话系统
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
         Random random = new Random();
+
+        Component greeting1 = BUILDER.buildDialogueAnswer(entityType,-3 + random.nextInt(2));
         switch (getSkinID()){
             //商人 对话id分配：-3~-1 返回值分配：-1 (被工匠抢先了awa只能用负数了awa）
             case 0:
-                Component greeting1 = BUILDER.buildDialogueAnswer(entityType,-3 + random.nextInt(2));
                 builder.start(greeting1)
                         .addFinalChoice((BUILDER.buildDialogueOption(entityType,-3)), (byte) -1);
                 break;
@@ -140,9 +141,15 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                                 )
                 );
                 break;
+            //女商人 返回值分配：10
             case -3:
+                builder.start(greeting1)
+                        .addFinalChoice((BUILDER.buildDialogueOption(entityType,-3)), (byte) 11);
                 break;
+            //女商人 返回值分配：11
             case -4:
+                builder.start(greeting1)
+                        .addFinalChoice((BUILDER.buildDialogueOption(entityType,-3)), (byte) 12);
                 break;
 
         }
@@ -297,6 +304,44 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                                 new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
                                 new ItemStack(TCRModItems.DREAM_TA.get(), 1),
                                 16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
+                                new ItemStack(TCRModItems.JUICE_TEA.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 20),
+                                new ItemStack(TCRModItems.HOT_CHOCOLATE.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
+                                new ItemStack(TCRModItems.COOKIE.get(), 2),
+                                16, 0, 0.02f)
+                );
+                break;
+            case 11:
+                chat(BUILDER.buildDialogueAnswer(entityType,-1,false));
+                startCustomTrade(player,
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 32),
+                                new ItemStack(TCRModItems.BEER.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
+                                new ItemStack(TCRModItems.DRINK1.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
+                                new ItemStack(TCRModItems.DRINK2.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
+                                new ItemStack(TCRModItems.DREAM_TA.get(), 1),
+                                16, 0, 0.02f)
+                );
+                break;
+            case 12:
+                chat(BUILDER.buildDialogueAnswer(entityType,-1,false));
+                startCustomTrade(player,
                         new MerchantOffer(
                                 new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
                                 new ItemStack(TCRModItems.JUICE_TEA.get(), 1),
