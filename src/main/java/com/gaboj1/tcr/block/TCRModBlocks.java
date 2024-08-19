@@ -41,7 +41,7 @@ public class TCRModBlocks {
                     BlockBehaviour.Properties.copy(Blocks.POTTED_POPPY).noOcclusion()));
 
     public static final RegistryObject<Block> CATNIP = registerBlock("catnip_block",
-            ()-> new FlowerBlock(() -> MobEffects.POISON, 5, BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
+            ()-> new FlowerBlock(() -> MobEffects.SLOW_FALLING, 0, BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
     public static final RegistryObject<Block> POTTED_CATNIP = REGISTRY.register("potted_catnip",
             ()-> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), TCRModBlocks.CATNIP,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_POPPY).noOcclusion()));

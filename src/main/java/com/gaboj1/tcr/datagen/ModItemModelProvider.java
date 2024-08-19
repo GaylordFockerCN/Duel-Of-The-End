@@ -73,6 +73,11 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         simpleItem(TCRModItems.CATNIP);
         simpleItem(TCRModItems.WITHERING_TOUCH);
+//        simpleItem(TCRModItems.HEART_OF_THE_SAPLING);
+//        simpleItem(TCRModItems.ESSENCE_OF_THE_ANCIENT_TREE);
+//        simpleItem(TCRModItems.BARK_OF_THE_GUARDIAN);
+//        simpleItem(TCRModItems.STARLIT_DEWDROP);
+        simpleItem(TCRModItems.DENSE_FOREST_CERTIFICATE);
 
         //handheldItem()会变很大个，适合用于武器什么的
         simpleItem(TCRModItems.BLUE_BANANA);

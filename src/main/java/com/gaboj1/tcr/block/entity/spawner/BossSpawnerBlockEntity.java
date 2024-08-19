@@ -57,6 +57,7 @@ public abstract class BossSpawnerBlockEntity<T extends Mob & ShadowableEntity> e
 	 */
 	public void tryToSpawnShadow(ServerPlayer player){
 		if(!canSpawnShadow()){
+			player.displayClientMessage(Component.literal("info.the_casket_of_reveries.cannotSpawn"), true);
 			return;
 		}
 		if(!isReady){

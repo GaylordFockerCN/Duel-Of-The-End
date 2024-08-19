@@ -18,7 +18,8 @@ public class YggdrasilBlockRenderer extends GeoBlockRenderer<YggdrasilSpawnerBlo
     //没法继承render
     @Override
     public void defaultRender(PoseStack poseStack, YggdrasilSpawnerBlockEntity animatable, MultiBufferSource bufferSource, @Nullable RenderType renderType, @Nullable VertexConsumer buffer, float yaw, float partialTick, int packedLight) {
-        poseStack.scale(2.0f,2.0f,2.0f);
+        poseStack.translate(-2, 0, -2);
+        poseStack.scale(5.0f,5.0f,5.0f);
         super.defaultRender(poseStack, animatable, bufferSource, renderType, buffer, yaw, partialTick, packedLight);
     }
 }

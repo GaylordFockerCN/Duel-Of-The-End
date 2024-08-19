@@ -32,7 +32,8 @@ public class ModLangGenerator extends ModLangProvider {
         this.add("info.the_casket_of_reveries.teleport_unlock","成功激活此锚点！");
         this.add("info.the_casket_of_reveries.boss1invincible","摧毁树爪或小怪以解除伊格德拉希尔无敌状态");
         this.add("info.the_casket_of_reveries.alreadyAddWhite","你已经是村民阵营了，不能伤害村民哦");
-        this.add("info.the_casket_of_reveries.sureToSpawn","你已经是村民阵营了，不能伤害村民哦");
+        this.add("info.the_casket_of_reveries.cannotSpawn","目前无法召唤！");
+        this.add("info.the_casket_of_reveries.sureToSpawn","再次右键以召唤BOSS（用于刷材料，不影响剧情）");
 
         this.add("the_casket_of_reveries.button.boss1","泰兰妮尔之心");
         this.add("the_casket_of_reveries.button.boss2","九霄");
@@ -78,8 +79,18 @@ public class ModLangGenerator extends ModLangProvider {
         this.addItemUsageInfo(TCRModItems.TREE_DEMON_BRANCH.get(),"树魔的掉落物，上面还带着点血迹。可于铁匠铺交换高阶材料。");
         this.add(TCRModItems.TREE_DEMON_FRUIT.get(),"树魔之果");
         this.addItemUsageInfo(TCRModItems.TREE_DEMON_FRUIT.get(),"树魔的掉落物，上面还带着点血迹。可于铁匠铺交换高阶材料。");
+        this.add(TCRModItems.HEART_OF_THE_SAPLING.get(),"树苗之心");
+        this.addItemUsageInfo(TCRModItems.HEART_OF_THE_SAPLING.get(),"小树妖的掉落物。");
+        this.add(TCRModItems.ESSENCE_OF_THE_ANCIENT_TREE.get(),"古木之髓");
+        this.addItemUsageInfo(TCRModItems.ESSENCE_OF_THE_ANCIENT_TREE.get(),"树妖的掉落物。");
+        this.add(TCRModItems.BARK_OF_THE_GUARDIAN.get(),"守护者之皮");
+        this.addItemUsageInfo(TCRModItems.BARK_OF_THE_GUARDIAN.get(),"森林守护者的掉落物。");
+        this.add(TCRModItems.STARLIT_DEWDROP.get(),"星光露珠");
+        this.addItemUsageInfo(TCRModItems.STARLIT_DEWDROP.get(),"精灵的掉落物。");
         this.add(TCRModItems.WITHERING_TOUCH.get(),"枯萎之触");
         this.addItemUsageInfo(TCRModItems.WITHERING_TOUCH.get(),"手持枯萎之触时，可以削弱树魔的力量。");
+        this.add(TCRModItems.DENSE_FOREST_CERTIFICATE.get(),"密林之证");
+        this.addItemUsageInfo(TCRModItems.DENSE_FOREST_CERTIFICATE.get(),"回溯密林群系事件完成的证明。");
         this.add(TCRModItems.TREE_SPIRIT_WAND.get(),"树灵法杖");
         this.addItemInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"no_spirit_tree","密林灵树原木不足，无法召唤小树妖");
         this.addItemUsageInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"右键地面消耗密林原木和生命值召唤小树妖",1);

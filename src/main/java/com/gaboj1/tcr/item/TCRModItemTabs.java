@@ -107,6 +107,7 @@ public class TCRModItemTabs {
 				tabData.accept(TCRModItems.ORICHALCUM_BOOTS.get());
 
 				//货币
+				tabData.accept(TCRModItems.DENSE_FOREST_CERTIFICATE.get());
 				tabData.accept(TCRModItems.DREAMSCAPE_COIN.get());
 				tabData.accept(TCRModItems.DREAMSCAPE_COIN_PLUS.get());
 				tabData.accept(TCRModItems.RAW_ORICHALCUM.get());

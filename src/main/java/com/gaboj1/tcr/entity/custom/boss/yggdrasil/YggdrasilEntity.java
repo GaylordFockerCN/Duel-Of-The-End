@@ -542,12 +542,12 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
 
     @Override
     public boolean isShadow() {
-        return false;
+        return getEntityData().get(IS_SHADER);
     }
 
     @Override
     public void setShadow() {
-
+        getEntityData().set(IS_SHADER, true);
     }
 
     /**
