@@ -203,6 +203,11 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 chat(BUILDER.buildDialogueAnswer(entityType,1,1,false));
                 startCustomTrade(player,
                         new MerchantOffer(
+                                new ItemStack(TCRModItems.TREE_DEMON_FRUIT.get(), 1),
+                                new ItemStack(TCRModItems.TREE_DEMON_HORN.get(), 1),
+                                new ItemStack(TCRModItems.TREE_SPIRIT_WAND.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
                                 new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 64),
                                 new ItemStack(TCRModItems.DESERT_EAGLE.get(), 1),
                                 16, 0, 0.02f),
@@ -266,16 +271,29 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
             case 10:
                 chat(BUILDER.buildDialogueAnswer(entityType,getSkinID(), 3,false));//啊，欸，很厉害的样子
                 break;
+            //猎人
             case 5:
                 chat(BUILDER.buildDialogueAnswer(entityType,15,false));
                 startCustomTrade(player,
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
-                                new ItemStack(TCRModItems.BEER.get(), 1),
+                                new ItemStack(TCRModItems.HEART_OF_THE_SAPLING.get(), 4),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
-                                new ItemStack(TCRModItems.DRINK2.get(), 1),
+                                new ItemStack(TCRModItems.ESSENCE_OF_THE_ANCIENT_TREE.get(), 16),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 5),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.BARK_OF_THE_GUARDIAN.get(), 16),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 20),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.STARLIT_DEWDROP.get(), 16),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 15),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 5),
+                                new ItemStack(TCRModItems.BASIC_RESIN.get(), 1),
                                 16, 0, 0.02f)
                 );
                 break;

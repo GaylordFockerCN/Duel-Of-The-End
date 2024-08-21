@@ -193,6 +193,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                         ammo.setCount(64);
                         player.addItem(ammo);
                     }
+                    player.addItem(TCRModItems.DENSE_FOREST_CERTIFICATE.get().getDefaultInstance());
                     DataManager.elderLoot2Got.putBool(player, true);
                 }
                 break;

@@ -49,19 +49,6 @@ public class ModEntityLootTables extends EntityLootSubProvider {
         add(TCRModEntities.YUN_YI.get(), emptyLootTable());
         add(TCRModEntities.YAN_XIN.get(), emptyLootTable());
 
-        add(TCRModEntities.SMALL_TREE_MONSTER.get(),
-                LootTable.lootTable()
-                        .withPool(LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(0, 4))
-                                .add(LootItem.lootTableItem(TCRModItems.BASIC_RESIN.get())))
-        );
-
-        add(TCRModEntities.SPRITE.get(),
-                LootTable.lootTable()
-                        .withPool(LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(0, 0))
-                                .add(LootItem.lootTableItem(TCRModItems.BASIC_RESIN.get())))
-        );
 
         add(TCRModEntities.TIGER.get(),
                 LootTable.lootTable()
@@ -105,6 +92,14 @@ public class ModEntityLootTables extends EntityLootSubProvider {
                                 .add(LootItem.lootTableItem(TCRModItems.BASIC_RESIN.get())))
         );
 
+        /*Biome1 start*/
+        add(TCRModEntities.SMALL_TREE_MONSTER.get(),
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(0, 2))
+                                .add(LootItem.lootTableItem(TCRModItems.HEART_OF_THE_SAPLING.get())))
+        );
+
         add(TCRModEntities.MIDDLE_TREE_MONSTER.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
@@ -112,14 +107,14 @@ public class ModEntityLootTables extends EntityLootSubProvider {
                                 .add(LootItem.lootTableItem(TCRModItems.BASIC_RESIN.get())))
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 2))
-                                .add(LootItem.lootTableItem(TCRModItems.INTERMEDIATE_RESIN.get())))
+                                .add(LootItem.lootTableItem(TCRModItems.ESSENCE_OF_THE_ANCIENT_TREE.get())))
         );
 
         add(TCRModEntities.TREE_GUARDIAN.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 2))
-                                .add(LootItem.lootTableItem(TCRModItems.INTERMEDIATE_RESIN.get())))
+                                .add(LootItem.lootTableItem(TCRModItems.BARK_OF_THE_GUARDIAN.get())))
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(1, 2))
                                 .add(LootItem.lootTableItem(TCRModItems.INTERMEDIATE_RESIN.get()).setWeight(1))
@@ -130,6 +125,13 @@ public class ModEntityLootTables extends EntityLootSubProvider {
                                 .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.025F, 0.005F))
                                 .add(LootItem.lootTableItem(TCRModItems.SUPER_RESIN.get()))
                                 .add(LootItem.lootTableItem(TCRModItems.COPY_RESIN.get())))
+        );
+
+        add(TCRModEntities.SPRITE.get(),
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(0, 2))
+                                .add(LootItem.lootTableItem(TCRModItems.STARLIT_DEWDROP.get())))
         );
 
         add(TCRModEntities.YGGDRASIL.get(),
@@ -166,6 +168,7 @@ public class ModEntityLootTables extends EntityLootSubProvider {
         );
 
         add(TCRModEntities.TREE_CLAW.get(), emptyLootTable());
+        /*Biome1 end*/
 
         add(TCRModEntities.SWORD.get(),emptyLootTable());
 

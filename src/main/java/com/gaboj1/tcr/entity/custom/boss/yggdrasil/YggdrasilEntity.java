@@ -497,6 +497,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
                 SaveUtil.biome1.finish(SaveUtil.BiomeData.BOSS, ((ServerLevel) level()));
                 if(!DataManager.boss1LootGot.getBool(player)){
                     player.addItem(TCRModItems.TREE_SPIRIT_WAND.get().getDefaultInstance());
+                    player.addItem(TCRModItems.DENSE_FOREST_CERTIFICATE.get().getDefaultInstance());
                     DataManager.boss1LootGot.putBool(player, true);
                 }
                 return;//NOTE：颁奖后面还有对话，不能setConversingPlayer为Null

@@ -99,6 +99,10 @@ public class TCRModItemTabs {
 				tabData.accept(TCRModItems.TREE_DEMON_FRUIT.get());
 				tabData.accept(TCRModItems.TREE_DEMON_BRANCH.get());
 				tabData.accept(TCRModItems.WITHERING_TOUCH.get());
+				tabData.accept(TCRModItems.HEART_OF_THE_SAPLING.get());
+				tabData.accept(TCRModItems.ESSENCE_OF_THE_ANCIENT_TREE.get());
+				tabData.accept(TCRModItems.BARK_OF_THE_GUARDIAN.get());
+				tabData.accept(TCRModItems.STARLIT_DEWDROP.get());
 
 				//盔甲
 				tabData.accept(TCRModItems.ORICHALCUM_HELMET.get());
