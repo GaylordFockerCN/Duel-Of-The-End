@@ -48,7 +48,7 @@ public class SpriteEntity extends Monster implements GeoEntity {
             return PlayState.CONTINUE;
         }
         tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.idle", Animation.LoopType.LOOP));
-        return PlayState.STOP;
+        return PlayState.CONTINUE;
     }
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
