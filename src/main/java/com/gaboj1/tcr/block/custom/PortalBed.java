@@ -43,15 +43,18 @@ public class PortalBed extends BedBlock {
             if (pPlayer.level() instanceof ServerLevel serverlevel && canSetSpawn(serverlevel) && !(Boolean)pState.getValue(OCCUPIED) ) {
 
                 MinecraftServer minecraftserver = serverlevel.getServer();
-                ResourceKey<Level> resourcekey = TCRConfig.MORE_HOLE.get()?
-                        (pPlayer.level().dimension() == TCRDimension.SKY_ISLAND_LEVEL_KEY ?
-                                Level.OVERWORLD : TCRDimension.SKY_ISLAND_LEVEL_KEY):
+                ResourceKey<Level> resourcekey =
+//                        TCRConfig.MORE_HOLE.get()?
+//                        (pPlayer.level().dimension() == TCRDimension.SKY_ISLAND_LEVEL_KEY ?
+//                                Level.OVERWORLD : TCRDimension.SKY_ISLAND_LEVEL_KEY):
                         (pPlayer.level().dimension() == TCRDimension.P_SKY_ISLAND_LEVEL_KEY ?
                                 Level.OVERWORLD : TCRDimension.P_SKY_ISLAND_LEVEL_KEY);
 
                 ServerLevel portalDimension = minecraftserver.getLevel(resourcekey);
                 if (portalDimension != null && !pPlayer.isPassenger()) {
-                    if(resourcekey == (TCRConfig.MORE_HOLE.get()?TCRDimension.SKY_ISLAND_LEVEL_KEY:TCRDimension.P_SKY_ISLAND_LEVEL_KEY)) {
+                    if(resourcekey ==
+//                            (TCRConfig.MORE_HOLE.get() ? TCRDimension.SKY_ISLAND_LEVEL_KEY :
+                                    TCRDimension.P_SKY_ISLAND_LEVEL_KEY) {
                         pPlayer.changeDimension(portalDimension, new TCRTeleporter(pPos, true));
                         TCRAdvancementData.getAdvancement(TheCasketOfReveriesMod.MOD_ID, (ServerPlayer) pPlayer);
                         TCRAdvancementData.getAdvancement("enter_realm_of_the_dream", (ServerPlayer) pPlayer);

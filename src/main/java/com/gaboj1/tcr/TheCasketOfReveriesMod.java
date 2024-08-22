@@ -165,6 +165,8 @@ public class TheCasketOfReveriesMod {
             EntityRenderers.register(TCRModEntities.SQUIRREL.get(), SquirrelRenderer::new);
             EntityRenderers.register(TCRModEntities.CRAB.get(), CrabRenderer::new);
 
+            EntityRenderers.register(TCRModEntities.P1NERO.get(), TCRVillagerRenderer::new);
+
             EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), TCRVillagerRenderer::new);
             EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), TCRVillagerRenderer::new);
             EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), TCRVillagerRenderer::new);

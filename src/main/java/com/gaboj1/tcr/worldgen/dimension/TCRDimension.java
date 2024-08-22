@@ -27,12 +27,12 @@ public class TCRDimension {
     //Realm of the Dream 梦之域
 
     //带坑版
-    public static final ResourceKey<LevelStem> SKY_ISLAND_KEY = ResourceKey.create(Registries.LEVEL_STEM,
-            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "realm_of_the_dream"));
-    public static final ResourceKey<Level> SKY_ISLAND_LEVEL_KEY = ResourceKey.create(Registries.DIMENSION,
-            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "realm_of_the_dream"));
-    public static final ResourceKey<DimensionType> SKY_ISLAND_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
-            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "realm_of_the_dream_type"));
+//    public static final ResourceKey<LevelStem> SKY_ISLAND_KEY = ResourceKey.create(Registries.LEVEL_STEM,
+//            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "realm_of_the_dream"));
+//    public static final ResourceKey<Level> SKY_ISLAND_LEVEL_KEY = ResourceKey.create(Registries.DIMENSION,
+//            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "realm_of_the_dream"));
+//    public static final ResourceKey<DimensionType> SKY_ISLAND_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
+//            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "realm_of_the_dream_type"));
     //平坦版
 
     public static final ResourceKey<LevelStem> P_SKY_ISLAND_KEY = ResourceKey.create(Registries.LEVEL_STEM,
@@ -62,7 +62,7 @@ public class TCRDimension {
                 new DimensionType.MonsterSettings(false, false, ConstantInt.of(0), 0)));
     }
     public static void bootstrapType(BootstapContext<DimensionType> context) {
-        bootstrapType(SKY_ISLAND_TYPE,context);
+//        bootstrapType(SKY_ISLAND_TYPE,context);
         bootstrapType(P_SKY_ISLAND_TYPE,context);
     }
 
@@ -72,14 +72,14 @@ public class TCRDimension {
         HolderGetter<DimensionType> dimTypes = context.lookup(Registries.DIMENSION_TYPE);
         HolderGetter<NoiseGeneratorSettings> noiseGenSettings = context.lookup(Registries.NOISE_SETTINGS);
 
-        //空岛版本
-        NoiseBasedChunkGenerator wrappedChunkGenerator = new NoiseBasedChunkGenerator(
-                TCRBiomeProvider.create(biomeRegistry),
-                noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS));
+//        //空岛版本
+//        NoiseBasedChunkGenerator wrappedChunkGenerator = new NoiseBasedChunkGenerator(
+//                TCRBiomeProvider.create(biomeRegistry),
+//                noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS));
 
-        TCRChunkGenerator chunkGenerator = new TCRChunkGenerator(wrappedChunkGenerator,noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS));
-        LevelStem stem = new LevelStem(dimTypes.getOrThrow(TCRDimension.SKY_ISLAND_TYPE), chunkGenerator);
-        context.register(SKY_ISLAND_KEY, stem);
+//        TCRChunkGenerator chunkGenerator = new TCRChunkGenerator(wrappedChunkGenerator,noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS));
+//        LevelStem stem = new LevelStem(dimTypes.getOrThrow(TCRDimension.SKY_ISLAND_TYPE), chunkGenerator);
+//        context.register(SKY_ISLAND_KEY, stem);
 
 
         //平坦版

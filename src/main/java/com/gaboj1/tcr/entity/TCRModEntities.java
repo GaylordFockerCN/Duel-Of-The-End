@@ -20,6 +20,7 @@ import com.gaboj1.tcr.entity.custom.tiger.TigerEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.MiddleTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.tree_monsters.TreeGuardianEntity;
+import com.gaboj1.tcr.entity.custom.villager.P1nero;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainStationaryVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainTalkableVillager;
@@ -131,6 +132,9 @@ public class TCRModEntities {
 	public static final RegistryObject<EntityType<CrabCrabYou>> CRAB = register("crab",
 			EntityType.Builder.of(CrabCrabYou::new, MobCategory.CREATURE));
 
+	public static final RegistryObject<EntityType<P1nero>> P1NERO = register("p1nero",
+			EntityType.Builder.of(P1nero::new, MobCategory.CREATURE));
+
 	public static final RegistryObject<EntityType<PastoralPlainVillager>> PASTORAL_PLAIN_VILLAGER = register("pastoral_plain_villager",
 			EntityType.Builder.of(PastoralPlainVillager::new, MobCategory.CREATURE));
 	public static final RegistryObject<EntityType<PastoralPlainTalkableVillager>> PASTORAL_PLAIN_TALKABLE_VILLAGER = register("pastoral_plain_talkable_villager",
@@ -180,6 +184,7 @@ public class TCRModEntities {
 		event.put(JELLY_CAT.get(), JellyCat.setAttributes());
 		event.put(SQUIRREL.get(), Squirrel.setAttributes());
 		event.put(CRAB.get(), CrabCrabYou.setAttributes());
+		event.put(P1NERO.get(), TCRVillager.setAttributes());
 		event.put(PASTORAL_PLAIN_VILLAGER.get(), TCRVillager.setAttributes());
 		event.put(PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), TCRVillager.setAttributes());
 		event.put(PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), TCRVillager.setAttributes());
@@ -204,6 +209,10 @@ public class TCRModEntities {
 
 	@SubscribeEvent
 	public static void entitySpawnRestriction(SpawnPlacementRegisterEvent event) {
+
+		event.register(P1NERO.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				P1nero::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+
 		event.register(PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				PastoralPlainTalkableVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,

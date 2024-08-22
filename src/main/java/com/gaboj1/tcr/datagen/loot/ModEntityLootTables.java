@@ -38,6 +38,8 @@ public class ModEntityLootTables extends EntityLootSubProvider {
         add(TCRModEntities.SQUIRREL.get(), emptyLootTable());//TODO 加点残忍的掉落物
         add(TCRModEntities.CRAB.get(), emptyLootTable());//TODO 加点残忍的掉落物
 
+        add(TCRModEntities.P1NERO.get(), emptyLootTable());
+
         add(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), emptyLootTable());
         add(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), emptyLootTable());
         add(TCRModEntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), emptyLootTable());

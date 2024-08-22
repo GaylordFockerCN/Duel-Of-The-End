@@ -58,9 +58,9 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
     @Override
     public void buildSurface(WorldGenRegion pLevel, StructureManager pStructureManager, RandomState pRandom, ChunkAccess pChunk) {
         super.buildSurface(pLevel, pStructureManager, pRandom, pChunk);
-        if(TCRConfig.MORE_HOLE.get()){
-            fixPrimerSurface(pLevel);
-        }
+//        if(TCRConfig.MORE_HOLE.get()){
+//            fixPrimerSurface(pLevel);
+//        }
         buildPeak(pLevel);
     }
 
@@ -157,9 +157,9 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
                 }
 
                 if(gBase == 75) {
-                    if(TCRConfig.MORE_HOLE.get()){
-                        continue;//不填坑
-                    }
+//                    if(TCRConfig.MORE_HOLE.get()){
+//                        continue;//不填坑
+//                    }
                     gBase = 77;//TODO 填坑，但是数值有待调
                 }
 

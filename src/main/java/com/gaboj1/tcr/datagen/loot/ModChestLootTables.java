@@ -102,7 +102,7 @@ public class ModChestLootTables implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(TCRModItems.RAW_ORICHALCUM.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 8.0F)))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 3.0F))
-                        .add(LootItem.lootTableItem(TCRModItems.DESERT_EAGLE_AMMO.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 64.0F)))
+                        .add(LootItem.lootTableItem(TCRModItems.DESERT_EAGLE_AMMO.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 6.0F)))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 2.0F))
                         .add(LootItem.lootTableItem(TCRModItems.ORICHALCUM.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))

@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.StructureBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.StructureMode;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Iterator;
 
@@ -23,6 +24,14 @@ public class BetterStructureBlockRenderer extends StructureBlockRenderer {
 
     public BetterStructureBlockRenderer(BlockEntityRendererProvider.Context pContext) {
         super(pContext);
+    }
+
+    /**
+     * 一直渲染，防止背对的时候没渲染
+     */
+    @Override
+    public boolean shouldRender(StructureBlockEntity pBlockEntity, Vec3 pCameraPos) {
+        return true;
     }
 
     public void render(BetterStructureBlockEntity pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, int pPackedOverlay) {

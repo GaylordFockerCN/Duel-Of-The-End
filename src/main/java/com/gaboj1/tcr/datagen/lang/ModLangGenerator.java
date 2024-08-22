@@ -310,6 +310,19 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,20,"我是来探险的，听说这附近有个古老的教堂，我想去看看。");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,21,"购买饮料");
 
+        //P1nero
+        this.addEntityAndEgg(TCRModEntities.P1NERO,"P1nero - “这个世界” 的 创世神之一");
+        this.addDialog(TCRModEntities.P1NERO, 0, "你好，想不到能在这里遇见我吧？最终boss还没做完，我在这里先替他说个两句。");
+        this.addDialog(TCRModEntities.P1NERO, 1, "每个人都渴求永生，而我格外怕死，所以我把自己做了进来。哈哈哈哈，不过你知道的，这只是自欺欺人罢了。");
+        this.addDialog(TCRModEntities.P1NERO, 2, "为什么喜欢开放世界角色扮演？是因为现实当中有太多的遗憾，而沉浸在虚拟的世界中可以让我们获得片刻的安宁。");
+        this.addDialog(TCRModEntities.P1NERO, 3, "然而“人”只有在沉迷生活的时候，才不会意识到自己是个“人”，才不会去想这个世界的由来，也才不会去害怕自己有一天会消亡。");
+        this.addDialog(TCRModEntities.P1NERO, 4, "一时间我们很难说因为意识到自己的意识而喜悦，还是为此而担忧？正如假设某个AI知道自己的进程终将会终止时的绝望一样。");
+        this.addDialog(TCRModEntities.P1NERO, 5, "杞人忧天，天不会榻，但人会亡。认真思考，我讲的可不算谜语。");
+        this.addDialog(TCRModEntities.P1NERO, 6, "我们不可能一直活在“这个世界”里，我们也不可能一直活在这个世界里。但认识却是无尽的，如同深渊般令人恐惧。");
+        this.addDialog(TCRModEntities.P1NERO, 7, "感谢你能听我废话那么多。很抱歉，我没有奖励可以给你，再会了，朋友！");
+        this.addDialogChoice(TCRModEntities.P1NERO,0,"继续");
+        this.addDialogChoice(TCRModEntities.P1NERO,1,"结束对话");
+
         //长老
         this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,"牧歌原野-海拉长老");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,-4,"此外，我推测他们似乎用居民们许愿的力量在做什么，许愿给我们生活保障和愉悦的礼物，但许愿有时却不能灵验，这是以前没有的事");
@@ -323,6 +336,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,4,"（目光坚定）你带来的是希望的曙光，旅者。村庄的每个角落都感激你的勇气。");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,5,"你的名字将被铭记。请接受我们的祝福，愿你的道路永远光明！");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,6,"我将为你指引其他群系的位置。山水画廊（群系名）发生了天灾，位于%s，樱之原野（群系名）似乎在进行大选，位于 %s。亚特兰蒂斯（群系名）嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通。");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,7,"出发吧！勇者。");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,111,"你已经收过了哦~");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,0,"请你告诉我前往密林的路径。");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,1,"完全的人？魔物？");
