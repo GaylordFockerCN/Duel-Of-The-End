@@ -18,6 +18,7 @@ import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
@@ -396,6 +397,13 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     @OnlyIn(Dist.CLIENT)
     @Override
     public void openDialogueScreen(CompoundTag serverData) {
+
+        BiomeMap biomeMap = BiomeMap.getInstance();
+        BlockPos biome2Center = biomeMap.getBlockPos(biomeMap.getCenter2(),0);
+        BlockPos biome3Center = biomeMap.getBlockPos(biomeMap.getCenter3(),0);
+        String position2 = "("+ biome2Center.getX()+", "+biome2Center.getZ()+")";
+        String position3 = "("+ biome3Center.getX()+", "+biome3Center.getZ()+")";
+
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
 
         if(serverData.getBoolean("canGetBossReward")) {
@@ -405,7 +413,8 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
                     .thenExecute((byte) 3)//中途返回值进行处理但不结束对话
                     .addChoice(BUILDER.buildDialogueOption(entityType, 8), BUILDER.buildDialogueAnswer(entityType, 11))
                     .addChoice(BUILDER.buildDialogueOption(entityType, 9), BUILDER.buildDialogueAnswer(entityType, 12))
-                    .addChoice(BUILDER.buildDialogueOption(entityType, -1), BUILDER.buildDialogueAnswer(entityType, 13));
+                    .addChoice(BUILDER.buildDialogueOption(entityType, -1), Component.literal("\n").append(Component.translatable(entityType + ".dialog13", position2, position3)))
+                    .addFinalChoice(BUILDER.buildDialogueOption(entityType,-1),(byte)4);
         } else if(serverData.getBoolean("killElderTaskGet")){
             //未满足领奖条件但是任务已经领了
             builder.setAnswerRoot(
@@ -481,6 +490,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
                 break;
             //选择处决
             case 1:
+                player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, 14), false);
                 SaveUtil.biome1.isBossFought = true;//注意要处决或者接任务后再调这个，注意考虑对话中断的情况
                 realDie(player.damageSources().playerAttack(player));
                 SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskKillBoss);
@@ -488,6 +498,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
                 break;
             //选择接任务
             case 2:
+                player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, 15), false);
                 SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskKillElder);
                 SaveUtil.biome1.isBossFought = true;//注意要处决或者接任务后再调这个，注意考虑对话中断的情况
                 break;
@@ -501,6 +512,12 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
                     DataManager.boss1LootGot.putBool(player, true);
                 }
                 return;//NOTE：颁奖后面还有对话，不能setConversingPlayer为Null
+            //任务成功且对话结束
+            case 4:
+                player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, 16), false);
+                level().explode(this, this.damageSources().explosion(this, this), null, getOnPos().getCenter(), 3F, false, Level.ExplosionInteraction.NONE);
+                this.discard();
+                break;
         }
         this.setConversingPlayer(null);
     }

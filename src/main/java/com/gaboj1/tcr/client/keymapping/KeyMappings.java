@@ -2,11 +2,11 @@ package com.gaboj1.tcr.client.keymapping;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.client.gui.screen.custom.GameProgressScreen;
-import com.gaboj1.tcr.item.custom.DesertEagleItem;
+import com.gaboj1.tcr.item.custom.gun.GunCommon;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.RequestOpenProgressScreenPacket;
-import com.gaboj1.tcr.network.packet.serverbound.DesertEagleReloadPacket;
+import com.gaboj1.tcr.network.packet.serverbound.GunReloadPacket;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -32,8 +32,8 @@ public class KeyMappings {
 			super.setDown(isDown);
 			if (isDownOld != isDown && isDown &&!isReloading) {
 				isReloading = true;
-				PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new DesertEagleReloadPacket());
-				DesertEagleItem.reload(Minecraft.getInstance().player);
+				PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new GunReloadPacket());
+				GunCommon.reload(Minecraft.getInstance().player);
 				new Thread(()->{
 					try {
 						Thread.sleep(2000);//NOTE: 当年不懂事暴力写的，现在懒得改了能用就好hhh

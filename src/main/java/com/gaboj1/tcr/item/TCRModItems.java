@@ -6,6 +6,8 @@ import com.gaboj1.tcr.item.custom.*;
 import com.gaboj1.tcr.item.custom.armor.OrichalcumArmorItem;
 import com.gaboj1.tcr.item.custom.boss_loot.FlySword;
 import com.gaboj1.tcr.item.custom.boss_loot.TreeSpiritWand;
+import com.gaboj1.tcr.item.custom.gun.GunCommon;
+import com.gaboj1.tcr.item.custom.gun.GunPlus;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.food.Foods;
@@ -21,9 +23,10 @@ import java.util.function.Supplier;
 
 public class TCRModItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, TheCasketOfReveriesMod.MOD_ID);
-	public static final RegistryObject<Item> DESERT_EAGLE_AMMO = REGISTRY.register("desert_eagle_ammo", () -> new Item(new Item.Properties().stacksTo(64)));
-	public static final RegistryObject<Item> DESERT_EAGLE = REGISTRY.register("desert_eagle", DesertEagleItem::new);
-	public static final RegistryObject<Item> DESERT_EAGLE_BULLET = REGISTRY.register("desert_eagle_bullet", () -> new Item(new Item.Properties().stacksTo(64)));
+	public static final RegistryObject<Item> AMMO = REGISTRY.register("ammo", () -> new Item(new Item.Properties().stacksTo(64)));
+	public static final RegistryObject<Item> GUN_COMMON = REGISTRY.register("gun", GunCommon::new);
+	public static final RegistryObject<Item> GUN_PLUS = REGISTRY.register("gun_plus", GunPlus::new);
+	public static final RegistryObject<Item> BULLET = REGISTRY.register("bullet", () -> new Item(new Item.Properties().stacksTo(64)));
 
 	public static final RegistryObject<Item> BASIC_RESIN = REGISTRY.register("basic_resin", () -> new BasicResin(new Item.Properties().setNoRepair().stacksTo(64).rarity(Rarity.COMMON),1));
 	public static final RegistryObject<Item> INTERMEDIATE_RESIN = REGISTRY.register("intermediate_resin", () -> new BasicResin(new Item.Properties().setNoRepair().stacksTo(64).rarity(Rarity.UNCOMMON),BasicResin.INTERMEDIATE_RESIN));

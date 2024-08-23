@@ -1,7 +1,9 @@
 package com.gaboj1.tcr.worldgen.portal;
 
+import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -50,6 +52,10 @@ public class TCRTeleporter implements ITeleporter {
         destinationPos = destinationPos.offset(20,70,0);//偏移一下不然会诞生在房子里（
         if(entity instanceof ServerPlayer player){
             player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 220, 1, false, true));
+            if(DataManager.isFirstEnter.getBool(player)){
+                player.displayClientMessage(Component.translatable("info.the_casket_of_reveries.first_enter"), true);
+                DataManager.isFirstEnter.putBool(player, false);
+            }
         }
         pos = new PortalInfo(destinationPos.getCenter(), Vec3.ZERO, entity.getYRot(), entity.getXRot());
         //NOTE不要相信IDE，这里判空是必须的！

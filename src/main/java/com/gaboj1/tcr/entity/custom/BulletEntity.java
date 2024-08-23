@@ -29,37 +29,38 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
 @OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
-public class DesertEagleBulletEntity extends AbstractArrow implements ItemSupplier {
-	public DesertEagleBulletEntity(PlayMessages.SpawnEntity packet, Level world) {
+public class BulletEntity extends AbstractArrow implements ItemSupplier {
+	public BulletEntity(PlayMessages.SpawnEntity packet, Level world) {
 		super(TCRModEntities.DESERT_EAGLE_BULLET.get(), world);
 	}
 
-	public DesertEagleBulletEntity(EntityType<? extends DesertEagleBulletEntity> type, Level world) {
+	public BulletEntity(EntityType<? extends BulletEntity> type, Level world) {
 		super(type, world);
 	}
 
 	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
+	public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public ItemStack getItem() {
-		return new ItemStack(TCRModItems.DESERT_EAGLE_BULLET.get());
+	public @NotNull ItemStack getItem() {
+		return new ItemStack(TCRModItems.BULLET.get());
 	}
 
 	@Override
-	protected ItemStack getPickupItem() {
-		return new ItemStack(TCRModItems.DESERT_EAGLE_AMMO.get());
+	protected @NotNull ItemStack getPickupItem() {
+		return new ItemStack(TCRModItems.AMMO.get());
 	}
 
 	@Override
-	protected void doPostHurtEffects(LivingEntity entity) {
+	protected void doPostHurtEffects(@NotNull LivingEntity entity) {
 		super.doPostHurtEffects(entity);
 		entity.setArrowCount(entity.getArrowCount() - 1);
 	}
@@ -73,7 +74,7 @@ public class DesertEagleBulletEntity extends AbstractArrow implements ItemSuppli
 	}
 
 	@Override
-	protected void onHitBlock(BlockHitResult p_36755_) {
+	protected void onHitBlock(@NotNull BlockHitResult p_36755_) {
 		super.onHitBlock(p_36755_);
 		if (level().getBlockState(p_36755_.getBlockPos()).getBlock() instanceof AbstractGlassBlock ||
 				level().getBlockState(p_36755_.getBlockPos()).getBlock() instanceof StainedGlassPaneBlock ||
@@ -126,7 +127,7 @@ public class DesertEagleBulletEntity extends AbstractArrow implements ItemSuppli
 							setBaseDamage(getBaseDamage()*2);
 						}
 						if(this.getOwner() instanceof Player player){
-							player.displayClientMessage(Component.literal("§c§l").append(Component.translatable(TCRModItems.DESERT_EAGLE.get().getDescriptionId()+".headshot")),true);
+							player.displayClientMessage(Component.literal("§c§l").append(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".headshot")),true);
 						}
 					}
 				}

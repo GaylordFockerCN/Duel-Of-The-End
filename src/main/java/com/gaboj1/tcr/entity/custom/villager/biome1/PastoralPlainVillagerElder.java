@@ -13,7 +13,6 @@ import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -134,18 +133,18 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
             BiomeMap biomeMap = BiomeMap.getInstance();
             BlockPos biome2Center = biomeMap.getBlockPos(biomeMap.getCenter2(),0);
             BlockPos biome3Center = biomeMap.getBlockPos(biomeMap.getCenter3(),0);
-            String position2 = "("+ biome2Center.getX()+","+biome2Center.getZ()+")";
-            String position3 = "("+ biome3Center.getX()+","+biome3Center.getZ()+")";
+            String position2 = "("+ biome2Center.getX()+", "+biome2Center.getZ()+")";
+            String position3 = "("+ biome3Center.getX()+", "+biome3Center.getZ()+")";
             builder.start(3)
                     .addChoice(3,4)
                     .addChoice(4,5)
-                    .addChoice(BUILDER.buildDialogueOption(entityType,5),Component.literal("\n").append(Component.translatable(entityType + ".dialog6",position2,position3)))
+                    .addChoice(BUILDER.buildDialogueOption(entityType,5), Component.literal("\n").append(Component.translatable(entityType + ".dialog6", position2, position3)))
                     .addFinalChoice(6,(byte)1);
         //初次与长老对话
         } else if(!serverData.getBoolean("isElderTalked")){
             BiomeMap biomeMap = BiomeMap.getInstance();
             BlockPos biome1Center = biomeMap.getBlockPos(biomeMap.getCenter1(),0);
-            String position = "("+biome1Center.getX()+","+biome1Center.getZ()+")";
+            String position = "("+biome1Center.getX()+", "+biome1Center.getZ()+")";
             builder.start(0)
                     .addChoice(1,1)
                     .addChoice(BUILDER.buildDialogueOption(entityType,0),BUILDER.buildDialogueAnswer(entityType,2,position))
@@ -154,7 +153,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         } else {
             BiomeMap biomeMap = BiomeMap.getInstance();
             BlockPos biome1Center = biomeMap.getBlockPos(biomeMap.getCenter1(),0);
-            String position = "("+biome1Center.getX()+","+biome1Center.getZ()+")";
+            String position = "("+biome1Center.getX()+", "+biome1Center.getZ()+")";
             builder.start(BUILDER.buildDialogueAnswer(entityType,2,position))
                     .addFinalChoice(-2,(byte)114514);
         }
@@ -187,12 +186,13 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                 this.chat(BUILDER.buildDialogueAnswer(entityType,10));//再会，勇者！
                 SaveUtil.biome1.finish(SaveUtil.BiomeData.VILLAGER, ((ServerLevel) level()));
                 if(!DataManager.elderLoot2Got.getBool(player)){
-                    int i = 5;
+                    int i = 2;
                     while(i-->0){
-                        ItemStack ammo = TCRModItems.DESERT_EAGLE_AMMO.get().getDefaultInstance();
+                        ItemStack ammo = TCRModItems.AMMO.get().getDefaultInstance();
                         ammo.setCount(64);
                         player.addItem(ammo);
                     }
+                    player.addItem(TCRModItems.GUN_PLUS.get().getDefaultInstance());
                     player.addItem(TCRModItems.DENSE_FOREST_CERTIFICATE.get().getDefaultInstance());
                     DataManager.elderLoot2Got.putBool(player, true);
                 }

@@ -3,7 +3,7 @@ package com.gaboj1.tcr.event.listeners;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.event.PlayerModelEvent;
 import com.gaboj1.tcr.item.TCRModItems;
-import com.gaboj1.tcr.item.custom.DesertEagleItem;
+import com.gaboj1.tcr.item.custom.gun.GunCommon;
 import com.gaboj1.tcr.util.ItemUtil;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -33,7 +33,7 @@ public class PlayerModelHandler {
         PlayerModel model = event.getModelPlayer();
         //持枪姿势
         //TODO: 单手持枪做得帅一点
-        if(mainHand instanceof DesertEagleItem){
+        if(mainHand instanceof GunCommon){
             if(right){
                 model.rightArm.xRot = model.head.xRot + (float) Math.toRadians(-90);
                 model.rightArm.zRot = model.head.zRot;
@@ -45,7 +45,7 @@ public class PlayerModelHandler {
             }
         }
 
-        if(offHand instanceof DesertEagleItem){
+        if(offHand instanceof GunCommon){
             if(right){
                 model.leftArm.xRot = model.head.xRot + (float) Math.toRadians(-90);
                 model.leftArm.zRot = model.head.zRot;

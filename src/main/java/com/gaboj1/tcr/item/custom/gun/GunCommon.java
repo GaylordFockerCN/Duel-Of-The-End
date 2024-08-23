@@ -1,19 +1,19 @@
 
-package com.gaboj1.tcr.item.custom;
+package com.gaboj1.tcr.item.custom.gun;
 
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.client.keymapping.KeyMappings;
-import com.gaboj1.tcr.entity.custom.DesertEagleBulletEntity;
+import com.gaboj1.tcr.entity.custom.BulletEntity;
 import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.client.TCRModSounds;
-import com.gaboj1.tcr.item.renderer.DesertEagleItemRenderer;
+import com.gaboj1.tcr.item.renderer.GunItemRenderer;
 import com.gaboj1.tcr.util.ItemUtil;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -31,6 +31,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -39,21 +40,19 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
-import software.bernie.geckolib.util.RenderUtils;
 
 import java.util.List;
 import java.util.function.Consumer;
 
-import static com.gaboj1.tcr.item.TCRModItems.DESERT_EAGLE_AMMO;
+import static com.gaboj1.tcr.item.TCRModItems.AMMO;
 
 /**
  * 为了子沙鹰类做准备，省的写很多重复的代码
  */
 
-public class DesertEagleItem extends Item implements GeoItem {
+public class GunCommon extends Item implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public boolean isReloading = false;
-    public static ItemDisplayContext transformType;
 
     public static final int RELOAD_TIME = 2000;
 
@@ -67,26 +66,21 @@ public class DesertEagleItem extends Item implements GeoItem {
 
     public final static int MAX_AMMO = 7;
 
-    protected RegistryObject<Item> ammoType = DESERT_EAGLE_AMMO;;
+    protected RegistryObject<Item> ammoType = AMMO;;
 
-    public DesertEagleItem() {
+    public GunCommon() {
         super(new Item.Properties().stacksTo(1).fireResistant().rarity(Rarity.EPIC).defaultDurability(MAX_AMMO));//引入弹匣了再把这个删了
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 
     @Override
-    public double getTick(Object itemStack) {
-        return RenderUtils.getCurrentTick();
-    }
-
-    @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {
-            private DesertEagleItemRenderer renderer;
+            private GunItemRenderer renderer;
             @Override
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                 if(this.renderer == null){
-                    renderer = new DesertEagleItemRenderer();
+                    renderer = new GunItemRenderer();
                 }
                 return this.renderer;
             }
@@ -136,17 +130,15 @@ public class DesertEagleItem extends Item implements GeoItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level world, Player player, @NotNull InteractionHand hand) {
         double x = player.getX();
         double y = player.getY();
         double z = player.getZ();
-        if (player == null)
-            return InteractionResultHolder.pass(player.getItemInHand(hand));
         ItemStack handItemStake = (hand == InteractionHand.MAIN_HAND?player.getMainHandItem():player.getOffhandItem());
-        if(handItemStake.getItem() instanceof DesertEagleItem handItem){
+        if(handItemStake.getItem() instanceof GunCommon handItem){
             boolean isCooldown;
             isCooldown = player.getCooldowns().isOnCooldown(handItem);
-            ItemStack bulletStack = DesertEagleItem.getBulletItemStack(handItemStake, 0);
+            ItemStack bulletStack = GunCommon.getBulletItemStack(handItemStake, 0);
             if (!handItem.isReloading && !bulletStack.isEmpty()&&bulletStack.getDamageValue() < bulletStack.getMaxDamage() &&!isCooldown) {
 
                 if (!player.isCreative()){
@@ -154,18 +146,18 @@ public class DesertEagleItem extends Item implements GeoItem {
                     final Integer bulletID1 = 0;
                     bullet.setDamageValue(bullet.getDamageValue() + 1);
                     //Update the stack in the gun
-                    DesertEagleItem.setBulletItemStack(handItemStake, bullet, bulletID1);
+                    GunCommon.setBulletItemStack(handItemStake, bullet, bulletID1);
                 }
 
                 if (world instanceof ServerLevel projectileLevel) {
                     Projectile _entityToSpawn =	new Object() {
                         public Projectile getArrow(Level level, Entity shooter, float damage, int knockBack, byte piercing) {
-                            AbstractArrow entityToSpawn = new DesertEagleBulletEntity(TCRModEntities.DESERT_EAGLE_BULLET.get(), level);
+                            AbstractArrow entityToSpawn = new BulletEntity(TCRModEntities.DESERT_EAGLE_BULLET.get(), level);
                             entityToSpawn.setOwner(shooter);
                             entityToSpawn.setNoGravity(true);
                             entityToSpawn.setBaseDamage(damage);
                             //双持伤害翻倍。不发射两发是因为有霸体时间..
-                            if(player.getItemInHand((hand == InteractionHand.MAIN_HAND?InteractionHand.OFF_HAND:InteractionHand.MAIN_HAND)).getItem() instanceof DesertEagleItem){
+                            if(player.getItemInHand((hand == InteractionHand.MAIN_HAND?InteractionHand.OFF_HAND:InteractionHand.MAIN_HAND)).getItem() instanceof GunCommon){
                                 entityToSpawn.setBaseDamage(damage*2);
                                 TCRAdvancementData.getAdvancement("can_double_hold",(ServerPlayer) player);
 
@@ -238,10 +230,10 @@ public class DesertEagleItem extends Item implements GeoItem {
                 //显示当前左右手的弹药数
                 showAmmoCount(world, hand == InteractionHand.MAIN_HAND,player,handItemStake);
 
-            } else if (hand == InteractionHand.MAIN_HAND && player.getOffhandItem().getItem() instanceof DesertEagleItem) {//如果副手有枪就使用副手试试
+            } else if (hand == InteractionHand.MAIN_HAND && player.getOffhandItem().getItem() instanceof GunCommon) {//如果副手有枪就使用副手试试
                 player.getOffhandItem().getItem().use(world, player,InteractionHand.OFF_HAND);
             } else {//都没有就需要换弹了
-                player.displayClientMessage(Component.translatable(TCRModItems.DESERT_EAGLE.get().getDescriptionId()+".reloadbutton", KeyMappings.RELOAD.saveString().toUpperCase()),true);
+                player.displayClientMessage(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".reloadbutton", KeyMappings.RELOAD.saveString().toUpperCase()),true);
             }
         }
         return InteractionResultHolder.pass(player.getItemInHand(hand));
@@ -251,32 +243,31 @@ public class DesertEagleItem extends Item implements GeoItem {
      * 显示当前双手子弹数量
      */
     public static void showAmmoCount(Level world,boolean isMainHand,Player player,ItemStack handItemStake){
-        if(!(handItemStake.getItem() instanceof DesertEagleItem)){
+        if(!(handItemStake.getItem() instanceof GunCommon)){
             return;
         }
         if (world instanceof ServerLevel){
 
             ItemStack anotherHandItemStake = player.getItemInHand(isMainHand?InteractionHand.OFF_HAND:InteractionHand.MAIN_HAND);
-            String content = (isMainHand?I18n.get(TCRModItems.DESERT_EAGLE.get().getDescriptionId()+".main_hand_ammo"):" "+I18n.get(TCRModItems.DESERT_EAGLE.get().getDescriptionId()+".off_hand_ammo")) +getBulletCount(handItemStake)+ "/" + DesertEagleItem.MAX_AMMO;
+            MutableComponent content = (isMainHand ? Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".main_hand_ammo") : Component.literal(" ").append(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".off_hand_ammo")));
+            content.append(Component.literal(getBulletCount(handItemStake)+ "/" + GunCommon.MAX_AMMO));
 
-            if(anotherHandItemStake.getItem() instanceof DesertEagleItem){
-                content = I18n.get(TCRModItems.DESERT_EAGLE.get().getDescriptionId()+".off_hand_ammo")+ ( isMainHand?getBulletCount(anotherHandItemStake):getBulletCount(handItemStake)) + "/"+ DesertEagleItem.MAX_AMMO+
-                        "      "+I18n.get(TCRModItems.DESERT_EAGLE.get().getDescriptionId()+".main_hand_ammo")+( isMainHand?getBulletCount(handItemStake):getBulletCount(anotherHandItemStake) )+ "/"+ DesertEagleItem.MAX_AMMO;
+            if(anotherHandItemStake.getItem() instanceof GunCommon){
+                content = Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".off_hand_ammo").append(
+                        Component.literal((isMainHand ? getBulletCount(anotherHandItemStake) : getBulletCount(handItemStake)) + "/"+ GunCommon.MAX_AMMO + "      ")
+                                .append(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".main_hand_ammo")
+                                        .append((isMainHand ? getBulletCount(handItemStake) : getBulletCount(anotherHandItemStake) )+ "/"+ GunCommon.MAX_AMMO)));
             }
-
-            player.displayClientMessage(Component.translatable(content),true);
-
-//            _level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(player.getX(), player.getY(), player.getZ()), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
-//                    "title @p actionbar \"" +content+"\"");
+            player.displayClientMessage(content,true);
         }
     }
 
     @Override
-    public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
+    public void appendHoverText(@NotNull ItemStack itemstack, Level world, List<Component> list, @NotNull TooltipFlag flag) {
         ItemStack bulletItemStack = getBulletItemStack(itemstack,0);
         int ammo = bulletItemStack.getMaxDamage()-bulletItemStack.getDamageValue();
-        list.add(Component.translatable(TCRModItems.DESERT_EAGLE.get().getDescriptionId()+".ammo_count").append(ammo+"/"+MAX_AMMO));
-        list.add(Component.translatable(TCRModItems.DESERT_EAGLE.get().getDescriptionId()+".ammo_cooldown").append(String.format("%.2fs", coolDownTick*0.05)));
+        list.add(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".ammo_count").append(ammo+"/"+MAX_AMMO));
+        list.add(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".ammo_cooldown").append(String.format("%.2fs", coolDownTick*0.05)));
     }
 
 
@@ -351,18 +342,18 @@ public class DesertEagleItem extends Item implements GeoItem {
         //分别判断左右手是否满弹药并做出换弹处理（为什么当时打算搞双持啊啊啊）
         ItemStack mainHandItem = player.getMainHandItem();
         ItemStack offhandItem = player.getOffhandItem();
-        if(mainHandItem.getItem() instanceof DesertEagleItem item /*mainHandItem.getOrCreateTag().getBoolean(FatherDesertEagleItem.RELOADING_DONE_TAG)*/){
+        if(mainHandItem.getItem() instanceof GunCommon item /*mainHandItem.getOrCreateTag().getBoolean(FatherDesertEagleItem.RELOADING_DONE_TAG)*/){
             if(isFull(mainHandItem)){
-                player.displayClientMessage(Component.translatable(TCRModItems.DESERT_EAGLE.get().getDescriptionId()+".main_ammo_full"),true);
+                player.displayClientMessage(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".main_ammo_full"),true);
             } else if (item.isReloading) {
-                player.displayClientMessage(Component.translatable(TCRModItems.DESERT_EAGLE.get().getDescriptionId()+".reloading"),true);
+                player.displayClientMessage(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".reloading"),true);
             }else doReload(player.getMainHandItem(),player,world,item.getAmmoType().get(),true);
         }
-        if(offhandItem.getItem() instanceof DesertEagleItem item && /*offhandItem.getOrCreateTag().getBoolean(FatherDesertEagleItem.RELOADING_DONE_TAG)*/!item.isReloading  && !isFull(offhandItem)){
+        if(offhandItem.getItem() instanceof GunCommon item && /*offhandItem.getOrCreateTag().getBoolean(FatherDesertEagleItem.RELOADING_DONE_TAG)*/!item.isReloading  && !isFull(offhandItem)){
             if(isFull(offhandItem)){
-                player.displayClientMessage(Component.translatable(TCRModItems.DESERT_EAGLE.get().getDescriptionId()+".off_ammo_full"),true);
+                player.displayClientMessage(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".off_ammo_full"),true);
             } else if (item.isReloading) {
-                player.displayClientMessage(Component.translatable(TCRModItems.DESERT_EAGLE.get().getDescriptionId()+".reloading"),true);
+                player.displayClientMessage(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".reloading"),true);
             }else doReload(player.getOffhandItem(),player,world,item.getAmmoType().get(),false);
         }
 
@@ -378,16 +369,21 @@ public class DesertEagleItem extends Item implements GeoItem {
 
             try {
                 int need = 1;
-                ItemStack bullet = DesertEagleItem.getBulletItemStack(handItemStake,0);
+                ItemStack bullet = GunCommon.getBulletItemStack(handItemStake,0);
                 if(bullet.isEmpty()){
-                    need = DesertEagleItem.MAX_AMMO;
+                    need = GunCommon.MAX_AMMO;
                 } else {
                     need = bullet.getDamageValue();
                 }
-//                int total = ItemUtil.searchAndConsumeItem(player,ammo,need);
-                int total = ItemUtil.searchAndConsumeItem(player,ammo,1);
+                int total;
+                //升级版的枪直接填满七发
+                if(handItemStake.getItem() instanceof GunPlus){
+                    total = ItemUtil.searchAndConsumeItem(player,ammo,need);
+                } else {
+                    total = ItemUtil.searchAndConsumeItem(player,ammo,1);
+                }
                 if(total>0){
-                    DesertEagleItem handItem = (DesertEagleItem) handItemStake.getItem();
+                    GunCommon handItem = (GunCommon) handItemStake.getItem();
                     handItem.isReloading = true;//限制同时换弹
                     //handItemStake.getOrCreateTag().putBoolean(FatherDesertEagleItem.RELOADING_DONE_TAG,false);
                     //播放动画
@@ -395,22 +391,22 @@ public class DesertEagleItem extends Item implements GeoItem {
                         //防止开火时换弹
                         if(player.getCooldowns().isOnCooldown(handItemStake.getItem()))return;
                         //播放动画
-                        ((DesertEagleItem)handItemStake.getItem()).reloadAnim(serverLevel, player, handItemStake);
+                        ((GunCommon)handItemStake.getItem()).reloadAnim(serverLevel, player, handItemStake);
                         //播放音效
                         //serverLevel.playSound(player, x,y,z, HDLModSounds.DESERTEAGLECRCRELOAD.get(), SoundSource.HOSTILE, 1, 1);
                         serverLevel.playSound(null, x, y, z, TCRModSounds.DESERT_EAGLE_RELOAD.get(), SoundSource.BLOCKS, 1, 1);
                     }
 
-                    Thread.sleep(DesertEagleItem.RELOAD_TIME);
+                    Thread.sleep(GunCommon.RELOAD_TIME);
                     ItemStack newBullet = handItemStake.copy();
                     newBullet.setCount(1);
                     newBullet.setDamageValue(need - total);
-                    DesertEagleItem.setBulletItemStack(handItemStake,newBullet,0);
+                    GunCommon.setBulletItemStack(handItemStake,newBullet,0);
                     handItem.isReloading = false;
                     //显示子弹数量信息
                     showAmmoCount((Level) world, isMainHand, player, handItemStake);
                 }else{
-                    player.displayClientMessage(Component.translatable(TCRModItems.DESERT_EAGLE.get().getDescriptionId()+".no_ammo"),true);
+                    player.displayClientMessage(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".no_ammo"),true);
                 }
             } catch (Exception e) {//Exception高发地，实在不会搞
                 throw new RuntimeException(e);
@@ -420,15 +416,15 @@ public class DesertEagleItem extends Item implements GeoItem {
     }
 
     private static int getBulletCount(ItemStack stack){
-        if(stack.getItem() instanceof DesertEagleItem){
-            ItemStack bullet = DesertEagleItem.getBulletItemStack(stack,0);
+        if(stack.getItem() instanceof GunCommon){
+            ItemStack bullet = GunCommon.getBulletItemStack(stack,0);
             return bullet.getMaxDamage()-bullet.getDamageValue();
         }
         return 0;
     }
 
     private static boolean isFull(ItemStack gun){
-        ItemStack bullet = DesertEagleItem.getBulletItemStack(gun,0);
+        ItemStack bullet = GunCommon.getBulletItemStack(gun,0);
         if(bullet.isEmpty())return false;
         return bullet.getDamageValue()==0;
     }

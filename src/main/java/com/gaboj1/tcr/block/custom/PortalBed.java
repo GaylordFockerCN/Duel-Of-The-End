@@ -8,6 +8,7 @@ import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import com.gaboj1.tcr.worldgen.portal.TCRTeleporter;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -28,6 +29,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 public class PortalBed extends BedBlock {
     public PortalBed(DyeColor pColor, Properties pProperties) {
@@ -35,7 +37,7 @@ public class PortalBed extends BedBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+    public @NotNull InteractionResult use(@NotNull BlockState pState, Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
 
         if (pLevel.isClientSide)
             return InteractionResult.CONSUME;
@@ -68,7 +70,7 @@ public class PortalBed extends BedBlock {
                             pLevel.removeBlock($$6, false);
                         }
                         Vec3 $$7 = pPos.getCenter();
-                        pLevel.explode((Entity)null, pLevel.damageSources().badRespawnPointExplosion($$7), (ExplosionDamageCalculator)null, $$7, 5.0F, true, Level.ExplosionInteraction.BLOCK);
+                        pLevel.explode(null, pLevel.damageSources().badRespawnPointExplosion($$7), null, $$7, 5.0F, true, Level.ExplosionInteraction.BLOCK);
 
                         TCRAdvancementData.getAdvancement("try_wake_up",(ServerPlayer) pPlayer);
 
@@ -83,7 +85,7 @@ public class PortalBed extends BedBlock {
 
     //TODO 抄凋零玫瑰的，到时候换自己的特效
     @Override
-    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
+    public void animateTick(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull RandomSource pRandom) {
         VoxelShape $$4 = this.getShape(pState, pLevel, pPos, CollisionContext.empty());
         Vec3 $$5 = $$4.bounds().getCenter();
         double $$6 = (double)pPos.getX() + $$5.x;

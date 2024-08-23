@@ -137,7 +137,7 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
             name = "day_dreamer";
             Advancement day_dreamer = Advancement.Builder.advancement()
                     .parent(enterRealmOfTheDream)
-                    .display(TCRModItems.DESERT_EAGLE.get(),
+                    .display(TCRModItems.GUN_COMMON.get(),
                             Component.translatable(pre+name),
                             Component.translatable(pre+name+".desc"),
                             null,
@@ -148,7 +148,7 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
             name = "can_double_hold";
             Advancement can_double_hold = Advancement.Builder.advancement()
                     .parent(day_dreamer)
-                    .display(TCRModItems.DESERT_EAGLE.get(),
+                    .display(TCRModItems.GUN_COMMON.get(),
                             Component.translatable(pre+name),
                             Component.translatable(pre+name+".desc"),
                             null,
@@ -199,6 +199,16 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
             for (String criteria : _ap.getRemainingCriteria())
                 serverPlayer.getAdvancements().award(_adv, criteria);
         }
+    }
+
+    public static boolean isDone(String name, ServerPlayer serverPlayer){
+        Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,name));
+        if(_adv == null){
+            TheCasketOfReveriesMod.LOGGER.info("advancement:\""+name+"\" is null!");
+            return false;
+        }
+        AdvancementProgress _ap = serverPlayer.getAdvancements().getOrStartProgress(_adv);
+        return _ap.isDone();
     }
 
 }

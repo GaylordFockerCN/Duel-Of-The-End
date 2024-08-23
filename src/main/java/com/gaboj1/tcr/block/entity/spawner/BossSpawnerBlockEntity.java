@@ -28,24 +28,11 @@ public abstract class BossSpawnerBlockEntity<T extends Mob & ShadowableEntity> e
 	protected static final int DEFAULT_RANGE = 20;
 
 	protected final EntityType<T> entityType;
-	protected boolean spawnedBoss = false;
 	protected boolean isReady = false;
 
 	protected BossSpawnerBlockEntity(BlockEntityType<?> type, EntityType<T> entityType, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 		this.entityType = entityType;
-	}
-
-	@Override
-	public void load(@NotNull CompoundTag pTag) {
-		super.load(pTag);
-		spawnedBoss = pTag.getBoolean("spawnedBoss");
-	}
-
-	@Override
-	protected void saveAdditional(@NotNull CompoundTag pTag) {
-		super.saveAdditional(pTag);
-		pTag.putBoolean("spawnedBoss", spawnedBoss);
 	}
 
 	public boolean anyPlayerInRange() {
@@ -74,7 +61,7 @@ public abstract class BossSpawnerBlockEntity<T extends Mob & ShadowableEntity> e
 	public abstract boolean canSpawnShadow();
 
 	public static void tick(Level level, BlockPos pos,  BlockState state, BossSpawnerBlockEntity<?> blockEntity) {
-		if (!TCRConfig.ENABLE_BOSS_SPAWN_BLOCK_LOAD.get() || blockEntity.spawnedBoss || !blockEntity.anyPlayerInRange()) {
+		if (!TCRConfig.ENABLE_BOSS_SPAWN_BLOCK_LOAD.get() || blockEntity.getPersistentData().getBoolean("spawnedBoss") || !blockEntity.anyPlayerInRange()) {
 			return;
 		}
 		if (level.isClientSide()) {
@@ -87,7 +74,7 @@ public abstract class BossSpawnerBlockEntity<T extends Mob & ShadowableEntity> e
 		} else {
 			if (level.getDifficulty() != Difficulty.PEACEFUL) {
 				if (blockEntity.spawnMyBoss((ServerLevel) level)) {
-					blockEntity.spawnedBoss = true;
+					blockEntity.getPersistentData().putBoolean("spawnedBoss", true);
 				}
 			}
 		}

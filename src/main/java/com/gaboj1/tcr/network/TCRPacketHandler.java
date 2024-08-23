@@ -36,7 +36,7 @@ public class TCRPacketHandler {
         register(PortalBlockTeleportPacket.class, PortalBlockTeleportPacket::decode);
         register(UpdateFlySpeedPacket.class, UpdateFlySpeedPacket::decode);
         register(AddDialogPacket.class, AddDialogPacket::decode);
-        register(DesertEagleReloadPacket.class, DesertEagleReloadPacket::decode);
+        register(GunReloadPacket.class, GunReloadPacket::decode);
 
         //双端
         register(SyncSaveUtilPacket.class, SyncSaveUtilPacket::decode);

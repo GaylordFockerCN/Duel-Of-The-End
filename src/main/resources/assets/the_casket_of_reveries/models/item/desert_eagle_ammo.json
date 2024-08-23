@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "the_casket_of_reveries:item/desert_eagle_ammo"
-  }
-}

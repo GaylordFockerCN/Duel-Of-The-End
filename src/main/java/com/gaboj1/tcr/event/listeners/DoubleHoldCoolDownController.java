@@ -1,11 +1,10 @@
 package com.gaboj1.tcr.event.listeners;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.item.custom.DesertEagleItem;
+import com.gaboj1.tcr.item.custom.gun.GunCommon;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -27,7 +26,7 @@ public class DoubleHoldCoolDownController {
 		ItemStack offHandStack = player.getOffhandItem();
 		ItemStack mainHandStack = player.getMainHandItem();
 		if (offHandStack.getItem().getClass() == mainHandStack.getItem().getClass())return;
-		if(mainHandStack.getItem() instanceof DesertEagleItem mainHandItem&& offHandStack.getItem() instanceof DesertEagleItem offHandItem){
+		if(mainHandStack.getItem() instanceof GunCommon mainHandItem&& offHandStack.getItem() instanceof GunCommon offHandItem){
 
 			if(event.getHand() == InteractionHand.MAIN_HAND){
 				if(!player.getCooldowns().isOnCooldown(offHandItem)&& !mainHandItem.isReloading){

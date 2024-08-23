@@ -187,12 +187,12 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
 //                System.out.println(getVillagerData().getProfession());
                 startCustomTrade(player,
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 64),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 32),
                                 new ItemStack(TCRModItems.ORICHALCUM.get(), 1),
                                 16, 0, 0),
                         new MerchantOffer(
                                 new ItemStack(TCRModItems.ORICHALCUM.get(), 1),
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 48),
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 48),
                                 16, 0, 1)
                 );
                 break;
@@ -204,17 +204,22 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 chat(BUILDER.buildDialogueAnswer(entityType,1,1,false));
                 startCustomTrade(player,
                         new MerchantOffer(
+                                new ItemStack(TCRModItems.GUN_COMMON.get(), 1),
+                                new ItemStack(TCRModItems.ORICHALCUM.get(), 16),
+                                new ItemStack(TCRModItems.GUN_PLUS.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
                                 new ItemStack(TCRModItems.TREE_DEMON_FRUIT.get(), 1),
                                 new ItemStack(TCRModItems.TREE_DEMON_HORN.get(), 1),
                                 new ItemStack(TCRModItems.TREE_SPIRIT_WAND.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 64),
-                                new ItemStack(TCRModItems.DESERT_EAGLE.get(), 1),
+                                new ItemStack(TCRModItems.GUN_COMMON.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
-                                new ItemStack(TCRModItems.DESERT_EAGLE_AMMO.get(), 2),
+                                new ItemStack(TCRModItems.AMMO.get(), 2),
                                 16, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRModItems.ORICHALCUM.get(), 5),
@@ -235,8 +240,8 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 );
                 break;
             case 111:
-                player.addItem(TCRModItems.DESERT_EAGLE.get().getDefaultInstance());
-                ItemStack ammo = TCRModItems.DESERT_EAGLE_AMMO.get().getDefaultInstance();
+                player.addItem(TCRModItems.GUN_COMMON.get().getDefaultInstance());
+                ItemStack ammo = TCRModItems.AMMO.get().getDefaultInstance();
                 ammo.setCount(20);
                 player.addItem(ammo);
                 DataManager.gunGot.putBool(player,true);//存入得用玩家
@@ -247,13 +252,13 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
 
                 return;//NOTE 记得返回，否则对话中断！
             case 1:
-                ItemUtil.searchAndConsumeItem(player, TCRModItems.DESERT_EAGLE_AMMO.get(), 20);
+                ItemUtil.searchAndConsumeItem(player, TCRModItems.AMMO.get(), 20);
 //                player.addItem(Book.getBook("book1"));//测试书籍生成
                 chat(BUILDER.buildDialogueAnswer(entityType,4,false));//......
                 break;
             case 2:
                 if(!DataManager.ammoGot.getBool(player.getPersistentData())){
-                    ItemStack stack = TCRModItems.DESERT_EAGLE_AMMO.get().getDefaultInstance();
+                    ItemStack stack = TCRModItems.AMMO.get().getDefaultInstance();
                     stack.setCount(20);
                     player.addItem(stack);
                     chat(BUILDER.buildDialogueAnswer(entityType,5,false));//快给我，不然嘣了你

@@ -2,7 +2,6 @@ package com.gaboj1.tcr.item;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.TCRModBlocks;
-import com.gaboj1.tcr.item.TCRModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -82,8 +81,9 @@ public class TCRModItemTabs {
 					.icon(() -> new ItemStack(TCRModItems.TREE_SPIRIT_WAND.get()))
 					.displayItems((parameters, tabData) -> {
 
-				tabData.accept(TCRModItems.DESERT_EAGLE_AMMO.get());
-				tabData.accept(TCRModItems.DESERT_EAGLE.get());
+				tabData.accept(TCRModItems.AMMO.get());
+				tabData.accept(TCRModItems.GUN_COMMON.get());
+				tabData.accept(TCRModItems.GUN_PLUS.get());
 
 				//树脂
 				tabData.accept(TCRModItems.BASIC_RESIN.get());

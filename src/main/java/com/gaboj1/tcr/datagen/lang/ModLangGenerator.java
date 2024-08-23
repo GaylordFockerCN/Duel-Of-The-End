@@ -27,6 +27,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addKeyMapping(KeyMappings.RELOAD, "火枪换弹");
         this.addKeyMapping(KeyMappings.OPEN_PROGRESS, "查看进度");
 
+        this.add("info.the_casket_of_reveries.first_enter", "这是什么地方？找这里的长者问问看怎么回事吧？");
         this.add("info.the_casket_of_reveries.enter_forbidden_biome","前面的区域，以后再来探索吧~");
         this.add("info.the_casket_of_reveries.teleport_lock","该区域尚未解锁");
         this.add("info.the_casket_of_reveries.teleport_unlock","成功激活此锚点！");
@@ -56,18 +57,20 @@ public class ModLangGenerator extends ModLangProvider {
         this.add("item_group.the_casket_of_reveries.spawn_egg","远梦之棺-刷怪蛋");
         this.add("item_group.the_casket_of_reveries.loot","远梦之棺-战利品");
 
-        this.add(TCRModItems.DESERT_EAGLE.get(),"火枪");
-        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"headshot","爆头！");
-        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"ammo_count","剩余弹药数：");
-        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"ammo_cooldown","冷却时间: ");
-        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"reloadbutton","请按 %s 键换弹");
-        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"no_ammo","无后备弹药!");
-        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"main_hand_ammo","主手剩余弹药:");
-        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"off_hand_ammo","副手剩余弹药:");
-        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"main_ammo_full","主手弹药充足！");
-        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"off_ammo_full","副手弹药充足！");
-        this.addItemInfo(TCRModItems.DESERT_EAGLE.get(),"reloading","您正在换弹！");
-        this.add(TCRModItems.DESERT_EAGLE_AMMO.get(),"火枪弹药");
+        this.add(TCRModItems.GUN_COMMON.get(),"火枪");
+        this.add(TCRModItems.GUN_PLUS.get(),"火枪升级版");
+        this.addItemUsageInfo(TCRModItems.GUN_PLUS.get(),"换弹时可一次性填满弹匣。");
+        this.addItemInfo(TCRModItems.GUN_COMMON.get(),"headshot","爆头！");
+        this.addItemInfo(TCRModItems.GUN_COMMON.get(),"ammo_count","剩余弹药数：");
+        this.addItemInfo(TCRModItems.GUN_COMMON.get(),"ammo_cooldown","冷却时间: ");
+        this.addItemInfo(TCRModItems.GUN_COMMON.get(),"reloadbutton","请按 %s 键换弹");
+        this.addItemInfo(TCRModItems.GUN_COMMON.get(),"no_ammo","无后备弹药!");
+        this.addItemInfo(TCRModItems.GUN_COMMON.get(),"main_hand_ammo","主手剩余弹药:");
+        this.addItemInfo(TCRModItems.GUN_COMMON.get(),"off_hand_ammo","副手剩余弹药:");
+        this.addItemInfo(TCRModItems.GUN_COMMON.get(),"main_ammo_full","主手弹药充足！");
+        this.addItemInfo(TCRModItems.GUN_COMMON.get(),"off_ammo_full","副手弹药充足！");
+        this.addItemInfo(TCRModItems.GUN_COMMON.get(),"reloading","您正在换弹！");
+        this.add(TCRModItems.AMMO.get(),"火枪弹药");
 
         this.add(TCRModItems.ELDER_STAFF.get(),"长老的拐杖");
         this.addItemUsageInfo(TCRModItems.ELDER_STAFF.get(),"长老生前用过的拐杖，上面还带着点血迹。");
@@ -335,8 +338,9 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,3,"（凝视着你，眼中充满了期待）");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,4,"（目光坚定）你带来的是希望的曙光，旅者。村庄的每个角落都感激你的勇气。");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,5,"你的名字将被铭记。请接受我们的祝福，愿你的道路永远光明！");
-        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,6,"我将为你指引其他群系的位置。山水画廊（群系名）发生了天灾，位于%s，樱之原野（群系名）似乎在进行大选，位于 %s。亚特兰蒂斯（群系名）嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通。");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,6,"我将为你指引其他群系的位置。『山水画廊』发生了天灾，位于%s，『樱之原野』似乎在进行大选，位于 %s。『亚特兰蒂斯』嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通。游历四方后，或许该回世界的中心看看了。");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,7,"出发吧！勇者。");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,10,"再会了！勇者。");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,111,"你已经收过了哦~");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,0,"请你告诉我前往密林的路径。");
         this.addDialogChoice(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,1,"完全的人？魔物？");
@@ -362,8 +366,11 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.YGGDRASIL,9,"如何？我已经迫不及待吸收他的鲜血了！");
         this.addDialog(TCRModEntities.YGGDRASIL,10,"很好，我将赐予你生命之力！");
         this.addDialog(TCRModEntities.YGGDRASIL,11,"享受这强大的力量吧！");
-        this.addDialog(TCRModEntities.YGGDRASIL,12,"我可以为你介绍其他地区的现状，我能感应到每个地区都存在着动荡。");
-        this.addDialog(TCRModEntities.YGGDRASIL,13,"位于%s的青云之巅（群系名）皇位不保，位于%s的樱之原野（群系名）也有一位智者现世，他将以他的才智狠狠压榨那群傻子。位于%s的亚特兰蒂斯（群系名）嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通");
+        this.addDialog(TCRModEntities.YGGDRASIL,12,"我将为你介绍其他地区的现状，我能感应到每个地区都存在着动荡。");
+        this.addDialog(TCRModEntities.YGGDRASIL,13,"位于%s的『青云之巅』皇位不保，位于%s的『深暗之樱』也有一位智者现世，他将以他的才智狠狠压榨那群傻子。至于『亚特兰蒂斯』嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通。游历四方后，或许该回世界的中心看看了。");
+        this.addDialog(TCRModEntities.YGGDRASIL,14,"不————你会后悔的！");
+        this.addDialog(TCRModEntities.YGGDRASIL,15,"去吧，我就在此地等你的好消息。");
+        this.addDialog(TCRModEntities.YGGDRASIL,16,"再会了，我将回去休养生息，也许有一天我们会在 『世界尽头』 再次相遇。");
 
         this.addDialogChoice(TCRModEntities.YGGDRASIL,-1,"继续");
         this.addDialogChoice(TCRModEntities.YGGDRASIL,0,"什么是同化？？等等……");
