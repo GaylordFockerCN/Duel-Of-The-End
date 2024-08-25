@@ -15,7 +15,8 @@ public class TCRLoot {
 
     //村民家普通箱子
     public static final ResourceLocation VILLAGE1USUAL = register("chests/village1usual");
-
+    //酒吧箱子
+//    public static final ResourceLocation BAR = register("chests/bar");
     //长老家箱子
     public static final ResourceLocation VILLAGE1SPECIAL1 = register("chests/village1special1");
     //铁匠铺箱子

@@ -134,6 +134,9 @@ public class ModEntityLootTables extends EntityLootSubProvider {
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 2))
                                 .add(LootItem.lootTableItem(TCRModItems.STARLIT_DEWDROP.get())))
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(0, 1))
+                                .add(LootItem.lootTableItem(TCRModItems.SPIRIT_WAND.get())))
         );
 
         add(TCRModEntities.YGGDRASIL.get(),

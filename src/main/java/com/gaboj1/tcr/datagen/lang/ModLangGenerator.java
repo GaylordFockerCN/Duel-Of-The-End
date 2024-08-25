@@ -31,9 +31,10 @@ public class ModLangGenerator extends ModLangProvider {
         this.add("info.the_casket_of_reveries.enter_forbidden_biome","前面的区域，以后再来探索吧~");
         this.add("info.the_casket_of_reveries.teleport_lock","该区域尚未解锁");
         this.add("info.the_casket_of_reveries.teleport_unlock","成功激活此锚点！");
+        this.add("info.the_casket_of_reveries.health_added","成功吸取了村民的生命。");
         this.add("info.the_casket_of_reveries.boss1invincible","摧毁树爪或小怪以解除伊格德拉希尔无敌状态");
         this.add("info.the_casket_of_reveries.alreadyAddWhite","你已经是村民阵营了，不能伤害村民哦");
-        this.add("info.the_casket_of_reveries.cannotSpawn","目前无法召唤！");
+        this.add("info.the_casket_of_reveries.cannotSpawn","目前的剧情进度还无法召唤此BOSS！");
         this.add("info.the_casket_of_reveries.sureToSpawn","再次右键以召唤BOSS（用于刷材料，不影响剧情）");
 
         this.add("the_casket_of_reveries.button.boss1","泰兰妮尔之心");
@@ -94,11 +95,14 @@ public class ModLangGenerator extends ModLangProvider {
         this.addItemUsageInfo(TCRModItems.WITHERING_TOUCH.get(),"手持枯萎之触时，可以削弱树魔的力量。");
         this.add(TCRModItems.DENSE_FOREST_CERTIFICATE.get(),"密林之证");
         this.addItemUsageInfo(TCRModItems.DENSE_FOREST_CERTIFICATE.get(),"回溯密林群系事件完成的证明。");
+        this.add(TCRModItems.HEALTH_WAND.get(),"生命法杖");
+        this.add(TCRModItems.SPIRIT_WAND.get(),"精灵法杖");
         this.add(TCRModItems.TREE_SPIRIT_WAND.get(),"树灵法杖");
         this.addItemInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"no_spirit_tree","密林灵树原木不足，无法召唤小树妖");
         this.addItemUsageInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"右键地面消耗密林原木和生命值召唤小树妖",1);
         this.addItemUsageInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"右键空气消耗饥饿值回血",2);
         this.addItemUsageInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"只能使用超级树脂修复",3);
+        this.addItemUsageInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"当主手持有树灵法杖杀死牧歌原野的村民时有极小概率增加最大生命上限！",4);
 
 
         this.add(TCRModItems.HOLY_SWORD.get(),"额滴圣剑");

@@ -44,6 +44,9 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+
+        handheldItem(TCRModItems.HEALTH_WAND);
+
         eggItem(TCRModItems.JELLY_CAT_SPAWN_EGG);
         eggItem(TCRModItems.SQUIRREL_SPAWN_EGG);
         eggItem(TCRModItems.CRAB_SPAWN_EGG);

@@ -54,22 +54,28 @@ public class TCRModItemTabs {
 					.title(Component.translatable("item_group.the_casket_of_reveries.spawn_egg"))
 					.icon(() -> new ItemStack(TCRModItems.JELLY_CAT_SPAWN_EGG.get()))
 					.displayItems((parameters, tabData) -> {
+						//梦灵
 						tabData.accept(TCRModItems.JELLY_CAT_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.SQUIRREL_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.CRAB_SPAWN_EGG.get());
+						//Biome1
 						tabData.accept(TCRModItems.SMALL_TREE_MONSTER_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.MIDDLE_TREE_MONSTER_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.TREE_GUARDIAN_SPAWN_EGG.get());
+						tabData.accept(TCRModItems.SPRITE_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.YGGDRASIL_SPAWN_EGG.get());
+
 						tabData.accept(TCRModItems.PASTORAL_PLAIN_VILLAGER_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.PASTORAL_PLAIN_VILLAGER_ELDER_SPAWN_EGG.get());
-						tabData.accept(TCRModItems.SPRITE_SPAWN_EGG.get());
+
+						//Biome2
 						tabData.accept(TCRModItems.TIGER_EGG.get());
 						tabData.accept(TCRModItems.BOXER_EGG.get());
 						tabData.accept(TCRModItems.BIG_HAMMER_EGG.get());
 						tabData.accept(TCRModItems.SNOW_SWORDMAN_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.SWORD_CONTROLLER_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.SECOND_BOSS_SPAWN_EGG.get());
+
 
 					}).build());
 
@@ -103,6 +109,8 @@ public class TCRModItemTabs {
 				tabData.accept(TCRModItems.ESSENCE_OF_THE_ANCIENT_TREE.get());
 				tabData.accept(TCRModItems.BARK_OF_THE_GUARDIAN.get());
 				tabData.accept(TCRModItems.STARLIT_DEWDROP.get());
+				tabData.accept(TCRModItems.SPIRIT_WAND.get());
+				tabData.accept(TCRModItems.HEALTH_WAND.get());
 
 				//盔甲
 				tabData.accept(TCRModItems.ORICHALCUM_HELMET.get());

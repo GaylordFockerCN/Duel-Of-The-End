@@ -1,0 +1,6 @@
+{
+  "parent": "the_casket_of_reveries:displaysettings/spirit_wand.item",
+  "textures": {
+    "layer0": "the_casket_of_reveries:entity/jingling"
+  }
+}

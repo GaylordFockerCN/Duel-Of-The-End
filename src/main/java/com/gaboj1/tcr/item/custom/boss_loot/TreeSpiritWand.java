@@ -8,6 +8,7 @@ import com.gaboj1.tcr.item.renderer.TreeSpiritWandRenderer;
 import com.gaboj1.tcr.util.ItemUtil;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -141,6 +142,7 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
         pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage1"));
         pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage2"));
         pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage3"));
+        pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage4").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
     }
 
     @Override
@@ -186,8 +188,4 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
         return this.cache;
     }
 
-    @Override
-    public double getTick(Object o) {
-        return RenderUtils.getCurrentTick();
-    }
 }
