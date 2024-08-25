@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.worldgen.biome;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.client.TCRModSounds;
 import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.worldgen.TCRPlacedFeatures;
 import net.minecraft.core.registries.Registries;
@@ -9,6 +10,7 @@ import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.Music;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
@@ -171,6 +173,7 @@ public class TCRBiomes {
                         .fogColor(12638463)
                         .skyColor(7907327)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                        .backgroundMusic(new Music(TCRModSounds.BIOME1VILLAGE.getHolder().orElseThrow(), 12000, 24000, true))
                         .build())
                 .build();
     }
@@ -200,6 +203,7 @@ public class TCRBiomes {
                         .fogColor(0x000000)
                         .skyColor(0x000000)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                        .backgroundMusic(new Music(TCRModSounds.BIOME1FOREST.getHolder().orElseThrow(), 12000, 24000, true))
                         .build())
                 .build();
     }

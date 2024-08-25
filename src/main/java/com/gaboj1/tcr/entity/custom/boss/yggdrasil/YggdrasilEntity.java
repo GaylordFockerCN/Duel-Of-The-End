@@ -2,6 +2,7 @@ package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.entity.spawner.EnforcedHomePoint;
+import com.gaboj1.tcr.client.BossMusicPlayer;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ShadowableEntity;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
@@ -300,6 +301,14 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     @Override
     public void tick() {
         super.tick();
+
+        //TODO 改为服务端处理
+        if(level().isClientSide){
+            if(getEntityData().get(IS_FIGHTING)){
+                BossMusicPlayer.playBossMusic(this, TCRModSounds.BIOME1BOSS_FIGHT.get(), 32);
+            }
+        }
+
         //恢复倒计时，这个timer由goal触发
         if(!level().isClientSide){
             if(recoverTimer <= 0){

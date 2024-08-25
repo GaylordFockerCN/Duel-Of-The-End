@@ -10,6 +10,12 @@
       "sound": "minecraft:ambient.cave",
       "tick_delay": 6000
     },
+    "music": {
+      "max_delay": 24000,
+      "min_delay": 12000,
+      "replace_current_music": true,
+      "sound": "the_casket_of_reveries:bgm.tcr.biome1.forest"
+    },
     "sky_color": 0,
     "water_color": 2489074,
     "water_fog_color": 1805247

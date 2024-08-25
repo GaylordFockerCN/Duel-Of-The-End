@@ -41,6 +41,9 @@ public class SoundGenerator extends TCRSoundProvider {
         generateNewSoundWithSubtitle(TCRModSounds.MALE_HENG, "entity/male_villager/male_heng", 1);
         generateNewSoundWithSubtitle(TCRModSounds.MALE_HI, "entity/male_villager/male_hi", 2);
         generateNewSoundWithSubtitle(TCRModSounds.MALE_SIGH, "entity/male_villager/male_sigh", 1);
+        generateNewSoundWithSubtitle(TCRModSounds.BIOME1VILLAGE, "bgm/biome1/village", 2);
+        generateNewSoundWithSubtitle(TCRModSounds.BIOME1FOREST, "bgm/biome1/forest", 2);
+        generateNewSoundWithSubtitle(TCRModSounds.BIOME1BOSS_FIGHT, "bgm/biome1/fight", 1);
 //        this.generateExistingSoundWithSubtitle(TFSounds.ACID_RAIN_BURNS, SoundEvents.FIRE_EXTINGUISH);
 //        this.generateNewSoundWithSubtitle(TFSounds.ALPHA_YETI_ALERT, "mob/alpha_yeti/alert", 1);
 //        this.generateNewSoundWithSubtitle(TFSounds.ALPHA_YETI_DEATH, "mob/alpha_yeti/death", 1);

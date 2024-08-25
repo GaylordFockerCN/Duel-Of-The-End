@@ -28,17 +28,20 @@ public final class TCRModSounds {
 	public static final RegistryObject<SoundEvent> FEMALE_VILLAGER_DEATH = createEvent("entity.tcr.female_villager_die");
 	public static final RegistryObject<SoundEvent> FEMALE_VILLAGER_HURT = createEvent("entity.tcr.female_villager_hurt");
 	public static final RegistryObject<SoundEvent> FEMALE_VILLAGER_OHAYO = createEvent("entity.tcr.female_villager_ohayo");
-	public static final RegistryObject<SoundEvent> FEMALE_HENG = createEvent("entity.female_villager.female_heng");
-	public static final RegistryObject<SoundEvent> FEMALE_SIGH = createEvent("entity.female_villager.female_sigh");
-	public static final RegistryObject<SoundEvent> JELLY_CAT_DEATH = createEvent("entity.jelly_cat.die");
-	public static final RegistryObject<SoundEvent> JELLY_CAT_HURT = createEvent("entity.jelly_cat.hurt");
-	public static final RegistryObject<SoundEvent> MALE_DEATH = createEvent("entity.male_villager.male_death");
-	public static final RegistryObject<SoundEvent> MALE_EYO = createEvent("entity.male_villager.male_eyo");
-	public static final RegistryObject<SoundEvent> MALE_GET_HURT = createEvent("entity.male_villager.male_get_hurt");
-	public static final RegistryObject<SoundEvent> MALE_HELLO = createEvent("entity.male_villager.male_hello");
-	public static final RegistryObject<SoundEvent> MALE_HENG = createEvent("entity.male_villager.male_heng");
-	public static final RegistryObject<SoundEvent> MALE_HI = createEvent("entity.male_villager.male_hi");
-	public static final RegistryObject<SoundEvent> MALE_SIGH = createEvent("entity.male_villager.male_sigh");
+	public static final RegistryObject<SoundEvent> FEMALE_HENG = createEvent("entity.tcr.female_villager.female_heng");
+	public static final RegistryObject<SoundEvent> FEMALE_SIGH = createEvent("entity.tcr.female_villager.female_sigh");
+	public static final RegistryObject<SoundEvent> JELLY_CAT_DEATH = createEvent("entity.tcr.jelly_cat.die");
+	public static final RegistryObject<SoundEvent> JELLY_CAT_HURT = createEvent("entity.tcr.jelly_cat.hurt");
+	public static final RegistryObject<SoundEvent> MALE_DEATH = createEvent("entity.tcr.male_villager.male_death");
+	public static final RegistryObject<SoundEvent> MALE_EYO = createEvent("entity.tcr.male_villager.male_eyo");
+	public static final RegistryObject<SoundEvent> MALE_GET_HURT = createEvent("entity.tcr.male_villager.male_get_hurt");
+	public static final RegistryObject<SoundEvent> MALE_HELLO = createEvent("entity.tcr.male_villager.male_hello");
+	public static final RegistryObject<SoundEvent> MALE_HENG = createEvent("entity.tcr.male_villager.male_heng");
+	public static final RegistryObject<SoundEvent> MALE_HI = createEvent("entity.tcr.male_villager.male_hi");
+	public static final RegistryObject<SoundEvent> MALE_SIGH = createEvent("entity.tcr.male_villager.male_sigh");
+	public static final RegistryObject<SoundEvent> BIOME1VILLAGE = createEvent("bgm.tcr.biome1.plain");
+	public static final RegistryObject<SoundEvent> BIOME1FOREST = createEvent("bgm.tcr.biome1.forest");
+	public static final RegistryObject<SoundEvent> BIOME1BOSS_FIGHT = createEvent("bgm.tcr.biome1.boss_fight");
 
 	private static RegistryObject<SoundEvent> createEvent(String sound) {
 		return REGISTRY.register(sound, () -> SoundEvent.createVariableRangeEvent(TheCasketOfReveriesMod.prefix(sound)));
