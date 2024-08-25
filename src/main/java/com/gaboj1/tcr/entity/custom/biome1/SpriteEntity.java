@@ -1,8 +1,8 @@
-package com.gaboj1.tcr.entity.custom.sprite;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.TamableAnimal;
+package com.gaboj1.tcr.entity.custom.biome1;
+import com.gaboj1.tcr.entity.custom.boss.yggdrasil.MagicProjectile;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -13,19 +13,22 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class SpriteEntity extends Monster implements GeoEntity {
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-
-
+    private int timer = 0;
+    private int nextAttack;
+    private boolean buffed;
     public SpriteEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
     }
@@ -45,25 +48,100 @@ public class SpriteEntity extends Monster implements GeoEntity {
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
         if(tAnimationState.isMoving()) {
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.move", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
+        } else {
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.idle", Animation.LoopType.LOOP));
         }
-        tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
+
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
+        this.goalSelector.addGoal(2, new SpriteAttackGoal(this, 0.5, false));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 
         this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
     }
+
+    /**
+     * 增加攻击判断范围
+     */
+    private static class SpriteAttackGoal extends MeleeAttackGoal{
+
+        public SpriteAttackGoal(PathfinderMob pMob, double pSpeedModifier, boolean pFollowingTargetEvenIfNotSeen) {
+            super(pMob, pSpeedModifier, pFollowingTargetEvenIfNotSeen);
+        }
+
+        @Override
+        protected double getAttackReachSqr(@NotNull LivingEntity pAttackTarget) {
+            return 20;
+        }
+    }
+
+    @Override
+    public boolean doHurtTarget(@NotNull Entity pEntity) {
+        if(timer == 0){
+            if(getRandom().nextBoolean()){
+                timer = 41;
+                nextAttack = 2;
+                triggerAnim("Attack", "attack2");
+            }else {
+                timer = 21;
+                nextAttack = 2;
+                triggerAnim("Attack", "attack1");
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void tick() {
+        if(!level().isClientSide){
+            if(nextAttack == 2){
+                if(timer == 11){
+                    shoot(5);
+                }
+                if(timer == 5){
+                    shoot(12);
+                }
+            }
+            if(timer == 1){
+                shoot(18);
+            }
+            if(timer > 0){
+                timer--;
+            }
+
+            if(!buffed && getHealth() < getMaxHealth() / 2){
+                triggerAnim("Attack", "buff");
+                AttributeInstance instance = getAttribute(Attributes.ARMOR);
+                if(instance != null){
+                    instance.addPermanentModifier(new AttributeModifier("buff modify", 5, AttributeModifier.Operation.ADDITION));
+                }
+                buffed = true;
+            }
+        }
+
+        super.tick();
+    }
+
+    public void shoot(int damage){
+        MagicProjectile projectile = new MagicProjectile(level(), this);
+        projectile.setGlowingTag(true);
+        projectile.setDamage(damage);
+        Vec3 view = this.getViewVector(1.0F);
+        projectile.shoot(view.x, view.y, view.z, 5.0F, 10.0F);
+        level().addFreshEntity(projectile);
+    }
+
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 50)
                 .add(Attributes.ATTACK_DAMAGE, 3)
                 .add(Attributes.ATTACK_SPEED, 0.5f)
                 .add(Attributes.MOVEMENT_SPEED, 0.30f)
+                .add(Attributes.ARMOR, 1)
                 .build();
     }
     @Override

@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.entity.client.sprite;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.entity.custom.sprite.SpriteEntity;
+import com.gaboj1.tcr.entity.custom.biome1.SpriteEntity;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 

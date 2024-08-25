@@ -1,9 +1,7 @@
 package com.gaboj1.tcr.entity.client.boxer;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.entity.client.sprite.SpriteModel;
-import com.gaboj1.tcr.entity.custom.boxer.BoxerEntity;
-import com.gaboj1.tcr.entity.custom.sprite.SpriteEntity;
+import com.gaboj1.tcr.entity.custom.biome2.BoxerEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

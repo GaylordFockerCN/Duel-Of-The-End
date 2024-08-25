@@ -1,9 +1,6 @@
 package com.gaboj1.tcr.entity.client.sprite;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.entity.client.tree_monster.MiddleTreeMonsterModel;
-import com.gaboj1.tcr.entity.custom.boss.yggdrasil.TreeClawEntity;
-import com.gaboj1.tcr.entity.custom.sprite.SpriteEntity;
-import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
+import com.gaboj1.tcr.entity.custom.biome1.SpriteEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

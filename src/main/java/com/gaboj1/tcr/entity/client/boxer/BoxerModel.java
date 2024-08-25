@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.entity.client.boxer;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.entity.custom.boxer.BoxerEntity;
+import com.gaboj1.tcr.entity.custom.biome2.BoxerEntity;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 

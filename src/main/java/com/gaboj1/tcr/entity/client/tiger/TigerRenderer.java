@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.entity.client.tiger;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.entity.custom.tiger.TigerEntity;
+import com.gaboj1.tcr.entity.custom.biome2.TigerEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

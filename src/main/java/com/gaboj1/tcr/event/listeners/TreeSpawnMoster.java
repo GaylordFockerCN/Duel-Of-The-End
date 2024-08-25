@@ -3,7 +3,7 @@ package com.gaboj1.tcr.event.listeners;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.custom.DenseForestTreeBlock;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
-import com.gaboj1.tcr.entity.custom.tree_monsters.SmallTreeMonsterEntity;
+import com.gaboj1.tcr.entity.custom.biome1.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.entity.TCRModEntities;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,7 +14,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.util.Random;
 

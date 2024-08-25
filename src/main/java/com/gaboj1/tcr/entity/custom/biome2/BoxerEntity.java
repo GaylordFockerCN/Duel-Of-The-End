@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.entity.custom.snow_swordman;
+package com.gaboj1.tcr.entity.custom.biome2;
 
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.world.entity.EntityType;
@@ -19,12 +19,14 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class SnowSwordmanEntity extends PathfinderMob implements GeoEntity {
+public class BoxerEntity extends PathfinderMob implements GeoEntity {
+
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public SnowSwordmanEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
+    public BoxerEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_);
     }
+
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, SaveUtil.getMobMultiplier(200))

@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.entity.custom.boxer;
+package com.gaboj1.tcr.entity.custom.biome2;
 
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.world.entity.EntityType;
@@ -19,14 +19,12 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class BoxerEntity extends PathfinderMob implements GeoEntity {
-
+public class BigHammerEntity extends PathfinderMob implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public BoxerEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
+    public BigHammerEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_);
     }
-
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, SaveUtil.getMobMultiplier(200))
@@ -58,7 +56,7 @@ public class BoxerEntity extends PathfinderMob implements GeoEntity {
             return PlayState.CONTINUE;
         }
         tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.idle", Animation.LoopType.LOOP));
-        return PlayState.CONTINUE;
+        return PlayState.STOP;
     }
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {

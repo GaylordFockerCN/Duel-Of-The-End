@@ -61,15 +61,8 @@ public class SpiritWand extends Item implements GeoItem {
 
         if(pLevel instanceof ServerLevel serverLevel){
             CompoundTag data = itemStack.getOrCreateTag();
-            int timer = data.getInt("AttackTimer");
-            if(timer == 1){
-                MagicProjectile projectile = new MagicProjectile(pLevel, pPlayer);
-                projectile.setGlowingTag(true);
-                Vec3 view = pPlayer.getViewVector(1.0F);
-                projectile.shoot(view.x, view.y, view.z, 1.5F, 10.0F);
-                pLevel.addFreshEntity(projectile);
-            } else if(timer == 0){
-                data.putInt("AttackTimer", 21);
+            if(data.getInt("AttackTimer") == 0){
+                data.putInt("AttackTimer", 41);
                 attackAnim(serverLevel, pPlayer, itemStack);
             }
         }
@@ -78,9 +71,21 @@ public class SpiritWand extends Item implements GeoItem {
     }
 
     @Override
-    public void inventoryTick(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull Entity pEntity, int pSlotId, boolean pIsSelected) {
-        pStack.getOrCreateTag().putInt("AttackTimer", Math.max(0, pStack.getOrCreateTag().getInt("AttackTimer") - 1));
-        super.inventoryTick(pStack, pLevel, pEntity, pSlotId, pIsSelected);
+    public void onInventoryTick(ItemStack stack, Level level, Player player, int slotIndex, int selectedIndex) {
+        if(!level.isClientSide){
+            CompoundTag data = stack.getOrCreateTag();
+            int timer = data.getInt("AttackTimer");
+            if(timer == 1){
+                MagicProjectile projectile = new MagicProjectile(level, player);
+                projectile.setGlowingTag(true);
+                projectile.setDamage(18);
+                Vec3 view = player.getViewVector(1.0F);
+                projectile.shoot(view.x, view.y, view.z, 5.0F, 10.0F);
+                level.addFreshEntity(projectile);
+            }
+            stack.getOrCreateTag().putInt("AttackTimer", Math.max(0, stack.getOrCreateTag().getInt("AttackTimer") - 1));
+        }
+        super.onInventoryTick(stack, level, player, slotIndex, selectedIndex);
     }
 
     @Override

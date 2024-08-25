@@ -1,13 +1,10 @@
 package com.gaboj1.tcr.entity.client.sword_controller;
 
-import com.gaboj1.tcr.entity.client.boxer.BoxerModel;
-import com.gaboj1.tcr.entity.custom.boxer.BoxerEntity;
-import com.gaboj1.tcr.entity.custom.sword_controller.SwordControllerEntity;
+import com.gaboj1.tcr.entity.custom.biome2.SwordControllerEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class SwordControllerRenderer extends GeoEntityRenderer<SwordControllerEntity>{

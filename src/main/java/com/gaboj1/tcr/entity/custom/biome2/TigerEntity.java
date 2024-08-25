@@ -1,8 +1,10 @@
-package com.gaboj1.tcr.entity.custom.sword_controller;
+package com.gaboj1.tcr.entity.custom.biome2;
 
 import com.gaboj1.tcr.util.SaveUtil;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -12,6 +14,7 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -19,13 +22,10 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class SwordControllerEntity extends PathfinderMob implements GeoEntity {
+public class TigerEntity extends TamableAnimal implements GeoEntity {
+
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-
-    public SwordControllerEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
-        super(p_21683_, p_21684_);
-    }
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, SaveUtil.getMobMultiplier(200))
@@ -44,6 +44,23 @@ public class SwordControllerEntity extends PathfinderMob implements GeoEntity {
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
     }
 
+    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
+        if(tAnimationState.isMoving()) {
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.walk", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
+        tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.idle", Animation.LoopType.LOOP));
+        return PlayState.CONTINUE;
+    }
+
+    public TigerEntity(EntityType<? extends TamableAnimal> entityType, Level level) {
+        super(entityType, level);
+    }
+    @Nullable
+    @Override
+    public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
+        return null;
+    }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
@@ -51,16 +68,9 @@ public class SwordControllerEntity extends PathfinderMob implements GeoEntity {
                 10, this::predicate));
     }
 
-    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
-        if(tAnimationState.isMoving()) {
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.move", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
-        tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.idle", Animation.LoopType.LOOP));
-        return PlayState.CONTINUE;
-    }
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return this.cache;
+        return cache;
     }
+
 }

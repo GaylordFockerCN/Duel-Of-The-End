@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.entity.custom.tree_monsters;
+package com.gaboj1.tcr.entity.custom.biome1;
 
 import com.gaboj1.tcr.client.TCRModSounds;
 import net.minecraft.sounds.SoundEvent;
@@ -17,6 +17,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -29,8 +30,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.Random;
 import java.util.UUID;
 
-public class MiddleTreeMonsterEntity extends Monster implements GeoEntity , NeutralMob {
-    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+public class MiddleTreeMonsterEntity extends Monster implements GeoEntity {
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public MiddleTreeMonsterEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
@@ -68,45 +69,27 @@ public class MiddleTreeMonsterEntity extends Monster implements GeoEntity , Neut
         return TCRModSounds.TREE_MONSTERS_DEATH.get();
     }
 
-//    @Nullable
-//    @Override
-//    public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob ageableMob) {
-//        return TCRModEntities.TIGER.get().create(level);
-//    }
-
-    private PlayState attackPredicate(AnimationState state) {
-        if(this.swinging && state.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
-            state.getController().forceAnimationReset();
-            Random r = new Random();
-                    state.getController().setAnimation(RawAnimation.begin().then("animation.middle_tree_monster.attack", Animation.LoopType.PLAY_ONCE));//攻击动作不循环
-            this.swinging = false;
-        }
-
-        return PlayState.CONTINUE;
-    }
-
-
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller",
-                0, this::predicate));
-        controllers.add(new AnimationController(this, "attackController",
-                0, this::attackPredicate));
+        controllers.add(new AnimationController<>(this, "controller",
+                10, this::predicate));
+        controllers.add(new AnimationController<>(this, "Attack", 10, state -> PlayState.STOP)
+                .triggerableAnim("attack1", RawAnimation.begin().then("animation.middle_tree_monster.attack1", Animation.LoopType.PLAY_ONCE))
+                .triggerableAnim("attack2", RawAnimation.begin().then("animation.middle_tree_monster.attack2", Animation.LoopType.PLAY_ONCE)));
     }
 
-    //@SubscribeEvent
+    @Override
+    public boolean doHurtTarget(@NotNull Entity pEntity) {
+        triggerAnim("Attack", "attack"+getRandom().nextInt(1,3));
+        return super.doHurtTarget(pEntity);
+    }
+
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
         if(tAnimationState.isMoving()) {
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.middle_tree_monster.move", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
+        } else {
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.middle_tree_monster.idle", Animation.LoopType.LOOP));
         }
-        LivingEntity target = this.getTarget();
-        if(target != null){
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.middle_tree_monster.attack1", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
-
-        tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.middle_tree_monster.idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
 
@@ -115,29 +98,4 @@ public class MiddleTreeMonsterEntity extends Monster implements GeoEntity , Neut
         return cache;
     }
 
-    @Override
-    public int getRemainingPersistentAngerTime() {
-        return 0;
-    }
-
-    @Override
-    public void setRemainingPersistentAngerTime(int pRemainingPersistentAngerTime) {
-
-    }
-
-    @Nullable
-    @Override
-    public UUID getPersistentAngerTarget() {
-        return null;
-    }
-
-    @Override
-    public void setPersistentAngerTarget(@Nullable UUID pPersistentAngerTarget) {
-
-    }
-
-    @Override
-    public void startPersistentAngerTimer() {
-
-    }
 }

@@ -26,8 +26,6 @@ import com.gaboj1.tcr.entity.client.tree_monster.MiddleTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.SmallTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.tree_monster.TreeGuardianRenderer;
 import com.gaboj1.tcr.entity.client.villager.TCRVillagerRenderer;
-import com.gaboj1.tcr.entity.custom.boss.second_boss.SecondBossEntity;
-import com.gaboj1.tcr.entity.custom.snow_swordman.SnowSwordmanEntity;
 import com.gaboj1.tcr.entity.custom.sword.SwordEntityRenderer;
 import com.gaboj1.tcr.item.TCRModItemTabs;
 import com.gaboj1.tcr.item.TCRModItems;

@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.entity.custom.big_hammer;
+package com.gaboj1.tcr.entity.custom.biome2;
 
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.world.entity.EntityType;
@@ -19,10 +19,11 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class BigHammerEntity extends PathfinderMob implements GeoEntity {
+public class SwordControllerEntity extends PathfinderMob implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public BigHammerEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
+
+    public SwordControllerEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_);
     }
     public static AttributeSupplier setAttributes() {
@@ -56,7 +57,7 @@ public class BigHammerEntity extends PathfinderMob implements GeoEntity {
             return PlayState.CONTINUE;
         }
         tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.idle", Animation.LoopType.LOOP));
-        return PlayState.STOP;
+        return PlayState.CONTINUE;
     }
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
