@@ -42,7 +42,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.EnumSet;
-import java.util.Random;
 
 /**
  * 大部分代码copy form Slime.java，实现猫猫跳动。没办法史莱姆不是可驯养的，只能这么做了awa
@@ -75,18 +74,18 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putInt("TCRVillagerSkinID", this.getEntityData().get(DATA_SKIN_ID));
+        tag.putInt("JellyCatSkinID", this.getEntityData().get(DATA_SKIN_ID));
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.getEntityData().set(DATA_SKIN_ID,tag.getInt("TCRVillagerSkinID"));
+        this.getEntityData().set(DATA_SKIN_ID,tag.getInt("JellyCatSkinID"));
     }
 
     @Override
     protected void defineSynchedData() {
-        int skinID = -maxSkinID + new Random().nextInt(maxSkinID * 2 + 1);//随机产生皮肤，负数代表球形手
+        int skinID = -maxSkinID + getRandom().nextInt(maxSkinID * 2 + 1);//随机产生皮肤，负数代表球形手
         if(skinID == 0){
             skinID = -1;
         }
@@ -115,7 +114,6 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
     /**
      * 集齐所有猫猫还有成就哦
      * 只看肤色不看手型
-     * @param player
      */
     @Override
     public void tame(@NotNull Player player) {
@@ -156,7 +154,12 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
 
     @Override
     public int getSkinID() {
-        return this.getEntityData().get(DATA_SKIN_ID);
+        int id = this.getEntityData().get(DATA_SKIN_ID);
+        //保险一下，没有0号猫猫
+        if(id == 0){
+            this.getEntityData().set(DATA_SKIN_ID, -1);
+        }
+        return -1;
     }
     @Override
     public void setSkinID(int newSkinID) {
@@ -174,20 +177,21 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
     }
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
         this.goalSelector.addGoal(1, new JellyCatFloatGoal(this));
         this.goalSelector.addGoal(2, new JellyCatAttackGoal(this));
-        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
-        this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
+        this.goalSelector.addGoal(3, new SitWhenOrderedToGoal(this));
+        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(6, new JellyCatRandomDirectionGoal(this));
+        this.goalSelector.addGoal(7, new JellyCatKeepOnJumpingGoal(this));
+        this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0F, false));
+        this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(10, new MeleeAttackGoal(this,1.0, false));
+
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
-        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this, JellyCat.class)).setAlertOthers());
-//        this.goalSelector.addGoal(2, new JellyCatWinkGoal(this));
-        this.goalSelector.addGoal(3, new JellyCatRandomDirectionGoal(this));
-        this.goalSelector.addGoal(5, new JellyCatKeepOnJumpingGoal(this));
-        this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0F, false));
-        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.targetSelector.addGoal(3, (new HurtByTargetGoal(this, JellyCat.class)).setAlertOthers());
     }
 
     @Nullable

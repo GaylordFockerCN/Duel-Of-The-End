@@ -12,6 +12,6 @@ public class CrabModel extends DefaultedEntityGeoModel<CrabCrabYou> {
 
     @Override
     public ResourceLocation getTextureResource(CrabCrabYou crab) {
-        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/crab/crab");
+        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/crab/crab" + crab.getSkinID() + ".png");
     }
 }
