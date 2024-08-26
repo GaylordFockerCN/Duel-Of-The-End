@@ -132,22 +132,6 @@ public class BiomeMap {
                 Graphics2D g2d = resizedImage.createGraphics();
                 g2d.drawImage(image, 0, 0, width, height, null);
                 g2d.dispose();
-
-                // 3. 输出到控制台
-                int characterWidth = 1; // 每个字符宽度
-                int characterHeight = 2; // 每个字符高度
-                for (int y = 0; y < height; y += characterHeight) {
-                    for (int x = 0; x < width; x += characterWidth) {
-                        // 获取当前位置的像素灰度值
-                        int pixel = resizedImage.getRGB(x, y);
-                        int gray = (int) (0.21 * ((pixel >> 16) & 0xff) + 0.72 * ((pixel >> 8) & 0xff) + 0.07 * (pixel & 0xff));
-
-                        // 根据灰度值映射字符
-                        char ch = getCharForGray(gray);
-                        System.out.print(ch);
-                    }
-                    System.out.println(); // 换行
-                }
                 TCRBiomeProvider.mapName = file.getName();
             }
             int height = image.getHeight();
@@ -171,12 +155,6 @@ public class BiomeMap {
             //如果还是不行就输出默认噪声地图
             return createNoiseMap(generator);
         }
-    }
-
-    private static char getCharForGray(int gray) {
-        char[] chars = {'@', '#', '8', '&', 'o', ':', '*', '.', ' '}; // 字符按照灰度值从高到低排序
-        int index = gray * (chars.length - 1) / 255; // 灰度值映射到字符数组的索引范围
-        return chars[index];
     }
 
     /**

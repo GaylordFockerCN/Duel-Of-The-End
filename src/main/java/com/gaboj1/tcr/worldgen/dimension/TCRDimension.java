@@ -45,7 +45,8 @@ public class TCRDimension {
 
     public static void bootstrapType(ResourceKey<DimensionType> typeResourceKey, BootstapContext<DimensionType> context){
         context.register(typeResourceKey, new DimensionType(
-                OptionalLong.of(12000), // fixedTime
+                OptionalLong.empty(),
+//                OptionalLong.of(12000), // fixedTime
                 true, // hasSkylight
                 false, // hasCeiling
                 false, // ultraWarm

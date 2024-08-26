@@ -117,7 +117,8 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
                     }
                     primer.setBlock(pos.atY(gBase+y), grassTop, 3);
                     if(y > 50-new Random().nextInt(20)){
-                        primer.setBlock(pos.atY(gBase+y-2), dirt, 3);
+//                        primer.setBlock(pos.atY(gBase+y-2), dirt, 3);
+                        primer.setBlock(pos.atY(gBase+y-2), stone, 3);
                         primer.setBlock(pos.atY(gBase+y-1), snowBlock, 3);
                         primer.setBlock(pos.atY(gBase+y), snowBlock, 3);
 //                        primer.setBlock(pos.atY(gBase+y+1), new Random().nextBoolean()?snowBlock:snow, 3);

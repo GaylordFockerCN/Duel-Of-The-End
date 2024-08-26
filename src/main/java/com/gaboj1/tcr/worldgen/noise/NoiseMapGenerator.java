@@ -208,7 +208,7 @@ public class NoiseMapGenerator implements Serializable {
         int centerX = centerPoint.x;
         int centerY = centerPoint.y;
 
-        int centerR = (int) (width * SCALE_OF_CENTER_R);//TODO:调整合适大小
+        int centerR = (int) (width * SCALE_OF_CENTER_R);
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < length; y++) {
@@ -427,7 +427,16 @@ public class NoiseMapGenerator implements Serializable {
         //centerR即偏移量
         for(int i = aCenter.x - aCenterR /2, a = 0; i < aCenter.x + aCenterR /2 && a < aCenterR; i++,a++){
             for(int j = aCenter.y - aCenterR /2, b = 0; j < aCenter.y + aCenterR /2 && b < aCenterR; j++,b++){
-                if(i > 0 && j > 0 && i<map.length && j<map[0].length && (aCenterBiomeMap[a][b] != 0 || tag == 6)) //第二群系造山用
+                if(i > 0 && j > 0 && i<map.length && j<map[0].length && aCenterBiomeMap[a][b] != 0){
+
+                    //第二群系造山用
+                    if(tag == 6){
+                        double dis = Math.sqrt(Math.pow(i - aCenter.x, 2) + Math.pow(j - aCenter.y, 2));
+                        if(dis <= aCenterR){
+                            map[i][j] = tag;
+                        }
+                    }
+
                     if(rotate){
                         map[j][i] = tag;//旋转，增加多样性 TODO 部分图效果不好
                         newPoints.add(new Point(j,i));
@@ -435,6 +444,7 @@ public class NoiseMapGenerator implements Serializable {
                         map[i][j] = tag;
                         newPoints.add(new Point(i,j));
                     }
+                }
             }
         }
         return computeCenter(newPoints);

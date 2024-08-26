@@ -6,6 +6,7 @@ import com.gaboj1.tcr.client.BossMusicPlayer;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ShadowableEntity;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
+import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
 import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
 import com.gaboj1.tcr.entity.custom.biome1.SpriteEntity;
 import com.gaboj1.tcr.entity.custom.biome1.TreeGuardianEntity;
@@ -85,7 +86,10 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
 
     private boolean canBeHurt;
     private int hurtTimer;
+    private int shootTimer = 0;
+    private Entity shootTarget;
     private int recoverTimer = 0;
+    private int treeClawTimer = 0;
     public final int maxRecoverTimer = 200;
     private final List<Integer> mobs = new ArrayList<>();
 
@@ -93,30 +97,23 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
         super(p_21683_, p_21684_);
     }
 
-    public static AttributeSupplier setAttributes() {//生物属性
+    public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, SaveUtil.getMobMultiplier(200))//最大血量
-                .add(Attributes.ATTACK_DAMAGE, SaveUtil.getMobMultiplier(3))//单次攻击伤害
-                .add(Attributes.ATTACK_SPEED, 0.5f)//攻速
-                .add(Attributes.MOVEMENT_SPEED, 0.30f)//移速
+                .add(Attributes.MAX_HEALTH, SaveUtil.getMobMultiplier(200))
+                .add(Attributes.ATTACK_DAMAGE, SaveUtil.getMobMultiplier(3))
+                .add(Attributes.ATTACK_SPEED, 0.5f)
+                .add(Attributes.MOVEMENT_SPEED, 0.30f)
                 .build();
     }
 
-    protected void registerGoals() {//设置生物行为
+    protected void registerGoals() {
         this.goalSelector.addGoal(0,new ConversationTriggerGoal(this));
         this.goalSelector.addGoal(1,new NpcDialogueGoal<>(this));
-        this.goalSelector.addGoal(2, new ShootGoal(this));
+        this.goalSelector.addGoal(2, new RangeMeleeAttackGoal(this, 1.0, true, 20, 40));
         this.goalSelector.addGoal(3,new RecoverGoal(this));
         this.goalSelector.addGoal(4, new SpawnTreeClawAtPointPositionGoal(this));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 
-        /*
-         * 下面设置攻击目标：（按需修改）
-         * 首先寻找攻击源
-         * 如果是玩家，且树怪被玩家激怒，则优先攻击玩家
-         * 如果是村民，不处于被激怒状态则也被攻击，优先级低于玩家（按需修改）
-         * 如果是Creeper，则与村民逻辑相同，但优先级低于村民（按需修改）
-         * */
         this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this,AbstractVillager.class,true));
@@ -302,15 +299,20 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     public void tick() {
         super.tick();
 
-        //TODO 改为服务端处理
+        //强制追，不知道为什么goal的那个追击坏了
+        if(getTarget() != null && getEntityData().get(IS_FIGHTING)){
+            this.getNavigation().moveTo(getTarget(), 1.0f);
+        }
+
         if(level().isClientSide){
             if(getEntityData().get(IS_FIGHTING)){
                 BossMusicPlayer.playBossMusic(this, TCRModSounds.BIOME1BOSS_FIGHT.get(), 32);
             }
         }
 
-        //恢复倒计时，这个timer由goal触发
         if(!level().isClientSide){
+
+            //恢复的倒计时，这个timer由goal触发
             if(recoverTimer <= 0){
                 boolean canRecover = false;
                 for(int entityID : mobs){
@@ -329,6 +331,40 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
             } else if(recoverTimer <= maxRecoverTimer){
                 recoverTimer--;
             }
+
+            //树爪的倒计时，这个timer由goal触发
+            if(treeClawTimer > 0){
+                treeClawTimer--;
+                if(treeClawTimer == 1){
+                    List<Player> players = this.level().getNearbyPlayers(TargetingConditions.DEFAULT, this, getPlayerAABB(getOnPos(), 20));
+                    List<Player> players2 = this.level().getNearbyPlayers(TargetingConditions.forNonCombat(), this, getPlayerAABB(getOnPos(), 20));//创造测试用
+                    players.addAll(players2);
+                    for (Player target : players) {
+                        TreeClawEntity treeClaw = new TreeClawEntity(this.level(), this, target);
+                        treeClaw.setPos(target.getX(), target.getY(), target.getZ());
+                        level().addFreshEntity(treeClaw);//树爪继承自Mob，和平模式无法召唤！！
+                        treeClaw.setDeltaMovement(target.getDeltaMovement().scale(0.1));//追一下
+                        treeClaw.catchPlayer();
+                        level().playSound(null, treeClaw.getOnPos(), SoundEvents.PLAYER_HURT, SoundSource.BLOCKS, 1.0f, 1.0f);
+                    }
+                }
+            }
+
+            //普攻的延迟发射，这个timer由goal触发
+            if(shootTimer > 0){
+                shootTimer--;
+                if(shootTimer == 1){
+                    MagicProjectile projectile = new MagicProjectile(level(), this);
+                    double x = shootTarget.getX() - this.getX();
+                    double y = shootTarget.getY(0.3333333333333333) - projectile.getY();
+                    double z = shootTarget.getZ() - this.getZ();
+                    double $$5 = Math.sqrt(x * x + z * z) * 0.20000000298023224;
+                    projectile.setDamage(10);
+                    projectile.shoot(x, y + $$5, z, 1.5F, 10.0F);
+                    level().addFreshEntity(projectile);
+                }
+            }
+
         }
 
         //霸体时间判断 TODO 不起作用？
@@ -613,7 +649,6 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
         private final YggdrasilEntity yggdrasil;
         private int shootInterval;
         public final int shootIntervalMax = 100;
-        public static final int attackRange = 10;
 
         public SpawnTreeClawAtPointPositionGoal(YggdrasilEntity yggdrasil) {
             this.yggdrasil = yggdrasil;
@@ -628,17 +663,8 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
         @Override
         public void start() {
             yggdrasil.triggerAnim("Summon", "summon");
-            List<Player> players = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.DEFAULT, yggdrasil, getPlayerAABB(yggdrasil.getOnPos(), attackRange));
-            List<Player> players2 = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.forNonCombat(), yggdrasil, getPlayerAABB(yggdrasil.getOnPos(), attackRange));//创造测试用
-            players.addAll(players2);
-            for (Player target : players) {
-                TreeClawEntity treeClaw = new TreeClawEntity(this.yggdrasil.level(), this.yggdrasil, target);
-                treeClaw.setPos(target.getX(), target.getY(), target.getZ());
-                yggdrasil.level().addFreshEntity(treeClaw);//树爪继承自Mob，和平模式无法召唤！！
-                treeClaw.setDeltaMovement(target.getDeltaMovement().scale(0.1));//追一下
-                treeClaw.catchPlayer();
-                yggdrasil.level().playSound(null, treeClaw.getOnPos(), SoundEvents.PLAYER_HURT, SoundSource.BLOCKS, 1.0f, 1.0f);
-            }
+            yggdrasil.treeClawTimer = 20;
+
 
             this.shootInterval = shootIntervalMax;
         }
@@ -699,65 +725,6 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     }
 
     /**
-     * 远程普攻
-     */
-    public static class ShootGoal extends MeleeAttackGoal{
-
-        private final YggdrasilEntity yggdrasil;
-        private int ticksUntilNextAttack;
-        public ShootGoal(YggdrasilEntity yggdrasil){
-            super(yggdrasil, 0.3, true);
-            this.yggdrasil = yggdrasil;
-        }
-
-        @Override
-        public boolean canUse() {
-            return yggdrasil.getEntityData().get(IS_FIGHTING) && super.canUse() && SaveUtil.biome1.canAttackBoss();
-        }
-
-        @Override
-        public void start() {
-            super.start();
-            this.ticksUntilNextAttack = 0;
-        }
-
-        @Override
-        public void tick() {
-            super.tick();
-            this.ticksUntilNextAttack = Math.max(this.ticksUntilNextAttack - 1, 0);
-        }
-
-        @Override
-        protected void resetAttackCooldown() {
-            super.resetAttackCooldown();
-            this.ticksUntilNextAttack = this.adjustedTickDelay(20);
-        }
-
-        @Override
-        protected boolean isTimeToAttack() {
-            super.isTimeToAttack();
-            return this.ticksUntilNextAttack <= 0;
-        }
-
-        @Override
-        protected int getTicksUntilNextAttack() {
-            super.getTicksUntilNextAttack();
-            return this.ticksUntilNextAttack;
-        }
-
-        @Override
-        protected void checkAndPerformAttack(@NotNull LivingEntity entity, double p_25558_) {
-            LivingEntity target = yggdrasil.getTarget();
-            if (target != null && target.distanceTo(yggdrasil) < 10 && ticksUntilNextAttack <= 0) {
-                this.resetAttackCooldown();
-                this.yggdrasil.attack(yggdrasil.getTarget());
-            }
-
-        }
-
-    }
-
-    /**
      * 播放动画并回血
      */
     public void recover(){
@@ -769,15 +736,11 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     /**
      * 播放动画并发射
      */
-    public void attack(LivingEntity target){
+    public boolean doHurtTarget(Entity target){
         triggerAnim("Attack","attack");
-        MagicProjectile projectile = new MagicProjectile(level(), this);
-        double x = target.getX() - this.getX();
-        double y = target.getY(0.3333333333333333) - projectile.getY();
-        double z = target.getZ() - this.getZ();
-        double $$5 = Math.sqrt(x * x + z * z) * 0.20000000298023224;
-        projectile.shoot(x, y + $$5, z, 1.5F, 10.0F);
-        level().addFreshEntity(projectile);
+        shootTimer = 20;
+        shootTarget = target;
+        return true;
     }
 
     /**

@@ -1,4 +1,5 @@
 package com.gaboj1.tcr.entity.custom.biome1;
+import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.MagicProjectile;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -6,7 +7,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
@@ -56,26 +56,11 @@ public class SpriteEntity extends Monster implements GeoEntity {
 
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new SpriteAttackGoal(this, 0.5, false));
+        this.goalSelector.addGoal(2, new RangeMeleeAttackGoal(this, 0.5, false, 10));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 
         this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
-    }
-
-    /**
-     * 增加攻击判断范围
-     */
-    private static class SpriteAttackGoal extends MeleeAttackGoal{
-
-        public SpriteAttackGoal(PathfinderMob pMob, double pSpeedModifier, boolean pFollowingTargetEvenIfNotSeen) {
-            super(pMob, pSpeedModifier, pFollowingTargetEvenIfNotSeen);
-        }
-
-        @Override
-        protected double getAttackReachSqr(@NotNull LivingEntity pAttackTarget) {
-            return 20;
-        }
     }
 
     @Override
