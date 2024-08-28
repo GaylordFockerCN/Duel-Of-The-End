@@ -38,10 +38,8 @@ public class SpriteEntity extends Monster implements GeoEntity {
         controllers.add(new AnimationController<>(this, "controller",
                 10, this::predicate));
         controllers.add(new AnimationController<>(this, "Attack", 10, state -> PlayState.STOP)
-                .triggerableAnim("attack1", RawAnimation.begin().then("animation.model.attack1", Animation.LoopType.PLAY_ONCE)));
-        controllers.add(new AnimationController<>(this, "Attack", 10, state -> PlayState.STOP)
-                .triggerableAnim("attack2", RawAnimation.begin().then("animation.model.attack2", Animation.LoopType.PLAY_ONCE)));
-        controllers.add(new AnimationController<>(this, "Attack", 10, state -> PlayState.STOP)
+                .triggerableAnim("attack1", RawAnimation.begin().then("animation.model.attack1", Animation.LoopType.PLAY_ONCE))
+                .triggerableAnim("attack2", RawAnimation.begin().then("animation.model.attack2", Animation.LoopType.PLAY_ONCE))
                 .triggerableAnim("buff", RawAnimation.begin().then("animation.model.buff", Animation.LoopType.PLAY_ONCE)));
     }
 
@@ -56,7 +54,7 @@ public class SpriteEntity extends Monster implements GeoEntity {
 
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new RangeMeleeAttackGoal(this, 0.5, false, 10));
+        this.goalSelector.addGoal(2, new RangeMeleeAttackGoal(this, 1.0, false, 20));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 
@@ -99,6 +97,7 @@ public class SpriteEntity extends Monster implements GeoEntity {
             }
 
             if(!buffed && getHealth() < getMaxHealth() / 2){
+                timer = 0;
                 triggerAnim("Attack", "buff");
                 AttributeInstance instance = getAttribute(Attributes.ARMOR);
                 if(instance != null){
