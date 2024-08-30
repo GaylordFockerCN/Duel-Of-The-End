@@ -388,6 +388,41 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.YGGDRASIL,8,"万分感谢！");
         this.addDialogChoice(TCRModEntities.YGGDRASIL,9,"我将去往何方？");
 
+
+        //CANGLAN
+        this.addEntityAndEgg(TCRModEntities.CANG_LAN,"苍澜");
+        this.addDialog(TCRModEntities.CANG_LAN,1,"侠士，你风尘仆仆来到此地，可曾察觉这山巅与山\n" +
+                "脚的天壤之别？那些高高在上的精英们金银满仓，而我们却在山下饥寒交迫。");
+        this.addDialog(TCRModEntities.CANG_LAN,2,"盟主的铁腕政策，令这不公成为铁律。他们独占资源，囤积武学秘籍，接连下达禁\n" +
+                "令，美其名曰维护江湖秩序。");
+        this.addDialog(TCRModEntities.CANG_LAN,3,"迫于盟主武力高强，我们只能任人鱼肉。更可恨的\n" +
+                "是，一场突如其来的天灾，暴露了他们的无能与我们的绝望。");
+        this.addDialog(TCRModEntities.CANG_LAN,4,"如今，我们不能再坐视不理。我们计划揭竿而起，推翻那只顾一己私\n" +
+                "利的盟主，重建一个公平正义的江湖！");
+        this.addDialog(TCRModEntities.CANG_LAN,5,"甚好！侠士的加入，让我们的义军如虎添翼。立刻准备，我们前往%s\n" +
+                "之地！");
+        this.addDialog(TCRModEntities.CANG_LAN,6,"（点头）我理解。真相往往隐藏在表象之下。去吧，用你的眼睛见证，\n" +
+                "用你的心感受，你会回来的。");
+        this.addDialog(TCRModEntities.CANG_LAN,7,"（站在废墟之上，目光坚定）我们的胜利是江湖的胜利！你的勇气和\n" +
+                "选择为我们赢得了自由的曙光");
+        this.addDialog(TCRModEntities.CANG_LAN,8,"（微笑着）这只是一个开始，旅者。真正的工作现在才开始——建立\n" +
+                "一个新的、公正的社会。");
+        this.addDialog(TCRModEntities.CANG_LAN,9,"（拍着玩家的肩膀）我们并肩作战，我们的未来将由我们共同塑造！\n" +
+                "现在，我将共和（我勒个匹诺康尼，不好意思用“同谐”这个词）之力分享与你");
+        this.addDialog(TCRModEntities.CANG_LAN,10,"我将为你指引其他群系的位置。牧歌原野（群系名）似乎有着巨大的\n" +
+                "危机，位于%s，樱之原野（群系名）似乎在进行大选，位于%s。亚特兰蒂斯（群\n" +
+                "系名）嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通");
+        this.addDialog(TCRModEntities.CANG_LAN,11,"住手，盟主！你的谎言和暴政到此为止。我\n" +
+                "们起义，是为了百姓的生存与尊严，为了一个更加公平的江湖");
+
+        this.addDialogChoice(TCRModEntities.CANG_LAN,0,"继续");
+        this.addDialogChoice(TCRModEntities.CANG_LAN,1,"（同情地）此等世道，实在令人痛心疾首！");
+        this.addDialogChoice(TCRModEntities.CANG_LAN,2,"【我愿与诸位同道，共赴义举。我虽无意逐鹿，却知苍生苦楚。】");
+        this.addDialogChoice(TCRModEntities.CANG_LAN,3,"【我需亲眼目睹这一切，再作定夺。】");
+        this.addDialogChoice(TCRModEntities.CANG_LAN,4,"这一切...结束了吗？");
+        this.addDialogChoice(TCRModEntities.CANG_LAN,5,"（决心）我也会尽我所能，帮助建设这个新世界。");
+        this.addDialogChoice(TCRModEntities.CANG_LAN,6,"我将去往何方？");
+
         this.addBookAndContents("book1","Test","Test1","Test1.1");
         this.addBookAndContents("book2","Test2","Test2","Test2.2");
         this.addBookAndAuthorAndContents("biome1_elder_diary3","海拉","海拉长老的日记3","我收取的生命之力居然让孩子们愿望不再百分百实现。而且没有了使者，这个地方的生命之力就会消失？可怜的孩子啊……不，最可怜的不是我吗？","为什么这样的重任只能我独自承担啊？可我为何再也不敢挺身而出而是一直等待他人的助力？这样的我该怎么回应我长眠的伙伴们");
