@@ -109,7 +109,12 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     protected void registerGoals() {
         this.goalSelector.addGoal(0,new ConversationTriggerGoal(this));
         this.goalSelector.addGoal(1,new NpcDialogueGoal<>(this));
-        this.goalSelector.addGoal(2, new RangeMeleeAttackGoal(this, 1.0, true, 20, 40));
+        this.goalSelector.addGoal(2, new RangeMeleeAttackGoal(this, 1.0, true, 20, 40){
+            @Override
+            public boolean canUse() {
+                return YggdrasilEntity.this.getEntityData().get(IS_FIGHTING) && super.canUse();
+            }
+        });
         this.goalSelector.addGoal(3,new RecoverGoal(this));
         this.goalSelector.addGoal(4, new SpawnTreeClawAtPointPositionGoal(this));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
@@ -237,6 +242,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
             superDie(source);
         }
         getEntityData().set(IS_FIGHTING, false);
+        setTarget(null);
         if(!level().isClientSide){
             if(SaveUtil.biome1.isBossDie){
                 triggerAnim("Death","death");
@@ -308,6 +314,11 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
             if(getEntityData().get(IS_FIGHTING)){
                 BossMusicPlayer.playBossMusic(this, TCRModSounds.BIOME1BOSS_FIGHT.get(), 32);
             }
+        }
+
+        //保险，防止追玩家
+        if(!getEntityData().get(IS_FIGHTING)){
+            setTarget(null);
         }
 
         if(!level().isClientSide){
@@ -543,6 +554,8 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
                 break;
             //选择接任务
             case 2:
+                getEntityData().set(IS_FIGHTING, false);
+                setTarget(null);
                 player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, 15), false);
                 SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskKillElder);
                 SaveUtil.biome1.isBossFought = true;//注意要处决或者接任务后再调这个，注意考虑对话中断的情况

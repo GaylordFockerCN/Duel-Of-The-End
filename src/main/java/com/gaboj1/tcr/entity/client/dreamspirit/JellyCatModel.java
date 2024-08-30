@@ -8,7 +8,7 @@ import software.bernie.geckolib.model.GeoModel;
 public class JellyCatModel extends GeoModel<JellyCat> {
     @Override
     public ResourceLocation getModelResource(JellyCat animatable) {
-        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "geo/jelly_cat"+(animatable.getSkinID()<0?"_ball_hand":"")+".geo.json");
+        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "geo/entity/jelly_cat"+(animatable.getSkinID()<0?"_ball_hand":"")+".geo.json");
     }
 
     @Override
@@ -19,6 +19,6 @@ public class JellyCatModel extends GeoModel<JellyCat> {
 
     @Override
     public ResourceLocation getAnimationResource(JellyCat animatable) {
-        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "animations/jelly_cat"+(animatable.getSkinID()<0?"_ball_hand":"")+".animation.json");
+        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "animations/entity/jelly_cat"+(animatable.getSkinID()<0?"_ball_hand":"")+".animation.json");
     }
 }

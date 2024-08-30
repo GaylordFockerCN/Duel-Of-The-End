@@ -32,6 +32,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -42,6 +43,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.EnumSet;
+import java.util.Objects;
 
 /**
  * 大部分代码copy form Slime.java，实现猫猫跳动。没办法史莱姆不是可驯养的，只能这么做了awa
@@ -108,6 +110,9 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
         } else {
             setFaceID(FaceID.IDLE);
         }
+        if(this.isOrderedToSit()){
+            this.getNavigation().stop();
+        }
         super.tick();
     }
 
@@ -137,9 +142,15 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
     @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player pPlayer, @NotNull InteractionHand pHand) {
         ItemStack handItem = pPlayer.getItemInHand(pHand);
-        if(handItem.is(TCRModItems.CATNIP.get())){
+        if(this.getOwner() == null && handItem.is(TCRModItems.CATNIP.get())){
             handItem.shrink(1);
             this.tame(pPlayer);
+            return InteractionResult.SUCCESS;
+        }
+        if(this.isTame() && Objects.requireNonNull(this.getOwner()).getId() == pPlayer.getId()){
+            this.setOrderedToSit(!this.isOrderedToSit());
+            this.getNavigation().stop();
+            return InteractionResult.SUCCESS;
         }
         return super.mobInteract(pPlayer, pHand);
     }
@@ -159,7 +170,7 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
         if(id == 0){
             this.getEntityData().set(DATA_SKIN_ID, -1);
         }
-        return -1;
+        return this.getEntityData().get(DATA_SKIN_ID);
     }
     @Override
     public void setSkinID(int newSkinID) {
@@ -178,14 +189,14 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
-        this.goalSelector.addGoal(1, new JellyCatFloatGoal(this));
-        this.goalSelector.addGoal(2, new JellyCatAttackGoal(this));
-        this.goalSelector.addGoal(3, new SitWhenOrderedToGoal(this));
-        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(6, new JellyCatRandomDirectionGoal(this));
-        this.goalSelector.addGoal(7, new JellyCatKeepOnJumpingGoal(this));
-        this.goalSelector.addGoal(8, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0F, false));
+        this.goalSelector.addGoal(1, new SitWhenOrderedToGoal(this));
+        this.goalSelector.addGoal(2, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0F, false));
+        this.goalSelector.addGoal(3, new JellyCatFloatGoal(this));
+        this.goalSelector.addGoal(4, new JellyCatAttackGoal(this));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(7, new JellyCatRandomDirectionGoal(this));
+        this.goalSelector.addGoal(8, new JellyCatKeepOnJumpingGoal(this));
         this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(10, new MeleeAttackGoal(this,1.0, false));
 
@@ -352,6 +363,7 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
         return super.canAttack(entity);
     }
 
+
     static class JellyCatRandomDirectionGoal extends Goal {
         private final JellyCat JellyCat;
         private float chosenDegrees;
@@ -369,7 +381,13 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
         public void tick() {
             if (--this.nextRandomizeTime <= 0) {
                 this.nextRandomizeTime = this.adjustedTickDelay(40 + this.JellyCat.getRandom().nextInt(60));
-                this.chosenDegrees = (float)this.JellyCat.getRandom().nextInt(360);
+                //追主人
+                if(this.JellyCat.getOwner() != null && !this.JellyCat.isOrderedToSit()){
+                    this.JellyCat.lookAt(this.JellyCat.getOwner(), 10, 10);
+                    this.chosenDegrees = this.JellyCat.getYRot();
+                } else {
+                    this.chosenDegrees = (float)this.JellyCat.getRandom().nextInt(360);
+                }
             }
 
             MoveControl movecontrol = this.JellyCat.getMoveControl();

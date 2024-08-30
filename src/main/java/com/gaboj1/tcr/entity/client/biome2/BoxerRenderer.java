@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.entity.client.boxer;
+package com.gaboj1.tcr.entity.client.biome2;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.custom.biome2.BoxerEntity;
@@ -7,17 +7,13 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class BoxerRenderer extends GeoEntityRenderer<BoxerEntity> {
     public BoxerRenderer(EntityRendererProvider.Context renderManager) {
-        super(renderManager, new BoxerModel());
+        super(renderManager, new DefaultedEntityGeoModel<>(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "boxer")));
     }
-
-    @Override
-    public ResourceLocation getTextureLocation(BoxerEntity animatable) {
-            return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/boxer.png");
-        }
 
     public void render(@NotNull  BoxerEntity entity, float entityYaw, float partialTick, PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight) {
         poseStack.scale(3f, 3f, 3f);
