@@ -112,6 +112,13 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
         }
         if(this.isOrderedToSit()){
             this.getNavigation().stop();
+            this.jumping = false;
+        }
+        if(this.getOwner() != null && !this.isOrderedToSit()){
+            this.lookAt(this.getOwner(), 10, 10);
+            if(this.getMoveControl() instanceof JellyCatMoveControl jellyCatMoveControl){
+                jellyCatMoveControl.setDirection(this.getYRot(), true);
+            }
         }
         super.tick();
     }
@@ -382,7 +389,7 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
             if (--this.nextRandomizeTime <= 0) {
                 this.nextRandomizeTime = this.adjustedTickDelay(40 + this.JellyCat.getRandom().nextInt(60));
                 //追主人
-                if(this.JellyCat.getOwner() != null && !this.JellyCat.isOrderedToSit()){
+                if(this.JellyCat.getOwner() != null && this.JellyCat.getOwner().distanceTo(this.JellyCat) < 10 && !this.JellyCat.isOrderedToSit()){
                     this.JellyCat.lookAt(this.JellyCat.getOwner(), 10, 10);
                     this.chosenDegrees = this.JellyCat.getYRot();
                 } else {
