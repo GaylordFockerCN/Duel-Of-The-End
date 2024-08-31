@@ -390,7 +390,6 @@ public class ModLangGenerator extends ModLangProvider {
 
 
         //CANGLAN
-        this.addEntityAndEgg(TCRModEntities.CANG_LAN,"苍澜");
         this.addDialog(TCRModEntities.CANG_LAN,1,"侠士，你风尘仆仆来到此地，可曾察觉这山巅与山\n" +
                 "脚的天壤之别？那些高高在上的精英们金银满仓，而我们却在山下饥寒交迫。");
         this.addDialog(TCRModEntities.CANG_LAN,2,"盟主的铁腕政策，令这不公成为铁律。他们独占资源，囤积武学秘籍，接连下达禁\n" +

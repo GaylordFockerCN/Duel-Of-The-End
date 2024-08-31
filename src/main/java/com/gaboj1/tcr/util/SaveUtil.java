@@ -170,6 +170,7 @@ public class SaveUtil {
         public boolean isBossDie = false;//boss是否死亡
         public boolean isBossTalked = false;//好像没用
         public boolean isCangLanTalked = false;
+        public boolean helpCangLan = false;
         public boolean isBossFought = false;//是否和boss战斗过
         public boolean isElderDie = false;
         public boolean isElderTalked = false;

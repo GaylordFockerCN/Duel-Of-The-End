@@ -248,9 +248,9 @@ public class TCRModEntities {
 		event.register(TIGER.get(),SpawnPlacements.Type.ON_GROUND,Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				TigerEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(BOXER.get(),SpawnPlacements.Type.ON_GROUND,Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				TigerEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+				BoxerEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(BIG_HAMMER.get(),SpawnPlacements.Type.ON_GROUND,Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				TigerEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+				BigHammerEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(MIDDLE_TREE_MONSTER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				MiddleTreeMonsterEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(SNOW_SWORDMAN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,

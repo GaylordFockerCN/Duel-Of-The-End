@@ -109,11 +109,11 @@ public class TCRModItems {
 			() -> new ForgeSpawnEggItem(TCRModEntities.SPRITE, 1, 0x1D0D00,
 					new Item.Properties()));
 
-	public static final RegistryObject<Item> TIGER_EGG = REGISTRY.register("tiger_egg",
+	public static final RegistryObject<Item> TIGER_SPAWN_EGG = REGISTRY.register("tiger_egg",
 			() -> new ForgeSpawnEggItem(TCRModEntities.TIGER, 0xD57E36, 0x1D0D00,
 					new Item.Properties()));
 
-	public static final RegistryObject<Item> BOXER_EGG = REGISTRY.register("boxer_egg",
+	public static final RegistryObject<Item> BOXER_SPAWN_EGG = REGISTRY.register("boxer_egg",
 			() -> new ForgeSpawnEggItem(TCRModEntities.BOXER, 2, 0x1D0D00,
 					new Item.Properties()));
 

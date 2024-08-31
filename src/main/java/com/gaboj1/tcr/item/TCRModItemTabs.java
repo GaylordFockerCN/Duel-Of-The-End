@@ -69,8 +69,8 @@ public class TCRModItemTabs {
 						tabData.accept(TCRModItems.PASTORAL_PLAIN_VILLAGER_ELDER_SPAWN_EGG.get());
 
 						//Biome2
-						tabData.accept(TCRModItems.TIGER_EGG.get());
-						tabData.accept(TCRModItems.BOXER_EGG.get());
+						tabData.accept(TCRModItems.TIGER_SPAWN_EGG.get());
+						tabData.accept(TCRModItems.BOXER_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.BIG_HAMMER_EGG.get());
 						tabData.accept(TCRModItems.SNOW_SWORDMAN_SPAWN_EGG.get());
 						tabData.accept(TCRModItems.SWORD_CONTROLLER_SPAWN_EGG.get());
