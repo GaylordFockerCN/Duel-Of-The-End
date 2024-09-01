@@ -34,8 +34,8 @@ public class ModLangGenerator extends ModLangProvider {
         this.add("info.the_casket_of_reveries.health_added","成功吸取了村民的生命。");
         this.add("info.the_casket_of_reveries.boss1invincible","摧毁树爪或小怪以解除伊格德拉希尔无敌状态");
         this.add("info.the_casket_of_reveries.alreadyAddWhite","你已经是村民阵营了，不能伤害村民哦");
-        this.add("info.the_casket_of_reveries.cannotSpawn","目前的剧情进度还无法召唤此BOSS！");
-        this.add("info.the_casket_of_reveries.sureToSpawn","再次右键以召唤BOSS（用于刷材料，不影响剧情）");
+        this.add("info.the_casket_of_reveries.cannot_spawn","目前的剧情进度还无法召唤此BOSS！");
+        this.add("info.the_casket_of_reveries.sure_to_spawn","再次右键以召唤BOSS（用于刷材料，不影响剧情）");
 
         this.add("the_casket_of_reveries.button.boss1","泰兰妮尔之心");
         this.add("the_casket_of_reveries.button.boss2","九霄");
@@ -133,10 +133,10 @@ public class ModLangGenerator extends ModLangProvider {
         this.addItemUsageInfo(TCRModItems.ORICHALCUM_BOOTS.get(),"神金套装，拥有非常高的韧性和击退抗性，但是护甲值较低。");
 
 
-        this.add(TCRModItems.DREAMSCAPE_COIN.get(),"奇梦币");
-        this.addItemUsageInfo(TCRModItems.DREAMSCAPE_COIN.get(),"在梦之领域通用的货币，闪闪发光十分珍贵。九个奇梦币可以合成一个大奇梦币");
-        this.add(TCRModItems.DREAMSCAPE_COIN_PLUS.get(),"大奇梦币");
-        this.addItemUsageInfo(TCRModItems.DREAMSCAPE_COIN_PLUS.get(),"在梦之领域通用的货币，闪闪发光十分珍贵。一个大奇梦币可以分解成九个奇梦币");
+        this.add(TCRModItems.DREAMSCAPE_COIN.get(),"梦碎片");
+        this.addItemUsageInfo(TCRModItems.DREAMSCAPE_COIN.get(),"在梦之领域通用的货币，闪闪发光十分珍贵。九个梦碎片可以合成一个梦晶石");
+        this.add(TCRModItems.DREAMSCAPE_COIN_PLUS.get(),"梦晶石");
+        this.addItemUsageInfo(TCRModItems.DREAMSCAPE_COIN_PLUS.get(),"在梦之领域通用的货币，闪闪发光十分珍贵。一个梦晶石可以分解成九个梦碎片");
 
         this.add(TCRModItems.BLUE_BANANA.get(),"蓝蕉");
         this.addItemUsageInfo(TCRModItems.BLUE_BANANA.get(),"蓝色的香蕉品种，不知道有什么特殊含义。");

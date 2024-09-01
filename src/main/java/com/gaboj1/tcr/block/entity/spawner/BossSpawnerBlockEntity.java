@@ -29,6 +29,7 @@ public abstract class BossSpawnerBlockEntity<T extends Mob & ShadowableEntity> e
 
 	protected final EntityType<T> entityType;
 	protected boolean isReady = false;
+	protected boolean spawned = false;
 
 	protected BossSpawnerBlockEntity(BlockEntityType<?> type, EntityType<T> entityType, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -44,12 +45,12 @@ public abstract class BossSpawnerBlockEntity<T extends Mob & ShadowableEntity> e
 	 */
 	public void tryToSpawnShadow(ServerPlayer player){
 		if(!canSpawnShadow()){
-			player.displayClientMessage(Component.literal("info.the_casket_of_reveries.cannotSpawn"), true);
+			player.displayClientMessage(Component.literal("info.the_casket_of_reveries.cannot_spawn"), true);
 			return;
 		}
 		if(!isReady){
 			isReady = true;
-			player.displayClientMessage(Component.literal("info.the_casket_of_reveries.sureToSpawn"), true);
+			player.displayClientMessage(Component.literal("info.the_casket_of_reveries.sure_to_spawn"), true);
 			return;
 		}
 		isReady = !spawnMyShadowBoss(player.serverLevel());
@@ -61,7 +62,7 @@ public abstract class BossSpawnerBlockEntity<T extends Mob & ShadowableEntity> e
 	public abstract boolean canSpawnShadow();
 
 	public static void tick(Level level, BlockPos pos,  BlockState state, BossSpawnerBlockEntity<?> blockEntity) {
-		if (!TCRConfig.ENABLE_BOSS_SPAWN_BLOCK_LOAD.get() || blockEntity.getPersistentData().getBoolean("spawnedBoss") || !blockEntity.anyPlayerInRange()) {
+		if (!TCRConfig.ENABLE_BOSS_SPAWN_BLOCK_LOAD.get() || blockEntity.spawned || !blockEntity.anyPlayerInRange()) {
 			return;
 		}
 		if (level.isClientSide()) {
@@ -74,10 +75,22 @@ public abstract class BossSpawnerBlockEntity<T extends Mob & ShadowableEntity> e
 		} else {
 			if (level.getDifficulty() != Difficulty.PEACEFUL) {
 				if (blockEntity.spawnMyBoss((ServerLevel) level)) {
-					blockEntity.getPersistentData().putBoolean("spawnedBoss", true);
+					blockEntity.spawned = true;
 				}
 			}
 		}
+	}
+
+	@Override
+	protected void saveAdditional(@NotNull CompoundTag tag) {
+		tag.putBoolean("spawned", spawned);
+		super.saveAdditional(tag);
+	}
+
+	@Override
+	public void load(@NotNull CompoundTag tag) {
+		spawned = tag.getBoolean("spawned");
+		super.load(tag);
 	}
 
 	protected boolean spawnMyShadowBoss(ServerLevelAccessor accessor) {

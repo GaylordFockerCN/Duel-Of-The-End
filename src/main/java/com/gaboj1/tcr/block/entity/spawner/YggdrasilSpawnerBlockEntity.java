@@ -23,15 +23,6 @@ public class YggdrasilSpawnerBlockEntity extends BossSpawnerBlockEntity<Yggdrasi
 
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-		controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
-
-		controllerRegistrar.add(new AnimationController<>(this, "Activate", 0, state -> PlayState.STOP)
-				.triggerableAnim("activate1", RawAnimation.begin().thenPlay("activate")));
-	}
-
-	private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
-		tAnimationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-		return PlayState.CONTINUE;
 	}
 
 	@Override
