@@ -34,7 +34,6 @@ public interface NpcDialogue {
      */
     @Nullable
     Player getConversingPlayer();
-    @Nullable
     void chat(Component component);
 
 }

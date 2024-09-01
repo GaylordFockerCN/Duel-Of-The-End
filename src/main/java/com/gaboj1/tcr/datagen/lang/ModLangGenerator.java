@@ -388,7 +388,6 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.YGGDRASIL,8,"万分感谢！");
         this.addDialogChoice(TCRModEntities.YGGDRASIL,9,"我将去往何方？");
 
-
         //CANGLAN
         this.addDialog(TCRModEntities.CANG_LAN,1,"侠士，你风尘仆仆来到此地，可曾察觉这山巅与山脚的天壤之别？那些高高在上的精英们金银满仓，而我们却在山下饥寒交迫。");
         this.addDialog(TCRModEntities.CANG_LAN,2,"盟主的铁腕政策，令这不公成为铁律。他们独占资源，囤积武学秘籍，接连下达禁令，美其名曰维护江湖秩序。");

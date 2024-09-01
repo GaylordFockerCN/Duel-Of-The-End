@@ -4,6 +4,7 @@ import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
+import com.gaboj1.tcr.entity.custom.boss.second_boss.SecondBossEntity;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.network.PacketRelay;
@@ -15,6 +16,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -22,7 +26,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -31,6 +34,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
@@ -40,6 +44,8 @@ import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
  */
 public class FuryTideCangLan extends Master implements NpcDialogue {
     protected Player conversingPlayer;
+    public static final EntityDataAccessor<Integer> BOSS_ID = SynchedEntityData.defineId(FuryTideCangLan.class, EntityDataSerializers.INT);
+
     public FuryTideCangLan(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
@@ -53,21 +59,19 @@ public class FuryTideCangLan extends Master implements NpcDialogue {
                 .build();
     }
 
-    protected void registerGoals() {//设置生物行为
-//        this.goalSelector.addGoal(0,new ConversationTriggerGoal(this));
-        this.goalSelector.addGoal(1,new NpcDialogueGoal<>(this));
-        this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-
-        this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Player.class, true));
-        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AbstractVillager.class,true));
+    public void sendDialoguePacket(ServerPlayer serverPlayer){
+        CompoundTag serverData = new CompoundTag();
+        serverData.putBoolean("isElderTalked",SaveUtil.biome2.isElderTalked);
+        serverData.putBoolean("isBossDie",SaveUtil.biome2.isBossDie);
+        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverData), serverPlayer);
     }
-
 
     @OnlyIn(Dist.CLIENT)
     @Override
     public void openDialogueScreen(CompoundTag serverData) {
-
+        if(this.getTarget() != null){
+            return;
+        }
         BiomeMap biomeMap = BiomeMap.getInstance();
         BlockPos biome1Center = biomeMap.getBlockPos(biomeMap.getCenter1(),0);
         BlockPos biome3Center = biomeMap.getBlockPos(biomeMap.getCenter3(),0);
@@ -76,7 +80,8 @@ public class FuryTideCangLan extends Master implements NpcDialogue {
 
 
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
-        if(true){
+        if(serverData.getBoolean("isElderTalked")){
+            //初次见面
             builder.setAnswerRoot(new TreeNode(BUILDER.buildDialogueAnswer(entityType,1))
                     .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,2),BUILDER.buildDialogueOption(entityType,0))
                             .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,3),BUILDER.buildDialogueOption(entityType,0))
@@ -84,16 +89,17 @@ public class FuryTideCangLan extends Master implements NpcDialogue {
                                             .addLeaf(BUILDER.buildDialogueOption(entityType,2),(byte)1)
                                             .addLeaf(BUILDER.buildDialogueOption(entityType,3),(byte)2)))
                                             ));
-        }
-        else if(serverData.getBoolean("isBossD")){
+        } else if(serverData.getBoolean("isBossDie")){
+            //击败boss
             builder.start(BUILDER.buildDialogueAnswer(entityType,7))
                     .addChoice(BUILDER.buildDialogueOption(entityType,4),BUILDER.buildDialogueAnswer(entityType,8))
                     .addChoice(BUILDER.buildDialogueOption(entityType,5),BUILDER.buildDialogueAnswer(entityType,9))
                     .addChoice(BUILDER.buildDialogueOption(entityType,6),Component.literal("\n").append(Component.translatable(entityType + ".dialog10",position1,position3)))
                     .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)6666);
-        }
-        else{
-            return;
+        } else {
+            //打断boss说话
+            builder.start(11)
+                    .addFinalChoice(0, (byte) 3);
         }
         Minecraft.getInstance().setScreen(builder.build());
     }
@@ -105,14 +111,25 @@ public class FuryTideCangLan extends Master implements NpcDialogue {
         BlockPos biome2Center = biomeMap.getBlockPos(biomeMap.getCenter2(),0);
         String position = "("+ biome2Center.getX()+", "+biome2Center.getZ()+")";
 
-switch(interactionID) {
-    case 1:
-        player.displayClientMessage(Component.literal("\n").append(Component.translatable(entityType + ".dialog5",position)),false);
-        break;
-    case 2:
-        player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType,6),false);
-        break;
-}
+        switch(interactionID) {
+            case 1:
+                player.displayClientMessage(Component.literal("\n").append(Component.translatable(entityType + ".dialog5",position)),false);
+                break;
+            case 2:
+                player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType,6),false);
+                break;
+            case 3:
+                //继续boss的对话
+                int bossId = getEntityData().get(BOSS_ID);
+                if(level().getEntity(getEntityData().get(BOSS_ID)) instanceof SecondBossEntity){
+                    CompoundTag serverData = new CompoundTag();
+                    serverData.putBoolean("fromCangLan", true);
+                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(bossId, serverData), ((ServerPlayer) player));
+                }
+                break;
+        }
+        this.setConversingPlayer(null);
+
     }
 
 
@@ -144,48 +161,11 @@ switch(interactionID) {
         return InteractionResult.SUCCESS;
     }
 
-    @Nullable
     @Override
     public void chat(Component component) {
         if(conversingPlayer != null) {
             conversingPlayer.sendSystemMessage(BUILDER.buildDialogue(this, component));
         }
-    }
-
-
-
-
-//    public static class ConversationTriggerGoal extends Goal {
-//        private final FuryTideCangLan cangLan;
-//        ServerPlayer player;
-//
-//        public ConversationTriggerGoal(FuryTideCangLan cangLan) {
-//            this.cangLan = cangLan;
-//        }
-//
-//        @Override
-//        public boolean canUse() {
-//            if (cangLan.getTarget() instanceof ServerPlayer player) {
-//                this.player = player;
-//                return cangLan.distanceTo(player) < 10 && !SaveUtil.biome2.isCangLanTalked;
-//            }
-//            return false;
-//        }
-//
-//        @Override
-//        public void start() {
-//            if (cangLan.getConversingPlayer() == null) {
-//                cangLan.setConversingPlayer(player);
-//                cangLan.sendDialoguePacket(player);
-//            }
-//
-//        }
-//    }
-
-    public void sendDialoguePacket(ServerPlayer serverPlayer){
-        CompoundTag serverData = new CompoundTag();
-        serverData.putBoolean("isCangLanTalked",SaveUtil.biome2.isCangLanTalked);
-        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverData), serverPlayer);
     }
 
     @Override

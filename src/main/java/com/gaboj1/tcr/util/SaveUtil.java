@@ -271,19 +271,19 @@ public class SaveUtil {
     }
 
     public static class Biome2Data extends BiomeData{
-        public boolean isCangLanTalked = false;
+//        public boolean isCangLanTalked = false;//cang lan 就是elder
 
-        @Override
-        public CompoundTag toNbt() {
-            CompoundTag tag = new CompoundTag();
-            tag.putBoolean("isCangLanTalked",isCangLanTalked);
-            return tag;
-        }
+//        @Override
+//        public CompoundTag toNbt() {
+//            CompoundTag tag = new CompoundTag();
+//            return tag;
+//        }
+//
+//        @Override
+//        public void fromNbt(CompoundTag serverData) {
+//            super.fromNbt(serverData);
+//        }
 
-        @Override
-        public void fromNbt(CompoundTag serverData) {
-            isCangLanTalked = serverData.getBoolean("isCangLanTalked");
-        }
     }
 
     public static class Biome3Data extends BiomeData{
