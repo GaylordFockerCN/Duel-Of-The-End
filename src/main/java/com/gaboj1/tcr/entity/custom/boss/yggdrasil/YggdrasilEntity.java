@@ -652,6 +652,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
                     yggdrasil.sendDialoguePacket(player);
                 }
 
+
         }
     }
 

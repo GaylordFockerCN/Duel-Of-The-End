@@ -169,8 +169,6 @@ public class SaveUtil {
         protected int biome = 0;
         public boolean isBossDie = false;//boss是否死亡
         public boolean isBossTalked = false;//好像没用
-        public boolean isCangLanTalked = false;
-        public boolean helpCangLan = false;
         public boolean isBossFought = false;//是否和boss战斗过
         public boolean isElderDie = false;
         public boolean isElderTalked = false;
@@ -193,6 +191,7 @@ public class SaveUtil {
             isBossFought = serverData.getBoolean("isBossFought");
             isElderDie = serverData.getBoolean("isElderDie");
             isElderTalked = serverData.getBoolean("isElderTalked");
+
         }
 
         /**
@@ -272,7 +271,19 @@ public class SaveUtil {
     }
 
     public static class Biome2Data extends BiomeData{
+        public boolean isCangLanTalked = false;
 
+        @Override
+        public CompoundTag toNbt() {
+            CompoundTag tag = new CompoundTag();
+            tag.putBoolean("isCangLanTalked",isCangLanTalked);
+            return tag;
+        }
+
+        @Override
+        public void fromNbt(CompoundTag serverData) {
+            isCangLanTalked = serverData.getBoolean("isCangLanTalked");
+        }
     }
 
     public static class Biome3Data extends BiomeData{
