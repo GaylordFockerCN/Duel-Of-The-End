@@ -133,6 +133,10 @@ public class TCRModItems {
 			() -> new ForgeSpawnEggItem(TCRModEntities.SECOND_BOSS, 800, 50,
 					new Item.Properties()));
 
+	public static final RegistryObject<Item> CANG_LAN_SPAWN_EGG = REGISTRY.register("cang_lan_spawn_egg",
+			() -> new ForgeSpawnEggItem(TCRModEntities.CANG_LAN, 6000, 50,
+					new Item.Properties()));
+
 	public static final RegistryObject<Item> YGGDRASIL_SPAWN_EGG = REGISTRY.register("yggdrasil_spawn_egg",
 			() -> new ForgeSpawnEggItem(TCRModEntities.YGGDRASIL, 1, 0x1D0D00,
 					new Item.Properties()));
