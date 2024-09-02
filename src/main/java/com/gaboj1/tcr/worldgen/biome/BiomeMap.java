@@ -59,7 +59,10 @@ public class BiomeMap {
         return generator.getVillage1();
     }
 
-    public Point getVillage2() {
+    /**
+     * 返回第二群系六个村的位置，0号为主村。
+     */
+    public Point[] getVillage2() {
         return generator.getVillage2();
     }
 

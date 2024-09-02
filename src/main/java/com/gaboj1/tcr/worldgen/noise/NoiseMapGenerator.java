@@ -35,7 +35,7 @@ public class NoiseMapGenerator implements Serializable {
     private List<Point> cPoints = new ArrayList<>();
     private List<Point> dPoints = new ArrayList<>();
 
-    private Point center1, center2, center3, center4, village1,village2,village3,village4;
+    private Point center1, center2, center3, center4, village1, village2_0, village2_1, village2_2, village2_3, village2_4, village2_5,village3,village4;
 
     public Point getCenter1() {
         return center1;
@@ -57,8 +57,8 @@ public class NoiseMapGenerator implements Serializable {
         return village1;
     }
 
-    public Point getVillage2() {
-        return village2;
+    public Point[] getVillage2() {
+        return new Point[]{village2_0, village2_1, village2_2, village2_3, village2_4, village2_5};
     }
 
     public Point getVillage3() {
@@ -265,9 +265,6 @@ public class NoiseMapGenerator implements Serializable {
      * 根据参数获得群系分界线曲度
      * TODO 调整合适数值
      * FIXME 有一条边会残留直线
-     * @param distance
-     * @param angle
-     * @return
      */
     private double getSinAngle(double distance, double angle) {
 
@@ -280,34 +277,6 @@ public class NoiseMapGenerator implements Serializable {
         angle += curveValue + (random.nextDouble() * 0.1 - 0.05);
 
         return angle;
-
-//        int numSections = 8; // 大区间数
-//        int numSubSections = 5; // 每个大区间细分为的小区间数
-//        double[] sigmoidIntensity = {0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45}; // 曲线强度数组
-//        double[] sigmoidOffset = {-0.1, -0.05, 0, 0, 0, 0, 0.05, 0.1}; // 曲线偏移量数组
-//
-//        // 计算当前角度所在的大区间和小区间
-//        double sectionSize = Math.PI / numSections;
-//        int sectionIndex = (int) ((angle + Math.PI) / sectionSize) % numSections;
-//        int subSectionIndex = (int) ((angle + Math.PI) / (sectionSize / numSubSections)) % numSubSections;
-//
-//        // 计算 sigmoid 值
-//        double sigmoidValue = 1 / (1 + Math.exp(-sigmoidIntensity[sectionIndex] * (distance * 0.5)));
-//        double randomOffset = random.nextDouble() * 0.1 - 0.05 + sigmoidOffset[sectionIndex];
-//        angle += sigmoidValue + randomOffset;
-//
-//        return angle;
-
-//        // 定义曲线参数
-//        double sigmoidIntensityA = 0.1; // 曲线强度A
-//        double sigmoidIntensityB = 0.2; // 曲线强度B
-//        double sigmoidValue = 1 / (1 + Math.exp(-sigmoidIntensityA * (distance *0.5))); // Sigmoid 曲线值 A
-//        if (angle >= 0 && angle < Math.PI / 2) {
-//            sigmoidValue = 1 / (1 + Math.exp(-sigmoidIntensityB * (distance *0.5))); // Sigmoid 曲线值 B
-//        }
-//        double randomOffset = random.nextDouble() * 0.1 - 0.05; // 随机偏移值
-//        angle += sigmoidValue + randomOffset; // 添加 S 型曲线值和随机偏移值到角度
-//        return angle;
 
     }
 
@@ -329,7 +298,16 @@ public class NoiseMapGenerator implements Serializable {
         this.map = map1.clone();//计算村庄需要用到map，所以得先更新地图
 
         village1 = calculateVillage(center1);
-        village2 = calculateVillage(center2);
+
+//        village2 = calculateVillage(center2);
+        int x = center2.x, y = center2.y, r = (int) (aCenterR * 0.5);
+        village2_0 = new Point(x + r, y);
+        village2_1 = new Point((int) (x + 0.5 * r), (int) (y + 0.866 * r));
+        village2_2 = new Point((int) (x - 0.5 * r), (int) (y + 0.866 * r));
+        village2_3 = new Point(x - r, y);
+        village2_4 = new Point((int) (x - 0.5 * r), (int) (y - 0.866 * r));
+        village2_5 = new Point((int) (x + 0.5 * r), (int) (y - 0.866 * r));
+
         village3 = calculateVillage(center3);
         village4 = calculateVillage(center4);
 
@@ -431,7 +409,8 @@ public class NoiseMapGenerator implements Serializable {
 
                     //第二群系造山用
                     if(tag == 6){
-                        double dis = Math.sqrt(Math.pow(i - aCenter.x, 2) + Math.pow(j - aCenter.y, 2));
+                        double offset = aCenterR * 0.3;//增大范围
+                        double dis = Math.sqrt(Math.pow(i - aCenter.x, 2) + Math.pow(j - aCenter.y, 2)) - offset;
                         if(dis <= aCenterR){
                             map[i][j] = tag;
                         }

@@ -9,6 +9,7 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGeneratorStructureState;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacementType;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.util.Optional;
@@ -20,7 +21,6 @@ import java.util.Optional;
 public class PositionPlacement extends StructurePlacement {
     public static final Codec<PositionPlacement> CODEC = RecordCodecBuilder.create(inst -> inst.group(
             Codec.INT.fieldOf("structure").forGetter(p -> p.structure)//对不起太菜了只能用数字枚举然后一个个判断
-//            ,Codec.BOOL.fieldOf("hasGenerated").forGetter(p -> p.hasGenerated)//好像不是很有必要写进去来着
     ).apply(inst, PositionPlacement::new));
 
     public final int structure;
@@ -30,7 +30,6 @@ public class PositionPlacement extends StructurePlacement {
     public PositionPlacement(int structure) {
         super(Vec3i.ZERO, FrequencyReductionMethod.DEFAULT, 1f, 0, Optional.empty()); // None of these params matter except for possibly flat-world or whatever
         this.structure = structure;
-//        this.hasGenerated = hasGenerated;
         this.hasGenerated = false;
     }
 
@@ -50,7 +49,9 @@ public class PositionPlacement extends StructurePlacement {
         return false;
     }
 
-    //判断该区块是否复合map所指定的结构的位置
+    /**
+     * 判断该区块是否复合map所指定的结构的位置
+     */
     private boolean checkStructure(TCRStructuresEnum structure, Point point, int correctX, int correctZ){
 
         int deOffsetX = point.x - structure.getOffsetX();
@@ -68,14 +69,13 @@ public class PositionPlacement extends StructurePlacement {
     }
 
     @Override
-    protected boolean isPlacementChunk(ChunkGeneratorStructureState state, int chunkX, int chunkZ) {
+    protected boolean isPlacementChunk(@NotNull ChunkGeneratorStructureState state, int chunkX, int chunkZ) {
         //反正应该或许不会被调用吧
-
         return false;
     }
 
     @Override
-    public StructurePlacementType<?> type() {
+    public @NotNull StructurePlacementType<?> type() {
         return TCRStructurePlacementTypes.SPECIFIC_LOCATION_PLACEMENT_TYPE.get();
     }
 

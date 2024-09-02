@@ -18,6 +18,12 @@ public enum TCRStructuresEnum {
     CHURCH(2,0,0),
     SWORD(2,0,12),
     VILLAGE1(2,0,0),
+    VILLAGE2_0(2,0,0),
+    VILLAGE2_1(2,0,0),
+    VILLAGE2_2(2,0,0),
+    VILLAGE2_3(2,0,0),
+    VILLAGE2_4(2,0,0),
+    VILLAGE2_5(2,0,0),
     FLOWER_ALTAR();
 
     int size = 0;
@@ -51,6 +57,12 @@ public enum TCRStructuresEnum {
             case CHURCH -> BiomeMap.getInstance().getCenter1();
             case SWORD -> BiomeMap.getInstance().getCenter2();
             case VILLAGE1 -> BiomeMap.getInstance().getVillage1();
+            case VILLAGE2_0 -> BiomeMap.getInstance().getVillage2()[0];
+            case VILLAGE2_1 -> BiomeMap.getInstance().getVillage2()[1];
+            case VILLAGE2_2 -> BiomeMap.getInstance().getVillage2()[2];
+            case VILLAGE2_3 -> BiomeMap.getInstance().getVillage2()[3];
+            case VILLAGE2_4 -> BiomeMap.getInstance().getVillage2()[4];
+            case VILLAGE2_5 -> BiomeMap.getInstance().getVillage2()[5];
             default -> new Point(0, 0);
         };
     }
