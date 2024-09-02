@@ -12,6 +12,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 传送石窗口，目前只实现了五个传送点（应该够了吧背景图都画了），
@@ -26,10 +27,14 @@ public class PortalBlockScreen extends Screen {
     PortalScreenComponent boss2 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss2"), button -> this.finishChat((byte) 2));
     PortalScreenComponent boss3 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss3"), button -> this.finishChat((byte) 3));
     PortalScreenComponent boss4 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss4"), button -> this.finishChat((byte) 4));
+    private final boolean isVillage;
+    private final boolean isFromTeleporter;
 
 
     public PortalBlockScreen(CompoundTag serverPlayerData) {
         super(Component.empty());
+        isVillage = serverPlayerData.getBoolean("isVillage");
+        isFromTeleporter = serverPlayerData.getBoolean("isFromTeleporter");
     }
 
     @Override
@@ -48,12 +53,12 @@ public class PortalBlockScreen extends Screen {
      * 服务端处理，不同id对应传送不同位置
     * */
     protected void finishChat(byte interactionID) {
-        PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new PortalBlockTeleportPacket(interactionID));
+        PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new PortalBlockTeleportPacket(interactionID, isVillage, isFromTeleporter));
         super.onClose();
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(guiGraphics);
         int posX = (this.width - 256) / 2;
         int posY = (this.height - 200) / 2;
@@ -72,7 +77,7 @@ public class PortalBlockScreen extends Screen {
     }
 
     @Override
-    public void resize(Minecraft minecraft, int width, int height) {
+    public void resize(@NotNull Minecraft minecraft, int width, int height) {
         this.width = width;
         this.height = height;
         this.positionButton();

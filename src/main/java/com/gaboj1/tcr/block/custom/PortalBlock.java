@@ -44,7 +44,7 @@ public class PortalBlock extends BaseEntityBlock{
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockHitResult) {
+    public @NotNull InteractionResult use(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult blockHitResult) {
 
         BlockEntity entity = level.getBlockEntity(pos);
         if(entity instanceof PortalBlockEntity portalBlockEntity){

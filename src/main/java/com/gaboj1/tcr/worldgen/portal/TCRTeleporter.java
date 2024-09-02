@@ -17,8 +17,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
 public class TCRTeleporter implements ITeleporter {
-    public static BlockPos thisPos = BlockPos.ZERO;
-    public static boolean insideDimension = true;
+    public BlockPos thisPos;
+    public boolean insideDimension;
 
     public TCRTeleporter(BlockPos pos, boolean insideDim) {
         thisPos = pos;
@@ -43,13 +43,13 @@ public class TCRTeleporter implements ITeleporter {
     @Override
     public @Nullable PortalInfo getPortalInfo(Entity entity, ServerLevel destinationLevel, Function<ServerLevel, PortalInfo> defaultPortalInfo) {
         PortalInfo pos;
-        BiomeMap biomeMap = BiomeMap.getInstance();
+//        BiomeMap biomeMap = BiomeMap.getInstance();
         int y = 100;
-        BlockPos destinationPos = biomeMap.getBlockPos(biomeMap.getVillage1(),y);
-        while (!destinationLevel.getBlockState(destinationPos).is(Blocks.AIR)){
-            destinationPos = destinationPos.above();
+//        BlockPos thisPos = biomeMap.getBlockPos(biomeMap.getVillage1(), y);
+        while (!destinationLevel.getBlockState(thisPos).is(Blocks.AIR)){
+            thisPos = thisPos.above();
         }
-        destinationPos = destinationPos.offset(20,70,0);//偏移一下不然会诞生在房子里（
+        thisPos = thisPos.offset(5,70,0);//偏移一下不然会诞生在房子里（
         if(entity instanceof ServerPlayer player){
             player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 220, 1, false, true));
             if(DataManager.isFirstEnter.getBool(player)){
@@ -57,7 +57,7 @@ public class TCRTeleporter implements ITeleporter {
                 DataManager.isFirstEnter.putBool(player, false);
             }
         }
-        pos = new PortalInfo(destinationPos.getCenter(), Vec3.ZERO, entity.getYRot(), entity.getXRot());
+        pos = new PortalInfo(thisPos.getCenter(), Vec3.ZERO, entity.getYRot(), entity.getXRot());
         //NOTE不要相信IDE，这里判空是必须的！
         return pos == null ? ITeleporter.super.getPortalInfo(entity, destinationLevel, defaultPortalInfo) : pos;
     }

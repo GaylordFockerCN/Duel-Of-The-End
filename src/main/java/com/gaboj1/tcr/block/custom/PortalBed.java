@@ -4,10 +4,14 @@ import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.entity.PortalBedEntity;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
+import com.gaboj1.tcr.network.PacketRelay;
+import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.packet.clientbound.PortalBlockScreenPacket;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import com.gaboj1.tcr.worldgen.portal.TCRTeleporter;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
@@ -42,26 +46,22 @@ public class PortalBed extends BedBlock {
         if (pLevel.isClientSide)
             return InteractionResult.CONSUME;
         if (pPlayer.canChangeDimensions()) {
-            if (pPlayer.level() instanceof ServerLevel serverlevel && canSetSpawn(serverlevel) && !(Boolean)pState.getValue(OCCUPIED) ) {
+            if (pLevel instanceof ServerLevel serverlevel && canSetSpawn(serverlevel) && !(Boolean)pState.getValue(OCCUPIED) ) {
 
                 MinecraftServer minecraftserver = serverlevel.getServer();
-                ResourceKey<Level> resourcekey =
-//                        TCRConfig.MORE_HOLE.get()?
-//                        (pPlayer.level().dimension() == TCRDimension.SKY_ISLAND_LEVEL_KEY ?
-//                                Level.OVERWORLD : TCRDimension.SKY_ISLAND_LEVEL_KEY):
-                        (pPlayer.level().dimension() == TCRDimension.P_SKY_ISLAND_LEVEL_KEY ?
+                ResourceKey<Level> destinationResourcekey = (pLevel.dimension() == TCRDimension.P_SKY_ISLAND_LEVEL_KEY ?
                                 Level.OVERWORLD : TCRDimension.P_SKY_ISLAND_LEVEL_KEY);
 
-                ServerLevel portalDimension = minecraftserver.getLevel(resourcekey);
+                ServerLevel portalDimension = minecraftserver.getLevel(destinationResourcekey);
                 if (portalDimension != null && !pPlayer.isPassenger()) {
-                    if(resourcekey ==
-//                            (TCRConfig.MORE_HOLE.get() ? TCRDimension.SKY_ISLAND_LEVEL_KEY :
-                                    TCRDimension.P_SKY_ISLAND_LEVEL_KEY) {
-                        pPlayer.changeDimension(portalDimension, new TCRTeleporter(pPos, true));
-                        TCRAdvancementData.getAdvancement(TheCasketOfReveriesMod.MOD_ID, (ServerPlayer) pPlayer);
-                        TCRAdvancementData.getAdvancement("enter_realm_of_the_dream", (ServerPlayer) pPlayer);
+                    if(destinationResourcekey == TCRDimension.P_SKY_ISLAND_LEVEL_KEY) {
+                        CompoundTag data = new CompoundTag();
+                        data.putBoolean("isVillage", true);
+                        data.putBoolean("isFromTeleporter", true);
+                        pPlayer.getPersistentData().putBoolean("village1Unlocked", true);
+                        pPlayer.getPersistentData().putBoolean("village2Unlocked", true);
+                        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PortalBlockScreenPacket(data), ((ServerPlayer) pPlayer));
                     } else {
-//                      pPlayer.changeDimension(portalDimension, new TCRTeleporter(pPos, false));
 
                         //爆炸并且获得成就
                         pLevel.removeBlock(pPos, false);
