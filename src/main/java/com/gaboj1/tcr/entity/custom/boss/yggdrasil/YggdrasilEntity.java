@@ -473,10 +473,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
                     .addFinalChoice(BUILDER.buildDialogueOption(entityType,-1),(byte)4);
         } else if(serverData.getBoolean("killElderTaskGet")){
             //未满足领奖条件但是任务已经领了
-            builder.setAnswerRoot(
-                    new TreeNode(BUILDER.buildDialogueAnswer(entityType,9))
-                            .addLeaf(BUILDER.buildDialogueOption(entityType,6),(byte) 114514));
-
+            builder.start(9).addFinalChoice(6, (byte) 114514);
         } else if(!serverData.getBoolean("isBossTalked")){
             //靠近就触发战斗，初次对话
             builder.start(BUILDER.buildDialogueAnswer(entityType, 0))

@@ -206,7 +206,6 @@ public class ModLangGenerator extends ModLangProvider {
         this.addEntityAndEgg(TCRModEntities.BIG_HAMMER,"大锤子");
         this.addEntityAndEgg(TCRModEntities.SNOW_SWORDMAN,"雪人剑客");
         this.addEntityAndEgg(TCRModEntities.SWORD_CONTROLLER,"御剑者");
-        this.addEntityAndEgg(TCRModEntities.SECOND_BOSS,"第二群系boss");
         this.addEntityAndEgg(TCRModEntities.TREE_GUARDIAN,"森林守护者");
         this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_VILLAGER,"牧歌原野-村民");
         this.addEntityAndEgg(TCRModEntities.CANG_LAN,"怒海宗：苍澜");
@@ -358,7 +357,7 @@ public class ModLangGenerator extends ModLangProvider {
         //Yggdrasil
         this.addEntityAndEgg(TCRModEntities.YGGDRASIL,"伊格德拉希尔");
         this.addEntityShaderName(TCRModEntities.YGGDRASIL, "伊格德拉希尔-残影");
-        this.addDialog(TCRModEntities.YGGDRASIL,0,"哦，可怜的年轻人，还是来了……，不对，你是完整的人");
+        this.addDialog(TCRModEntities.YGGDRASIL,0,"哦，可怜的年轻人，你还是来了…… 不对，你是完整的人！");
         this.addDialog(TCRModEntities.YGGDRASIL,1,"将你同化已经是不可能的了。看来只有消灭你了啊孩子……");
         this.addDialog(TCRModEntities.YGGDRASIL,2,"我必须承认，你的能力超出了我的预期。但很遗憾，你的到来打破了我们的平衡。");
         this.addDialog(TCRModEntities.YGGDRASIL,3,"你不明白……你的胜利将会带来灾难。我是孩子们愿望的实现者，他们的欢笑是我力量的源泉。");
@@ -388,7 +387,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.YGGDRASIL,8,"万分感谢！");
         this.addDialogChoice(TCRModEntities.YGGDRASIL,9,"我将去往何方？");
 
-        //CANGLAN
+        //沧澜
         this.addDialog(TCRModEntities.CANG_LAN,1,"侠士，你风尘仆仆来到此地，可曾察觉这山巅与山脚的天壤之别？那些高高在上的精英们金银满仓，而我们却在山下饥寒交迫。");
         this.addDialog(TCRModEntities.CANG_LAN,2,"盟主的铁腕政策，令这不公成为铁律。他们独占资源，囤积武学秘籍，接连下达禁令，美其名曰维护江湖秩序。");
         this.addDialog(TCRModEntities.CANG_LAN,3,"迫于盟主武力高强，我们只能任人鱼肉。更可恨的是，一场突如其来的天灾，暴露了他们的无能与我们的绝望。");
@@ -408,6 +407,26 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.CANG_LAN,4,"这一切...结束了吗？");
         this.addDialogChoice(TCRModEntities.CANG_LAN,5,"（决心）我也会尽我所能，帮助建设这个新世界。");
         this.addDialogChoice(TCRModEntities.CANG_LAN,6,"我将去往何方？");
+
+        //Boss2
+        this.addEntityAndEgg(TCRModEntities.SECOND_BOSS,"第二群系boss");
+        this.addDialog(TCRModEntities.SECOND_BOSS,0,"年轻的侠士，你可听闻，一群受人蛊惑的百姓，因不满现状欲揭竿而起，威胁到我们世代相传的秩序。");
+        this.addDialog(TCRModEntities.SECOND_BOSS,1,"他们渴望变革，但变革带来的混乱远比现状可怕。我受世界尽头之任，维护的是江湖的稳定，是群系的根基。我需要你的剑，来保护我们不受那些只顾眼前利益、不顾江湖大局的人的伤害。");
+        this.addDialog(TCRModEntities.SECOND_BOSS,2,"（打断）稳定是最重要的，也许会带来牺牲，但不可操之过急。如果你愿意随我追求秩序之道，我将赐予你秩序之力");
+        this.addDialog(TCRModEntities.SECOND_BOSS,3,"（冷笑）苍澜，你这是自寻死路！你听到了这些叛徒的言辞，现在想要尝到甜头，日后定要得寸进尺！");
+        this.addDialog(TCRModEntities.SECOND_BOSS,4,"：（审视着战场，满意地点头）你展现了非凡的勇气和力量，我的忠实盟友。刁民们已被驱散，秩序得以维护。");
+        this.addDialog(TCRModEntities.SECOND_BOSS,5,"（坚定地）为了保护我们的生活方式和传统，一切牺牲都是必要的。记住，秩序是我们的基石。现在我将赐予你部分秩序之力！");
+        this.addDialog(TCRModEntities.SECOND_BOSS,6,"：（微笑）你的成长将使我们的群系更加强大安稳。现在，让我们重建和加强我们的统治吧！");
+        this.addDialog(TCRModEntities.SECOND_BOSS,7,"我将为你介绍其他地区的现状，我感应到每个地区都存在着动荡。位于%s 的回溯密林（群系名）的秘密似乎藏不住了，" +
+                "位于%s 的樱之原野（群系名）也有一位智者现世，他将以他的才智狠狠压榨那群傻子。位于%s 的亚特兰蒂斯（群系名）嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通。");
+
+        this.addDialogChoice(TCRModEntities.SECOND_BOSS,0,"继续");
+        this.addDialogChoice(TCRModEntities.SECOND_BOSS,1,"不满现状？此话怎讲？");
+        this.addDialogChoice(TCRModEntities.SECOND_BOSS,2,"倘若现状真使人痛苦呢？");
+        this.addDialogChoice(TCRModEntities.SECOND_BOSS,3,"：【刁民们速速退下！（支持盟主）】");
+        this.addDialogChoice(TCRModEntities.SECOND_BOSS,4,"【盟主，你所谓的秩序已然导致了混乱！（支持义军）】");
+        this.addDialogChoice(TCRModEntities.SECOND_BOSS,5,"这场战斗...真的值得吗？");
+        this.addDialogChoice(TCRModEntities.SECOND_BOSS,6,"我将去往何方？");
 
         this.addBookAndContents("book1","Test","Test1","Test1.1");
         this.addBookAndContents("book2","Test2","Test2","Test2.2");

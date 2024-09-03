@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.entity.custom.boss.second_boss;
 
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
+import com.gaboj1.tcr.client.gui.screen.TreeNode;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
@@ -42,6 +43,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
 public class SecondBossEntity extends TCRBoss implements GeoEntity, NpcDialogue {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -120,16 +123,27 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity, NpcDialogue 
         if(this.getTarget() != null || this.getConversingPlayer() != null){
             return;
         }
-        LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
+        LinkListStreamDialogueScreenBuilder builder = new LinkListStreamDialogueScreenBuilder(this, entityType);
         if(senderData.getBoolean("fromCangLan")){
             //继续cangLan的对话
-
+            builder.setAnswerRoot(
+                    new TreeNode(BUILDER.buildDialogueAnswer(entityType, 3))
+                            .addLeaf(BUILDER.buildDialogueOption(entityType,3),(byte) 1)
+                            .addLeaf(BUILDER.buildDialogueOption(entityType,4),(byte) 2));
         } else if(!senderData.getBoolean("isBossTalked")){
             //初次见面，返回 0
-
+            builder.start(0)
+                    .addChoice(1, 1)
+                    .addChoice(2, 2)
+                    .addFinalChoice(0, (byte)0);
         } else if(senderData.getBoolean("isElderDie")){
             //击败联军后
-
+            builder.start(4)
+                    .addChoice(6, 5)
+                    .addChoice(0, 6)
+                    .thenExecute((byte) 4)
+                    .addChoice(7, 7)
+                    .addFinalChoice(8, (byte)3);
         } else {
             return;
         }
@@ -192,7 +206,13 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity, NpcDialogue 
                 getEntityData().set(IS_FIGHTING, true);
                 setTarget(player);
                 break;
+            case 3:
+                break;
+            case 4:
+                //boss送礼
+                return;
         }
+        setConversingPlayer(null);
     }
 
     @Override
