@@ -7,7 +7,7 @@
   },
   "display": {
     "icon": {
-      "item": "the_casket_of_reveries:desert_eagle_ammo"
+      "item": "the_casket_of_reveries:gun_ammo"
     },
     "title": {
       "translate": "advancement.shoot_hundred_meters"

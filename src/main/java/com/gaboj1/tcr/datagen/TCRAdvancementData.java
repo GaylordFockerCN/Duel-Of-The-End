@@ -28,10 +28,10 @@ import java.util.function.Consumer;
 
 public class TCRAdvancementData extends ForgeAdvancementProvider {
     public TCRAdvancementData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, ExistingFileHelper helper) {
-        super(output, registries, helper, List.of(new AetherAdvancements()));
+        super(output, registries, helper, List.of(new TCRAdvancements()));
     }
 
-    public static class AetherAdvancements implements AdvancementGenerator {
+    public static class TCRAdvancements implements AdvancementGenerator {
 
         public final String pre = "advancement."+TheCasketOfReveriesMod.MOD_ID+".";
         private Consumer<Advancement> consumer;
