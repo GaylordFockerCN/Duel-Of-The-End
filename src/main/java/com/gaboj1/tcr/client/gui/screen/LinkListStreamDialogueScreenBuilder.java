@@ -167,6 +167,9 @@ public class LinkListStreamDialogueScreenBuilder {
                 node.execute();
             }
             if(node.canExecuteCode()){
+                if(node.getExecuteValue() == 0){
+                    throw new IllegalArgumentException("The return value '0' is for ESC");
+                }
                 screen.execute(node.getExecuteValue());
             }
             screen.setDialogueAnswer(node.getAnswer());

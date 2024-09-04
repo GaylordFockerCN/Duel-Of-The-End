@@ -42,9 +42,7 @@ import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 /**
  * 苍澜：放水球
  */
-public class FuryTideCangLan extends Master implements NpcDialogue {
-    protected Player conversingPlayer;
-    public static final EntityDataAccessor<Integer> BOSS_ID = SynchedEntityData.defineId(FuryTideCangLan.class, EntityDataSerializers.INT);
+public class FuryTideCangLan extends Master {
 
     public FuryTideCangLan(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -59,19 +57,18 @@ public class FuryTideCangLan extends Master implements NpcDialogue {
                 .build();
     }
 
-    public void sendDialoguePacket(ServerPlayer serverPlayer){
-        CompoundTag serverData = new CompoundTag();
-        serverData.putBoolean("isElderTalked",SaveUtil.biome2.isElderTalked);
-        serverData.putBoolean("isBossDie",SaveUtil.biome2.isBossDie);
-        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverData), serverPlayer);
-    }
-
     @OnlyIn(Dist.CLIENT)
     @Override
     public void openDialogueScreen(CompoundTag serverData) {
         if(this.getTarget() != null){
             return;
         }
+
+        //击败boss后的挑战模式
+        if(serverData.getBoolean("isBossDie") && !isSummonedByBoss){
+            super.openDialogueScreen(serverData);
+        }
+
         BiomeMap biomeMap = BiomeMap.getInstance();
         BlockPos biome1Center = biomeMap.getBlockPos(biomeMap.getCenter1(),0);
         BlockPos biome3Center = biomeMap.getBlockPos(biomeMap.getCenter3(),0);
@@ -80,7 +77,7 @@ public class FuryTideCangLan extends Master implements NpcDialogue {
 
 
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
-        if(serverData.getBoolean("isElderTalked")){
+        if(!serverData.getBoolean("isElderTalked") && !isSummonedByBoss){
             //初次见面
             builder.setAnswerRoot(new TreeNode(BUILDER.buildDialogueAnswer(entityType,1))
                     .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,2),BUILDER.buildDialogueOption(entityType,0))
@@ -89,17 +86,18 @@ public class FuryTideCangLan extends Master implements NpcDialogue {
                                             .addLeaf(BUILDER.buildDialogueOption(entityType,2),(byte)1)
                                             .addLeaf(BUILDER.buildDialogueOption(entityType,3),(byte)2)))
                                             ));
-        } else if(serverData.getBoolean("isBossDie")){
+        } else if(isSummonedByBoss && serverData.getBoolean("fromBoss")){
+            //打断boss说话
+            builder.start(11)
+                    .addFinalChoice(0, (byte) 3);
+
+        } else {
             //击败boss
             builder.start(BUILDER.buildDialogueAnswer(entityType,7))
                     .addChoice(BUILDER.buildDialogueOption(entityType,4),BUILDER.buildDialogueAnswer(entityType,8))
                     .addChoice(BUILDER.buildDialogueOption(entityType,5),BUILDER.buildDialogueAnswer(entityType,9))
                     .addChoice(BUILDER.buildDialogueOption(entityType,6),Component.literal("\n").append(Component.translatable(entityType + ".dialog10",position1,position3)))
                     .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)6666);
-        } else {
-            //打断boss说话
-            builder.start(11)
-                    .addFinalChoice(0, (byte) 3);
         }
         Minecraft.getInstance().setScreen(builder.build());
     }
@@ -113,10 +111,10 @@ public class FuryTideCangLan extends Master implements NpcDialogue {
 
         switch(interactionID) {
             case 1:
-                player.displayClientMessage(Component.literal("\n").append(Component.translatable(entityType + ".dialog5",position)),false);
+                chat(Component.literal("\n").append(Component.translatable(entityType + ".dialog5",position)));
                 break;
             case 2:
-                player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType,6),false);
+                chat(BUILDER.buildDialogueAnswer(entityType,6));
                 break;
             case 3:
                 //继续boss的对话
@@ -130,35 +128,6 @@ public class FuryTideCangLan extends Master implements NpcDialogue {
         }
         this.setConversingPlayer(null);
 
-    }
-
-
-    @Override
-    public void setConversingPlayer(@Nullable Player player) {
-            this.conversingPlayer = player;
-    }
-
-    @Nullable
-    @Override
-    public Player getConversingPlayer() {
-        return this.conversingPlayer;
-    }
-
-    @Override
-    public InteractionResult mobInteract(Player player, InteractionHand pHand) {
-        if (pHand == InteractionHand.MAIN_HAND) {
-            if (!this.level().isClientSide()) {
-                this.lookAt(player, 180.0F, 180.0F);
-                if (player instanceof ServerPlayer serverPlayer) {
-                    if (this.getConversingPlayer() == null) {
-                        this.setConversingPlayer(serverPlayer);
-                        sendDialoguePacket(serverPlayer);
-                    }
-                }
-                return InteractionResult.SUCCESS;
-            }
-        }
-        return InteractionResult.SUCCESS;
     }
 
     @Override

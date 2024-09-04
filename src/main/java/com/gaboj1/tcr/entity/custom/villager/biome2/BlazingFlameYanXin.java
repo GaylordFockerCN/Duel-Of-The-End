@@ -20,12 +20,12 @@ public class BlazingFlameYanXin extends Master {
         return true;
     }
 
-    public static AttributeSupplier setAttributes() {//生物属性
+    public static AttributeSupplier setAttributes() {
         return PathfinderMob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 100.0D)//最大血量
-                .add(Attributes.ATTACK_DAMAGE, 10.0f)//单次攻击伤害
-                .add(Attributes.ATTACK_SPEED, 1.0f)//攻速
-                .add(Attributes.MOVEMENT_SPEED, 0.4f)//移速
+                .add(Attributes.MAX_HEALTH, 100.0D)
+                .add(Attributes.ATTACK_DAMAGE, 10.0f)
+                .add(Attributes.ATTACK_SPEED, 1.0f)
+                .add(Attributes.MOVEMENT_SPEED, 0.4f)
                 .build();
     }
 

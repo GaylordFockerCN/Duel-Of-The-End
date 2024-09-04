@@ -15,12 +15,13 @@ public class IronfistDuanShan extends Master {
         super(pEntityType, pLevel);
     }
 
-    public static AttributeSupplier setAttributes() {//生物属性
+    public static AttributeSupplier setAttributes() {
         return PathfinderMob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 200.0D)//最大血量
-                .add(Attributes.ATTACK_DAMAGE, 15.0f)//单次攻击伤害
-                .add(Attributes.ATTACK_SPEED, 0.5f)//攻速
-                .add(Attributes.MOVEMENT_SPEED, 0.35f)//移速
+                .add(Attributes.MAX_HEALTH, 200.0D)
+                .add(Attributes.ATTACK_DAMAGE, 15.0f)
+                .add(Attributes.ATTACK_SPEED, 0.5f)
+                .add(Attributes.MOVEMENT_SPEED, 0.35f)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 114514)//不动如山
                 .build();
     }
 

@@ -3,10 +3,9 @@ package com.gaboj1.tcr.entity.custom.boss.second_boss;
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
 import com.gaboj1.tcr.entity.NpcDialogue;
+import com.gaboj1.tcr.entity.ShadowableEntity;
 import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
-import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
-import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome2.*;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
@@ -15,10 +14,12 @@ import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.BossEvent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -31,8 +32,8 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -42,18 +43,16 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
-public class SecondBossEntity extends TCRBoss implements GeoEntity, NpcDialogue {
+public class SecondBossEntity extends TCRBoss implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     protected EntityType<?> entityType = TCRModEntities.SECOND_BOSS.get();
-    private static final EntityDataAccessor<Boolean> IS_FIGHTING = SynchedEntityData.defineId(SecondBossEntity.class, EntityDataSerializers.BOOLEAN);
     private final List<Integer> mastersId = new ArrayList<>();
     public SecondBossEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
-        super(p_21683_, p_21684_);
+        super(p_21683_, p_21684_, BossEvent.BossBarColor.WHITE);
     }
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
@@ -61,25 +60,8 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity, NpcDialogue 
                 .add(Attributes.ATTACK_DAMAGE, SaveUtil.getMobMultiplier(3))
                 .add(Attributes.ATTACK_SPEED, 0.5f)
                 .add(Attributes.MOVEMENT_SPEED, 0.30f)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 114514)//不动如山！
                 .build();
-    }
-
-    @Override
-    public void addAdditionalSaveData(@NotNull CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-        tag.putBoolean("is_fighting", this.getEntityData().get(IS_FIGHTING));
-    }
-
-    @Override
-    public void readAdditionalSaveData(@NotNull CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-        this.getEntityData().set(IS_FIGHTING,tag.getBoolean("is_fighting"));
-    }
-
-    @Override
-    protected void defineSynchedData() {
-        getEntityData().define(IS_FIGHTING, false);
-        super.defineSynchedData();
     }
 
     protected void registerGoals() {
@@ -135,7 +117,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity, NpcDialogue 
             builder.start(0)
                     .addChoice(1, 1)
                     .addChoice(2, 2)
-                    .addFinalChoice(0, (byte)0);
+                    .addFinalChoice(0, (byte)-1);
         } else if(senderData.getBoolean("isElderDie")){
             //击败联军后
             builder.start(4)
@@ -153,31 +135,28 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity, NpcDialogue 
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID){
-            case 0:
+            case -1: // 按esc也是返回0！！！
                 //初次对话，召唤六大门派
-                FuryTideCangLan cangLan = TCRModEntities.CANG_LAN.get().create(level());
+                if(!mastersId.isEmpty()){
+                    return;
+                }
                 double x = this.getX();
                 double y = this.getY();
                 double z = this.getZ();
                 double r = 2;
+                FuryTideCangLan cangLan = TCRModEntities.CANG_LAN.get().create(level());
                 assert cangLan != null;
-                cangLan.setPos(x + r, y, z);//夹中间
-                cangLan.setBossId(this.getId());
+                cangLan.setPos(x + r, y, z);
                 BlazingFlameYanXin yanXin = TCRModEntities.YAN_XIN.get().create(level());
                 yanXin.setPos(x + 0.5 * r, y, z + 0.866 * r);
-                yanXin.setBossId(this.getId());
                 IronfistDuanShan duanShan = TCRModEntities.DUAN_SHAN.get().create(level());
                 duanShan.setPos(x - 0.5 * r, y, z + 0.866 * r);
-                duanShan.setBossId(this.getId());
                 SerpentWhispererCuiHua cuiHua = TCRModEntities.CUI_HUA.get().create(level());
                 cuiHua.setPos(x - r, y, z);
-                cuiHua.setBossId(this.getId());
                 ThunderclapZhenYu zhenYu = TCRModEntities.ZHEN_YU.get().create(level());
                 zhenYu.setPos(x - 0.5 * r, y, z - 0.866 * r);
-                zhenYu.setBossId(this.getId());
                 WindwalkerYunYi yunYi = TCRModEntities.YUN_YI.get().create(level());
                 yunYi.setPos(x + 0.5 * r, y, z - 0.866 * r);
-                yunYi.setBossId(this.getId());
                 level().addFreshEntity(cangLan);
                 level().addFreshEntity(yanXin);
                 level().addFreshEntity(duanShan);
@@ -190,23 +169,45 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity, NpcDialogue 
                 mastersId.add(cuiHua.getId());
                 mastersId.add(zhenYu.getId());
                 mastersId.add(yunYi.getId());
-
-                PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), new CompoundTag()), ((ServerPlayer) player));//让苍澜接话
+                for(int id : mastersId){
+                    if(level().getEntity(id) instanceof Master master){//没加入level前无法获取id。。。
+                        master.getLookControl().setLookAt(this);
+                        master.setWaiting(true);
+                        master.setBossId(this.getId());
+//                        level().explode(master, this.damageSources().explosion(this, this), null, master.position(), 3F, false, Level.ExplosionInteraction.NONE);
+                    }
+                }
+                CompoundTag data = new CompoundTag();
+                data.putBoolean("fromBoss", true);
+                PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(cangLan.getId(), data), ((ServerPlayer) player));//让苍澜接话
                 break;
             case 1:
                 //选择boss阵容
                 for(int id : mastersId){
                     if(level().getEntity(id) instanceof Master master){
-                        master.setTarget(player);
+                        master.startFighting(player);
                     }
                 }
+                SaveUtil.biome2.isBossTalked = true;
+                SaveUtil.biome2.choice = SaveUtil.BiomeData.BOSS;
                 break;
             case 2:
                 //选择联军阵容
                 getEntityData().set(IS_FIGHTING, true);
                 setTarget(player);
+                for(int id : mastersId){
+                    if(level().getEntity(id) instanceof Master master){
+                        master.startFighting(this);
+                    }
+                }
+                SaveUtil.biome2.isBossTalked = true;
+                SaveUtil.biome2.choice = SaveUtil.BiomeData.VILLAGER;
                 break;
             case 3:
+                //结束boss对话
+                player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, 8), false);
+                level().explode(this, this.damageSources().explosion(this, this), null, getOnPos().getCenter(), 3F, false, Level.ExplosionInteraction.NONE);
+                this.discard();
                 break;
             case 4:
                 //boss送礼
@@ -216,18 +217,69 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity, NpcDialogue 
     }
 
     @Override
-    public void setConversingPlayer(@Nullable Player player) {
-
+    protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
+        if (hand == InteractionHand.MAIN_HAND) {
+            if (!this.level().isClientSide()) {
+                this.lookAt(player, 180.0F, 180.0F);
+                if (player instanceof ServerPlayer serverPlayer) {
+                    if (this.getConversingPlayer() == null) {
+                        sendDialoguePacket(serverPlayer);
+                        this.setConversingPlayer(serverPlayer);
+                    }
+                }
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return InteractionResult.PASS;
     }
 
-    @Nullable
     @Override
-    public Player getConversingPlayer() {
+    public void tick() {
+        super.tick();
+        if(conversingPlayer != null){
+            setTarget(null);
+            this.getNavigation().stop();
+            this.getLookControl().setLookAt(conversingPlayer);
+        }
+    }
+
+    @Override
+    public SoundEvent getFightMusic() {
         return null;
+    }
+
+    @Override
+    public boolean hurt(@NotNull DamageSource entity, float v) {
+        if(SaveUtil.biome2.choice == SaveUtil.BiomeData.BOSS && entity.getEntity() instanceof Player){
+            return false;
+        }
+        return super.hurt(entity, v);
+    }
+
+    @Override
+    public void die(@NotNull DamageSource source) {
+        SaveUtil.biome2.isBossDie = true;
+        for(int id : mastersId){
+            if(level().getEntity(id) instanceof Master master){
+                master.discard();
+            }
+        }
+        FuryTideCangLan cangLan = TCRModEntities.CANG_LAN.get().create(level());
+        assert cangLan != null;
+        if(getTarget() != null){
+            Vec3 vec3 = getTarget().position().add(this.position()).scale(0.5);
+            cangLan.setPos(vec3.x, vec3.y, vec3.z);//夹中间
+        } else {
+            cangLan.setPos(this.position());
+        }
+        level().addFreshEntity(cangLan);
+        cangLan.sendDialoguePacket(((ServerPlayer) level().getNearestPlayer(this, 48)));
+        super.die(source);
     }
 
     @Override
     public void chat(Component component) {
 
     }
+
 }

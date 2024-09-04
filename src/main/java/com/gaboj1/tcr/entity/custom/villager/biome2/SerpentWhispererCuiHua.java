@@ -22,12 +22,12 @@ public class SerpentWhispererCuiHua extends Master{
         return true;
     }
 
-    public static AttributeSupplier setAttributes() {//生物属性
+    public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 80.0D)//最大血量
-                .add(Attributes.ATTACK_DAMAGE, 2.0f)//单次攻击伤害
-                .add(Attributes.ATTACK_SPEED, 2.0f)//攻速
-                .add(Attributes.MOVEMENT_SPEED, 0.6f)//移速
+                .add(Attributes.MAX_HEALTH, 80.0D)
+                .add(Attributes.ATTACK_DAMAGE, 2.0f)
+                .add(Attributes.ATTACK_SPEED, 2.0f)
+                .add(Attributes.MOVEMENT_SPEED, 0.6f)
                 .build();
     }
 

@@ -1,8 +1,6 @@
 package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.block.entity.spawner.EnforcedHomePoint;
-import com.gaboj1.tcr.client.BossMusicPlayer;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ShadowableEntity;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
@@ -23,7 +21,6 @@ import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.GlobalPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -53,7 +50,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
@@ -74,15 +70,10 @@ import java.util.Objects;
 import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
 
-public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomePoint, NpcDialogue, ShadowableEntity {
-    @Nullable
-    protected Player conversingPlayer;
+public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     EntityType<?> entityType = TCRModEntities.YGGDRASIL.get();
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Boolean> IS_FIGHTING = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> IS_SHADER = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.BOOLEAN);
-    private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.BLUE, BossEvent.BossBarOverlay.PROGRESS);
 
     private boolean canBeHurt;
     private int hurtTimer;
@@ -94,7 +85,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     private final List<Integer> mobs = new ArrayList<>();
 
     public YggdrasilEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
-        super(p_21683_, p_21684_);
+        super(p_21683_, p_21684_, BossEvent.BossBarColor.BLUE);
     }
 
     public static AttributeSupplier setAttributes() {
@@ -109,7 +100,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     protected void registerGoals() {
         this.goalSelector.addGoal(0,new ConversationTriggerGoal(this));
         this.goalSelector.addGoal(1,new NpcDialogueGoal<>(this));
-        this.goalSelector.addGoal(2, new RangeMeleeAttackGoal(this, 1.0, true, 20, 40){
+        this.goalSelector.addGoal(2, new RangeMeleeAttackGoal(this, 1.0, true, 72, 40){
             @Override
             public boolean canUse() {
                 return YggdrasilEntity.this.getEntityData().get(IS_FIGHTING) && super.canUse();
@@ -128,8 +119,6 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("state", this.getEntityData().get(STATE));
-        tag.putBoolean("is_fighting", this.getEntityData().get(IS_FIGHTING));
-        tag.putBoolean("is_shader", this.getEntityData().get(IS_SHADER));
     }
 
     @Override
@@ -139,29 +128,12 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
         if(tag.getInt("state") != 0){
             SaveUtil.biome1.isBossTalked = true;//多余的保险措施？
         }
-        this.getEntityData().set(IS_FIGHTING,tag.getBoolean("is_fighting"));
-        this.getEntityData().set(IS_SHADER,tag.getBoolean("is_shader"));
     }
 
     @Override
     protected void defineSynchedData() {
-        getEntityData().define(IS_FIGHTING, false);
-        getEntityData().define(STATE, 0);
-        if(!level().isClientSide && SaveUtil.biome1.isBossDie){
-            getEntityData().define(IS_SHADER, true);
-        }else {
-            getEntityData().define(IS_SHADER, false);
-        }
         super.defineSynchedData();
-    }
-
-    public ServerBossEvent getBossBar() {
-        return this.bossInfo;
-    }
-    @Override
-    public void setCustomName(@Nullable Component name) {
-        super.setCustomName(name);
-        this.getBossBar().setName(Objects.requireNonNull(this.getCustomName()));
+        getEntityData().define(STATE, 0);
     }
 
     @Override
@@ -170,27 +142,6 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
            return Component.translatable(entityType.getDescriptionId()+"_shader");
         }
         return super.getDisplayName();
-    }
-
-    @Override
-    protected void customServerAiStep() {
-        super.customServerAiStep();
-        if (!this.level().isClientSide()) {
-            this.getBossBar().setProgress(this.getHealth() / this.getMaxHealth());
-        }
-    }
-
-    @Override
-    public void startSeenByPlayer(@NotNull ServerPlayer player) {
-        super.startSeenByPlayer(player);
-        this.getBossBar().addPlayer(player);
-    }
-
-
-    @Override
-    public void stopSeenByPlayer(@NotNull ServerPlayer player) {
-        super.stopSeenByPlayer(player);
-        this.getBossBar().removePlayer(player);
     }
 
     /**
@@ -305,22 +256,6 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     public void tick() {
         super.tick();
 
-        //强制追，不知道为什么goal的那个追击坏了
-        if(getTarget() != null && getEntityData().get(IS_FIGHTING)){
-            this.getNavigation().moveTo(getTarget(), 1.0f);
-        }
-
-        if(level().isClientSide){
-            if(getEntityData().get(IS_FIGHTING)){
-                BossMusicPlayer.playBossMusic(this, TCRModSounds.BIOME1BOSS_FIGHT.get(), 32);
-            }
-        }
-
-        //保险，防止追玩家
-        if(!getEntityData().get(IS_FIGHTING)){
-            setTarget(null);
-        }
-
         if(!level().isClientSide){
 
             //恢复的倒计时，这个timer由goal触发
@@ -378,10 +313,9 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
 
         }
 
-        //霸体时间判断 TODO 不起作用？
+        //霸体时间判断
         if(conversingPlayer != null){
             canBeHurt = false;
-            navigation.stop();
         }
 
         if(canBeHurt){
@@ -393,27 +327,16 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
         }
     }
 
+    public SoundEvent getFightMusic(){
+        return TCRModSounds.BIOME1BOSS_FIGHT.get();
+    }
+
     /**
      * 特定机制下（比如树爪被破坏）才能被打
      */
     public void setCanBeHurt() {
         this.canBeHurt = true;
         hurtTimer = 200;
-    }
-
-    @Override
-    public @Nullable GlobalPos getRestrictionPoint() {
-        return null;
-    }
-
-    @Override
-    public void setRestrictionPoint(@Nullable GlobalPos pos) {
-
-    }
-
-    @Override
-    public int getHomeRadius() {
-        return 0;
     }
 
     @Nullable
@@ -478,7 +401,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
             //靠近就触发战斗，初次对话
             builder.start(BUILDER.buildDialogueAnswer(entityType, 0))
                     .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,1))
-                    .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)0);
+                    .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)(-1));
 
         } else if(!serverData.getBoolean("isBossFought")){
             //战斗结束后的对话
@@ -531,7 +454,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID){
             //初次对话结束，就是变成开始打了
-            case 0:
+            case -1:
                 SaveUtil.biome1.isBossTalked = true;
                 getEntityData().set(STATE, 1);
                 getEntityData().set(IS_FIGHTING, true);
@@ -595,32 +518,10 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     }
 
     @Override
-    public void setConversingPlayer(@Nullable Player player) {
-        this.conversingPlayer = player;
-    }
-
-    @Nullable
-    @Override
-    public Player getConversingPlayer() {
-        return this.conversingPlayer;
-    }
-
-
-    @Override
     public void chat(Component component) {
         if(conversingPlayer != null) {
             conversingPlayer.sendSystemMessage(BUILDER.buildDialogue(this, component));
         }
-    }
-
-    @Override
-    public boolean isShadow() {
-        return getEntityData().get(IS_SHADER);
-    }
-
-    @Override
-    public void setShadow() {
-        getEntityData().set(IS_SHADER, true);
     }
 
     /**
@@ -644,13 +545,12 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
 
         @Override
         public void start() {
-                if (yggdrasil.getConversingPlayer() == null) {
-                    yggdrasil.setConversingPlayer(player);
-                    yggdrasil.sendDialoguePacket(player);
-                }
-
-
+            if (yggdrasil.getConversingPlayer() == null) {
+                yggdrasil.setConversingPlayer(player);
+                yggdrasil.sendDialoguePacket(player);
+            }
         }
+
     }
 
     /**
@@ -747,21 +647,11 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity, EnforcedHomeP
     /**
      * 播放动画并发射
      */
-    public boolean doHurtTarget(Entity target){
+    public boolean doHurtTarget(@NotNull Entity target){
         triggerAnim("Attack","attack");
         shootTimer = 20;
         shootTarget = target;
         return true;
-    }
-
-    /**
-     * 返回一个范围
-     * @param pos 中心位置
-     * @param offset 半径
-     * @return 以pos为中心offset的两倍为边长的一个正方体
-     */
-    private static AABB getPlayerAABB(BlockPos pos, int offset){
-        return new AABB(pos.offset(offset,offset,offset),pos.offset(-offset,-offset,-offset));
     }
 
     @Override
