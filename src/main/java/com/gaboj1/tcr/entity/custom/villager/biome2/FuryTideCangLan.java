@@ -93,9 +93,10 @@ public class FuryTideCangLan extends Master {
 
         } else {
             //击败boss
-            builder.start(BUILDER.buildDialogueAnswer(entityType,7))
-                    .addChoice(BUILDER.buildDialogueOption(entityType,4),BUILDER.buildDialogueAnswer(entityType,8))
-                    .addChoice(BUILDER.buildDialogueOption(entityType,5),BUILDER.buildDialogueAnswer(entityType,9))
+            builder.start(7)
+                    .addChoice(4, 8)
+                    .addChoice(5, 9)
+                    .thenExecute((byte) 4)
                     .addChoice(BUILDER.buildDialogueOption(entityType,6),Component.literal("\n").append(Component.translatable(entityType + ".dialog10",position1,position3)))
                     .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)6666);
         }
@@ -112,9 +113,11 @@ public class FuryTideCangLan extends Master {
         switch(interactionID) {
             case 1:
                 chat(Component.literal("\n").append(Component.translatable(entityType + ".dialog5",position)));
+                discard();
                 break;
             case 2:
                 chat(BUILDER.buildDialogueAnswer(entityType,6));
+                discard();
                 break;
             case 3:
                 //继续boss的对话
@@ -125,6 +128,9 @@ public class FuryTideCangLan extends Master {
                     PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(bossId, serverData), ((ServerPlayer) player));
                 }
                 break;
+            case 4:
+                //TODO 颁奖
+                return;
         }
         this.setConversingPlayer(null);
 

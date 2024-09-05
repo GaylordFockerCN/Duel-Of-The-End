@@ -388,43 +388,42 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.YGGDRASIL,9,"我将去往何方？");
 
         //沧澜
-        this.addDialog(TCRModEntities.CANG_LAN,1,"侠士，你风尘仆仆来到此地，可曾察觉这山巅与山脚的天壤之别？那些高高在上的精英们金银满仓，而我们却在山下饥寒交迫。");
-        this.addDialog(TCRModEntities.CANG_LAN,2,"盟主的铁腕政策，令这不公成为铁律。他们独占资源，囤积武学秘籍，接连下达禁令，美其名曰维护江湖秩序。");
-        this.addDialog(TCRModEntities.CANG_LAN,3,"迫于盟主武力高强，我们只能任人鱼肉。更可恨的是，一场突如其来的天灾，暴露了他们的无能与我们的绝望。");
-        this.addDialog(TCRModEntities.CANG_LAN,4,"如今，我们不能再坐视不理。我们计划揭竿而起，推翻那只顾一己私利的盟主，重建一个公平正义的江湖！");
-        this.addDialog(TCRModEntities.CANG_LAN,5,"甚好！侠士的加入，让我们的义军如虎添翼。立刻准备，我们前往%s之地！");
-        this.addDialog(TCRModEntities.CANG_LAN,6,"（点头）我理解。真相往往隐藏在表象之下。去吧，用你的眼睛见证，用你的心感受，你会回来的。");
+        this.addDialog(TCRModEntities.CANG_LAN,1,"小兄弟，你风尘仆仆来到此地，可曾察觉这山巅与浮岛的天壤之别？");
+        this.addDialog(TCRModEntities.CANG_LAN,2,"盟主征尽，当年于山巅论剑决出的武林至尊，如今却有违当初的誓言，不顾联盟生死。一场突如其来的天灾，暴露了他们的无能与我们的绝望。");
+        this.addDialog(TCRModEntities.CANG_LAN,3,"迫于盟主武力高强，我们只能任人鱼肉。更可恨的是，他们独占资源，囤积武学秘籍，接连下达禁令，美其名曰维护江湖秩序。");
+        this.addDialog(TCRModEntities.CANG_LAN,4,"如今，吾联合六大掌门，欲揭竿而起，剿灭那只顾一己私利的盟主，为武林除害，重建一个公平正义的江湖！小兄弟是否愿与我们同行？");
+        this.addDialog(TCRModEntities.CANG_LAN,5,"甚好！侠士之加入，使义军如虎添翼。请随我们一同前往 %s 之地！");
+        this.addDialog(TCRModEntities.CANG_LAN,6,"（点头）我理解，在你了解到盟主的铁腕政策后，我相信，你会回来的。");
         this.addDialog(TCRModEntities.CANG_LAN,7,"（站在废墟之上，目光坚定）我们的胜利是江湖的胜利！你的勇气和选择为我们赢得了自由的曙光");
-        this.addDialog(TCRModEntities.CANG_LAN,8,"（微笑着）这只是一个开始，旅者。真正的工作现在才开始——建立一个新的、公正的社会。");
-        this.addDialog(TCRModEntities.CANG_LAN,9,"（拍着玩家的肩膀）我们并肩作战，我们的未来将由我们共同塑造！现在，我将共和（我勒个匹诺康尼，不好意思用“同谐”这个词）之力分享与你");
-        this.addDialog(TCRModEntities.CANG_LAN,10,"我将为你指引其他群系的位置。牧歌原野（群系名）似乎有着巨大的危机，位于%s，樱之原野（群系名）似乎在进行大选，位于%s。亚特兰蒂斯（群系名）嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通");
-        this.addDialog(TCRModEntities.CANG_LAN,11,"住手，盟主！你的谎言和暴政到此为止。我们起义，是为了百姓的生存与尊严，为了一个更加公平的江湖");
+        this.addDialog(TCRModEntities.CANG_LAN,8,"（微笑着）这仅是一个开始，小兄弟。真正的工作现在才开始！我们将建立一个新的联盟，不再由谁独裁的联盟！");
+        this.addDialog(TCRModEntities.CANG_LAN,9,"（拍着玩家的肩膀）我们并肩作战，未来将由我们共同塑造！请小兄弟收下我们的微薄谢礼！");
+        this.addDialog(TCRModEntities.CANG_LAN,10,"这个嘛...牧歌原野似乎有着巨大的危机，位于 %s ，樱之原野似乎在进行大选，位于 %s 。亚特兰蒂斯嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通");
+        this.addDialog(TCRModEntities.CANG_LAN,11,"住手，盟主！你的谎言和暴政到此为止。我们是为了各弟子的生存与尊严，为了一个更加公平的江湖而来！");
 
         this.addDialogChoice(TCRModEntities.CANG_LAN,0,"继续");
         this.addDialogChoice(TCRModEntities.CANG_LAN,1,"（同情地）此等世道，实在令人痛心疾首！");
-        this.addDialogChoice(TCRModEntities.CANG_LAN,2,"【我愿与诸位同道，共赴义举。我虽无意逐鹿，却知苍生苦楚。】");
-        this.addDialogChoice(TCRModEntities.CANG_LAN,3,"【我需亲眼目睹这一切，再作定夺。】");
+        this.addDialogChoice(TCRModEntities.CANG_LAN,2,"我愿与诸位同道，共赴义举。我虽无意逐鹿，却知苍生苦楚。");
+        this.addDialogChoice(TCRModEntities.CANG_LAN,3,"我需亲眼目睹这一切，再作定夺。");
         this.addDialogChoice(TCRModEntities.CANG_LAN,4,"这一切...结束了吗？");
-        this.addDialogChoice(TCRModEntities.CANG_LAN,5,"（决心）我也会尽我所能，帮助建设这个新世界。");
+        this.addDialogChoice(TCRModEntities.CANG_LAN,5,"我也会尽我所能，帮助建设这个新世界。");
         this.addDialogChoice(TCRModEntities.CANG_LAN,6,"我将去往何方？");
 
         //Boss2
         this.addEntityAndEgg(TCRModEntities.SECOND_BOSS,"第二群系boss");
-        this.addDialog(TCRModEntities.SECOND_BOSS,0,"年轻的侠士，你可听闻，一群受人蛊惑的百姓，因不满现状欲揭竿而起，威胁到我们世代相传的秩序。");
-        this.addDialog(TCRModEntities.SECOND_BOSS,1,"他们渴望变革，但变革带来的混乱远比现状可怕。我受世界尽头之任，维护的是江湖的稳定，是群系的根基。我需要你的剑，来保护我们不受那些只顾眼前利益、不顾江湖大局的人的伤害。");
-        this.addDialog(TCRModEntities.SECOND_BOSS,2,"（打断）稳定是最重要的，也许会带来牺牲，但不可操之过急。如果你愿意随我追求秩序之道，我将赐予你秩序之力");
-        this.addDialog(TCRModEntities.SECOND_BOSS,3,"（冷笑）苍澜，你这是自寻死路！你听到了这些叛徒的言辞，现在想要尝到甜头，日后定要得寸进尺！");
-        this.addDialog(TCRModEntities.SECOND_BOSS,4,"：（审视着战场，满意地点头）你展现了非凡的勇气和力量，我的忠实盟友。刁民们已被驱散，秩序得以维护。");
-        this.addDialog(TCRModEntities.SECOND_BOSS,5,"（坚定地）为了保护我们的生活方式和传统，一切牺牲都是必要的。记住，秩序是我们的基石。现在我将赐予你部分秩序之力！");
-        this.addDialog(TCRModEntities.SECOND_BOSS,6,"：（微笑）你的成长将使我们的群系更加强大安稳。现在，让我们重建和加强我们的统治吧！");
-        this.addDialog(TCRModEntities.SECOND_BOSS,7,"我将为你介绍其他地区的现状，我感应到每个地区都存在着动荡。位于%s 的回溯密林（群系名）的秘密似乎藏不住了，" +
-                "位于%s 的樱之原野（群系名）也有一位智者现世，他将以他的才智狠狠压榨那群傻子。位于%s 的亚特兰蒂斯（群系名）嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通。");
+        this.addDialog(TCRModEntities.SECOND_BOSS,0,"你终于来了...你可听闻，一群受人蛊惑的莽夫，欲揭竿而起，威胁到我们世代相传的秩序。我看并非对如今秩序不满，而是贪图我手中的武林秘籍。");
+        this.addDialog(TCRModEntities.SECOND_BOSS,1,"我受世界尽头之任，维护的不仅是江湖的稳定，更是群系的根基。武林秘籍倘若公之于众，若落入奸人手里，后果不堪设想！我需要你的剑，来助我守住此地。");
+        this.addDialog(TCRModEntities.SECOND_BOSS,2,"（大笑）哈哈哈哈，后生可畏，后生可畏！群系之基如今可取决于你的决定了。若你愿助我度过此难，我将给予你本应得到的力量。");
+        this.addDialog(TCRModEntities.SECOND_BOSS,3,"（冷笑）苍澜，你这是自寻死路！云逸，翠华，焰心，震宇，断山，你们也愿信他的鬼话？");
+        this.addDialog(TCRModEntities.SECOND_BOSS,4,"：（审视着战场）你展现了非凡的勇气和力量，我的忠实盟友。奸人已被驱散，秩序得以维护。");
+        this.addDialog(TCRModEntities.SECOND_BOSS,5,"（坚定地）总得有人做出牺牲，可惜连累了其他几位掌门。好了，如今请收下你应得的那份力量吧。");
+        this.addDialog(TCRModEntities.SECOND_BOSS,6,"掌门战败，他们的弟子绝不会就此罢休，我将修养片刻，维护群系稳定的大业亦有一段距离。你的旅途也亦未终止。");
+        this.addDialog(TCRModEntities.SECOND_BOSS,7,"回溯密林位于 %s ，樱之原野位于 %s 。亚特兰蒂斯位于 %s 。这个世界的四大洲都不得安宁，不知世界尽头那边又有何动作。");
 
         this.addDialogChoice(TCRModEntities.SECOND_BOSS,0,"继续");
-        this.addDialogChoice(TCRModEntities.SECOND_BOSS,1,"不满现状？此话怎讲？");
-        this.addDialogChoice(TCRModEntities.SECOND_BOSS,2,"倘若现状真使人痛苦呢？");
-        this.addDialogChoice(TCRModEntities.SECOND_BOSS,3,"：【刁民们速速退下！（支持盟主）】");
-        this.addDialogChoice(TCRModEntities.SECOND_BOSS,4,"【盟主，你所谓的秩序已然导致了混乱！（支持义军）】");
+        this.addDialogChoice(TCRModEntities.SECOND_BOSS,1,"不满？秘籍？");
+        this.addDialogChoice(TCRModEntities.SECOND_BOSS,2,"我怎能凭你一面之词？");
+        this.addDialogChoice(TCRModEntities.SECOND_BOSS,3,"奸人速速退下！休想窃取秘籍！（支持盟主）");
+        this.addDialogChoice(TCRModEntities.SECOND_BOSS,4,"盟主，你所谓的秩序已然导致了混乱！（支持联军）");
         this.addDialogChoice(TCRModEntities.SECOND_BOSS,5,"这场战斗...真的值得吗？");
         this.addDialogChoice(TCRModEntities.SECOND_BOSS,6,"我将去往何方？");
 
