@@ -65,7 +65,7 @@ public class FuryTideCangLan extends Master {
         }
 
         //击败boss后的挑战模式
-        if(serverData.getBoolean("isBossDie") && !isSummonedByBoss){
+        if(serverData.getBoolean("isBossDie") && !isSummonedByBoss()){
             super.openDialogueScreen(serverData);
         }
 
@@ -77,28 +77,29 @@ public class FuryTideCangLan extends Master {
 
 
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
-        if(!serverData.getBoolean("isElderTalked") && !isSummonedByBoss){
-            //初次见面
-            builder.setAnswerRoot(new TreeNode(BUILDER.buildDialogueAnswer(entityType,1))
-                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,2),BUILDER.buildDialogueOption(entityType,0))
-                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,3),BUILDER.buildDialogueOption(entityType,0))
-                                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,4),BUILDER.buildDialogueOption(entityType,1))
-                                            .addLeaf(BUILDER.buildDialogueOption(entityType,2),(byte)1)
-                                            .addLeaf(BUILDER.buildDialogueOption(entityType,3),(byte)2)))
-                                            ));
-        } else if(isSummonedByBoss && serverData.getBoolean("fromBoss")){
+        if(serverData.getBoolean("fromBoss")){
             //打断boss说话
             builder.start(11)
                     .addFinalChoice(0, (byte) 3);
 
-        } else {
+        } else if(serverData.getBoolean("isBossDie") && isSummonedByBoss()){
             //击败boss
             builder.start(7)
                     .addChoice(4, 8)
                     .addChoice(5, 9)
                     .thenExecute((byte) 4)
                     .addChoice(BUILDER.buildDialogueOption(entityType,6),Component.literal("\n").append(Component.translatable(entityType + ".dialog10",position1,position3)))
-                    .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)6666);
+                    .addFinalChoice(BUILDER.buildDialogueOption(entityType,0), (byte)5);
+        } else {
+            //初次见面
+            builder.setAnswerRoot(new TreeNode(BUILDER.buildDialogueAnswer(entityType,1))
+                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,2),BUILDER.buildDialogueOption(entityType,0))
+                                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,3),BUILDER.buildDialogueOption(entityType,0))
+                                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,4),BUILDER.buildDialogueOption(entityType,1))
+                                                    .addLeaf(BUILDER.buildDialogueOption(entityType,2),(byte)1)
+                                                    .addLeaf(BUILDER.buildDialogueOption(entityType,3),(byte)2)))
+                    ));
+
         }
         Minecraft.getInstance().setScreen(builder.build());
     }
@@ -131,6 +132,11 @@ public class FuryTideCangLan extends Master {
             case 4:
                 //TODO 颁奖
                 return;
+            case 5:
+                //TODO 结束，给予凭证
+
+                setWaiting(false);
+                break;
         }
         this.setConversingPlayer(null);
 

@@ -2,8 +2,6 @@ package com.gaboj1.tcr.entity.custom.boss.second_boss;
 
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
-import com.gaboj1.tcr.entity.NpcDialogue;
-import com.gaboj1.tcr.entity.ShadowableEntity;
 import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
 import com.gaboj1.tcr.entity.custom.villager.biome2.*;
@@ -41,8 +39,8 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
@@ -50,7 +48,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     protected EntityType<?> entityType = TCRModEntities.SECOND_BOSS.get();
-    private final List<Integer> mastersId = new ArrayList<>();
+    private final Set<Integer> mastersId = new HashSet<>();
     public SecondBossEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_, BossEvent.BossBarColor.WHITE);
     }
@@ -121,11 +119,11 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
         } else if(senderData.getBoolean("isElderDie")){
             //击败联军后
             builder.start(4)
-                    .addChoice(6, 5)
+                    .addChoice(5, 5)
                     .addChoice(0, 6)
                     .thenExecute((byte) 4)
-                    .addChoice(7, 7)
-                    .addFinalChoice(8, (byte)3);
+                    .addChoice(6, 7)
+                    .addFinalChoice(0, (byte)3);
         } else {
             return;
         }
@@ -174,6 +172,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
                         master.getLookControl().setLookAt(this);
                         master.setWaiting(true);
                         master.setBossId(this.getId());
+                        master.setHealth(1);//TODO 测试用，记得删
 //                        level().explode(master, this.damageSources().explosion(this, this), null, master.position(), 3F, false, Level.ExplosionInteraction.NONE);
                     }
                 }
@@ -205,7 +204,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
                 break;
             case 3:
                 //结束boss对话
-                player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, 8), false);
+                player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, 7), false);
                 level().explode(this, this.damageSources().explosion(this, this), null, getOnPos().getCenter(), 3F, false, Level.ExplosionInteraction.NONE);
                 this.discard();
                 break;
@@ -217,29 +216,40 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
     }
 
     @Override
-    protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
-        if (hand == InteractionHand.MAIN_HAND) {
-            if (!this.level().isClientSide()) {
-                this.lookAt(player, 180.0F, 180.0F);
-                if (player instanceof ServerPlayer serverPlayer) {
-                    if (this.getConversingPlayer() == null) {
-                        sendDialoguePacket(serverPlayer);
-                        this.setConversingPlayer(serverPlayer);
-                    }
-                }
-                return InteractionResult.SUCCESS;
-            }
-        }
-        return InteractionResult.PASS;
-    }
-
-    @Override
     public void tick() {
         super.tick();
+
+        //在对话的时候要等
         if(conversingPlayer != null){
             setTarget(null);
             this.getNavigation().stop();
             this.getLookControl().setLookAt(conversingPlayer);
+        }
+
+        //苍澜插嘴的时候也要等
+        for(int i : mastersId){
+            if(level().getEntity(i) instanceof Master master && master.isWaiting()){
+                this.getNavigation().stop();
+                this.getLookControl().setLookAt(master);
+            }
+        }
+
+    }
+
+    /**
+     * 掌门死了后要移除，并且判断是否杀死了全部宗师
+     * 注意要先判断周围有没有玩家再发包，以免找不到玩家而存档又改掉了
+     */
+    public void removeMaster(Master master){
+        mastersId.remove(master.getId());
+        if(mastersId.isEmpty()){
+            if(getTarget() instanceof ServerPlayer serverPlayer){
+                SaveUtil.biome2.isElderDie = true;
+                sendDialoguePacket(serverPlayer);
+            } else if(level().getNearestPlayer(this, 48) instanceof ServerPlayer serverPlayer){
+                SaveUtil.biome2.isElderDie = true;
+                sendDialoguePacket(serverPlayer);
+            }
         }
     }
 
@@ -272,6 +282,8 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
         } else {
             cangLan.setPos(this.position());
         }
+        cangLan.setSummonedByBoss(true);
+        cangLan.setWaiting(true);
         level().addFreshEntity(cangLan);
         cangLan.sendDialoguePacket(((ServerPlayer) level().getNearestPlayer(this, 48)));
         super.die(source);

@@ -501,23 +501,6 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     }
 
     @Override
-    protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
-        if (hand == InteractionHand.MAIN_HAND) {
-            if (!this.level().isClientSide()) {
-                    this.lookAt(player, 180.0F, 180.0F);
-                    if (player instanceof ServerPlayer serverPlayer) {
-                        if (this.getConversingPlayer() == null) {
-                            sendDialoguePacket(serverPlayer);
-                            this.setConversingPlayer(serverPlayer);
-                    }
-                }
-                return InteractionResult.SUCCESS;
-            }
-        }
-        return InteractionResult.PASS;
-    }
-
-    @Override
     public void chat(Component component) {
         if(conversingPlayer != null) {
             conversingPlayer.sendSystemMessage(BUILDER.buildDialogue(this, component));

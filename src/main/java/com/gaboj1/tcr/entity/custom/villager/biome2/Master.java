@@ -35,9 +35,10 @@ import software.bernie.geckolib.core.object.PlayState;
  */
 public abstract class Master extends TCRVillager implements NpcDialogue {
     protected Player conversingPlayer;
-    boolean isSummonedByBoss, waiting;
+    boolean waiting;
     public static final EntityDataAccessor<Integer> BOSS_ID = SynchedEntityData.defineId(Master.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Boolean> IS_FIGHTING = SynchedEntityData.defineId(Master.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Boolean> IS_BOSS_SUMMONED = SynchedEntityData.defineId(Master.class, EntityDataSerializers.BOOLEAN);
     public Master(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
         super(pEntityType, pLevel, 142857);
     }
@@ -47,6 +48,7 @@ public abstract class Master extends TCRVillager implements NpcDialogue {
         super.defineSynchedData();
         getEntityData().define(BOSS_ID, -1);
         getEntityData().define(IS_FIGHTING, false);
+        getEntityData().define(IS_BOSS_SUMMONED, false);
     }
 
     @Override
@@ -63,7 +65,11 @@ public abstract class Master extends TCRVillager implements NpcDialogue {
 
     public void setBossId(int id){
         getEntityData().set(BOSS_ID, id);
-        isSummonedByBoss = true;
+        getEntityData().set(IS_BOSS_SUMMONED, true);
+    }
+
+    public void setSummonedByBoss(boolean summonedByBoss) {
+        getEntityData().set(IS_BOSS_SUMMONED, summonedByBoss);
     }
 
     /**
@@ -75,6 +81,10 @@ public abstract class Master extends TCRVillager implements NpcDialogue {
 
     public boolean isWaiting() {
         return waiting;
+    }
+
+    public boolean isSummonedByBoss() {
+        return getEntityData().get(IS_BOSS_SUMMONED);
     }
 
     public void startFighting(LivingEntity entity){
@@ -92,7 +102,7 @@ public abstract class Master extends TCRVillager implements NpcDialogue {
     public void tick() {
         super.tick();
         //如果没有绑定的boss就紫砂
-        if(!level().isClientSide && isSummonedByBoss){
+        if(!level().isClientSide && isSummonedByBoss()){
             int bossId = getEntityData().get(BOSS_ID);
             if(bossId != -1 && !(level().getEntity(bossId) instanceof SecondBossEntity)){
                 this.setHealth(0);
@@ -124,10 +134,17 @@ public abstract class Master extends TCRVillager implements NpcDialogue {
         return false;
     }
 
+    /**
+     * 死后从boss移除
+     * 或者进入对话给予挑战奖励
+     */
     @Override
     public void die(@NotNull DamageSource source) {
-        if(isSummonedByBoss){
+        if(isSummonedByBoss()){
             super.die(source);
+            if(level().getEntity(getEntityData().get(BOSS_ID)) instanceof SecondBossEntity secondBoss){
+                secondBoss.removeMaster(this);
+            }
         } else if(source.getEntity() instanceof ServerPlayer player){
             sendDialoguePacket(player);
         }

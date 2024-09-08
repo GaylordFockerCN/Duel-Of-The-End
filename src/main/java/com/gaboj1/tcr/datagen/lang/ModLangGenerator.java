@@ -414,10 +414,11 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.SECOND_BOSS,1,"我受世界尽头之任，维护的不仅是江湖的稳定，更是群系的根基。武林秘籍倘若公之于众，若落入奸人手里，后果不堪设想！我需要你的剑，来助我守住此地。");
         this.addDialog(TCRModEntities.SECOND_BOSS,2,"（大笑）哈哈哈哈，后生可畏，后生可畏！群系之基如今可取决于你的决定了。若你愿助我度过此难，我将给予你本应得到的力量。");
         this.addDialog(TCRModEntities.SECOND_BOSS,3,"（冷笑）苍澜，你这是自寻死路！云逸，翠华，焰心，震宇，断山，你们也愿信他的鬼话？");
-        this.addDialog(TCRModEntities.SECOND_BOSS,4,"：（审视着战场）你展现了非凡的勇气和力量，我的忠实盟友。奸人已被驱散，秩序得以维护。");
+        this.addDialog(TCRModEntities.SECOND_BOSS,4,"（审视着战场）你展现了非凡的勇气和力量，我的忠实盟友。奸人已被驱散，秩序得以维护。");
         this.addDialog(TCRModEntities.SECOND_BOSS,5,"（坚定地）总得有人做出牺牲，可惜连累了其他几位掌门。好了，如今请收下你应得的那份力量吧。");
         this.addDialog(TCRModEntities.SECOND_BOSS,6,"掌门战败，他们的弟子绝不会就此罢休，我将修养片刻，维护群系稳定的大业亦有一段距离。你的旅途也亦未终止。");
         this.addDialog(TCRModEntities.SECOND_BOSS,7,"回溯密林位于 %s ，樱之原野位于 %s 。亚特兰蒂斯位于 %s 。这个世界的四大洲都不得安宁，不知世界尽头那边又有何动作。");
+        this.addDialog(TCRModEntities.SECOND_BOSS,8,"江湖路远，有缘再见！");
 
         this.addDialogChoice(TCRModEntities.SECOND_BOSS,0,"继续");
         this.addDialogChoice(TCRModEntities.SECOND_BOSS,1,"不满？秘籍？");

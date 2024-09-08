@@ -15,7 +15,7 @@ public class ShootFireBallTask extends TCRVillagerRetaliateTask {
 
     @Override
     protected boolean checkRange(TCRVillager tcrVillager, LivingEntity target) {
-        return tcrVillager.distanceTo(target) <= 5;
+        return tcrVillager.distanceTo(target) <= 36;
     }
 
     /**

@@ -19,6 +19,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -136,6 +138,25 @@ public abstract class TCRBoss extends PathfinderMob implements NpcDialogue, Shad
         }
 
     }
+
+    @Override
+    protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
+        if (hand == InteractionHand.MAIN_HAND) {
+            if (!this.level().isClientSide()) {
+                this.lookAt(player, 180.0F, 180.0F);
+                if (player instanceof ServerPlayer serverPlayer) {
+                    if (this.getConversingPlayer() == null) {
+                        sendDialoguePacket(serverPlayer);
+                        this.setConversingPlayer(serverPlayer);
+                    }
+                }
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return InteractionResult.PASS;
+    }
+
+    protected abstract void sendDialoguePacket(ServerPlayer serverPlayer);
 
     /**
      * 返回一个范围
