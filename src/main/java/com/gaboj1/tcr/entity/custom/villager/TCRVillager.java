@@ -51,7 +51,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Random;
 
-public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
+public abstract class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
@@ -81,7 +81,7 @@ public class TCRVillager extends Villager implements GeoEntity, ManySkinEntity {
             if(random.nextBoolean()){
                 skinID = random.nextInt(getMaleTypeCnt())+1;
             }else {
-                skinID = -random.nextInt(getFemaleTypeCnt())-1;
+                skinID = -(random.nextInt(getFemaleTypeCnt())+1);
             }
         }
         this.getEntityData().define(DATA_SKIN_ID, skinID);

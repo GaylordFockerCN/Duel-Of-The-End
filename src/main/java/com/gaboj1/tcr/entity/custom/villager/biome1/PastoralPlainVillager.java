@@ -28,7 +28,7 @@ public class PastoralPlainVillager extends TCRVillager {
     }
     @Override
     public int getFemaleTypeCnt() {
-        return 0;
+        return 2;
     }
 
     @Override
