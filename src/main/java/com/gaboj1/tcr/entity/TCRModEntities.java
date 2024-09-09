@@ -141,7 +141,12 @@ public class TCRModEntities {
 	public static final RegistryObject<EntityType<PastoralPlainVillagerElder>> PASTORAL_PLAIN_VILLAGER_ELDER = register("pastoral_plain_villager_elder",
 			EntityType.Builder.of(PastoralPlainVillagerElder::new, MobCategory.CREATURE));
 
-
+	public static final RegistryObject<EntityType<Villager2>> VILLAGER2 = register("villager2",
+			EntityType.Builder.of(Villager2::new, MobCategory.CREATURE));
+	public static final RegistryObject<EntityType<TalkableVillager2>> VILLAGER2_TALKABLE = register("villager2_talkable",
+			EntityType.Builder.of(TalkableVillager2::new, MobCategory.CREATURE));
+	public static final RegistryObject<EntityType<StationaryVillager2>> VILLAGER2_STATIONARY = register("villager2_stationary",
+			EntityType.Builder.of(StationaryVillager2::new, MobCategory.CREATURE));
 	public static final RegistryObject<EntityType<FuryTideCangLan>> CANG_LAN = register("cang_lan",
 			EntityType.Builder.of(FuryTideCangLan::new, MobCategory.CREATURE));
 	public static final RegistryObject<EntityType<ThunderclapZhenYu>> ZHEN_YU = register("zhen_yu",
@@ -190,6 +195,9 @@ public class TCRModEntities {
 		event.put(TREE_CLAW.get(), TreeClawEntity.setAttributes());
 		event.put(SPRITE.get(),SpriteEntity.setAttributes());
 
+		event.put(VILLAGER2.get(), TCRVillager.setAttributes());
+		event.put(VILLAGER2_TALKABLE.get(), TCRVillager.setAttributes());
+		event.put(VILLAGER2_STATIONARY.get(), TCRVillager.setAttributes());
 		event.put(CANG_LAN.get(),FuryTideCangLan.setAttributes());
 		event.put(DUAN_SHAN.get(),IronfistDuanShan.setAttributes());
 		event.put(ZHEN_YU.get(),ThunderclapZhenYu.setAttributes());
@@ -218,6 +226,12 @@ public class TCRModEntities {
 				PastoralPlainVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(PASTORAL_PLAIN_VILLAGER_ELDER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				PastoralPlainVillagerElder::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(VILLAGER2.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				PastoralPlainTalkableVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(VILLAGER2_STATIONARY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				PastoralPlainTalkableVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(VILLAGER2_TALKABLE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				PastoralPlainVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 
 		event.register(CANG_LAN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				FuryTideCangLan::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);

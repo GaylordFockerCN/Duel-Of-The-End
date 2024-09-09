@@ -208,6 +208,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addEntityAndEgg(TCRModEntities.SWORD_CONTROLLER,"御剑者");
         this.addEntityAndEgg(TCRModEntities.TREE_GUARDIAN,"森林守护者");
         this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_VILLAGER,"牧歌原野-村民");
+        this.addEntityAndEgg(TCRModEntities.VILLAGER2,"青云之巅-村民");
         this.addEntityAndEgg(TCRModEntities.CANG_LAN,"怒海宗：苍澜");
         this.addEntityAndEgg(TCRModEntities.ZHEN_YU,"震雷宗：震宇");
         this.addEntityAndEgg(TCRModEntities.DUAN_SHAN,"破岩门：断山");
@@ -244,6 +245,13 @@ public class ModLangGenerator extends ModLangProvider {
         this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,2,"牧歌原野-学者");
         this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,3,"牧歌原野-牧羊人");
         this.addEntityType(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,4,"牧歌原野-猎人");
+
+        this.addEntityAndEgg(TCRModEntities.VILLAGER2_TALKABLE,"青云之巅-村民");
+        this.addEntityType(TCRModEntities.VILLAGER2_TALKABLE,-1,"青云之巅-厨娘");
+        this.addEntityType(TCRModEntities.VILLAGER2_TALKABLE,-2,"青云之巅-商人");
+        this.addEntityType(TCRModEntities.VILLAGER2_TALKABLE,0,"青云之巅-守卫");
+        this.addEntityType(TCRModEntities.VILLAGER2_TALKABLE,1,"青云之巅-药师");
+        this.addEntityType(TCRModEntities.VILLAGER2_TALKABLE,2,"青云之巅-铁匠");
 
         //商人
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-3,"这里的人们都是能幸福地许愿日常用品。至于我为什么要当商人？只是享受这种以物易物的感觉");

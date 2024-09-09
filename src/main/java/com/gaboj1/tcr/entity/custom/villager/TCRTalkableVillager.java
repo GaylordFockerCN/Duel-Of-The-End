@@ -36,7 +36,7 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
 
     @Override
     public boolean save(CompoundTag tag) {
-        tag.putBoolean("alreadyAddTrade",alreadyAddTrade);
+        tag.putBoolean("alreadyAddTrade", alreadyAddTrade);
         return super.save(tag);
     }
 

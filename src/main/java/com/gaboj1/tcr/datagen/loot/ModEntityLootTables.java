@@ -18,7 +18,6 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.stream.Stream;
 
-@SuppressWarnings("deprecation")
 public class ModEntityLootTables extends EntityLootSubProvider {
 
     protected ModEntityLootTables() {
@@ -44,6 +43,9 @@ public class ModEntityLootTables extends EntityLootSubProvider {
         add(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), emptyLootTable());
         add(TCRModEntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), emptyLootTable());
 
+        add(TCRModEntities.VILLAGER2.get(), emptyLootTable());
+        add(TCRModEntities.VILLAGER2_STATIONARY.get(), emptyLootTable());
+        add(TCRModEntities.VILLAGER2_TALKABLE.get(), emptyLootTable());
         add(TCRModEntities.CANG_LAN.get(), emptyLootTable());
         add(TCRModEntities.ZHEN_YU.get(), emptyLootTable());
         add(TCRModEntities.DUAN_SHAN.get(), emptyLootTable());

@@ -1,10 +1,10 @@
-package com.gaboj1.tcr.entity.custom.villager.biome1;
+package com.gaboj1.tcr.entity.custom.villager.biome2;
 
-import com.gaboj1.tcr.datagen.TCRAdvancementData;
-import com.gaboj1.tcr.entity.custom.villager.TCRTalkableVillager;
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
+import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.custom.villager.TCRTalkableVillager;
 import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.ItemUtil;
@@ -28,21 +28,21 @@ import java.util.Random;
 
 import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
-public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
+public class TalkableVillager2 extends TCRTalkableVillager {
 
-    private final EntityType<?> entityType = TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get();
+    private final EntityType<?> entityType = TCRModEntities.VILLAGER2_TALKABLE.get();
 
-    public PastoralPlainTalkableVillager(EntityType<? extends PastoralPlainTalkableVillager> entityType, Level level) {
+    public TalkableVillager2(EntityType<? extends TalkableVillager2> entityType, Level level) {
         super(entityType, level,1);
     }
 
     @Override
     public int getMaleTypeCnt() {
-        return 5;
+        return 3;
     }
     @Override
     public int getFemaleTypeCnt() {
-        return 4;
+        return 2;
     }
 
     /**
@@ -155,7 +155,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
 
         }
 
-        if(SaveUtil.biome1.choice == 1){
+        if(SaveUtil.biome2.choice == 1){
             if(Minecraft.getInstance().player != null){
                 talk(Minecraft.getInstance().player, true);
             }
@@ -415,11 +415,11 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
      */
     @Override
     public @NotNull Component getDisplayName() {
-        return Component.translatable(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get().getDescriptionId() + getSkinID());
+        return Component.translatable(TCRModEntities.VILLAGER2_TALKABLE.get().getDescriptionId() + getSkinID());
     }
 
     @Override
     public String getResourceName() {
-        return "talkable/pastoral_plain_villager"+getSkinID();
+        return "talkable/villager2"+getSkinID();
     }
 }
