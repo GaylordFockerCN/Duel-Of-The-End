@@ -47,6 +47,10 @@ public class ModEntityLootTables extends EntityLootSubProvider {
         add(TCRModEntities.VILLAGER2_STATIONARY.get(), emptyLootTable());
         add(TCRModEntities.VILLAGER2_TALKABLE.get(), emptyLootTable());
         add(TCRModEntities.MIAO_YIN.get(), emptyLootTable());
+        add(TCRModEntities.SHANG_REN.get(), emptyLootTable());
+        add(TCRModEntities.WANDERER.get(), emptyLootTable());
+        add(TCRModEntities.RECEPTIONIST.get(), emptyLootTable());
+        add(TCRModEntities.TRIAL_MASTER.get(), emptyLootTable());
         add(TCRModEntities.CANG_LAN.get(), emptyLootTable());
         add(TCRModEntities.ZHEN_YU.get(), emptyLootTable());
         add(TCRModEntities.DUAN_SHAN.get(), emptyLootTable());

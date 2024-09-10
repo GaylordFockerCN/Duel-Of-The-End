@@ -8,6 +8,7 @@ import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -32,6 +33,11 @@ public abstract class YueShiLineNpc extends TCRTalkableVillager {
             }
         }
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float v) {
+        return false;
     }
 
 }

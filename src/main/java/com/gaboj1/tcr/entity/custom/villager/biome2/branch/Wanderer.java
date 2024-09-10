@@ -1,14 +1,16 @@
 package com.gaboj1.tcr.entity.custom.villager.biome2.branch;
 
+import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.entity.TCRModEntities;
-import com.gaboj1.tcr.util.SaveUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+
+import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
 public class Wanderer extends YueShiLineNpc {
     public Wanderer(EntityType<? extends Wanderer> pEntityType, Level pLevel) {
@@ -32,18 +34,19 @@ public class Wanderer extends YueShiLineNpc {
 
     @Override
     public void openDialogueScreen(CompoundTag senderData) {
-
-    }
-
-    @Override
-    public boolean hurt(DamageSource source, float v) {
-        return false;
+        LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
+        builder.start(0)
+                        .addChoice(0, 1)
+                                .addFinalChoice(1, (byte) 1);
+        Minecraft.getInstance().setScreen(builder.build());
     }
 
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
-
+        player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, 2), true);
         this.discard();
+        //TODO 获得琵琶
+
         setConversingPlayer(null);
     }
 

@@ -17,7 +17,7 @@ import net.minecraft.world.item.*;
 public class BookManager {
 
     public static Book BIOME1_ELDER_DIARY_3 = new Book("biome1_elder_diary3", 2);
-
+    public static Book BU_GAO = new Book("bu_gao", 1);
     public record Book(String name, int pageCount){
         public ItemStack get(){
             return getBook(name,pageCount);

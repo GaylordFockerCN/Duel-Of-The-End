@@ -210,6 +210,10 @@ public class ModLangGenerator extends ModLangProvider {
         this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_VILLAGER,"牧歌原野-村民");
         this.addEntityAndEgg(TCRModEntities.VILLAGER2,"青云之巅-村民");
         this.addEntityAndEgg(TCRModEntities.MIAO_YIN,"妙音");
+        this.addEntityAndEgg(TCRModEntities.SHANG_REN,"商人");
+        this.addEntityAndEgg(TCRModEntities.WANDERER,"流浪汉");
+        this.addEntityAndEgg(TCRModEntities.RECEPTIONIST,"*府接待员");
+        this.addEntityAndEgg(TCRModEntities.TRIAL_MASTER,"*");
         this.addEntityAndEgg(TCRModEntities.CANG_LAN,"怒海宗：苍澜");
         this.addEntityAndEgg(TCRModEntities.ZHEN_YU,"震雷宗：震宇");
         this.addEntityAndEgg(TCRModEntities.DUAN_SHAN,"破岩门：断山");
@@ -473,6 +477,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.MIAO_YIN,14,"阁下若最终得寻此物，治好妾身的眼疾，妾身定会想尽办法报答此恩！");
         this.addDialog(TCRModEntities.MIAO_YIN,15,"(去寻找对珍宝很了解的人吧，或许经常做买卖的人会知道？)");//任务提示
         //乐师支线-与商人对话获取线索
+        this.addDialogChoice(TCRModEntities.SHANG_REN,-1,"交易");
         this.addDialog(TCRModEntities.SHANG_REN,0,"公平买卖，童叟无欺，奇珍异宝，应有尽有~");
         this.addDialogChoice(TCRModEntities.SHANG_REN,0,"你这里什么宝贝都有吗");
         this.addDialog(TCRModEntities.SHANG_REN,1,"当然！阁下请看！");//弹出交易表，如果还没和乐师对话过的话
@@ -495,8 +500,10 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.SHANG_REN,10,"莫要烦躁，我并不知道万明珠的确切归属，然而我却知道在哪里可以得到它的情报~");
         this.addDialogChoice(TCRModEntities.SHANG_REN,9,"别废话了，快点告诉我");
         this.addDialogChoice(TCRModEntities.SHANG_REN,10,"莫要欺人太甚！（杀了奸商）");
-        this.addBookAndAuthorAndContents("bu_gao","谁人的日记","布告","欲一睹万明珠者，可至 *** 。通过所设试炼，方可得万明珠。");
-        this.addDialog(TCRModEntities.SHANG_REN,11,"此布告张贴于各村良久，早已有无数能人前往，可据传竟无一人能通过此试炼。适才我见你不知有此事，故与你相戏。切莫责怪，此乃赔罪，此试炼之地正位于 %s 处，你可前去。");
+        this.addBookAndAuthorAndContents("bu_gao","不详","布告","欲一睹万明珠者，可至 *** 。通过所设试炼，方可得万明珠。");
+        this.addDialog(TCRModEntities.SHANG_REN,11,"此布告张贴于各地良久，早已有无数能人前往，可据传竟无一人能通过此试炼。适才我见你不知有此事，故与你相戏。切莫责怪，此乃赔罪，此试炼之地正位于 %s 处，你可前去。");
+        this.addDialog(TCRModEntities.SHANG_REN,12,"杀人啦杀人啦！");
+        this.addDialog(TCRModEntities.SHANG_REN,13,"（获得情报了，先回去找一下那位盲人姑娘吧。）");
         //乐师支线-与乐师的二次对话
         this.addDialog(TCRModEntities.MIAO_YIN,16,"阁下此番归来，想是已经寻得了些许线索了？");
         this.addDialogChoice(TCRModEntities.MIAO_YIN,17,"（告知布告之事）");
@@ -509,9 +516,10 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.RECEPTIONIST,0,"远行之人，可为万明珠而来？");
         this.addDialogChoice(TCRModEntities.RECEPTIONIST,0,"正是");
         this.addDialog(TCRModEntities.RECEPTIONIST,1,"既如此，请前往试炼。此试炼并无刁难之处，但凭个人本领即可。然自设立以来尚无一人过关，望君多加小心。若因此丧命，吾等概不负责。");
+        this.addDialogChoice(TCRModEntities.RECEPTIONIST,1,"结束对话");
         this.addDialog(TCRModEntities.RECEPTIONIST,2,"君之诚心灼灼，吾深感敬佩！");
         this.addDialog(TCRModEntities.RECEPTIONIST,3,"令人敬佩，令人敬佩。吾等设立此试炼已久，通过者唯君尔。吾等即刻禀告主人，请君随吾等前来！");
-        this.addDialogChoice(TCRModEntities.RECEPTIONIST,1,"跟随");
+
         //乐师支线-与试炼主人初次的对话
         this.addDialog(TCRModEntities.TRIAL_MASTER,0,"壮哉壮哉，何等勇士，竟能通过吾之试炼！");
         this.addDialogChoice(TCRModEntities.TRIAL_MASTER,0,"您过奖了，我只是想要借用一下万明珠");
@@ -539,27 +547,27 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.TRIAL_MASTER,12,"都说了我们不是那种关系…她就在xx村落处，穿着青绿色的服饰，你若有心，就找人把她请来吧。我先回去与她只会一声。");
         this.addDialog(TCRModEntities.TRIAL_MASTER,11,"你在此处耽搁时间也许久了，加上路途劳顿，以吾之见，今日你就先在此住下，隔日再回吧");
         this.addDialogChoice(TCRModEntities.TRIAL_MASTER,13,"好吧");
-        this.addDialog(TCRModEntities.TRIAL_MASTER,11,"阁下，昨夜在吾府休息可好？");
-        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,13,"还行");
-        this.addDialog(TCRModEntities.TRIAL_MASTER,11,"多谢夸奖，请您务必要及时返回，总管一职可得仰仗您啊");
-        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,13,"放心，我会顺便回来归还万明珠的。");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,12,"阁下，昨夜在吾府休息可好？");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,14,"还行");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,13,"多谢夸奖，请您务必要及时返回，总管一职可得仰仗您啊");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,15,"放心，我会顺便回来归还万明珠的。");
         //乐师支线-与流浪者初次的对话
-        this.addDialog(TCRModEntities.WANDERER, 0,"你找乐师么？她已经不在这里了，昨天夜里她被人带走了。");
+        this.addDialog(TCRModEntities.WANDERER, 0,"你在找那位盲人姑娘么？她已经不在这里了，昨天夜里她被人带走了。");
         this.addDialogChoice(TCRModEntities.WANDERER,0,"发生什么事了？");
-        this.addDialog(TCRModEntities.WANDERER, 1,"我不知道，当时我就在附近，那群人很凶暴，乐师在那里尖叫反抗，但好像无济于事。可，可跟我没关系，我只是想来这里看看她有没有留下什么值钱的东西，如果你认识她的话，她，她的东西都还给你，可真的不关我的事啊。");
+        this.addDialog(TCRModEntities.WANDERER, 1,"我不知道，当时我就在附近，那群人很凶暴，那盲人姑娘在那里尖叫反抗，但好像无济于事。可，可跟我没关系，我只是想来这里看看她有没有留下什么值钱的东西，如果你认识她的话，她，她的东西都还给你，可真的不关我的事啊！");
         this.addDialogChoice(TCRModEntities.WANDERER,1,"这...");
-        this.addDialog(TCRModEntities.WANDERER, 2,"（流浪者逃走了）");//获得琵琶
+        this.addDialog(TCRModEntities.WANDERER, 2,"（流浪者逃走了...回***问问什么情况吧。）");//获得琵琶
         //乐师支线-与接待员二次对话
         this.addDialog(TCRModEntities.RECEPTIONIST,4,"远行之人，可为…若君为寻主人而来，恕吾辈不敢违命，主人不愿见你，请回吧。");
         this.addDialogChoice(TCRModEntities.RECEPTIONIST,2,"这是怎么回事？你们把乐师怎么了？");
         this.addDialog(TCRModEntities.RECEPTIONIST,5,"吾辈不知乐师是何物，您请回吧");
         this.addDialogChoice(TCRModEntities.RECEPTIONIST,3,"万明珠还在我手上！");
-        this.addDialog(TCRModEntities.RECEPTIONIST,5,"主人说了，你手上的万明珠非真品，但却也是上好的珠宝，就当作赠与君的离别礼了，您请回吧。");
+        this.addDialog(TCRModEntities.RECEPTIONIST,6,"主人说了，你手上的万明珠非真品，但却也是上好的珠宝，就当作赠与君的离别礼了，您请回吧。");
 
 
         this.addBookAndContents("book1","Test","Test1","Test1.1");
         this.addBookAndContents("book2","Test2","Test2","Test2.2");
-        this.addBookAndAuthorAndContents("biome1_elder_diary3","海拉","海拉长老的日记3","我收取的生命之力居然让孩子们愿望不再百分百实现。而且没有了使者，这个地方的生命之力就会消失？可怜的孩子啊……不，最可怜的不是我吗？","为什么这样的重任只能我独自承担啊？可我为何再也不敢挺身而出而是一直等待他人的助力？这样的我该怎么回应我长眠的伙伴们");
+        this.addBookAndAuthorAndContents("biome1_elder_diary3","海拉","海拉长老的日记","没有了使者，这个地方的生命之力就会消失？", "为什么这样的重任只能我独自承担啊？可我为何再也不敢挺身而出而是一直等待他人的助力？这样的我该怎么回应我长眠的伙伴们");
 
         this.addAdvancement(TheCasketOfReveriesMod.MOD_ID,"远梦之棺","> <");
         this.addAdvancement("enter_realm_of_the_dream","梦之领域","进入梦之领域");

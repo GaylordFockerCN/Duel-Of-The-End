@@ -1,7 +1,11 @@
 package com.gaboj1.tcr.entity.custom.villager.biome2.branch;
 
+import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.SaveUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
@@ -9,6 +13,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+
+import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
 public class Receptionist extends YueShiLineNpc {
     public Receptionist(EntityType<? extends Receptionist> pEntityType, Level pLevel) {
@@ -32,20 +38,38 @@ public class Receptionist extends YueShiLineNpc {
 
     @Override
     public void openDialogueScreen(CompoundTag senderData) {
-
-    }
-
-    @Override
-    public boolean hurt(DamageSource source, float v) {
-        return false;
+        LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
+        if(!senderData.getBoolean("talkToMaster")){
+            //正常对话
+            builder.start(0)
+                    .addChoice(0, 1)
+                    .addFinalChoice(1, (byte) -1);
+        } else {
+            //乐师被抓后的对话
+            builder.start(4)
+                    .addChoice(2, 5)
+                    .addFinalChoice(3, (byte) 1);
+        }
+        Minecraft.getInstance().setScreen(builder.build());
     }
 
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
-        switch (interactionID){
-
+        if (interactionID == 1) {
+            chat(BUILDER.buildDialogueAnswer(entityType, 6));
         }
         setConversingPlayer(null);
+    }
+
+    /**
+     * 如果坏事暴露则可以打
+     */
+    @Override
+    public boolean hurt(DamageSource source, float v) {
+        if(SaveUtil.biome2.talkToMaster){
+            return super.hurt(source, v);
+        }
+        return false;
     }
 
 }
