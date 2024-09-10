@@ -521,6 +521,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.RECEPTIONIST,3,"令人敬佩，令人敬佩。吾等设立此试炼已久，通过者唯君尔。吾等即刻禀告主人，请君随吾等前来！");
 
         //乐师支线-与试炼主人初次的对话
+        this.addDialog(TCRModEntities.TRIAL_MASTER,-1,"（盲人女孩面前已经没有东西可以偷了）");
         this.addDialog(TCRModEntities.TRIAL_MASTER,0,"壮哉壮哉，何等勇士，竟能通过吾之试炼！");
         this.addDialogChoice(TCRModEntities.TRIAL_MASTER,0,"您过奖了，我只是想要借用一下万明珠");
         this.addDialog(TCRModEntities.TRIAL_MASTER,1,"万明珠不过小事一桩。实不相瞒，吾设立此等试炼，意在选出真正强大之人。请阁下在吾之府邸担任总管，护吾宅邸之周全，吾愿准备丰厚赠礼，望您勿要推辞。");

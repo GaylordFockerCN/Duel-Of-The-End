@@ -52,6 +52,7 @@ public class DataManager {
     public static BoolData boss1LootGot =  new BoolData("boss1_loot_got",false,9);
     public static BoolData isFirstEnter =  new BoolData("isFirstEnter",false,10);
     public static BoolData isMiaoYinGifted =  new BoolData("isMiaoYinGifted",false,11);
+    public static BoolData stolenMiaoYin =  new BoolData("stolenMiaoYin",false,12);
 
     //给予初始值
     public static void init(Player player){

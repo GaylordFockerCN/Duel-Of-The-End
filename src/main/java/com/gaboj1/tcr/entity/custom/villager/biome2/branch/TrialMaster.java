@@ -49,6 +49,7 @@ public class TrialMaster extends YueShiLineNpc {
                                                             .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,5),BUILDER.buildDialogueOption(entityType,4))
                                                                     .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,6),BUILDER.buildDialogueOption(entityType,5))
                                                                             .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,7),BUILDER.buildDialogueOption(entityType,6))
+                                                                                    .execute((byte) -1)
                                                                                     .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,8),BUILDER.buildDialogueOption(entityType,7))
                                                                                             .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,9),BUILDER.buildDialogueOption(entityType,10))
                                                                                                     .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,10),BUILDER.buildDialogueOption(entityType,11))
@@ -86,6 +87,10 @@ public class TrialMaster extends YueShiLineNpc {
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID){
+            case -1:
+                //给予夜明珠 TODO
+                
+                return;
             case 1:
                 //选择告诉试炼主盲女的位置
                 SaveUtil.biome2.talkToMaster = true;

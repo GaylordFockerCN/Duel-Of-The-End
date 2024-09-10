@@ -21,18 +21,15 @@ public abstract class YueShiLineNpc extends TCRTalkableVillager {
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (hand == InteractionHand.MAIN_HAND) {
-            if (!this.level().isClientSide()) {
-                this.lookAt(player, 180.0F, 180.0F);
-                if (player instanceof ServerPlayer serverPlayer) {
-                    if (this.getConversingPlayer() == null) {
-                        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), SaveUtil.biome2.toNbt()), serverPlayer);
-                        this.setConversingPlayer(serverPlayer);
-                    }
+            this.lookAt(player, 180.0F, 180.0F);
+            if (player instanceof ServerPlayer serverPlayer) {
+                if (this.getConversingPlayer() == null) {
+                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), SaveUtil.biome2.toNbt()), serverPlayer);
+                    this.setConversingPlayer(serverPlayer);
                 }
-                return InteractionResult.SUCCESS;
             }
         }
-        return InteractionResult.PASS;
+        return InteractionResult.sidedSuccess(level().isClientSide);
     }
 
     @Override
