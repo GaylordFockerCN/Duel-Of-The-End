@@ -175,6 +175,11 @@ public class TheCasketOfReveriesMod {
             EntityRenderers.register(TCRModEntities.VILLAGER2.get(), TCRVillagerRenderer::new);
             EntityRenderers.register(TCRModEntities.VILLAGER2_TALKABLE.get(), TCRVillagerRenderer::new);
             EntityRenderers.register(TCRModEntities.VILLAGER2_STATIONARY.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCRModEntities.MIAO_YIN.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCRModEntities.SHANG_REN.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCRModEntities.RECEPTIONIST.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCRModEntities.WANDERER.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCRModEntities.TRIAL_MASTER.get(), TCRVillagerRenderer::new);
             EntityRenderers.register(TCRModEntities.CANG_LAN.get(), TCRVillagerRenderer::new);
             EntityRenderers.register(TCRModEntities.ZHEN_YU.get(), TCRVillagerRenderer::new);
             EntityRenderers.register(TCRModEntities.DUAN_SHAN.get(), TCRVillagerRenderer::new);

@@ -29,6 +29,7 @@ import com.gaboj1.tcr.entity.custom.*;
 
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome2.*;
+import com.gaboj1.tcr.entity.custom.villager.biome2.branch.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -147,6 +148,16 @@ public class TCRModEntities {
 			EntityType.Builder.of(TalkableVillager2::new, MobCategory.CREATURE));
 	public static final RegistryObject<EntityType<StationaryVillager2>> VILLAGER2_STATIONARY = register("villager2_stationary",
 			EntityType.Builder.of(StationaryVillager2::new, MobCategory.CREATURE));
+	public static final RegistryObject<EntityType<MiaoYin>> MIAO_YIN = register("miao_yin",
+			EntityType.Builder.of(MiaoYin::new, MobCategory.CREATURE));
+	public static final RegistryObject<EntityType<ShangRen>> SHANG_REN = register("shang_ren",
+			EntityType.Builder.of(ShangRen::new, MobCategory.CREATURE));
+	public static final RegistryObject<EntityType<Receptionist>> RECEPTIONIST = register("receptionist",
+			EntityType.Builder.of(Receptionist::new, MobCategory.CREATURE));
+	public static final RegistryObject<EntityType<Wanderer>> WANDERER = register("wanderer",
+			EntityType.Builder.of(Wanderer::new, MobCategory.CREATURE));
+	public static final RegistryObject<EntityType<TrialMaster>> TRIAL_MASTER = register("trial_master",
+			EntityType.Builder.of(TrialMaster::new, MobCategory.CREATURE));
 	public static final RegistryObject<EntityType<FuryTideCangLan>> CANG_LAN = register("cang_lan",
 			EntityType.Builder.of(FuryTideCangLan::new, MobCategory.CREATURE));
 	public static final RegistryObject<EntityType<ThunderclapZhenYu>> ZHEN_YU = register("zhen_yu",
@@ -198,6 +209,11 @@ public class TCRModEntities {
 		event.put(VILLAGER2.get(), TCRVillager.setAttributes());
 		event.put(VILLAGER2_TALKABLE.get(), TCRVillager.setAttributes());
 		event.put(VILLAGER2_STATIONARY.get(), TCRVillager.setAttributes());
+		event.put(MIAO_YIN.get(),TCRVillager.setAttributes());
+		event.put(SHANG_REN.get(),TCRVillager.setAttributes());
+		event.put(RECEPTIONIST.get(),TCRVillager.setAttributes());
+		event.put(WANDERER.get(),TCRVillager.setAttributes());
+		event.put(TRIAL_MASTER.get(),TCRVillager.setAttributes());
 		event.put(CANG_LAN.get(),FuryTideCangLan.setAttributes());
 		event.put(DUAN_SHAN.get(),IronfistDuanShan.setAttributes());
 		event.put(ZHEN_YU.get(),ThunderclapZhenYu.setAttributes());
@@ -233,6 +249,16 @@ public class TCRModEntities {
 		event.register(VILLAGER2_TALKABLE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				PastoralPlainVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 
+		event.register(MIAO_YIN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				FuryTideCangLan::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(SHANG_REN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				FuryTideCangLan::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(RECEPTIONIST.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				FuryTideCangLan::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(WANDERER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				FuryTideCangLan::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(TRIAL_MASTER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				FuryTideCangLan::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(CANG_LAN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				FuryTideCangLan::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(DUAN_SHAN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,

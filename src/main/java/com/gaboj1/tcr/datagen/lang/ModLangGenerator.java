@@ -209,6 +209,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addEntityAndEgg(TCRModEntities.TREE_GUARDIAN,"森林守护者");
         this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_VILLAGER,"牧歌原野-村民");
         this.addEntityAndEgg(TCRModEntities.VILLAGER2,"青云之巅-村民");
+        this.addEntityAndEgg(TCRModEntities.MIAO_YIN,"妙音");
         this.addEntityAndEgg(TCRModEntities.CANG_LAN,"怒海宗：苍澜");
         this.addEntityAndEgg(TCRModEntities.ZHEN_YU,"震雷宗：震宇");
         this.addEntityAndEgg(TCRModEntities.DUAN_SHAN,"破岩门：断山");
@@ -435,6 +436,126 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.SECOND_BOSS,4,"盟主，你所谓的秩序已然导致了混乱！（支持联军）");
         this.addDialogChoice(TCRModEntities.SECOND_BOSS,5,"这场战斗...真的值得吗？");
         this.addDialogChoice(TCRModEntities.SECOND_BOSS,6,"我将去往何方？");
+
+        //乐师支线-第一段对话
+        this.addDialog(TCRModEntities.MIAO_YIN,0,"哀兮悲兮，迷途之人。彳亍寻真，却在眼前。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,0,"默默听赏");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,1,"施舍");
+        this.addDialog(TCRModEntities.MIAO_YIN,1,"感谢知遇之恩");
+        this.addDialog(TCRModEntities.MIAO_YIN,2,"阁下驻足良久，想必是中意妾身的音乐。若能赏光捧个钱场，妾身感激不尽。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,2,"你是何人？");
+        this.addDialog(TCRModEntities.MIAO_YIN,3,"一介漂泊之人尔…妾身虽目不能视，却可感受阁下的气场，你我应为同类。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,3,"你的眼睛看不见吗");
+        this.addDialog(TCRModEntities.MIAO_YIN,4,"妾身儿时曾为烟火所熏，双目失明久矣");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,4,"悄悄取走乐师面前的钱");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,5,"施舍");
+        this.addDialog(TCRModEntities.MIAO_YIN,5,"阁下真是心善之人。可惜妾身行动不便，无以为报，仅能奏乐为谢。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,6,"你没有想过去治疗一下吗");
+        this.addDialog(TCRModEntities.MIAO_YIN,6,"治愈失明之法，古今难寻。妾身虽知一法，只恨形单影只，力不从心。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,7,"你的家人呢。");
+        this.addDialog(TCRModEntities.MIAO_YIN,7,"在妾身幼时便都已离去，家产也皆为先前所提火灾所覆灭。如君所见，妾身在此漂泊卖艺，实属身不由己。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,8,"我或许可以帮助你");
+        this.addDialog(TCRModEntities.MIAO_YIN,8,"…你我素不相识，妾身承蒙阁下好意，但此事却无需由您费心。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,9,"离去");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,10,"我只是乐于助人");
+        this.addDialog(TCRModEntities.MIAO_YIN,9,"妾身能感受到阁下的力量非凡，或许此事对阁下不过举手之劳。但若阁下不能如实告知缘由，恐怕妾身内心难安。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,11,"我喜欢你");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,12,"我只是很同情你。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,13,"你我都是漂泊之人，理应互帮互助。");
+        this.addDialog(TCRModEntities.MIAO_YIN,10,"请勿调戏妾身。");
+        this.addDialog(TCRModEntities.MIAO_YIN,11,"阁下能这么说，妾身感激不尽。既然您有如此诚意，妾身便不再有所隐瞒，传闻世上有一宝珠，唤为万明。" +
+                "在月圆之夜，万明珠可汲取月光，迸发魔力，从而使周围的生物恢复视力，若非双目失明者，则可练成火眼金睛，视千里之远不在话下。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,14,"这么神奇的宝物真的存在吗");
+        this.addDialog(TCRModEntities.MIAO_YIN,12,"阁下以诚心待我，妾身定然不会相欺。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,15,"那么何处可以寻得此物呢。");
+        this.addDialog(TCRModEntities.MIAO_YIN,13,"妾身亦不知，但此物名声非凡，在钟情收藏者之间定有情报相传。妾身行动不便，只得麻烦阁下为妾身四处打听了。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,16,"好吧，我会去帮你找找看的。");
+        this.addDialog(TCRModEntities.MIAO_YIN,14,"阁下若最终得寻此物，治好妾身的眼疾，妾身定会想尽办法报答此恩！");
+        this.addDialog(TCRModEntities.MIAO_YIN,15,"(去寻找对珍宝很了解的人吧，或许经常做买卖的人会知道？)");//任务提示
+        //乐师支线-与商人对话获取线索
+        this.addDialog(TCRModEntities.SHANG_REN,0,"公平买卖，童叟无欺，奇珍异宝，应有尽有~");
+        this.addDialogChoice(TCRModEntities.SHANG_REN,0,"你这里什么宝贝都有吗");
+        this.addDialog(TCRModEntities.SHANG_REN,1,"当然！阁下请看！");//弹出交易表，如果还没和乐师对话过的话
+        this.addDialog(TCRModEntities.SHANG_REN,2,"我走南闯北多年，四处搜罗，全天下的宝物，不敢说全部，但其十之八九，可皆在我辈之手头。不知你欲寻何物啊？");
+        this.addDialogChoice(TCRModEntities.SHANG_REN,1,"你这里有万明珠吗");
+        this.addDialog(TCRModEntities.SHANG_REN,3,"万明珠…不巧，此物正在那十之一二之中。");
+        this.addDialogChoice(TCRModEntities.SHANG_REN,2,"亏你刚才还那么夸下海口");
+        this.addDialog(TCRModEntities.SHANG_REN,4,"这不是正好你赶巧儿了么。不过，虽然万明珠不在我手上，我却知道此物的所在之处。");
+        this.addDialogChoice(TCRModEntities.SHANG_REN,3,"你可算是有点用了，能否告知它在何处？");
+        this.addDialog(TCRModEntities.SHANG_REN,5,"如你所知，此物乃是真正的奇珍…连你这样的异乡人都知道它的名号，它自然早已被人收藏起来了。怎么可能还会在这尘世间流通呢。");
+        this.addDialogChoice(TCRModEntities.SHANG_REN,4,"你可知收藏它的是何人？");
+        this.addDialog(TCRModEntities.SHANG_REN,6,"哼，我就算知道又如何，难道你要从那个人手里买下它吗。这种喜好收藏的人，最不缺的就是钱了。");
+        this.addDialogChoice(TCRModEntities.SHANG_REN,5,"我只是想向他借用一下，我要帮助一个失明的人。");
+        this.addDialog(TCRModEntities.SHANG_REN,7,"失明的人，难道是…唉，算了，话说回来，你莫非也是听信了那个传说吗，我好心提醒你，自此传说流传于世起，还从未有人亲眼见过万明珠治愈失明之人的情景。");
+        this.addDialogChoice(TCRModEntities.SHANG_REN,6,"我已经见过不少奇幻的东西了，相比之下，这个传说还更值得相信。而且，至少在此之前我要先努力一下。");
+        this.addDialog(TCRModEntities.SHANG_REN,8,"真是执着，不过，此世间亦不乏你这等心怀执念之人。");
+        this.addDialogChoice(TCRModEntities.SHANG_REN,7,"所以你能告诉我它在哪吗。");
+        this.addDialog(TCRModEntities.SHANG_REN,9,"我不知道");
+        this.addDialogChoice(TCRModEntities.SHANG_REN,8,"你说什么？");
+        this.addDialog(TCRModEntities.SHANG_REN,10,"莫要烦躁，我并不知道万明珠的确切归属，然而我却知道在哪里可以得到它的情报~");
+        this.addDialogChoice(TCRModEntities.SHANG_REN,9,"别废话了，快点告诉我");
+        this.addDialogChoice(TCRModEntities.SHANG_REN,10,"莫要欺人太甚！（杀了奸商）");
+        this.addBookAndAuthorAndContents("bu_gao","谁人的日记","布告","欲一睹万明珠者，可至 *** 。通过所设试炼，方可得万明珠。");
+        this.addDialog(TCRModEntities.SHANG_REN,11,"此布告张贴于各村良久，早已有无数能人前往，可据传竟无一人能通过此试炼。适才我见你不知有此事，故与你相戏。切莫责怪，此乃赔罪，此试炼之地正位于 %s 处，你可前去。");
+        //乐师支线-与乐师的二次对话
+        this.addDialog(TCRModEntities.MIAO_YIN,16,"阁下此番归来，想是已经寻得了些许线索了？");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,17,"（告知布告之事）");
+        this.addDialog(TCRModEntities.MIAO_YIN,17,"原来如此，妾身本对此不抱期望，没成想这万明珠竟然早已暴露于世间");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,18,"你双目失明，有些东西虽然离你很近，你却也看不见");
+        this.addDialog(TCRModEntities.MIAO_YIN,18,"…阁下所言极是，那么，您愿为我参加此试炼么");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,19,"义不容辞！");
+        this.addDialog(TCRModEntities.MIAO_YIN,19,"阁下心善如此，妾身深受感动。若您能寻得万明珠归来，妾身定有重谢。此为些许辅助之物，或许对试炼有所裨益。");
+        //乐师支线-与接待员的对话
+        this.addDialog(TCRModEntities.RECEPTIONIST,0,"远行之人，可为万明珠而来？");
+        this.addDialogChoice(TCRModEntities.RECEPTIONIST,0,"正是");
+        this.addDialog(TCRModEntities.RECEPTIONIST,1,"既如此，请前往试炼。此试炼并无刁难之处，但凭个人本领即可。然自设立以来尚无一人过关，望君多加小心。若因此丧命，吾等概不负责。");
+        this.addDialog(TCRModEntities.RECEPTIONIST,2,"君之诚心灼灼，吾深感敬佩！");
+        this.addDialog(TCRModEntities.RECEPTIONIST,3,"令人敬佩，令人敬佩。吾等设立此试炼已久，通过者唯君尔。吾等即刻禀告主人，请君随吾等前来！");
+        this.addDialogChoice(TCRModEntities.RECEPTIONIST,1,"跟随");
+        //乐师支线-与试炼主人初次的对话
+        this.addDialog(TCRModEntities.TRIAL_MASTER,0,"壮哉壮哉，何等勇士，竟能通过吾之试炼！");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,0,"您过奖了，我只是想要借用一下万明珠");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,1,"万明珠不过小事一桩。实不相瞒，吾设立此等试炼，意在选出真正强大之人。请阁下在吾之府邸担任总管，护吾宅邸之周全，吾愿准备丰厚赠礼，望您勿要推辞。");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,1,"我只是想借用万明珠来治疗一位失明之人，对担任总管一事并无兴趣。");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,2,"吾当然知道阁下此行之目的。万明珠好说，只要阁下担任总管，便可与你所帮之人一同搬入我府，到时，无论是万明珠还是亿明珠，全部任你取用。");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,2,"不，那位失明之人并非我的家人，我只是一介漂泊之人，偶然间遇到她，心生怜悯，想帮助她罢了。");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,3,"漂泊之人…既然阁下无牵无挂，岂不是更加方便？任职我府，成家立业，不在话下。");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,3,"不，我对这件事真的不感兴趣，请将万明珠借我。");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,4,"吾说过了，万明珠不过小事一桩…");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,4,"我只是想帮人，请不要让我为难。");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,5,"吾可是周公吐哺，望你归心啊。若吾借你万明珠，你可否再考虑考虑？");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,5,"好吧，你把万明珠借给我，我便再考虑考虑。（现在有求于他，只好先糊弄过去）");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,6,"阁下真是识时务者。我这就把万明珠给你。");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,6,"继续");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,7,"虽然阁下先前说你欲救之人非你家人，然而阁下如此心切，相比此人应是你心爱之人罢。如果不是，当我多嘴，嘿嘿。");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,7,"不是，只是在路边流浪的一名盲人乐师罢了");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,8,"没错，就是我的心爱之人。");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,9,"只是跟我一样的漂泊之人，我们是同伴。");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,8,"盲人乐师？噢，真是稀奇啊，世间还有这样的存在。不知她既然双眼失明，又该如何拨弄乐器");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,10,"她并非生来失明，据说她的双眼是在一场大火中被熏瞎的。大概是在此之前学过乐器吧。");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,9,"卖弄乐理之人…此等人物竟会四处漂泊，想来也有难处，顺带一提，不知她使用的是何种乐器？");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,11,"是琵琶");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,10, "…正好，我府也缺少通乐理之人，我欲将其请来，不知阁下可愿相助？若在此处，你们也方便作伴。");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,12,"都说了我们不是那种关系…她就在xx村落处，穿着青绿色的服饰，你若有心，就找人把她请来吧。我先回去与她只会一声。");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,11,"你在此处耽搁时间也许久了，加上路途劳顿，以吾之见，今日你就先在此住下，隔日再回吧");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,13,"好吧");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,11,"阁下，昨夜在吾府休息可好？");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,13,"还行");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,11,"多谢夸奖，请您务必要及时返回，总管一职可得仰仗您啊");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,13,"放心，我会顺便回来归还万明珠的。");
+        //乐师支线-与流浪者初次的对话
+        this.addDialog(TCRModEntities.WANDERER, 0,"你找乐师么？她已经不在这里了，昨天夜里她被人带走了。");
+        this.addDialogChoice(TCRModEntities.WANDERER,0,"发生什么事了？");
+        this.addDialog(TCRModEntities.WANDERER, 1,"我不知道，当时我就在附近，那群人很凶暴，乐师在那里尖叫反抗，但好像无济于事。可，可跟我没关系，我只是想来这里看看她有没有留下什么值钱的东西，如果你认识她的话，她，她的东西都还给你，可真的不关我的事啊。");
+        this.addDialogChoice(TCRModEntities.WANDERER,1,"这...");
+        this.addDialog(TCRModEntities.WANDERER, 2,"（流浪者逃走了）");//获得琵琶
+        //乐师支线-与接待员二次对话
+        this.addDialog(TCRModEntities.RECEPTIONIST,4,"远行之人，可为…若君为寻主人而来，恕吾辈不敢违命，主人不愿见你，请回吧。");
+        this.addDialogChoice(TCRModEntities.RECEPTIONIST,2,"这是怎么回事？你们把乐师怎么了？");
+        this.addDialog(TCRModEntities.RECEPTIONIST,5,"吾辈不知乐师是何物，您请回吧");
+        this.addDialogChoice(TCRModEntities.RECEPTIONIST,3,"万明珠还在我手上！");
+        this.addDialog(TCRModEntities.RECEPTIONIST,5,"主人说了，你手上的万明珠非真品，但却也是上好的珠宝，就当作赠与君的离别礼了，您请回吧。");
+
 
         this.addBookAndContents("book1","Test","Test1","Test1.1");
         this.addBookAndContents("book2","Test2","Test2","Test2.2");

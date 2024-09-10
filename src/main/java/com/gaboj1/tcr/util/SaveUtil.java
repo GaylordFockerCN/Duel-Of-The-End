@@ -271,17 +271,37 @@ public class SaveUtil {
     }
 
     public static class Biome2Data extends BiomeData{
-//        public boolean isCangLanTalked = false;//cang lan 就是elder
+        public boolean miaoYinTalked1;//是否初次和乐师对话完
+        public boolean shangRenTalked;//是否完成和商人的对话
+        public boolean afterTrial;//是否通过了试炼
+        public boolean trialTalked1;//是否初次和试炼主对话过
+        public boolean talkToMaster;//是否选择告诉试炼主人盲人乐师的事
+        public boolean wandererTalked;//是否完成和商人的对话
 
-//        @Override
-//        public CompoundTag toNbt() {
-//            CompoundTag tag = new CompoundTag();
-//            return tag;
-//        }
+
+        @Override
+        public CompoundTag toNbt() {
+            CompoundTag tag = new CompoundTag();
+            tag.putInt("choice", choice);
+            tag.putBoolean("isBossDie", isBossDie);
+            tag.putBoolean("isBossTalked", isBossTalked);
+            tag.putBoolean("isBossFought", isBossFought);
+            tag.putBoolean("isElderDie", isElderDie);
+            tag.putBoolean("isElderTalked", isElderTalked);
+
+            tag.putBoolean("miaoYinTalked1", miaoYinTalked1);
+            tag.putBoolean("shangRenTalked", shangRenTalked);
+            tag.putBoolean("afterTrial", afterTrial);
+            tag.putBoolean("trialTalked1", trialTalked1);
+            tag.putBoolean("talkToMaster", talkToMaster);
+            tag.putBoolean("wandererTalked", wandererTalked);
+            return tag;
+        }
 //
 //        @Override
 //        public void fromNbt(CompoundTag serverData) {
 //            super.fromNbt(serverData);
+//            miaoYinTalked1 = serverData.getBoolean("miaoYinTalked1");
 //        }
 
     }

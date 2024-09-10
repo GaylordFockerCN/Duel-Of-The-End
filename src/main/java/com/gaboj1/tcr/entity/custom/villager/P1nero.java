@@ -5,6 +5,7 @@ import com.gaboj1.tcr.entity.TCRModEntities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -14,7 +15,7 @@ import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
 public class P1nero extends TCRTalkableVillager {
 
-    private EntityType<?> entityType = TCRModEntities.P1NERO.get();
+    private final EntityType<?> entityType = TCRModEntities.P1NERO.get();
     public P1nero(EntityType<? extends P1nero> pEntityType, Level pLevel) {
         super(pEntityType, pLevel, 1);
     }
@@ -28,6 +29,14 @@ public class P1nero extends TCRTalkableVillager {
     public @NotNull Component getDisplayName() {
         return Component.translatable(TCRModEntities.P1NERO.get().getDescriptionId());
     }
+
+    @Override
+    public boolean hurt(DamageSource source, float v) {
+        return false;
+    }
+
+    @Override
+    public void die(@NotNull DamageSource source) {}
 
     @Override
     public void openDialogueScreen(CompoundTag senderData) {
