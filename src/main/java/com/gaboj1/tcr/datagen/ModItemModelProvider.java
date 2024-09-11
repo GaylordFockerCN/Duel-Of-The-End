@@ -100,6 +100,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(TCRModItems.MAO_DAI);
         simpleItem(TCRModItems.PINE_CONE);
         simpleItem(TCRModItems.RED_WINE);
+        simpleItem(TCRModItems.WANG_MING_PEARL);
 
         simpleBlockItemBlockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER);
         simpleBlockItemBlockTexture(TCRModBlocks.CATNIP);

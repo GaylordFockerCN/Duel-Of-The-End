@@ -171,6 +171,8 @@ public class ModLangGenerator extends ModLangProvider {
         this.addItemUsageInfo(TCRModItems.RED_WINE.get(), "一种经过发酵的葡萄酒，风味独特，适合与美食搭配。");
         this.add(TCRModItems.CATNIP.get(), "猫薄荷");
         this.addItemUsageInfo(TCRModItems.CATNIP.get(), "可以用于驯服猫猫果冻");
+        this.add(TCRModItems.WANG_MING_PEARL.get(), "万明珠");
+        this.addItemUsageInfo(TCRModItems.WANG_MING_PEARL.get(), "传闻世上有一宝珠，唤为万明，值千金。在月圆之夜，万明珠可汲取月光，迸发魔力，从而使周围的生物恢复视力，若非双目失明者，则可练成火眼金睛，视千里之远不在话下。");
 
         this.add(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get(),"更好的结构方块");
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get(),"密林灵叶");
@@ -520,7 +522,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addBookAndAuthorAndContents("bu_gao","不详","布告","欲一睹万明珠者，可至 *** 。通过所设试炼，方可得万明珠。");
         this.addDialog(TCRModEntities.SHANG_REN,11,"此布告张贴于各地良久，早已有无数能人前往，可据传竟无一人能通过此试炼。适才我见你不知有此事，故与你相戏。切莫责怪，此乃赔罪，此试炼之地正位于 %s 处，你可前去。");
         this.addDialog(TCRModEntities.SHANG_REN,12,"杀人啦杀人啦！");
-        this.addDialog(TCRModEntities.SHANG_REN,13,"（获得情报了，先回去找一下那位盲人姑娘吧。）");
+        this.addDialog(TCRModEntities.SHANG_REN,13,"（获得情报了，先回去找一下那位盲人姑娘吧。）");//任务提示
         //乐师支线-与乐师的二次对话
         this.addDialog(TCRModEntities.MIAO_YIN,16,"阁下此番归来，想是已经寻得了些许线索了？");
         this.addDialogChoice(TCRModEntities.MIAO_YIN,17,"（告知布告之事）");
@@ -569,6 +571,8 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.TRIAL_MASTER,14,"还行");
         this.addDialog(TCRModEntities.TRIAL_MASTER,13,"多谢夸奖，请您务必要及时返回，总管一职可得仰仗您啊");
         this.addDialogChoice(TCRModEntities.TRIAL_MASTER,15,"放心，我会顺便回来归还万明珠的。");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,14,"阁下有缘再会！");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,15,"呵呵，真是令人感动的情谊。既然如此，阁下便带此万明珠速速返回吧。可千万别忘了与吾的约定。这里有一些礼物，就当作是预付的工资了，还望笑纳。");
         //乐师支线-与流浪者初次的对话
         this.addDialog(TCRModEntities.WANDERER, 0,"你在找那位盲人姑娘么？她已经不在这里了，昨天夜里她被人带走了。");
         this.addDialogChoice(TCRModEntities.WANDERER,0,"发生什么事了？");
@@ -581,7 +585,76 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.RECEPTIONIST,5,"吾辈不知乐师是何物，您请回吧");
         this.addDialogChoice(TCRModEntities.RECEPTIONIST,3,"万明珠还在我手上！");
         this.addDialog(TCRModEntities.RECEPTIONIST,6,"主人说了，你手上的万明珠非真品，但却也是上好的珠宝，就当作赠与君的离别礼了，您请回吧。");
-
+        //乐师支线-取得万明珠后和乐师的对话
+        this.addDialog(TCRModEntities.MIAO_YIN,20,"妾身内心挂念不已，阁下可算归来了，此行结果如何？");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,20,"我已经取到万明珠了。给你。");
+        this.addDialog(TCRModEntities.MIAO_YIN,21,"是么，原来，这就是妾身心心念念的万明珠么…");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,21,"你的眼睛有救了");
+        this.addDialog(TCRModEntities.MIAO_YIN,22,"嗯？啊…是啊");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,22,"接下来只需要等到月圆之夜就可以治好你的眼睛了。");
+        this.addDialog(TCRModEntities.MIAO_YIN,23,"嗯…话说回来，阁下此行可否遇到什么艰难险阻，可有负伤，妾身此处还有不少疗伤药材。想来试炼一定不易吧");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,23,"试炼对我来说很轻松，只是跟那位试炼的主人来回拉扯了半天。");
+        this.addDialog(TCRModEntities.MIAO_YIN,24,"试炼主人？就是这万明珠的主人对吧，他是个什么样的人？");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,24,"什么样的人？嗯…瘦高的，不胖，皮肤黝黑，看起来四五十岁的模样。");
+        this.addDialog(TCRModEntities.MIAO_YIN,25,"是这样？！阁下见到他了？");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,25,"啊…是啊，因为我通过了试炼，他要让我当总管，说起来还有点心动");
+        this.addDialog(TCRModEntities.MIAO_YIN,26,"你去到他宅子里去了？");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,26,"是啊");
+        this.addDialog(TCRModEntities.MIAO_YIN,27,"可以告诉妾身，他的家在哪里吗？");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,27,"你问这个作甚？");//结局2
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,28,"告诉你也无妨，那宅子位于 *** ");//结局3
+        this.addDialog(TCRModEntities.MIAO_YIN,28,"啊，只是想着说，等妾身的眼睛治好了，就去他家里拜谢一下。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,29,"这样啊，到时候我跟你一起去吧，我顺便要去归还万明珠的。");
+        this.addDialog(TCRModEntities.MIAO_YIN,29,"…阁下为何对妾身如此之好呢，之前也问过，虽然都是漂泊之人，但阁下比我强得多，无论在哪里都有容身之处，而妾身却始终需要依靠别人，只是累赘罢了…");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,30,"事到如今你还在说什么呢？我说过了，我只是想帮助你，仅此而已…");
+        this.addDialog(TCRModEntities.MIAO_YIN,30,"帮助我…这样么，那么，你会帮我到底的吧…");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,31,"那当然了，明晚便是月圆之夜，先治好你的眼睛，其他事情，以后再说。");
+        this.addDialog(TCRModEntities.MIAO_YIN,31,"嗯…");
+        this.addDialog(TCRModEntities.MIAO_YIN,32,"（等到明晚再来找她吧）");//任务提示
+        this.addDialog(TCRModEntities.MIAO_YIN,33,"阁下你来了，我们开始吧");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,32,"嗯。（取出万明珠）");
+        this.addDialog(TCRModEntities.MIAO_YIN,34,"（月光逐渐映照在万明珠上，透过万明珠的反射，周围弥散着淡淡的白光，妙音就这样沐浴在光中。）");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,33,"感觉如何？");
+        this.addDialog(TCRModEntities.MIAO_YIN,35,"眼睛痒痒的，感觉好晃眼");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,34,"什么？那不就说明你眼睛有感觉了？也就是说？");
+        this.addDialog(TCRModEntities.MIAO_YIN,36,"欸，欸，啊，是啊，我好像能感受到了！（你能感受到妙音在看向你）阁下，我好像能看清你的脸了，嗯…");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,35,"太好了！你的视力真的恢复了！");
+        this.addDialog(TCRModEntities.MIAO_YIN,37,"啊，是啊，没想到传说是真的。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,36,"这样一来就没问题了，那么，我们去找那位主人道谢吧。");
+        this.addDialog(TCRModEntities.MIAO_YIN,38,"嗯，不过在此之前，妾身有些话想说");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,37,"怎么了？");
+        this.addDialog(TCRModEntities.MIAO_YIN,39,"您说过，会帮我到底的对吧？");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,38,"是呀");
+        this.addDialog(TCRModEntities.MIAO_YIN,40,"其实，我不是什么漂泊之人。我生于富庶之家，我的母亲在我很小的时候就死了，但我的父亲很宠溺我，知道我喜欢音乐，为我请了最好的老师教我琵琶，这个琵琶上面附有魔力，就是那位老师离别时相赠的。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,39,"所以你的琵琶是那时候学的");
+        this.addDialog(TCRModEntities.MIAO_YIN,41,"没错，虽然父亲后来又新娶了妻子，后妈对我很冷漠，但因为音乐，我的童年很快乐。可惜在我十四岁那年，我的父亲突然去世了，没人知晓原因。在那以后，家族的产业就落到了后妈身上，可惜后妈不善打理，只好拜托我的叔父。突然有一天，家中莫名起了大火，死伤了一众家仆，");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,40,"继续");
+        this.addDialog(TCRModEntities.MIAO_YIN,42,"我的眼睛被熏瞎，家产也葬送火海……从此之后我便家徒四壁，后妈无法忍受，改嫁了，只剩叔父勉强支撑着抚养我，到了我十八岁时，叔父却又突然被宗主征兵带走，从此了无音讯，失去了一切依靠，我只剩下琵琶了，也就靠此漂泊谋生至今。然后现在，又遇到了你。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,41,"你告诉我这些，不就更让我同情了吗…");
+        this.addDialog(TCRModEntities.MIAO_YIN,43,"妾身确实是在谋求你的同情，不如说，其实我有一事相求。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,42,"什么事情");
+        this.addDialog(TCRModEntities.MIAO_YIN,44,"其实这万明珠，原本正是我家的收藏");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,43,"你说什么？");
+        this.addDialog(TCRModEntities.MIAO_YIN,45,"这个万明珠，原本是我家的镇宅之宝，但是在那场大火中遗失了…虽然妾身本来便有所猜测，但直到你说，我才能肯定，你刚刚说的试炼主人，无疑就是妾身的叔父。我的叔父…可能其实没有战死沙场或是怎样，而是盗走了妾身的家产，躲去别处逍遥自在了！");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,44,"居然还有这种事情？");
+        this.addDialog(TCRModEntities.MIAO_YIN,46,"这些年来，我虽然是在流浪，但也在搜寻消息，没想到真相是我最不愿意接受的…");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,45,"所以你想要去找你的叔父吗");
+        this.addDialog(TCRModEntities.MIAO_YIN,47,"是的，我要去找他，我要…拿回我的财产。你会帮我的吧。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,46,"我当然会帮你。");
+        this.addDialog(TCRModEntities.MIAO_YIN,48,"等妾身拿回家产，阁下想要什么，我都会给你！");
+        this.addDialog(TCRModEntities.MIAO_YIN,49,"（该去找 *** 清算了）");
+        //第二次找试炼主人对话
+        this.addDialog(TCRModEntities.TRIAL_MASTER,16,"阁下！你终于回来啦，怎么样？万明珠有帮到你吗");//记得这时候召唤一只妙音跟在背后
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,16,"当然，万明珠治好了我同伴的失明。");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,17,"果然…欸，你说什么，居然治好了吗？！");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,17,"没错，而且她现在想见见你。");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,18,"什么，是什么人？");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,18,"好久不见，叔父。");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,19,"什么…居然是你，你居然还活着…！");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,19,"叔父，许久未见，您见面的第一句话居然是盼望着我死么");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,20,"当然不是…不如说，我很惊讶…护卫！");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,21,"为什么，你居然会找到这么厉害的帮手");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,20,"毕竟我可是通过了你的试炼呢");
 
         this.addBookAndContents("book1","Test","Test1","Test1.1");
         this.addBookAndContents("book2","Test2","Test2","Test2.2");

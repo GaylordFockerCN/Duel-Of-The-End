@@ -277,7 +277,8 @@ public class SaveUtil {
         public boolean trialTalked1;//是否初次和试炼主对话过
         public boolean talkToMaster;//是否选择告诉试炼主人盲人乐师的事
         public boolean wandererTalked;//是否完成和商人的对话
-
+        public boolean miaoYinTalked2;//是否二次和乐师对话完、
+        public boolean chooseEnd2;//是否选到了结局2
 
         @Override
         public CompoundTag toNbt() {
@@ -295,6 +296,8 @@ public class SaveUtil {
             tag.putBoolean("trialTalked1", trialTalked1);
             tag.putBoolean("talkToMaster", talkToMaster);
             tag.putBoolean("wandererTalked", wandererTalked);
+            tag.putBoolean("miaoYinTalked2", miaoYinTalked2);
+            tag.putBoolean("chooseEnd2", chooseEnd2);
             return tag;
         }
 //

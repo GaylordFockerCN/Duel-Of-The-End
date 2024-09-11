@@ -81,6 +81,7 @@ public class TCRModItems {
 	public static final RegistryObject<Item> MAO_DAI = REGISTRY.register("maodai", () -> new DrinkItem(new Item.Properties().food(TCRFoods.DREAM_DA)));
 	public static final RegistryObject<Item> PINE_CONE = REGISTRY.register("pine_cone", () -> new DropItem(new Item.Properties().food(TCRFoods.COMMON)));
 	public static final RegistryObject<Item> RED_WINE = REGISTRY.register("red_wine", () -> new DrinkItem(new Item.Properties().food(TCRFoods.DREAM_DA)));
+	public static final RegistryObject<Item> WANG_MING_PEARL = REGISTRY.register("wang_ming_pearl", () -> new DropItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
 
 //	public static final RegistryObject<Item> JELLY_CAT_SPAWN_EGG = registerEgg("jelly_cat_spawn_egg", TCRModEntities.JELLY_CAT);
 	public static final RegistryObject<Item> JELLY_CAT_SPAWN_EGG = REGISTRY.register("jelly_cat_spawn_egg",

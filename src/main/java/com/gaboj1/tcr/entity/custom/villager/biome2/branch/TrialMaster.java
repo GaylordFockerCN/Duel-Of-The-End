@@ -3,6 +3,8 @@ package com.gaboj1.tcr.entity.custom.villager.biome2.branch;
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
 import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
@@ -10,6 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,6 +36,16 @@ public class TrialMaster extends YueShiLineNpc {
     @Override
     public @NotNull Component getDisplayName() {
         return Component.translatable(TCRModEntities.TRIAL_MASTER.get().getDescriptionId());
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if(!level().isClientSide){
+            if(SaveUtil.biome2.miaoYinTalked2 && SaveUtil.biome2.chooseEnd2){//给妙音万明珠而且选择了结局2
+                //把叔父替换为妙音（妙音独自杀了叔父）TODO
+            }
+        }
     }
 
     @Override
@@ -63,12 +76,8 @@ public class TrialMaster extends YueShiLineNpc {
                                                                                                     )
                                                                                             )
                                                                                     )
-                                                                                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,9),BUILDER.buildDialogueOption(entityType,8))
-
-                                                                                    )
-                                                                                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,9),BUILDER.buildDialogueOption(entityType,9))
-
-                                                                                    )
+                                                                                    .addLeaf(BUILDER.buildDialogueOption(entityType,8), (byte) 2)
+                                                                                    .addLeaf(BUILDER.buildDialogueOption(entityType,9), (byte) 2)
                                                                             )
                                                                     )
                                                             )
@@ -77,6 +86,11 @@ public class TrialMaster extends YueShiLineNpc {
                                     )
                             )
             );
+        } else if(senderData.getBoolean("chooseEnd2")){
+
+        }else {
+            //初次对话后如果想再bb几句
+            builder.start(14).addFinalChoice(6, (byte) -2);
         }
 
         if(!builder.isEmpty()){
@@ -87,16 +101,27 @@ public class TrialMaster extends YueShiLineNpc {
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID){
+            case -2:
+                break;
             case -1:
-                //给予夜明珠 TODO
-                
+                if(!DataManager.wanMingPearlGot.getBool(player)) {
+                    player.addItem(TCRModItems.WANG_MING_PEARL.get().getDefaultInstance());
+                }
                 return;
             case 1:
                 //选择告诉试炼主盲女的位置
                 SaveUtil.biome2.talkToMaster = true;
+                talk(player, BUILDER.buildDialogueAnswer(entityType,14));
+                discard();
                 break;
             case 2:
-
+                talk(player, BUILDER.buildDialogueAnswer(entityType,15));
+                if(!DataManager.wanMingPearlGot.getBool(player)){
+                    DataManager.wanMingPearlGot.putBool(player, true);
+                    player.addItem(TCRModItems.WANG_MING_PEARL.get().getDefaultInstance());
+                    player.addItem(new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 16));
+                }
+                SaveUtil.biome2.trialTalked1 = true;
                 break;
         }
         setConversingPlayer(null);

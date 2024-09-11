@@ -117,9 +117,10 @@ public class MiaoYin extends YueShiLineNpc {
                     .addChoice(17, 17)
                     .addChoice(18, 18)
                     .addFinalChoice(19, (byte) 6);
-        } else if(senderData.getBoolean("afterTrial") && !senderData.getBoolean("talkToMaster")){
+        } else if(senderData.getBoolean("trialTalked1")){
             //取得夜明珠后
 
+        } else {
             return;
         }
 
