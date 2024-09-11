@@ -68,8 +68,8 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
             //工匠 对话id分配：0~6 返回值分配：0~2,110
             case 1:
                 if(!DataManager.gunGot.getBool(serverPlayerData)){
-                    builder.start(BUILDER.buildDialogueAnswer(entityType,0))//不许伤害小羊小牛小猪！（我们好像没有这些生物）
-                            .addChoice(BUILDER.buildDialogueOption(entityType,0),BUILDER.buildDialogueAnswer(entityType,1))//那你汉堡里面的牛肉是哪来的？  上天……上天给我的……这不是祈祷就有了吗？
+                    builder.start(BUILDER.buildDialogueAnswer(entityType,0))
+                            .addChoice(BUILDER.buildDialogueOption(entityType,0),BUILDER.buildDialogueAnswer(entityType,1))
                             .addChoice(BUILDER.buildDialogueOption(entityType,1),BUILDER.buildDialogueOption(entityType,2).withStyle(ChatFormatting.DARK_RED,ChatFormatting.BOLD))//我也可以吗？我想要把火铳！（内心真诚地默念一遍） 【获得火铳】
                             .thenExecute((byte) 111)//代号111，获得沙鹰
                             .addChoice(BUILDER.buildDialogueOption(entityType,3),BUILDER.buildDialogueAnswer(entityType,2))

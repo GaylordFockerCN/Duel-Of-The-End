@@ -476,7 +476,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
             case 2:
                 getEntityData().set(IS_FIGHTING, false);
                 setTarget(null);
-                player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, 15), false);
+                chat(BUILDER.buildDialogueAnswer(entityType, 15, false));
                 SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskKillElder);
                 SaveUtil.biome1.isBossFought = true;//注意要处决或者接任务后再调这个，注意考虑对话中断的情况
                 break;
@@ -485,7 +485,9 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                 SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskBackToBoss);
                 SaveUtil.biome1.finish(SaveUtil.BiomeData.BOSS, ((ServerLevel) level()));
                 if(!DataManager.boss1LootGot.getBool(player)){
-                    player.addItem(TCRModItems.TREE_SPIRIT_WAND.get().getDefaultInstance());
+                    ItemStack wand = TCRModItems.TREE_SPIRIT_WAND.get().getDefaultInstance();
+                    wand.getOrCreateTag().putBoolean("fromBoss", true);
+                    player.addItem(wand);
                     player.addItem(TCRModItems.DENSE_FOREST_CERTIFICATE.get().getDefaultInstance());
                     DataManager.boss1LootGot.putBool(player, true);
                 }

@@ -247,9 +247,6 @@ public class TalkableVillager2 extends TCRTalkableVillager {
             case 4:
                 chat(BUILDER.buildDialogueAnswer(entityType,9,false));//真是有干劲啊，那我也要全力以赴了，朋友
                 break;
-
-            default:
-                return;
         }
 
         this.setConversingPlayer(null);

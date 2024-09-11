@@ -12,6 +12,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -38,7 +39,8 @@ public class LivingEntityListener {
      */
     @SubscribeEvent
     public static void onEntityDie(LivingDeathEvent event) {
-        if(new Random().nextInt(0,30) == 5 &&event.getSource().getEntity() instanceof Player player && player.getMainHandItem().is(TCRModItems.TREE_SPIRIT_WAND.get())){
+        ItemStack stack = event.getEntity().getMainHandItem();
+        if(new Random().nextInt(0,30) == 5 &&event.getSource().getEntity() instanceof Player player && stack.is(TCRModItems.TREE_SPIRIT_WAND.get()) && stack.getOrCreateTag().getBoolean("fromBoss")){
             LivingEntity entity = event.getEntity();
             if(entity instanceof PastoralPlainVillager || entity instanceof PastoralPlainTalkableVillager || entity instanceof PastoralPlainVillagerElder){
                 AttributeInstance instance = player.getAttribute(Attributes.MAX_HEALTH);

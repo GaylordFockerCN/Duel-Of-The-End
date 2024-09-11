@@ -102,7 +102,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addItemUsageInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"右键地面消耗密林原木和生命值召唤小树妖",1);
         this.addItemUsageInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"右键空气消耗饥饿值回血",2);
         this.addItemUsageInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"只能使用超级树脂修复",3);
-        this.addItemUsageInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"当主手持有树灵法杖杀死牧歌原野的村民时有极小概率增加最大生命上限！",4);
+        this.addItemUsageInfo(TCRModItems.TREE_SPIRIT_WAND.get(),"当主手持有树灵法杖杀死牧歌原野的村民有极小概率增加最大生命上限！",4);
 
 
         this.add(TCRModItems.HOLY_SWORD.get(),"额滴圣剑");

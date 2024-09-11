@@ -34,6 +34,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
@@ -61,7 +62,7 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
 
     //右键空气消耗饱食度来回血
     @Override
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         if(pPlayer.isCreative()){
             return InteractionResultHolder.pass(itemStack);
@@ -83,11 +84,12 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
 
     //右键方块召唤小树怪
     @Override
-    public InteractionResult useOn(UseOnContext pContext) {
+    public @NotNull InteractionResult useOn(UseOnContext pContext) {
         BlockPos pos = pContext.getClickedPos();
         Level level = pContext.getLevel();
         Player player = pContext.getPlayer();
         if(level instanceof ServerLevel serverLevel){
+            assert player != null;
             if(!player.isCreative() && ItemUtil.searchAndConsumeItem(player, TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get().asItem(), TCRConfig.SPIRIT_LOG_CONSUME.get()) == 0){
                 player.displayClientMessage(Component.translatable(this.getDescriptionId()+".no_spirit_tree"), true);
                 return InteractionResult.PASS;
@@ -109,7 +111,9 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
         return InteractionResult.PASS;
     }
 
-    //平A伤害调整
+    /**
+     * 平A伤害调整
+     */
     @Override
     public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot equipmentSlot) {
         if (equipmentSlot == EquipmentSlot.MAINHAND) {
@@ -127,7 +131,7 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
      *获得近战法师成就
      */
     @Override
-    public boolean hurtEnemy(ItemStack itemStack, LivingEntity pTarget, LivingEntity pAttacker) {
+    public boolean hurtEnemy(ItemStack itemStack, @NotNull LivingEntity pTarget, @NotNull LivingEntity pAttacker) {
         itemStack.setDamageValue(itemStack.getDamageValue()+1);
         if(pAttacker instanceof ServerPlayer serverPlayer) {
             TCRAdvancementData.getAdvancement("melee_mage", serverPlayer);
@@ -137,12 +141,14 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+    public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage1"));
         pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage2"));
         pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage3"));
-        pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage4").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
+        if(pStack.getOrCreateTag().getBoolean("fromBoss")){
+            pTooltipComponents.add(Component.translatable(this.getDescriptionId()+".usage4").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
+        }
     }
 
     @Override
@@ -178,7 +184,7 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
 
     }
 
-    private PlayState predicate(AnimationState animationState) {
+    private PlayState predicate(AnimationState<?> animationState) {
         animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
