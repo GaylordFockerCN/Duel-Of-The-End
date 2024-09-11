@@ -443,10 +443,10 @@ public class ModLangGenerator extends ModLangProvider {
 
         //厨娘
         this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,0,"客官远道而来，不妨一试小女子的手艺。在这村落之中，小女子自信无人能出其右。");
-        this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,1,"传闻雪山之巅，有位高人掌管着这片大地，但近日似乎有人心生不满，战火将至。唉，届时，不知还有几人愿意品尝小女子的手艺。");
-        this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,2,"哼哼，烹饪之事，今日客官有何偏好？");
-        this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,3,"有时，小女子亦想如旅者般游历四方，寻觅珍稀食材、食谱。可惜，一旦离去，便无人照看小店……客官可愿助我一臂之力？哈哈，说笑罢了。");
-        this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,4,"欲知美食之精髓，乃是爱也。小女子真心觉得烹饪乃乐事。");
+        this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,1,"有时，小女子亦想如旅者般游历四方，寻觅珍稀食材、食谱。可惜，一旦离去，便无人照看小店……客官可愿助我一臂之力？哈哈，说笑罢了。");
+        this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,2,"欲知美食之精髓，乃是爱也。小女子真心觉得烹饪乃乐事。");
+        this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,3,"哼哼，烹饪之事，今日客官有何偏好？");
+        this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,4,"传闻雪山之巅，有位高人掌管着这片大地，但近日似乎有人心生不满，战火将至。唉，届时，不知还有几人愿意品尝小女子的手艺。");
 
         //女商人
         this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,5,"阁下身上宝物众多，何不与小女子做些交易？呵呵。");
@@ -454,6 +454,9 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,7,"比起金银，小女子更渴望得到稀世珍宝。若阁下有此等宝物，不妨带来一观，小女子定会给出令阁下心动的价码。");
         this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,8,"请随小女子一观珍藏，定能让阁下眼界大开。");
         this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,9,"雪山顶上之人？阁下以为，小女子这般见多识广之人，会不知其事？不过，情报岂能轻易透露。");
+
+        this.addDialogChoice(TCRModEntities.VILLAGER2_TALKABLE,1,"交易");
+        this.addDialogChoice(TCRModEntities.VILLAGER2_TALKABLE,2,"询问");
 
         //乐师支线-第一段对话
         this.addDialog(TCRModEntities.MIAO_YIN,0,"哀兮悲兮，迷途之人。彳亍寻真，却在眼前。");

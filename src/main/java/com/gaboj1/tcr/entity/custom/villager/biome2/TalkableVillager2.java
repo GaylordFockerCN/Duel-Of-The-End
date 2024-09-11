@@ -14,6 +14,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -122,30 +124,30 @@ public class TalkableVillager2 extends TCRTalkableVillager {
                 builder.start(greeting4)
                         .addFinalChoice((BUILDER.buildDialogueOption(entityType,13)), (byte) 5);
                 break;
-            //舞女 对话id分配：16~18 返回值分配：6
+            //厨娘 对话id分配：0~4 返回值分配：1,2
             case -1:
-                Component greeting_1 = BUILDER.buildDialogueAnswer(entityType,16);
-                builder.start(greeting_1)//嘿，你是来看我跳舞的吗？在这个小镇上我可是最出名的舞者哦。
-                        .addChoice((BUILDER.buildDialogueOption(entityType,16)),(BUILDER.buildDialogueAnswer(entityType,17)))//你跳的舞一定很精彩//当然可以！这支舞是我从外地学来的，希望你喜欢！顺便问一下，你是来这里做什么的呢？
-                        .addFinalChoice((BUILDER.buildDialogueOption(entityType,17)), (byte) 6);
-                break;
-
-            //服务生 对话id分配：19~21 返回值分配：7,8,112
-            case -2:
-                Component greeting_2 = BUILDER.buildDialogueAnswer(entityType,19);
+                int i = random.nextInt(0,3);
+                Component greeting_1 = BUILDER.buildDialogueAnswer(entityType,i);
                 builder.setAnswerRoot(
-                        new TreeNode(greeting_2)
-                                .addChild(new TreeNode((BUILDER.buildDialogueAnswer(entityType,20)),(BUILDER.buildDialogueOption(entityType,19)))
-                                        .execute((byte) 112)
-                                        .addLeaf((BUILDER.buildDialogueOption(entityType,20)), (byte) 7)
-                                        .addLeaf((BUILDER.buildDialogueOption(entityType,21)), (byte) 8)
-                                )
+                        new TreeNode(greeting_1)
+                                //交易
+                                .addLeaf(BUILDER.buildDialogueOption(entityType,1), (byte) 1)
+                                //询问
+                                .addLeaf(BUILDER.buildDialogueOption(entityType,2), (byte) 2)
                 );
                 break;
-            //女商人 返回值分配：10
-            case -3:
-                builder.start(greeting1)
-                        .addFinalChoice((BUILDER.buildDialogueOption(entityType,-3)), (byte) 11);
+
+            //女商人 对话id分配：5~9 返回值分配：3,4
+            case -2:
+                int j = random.nextInt(5,8);
+                Component greeting_2 = BUILDER.buildDialogueAnswer(entityType,j);
+                builder.setAnswerRoot(
+                        new TreeNode(greeting_2)
+                                //交易
+                                .addLeaf(BUILDER.buildDialogueOption(entityType,1), (byte) 3)
+                                //询问
+                                .addLeaf(BUILDER.buildDialogueOption(entityType,2), (byte) 4)
+                );
                 break;
             //女商人 返回值分配：11
             case -4:
@@ -178,13 +180,11 @@ public class TalkableVillager2 extends TCRTalkableVillager {
 
         switch (interactionID){
 
-            //商人
-            case -1:
-                chat(BUILDER.buildDialogueAnswer(entityType,-1,false));
-//                VillagerData data = getVillagerData();
-//                data.setProfession(TCRModVillagers.TCR_MERCHANT.get());//没有屌用
-//                setVillagerData(data);
-//                System.out.println(getVillagerData().getProfession());
+            //厨娘
+            case 1:
+                chat(BUILDER.buildDialogueAnswer(entityType,3,false));
+
+                //TODO: 交易物品，待定
                 startCustomTrade(player,
                         new MerchantOffer(
                                 new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 32),
@@ -198,15 +198,15 @@ public class TalkableVillager2 extends TCRTalkableVillager {
                                 new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 5),
                                 new ItemStack(TCRModItems.HEALTH_WAND.get(), 1),
                                 16, 0, 1)
-
                 );
                 break;
-            case 0:
-                //什么都不做
+            case 2:
+                chat(BUILDER.buildDialogueAnswer(entityType,4));
                 break;
 
-            case 110:
-                chat(BUILDER.buildDialogueAnswer(entityType,1,1,false));
+                //女商人
+            case 3:
+                chat(BUILDER.buildDialogueAnswer(entityType,8,false));
                 startCustomTrade(player,
                         new MerchantOffer(
                                 new ItemStack(TCRModItems.GUN_COMMON.get(), 1),
@@ -244,163 +244,9 @@ public class TalkableVillager2 extends TCRTalkableVillager {
                                 16, 0, 0.02f)
                 );
                 break;
-            case 111:
-                player.addItem(TCRModItems.GUN_COMMON.get().getDefaultInstance());
-                ItemStack ammo = TCRModItems.AMMO.get().getDefaultInstance();
-                ammo.setCount(20);
-                player.addItem(ammo);
-                DataManager.gunGot.putBool(player,true);//存入得用玩家
-
-                if(player instanceof ServerPlayer serverPlayer){
-                    TCRAdvancementData.getAdvancement("day_dreamer",serverPlayer);
-                }
-
-                return;//NOTE 记得返回，否则对话中断！
-            case 1:
-                ItemUtil.searchAndConsumeItem(player, TCRModItems.AMMO.get(), 20);
-//                player.addItem(Book.getBook("book1"));//测试书籍生成
-                chat(BUILDER.buildDialogueAnswer(entityType,4,false));//......
-                break;
-            case 2:
-                if(!DataManager.ammoGot.getBool(player.getPersistentData())){
-                    ItemStack stack = TCRModItems.AMMO.get().getDefaultInstance();
-                    stack.setCount(20);
-                    player.addItem(stack);
-                    chat(BUILDER.buildDialogueAnswer(entityType,5,false));//快给我，不然嘣了你
-                    DataManager.ammoGot.putBool(player,true);
-                }
-                break;
-            case 3:
-                chat(BUILDER.buildDialogueAnswer(entityType,9,false));//愿我的智慧为你扫开前路
-                break;
             case 4:
-                chat(BUILDER.buildDialogueAnswer(entityType,12,false));//真是有干劲啊，那我也要全力以赴了，朋友
+                chat(BUILDER.buildDialogueAnswer(entityType,9,false));//真是有干劲啊，那我也要全力以赴了，朋友
                 break;
-            case 9:
-                chat(BUILDER.buildDialogueAnswer(entityType,getSkinID(), 2,false));//异乡人，你怎么了？
-                break;
-            case 10:
-                chat(BUILDER.buildDialogueAnswer(entityType,getSkinID(), 3,false));//啊，欸，很厉害的样子
-                break;
-            //猎人
-            case 5:
-                chat(BUILDER.buildDialogueAnswer(entityType,15,false));
-                startCustomTrade(player,
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.HEART_OF_THE_SAPLING.get(), 1),
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.ESSENCE_OF_THE_ANCIENT_TREE.get(), 1),
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 5),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.BARK_OF_THE_GUARDIAN.get(), 1),
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 20),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.STARLIT_DEWDROP.get(), 1),
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 15),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 5),
-                                new ItemStack(TCRModItems.BASIC_RESIN.get(), 1),
-                                16, 0, 0.02f)
-                );
-                break;
-            case 6:
-                chat(BUILDER.buildDialogueAnswer(entityType,16,false));//哦，那你一定要小心，那些传说听起来让人直做噩梦。
-                break;
-            case 7:
-                chat(BUILDER.buildDialogueAnswer(entityType,21,false));
-                break;
-            case 8:
-                chat(BUILDER.buildDialogueAnswer(entityType,23,false));
-                startCustomTrade(player,
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 6),
-                                new ItemStack(TCRModItems.BEER.get(), 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 12),
-                                new ItemStack(TCRModItems.DRINK1.get(), 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 13),
-                                new ItemStack(TCRModItems.DRINK2.get(), 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 3),
-                                new ItemStack(TCRModItems.DREAM_TA.get(), 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 12),
-                                new ItemStack(TCRModItems.JUICE_TEA.get(), 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 20),
-                                new ItemStack(TCRModItems.HOT_CHOCOLATE.get(), 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 20),
-                                new ItemStack(Items.COOKED_BEEF, 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
-                                new ItemStack(Items.COOKED_CHICKEN, 2),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
-                                new ItemStack(Items.COOKED_PORKCHOP, 1),
-                                16, 0, 0.02f)
-                );
-                break;
-            case 11:
-                chat(BUILDER.buildDialogueAnswer(entityType,-1,false));
-                startCustomTrade(player,
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 6),
-                                new ItemStack(TCRModItems.BEER.get(), 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 12),
-                                new ItemStack(TCRModItems.DRINK1.get(), 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 13),
-                                new ItemStack(TCRModItems.DRINK2.get(), 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 3),
-                                new ItemStack(TCRModItems.DREAM_TA.get(), 1),
-                                16, 0, 0.02f)
-                );
-                break;
-            case 12:
-                chat(BUILDER.buildDialogueAnswer(entityType,-1,false));
-                startCustomTrade(player,
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 10),
-                                new ItemStack(TCRModItems.JUICE_TEA.get(), 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 20),
-                                new ItemStack(TCRModItems.HOT_CHOCOLATE.get(), 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 2),
-                                new ItemStack(TCRModItems.COOKIE.get(), 1),
-                                16, 0, 0.02f)
-                );
-                break;
-            case 112:
-                if(!DataManager.drinkGot.getBool(player)){
-                    player.addItem(TCRModItems.DRINK2.get().getDefaultInstance());
-                    DataManager.drinkGot.putBool(player,true);
-                }else {
-                    chat(BUILDER.buildDialogueAnswer(entityType,22,false));
-                }
-                return;//NOTE 记得返回，否则对话中断！
 
             default:
                 return;
