@@ -16,11 +16,19 @@ import net.minecraftforge.registries.RegistryObject;
 public class DialogueComponentBuilder {
 
     public static final DialogueComponentBuilder BUILDER = new DialogueComponentBuilder();
+    private final EntityType<?> entityType;
+
+    public DialogueComponentBuilder(EntityType<?> entityType){
+        this.entityType = entityType;
+    }
+    public DialogueComponentBuilder(){
+        this.entityType = null;
+    }
 
     /**
      * 用于间隔发送一堆对话，用于演示npc之间的对话
      */
-    public static void displayClientMessages(Player player, long interval, boolean actionBar, Component... messages){
+    public static void displayClientMessages(Player player, long interval, boolean actionBar, Runnable onDialogEnd, Component... messages){
         new Thread(()->{
             for(Component message : messages){
                 player.displayClientMessage(message, actionBar);
@@ -30,11 +38,16 @@ public class DialogueComponentBuilder {
                     TheCasketOfReveriesMod.LOGGER.error(e.getMessage());
                 }
             }
+            onDialogEnd.run();
         }).start();
     }
 
     public MutableComponent buildDialogue(Entity entity, Component content){
         return Component.literal("[").append(entity.getDisplayName().copy().withStyle(ChatFormatting.YELLOW)).append("]").append(content);
+    }
+
+    public MutableComponent buildDialogue(EntityType<?> entity, Component content){
+        return Component.literal("[").append(entity.getDescription().copy().withStyle(ChatFormatting.YELLOW)).append("]").append(content);
     }
 
     public MutableComponent buildDialogue(Entity entity, Component content ,ChatFormatting... nameChatFormatting){
@@ -79,4 +92,44 @@ public class DialogueComponentBuilder {
         Component component = Component.translatable(entityType + ".dialog" + i, s);
         return Component.literal("\n").append(component);
     }
+
+    public MutableComponent buildDialogueOption(String key) {
+        return Component.translatable(entityType+".choice." + key);
+    }
+    public MutableComponent buildDialogueOption(int i) {
+        return Component.translatable(entityType+".choice" + i);
+    }
+
+    public MutableComponent buildDialogueOption(int skinID, int i) {
+        return Component.translatable(entityType+".choice"+skinID+"_"+ i);
+    }
+    public MutableComponent buildDialogueAnswer(int i, boolean newLine) {
+        Component component = Component.translatable(entityType+".dialog"+i);
+
+        return Component.literal(newLine?"\n":"").append(component);//换行符有效
+    }
+
+    public MutableComponent buildDialogueAnswer(int i) {
+        Component component = Component.translatable(entityType+".dialog"+i);
+
+        return Component.literal("\n").append(component);//换行符有效
+    }
+
+    public MutableComponent buildDialogueAnswer(int skinID , int i) {
+        Component component = Component.translatable(entityType+".dialog"+skinID+"_"+i);
+
+        return Component.literal("\n").append(component);//换行符有效
+    }
+
+
+    public MutableComponent buildDialogueAnswer(int skinID, int i, boolean newLine) {
+        Component component = Component.translatable(entityType+".dialog"+skinID+"_"+i);
+        return Component.literal(newLine?"\n":"").append(component);//换行符有效
+    }
+
+    public MutableComponent buildDialogueAnswer(int i, String s) {
+        Component component = Component.translatable(entityType + ".dialog" + i, s);
+        return Component.literal("\n").append(component);
+    }
+
 }

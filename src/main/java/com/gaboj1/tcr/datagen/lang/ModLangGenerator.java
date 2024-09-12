@@ -173,6 +173,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addItemUsageInfo(TCRModItems.CATNIP.get(), "可以用于驯服猫猫果冻");
         this.add(TCRModItems.WANG_MING_PEARL.get(), "万明珠");
         this.addItemUsageInfo(TCRModItems.WANG_MING_PEARL.get(), "传闻世上有一宝珠，唤为万明，值千金。在月圆之夜，万明珠可汲取月光，迸发魔力，从而使周围的生物恢复视力，若非双目失明者，则可练成火眼金睛，视千里之远不在话下。");
+        this.addItemUsageInfo(TCRModItems.WANG_MING_PEARL.get(), "万明珠（？）", 1);
 
         this.add(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get(),"更好的结构方块");
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get(),"密林灵叶");
@@ -584,7 +585,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.RECEPTIONIST,2,"这是怎么回事？你们把乐师怎么了？");
         this.addDialog(TCRModEntities.RECEPTIONIST,5,"吾辈不知乐师是何物，您请回吧");
         this.addDialogChoice(TCRModEntities.RECEPTIONIST,3,"万明珠还在我手上！");
-        this.addDialog(TCRModEntities.RECEPTIONIST,6,"主人说了，你手上的万明珠非真品，但却也是上好的珠宝，就当作赠与君的离别礼了，您请回吧。");
+        this.addDialog(TCRModEntities.RECEPTIONIST,6,"主人说了，你手上的万明珠非真品，但却也是上好的珠宝，就当作赠与君的离别礼了，您请回吧。");//结局一：不见
         //乐师支线-取得万明珠后和乐师的对话
         this.addDialog(TCRModEntities.MIAO_YIN,20,"妾身内心挂念不已，阁下可算归来了，此行结果如何？");
         this.addDialogChoice(TCRModEntities.MIAO_YIN,20,"我已经取到万明珠了。给你。");
@@ -641,7 +642,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.MIAO_YIN,45,"所以你想要去找你的叔父吗");
         this.addDialog(TCRModEntities.MIAO_YIN,47,"是的，我要去找他，我要…拿回我的财产。你会帮我的吧。");
         this.addDialogChoice(TCRModEntities.MIAO_YIN,46,"我当然会帮你。");
-        this.addDialog(TCRModEntities.MIAO_YIN,48,"等妾身拿回家产，阁下想要什么，我都会给你！");
+        this.addDialog(TCRModEntities.MIAO_YIN,48,"我们这就出发吧！待妾身夺回家产，阁下想要什么，我都会给你！");
         this.addDialog(TCRModEntities.MIAO_YIN,49,"（该去找 *** 清算了）");
         //第二次找试炼主人对话
         this.addDialog(TCRModEntities.TRIAL_MASTER,16,"阁下！你终于回来啦，怎么样？万明珠有帮到你吗");//记得这时候召唤一只妙音跟在背后
@@ -649,12 +650,39 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.TRIAL_MASTER,17,"果然…欸，你说什么，居然治好了吗？！");
         this.addDialogChoice(TCRModEntities.TRIAL_MASTER,17,"没错，而且她现在想见见你。");
         this.addDialog(TCRModEntities.TRIAL_MASTER,18,"什么，是什么人？");
-        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,18,"好久不见，叔父。");
+        this.addDialog(TCRModEntities.MIAO_YIN,50,"好久不见，叔父。");
         this.addDialog(TCRModEntities.TRIAL_MASTER,19,"什么…居然是你，你居然还活着…！");
-        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,19,"叔父，许久未见，您见面的第一句话居然是盼望着我死么");
+        this.addDialog(TCRModEntities.MIAO_YIN,51,"叔父，许久未见，您见面的第一句话居然是盼望着我死么");
         this.addDialog(TCRModEntities.TRIAL_MASTER,20,"当然不是…不如说，我很惊讶…护卫！");
         this.addDialog(TCRModEntities.TRIAL_MASTER,21,"为什么，你居然会找到这么厉害的帮手");
-        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,20,"毕竟我可是通过了你的试炼呢");
+        this.addDialog(TCRModEntities.MIAO_YIN,52,"毕竟他可是通过了你的试炼呢");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,18,"事到如今，也该说出真相了吧");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,22,"该死，没想到居然会有这么一天。当年，我在你父亲死后打理着产业，但由于我经营不善，导致了不少亏空，我没有办法，只好从家产里偷偷挪用来补齐。后来债越欠越多…我没有办法，只好把值钱的东西都移走，然后一把火把房子烧了，造成火灾的假象…");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,19,"就因为你自己的贪欲，烧瞎了自己侄女的眼睛，害了多少人的性命。");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,23,"该死，没想到居然会有这么一天。当年，我在你父亲死后打理着产业，但由于我经营不善，导致了不少亏空，我没有办法，只好从家产里偷偷挪用来补齐。后来债越欠越多…我没有办法，只好把值钱的东西都移走，然后一把火把房子烧了，造成火灾的假象…");
+        this.addDialogChoice(TCRModEntities.TRIAL_MASTER,20,"就因为你自己的贪欲，烧瞎了自己侄女的眼睛，害了多少人的性命。");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,24,"火灾的发展总是出人预料，我已经尽力让火势不发生在你的房间了，否则，你和你的那破琴肯定不能全身而退…我自己也被火烧伤，不然也不用刻意涂黑皮肤来掩饰了。");
+        this.addDialog(TCRModEntities.MIAO_YIN,53,"你作为始作俑者，居然还有脸在这里为自己开脱？简直是找打！");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,25,"我也是走投无路！在那之后我可又是照顾了你好多年，直到你十八岁了我才找个借口逃走，事到如今…无论如何，你们得留我一条生路！");
+        this.addDialog(TCRModEntities.MIAO_YIN,54,"你这人，真是无耻到了极点。不杀你，要如何了结我的心头之恨！");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,26,"别杀我，我把家产都还你，我会向天下坦白我的罪行，恢复你的声誉。");
+        this.addDialog(TCRModEntities.MIAO_YIN,55,"这样也好，就让大众的唾沫把他淹死吧，而且，他的老债主也一定不会放过他的。");
+        this.addDialog(TCRModEntities.TRIAL_MASTER,27,"（此后就交给他们了，过几天再来拜访妙音吧）");
+        //事件结束后与乐师对话
+        this.addDialog(TCRModEntities.MIAO_YIN,56,"阁下！你来了。妾身已经接管了那个家伙的财产了，阁下帮我甚多，妾身感激不尽");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,47,"小事一桩，话说那个家伙去哪了？");
+        this.addDialog(TCRModEntities.MIAO_YIN,57,"他坦白了他的罪行，已经被关起来了");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,48,"这样一来问题就都解决了，太好了");
+        this.addDialog(TCRModEntities.MIAO_YIN,58,"阁下…非常感谢你，之前说好的奖励，你想要什么");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,49,"我想要…");
+        this.addDialog(TCRModEntities.MIAO_YIN,59,"呵呵，妾身现在刚接收回了家产，一时恐怕难以抽身，不过若阁下愿意留在此处辅佐我，妾身也是非常欢迎。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,50,"算了，我是漂泊之人，不便在此久留。");
+        this.addDialog(TCRModEntities.MIAO_YIN,60,"是呀，嗯，话说回来，我现在已经有容身之处了，这件琵琶就送给你吧。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,51,"这样可以吗");
+        this.addDialog(TCRModEntities.MIAO_YIN,61,"妾身的琵琶还有很多，阁下无需担心，这件琵琶上有特殊的力量，或许对你冒险有所帮助。当然，我会送你一些别的礼物，希望阁下之后也能回来看看我。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,52,"我们一定会再见面的");//结局二达成
+
+
 
         this.addBookAndContents("book1","Test","Test1","Test1.1");
         this.addBookAndContents("book2","Test2","Test2","Test2.2");

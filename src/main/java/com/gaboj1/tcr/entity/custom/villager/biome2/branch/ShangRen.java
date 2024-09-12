@@ -44,7 +44,7 @@ public class ShangRen extends YueShiLineNpc {
         if(senderData.getBoolean("miaoYinTalked1")){
             builder.setAnswerRoot(
                     new TreeNode(BUILDER.buildDialogueAnswer(entityType,0))
-                            .addLeaf(BUILDER.buildDialogueAnswer(entityType,-1), (byte) 1)//普通交易
+                            .addLeaf(BUILDER.buildDialogueOption(entityType,-1), (byte) 1)//普通交易
                             .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,2), BUILDER.buildDialogueOption(entityType,0))
                                     .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,3), BUILDER.buildDialogueOption(entityType,1))
                                             .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,4), BUILDER.buildDialogueOption(entityType,2))

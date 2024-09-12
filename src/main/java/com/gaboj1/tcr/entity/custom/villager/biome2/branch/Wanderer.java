@@ -2,6 +2,7 @@ package com.gaboj1.tcr.entity.custom.villager.biome2.branch;
 
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -14,12 +15,7 @@ import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
 public class Wanderer extends YueShiLineNpc {
     public Wanderer(EntityType<? extends Wanderer> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel, -1);
-    }
-
-    @Override
-    public boolean isFemale() {
-        return true;
+        super(pEntityType, pLevel, 1);
     }
 
     @Override
@@ -43,10 +39,10 @@ public class Wanderer extends YueShiLineNpc {
 
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
-        player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, 2), true);
+        player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, 2, false), true);
         this.discard();
         //TODO 获得琵琶
-
+        SaveUtil.biome2.isBranchEnd = true;
         setConversingPlayer(null);
     }
 

@@ -106,6 +106,15 @@ public abstract class TCRVillager extends Villager implements GeoEntity, ManySki
         return isAngry;
     }
 
+    /**
+     * 方便代码让它攻击某人
+     */
+    @Override
+    public void setTarget(@Nullable LivingEntity entity) {
+        super.setTarget(entity);
+        isAngry = true;
+    }
+
     //区别于getID
     @Override
     public int getSkinID() {

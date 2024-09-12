@@ -32,9 +32,16 @@ public abstract class YueShiLineNpc extends TCRTalkableVillager {
         return InteractionResult.sidedSuccess(level().isClientSide);
     }
 
+    /**
+     * 关键npc可不能揍
+     */
     @Override
     public boolean hurt(DamageSource source, float v) {
         return false;
+    }
+
+    public boolean realHurt(DamageSource source, float v) {
+        return super.hurt(source, v);
     }
 
 }

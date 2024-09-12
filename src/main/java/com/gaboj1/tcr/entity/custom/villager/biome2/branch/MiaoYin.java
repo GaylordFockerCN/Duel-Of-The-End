@@ -111,15 +111,69 @@ public class MiaoYin extends YueShiLineNpc {
                     new TreeNode(BUILDER.buildDialogueAnswer(entityType,11))
                             .addChild(sameNode1)
             );
-        } else if(senderData.getBoolean("shangRenTalked")){
+        } else if(senderData.getBoolean("shangRenTalked") && !senderData.getBoolean("trialTalked1")){
             //和商人对话后
             builder.start(16)
                     .addChoice(17, 17)
                     .addChoice(18, 18)
                     .addFinalChoice(19, (byte) 6);
-        } else if(senderData.getBoolean("trialTalked1")){
+        } else if(senderData.getBoolean("trialTalked1") && !senderData.getBoolean("miaoYinTalked2")){
             //取得夜明珠后
-
+            builder.setAnswerRoot(
+                    new TreeNode(BUILDER.buildDialogueAnswer(entityType,20))
+                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,21),BUILDER.buildDialogueOption(entityType,20))
+                                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,22),BUILDER.buildDialogueOption(entityType,21))
+                                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,23),BUILDER.buildDialogueOption(entityType,22))
+                                                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,24),BUILDER.buildDialogueOption(entityType,23))
+                                                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,25),BUILDER.buildDialogueOption(entityType,24))
+                                                                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,26),BUILDER.buildDialogueOption(entityType,25))
+                                                                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,27),BUILDER.buildDialogueOption(entityType,26))
+                                                                                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,28),BUILDER.buildDialogueOption(entityType,27))
+                                                                                            .execute((byte) 7)//记录选择
+                                                                                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,29),BUILDER.buildDialogueOption(entityType,29))
+                                                                                                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,30),BUILDER.buildDialogueOption(entityType,30))
+                                                                                                            .addLeaf(BUILDER.buildDialogueOption(entityType,31), (byte) 9)
+                                                                                                    )
+                                                                                            )
+                                                                                    )
+                                                                                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,21),BUILDER.buildDialogueOption(entityType,28))
+                                                                                            .execute((byte) 8)//记录选择
+                                                                                    )
+                                                                            )
+                                                                    )
+                                                            )
+                                                    )
+                                            )
+                                    )
+                            )
+            );
+        } else if(senderData.getBoolean("miaoYinTalked2") && senderData.getBoolean("chooseEnd2")){
+            //第二段对话（隔了一天，已经是月圆之夜了）
+            builder.start(33)
+                    .addChoice(32, 34)
+                    .addChoice(33, 35)
+                    .addChoice(34, 36)
+                    .addChoice(35, 37)
+                    .addChoice(36, 38)
+                    .addChoice(37, 39)
+                    .addChoice(38, 40)
+                    .addChoice(39, 41)
+                    .addChoice(40, 42)
+                    .addChoice(41, 43)
+                    .addChoice(42, 44)
+                    .addChoice(43, 45)
+                    .addChoice(44, 46)
+                    .addChoice(45, 47)
+                    .addFinalChoice(46, (byte) 10);
+        } else if(senderData.getBoolean("trialTalked2")){
+            //剧情结束后
+            builder.start(56)
+                    .addChoice(47, 57)
+                    .addChoice(48, 58)
+                    .addChoice(49, 59)
+                    .addChoice(50, 60)
+                    .addChoice(51, 61)
+                    .addFinalChoice(52, (byte) 11);
         } else {
             return;
         }
@@ -170,7 +224,26 @@ public class MiaoYin extends YueShiLineNpc {
                     player.addItem(TCRModItems.GOLDEN_WIND_AND_DEW.get().getDefaultInstance());
                 }
                 break;
-
+            case 7:
+                SaveUtil.biome2.chooseEnd2 = true;
+                return;
+            case 8:
+                SaveUtil.biome2.chooseEnd2 = false;
+                return;
+            case 9:
+                chat(BUILDER.buildDialogueAnswer(entityType,31, false));
+                player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType,32, true), false);
+                SaveUtil.biome2.miaoYinTalked2 = true;
+                break;
+            case 10:
+                chat(BUILDER.buildDialogueAnswer(entityType,48, false));
+                player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType,49, true), false);
+                discard();
+                break;
+            case 11:
+                //获得成就 TODO
+                chat(BUILDER.buildDialogueAnswer(entityType,52, false));
+                break;
         }
         setConversingPlayer(null);
     }

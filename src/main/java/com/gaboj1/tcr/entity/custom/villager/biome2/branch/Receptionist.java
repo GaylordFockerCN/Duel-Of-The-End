@@ -18,12 +18,7 @@ import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
 public class Receptionist extends YueShiLineNpc {
     public Receptionist(EntityType<? extends Receptionist> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel, -1);
-    }
-
-    @Override
-    public boolean isFemale() {
-        return true;
+        super(pEntityType, pLevel, 1);
     }
 
     @Override
