@@ -37,6 +37,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.add("info.the_casket_of_reveries.cannot_spawn","目前的剧情进度还无法召唤此BOSS！");
         this.add("info.the_casket_of_reveries.sure_to_spawn","再次右键以召唤BOSS（用于刷材料，不影响剧情）");
         this.add("info.the_casket_of_reveries.cannot_trial","目前暂时无法进行试炼");
+        this.add("info.the_casket_of_reveries.trial_start","试炼开始！");
 
         this.add("the_casket_of_reveries.button.boss1","泰兰妮尔之心");
         this.add("the_casket_of_reveries.button.boss2","九霄");

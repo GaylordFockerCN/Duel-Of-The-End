@@ -29,17 +29,17 @@ public class TigerTrialSpawnerBlock extends EntitySpawnerBlock {
     @Override
     public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
         if(!pLevel.isClientSide){
-            if(!SaveUtil.biome2.miaoYinTalked1){
-                pPlayer.displayClientMessage(Component.translatable("info.the_casket_of_reveries.cannot_trial"), true);
-            } else {
-                BlockEntity entity = pLevel.getBlockEntity(pPos);
-                if(entity instanceof TigerTrialSpawnerBlockEntity blockEntity && !blockEntity.isTrialing() && !blockEntity.isTrialed()){
-                    for(int i = 0; i < 5 ; i++){
-                        TigerEntity tiger = blockEntity.spawnMyBoss(((ServerLevel) pLevel));
-                        tiger.setTarget(pPlayer);
-                        blockEntity.addTiger(tiger);
-                    }
+            BlockEntity entity = pLevel.getBlockEntity(pPos);
+            if(SaveUtil.biome2.miaoYinTalked1 && entity instanceof TigerTrialSpawnerBlockEntity blockEntity && !blockEntity.isTrialing() && !blockEntity.isTrialed()){
+                for(int i = 0; i < 5 ; i++){
+                    TigerEntity tiger = blockEntity.spawnMyBoss(((ServerLevel) pLevel));
+                    pLevel.addFreshEntity(tiger);
+                    tiger.setTarget(pPlayer);
+                    blockEntity.addTiger(tiger);
                 }
+                pPlayer.displayClientMessage(Component.translatable("info.the_casket_of_reveries.trial_start"), true);
+            } else {
+                pPlayer.displayClientMessage(Component.translatable("info.the_casket_of_reveries.cannot_trial"), true);
             }
         }
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
@@ -47,7 +47,10 @@ public class TigerTrialSpawnerBlock extends EntitySpawnerBlock {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
-        return createTickerHelper(type, blockEntityType.get(), TigerTrialSpawnerBlockEntity::tick);
+        return createTickerHelper(type, blockEntityType.get(), (
+                (level1, blockPos, blockState, entitySpawnerBlockEntity) ->
+                        TigerTrialSpawnerBlockEntity.tick(level1, blockPos, blockState, (TigerTrialSpawnerBlockEntity) entitySpawnerBlockEntity))
+        );
     }
 
     @Nullable

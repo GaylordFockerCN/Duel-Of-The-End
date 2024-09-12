@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TigerTrialSpawnerBlockEntity extends EntitySpawnerBlockEntity<TigerEntity>{
-    private final List<TigerEntity> tigers = new ArrayList<>();
+    private final List<Integer> tigers = new ArrayList<>();
     private boolean trialed, trialing;
     public TigerTrialSpawnerBlockEntity(BlockPos pos, BlockState state) {
         super(TCRModBlockEntities.TIGER_TRIAL_SPAWNER_BLOCK_ENTITY.get(), TCRModEntities.TIGER.get(), pos, state);
@@ -51,16 +51,25 @@ public class TigerTrialSpawnerBlockEntity extends EntitySpawnerBlockEntity<Tiger
     }
 
     public void addTiger(TigerEntity entity){
-        tigers.add(entity);
+        tigers.add(entity.getId());
         trialing = true;
     }
 
-    public List<TigerEntity> getTigers() {
+    public List<Integer> getTigers() {
         return tigers;
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, TigerTrialSpawnerBlockEntity blockEntity) {
-        if(blockEntity.isTrialing() && blockEntity.getTigers().isEmpty()){
+        if(level.isClientSide){
+            return;
+        }
+        boolean isEmpty = !blockEntity.getTigers().isEmpty();
+        for(int entityId : blockEntity.getTigers()){
+            if(level.getEntity(entityId) instanceof TigerEntity){
+                isEmpty = false;
+            }
+        }
+        if(blockEntity.isTrialing() && isEmpty){
             TrialMaster trialMaster = TCRModEntities.TRIAL_MASTER.get().create(level);
             if(trialMaster != null){
                 blockEntity.trialing = false;
@@ -69,6 +78,7 @@ public class TigerTrialSpawnerBlockEntity extends EntitySpawnerBlockEntity<Tiger
                 Player player = level.getNearestPlayer(pos.getX(), pos.getY(), pos.getZ(), 32, false);
                 assert player != null;
                 trialMaster.setPos(pos.getCenter().add(player.position()).scale(0.5));
+                level.addFreshEntity(trialMaster);
                 trialMaster.mobInteract(player, InteractionHand.MAIN_HAND);//发起对话
             }
         }
