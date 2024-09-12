@@ -18,7 +18,7 @@ import software.bernie.geckolib.util.RenderUtils;
 public class YggdrasilSpawnerBlockEntity extends BossSpawnerBlockEntity<YggdrasilEntity> implements GeoAnimatable {
 	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 	public YggdrasilSpawnerBlockEntity(BlockPos pos, BlockState state) {
-		super(TCRModBlockEntities.YGGDRASIL_SPAWNER_BLOCK_ENTITY.get(),TCRModEntities.YGGDRASIL.get(), pos, state);
+		super(TCRModBlockEntities.YGGDRASIL_SPAWNER_BLOCK_ENTITY.get(), TCRModEntities.YGGDRASIL.get(), pos, state);
 	}
 
 	@Override

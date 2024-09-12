@@ -34,7 +34,13 @@ public class Receptionist extends YueShiLineNpc {
     @Override
     public void openDialogueScreen(CompoundTag senderData) {
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
-        if(!senderData.getBoolean("talkToMaster")){
+        if(senderData.getBoolean("trialTalked2") /* TODO 或者结局3*/){
+            builder.start(2)
+                    .addFinalChoice(1, (byte) -1);
+        } else if(senderData.getBoolean("afterTrial") && !senderData.getBoolean("talkToMaster")){
+            builder.start(3)
+                    .addFinalChoice(1, (byte) -1);
+        } else if(!senderData.getBoolean("talkToMaster")){
             //正常对话
             builder.start(0)
                     .addChoice(0, 1)

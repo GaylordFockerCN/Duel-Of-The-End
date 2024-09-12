@@ -27,6 +27,7 @@ public class TCRModItemTabs {
 				tabData.accept(TCRModBlocks.PORTAL_BED.get());
 				tabData.accept(TCRModBlocks.PORTAL_BLOCK.get());
 				tabData.accept(TCRModBlocks.YGGDRASIL_BLOCK.get());
+				tabData.accept(TCRModBlocks.TIGER_TRIAL_BLOCK.get());
 				tabData.accept(TCRModBlocks.CATNIP.get());
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
 				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get());

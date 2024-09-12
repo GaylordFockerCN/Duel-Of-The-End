@@ -4,6 +4,7 @@ import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.entity.BetterStructureBlockEntity;
 import com.gaboj1.tcr.block.entity.PortalBedEntity;
 import com.gaboj1.tcr.block.entity.PortalBlockEntity;
+import com.gaboj1.tcr.block.entity.spawner.TigerTrialSpawnerBlockEntity;
 import com.gaboj1.tcr.block.entity.spawner.YggdrasilSpawnerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -33,6 +34,11 @@ public class TCRModBlockEntities {
             REGISTRY.register("yggdrasil_spawner_block_entity", () ->
                     BlockEntityType.Builder.of(YggdrasilSpawnerBlockEntity::new,
                             TCRModBlocks.YGGDRASIL_BLOCK.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<TigerTrialSpawnerBlockEntity>> TIGER_TRIAL_SPAWNER_BLOCK_ENTITY =
+            REGISTRY.register("tiger_trial_spawner_block_entity", () ->
+                    BlockEntityType.Builder.of(TigerTrialSpawnerBlockEntity::new,
+                            TCRModBlocks.TIGER_TRIAL_BLOCK.get()).build(null));
 
 
 }

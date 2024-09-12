@@ -36,6 +36,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.add("info.the_casket_of_reveries.alreadyAddWhite","你已经是村民阵营了，不能伤害村民哦");
         this.add("info.the_casket_of_reveries.cannot_spawn","目前的剧情进度还无法召唤此BOSS！");
         this.add("info.the_casket_of_reveries.sure_to_spawn","再次右键以召唤BOSS（用于刷材料，不影响剧情）");
+        this.add("info.the_casket_of_reveries.cannot_trial","目前暂时无法进行试炼");
 
         this.add("the_casket_of_reveries.button.boss1","泰兰妮尔之心");
         this.add("the_casket_of_reveries.button.boss2","九霄");
@@ -343,7 +344,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.P1NERO, 6, "我们不可能一直活在“这个世界”里，我们也不可能一直活在这个世界里。但认识却是无尽的，如同深渊般令人恐惧。");
         this.addDialog(TCRModEntities.P1NERO, 7, "感谢你能听我废话那么多。很抱歉，我没有奖励可以给你，再会了，朋友！");
         this.addDialogChoice(TCRModEntities.P1NERO,0,"继续");
-        this.addDialogChoice(TCRModEntities.P1NERO,1,"结束对话");
+        this.addDialogChoice(TCRModEntities.P1NERO,1,"离开");
 
         //长老
         this.addEntityAndEgg(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER,"牧歌原野-海拉长老");
@@ -536,12 +537,11 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.RECEPTIONIST,0,"远行之人，可为万明珠而来？");
         this.addDialogChoice(TCRModEntities.RECEPTIONIST,0,"正是");
         this.addDialog(TCRModEntities.RECEPTIONIST,1,"既如此，请前往试炼。此试炼并无刁难之处，但凭个人本领即可。然自设立以来尚无一人过关，望君多加小心。若因此丧命，吾等概不负责。");
-        this.addDialogChoice(TCRModEntities.RECEPTIONIST,1,"结束对话");
-        this.addDialog(TCRModEntities.RECEPTIONIST,2,"君之诚心灼灼，吾深感敬佩！");
-        this.addDialog(TCRModEntities.RECEPTIONIST,3,"令人敬佩，令人敬佩。吾等设立此试炼已久，通过者唯君尔。吾等即刻禀告主人，请君随吾等前来！");
+        this.addDialogChoice(TCRModEntities.RECEPTIONIST,1,"离开");
+        this.addDialog(TCRModEntities.RECEPTIONIST,2,"我们永远效忠于妙音大人！");
+        this.addDialog(TCRModEntities.RECEPTIONIST,3,"令人敬佩，令人敬佩。吾等设立此试炼已久，通过者唯君尔！");
 
         //乐师支线-与试炼主人初次的对话
-        this.addDialog(TCRModEntities.TRIAL_MASTER,-1,"（盲人女孩面前已经没有东西可以偷了）");
         this.addDialog(TCRModEntities.TRIAL_MASTER,0,"壮哉壮哉，何等勇士，竟能通过吾之试炼！");
         this.addDialogChoice(TCRModEntities.TRIAL_MASTER,0,"您过奖了，我只是想要借用一下万明珠");
         this.addDialog(TCRModEntities.TRIAL_MASTER,1,"万明珠不过小事一桩。实不相瞒，吾设立此等试炼，意在选出真正强大之人。请阁下在吾之府邸担任总管，护吾宅邸之周全，吾愿准备丰厚赠礼，望您勿要推辞。");
