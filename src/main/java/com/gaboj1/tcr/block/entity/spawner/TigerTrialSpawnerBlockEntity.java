@@ -1,6 +1,5 @@
 package com.gaboj1.tcr.block.entity.spawner;
 
-import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.block.TCRModBlockEntities;
 import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.entity.custom.biome2.TigerEntity;
@@ -9,7 +8,6 @@ import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -39,6 +37,11 @@ public class TigerTrialSpawnerBlockEntity extends EntitySpawnerBlockEntity<Tiger
     }
 
     @Override
+    public boolean shouldDestroySelf() {
+        return false;
+    }
+
+    @Override
     protected void saveAdditional(@NotNull CompoundTag tag) {
         super.saveAdditional(tag);
         tag.putBoolean("trialed", trialed);
@@ -59,7 +62,7 @@ public class TigerTrialSpawnerBlockEntity extends EntitySpawnerBlockEntity<Tiger
         return tigers;
     }
 
-    public static void tick(Level level, BlockPos pos, BlockState state, TigerTrialSpawnerBlockEntity blockEntity) {
+    public static void tick(Level level, BlockPos pos, TigerTrialSpawnerBlockEntity blockEntity) {
         if(level.isClientSide){
             return;
         }

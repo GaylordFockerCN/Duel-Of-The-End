@@ -1,11 +1,9 @@
 package com.gaboj1.tcr.block.custom.spawner;
 
 import com.gaboj1.tcr.block.TCRModBlockEntities;
-import com.gaboj1.tcr.block.entity.spawner.BossSpawnerBlockEntity;
 import com.gaboj1.tcr.block.entity.spawner.TigerTrialSpawnerBlockEntity;
 import com.gaboj1.tcr.entity.custom.biome2.TigerEntity;
 import com.gaboj1.tcr.util.SaveUtil;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -49,7 +47,7 @@ public class TigerTrialSpawnerBlock extends EntitySpawnerBlock {
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
         return createTickerHelper(type, blockEntityType.get(), (
                 (level1, blockPos, blockState, entitySpawnerBlockEntity) ->
-                        TigerTrialSpawnerBlockEntity.tick(level1, blockPos, blockState, (TigerTrialSpawnerBlockEntity) entitySpawnerBlockEntity))
+                        TigerTrialSpawnerBlockEntity.tick(level1, blockPos, (TigerTrialSpawnerBlockEntity) entitySpawnerBlockEntity))
         );
     }
 

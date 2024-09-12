@@ -54,10 +54,15 @@ public abstract class EntitySpawnerBlockEntity<T extends Mob> extends BlockEntit
 			if (level.getDifficulty() != Difficulty.PEACEFUL) {
 				if (blockEntity.spawnMyBoss((ServerLevel) level) != null) {
 					blockEntity.spawned = true;
+					if(blockEntity.shouldDestroySelf()){
+						level.destroyBlock(pos, true);
+					}
 				}
 			}
 		}
 	}
+
+	public abstract boolean shouldDestroySelf();
 
 	@Override
 	protected void saveAdditional(@NotNull CompoundTag tag) {

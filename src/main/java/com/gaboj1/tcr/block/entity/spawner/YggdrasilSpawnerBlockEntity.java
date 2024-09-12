@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import software.bernie.geckolib.util.RenderUtils;
 
@@ -41,6 +40,11 @@ public class YggdrasilSpawnerBlockEntity extends BossSpawnerBlockEntity<Yggdrasi
 	@Override
 	public boolean canSpawnShadow() {
 		return SaveUtil.biome1.isFinished();
+	}
+
+	@Override
+	public boolean shouldDestroySelf() {
+		return false;
 	}
 
 	@Override
