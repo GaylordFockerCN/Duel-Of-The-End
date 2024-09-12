@@ -1,13 +1,10 @@
 package com.gaboj1.tcr.block.entity.spawner;
 
 import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.entity.ShadowableEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -24,7 +21,7 @@ import java.util.Objects;
 
 public abstract class EntitySpawnerBlockEntity<T extends Mob> extends BlockEntity {
 
-	protected static final int DEFAULT_RANGE = 20;
+	protected static final int DEFAULT_RANGE = 32;
 
 	protected final EntityType<T> entityType;
 	protected boolean isReady = false;
@@ -82,6 +79,7 @@ public abstract class EntitySpawnerBlockEntity<T extends Mob> extends BlockEntit
 		BlockPos spawnPos = accessor.getBlockState(this.getBlockPos().above()).getCollisionShape(accessor, this.getBlockPos().above()).isEmpty() ? this.getBlockPos().above() : this.getBlockPos();
 		myCreature.moveTo(spawnPos, accessor.getLevel().getRandom().nextFloat() * 360F, 0.0F);
 		ForgeEventFactory.onFinalizeSpawn(myCreature, accessor, accessor.getCurrentDifficultyAt(spawnPos), MobSpawnType.SPAWNER, null, null);
+		accessor.addFreshEntity(myCreature);
 
 		return myCreature;
 	}

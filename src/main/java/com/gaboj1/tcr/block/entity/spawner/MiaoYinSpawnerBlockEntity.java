@@ -20,16 +20,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MiaoYinSpawnerBlockEntity extends EntitySpawnerBlockEntity<MiaoYin>{
+
     public MiaoYinSpawnerBlockEntity(BlockPos pos, BlockState state) {
         super(TCRModBlockEntities.MIAO_YIN_SPAWNER_BLOCK_ENTITY.get(), TCRModEntities.MIAO_YIN.get(), pos, state);
     }
 
     @Override
     public MiaoYin spawnMyBoss(ServerLevelAccessor accessor) {
-        if(!SaveUtil.biome2.trialTalked2){
-            return null;
+        if(SaveUtil.biome2.trialTalked2 || SaveUtil.biome2.chooseEnd3()){
+            return super.spawnMyBoss(accessor);
         }
-        return super.spawnMyBoss(accessor);
+        return null;
+    }
+
+    @Override
+    protected int getRange() {
+        return 64;
     }
 
     @Override

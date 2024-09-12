@@ -199,6 +199,8 @@ public class ModLangGenerator extends ModLangProvider {
         this.add(TCRModBlocks.POTTED_CATNIP.get(),"猫薄荷盆栽");
         this.add(TCRModBlocks.ORICHALCUM_ORE.get(),"神金矿");
         this.add(TCRModBlocks.YGGDRASIL_BLOCK.get(),"Yggdrasil召唤石");
+        this.add(TCRModBlocks.TIGER_TRIAL_BLOCK.get(),"试炼冰虎召唤石");
+        this.add(TCRModBlocks.MIAO_YIN_BLOCK.get(),"妙音召唤石");
 
         this.addEntityAndEgg(TCRModEntities.JELLY_CAT,"猫猫果冻");
         this.addEntityAndEgg(TCRModEntities.SQUIRREL,"松鼠");
@@ -682,8 +684,48 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.MIAO_YIN,51,"这样可以吗");
         this.addDialog(TCRModEntities.MIAO_YIN,61,"妾身的琵琶还有很多，阁下无需担心，这件琵琶上有特殊的力量，或许对你冒险有所帮助。当然，我会送你一些别的礼物，希望阁下之后也能回来看看我。");
         this.addDialogChoice(TCRModEntities.MIAO_YIN,52,"我们一定会再见面的");//结局二达成
-
-
+        //结局3与乐师的对话
+        this.addDialog(TCRModEntities.MIAO_YIN,62,"是在这里么，跑到了这么远的地方了啊，嗯，妾身知道了。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,53,"怎么了吗");
+        this.addDialog(TCRModEntities.MIAO_YIN,63,"（乐师“看着”你，露出笑容）没什么好在意的。阁下，谢谢你。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,54,"小事一桩，话说回来，明晚就是月圆之夜了，可以治好你的眼睛了。");//结局二达成
+        this.addDialog(TCRModEntities.MIAO_YIN,64,"是啊…");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,55,"离开");
+        //隔天在试炼主家里的对话
+        this.addBookAndAuthorAndContents("miao_yin_message","妙音","谁人留下的字条","阁下，感谢您的相助。但无论如何，也不能把您再扯入妾身的私事中来。当然，妾身不会忘记与您的约定，如果您想要奖励，就来那位“试炼主人”的家中吧。");
+        this.addDialog(TCRModEntities.MIAO_YIN,65,"阁下，你终于来了");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,56,"你怎么一个人在这里，那位试炼主人呢？");
+        this.addDialog(TCRModEntities.MIAO_YIN,66,"被妾身杀了");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,57,"什么？你…");
+        this.addDialog(TCRModEntities.MIAO_YIN,67,"抱歉，阁下，妾身利用了你，但我这样做有我的理由");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,58,"是什么理由");
+        this.addDialog(TCRModEntities.MIAO_YIN,68,"其实，我不是什么漂泊之人。我生于富庶之家，我的母亲在我很小的时候就死了，但我的父亲很宠溺我，知道我喜欢音乐，为我请了最好的老师教我琵琶，这个琵琶上面附有魔力，就是那位老师离别时相赠的。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,59,"继续");
+        this.addDialog(TCRModEntities.MIAO_YIN,69,"虽然父亲后来又新娶了妻子，后妈对我很冷漠，但因为音乐，我的童年很快乐。可惜在我十四岁那年，我的父亲突然去世了，没人知晓原因。在那以后，家族的产业就落到了后妈身上，可惜后妈不善打理，只好拜托我的叔父。突然有一天，家中莫名起了大火，死伤了一众家仆");
+        //继续
+        this.addDialog(TCRModEntities.MIAO_YIN,70,"我的眼睛被熏瞎，家产也葬送火海，从此之后我便家徒四壁，后妈无法忍受，改嫁了，只剩叔父勉强支撑着抚养我，到了我十八岁时，叔父却又突然被宗主征兵带走，从此了无音讯，失去了一切依靠，我只剩下琵琶了，也就靠此漂泊谋生至今。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,60,"这跟你杀人又有什么关系？");
+        this.addDialog(TCRModEntities.MIAO_YIN,71,"阁下所见到的试炼主人，就是我的叔父");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,61,"什么？");
+        this.addDialog(TCRModEntities.MIAO_YIN,72,"他由于生意上的亏空，偷偷挪用了我父亲的家产，被我父亲发现后，他就害死了我的父亲。在这之后，他生意上的亏空不仅没有被填上，反而越来越大，他设计了一场火灾，造成家产全毁的假象，实际上已经把所有值钱的东西偷偷转移走了，万明珠，就是其中之一。此后他就一直隐姓埋名，躲了起来。没想到，终于还是让我逮住他了。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,62,"你怎么知道他就是你的叔父？");
+        this.addDialog(TCRModEntities.MIAO_YIN,73,"万明珠是我家的镇宅之宝，我再熟悉不过了。作为神物，它岂是会被火烧尽的东西？所以，我知道它一定是被人拿走了，只要沿着万明珠找，就能找到真凶。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,63,"这么说来，你的眼睛…");
+        this.addDialog(TCRModEntities.MIAO_YIN,74,"很抱歉，在这点上妾身也利用了你。其实我的眼睛被烟火熏伤后一段时间就恢复了，虽然视力有所下降，但看东西还是没问题的，也多亏了妾身一直装瞎，叔父在火灾之后不把我放在眼里，一边抚养我一边继续干着他那些坏勾当，直到他把我抛弃逃走。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,64,"那么关于万明珠的传言也是假的吗");
+        this.addDialog(TCRModEntities.MIAO_YIN,75,"阁下居然对此感兴趣么，实话实说，万明珠如果真有这等功效，父亲早就用它来帮助别人了，它不过是富含魔力的珠子罢了，叔父应该也知道这件事，所以他只是拿了个假珠子糊弄你，反正真珠子同样没法治病。");
+        //继续
+        this.addDialog(TCRModEntities.MIAO_YIN,76,"不过这个传说不是我编的，但妾身利用了这个传说，让你帮我去找万明珠。当然，我也早知道有试炼这件事，只是从没有人能通过它，我又不可能冒着风险现身，也就没有确切的情报。直到遇到了你，阁下，我真的很感谢你。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,65,"如果事情真是这样就好…我也没有做什么。不过，你就这么把他干掉了吗");
+        this.addDialog(TCRModEntities.MIAO_YIN,77,"流浪期间，妾身也算是个和你一样的冒险者，锻炼升级自然不在话下。不过也没有很强，因此只敢搞些突然袭击罢了。至于他…我已经在他的宅邸里找到了他罪行的证据，我父亲的老朋友也一定会帮我，这点不必担心了。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,66,"既然如此，那看来也没我什么事情了");
+        this.addDialog(TCRModEntities.MIAO_YIN,78,"且慢，此番若无阁下，妾身一人绝对难以复仇，如今我已夺回家产，阁下无需顾虑，想要什么，尽管开口。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,67,"我想要…");
+        this.addDialog(TCRModEntities.MIAO_YIN,79,"话说回来，阁下是漂泊之人。妾身的琵琶，上附有特殊之魔力，想来对你的冒险大有裨益，就赠与阁下了。此外，金钱等俗物，阁下任意取就是，您意下如何？");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,68,"如此也好，谢谢你了");
+        this.addDialog(TCRModEntities.MIAO_YIN,80,"不，是妾身要谢谢阁下才是。若您此后冒险腻了，可归此处，妾身一定好好招待");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,69,"会再见的。");//结局3
+        //TODO 后日谈
 
         this.addBookAndContents("book1","Test","Test1","Test1.1");
         this.addBookAndContents("book2","Test2","Test2","Test2.2");

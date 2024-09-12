@@ -18,6 +18,7 @@ public class BookManager {
 
     public static Book BIOME1_ELDER_DIARY_3 = new Book("biome1_elder_diary3", 2);
     public static Book BU_GAO = new Book("bu_gao", 1);
+    public static Book MIAO_YIN_MESSAGE = new Book("miao_yin_message", 1);
     public record Book(String name, int pageCount){
         public ItemStack get(){
             return getBook(name,pageCount);
@@ -38,7 +39,7 @@ public class BookManager {
 
         book.addTagElement("pages", bookPages);//页数
         book.addTagElement("generation", IntTag.valueOf(3));//破损度
-        //不用I18n不知道为什么书会失效.....
+        //不用I18n不知道为什么书会失效..... FIXME 感觉用了I18n的话放服务端会有bug
         book.addTagElement("author", StringTag.valueOf(I18n.get(TheCasketOfReveriesMod.MOD_ID + ".book.author." + key)));
         book.addTagElement("title", StringTag.valueOf(I18n.get(TheCasketOfReveriesMod.MOD_ID + ".book." + key)));
         return book;

@@ -163,7 +163,6 @@ public class TrialMaster extends YueShiLineNpc {
                                 }
                                 isAngry = true;
                                 setTarget(player);
-                                setHealth(1);//TODO 测试用
                             },
                             dBuilder.buildDialogue(this, dBuilder.buildDialogueAnswer(18)),
                             dBuilder.buildDialogue(miaoYinType, dBuilder.buildDialogueAnswer(miaoYinType, 50)),

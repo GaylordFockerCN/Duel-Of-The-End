@@ -7,6 +7,7 @@ import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
+import com.gaboj1.tcr.util.BookManager;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.ItemUtil;
 import com.gaboj1.tcr.util.SaveUtil;
@@ -17,8 +18,11 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.DropperBlock;
+import net.minecraft.world.level.block.entity.DropperBlockEntity;
 import org.jetbrains.annotations.NotNull;
 
 import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
@@ -136,8 +140,11 @@ public class MiaoYin extends YueShiLineNpc {
                                                                                                     )
                                                                                             )
                                                                                     )
-                                                                                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,21),BUILDER.buildDialogueOption(entityType,28))
+                                                                                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,62),BUILDER.buildDialogueOption(entityType,28))
                                                                                             .execute((byte) 8)//记录选择
+                                                                                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,63),BUILDER.buildDialogueOption(entityType,53))
+                                                                                                            .addLeaf(BUILDER.buildDialogueOption(entityType,54), (byte) 12)
+                                                                                                    )
                                                                                     )
                                                                             )
                                                                     )
@@ -175,7 +182,24 @@ public class MiaoYin extends YueShiLineNpc {
                     .addChoice(51, 61)
                     .addFinalChoice(52, (byte) 11);
         } else {
-            return;
+            //选择了结局3，在试炼主人家的对话
+            builder.start(65)
+                    .addChoice(56, 66)
+                    .addChoice(57, 67)
+                    .addChoice(58, 68)
+                    .addChoice(59, 69)
+                    .addChoice(59, 70)
+                    .addChoice(60, 71)
+                    .addChoice(61, 72)
+                    .addChoice(62, 73)
+                    .addChoice(63, 74)
+                    .addChoice(64, 75)
+                    .addChoice(59, 76)
+                    .addChoice(65, 77)
+                    .addChoice(66, 78)
+                    .addChoice(67, 79)
+                    .addChoice(68, 80)
+                    .addFinalChoice(69, (byte) 11);
         }
 
         Minecraft.getInstance().setScreen(builder.build());
@@ -231,18 +255,27 @@ public class MiaoYin extends YueShiLineNpc {
                 SaveUtil.biome2.chooseEnd2 = false;
                 return;
             case 9:
+                //初段对话，等隔天再来（即下次对话）
                 chat(BUILDER.buildDialogueAnswer(entityType,31, false));
                 player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType,32, true), false);
                 SaveUtil.biome2.miaoYinTalked2 = true;
                 break;
             case 10:
+                //出发
                 chat(BUILDER.buildDialogueAnswer(entityType,48, false));
                 player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType,49, true), false);
                 discard();
                 break;
             case 11:
-                //获得成就 TODO
-                chat(BUILDER.buildDialogueAnswer(entityType,52, false));
+                //获得成就，给予琵琶 TODO
+                SaveUtil.biome2.isBranchEnd = true;
+                break;
+            case 12:
+                chat(BUILDER.buildDialogueAnswer(entityType,64));
+                SaveUtil.biome2.miaoYinTalked2 = true;
+                discard();
+                ItemEntity item = new ItemEntity(level(), getX(), getY(), getZ(), BookManager.MIAO_YIN_MESSAGE.get());
+                level().addFreshEntity(item);
                 break;
         }
         setConversingPlayer(null);

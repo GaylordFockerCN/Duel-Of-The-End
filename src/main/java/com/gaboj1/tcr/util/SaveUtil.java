@@ -282,6 +282,10 @@ public class SaveUtil {
         public boolean trialTalked2;//是否与试炼主人二次对话
         public boolean isBranchEnd;//支线是否全部完结
 
+        public boolean chooseEnd3(){
+            return miaoYinTalked2 && !chooseEnd2;
+        }
+
         @Override
         public CompoundTag toNbt() {
             CompoundTag tag = new CompoundTag();
@@ -301,6 +305,7 @@ public class SaveUtil {
             tag.putBoolean("miaoYinTalked2", miaoYinTalked2);
             tag.putBoolean("chooseEnd2", chooseEnd2);
             tag.putBoolean("trialTalked2", trialTalked2);
+            tag.putBoolean("isBranchEnd", isBranchEnd);
             return tag;
         }
 //         //测试时不保存省的开新档
