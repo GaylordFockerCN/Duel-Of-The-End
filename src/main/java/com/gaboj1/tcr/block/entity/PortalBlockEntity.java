@@ -100,8 +100,4 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
         return cache;
     }
 
-    @Override
-    public double getTick(Object blockEntity) {
-        return RenderUtils.getCurrentTick();
-    }
 }

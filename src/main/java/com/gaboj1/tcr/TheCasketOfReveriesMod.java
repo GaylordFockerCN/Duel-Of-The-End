@@ -3,6 +3,7 @@ package com.gaboj1.tcr;
 import com.gaboj1.tcr.block.TCRModBlockEntities;
 import com.gaboj1.tcr.block.TCRModBlocks;
 import com.gaboj1.tcr.block.entity.client.PortalBlockRenderer;
+import com.gaboj1.tcr.block.entity.client.TigerSpawnerRenderer;
 import com.gaboj1.tcr.block.entity.client.YggdrasilBlockRenderer;
 import com.gaboj1.tcr.block.renderer.BetterStructureBlockRenderer;
 import com.gaboj1.tcr.block.renderer.PortalBedRenderer;
@@ -209,7 +210,7 @@ public class TheCasketOfReveriesMod {
             event.registerBlockEntityRenderer(TCRModBlockEntities.PORTAL_BLOCK_ENTITY.get(), PortalBlockRenderer::new);
             event.registerEntityRenderer(TCRModEntities.DESERT_EAGLE_BULLET.get(), ThrownItemRenderer::new);
             event.registerBlockEntityRenderer(TCRModBlockEntities.YGGDRASIL_SPAWNER_BLOCK_ENTITY.get(), YggdrasilBlockRenderer::new);
-//            event.registerBlockEntityRenderer(TCRModBlockEntities.TIGER_TRIAL_SPAWNER_BLOCK_ENTITY.get(), YggdrasilBlockRenderer::new);
+            event.registerBlockEntityRenderer(TCRModBlockEntities.TIGER_TRIAL_SPAWNER_BLOCK_ENTITY.get(), (context -> new TigerSpawnerRenderer()));
         }
 
         @SubscribeEvent

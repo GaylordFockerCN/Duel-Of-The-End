@@ -308,12 +308,21 @@ public class SaveUtil {
             tag.putBoolean("isBranchEnd", isBranchEnd);
             return tag;
         }
-//         //测试时不保存省的开新档
-//        @Override
-//        public void fromNbt(CompoundTag serverData) {
-//            super.fromNbt(serverData);
-//            miaoYinTalked1 = serverData.getBoolean("miaoYinTalked1");
-//        }
+
+        @Override
+        public void fromNbt(CompoundTag serverData) {
+            super.fromNbt(serverData);
+            miaoYinTalked1 = serverData.getBoolean("miaoYinTalked1");
+            shangRenTalked = serverData.getBoolean("shangRenTalked");
+            afterTrial = serverData.getBoolean("afterTrial");
+            trialTalked1 = serverData.getBoolean("trialTalked1");
+            talkToMaster = serverData.getBoolean("talkToMaster");
+            wandererTalked = serverData.getBoolean("wandererTalked");
+            miaoYinTalked2 = serverData.getBoolean("miaoYinTalked2");
+            chooseEnd2 = serverData.getBoolean("chooseEnd2");
+            trialTalked2= serverData.getBoolean("trialTalked2");
+            isBranchEnd = serverData.getBoolean("isBranchEnd");
+        }
 
     }
 

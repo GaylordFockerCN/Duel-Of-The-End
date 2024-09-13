@@ -20,6 +20,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DropperBlock;
 import net.minecraft.world.level.block.entity.DropperBlockEntity;
@@ -73,7 +74,12 @@ public class MiaoYin extends YueShiLineNpc {
                         .addLeaf(BUILDER.buildDialogueOption(entityType,16), (byte) 5)//接取任务
                 );
 
-        if(senderData.getBoolean("stolenMiaoYin")){
+        if(senderData.getBoolean("isBranchEnd")){
+            builder.setAnswerRoot(new TreeNode(BUILDER.buildDialogueAnswer(entityType,81))
+                    .addLeaf(BUILDER.buildDialogueOption(entityType,70), (byte) 13)//借钱
+                    .addLeaf(BUILDER.buildDialogueOption(entityType,71), (byte) 14)//问候
+                    .addLeaf(BUILDER.buildDialogueOption(entityType,72), (byte) -114514));//离去
+        } else if(senderData.getBoolean("stolenMiaoYin")){
             //盗窃惩罚。如果盗窃则不能再接任务只能施舍
             builder.start(0)
                     .addFinalChoice(1, (byte) -2);
@@ -276,6 +282,23 @@ public class MiaoYin extends YueShiLineNpc {
                 discard();
                 ItemEntity item = new ItemEntity(level(), getX(), getY(), getZ(), BookManager.MIAO_YIN_MESSAGE.get());
                 level().addFreshEntity(item);
+                break;
+            case 13:
+                if(DataManager.miaoYinMoney1.getBool(player) && DataManager.miaoYinMoney1.isLocked(player)){
+                    chat(BUILDER.buildDialogueAnswer(entityType,84));
+                } else {
+                    if(DataManager.miaoYinMoney1.getBool(player)){
+                        DataManager.miaoYinMoney1.lock(player);
+                        player.addItem(new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 14));
+                    } else {
+                        player.addItem(new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 13));
+                    }
+                    DataManager.miaoYinMoney1.putBool(player, true);
+                    chat(BUILDER.buildDialogueAnswer(entityType,82));
+                }
+                break;
+            case 14:
+                chat(BUILDER.buildDialogueAnswer(entityType,83));
                 break;
         }
         setConversingPlayer(null);

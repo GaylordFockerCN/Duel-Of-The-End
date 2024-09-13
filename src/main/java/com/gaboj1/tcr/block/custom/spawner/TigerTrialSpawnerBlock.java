@@ -40,7 +40,7 @@ public class TigerTrialSpawnerBlock extends EntitySpawnerBlock {
                 pPlayer.displayClientMessage(Component.translatable("info.the_casket_of_reveries.cannot_trial"), true);
             }
         }
-        return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+        return InteractionResult.sidedSuccess(pLevel.isClientSide);
     }
 
     @Override

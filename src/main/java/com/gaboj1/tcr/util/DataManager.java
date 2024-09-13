@@ -54,6 +54,7 @@ public class DataManager {
     public static BoolData isMiaoYinGifted =  new BoolData("isMiaoYinGifted",false,11);
     public static BoolData stolenMiaoYin =  new BoolData("stolenMiaoYin",false,12);
     public static BoolData wanMingPearlGot =  new BoolData("wanMingPearlGot",false,13);
+    public static BoolData miaoYinMoney1 =  new BoolData("miaoYinMoney1",false,14);
 
     //给予初始值
     public static void init(Player player){

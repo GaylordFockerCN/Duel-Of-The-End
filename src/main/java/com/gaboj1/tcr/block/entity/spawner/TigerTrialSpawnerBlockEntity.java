@@ -7,17 +7,24 @@ import com.gaboj1.tcr.entity.custom.villager.biome2.branch.TrialMaster;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animatable.GeoBlockEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
+import software.bernie.geckolib.util.RenderUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TigerTrialSpawnerBlockEntity extends EntitySpawnerBlockEntity<TigerEntity>{
+public class TigerTrialSpawnerBlockEntity extends EntitySpawnerBlockEntity<TigerEntity> implements GeoBlockEntity {
     private final List<Integer> tigers = new ArrayList<>();
     private boolean trialed, trialing;
     public TigerTrialSpawnerBlockEntity(BlockPos pos, BlockState state) {
@@ -62,8 +69,16 @@ public class TigerTrialSpawnerBlockEntity extends EntitySpawnerBlockEntity<Tiger
         return tigers;
     }
 
+    /**
+     * 实时检测是否挑战成功
+     * 挑战成功则召唤试炼主并进行对话
+     */
     public static void tick(Level level, BlockPos pos, TigerTrialSpawnerBlockEntity blockEntity) {
         if(level.isClientSide){
+            double rx = pos.getX() + level.getRandom().nextFloat();
+            double ry = pos.getY() + level.getRandom().nextFloat();
+            double rz = pos.getZ() + level.getRandom().nextFloat();
+            level.addParticle(blockEntity.getSpawnerParticle(), rx, ry, rz, 0.0D, 0.0D, 0.0D);
             return;
         }
         boolean isEmpty = !blockEntity.getTigers().isEmpty();
@@ -89,7 +104,17 @@ public class TigerTrialSpawnerBlockEntity extends EntitySpawnerBlockEntity<Tiger
 
     @Override
     public ParticleOptions getSpawnerParticle() {
-        return null;
+        return ParticleTypes.SNOWFLAKE;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return GeckoLibUtil.createInstanceCache(this);
     }
 
 }

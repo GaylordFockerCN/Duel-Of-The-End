@@ -703,11 +703,11 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.MIAO_YIN,59,"继续");
         this.addDialog(TCRModEntities.MIAO_YIN,69,"虽然父亲后来又新娶了妻子，后妈对我很冷漠，但因为音乐，我的童年很快乐。可惜在我十四岁那年，我的父亲突然去世了，没人知晓原因。在那以后，家族的产业就落到了后妈身上，可惜后妈不善打理，只好拜托我的叔父。突然有一天，家中莫名起了大火，死伤了一众家仆");
         //继续
-        this.addDialog(TCRModEntities.MIAO_YIN,70,"我的眼睛被熏瞎，家产也葬送火海，从此之后我便家徒四壁，后妈无法忍受，改嫁了，只剩叔父勉强支撑着抚养我，到了我十八岁时，叔父却又突然被宗主征兵带走，从此了无音讯，失去了一切依靠，我只剩下琵琶了，也就靠此漂泊谋生至今。");
+        this.addDialog(TCRModEntities.MIAO_YIN,70,"我的眼睛被熏瞎，家产也葬送火海，从此之后我便家徒四壁，后妈无法忍受，改嫁了，只剩叔父勉强支撑着抚养我，到了我十八岁时，叔父突然离我而去，从此了无音讯。失去了一切依靠，我只剩下琵琶了，也就靠此漂泊谋生至今。");
         this.addDialogChoice(TCRModEntities.MIAO_YIN,60,"这跟你杀人又有什么关系？");
         this.addDialog(TCRModEntities.MIAO_YIN,71,"阁下所见到的试炼主人，就是我的叔父");
         this.addDialogChoice(TCRModEntities.MIAO_YIN,61,"什么？");
-        this.addDialog(TCRModEntities.MIAO_YIN,72,"他由于生意上的亏空，偷偷挪用了我父亲的家产，被我父亲发现后，他就害死了我的父亲。在这之后，他生意上的亏空不仅没有被填上，反而越来越大，他设计了一场火灾，造成家产全毁的假象，实际上已经把所有值钱的东西偷偷转移走了，万明珠，就是其中之一。此后他就一直隐姓埋名，躲了起来。没想到，终于还是让我逮住他了。");
+        this.addDialog(TCRModEntities.MIAO_YIN,72,"他由于生意上的亏空，偷偷挪用了我父亲的家产，被我父亲发现后，他就害死了我的父亲。在这之后，他生意上的亏空不仅没有被填上，反而越来越大，他设计了一场火灾，造成家产全毁的假象，实际上已经把所有值钱的东西偷偷转移走了，万明珠，就是其中之一。他先是装做好人，抚养了我一阵子，之后便逃走，一直隐姓埋名，躲了起来。没想到，终于还是让我逮住他了。");
         this.addDialogChoice(TCRModEntities.MIAO_YIN,62,"你怎么知道他就是你的叔父？");
         this.addDialog(TCRModEntities.MIAO_YIN,73,"万明珠是我家的镇宅之宝，我再熟悉不过了。作为神物，它岂是会被火烧尽的东西？所以，我知道它一定是被人拿走了，只要沿着万明珠找，就能找到真凶。");
         this.addDialogChoice(TCRModEntities.MIAO_YIN,63,"这么说来，你的眼睛…");
@@ -725,7 +725,14 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialogChoice(TCRModEntities.MIAO_YIN,68,"如此也好，谢谢你了");
         this.addDialog(TCRModEntities.MIAO_YIN,80,"不，是妾身要谢谢阁下才是。若您此后冒险腻了，可归此处，妾身一定好好招待");
         this.addDialogChoice(TCRModEntities.MIAO_YIN,69,"会再见的。");//结局3
-        //TODO 后日谈
+        //后日谈
+        this.addDialog(TCRModEntities.MIAO_YIN,81,"阁下别来无恙。阁下之恩，妾身永生不忘，若需休憩，把此处当做自己家便好。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,70,"借我点钱");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,71,"你最近过得怎么样。");
+        this.addDialogChoice(TCRModEntities.MIAO_YIN,72,"无事离去");
+        this.addDialog(TCRModEntities.MIAO_YIN,82,"阁下若有难处，妾身必倾力相助，此有些许财物，或可解阁下燃眉之急");
+        this.addDialog(TCRModEntities.MIAO_YIN,83,"自收回家产以后，妾身勉强经营，总算是将一切都安置好了。当然，这一切也都多亏了阁下。");
+        this.addDialog(TCRModEntities.MIAO_YIN,84,"阁下三番五次问妾身借钱，可是遇到了什么困难？请不必对妾身隐瞒，比起财物，妾身更愿意身体力行帮助阁下。");
 
         this.addBookAndContents("book1","Test","Test1","Test1.1");
         this.addBookAndContents("book2","Test2","Test2","Test2.2");
