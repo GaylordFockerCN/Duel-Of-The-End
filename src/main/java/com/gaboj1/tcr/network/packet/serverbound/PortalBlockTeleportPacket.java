@@ -2,6 +2,7 @@ package com.gaboj1.tcr.network.packet.serverbound;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
+import com.gaboj1.tcr.entity.TCRFakePlayer;
 import com.gaboj1.tcr.network.packet.BasePacket;
 import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
@@ -26,16 +27,17 @@ import java.util.Objects;
 /**
  * 客户端发给服务端，进行传送判断并播放音效
  */
-public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, boolean isFromTeleporter) implements BasePacket {
+public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, boolean isFromTeleporter, BlockPos bedPos) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeByte(this.interactionID());
         buf.writeBoolean(this.isVillage());
         buf.writeBoolean(this.isFromTeleporter());
+        buf.writeBlockPos(this.bedPos());
     }
 
     public static PortalBlockTeleportPacket decode(FriendlyByteBuf buf) {
-        return new PortalBlockTeleportPacket(buf.readByte(), buf.readBoolean(), buf.readBoolean());
+        return new PortalBlockTeleportPacket(buf.readByte(), buf.readBoolean(), buf.readBoolean(), buf.readBlockPos());
     }
 
     //TODO 修改不同的高度，修正偏移值。
@@ -75,6 +77,12 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
                     playerEntity.changeDimension(portalDimension, new TCRTeleporter(new BlockPos(destination.x, 170, destination.y), true));
                     TCRAdvancementData.getAdvancement(TheCasketOfReveriesMod.MOD_ID, serverPlayer);
                     TCRAdvancementData.getAdvancement("enter_realm_of_the_dream", serverPlayer);
+                    //召唤假人
+                    TCRFakePlayer fakePlayer = new TCRFakePlayer(serverPlayer, serverPlayer.serverLevel(), bedPos);
+                    fakePlayer.setPos(bedPos.getCenter());
+                    serverPlayer.serverLevel().addFreshEntity(fakePlayer);
+                    fakePlayer.setSleepingPos(bedPos);
+                    serverPlayer.getPersistentData().putInt(TCRFakePlayer.KEY, fakePlayer.getId());
                 }
             }
         } else {

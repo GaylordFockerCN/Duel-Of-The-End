@@ -1,7 +1,6 @@
 package com.gaboj1.tcr.worldgen.portal;
 
 import com.gaboj1.tcr.util.DataManager;
-import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;

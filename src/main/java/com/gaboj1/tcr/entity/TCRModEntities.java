@@ -66,19 +66,19 @@ public class TCRModEntities {
 
 	public static final RegistryObject<EntityType<SmallTreeMonsterEntity>> SMALL_TREE_MONSTER =
 			REGISTRY.register("small_tree_monster",
-					() -> EntityType.Builder.of(SmallTreeMonsterEntity::new, MobCategory.CREATURE)
+					() -> EntityType.Builder.of(SmallTreeMonsterEntity::new, MobCategory.MONSTER)
 							.sized(0.4f, 0.4f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "small_tree_monster").toString()));
 
 	public static final RegistryObject<EntityType<MiddleTreeMonsterEntity>> MIDDLE_TREE_MONSTER =
 			REGISTRY.register("middle_tree_monster",
-					() -> EntityType.Builder.of(MiddleTreeMonsterEntity::new, MobCategory.CREATURE)
+					() -> EntityType.Builder.of(MiddleTreeMonsterEntity::new, MobCategory.MONSTER)
 							.sized(1f, 1.8f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "middle_tree_monster").toString()));
 
 	public static final RegistryObject<EntityType<TreeGuardianEntity>> TREE_GUARDIAN =
 			REGISTRY.register("tree_guardian",
-					() -> EntityType.Builder.of(TreeGuardianEntity::new, MobCategory.CREATURE)
+					() -> EntityType.Builder.of(TreeGuardianEntity::new, MobCategory.MONSTER)
 							.sized(0.78f, 2f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "tree_guardian").toString()));
 
@@ -132,6 +132,8 @@ public class TCRModEntities {
 
 	public static final RegistryObject<EntityType<P1nero>> P1NERO = register("p1nero",
 			EntityType.Builder.of(P1nero::new, MobCategory.CREATURE));
+	public static final RegistryObject<EntityType<TCRFakePlayer>> FAKE_PLAYER = register("fake_player",
+			EntityType.Builder.of(TCRFakePlayer::new, MobCategory.CREATURE));
 
 	public static final RegistryObject<EntityType<PastoralPlainVillager>> PASTORAL_PLAIN_VILLAGER = register("pastoral_plain_villager",
 			EntityType.Builder.of(PastoralPlainVillager::new, MobCategory.CREATURE));
@@ -198,6 +200,7 @@ public class TCRModEntities {
 		event.put(SQUIRREL.get(), Squirrel.setAttributes());
 		event.put(CRAB.get(), CrabCrabYou.setAttributes());
 		event.put(P1NERO.get(), TCRVillager.setAttributes());
+		event.put(FAKE_PLAYER.get(), TCRVillager.setAttributes());
 		event.put(PASTORAL_PLAIN_VILLAGER.get(), TCRVillager.setAttributes());
 		event.put(PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), TCRVillager.setAttributes());
 		event.put(PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), TCRVillager.setAttributes());
@@ -233,6 +236,8 @@ public class TCRModEntities {
 
 		event.register(P1NERO.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				P1nero::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+//		event.register(FAKE_PLAYER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+//				((entityType, serverLevelAccessor, mobSpawnType, blockPos, randomSource) -> true), SpawnPlacementRegisterEvent.Operation.REPLACE);
 
 		event.register(PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				PastoralPlainTalkableVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);

@@ -9,12 +9,13 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.model.DefaultedBlockGeoModel;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 import software.bernie.geckolib.renderer.GeoBlockRenderer;
 
 public class YggdrasilBlockRenderer extends GeoBlockRenderer<YggdrasilSpawnerBlockEntity> {
     public YggdrasilBlockRenderer(BlockEntityRendererProvider.Context context) {
-        super(new DefaultedEntityGeoModel<>(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "yggdrasil_block")));
+        super(new DefaultedBlockGeoModel<>(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "yggdrasil_block")));
     }
 
     @Override

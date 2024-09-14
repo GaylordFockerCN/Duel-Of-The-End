@@ -9,6 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -29,12 +30,14 @@ public class PortalBlockScreen extends Screen {
     PortalScreenComponent boss4 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss4"), button -> this.finishChat((byte) 4));
     private final boolean isVillage;
     private final boolean isFromTeleporter;
+    private final BlockPos bedPos;
 
 
     public PortalBlockScreen(CompoundTag serverPlayerData) {
         super(Component.empty());
         isVillage = serverPlayerData.getBoolean("isVillage");
         isFromTeleporter = serverPlayerData.getBoolean("isFromTeleporter");
+        bedPos = new BlockPos(serverPlayerData.getInt("bedPosX"), serverPlayerData.getInt("bedPosY"), serverPlayerData.getInt("bedPosZ"));
     }
 
     @Override
@@ -53,7 +56,7 @@ public class PortalBlockScreen extends Screen {
      * 服务端处理，不同id对应传送不同位置
     * */
     protected void finishChat(byte interactionID) {
-        PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new PortalBlockTeleportPacket(interactionID, isVillage, isFromTeleporter));
+        PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new PortalBlockTeleportPacket(interactionID, isVillage, isFromTeleporter, bedPos));
         super.onClose();
     }
 

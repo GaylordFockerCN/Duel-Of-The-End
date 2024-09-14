@@ -11,6 +11,7 @@ import com.gaboj1.tcr.client.TCRModSounds;
 import com.gaboj1.tcr.effect.TCREffects;
 import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.entity.TCRModVillagers;
+import com.gaboj1.tcr.entity.client.TCRFakePlayerRenderer;
 import com.gaboj1.tcr.entity.client.big_hammer.BigHammerRenderer;
 import com.gaboj1.tcr.entity.client.boss.yggrasil.TreeClawRenderer;
 import com.gaboj1.tcr.entity.client.boss.yggrasil.YggdrasilRenderer;
@@ -61,6 +62,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
+import software.bernie.geckolib.renderer.DynamicGeoEntityRenderer;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -168,6 +170,7 @@ public class TheCasketOfReveriesMod {
             EntityRenderers.register(TCRModEntities.CRAB.get(), CrabRenderer::new);
 
             EntityRenderers.register(TCRModEntities.P1NERO.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCRModEntities.FAKE_PLAYER.get(), TCRFakePlayerRenderer::new);
 
             EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), TCRVillagerRenderer::new);
             EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), TCRVillagerRenderer::new);
