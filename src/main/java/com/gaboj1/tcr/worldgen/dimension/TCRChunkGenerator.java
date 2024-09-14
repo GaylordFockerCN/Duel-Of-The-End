@@ -1,11 +1,8 @@
 package com.gaboj1.tcr.worldgen.dimension;
 
-import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
-import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
 import com.gaboj1.tcr.worldgen.structure.PositionPlacement;
 import com.gaboj1.tcr.worldgen.structure.TCRStructuresEnum;
 import com.mojang.datafixers.util.Pair;
@@ -26,10 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.chunk.ChunkGeneratorStructureState;
-import net.minecraft.world.level.levelgen.LegacyRandomSource;
-import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
-import net.minecraft.world.level.levelgen.RandomState;
-import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
@@ -47,7 +41,7 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
 
     public static final Codec<TCRChunkGenerator> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
             ChunkGenerator.CODEC.fieldOf("wrapped_generator").forGetter(o -> o.delegate),
-            NoiseGeneratorSettings.CODEC.fieldOf("noise_generation_settings").forGetter(o -> o.generatorSettings())
+            NoiseGeneratorSettings.CODEC.fieldOf("noise_generation_settings").forGetter(NoiseBasedChunkGenerator::generatorSettings)
             ).apply(instance, TCRChunkGenerator::new));
 
     public TCRChunkGenerator(ChunkGenerator delegate, Holder<NoiseGeneratorSettings> noiseGeneratorSettingsHolder) {

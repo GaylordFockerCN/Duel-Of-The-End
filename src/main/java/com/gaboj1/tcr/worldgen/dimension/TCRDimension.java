@@ -17,30 +17,16 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
-import net.minecraft.world.level.levelgen.NoiseSettings;
 
 import java.util.OptionalLong;
-import java.util.Random;
 
 public class TCRDimension {
-    
-    //Realm of the Dream 梦之域
-
-    //带坑版
-//    public static final ResourceKey<LevelStem> SKY_ISLAND_KEY = ResourceKey.create(Registries.LEVEL_STEM,
-//            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "realm_of_the_dream"));
-//    public static final ResourceKey<Level> SKY_ISLAND_LEVEL_KEY = ResourceKey.create(Registries.DIMENSION,
-//            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "realm_of_the_dream"));
-//    public static final ResourceKey<DimensionType> SKY_ISLAND_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
-//            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "realm_of_the_dream_type"));
-    //平坦版
-
     public static final ResourceKey<LevelStem> P_SKY_ISLAND_KEY = ResourceKey.create(Registries.LEVEL_STEM,
-            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "p_realm_of_the_dream"));
+            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "realm_of_the_dream"));
     public static final ResourceKey<Level> P_SKY_ISLAND_LEVEL_KEY = ResourceKey.create(Registries.DIMENSION,
-            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "p_realm_of_the_dream"));
+            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "realm_of_the_dream"));
     public static final ResourceKey<DimensionType> P_SKY_ISLAND_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
-            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "p_realm_of_the_dream_type"));
+            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "realm_of_the_dream_type"));
 
 
     public static void bootstrapType(ResourceKey<DimensionType> typeResourceKey, BootstapContext<DimensionType> context){
@@ -63,34 +49,21 @@ public class TCRDimension {
                 new DimensionType.MonsterSettings(false, false, ConstantInt.of(0), 0)));
     }
     public static void bootstrapType(BootstapContext<DimensionType> context) {
-//        bootstrapType(SKY_ISLAND_TYPE,context);
-        bootstrapType(P_SKY_ISLAND_TYPE,context);
+        bootstrapType(P_SKY_ISLAND_TYPE, context);
     }
 
     public static void bootstrapStem(BootstapContext<LevelStem> context) {
-
         HolderGetter<Biome> biomeRegistry = context.lookup(Registries.BIOME);
         HolderGetter<DimensionType> dimTypes = context.lookup(Registries.DIMENSION_TYPE);
         HolderGetter<NoiseGeneratorSettings> noiseGenSettings = context.lookup(Registries.NOISE_SETTINGS);
 
-//        //空岛版本
-//        NoiseBasedChunkGenerator wrappedChunkGenerator = new NoiseBasedChunkGenerator(
-//                TCRBiomeProvider.create(biomeRegistry),
-//                noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS));
-
-//        TCRChunkGenerator chunkGenerator = new TCRChunkGenerator(wrappedChunkGenerator,noiseGenSettings.getOrThrow(ModNoiseSettings.SKY_ISLANDS));
-//        LevelStem stem = new LevelStem(dimTypes.getOrThrow(TCRDimension.SKY_ISLAND_TYPE), chunkGenerator);
-//        context.register(SKY_ISLAND_KEY, stem);
-
-
-        //平坦版
-        NoiseBasedChunkGenerator wrappedChunkGenerator2 = new NoiseBasedChunkGenerator(
+        NoiseBasedChunkGenerator wrappedChunkGenerator = new NoiseBasedChunkGenerator(
                 TCRBiomeProvider.create(biomeRegistry),
                 noiseGenSettings.getOrThrow(ModNoiseSettings.PLAIN));
 
-        TCRChunkGenerator chunkGenerator2 = new TCRChunkGenerator(wrappedChunkGenerator2,noiseGenSettings.getOrThrow(ModNoiseSettings.PLAIN));
-        LevelStem stem2 = new LevelStem(dimTypes.getOrThrow(TCRDimension.P_SKY_ISLAND_TYPE), chunkGenerator2);
-        context.register(P_SKY_ISLAND_KEY, stem2);
-
+        TCRChunkGenerator chunkGenerator = new TCRChunkGenerator(wrappedChunkGenerator, noiseGenSettings.getOrThrow(ModNoiseSettings.PLAIN));
+        LevelStem stem = new LevelStem(dimTypes.getOrThrow(TCRDimension.P_SKY_ISLAND_TYPE), chunkGenerator);
+        context.register(P_SKY_ISLAND_KEY, stem);
     }
+
 }
