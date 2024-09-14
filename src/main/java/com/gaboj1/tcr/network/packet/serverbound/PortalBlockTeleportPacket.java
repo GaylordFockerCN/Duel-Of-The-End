@@ -72,15 +72,16 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
 
         if(isFromTeleporter){
             if(playerEntity instanceof ServerPlayer serverPlayer){
+                ServerLevel currentLevel = serverPlayer.serverLevel();
                 ServerLevel portalDimension = Objects.requireNonNull(serverPlayer.getServer()).getLevel(TCRDimension.P_SKY_ISLAND_LEVEL_KEY);
                 if(portalDimension != null){
                     playerEntity.changeDimension(portalDimension, new TCRTeleporter(new BlockPos(destination.x, 170, destination.y), true));
                     TCRAdvancementData.getAdvancement(TheCasketOfReveriesMod.MOD_ID, serverPlayer);
                     TCRAdvancementData.getAdvancement("enter_realm_of_the_dream", serverPlayer);
                     //召唤假人
-                    TCRFakePlayer fakePlayer = new TCRFakePlayer(serverPlayer, serverPlayer.serverLevel(), bedPos);
+                    TCRFakePlayer fakePlayer = new TCRFakePlayer(serverPlayer, currentLevel, bedPos);
                     fakePlayer.setPos(bedPos.getCenter());
-                    serverPlayer.serverLevel().addFreshEntity(fakePlayer);
+                    currentLevel.addFreshEntity(fakePlayer);
                     fakePlayer.setSleepingPos(bedPos);
                     serverPlayer.getPersistentData().putInt(TCRFakePlayer.KEY, fakePlayer.getId());
                 }
