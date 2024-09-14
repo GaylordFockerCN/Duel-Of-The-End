@@ -14,7 +14,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
-import org.spongepowered.noise.module.combiner.Min;
 
 public class TCRFakePlayerRenderer extends EntityRenderer<TCRFakePlayer> {
     public TCRFakePlayerRenderer(EntityRendererProvider.Context p_174008_) {
@@ -30,16 +29,11 @@ public class TCRFakePlayerRenderer extends EntityRenderer<TCRFakePlayer> {
     public void render(@NotNull TCRFakePlayer fakePlayer, float yaw, float p_114487_, @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int p_114490_) {
         super.render(fakePlayer, yaw, p_114487_, poseStack, bufferSource, p_114490_);
         poseStack.pushPose();
-//            poseStack.mulPose(Axis.YP.rotationDegrees(-clientPlayer.getYRot()));
-//            poseStack.mulPose(Axis.XP.rotationDegrees(90F - clientPlayer.getXRot()));
-        poseStack.mulPose(Axis.XP.rotationDegrees(90F));
-        poseStack.translate(0, -1.0, 0);
+        poseStack.mulPose(fakePlayer.getSleepDirection().getRotation());
+        poseStack.translate(0, -1.4, 0);
         AbstractClientPlayer clientPlayer = new RemotePlayer(((ClientLevel) fakePlayer.level()), new GameProfile(fakePlayer.getRealPlayerUuid(), fakePlayer.getDisplayName().getString()));
         getRenderer(clientPlayer).render(clientPlayer, 0, p_114487_, poseStack, bufferSource, p_114490_);
         poseStack.popPose();
-//        if(fakePlayer.getRealPlayer() instanceof AbstractClientPlayer clientPlayer){
-//
-//        }
     }
     private <T extends Entity> EntityRenderer<? super T> getRenderer(T entity) {
         return Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);

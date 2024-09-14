@@ -6,16 +6,15 @@ import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.SyncFakePlayerPacket;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
@@ -39,6 +38,10 @@ public class TCRFakePlayer extends LivingEntity{
 
     public TCRFakePlayer(EntityType<? extends LivingEntity> entityType, Level level) {
         super(entityType, level);
+        //防止出现无主的情况
+        if(!level.isClientSide && getRealPlayer() == null){
+            discard();
+        }
     }
 
     public TCRFakePlayer(Player realPlayer, Level level, BlockPos pos) {
@@ -78,14 +81,10 @@ public class TCRFakePlayer extends LivingEntity{
     public void tick() {
         super.tick();
         BlockPos pos = getEntityData().get(BED_POS);
-        //防止被创开
-        setPos(pos.getCenter());
-        //床被摧毁则真身传送回来
-        if(!level().isClientSide && !(level().getBlockEntity(pos) instanceof PortalBedEntity)){
-            this.discard();
-            Player player = level().getServer().getLevel(TCRDimension.P_SKY_ISLAND_LEVEL_KEY).getPlayerByUUID(getRealPlayerUuid());
-            if(player != null){
-                player.teleportTo(((ServerLevel) level()), getX(), getY(), getZ(), new HashSet<>(), getXRot(), getYRot());
+        //床被摧毁或被推下床则真身传送回来
+        if(!level().isClientSide){
+            if(pos.getCenter().distanceTo(position()) > 1 || !(level().getBlockEntity(pos) instanceof PortalBedEntity)){
+                callBackRealPlayer();
             }
         }
         //假身不能位于同一维度
@@ -93,6 +92,14 @@ public class TCRFakePlayer extends LivingEntity{
             discard();
         }
 
+    }
+
+    public void callBackRealPlayer(){
+        this.discard();
+        Player player = getRealPlayer();
+        if(player != null){
+            player.teleportTo(((ServerLevel) level()), getX(), getY(), getZ(), new HashSet<>(), getXRot(), getYRot());
+        }
     }
 
     @Override
@@ -118,7 +125,7 @@ public class TCRFakePlayer extends LivingEntity{
     }
 
     public Player getRealPlayer(){
-        return level().getPlayerByUUID(getRealPlayerUuid());
+        return level().getServer().getLevel(TCRDimension.P_SKY_ISLAND_LEVEL_KEY).getPlayerByUUID(getRealPlayerUuid());
     }
 
     public UUID getRealPlayerUuid() {
@@ -130,6 +137,13 @@ public class TCRFakePlayer extends LivingEntity{
             return player.getSkinTextureLocation();
         }
         return null;
+    }
+
+    public BlockPos getBedPos(){
+        return getEntityData().get(BED_POS);
+    }
+    public Direction getSleepDirection() {
+        return level().getBlockState(getBedPos()).getBedDirection(level(), getBedPos());
     }
 
     public boolean isSlim(){

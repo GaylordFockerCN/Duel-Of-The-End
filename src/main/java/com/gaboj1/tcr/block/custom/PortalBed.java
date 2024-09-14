@@ -24,6 +24,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -38,8 +39,15 @@ public class PortalBed extends BedBlock {
     }
 
     @Override
-    public @NotNull InteractionResult use(@NotNull BlockState pState, Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
-
+    public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
+        //统一Pos到床头
+        if (pState.getValue(PART) != BedPart.HEAD) {
+            pPos = pPos.relative(pState.getValue(FACING));
+            pState = pLevel.getBlockState(pPos);
+            if (!pState.is(this)) {
+                return InteractionResult.CONSUME;
+            }
+        }
         if (pLevel.isClientSide)
             return InteractionResult.CONSUME;
         if (pPlayer.canChangeDimensions()) {
