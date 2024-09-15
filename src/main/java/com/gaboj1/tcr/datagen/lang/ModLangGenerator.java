@@ -462,8 +462,30 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,8,"请随小女子一观珍藏，定能让阁下眼界大开。");
         this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,9,"雪山顶上之人？阁下以为，小女子这般见多识广之人，会不知其事？不过，情报岂能轻易透露。");
 
+        //守卫
+        this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,10,"锥风啸雪，不足为惧");
+        this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,11,"如果需要帮助，随时都可以来找我");
+
+        //铁匠
+        this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,12,"宝剑锋从磨砺出，梅花香自苦寒来");
+        this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,13,"打铁还需自身硬");
+
+        //路人
+        this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,14,"原来是不惧风雪到达我的家乡的客人，真是令人敬佩");
+        this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,15,"我可是雪城万事通，有事尽管来问我");
+
+        //药师
+        this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,16,"药食同源，来咱这就得好好享用美食，这是身体健康的一部分");
+        this.addDialog(TCRModEntities.VILLAGER2_TALKABLE,17,"要是受冻了咱可以给您开几副药");
+
+
+
+
         this.addDialogChoice(TCRModEntities.VILLAGER2_TALKABLE,1,"交易");
         this.addDialogChoice(TCRModEntities.VILLAGER2_TALKABLE,2,"询问");
+        this.addDialogChoice(TCRModEntities.VILLAGER2_TALKABLE,3,"锻造");
+        this.addDialogChoice(TCRModEntities.VILLAGER2_TALKABLE,4,"离开");
+
 
         //乐师支线-第一段对话
         this.addDialog(TCRModEntities.MIAO_YIN,0,"哀兮悲兮，迷途之人。彳亍寻真，却在眼前。");
