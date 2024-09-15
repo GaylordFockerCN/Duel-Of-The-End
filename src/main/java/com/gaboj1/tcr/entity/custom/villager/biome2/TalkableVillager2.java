@@ -59,71 +59,29 @@ public class TalkableVillager2 extends TCRTalkableVillager {
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
         Random random = new Random();
 
-        Component greeting1 = BUILDER.buildDialogueAnswer(entityType,-3 + random.nextInt(2));
         switch (getSkinID()){
-            //商人 对话id分配：-3~-1 返回值分配：-1 (被工匠抢先了awa只能用负数了awa）
+            //守卫 对话id分配：10~11 返回值：null
             case 0:
+                Component greeting1 = BUILDER.buildDialogueAnswer(entityType, random.nextInt(10,12));
                 builder.start(greeting1)
-                        .addFinalChoice((BUILDER.buildDialogueOption(entityType,-3)), (byte) -1);
+                        .addFinalChoice((BUILDER.buildDialogueOption(entityType,4)), (byte) 666);
                 break;
 
-            //工匠 对话id分配：0~6 返回值分配：0~2,110
+            //药师 对话id分配：16~17 返回值分配：66
             case 1:
-                if(!DataManager.gunGot.getBool(serverPlayerData)){
-                    builder.start(BUILDER.buildDialogueAnswer(entityType,0))//不许伤害小羊小牛小猪！（我们好像没有这些生物）
-                            .addChoice(BUILDER.buildDialogueOption(entityType,0),BUILDER.buildDialogueAnswer(entityType,1))//那你汉堡里面的牛肉是哪来的？  上天……上天给我的……这不是祈祷就有了吗？
-                            .addChoice(BUILDER.buildDialogueOption(entityType,1),BUILDER.buildDialogueOption(entityType,2).withStyle(ChatFormatting.DARK_RED,ChatFormatting.BOLD))//我也可以吗？我想要把火铳！（内心真诚地默念一遍） 【获得火铳】
-                            .thenExecute((byte) 111)//代号111，获得沙鹰
-                            .addChoice(BUILDER.buildDialogueOption(entityType,3),BUILDER.buildDialogueAnswer(entityType,2))
-                            .addFinalChoice(BUILDER.buildDialogueOption(entityType,4),(byte) 0);//做梦吧你！火铳是我帮你祈祷出来的！
-                }else {
-                    builder.setAnswerRoot(
-                            new TreeNode(BUILDER.buildDialogueAnswer(entityType,3))// ......
-                                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,3),BUILDER.buildDialogueOption(entityType,4))// ......  ......
-                                            .addLeaf(BUILDER.buildDialogueOption(entityType,5), (byte) 1)//快给我，不然嘣了你
-                                            .addLeaf(BUILDER.buildDialogueOption(entityType,6), (byte) 2)//谢谢你的火铳~
-                                    )
-                                    .addLeaf(BUILDER.buildDialogueOption(entityType,13),(byte) 110)
-                    );
-                }
-                break;
-            //学者 对话id分配：7~9 返回值分配：3
-            case 2:
-                if(!serverPlayerData.getBoolean("hasTalkedTo"+getSkinID())){
-                    builder.setAnswerRoot(new TreeNode(BUILDER.buildDialogueAnswer(entityType,getSkinID(), 1))
-                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,getSkinID(), 2),BUILDER.buildDialogueOption(entityType,getSkinID(), 1))
-                                    .addLeaf(BUILDER.buildDialogueOption(entityType,getSkinID(), 3),(byte) 0)
-                                    .addLeaf(BUILDER.buildDialogueOption(entityType,getSkinID(), 4),(byte) 0))
-                            .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,getSkinID(), 2),BUILDER.buildDialogueOption(entityType,getSkinID(), 2))
-                                    .addLeaf(BUILDER.buildDialogueOption(entityType,getSkinID(), 3),(byte) 0)
-                                    .addLeaf(BUILDER.buildDialogueOption(entityType,getSkinID(), 4),(byte) 0))
-                    );
-                    break;
-                }
-                Component greeting2 = BUILDER.buildDialogueAnswer(entityType,7 + random.nextInt(2));
+                Component greeting2 = BUILDER.buildDialogueAnswer(entityType,random.nextInt(16,18));
                 builder.start(greeting2)
-                        .addFinalChoice((BUILDER.buildDialogueOption(entityType,7)), (byte) 3);
+                        .addFinalChoice(BUILDER.buildDialogueOption(entityType,1),(byte) 66);
                 break;
 
-            //牧羊人 对话id分配：10~12 返回值分配：4
-            case 3:
-                if(serverPlayerData.getBoolean("hasTalkedTo"+getSkinID())){
-                    Component greeting3 = BUILDER.buildDialogueAnswer(entityType,10 + random.nextInt(2));
-                    builder.start(greeting3)
-                            .addFinalChoice((BUILDER.buildDialogueOption(entityType,10)), (byte) 4);
-                } else {
-                    builder.setAnswerRoot(new TreeNode(BUILDER.buildDialogueAnswer(entityType,getSkinID(), 1))
-                            .addLeaf(BUILDER.buildDialogueOption(entityType, getSkinID(),1), (byte) 9)
-                            .addLeaf(BUILDER.buildDialogueOption(entityType, getSkinID(),2), (byte) 10)
-                    );
-                }
+            //铁匠 对话id分配：12~13 返回值分配：66
+            case 2:
+                Component greeting3 = BUILDER.buildDialogueAnswer(entityType,random.nextInt(12,14));
+                builder.start(greeting3)
+                        .addFinalChoice(BUILDER.buildDialogueOption(entityType,3),(byte) 66);
                 break;
-            //猎人 对话id分配：13~15 返回值分配：5
-            case 4:
-                Component greeting4 = BUILDER.buildDialogueAnswer(entityType,13 + random.nextInt(2));
-                builder.start(greeting4)
-                        .addFinalChoice((BUILDER.buildDialogueOption(entityType,13)), (byte) 5);
-                break;
+
+
             //厨娘 对话id分配：0~4 返回值分配：1,2
             case -1:
                 int i = random.nextInt(0,3);
@@ -149,12 +107,6 @@ public class TalkableVillager2 extends TCRTalkableVillager {
                                 .addLeaf(BUILDER.buildDialogueOption(entityType,2), (byte) 4)
                 );
                 break;
-            //女商人 返回值分配：11
-            case -4:
-                builder.start(greeting1)
-                        .addFinalChoice((BUILDER.buildDialogueOption(entityType,-3)), (byte) 12);
-                break;
-
         }
 
         if(SaveUtil.biome2.choice == 1){
