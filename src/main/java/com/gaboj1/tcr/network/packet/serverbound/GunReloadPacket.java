@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.network.packet.serverbound;
 
-import com.gaboj1.tcr.item.custom.gun.GunCommon;
+import com.gaboj1.tcr.item.custom.weapon.GunCommon;
 import com.gaboj1.tcr.network.packet.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;

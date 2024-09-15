@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.item.custom;
+package com.gaboj1.tcr.item.custom.weapon;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;

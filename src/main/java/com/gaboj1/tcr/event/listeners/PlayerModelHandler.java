@@ -3,7 +3,7 @@ package com.gaboj1.tcr.event.listeners;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.event.PlayerModelEvent;
 import com.gaboj1.tcr.item.TCRModItems;
-import com.gaboj1.tcr.item.custom.gun.GunCommon;
+import com.gaboj1.tcr.item.custom.weapon.GunCommon;
 import com.gaboj1.tcr.util.ItemUtil;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;

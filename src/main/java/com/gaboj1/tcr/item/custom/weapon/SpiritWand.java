@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.item.custom;
+package com.gaboj1.tcr.item.custom.weapon;
 
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.MagicProjectile;
 import com.gaboj1.tcr.item.renderer.SpiritWandRenderer;

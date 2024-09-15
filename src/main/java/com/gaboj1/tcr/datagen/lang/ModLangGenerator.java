@@ -59,6 +59,8 @@ public class ModLangGenerator extends ModLangProvider {
         this.add("item_group.the_casket_of_reveries.block","远梦之棺-方块");
         this.add("item_group.the_casket_of_reveries.spawn_egg","远梦之棺-刷怪蛋");
         this.add("item_group.the_casket_of_reveries.loot","远梦之棺-战利品");
+        this.add("item_group.the_casket_of_reveries.weapon","远梦之棺-战斗用品");
+        this.add("item_group.the_casket_of_reveries.food","远梦之棺-食物");
 
         this.add(TCRModItems.GUN_COMMON.get(),"火枪");
         this.add(TCRModItems.GUN_PLUS.get(),"火枪升级版");
@@ -110,6 +112,11 @@ public class ModLangGenerator extends ModLangProvider {
         this.add(TCRModItems.HOLY_SWORD.get(),"额滴圣剑");
         this.addItemUsageInfo(TCRModItems.HOLY_SWORD.get(),"某位高人留下的圣剑",1);
         this.addItemUsageInfo(TCRModItems.HOLY_SWORD.get(),"灵气值 ： %d",3);
+
+        this.add(TCRModItems.TIGER_SOUL_ICE.get(),"虎魄冰");
+        this.addItemUsageInfo(TCRModItems.TIGER_SOUL_ICE.get(),"冰虎的掉落物");
+        this.add(TCRModItems.TIGER_KARAMBIT.get(),"冰虎爪刀");
+        this.addItemUsageInfo(TCRModItems.TIGER_KARAMBIT.get(),"由虎魄冰和冰虎牙合成的锋利武器，背刺敌人时伤害翻倍并附带冻结效果。");
 
         this.add(TCRModItems.COPY_RESIN.get(),"复制树脂");
         this.addItemUsageInfo(TCRModItems.COPY_RESIN.get(),"右键消耗以复制另一只手的物品");

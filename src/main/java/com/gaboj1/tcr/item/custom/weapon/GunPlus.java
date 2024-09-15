@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.item.custom.gun;
+package com.gaboj1.tcr.item.custom.weapon;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;

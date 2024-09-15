@@ -1,8 +1,8 @@
 package com.gaboj1.tcr.item.model;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.item.custom.gun.GunCommon;
-import com.gaboj1.tcr.item.custom.gun.GunPlus;
+import com.gaboj1.tcr.item.custom.weapon.GunCommon;
+import com.gaboj1.tcr.item.custom.weapon.GunPlus;
 import software.bernie.geckolib.model.DefaultedItemGeoModel;
 
 import net.minecraft.resources.ResourceLocation;

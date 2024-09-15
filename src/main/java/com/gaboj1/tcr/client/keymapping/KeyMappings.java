@@ -2,7 +2,7 @@ package com.gaboj1.tcr.client.keymapping;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.client.gui.screen.custom.GameProgressScreen;
-import com.gaboj1.tcr.item.custom.gun.GunCommon;
+import com.gaboj1.tcr.item.custom.weapon.GunCommon;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.RequestOpenProgressScreenPacket;

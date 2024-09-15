@@ -89,11 +89,6 @@ public class TCRModItemTabs {
 					.title(Component.translatable("item_group.the_casket_of_reveries.loot"))
 					.icon(() -> new ItemStack(TCRModItems.TREE_SPIRIT_WAND.get()))
 					.displayItems((parameters, tabData) -> {
-
-				tabData.accept(TCRModItems.AMMO.get());
-				tabData.accept(TCRModItems.GUN_COMMON.get());
-				tabData.accept(TCRModItems.GUN_PLUS.get());
-
 				//树脂
 				tabData.accept(TCRModItems.BASIC_RESIN.get());
 				tabData.accept(TCRModItems.INTERMEDIATE_RESIN.get());
@@ -103,23 +98,20 @@ public class TCRModItemTabs {
 
 				//掉落物
 				tabData.accept(TCRModItems.ELDER_STAFF.get());
+
 				tabData.accept(TCRModItems.TREE_DEMON_HORN.get());
 				tabData.accept(TCRModItems.TREE_DEMON_MASK.get());
 				tabData.accept(TCRModItems.TREE_DEMON_FRUIT.get());
 				tabData.accept(TCRModItems.TREE_DEMON_BRANCH.get());
+
 				tabData.accept(TCRModItems.WITHERING_TOUCH.get());
+
 				tabData.accept(TCRModItems.HEART_OF_THE_SAPLING.get());
 				tabData.accept(TCRModItems.ESSENCE_OF_THE_ANCIENT_TREE.get());
 				tabData.accept(TCRModItems.BARK_OF_THE_GUARDIAN.get());
 				tabData.accept(TCRModItems.STARLIT_DEWDROP.get());
-				tabData.accept(TCRModItems.SPIRIT_WAND.get());
-				tabData.accept(TCRModItems.HEALTH_WAND.get());
 
-				//盔甲
-				tabData.accept(TCRModItems.ORICHALCUM_HELMET.get());
-				tabData.accept(TCRModItems.ORICHALCUM_CHESTPLATE.get());
-				tabData.accept(TCRModItems.ORICHALCUM_LEGGINGS.get());
-				tabData.accept(TCRModItems.ORICHALCUM_BOOTS.get());
+				tabData.accept(TCRModItems.TIGER_SOUL_ICE.get());
 
 				//货币
 				tabData.accept(TCRModItems.DENSE_FOREST_CERTIFICATE.get());
@@ -129,28 +121,56 @@ public class TCRModItemTabs {
 				tabData.accept(TCRModItems.RAW_ORICHALCUM.get());
 				tabData.accept(TCRModItems.ORICHALCUM.get());
 
-				//法宝
-				tabData.accept(TCRModItems.TREE_SPIRIT_WAND.get());
-				tabData.accept(TCRModItems.HOLY_SWORD.get());
-
-				//食物
-				tabData.accept(TCRModItems.BLUE_BANANA.get());
-				tabData.accept(TCRModItems.DREAM_TA.get());
-				tabData.accept(TCRModItems.BEER.get());
-				tabData.accept(TCRModItems.COOKIE.get());
-				tabData.accept(TCRModItems.ELDER_CAKE.get());
-				tabData.accept(TCRModItems.EDEN_APPLE.get());
-				tabData.accept(TCRModItems.DRINK1.get());
-				tabData.accept(TCRModItems.DRINK2.get());
-				tabData.accept(TCRModItems.GOLDEN_WIND_AND_DEW.get());
-				tabData.accept(TCRModItems.GREEN_BANANA.get());
-				tabData.accept(TCRModItems.HOT_CHOCOLATE.get());
-				tabData.accept(TCRModItems.JUICE_TEA.get());
-				tabData.accept(TCRModItems.MAO_DAI.get());
-				tabData.accept(TCRModItems.PINE_CONE.get());
-				tabData.accept(TCRModItems.RED_WINE.get());
-				tabData.accept(TCRModItems.CATNIP.get());
-
 			}).build());
+
+	public static final RegistryObject<CreativeModeTab> WEAPON = REGISTRY.register("weapon",
+			() -> CreativeModeTab.builder()
+					.withTabsBefore(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "spawn_egg"))
+					.title(Component.translatable("item_group.the_casket_of_reveries.weapon"))
+					.icon(() -> new ItemStack(TCRModItems.TIGER_KARAMBIT.get()))
+					.displayItems((parameters, tabData) -> {
+
+						tabData.accept(TCRModItems.AMMO.get());
+						tabData.accept(TCRModItems.GUN_COMMON.get());
+						tabData.accept(TCRModItems.GUN_PLUS.get());
+						tabData.accept(TCRModItems.SPIRIT_WAND.get());
+						tabData.accept(TCRModItems.HEALTH_WAND.get());
+						tabData.accept(TCRModItems.TIGER_KARAMBIT.get());
+
+						//盔甲
+						tabData.accept(TCRModItems.ORICHALCUM_HELMET.get());
+						tabData.accept(TCRModItems.ORICHALCUM_CHESTPLATE.get());
+						tabData.accept(TCRModItems.ORICHALCUM_LEGGINGS.get());
+						tabData.accept(TCRModItems.ORICHALCUM_BOOTS.get());
+
+						//法宝
+						tabData.accept(TCRModItems.TREE_SPIRIT_WAND.get());
+						tabData.accept(TCRModItems.HOLY_SWORD.get());
+
+					}).build());
+
+	public static final RegistryObject<CreativeModeTab> FOOD = REGISTRY.register("food",
+			() -> CreativeModeTab.builder()
+					.withTabsBefore(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "spawn_egg"))
+					.title(Component.translatable("item_group.the_casket_of_reveries.food"))
+					.icon(() -> new ItemStack(TCRModItems.BLUE_BANANA.get()))
+					.displayItems((parameters, tabData) -> {
+						tabData.accept(TCRModItems.BLUE_BANANA.get());
+						tabData.accept(TCRModItems.DREAM_TA.get());
+						tabData.accept(TCRModItems.BEER.get());
+						tabData.accept(TCRModItems.COOKIE.get());
+						tabData.accept(TCRModItems.ELDER_CAKE.get());
+						tabData.accept(TCRModItems.EDEN_APPLE.get());
+						tabData.accept(TCRModItems.DRINK1.get());
+						tabData.accept(TCRModItems.DRINK2.get());
+						tabData.accept(TCRModItems.GOLDEN_WIND_AND_DEW.get());
+						tabData.accept(TCRModItems.GREEN_BANANA.get());
+						tabData.accept(TCRModItems.HOT_CHOCOLATE.get());
+						tabData.accept(TCRModItems.JUICE_TEA.get());
+						tabData.accept(TCRModItems.MAO_DAI.get());
+						tabData.accept(TCRModItems.PINE_CONE.get());
+						tabData.accept(TCRModItems.RED_WINE.get());
+						tabData.accept(TCRModItems.CATNIP.get());
+					}).build());
 
 }

@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.item.model;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.item.custom.SpiritWand;
+import com.gaboj1.tcr.item.custom.weapon.SpiritWand;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.DefaultedItemGeoModel;
 

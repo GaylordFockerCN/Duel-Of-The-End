@@ -6,8 +6,7 @@ import com.gaboj1.tcr.item.custom.*;
 import com.gaboj1.tcr.item.custom.armor.OrichalcumArmorItem;
 import com.gaboj1.tcr.item.custom.boss_loot.FlySword;
 import com.gaboj1.tcr.item.custom.boss_loot.TreeSpiritWand;
-import com.gaboj1.tcr.item.custom.gun.GunCommon;
-import com.gaboj1.tcr.item.custom.gun.GunPlus;
+import com.gaboj1.tcr.item.custom.weapon.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.food.Foods;
@@ -63,6 +62,9 @@ public class TCRModItems {
 	public static final RegistryObject<Item> DENSE_FOREST_CERTIFICATE = REGISTRY.register("dense_forest_certificate",  () -> new DropItem(new Item.Properties().rarity(Rarity.EPIC)));
 	public static final RegistryObject<Item> ELDER_STAFF = REGISTRY.register("elder_staff", DropItem::new);
 	public static final RegistryObject<Item> HOLY_SWORD = REGISTRY.register("holy_sword", FlySword::new);
+	public static final RegistryObject<Item> TIGER_KARAMBIT = REGISTRY.register("tiger_karambit", TigerKarambit::new);
+	public static final RegistryObject<Item> TIGER_SOUL_ICE = REGISTRY.register("hupobing", DropItem::new);
+
 	public static final RegistryObject<Item> DREAMSCAPE_COIN = REGISTRY.register("dreamscape_coin",() ->  new DropItem(new Item.Properties().setNoRepair().rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> DREAMSCAPE_COIN_PLUS = REGISTRY.register("dreamscape_coin_plus",() ->  new DropItem(new Item.Properties().setNoRepair().rarity(Rarity.EPIC)));
 	public static final RegistryObject<Item> BLUE_BANANA = REGISTRY.register("blue_banana",() ->  new DropItem(new Item.Properties().food(TCRFoods.COMMON)));

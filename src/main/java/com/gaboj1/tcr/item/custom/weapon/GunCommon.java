@@ -1,5 +1,5 @@
 
-package com.gaboj1.tcr.item.custom.gun;
+package com.gaboj1.tcr.item.custom.weapon;
 
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.item.TCRModItems;

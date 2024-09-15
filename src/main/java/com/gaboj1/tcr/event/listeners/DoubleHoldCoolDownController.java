@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.event.listeners;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.item.custom.gun.GunCommon;
+import com.gaboj1.tcr.item.custom.weapon.GunCommon;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
