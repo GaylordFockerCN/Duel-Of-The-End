@@ -87,7 +87,7 @@ public class TCRModItemTabs {
 			() -> CreativeModeTab.builder()
 					.withTabsBefore(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "spawn_egg"))
 					.title(Component.translatable("item_group.the_casket_of_reveries.loot"))
-					.icon(() -> new ItemStack(TCRModItems.TREE_SPIRIT_WAND.get()))
+					.icon(() -> new ItemStack(TCRModItems.WITHERING_TOUCH.get()))
 					.displayItems((parameters, tabData) -> {
 				//树脂
 				tabData.accept(TCRModItems.BASIC_RESIN.get());
