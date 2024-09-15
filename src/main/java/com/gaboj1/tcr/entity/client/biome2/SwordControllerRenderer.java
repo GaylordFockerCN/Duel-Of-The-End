@@ -14,9 +14,4 @@ public class SwordControllerRenderer extends GeoEntityRenderer<SwordControllerEn
     public SwordControllerRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new DefaultedEntityGeoModel<>(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "sword_controller")));
     }
-
-    public void render(@NotNull SwordControllerEntity entity, float entityYaw, float partialTick, PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight) {
-        poseStack.scale(3f, 3f, 3f);
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-    }
 }

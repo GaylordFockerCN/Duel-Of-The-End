@@ -15,9 +15,4 @@ public class TigerRenderer extends GeoEntityRenderer<TigerEntity> {
         super(renderManager, new DefaultedEntityGeoModel<>(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "tiger")));
     }
 
-    @Override
-    public void render(@NotNull TigerEntity entity, float entityYaw, float partialTick, PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight) {
-        poseStack.scale(3f, 3f, 3f);
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-    }
 }

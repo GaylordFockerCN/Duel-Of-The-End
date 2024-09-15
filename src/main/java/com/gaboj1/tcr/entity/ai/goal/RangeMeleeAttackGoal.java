@@ -6,7 +6,7 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 增加攻击判断范围
+ * 增加攻击判断范围和间隔
  */
 public class RangeMeleeAttackGoal extends MeleeAttackGoal {
 

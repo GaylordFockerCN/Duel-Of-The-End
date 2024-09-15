@@ -11,6 +11,7 @@ import com.gaboj1.tcr.client.TCRModSounds;
 import com.gaboj1.tcr.effect.TCREffects;
 import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.entity.TCRModVillagers;
+import com.gaboj1.tcr.entity.client.IceThornRenderer;
 import com.gaboj1.tcr.entity.client.TCRFakePlayerRenderer;
 import com.gaboj1.tcr.entity.client.big_hammer.BigHammerRenderer;
 import com.gaboj1.tcr.entity.client.boss.yggrasil.TreeClawRenderer;
@@ -212,6 +213,7 @@ public class TheCasketOfReveriesMod {
             event.registerBlockEntityRenderer(TCRModBlockEntities.BETTER_STRUCTURE_BLOCK_ENTITY.get(), BetterStructureBlockRenderer::new);
             event.registerBlockEntityRenderer(TCRModBlockEntities.PORTAL_BLOCK_ENTITY.get(), PortalBlockRenderer::new);
             event.registerEntityRenderer(TCRModEntities.DESERT_EAGLE_BULLET.get(), ThrownItemRenderer::new);
+            event.registerEntityRenderer(TCRModEntities.ICE_THORN_ENTITY.get(), IceThornRenderer::new);
             event.registerBlockEntityRenderer(TCRModBlockEntities.YGGDRASIL_SPAWNER_BLOCK_ENTITY.get(), YggdrasilBlockRenderer::new);
             event.registerBlockEntityRenderer(TCRModBlockEntities.TIGER_TRIAL_SPAWNER_BLOCK_ENTITY.get(), (context -> new TigerSpawnerRenderer()));
         }

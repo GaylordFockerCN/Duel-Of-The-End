@@ -51,6 +51,8 @@ public class TCRModEntities {
 	public static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, TheCasketOfReveriesMod.MOD_ID);
 	public static final RegistryObject<EntityType<BulletEntity>> DESERT_EAGLE_BULLET = register("projectile_desert_eagle_bullet", EntityType.Builder.<BulletEntity>of(BulletEntity::new, MobCategory.MISC)
 			.setCustomClientFactory(BulletEntity::new).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.1f, 0.1f));
+	public static final RegistryObject<EntityType<IceThornEntity>> ICE_THORN_ENTITY = register("ice_thorn_entity", EntityType.Builder.<IceThornEntity>of(IceThornEntity::new, MobCategory.MISC)
+			.setCustomClientFactory(IceThornEntity::new).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.1f, 0.1f));
 	public static final RegistryObject<EntityType<MagicProjectile>> MAGIC_PROJECTILE = register("magic_projectile", EntityType.Builder.<MagicProjectile>of(MagicProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10));
 
 	public static final RegistryObject<EntityType<SwordEntity>> SWORD = register("sword",
@@ -91,19 +93,19 @@ public class TCRModEntities {
 	public static final RegistryObject<EntityType<TigerEntity>> TIGER =
 			REGISTRY.register("tiger",
 					() -> EntityType.Builder.of(TigerEntity::new, MobCategory.CREATURE)
-							.sized(0.78f, 2f)
+							.sized(2.2f, 2f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "tiger").toString()));
 
 	public static final RegistryObject<EntityType<BoxerEntity>> BOXER =
 			REGISTRY.register("boxer",
 					() -> EntityType.Builder.of(BoxerEntity::new, MobCategory.CREATURE)
-							.sized(0.78f, 2f)
+							.sized(0.78f, 1.6f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "boxer").toString()));
 
 	public static final RegistryObject<EntityType<BigHammerEntity>> BIG_HAMMER =
 			REGISTRY.register("big_hammer",
 					() -> EntityType.Builder.of(BigHammerEntity::new, MobCategory.CREATURE)
-							.sized(0.78f, 2f)
+							.sized(2f, 3f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "big_hammer").toString()));
 
 	public static final RegistryObject<EntityType<SnowSwordmanEntity>> SNOW_SWORDMAN =

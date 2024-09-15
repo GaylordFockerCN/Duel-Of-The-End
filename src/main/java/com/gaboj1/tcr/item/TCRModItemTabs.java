@@ -111,6 +111,7 @@ public class TCRModItemTabs {
 				tabData.accept(TCRModItems.BARK_OF_THE_GUARDIAN.get());
 				tabData.accept(TCRModItems.STARLIT_DEWDROP.get());
 
+				tabData.accept(TCRModItems.ICE_THORN.get());
 				tabData.accept(TCRModItems.TIGER_SOUL_ICE.get());
 
 				//货币

@@ -5,6 +5,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
+import org.jetbrains.annotations.NotNull;
 
 public class OrichalcumEffect extends MobEffect {
 
@@ -14,7 +15,7 @@ public class OrichalcumEffect extends MobEffect {
     }
 
     @Override
-    public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
+    public void applyEffectTick(@NotNull LivingEntity livingEntity, int amplifier) {
         if(livingEntity instanceof ServerPlayer player){
             if(effectDuration == 0){
                 player.setSwimming(false);

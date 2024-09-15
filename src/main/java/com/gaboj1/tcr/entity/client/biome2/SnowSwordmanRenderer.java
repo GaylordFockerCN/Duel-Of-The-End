@@ -15,8 +15,4 @@ public class SnowSwordmanRenderer extends GeoEntityRenderer<SnowSwordmanEntity> 
         super(renderManager, new DefaultedEntityGeoModel<>(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "snow_swordman")));
     }
 
-    public void render(@NotNull SnowSwordmanEntity entity, float entityYaw, float partialTick, PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight) {
-        poseStack.scale(3f, 3f, 3f);
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-    }
 }

@@ -26,7 +26,7 @@ public class TCRModItems {
 	public static final RegistryObject<Item> GUN_COMMON = REGISTRY.register("gun", GunCommon::new);
 	public static final RegistryObject<Item> GUN_PLUS = REGISTRY.register("gun_plus", GunPlus::new);
 	public static final RegistryObject<Item> BULLET = REGISTRY.register("bullet", () -> new Item(new Item.Properties().stacksTo(64)));
-
+	public static final RegistryObject<Item> ICE_THORN = REGISTRY.register("bingci", () -> new Item(new Item.Properties().stacksTo(64)));
 	public static final RegistryObject<Item> BASIC_RESIN = REGISTRY.register("basic_resin", () -> new BasicResin(new Item.Properties().setNoRepair().stacksTo(64).rarity(Rarity.COMMON),1));
 	public static final RegistryObject<Item> INTERMEDIATE_RESIN = REGISTRY.register("intermediate_resin", () -> new BasicResin(new Item.Properties().setNoRepair().stacksTo(64).rarity(Rarity.UNCOMMON),BasicResin.INTERMEDIATE_RESIN));
 	public static final RegistryObject<Item> ADVANCED_RESIN = REGISTRY.register("advanced_resin", () -> new BasicResin(new Item.Properties().setNoRepair().stacksTo(64).rarity(Rarity.RARE),BasicResin.ADVANCED_RESIN));

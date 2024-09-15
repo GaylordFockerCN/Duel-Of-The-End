@@ -13,9 +13,5 @@ public class SpriteRenderer extends GeoEntityRenderer<SpriteEntity> {
     public SpriteRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new DefaultedEntityGeoModel<>(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "jingling")));
     }
-    @Override
-    public void render(@NotNull SpriteEntity entity, float entityYaw, float partialTick, PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight) {
-        poseStack.scale(3f, 3f, 3f);
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-    }
+
 }

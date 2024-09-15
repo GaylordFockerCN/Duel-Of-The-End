@@ -15,8 +15,4 @@ public class BoxerRenderer extends GeoEntityRenderer<BoxerEntity> {
         super(renderManager, new DefaultedEntityGeoModel<>(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "boxer")));
     }
 
-    public void render(@NotNull  BoxerEntity entity, float entityYaw, float partialTick, PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight) {
-        poseStack.scale(3f, 3f, 3f);
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-    }
 }

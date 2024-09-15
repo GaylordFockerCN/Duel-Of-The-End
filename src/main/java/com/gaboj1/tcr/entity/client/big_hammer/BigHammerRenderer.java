@@ -15,9 +15,4 @@ public class BigHammerRenderer extends GeoEntityRenderer<BigHammerEntity> {
         super(renderManager, new DefaultedEntityGeoModel<>(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "big_hammer")));
     }
 
-    public void render(@NotNull BigHammerEntity entity, float entityYaw, float partialTick, PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight) {
-        poseStack.scale(3f, 3f, 3f);
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-    }
-
 }

@@ -20,6 +20,7 @@ public class ModLangGenerator extends ModLangProvider {
 
         this.addEffect(TCREffects.ORICHALCUM, "神金");
         this.addEffect(TCREffects.FLY_SPEED, "御剑飞行");
+        this.addEffect(TCREffects.FROZEN, "冻结");
 
         this.addTask("kill_boss1", "清道夺邪魔", "杀死密林中危害牧歌原野安全的邪恶树魔");
 
@@ -113,6 +114,8 @@ public class ModLangGenerator extends ModLangProvider {
         this.addItemUsageInfo(TCRModItems.HOLY_SWORD.get(),"某位高人留下的圣剑",1);
         this.addItemUsageInfo(TCRModItems.HOLY_SWORD.get(),"灵气值 ： %d",3);
 
+        this.add(TCRModItems.ICE_THORN.get(),"冰刺");
+        this.addItemUsageInfo(TCRModItems.ICE_THORN.get(),"冰虎的掉落物，可以当箭发射");
         this.add(TCRModItems.TIGER_SOUL_ICE.get(),"虎魄冰");
         this.addItemUsageInfo(TCRModItems.TIGER_SOUL_ICE.get(),"冰虎的掉落物");
         this.add(TCRModItems.TIGER_KARAMBIT.get(),"冰虎爪刀");
@@ -215,7 +218,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addEntityAndEgg(TCRModEntities.SMALL_TREE_MONSTER,"小树妖");
         this.addEntityAndEgg(TCRModEntities.MIDDLE_TREE_MONSTER,"树妖");
         this.addEntityAndEgg(TCRModEntities.SPRITE,"精灵");
-        this.addEntityAndEgg(TCRModEntities.TIGER,"老虎");
+        this.addEntityAndEgg(TCRModEntities.TIGER,"冰虎");
         this.addEntityAndEgg(TCRModEntities.BOXER,"拳师");
         this.addEntityAndEgg(TCRModEntities.BIG_HAMMER,"大锤子");
         this.addEntityAndEgg(TCRModEntities.SNOW_SWORDMAN,"雪人剑客");
