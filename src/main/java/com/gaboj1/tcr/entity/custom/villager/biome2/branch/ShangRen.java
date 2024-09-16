@@ -31,7 +31,7 @@ public class ShangRen extends YueShiLineNpc {
 
     @Override
     public String getResourceName() {
-        return "shang_ren";
+        return "talkable/villager2-2";
     }
 
     @Override

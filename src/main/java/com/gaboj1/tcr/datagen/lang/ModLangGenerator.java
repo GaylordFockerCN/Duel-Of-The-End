@@ -183,9 +183,9 @@ public class ModLangGenerator extends ModLangProvider {
         this.addItemUsageInfo(TCRModItems.RED_WINE.get(), "一种经过发酵的葡萄酒，风味独特，适合与美食搭配。");
         this.add(TCRModItems.CATNIP.get(), "猫薄荷");
         this.addItemUsageInfo(TCRModItems.CATNIP.get(), "可以用于驯服猫猫果冻");
-        this.add(TCRModItems.WANG_MING_PEARL.get(), "万明珠");
-        this.addItemUsageInfo(TCRModItems.WANG_MING_PEARL.get(), "传闻世上有一宝珠，唤为万明，值千金。在月圆之夜，万明珠可汲取月光，迸发魔力，从而使周围的生物恢复视力，若非双目失明者，则可练成火眼金睛，视千里之远不在话下。");
-        this.addItemUsageInfo(TCRModItems.WANG_MING_PEARL.get(), "万明珠（？）", 1);
+        this.add(TCRModItems.WAN_MING_PEARL.get(), "万明珠");
+        this.addItemUsageInfo(TCRModItems.WAN_MING_PEARL.get(), "传闻世上有一宝珠，唤为万明，值千金。在月圆之夜，万明珠可汲取月光，迸发魔力，从而使周围的生物恢复视力，若非双目失明者，则可练成火眼金睛，视千里之远不在话下。");
+        this.addItemUsageInfo(TCRModItems.WAN_MING_PEARL.get(), "万明珠（？）", 1);
 
         this.add(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get(),"更好的结构方块");
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get(),"密林灵叶");

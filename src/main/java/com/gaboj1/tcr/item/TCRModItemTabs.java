@@ -118,7 +118,7 @@ public class TCRModItemTabs {
 				tabData.accept(TCRModItems.DENSE_FOREST_CERTIFICATE.get());
 				tabData.accept(TCRModItems.DREAMSCAPE_COIN.get());
 				tabData.accept(TCRModItems.DREAMSCAPE_COIN_PLUS.get());
-				tabData.accept(TCRModItems.WANG_MING_PEARL.get());
+				tabData.accept(TCRModItems.WAN_MING_PEARL.get());
 				tabData.accept(TCRModItems.RAW_ORICHALCUM.get());
 				tabData.accept(TCRModItems.ORICHALCUM.get());
 
