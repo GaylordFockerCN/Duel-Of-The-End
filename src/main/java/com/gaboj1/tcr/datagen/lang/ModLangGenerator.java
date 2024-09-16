@@ -32,13 +32,16 @@ public class ModLangGenerator extends ModLangProvider {
         this.add("info.the_casket_of_reveries.enter_forbidden_biome","前面的区域，以后再来探索吧~");
         this.add("info.the_casket_of_reveries.teleport_lock","该区域尚未解锁");
         this.add("info.the_casket_of_reveries.teleport_unlock","成功激活此锚点！");
-        this.add("info.the_casket_of_reveries.health_added","成功吸取了村民的生命。");
+        this.add("info.the_casket_of_reveries.health_added_from_villager1","成功吸取了村民的生命。");
         this.add("info.the_casket_of_reveries.boss1invincible","摧毁树爪或小怪以解除伊格德拉希尔无敌状态");
         this.add("info.the_casket_of_reveries.alreadyAddWhite","你已经是村民阵营了，不能伤害村民哦");
         this.add("info.the_casket_of_reveries.cannot_spawn","目前的剧情进度还无法召唤此BOSS！");
         this.add("info.the_casket_of_reveries.sure_to_spawn","再次右键以召唤BOSS（用于刷材料，不影响剧情）");
         this.add("info.the_casket_of_reveries.cannot_trial","目前暂时无法进行试炼");
         this.add("info.the_casket_of_reveries.trial_start","试炼开始！");
+        this.add("info.the_casket_of_reveries.add_health_success","成功提升血量上限！");
+        this.add("info.the_casket_of_reveries.add_health_failed","提升血量上限失败！");
+        this.add("info.the_casket_of_reveries.resurrection","成功还魂！！！");
 
         this.add("the_casket_of_reveries.button.boss1","泰兰妮尔之心");
         this.add("the_casket_of_reveries.button.boss2","九霄");
@@ -186,6 +189,30 @@ public class ModLangGenerator extends ModLangProvider {
         this.add(TCRModItems.WAN_MING_PEARL.get(), "万明珠");
         this.addItemUsageInfo(TCRModItems.WAN_MING_PEARL.get(), "传闻世上有一宝珠，唤为万明，值千金。在月圆之夜，万明珠可汲取月光，迸发魔力，从而使周围的生物恢复视力，若非双目失明者，则可练成火眼金睛，视千里之远不在话下。");
         this.addItemUsageInfo(TCRModItems.WAN_MING_PEARL.get(), "万明珠（？）", 1);
+        this.add(TCRModItems.LIGHT_ELIXIR.get(), "光明丹");
+        this.addItemUsageInfo(TCRModItems.LIGHT_ELIXIR.get(), "一种增强视力的丹药。");
+        this.add(TCRModItems.ASCENSION_ELIXIR.get(), "登仙丹");
+        this.addItemUsageInfo(TCRModItems.ASCENSION_ELIXIR.get(), "一种使人飘飘欲仙的丹药。");
+        this.add(TCRModItems.LUCKY_ELIXIR.get(), "幸运丹");
+        this.addItemUsageInfo(TCRModItems.LUCKY_ELIXIR.get(), "一种带来好运的丹药。");
+        this.add(TCRModItems.EVASION_ELIXIR.get(), "避凶丹");
+        this.addItemUsageInfo(TCRModItems.EVASION_ELIXIR.get(), "一种增强伤害抗性的丹药。");
+        this.add(TCRModItems.WATER_AVOIDANCE_ELIXIR.get(), "避水丹");
+        this.addItemUsageInfo(TCRModItems.WATER_AVOIDANCE_ELIXIR.get(), "一种保护你在水下活动的丹药，适合水下探索。");
+        this.add(TCRModItems.FIRE_AVOIDANCE_ELIXIR.get(), "避火丹");
+        this.addItemUsageInfo(TCRModItems.FIRE_AVOIDANCE_ELIXIR.get(), "一种保护你免受火焰伤害的丹药。");
+        this.add(TCRModItems.COLD_AVOIDANCE_ELIXIR.get(), "避寒丹");
+        this.addItemUsageInfo(TCRModItems.COLD_AVOIDANCE_ELIXIR.get(), "一种防止寒冷有害影响的丹药，让你在冰冷环境中生存。");
+        this.add(TCRModItems.THUNDER_AVOIDANCE_ELIXIR.get(), "避雷丹");
+        this.addItemUsageInfo(TCRModItems.THUNDER_AVOIDANCE_ELIXIR.get(), "一种保护你免受雷击伤害的丹药。");
+        this.add(TCRModItems.POISON_AVOIDANCE_ELIXIR.get(), "避毒丹");
+        this.addItemUsageInfo(TCRModItems.POISON_AVOIDANCE_ELIXIR.get(), "一种中和毒素效果的丹药，可免疫中毒。");
+        this.add(TCRModItems.NINE_TURN_REVIVAL_ELIXIR.get(), "九转还魂丹");
+        this.addItemUsageInfo(TCRModItems.NINE_TURN_REVIVAL_ELIXIR.get(), "服用后，受到致命伤害时将半血复活。");
+        this.add(TCRModItems.STRENGTH_PILL.get(), "大力丸");
+        this.addItemUsageInfo(TCRModItems.STRENGTH_PILL.get(), "一种暂时提升攻击伤害的丹药。");
+        this.add(TCRModItems.AQUA_GOLD_ELIXIR.get(), "碧藕金丹");
+        this.addItemUsageInfo(TCRModItems.AQUA_GOLD_ELIXIR.get(), "服用后有概率增加最大生命上限，最多增加9次，概率随服用次数增大而降低。");
 
         this.add(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get(),"更好的结构方块");
         this.add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get(),"密林灵叶");

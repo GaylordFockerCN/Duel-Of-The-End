@@ -84,6 +84,18 @@ public class TCRModItems {
 	public static final RegistryObject<Item> PINE_CONE = REGISTRY.register("pine_cone", () -> new DropItem(new Item.Properties().food(TCRFoods.COMMON)));
 	public static final RegistryObject<Item> RED_WINE = REGISTRY.register("red_wine", () -> new DrinkItem(new Item.Properties().food(TCRFoods.DREAM_DA)));
 	public static final RegistryObject<Item> WAN_MING_PEARL = REGISTRY.register("wan_ming_pearl", WanMingPearl::new);
+	public static final RegistryObject<Item> LIGHT_ELIXIR = REGISTRY.register("light_elixir", () -> new DropItem(new Item.Properties().rarity(Rarity.UNCOMMON).food(TCRFoods.NIGHT_VISION_PELLET)));
+	public static final RegistryObject<Item> ASCENSION_ELIXIR = REGISTRY.register("ascension_elixir", () -> new DropItem(new Item.Properties().rarity(Rarity.RARE).food(TCRFoods.SPEED_PELLET)));
+	public static final RegistryObject<Item> LUCKY_ELIXIR = REGISTRY.register("lucky_elixir", () -> new DropItem(new Item.Properties().rarity(Rarity.UNCOMMON).food(TCRFoods.LUCK_PELLET)));
+	public static final RegistryObject<Item> EVASION_ELIXIR = REGISTRY.register("evasion_elixir", () -> new DropItem(new Item.Properties().rarity(Rarity.UNCOMMON).food(TCRFoods.DAMAGE_RESISTANCE_PELLET)));
+	public static final RegistryObject<Item> WATER_AVOIDANCE_ELIXIR = REGISTRY.register("water_avoidance_elixir", () -> new DropItem(new Item.Properties().rarity(Rarity.UNCOMMON).food(TCRFoods.WATER_RESISTANCE_PELLET)));
+	public static final RegistryObject<Item> FIRE_AVOIDANCE_ELIXIR = REGISTRY.register("fire_avoidance_elixir", () -> new DropItem(new Item.Properties().rarity(Rarity.UNCOMMON).food(TCRFoods.FIRE_RESISTANCE_PELLET)));
+	public static final RegistryObject<Item> COLD_AVOIDANCE_ELIXIR = REGISTRY.register("cold_avoidance_elixir", () -> new DropItem(new Item.Properties().rarity(Rarity.UNCOMMON).food(TCRFoods.FROZEN_RESISTANCE_PELLET)));
+	public static final RegistryObject<Item> THUNDER_AVOIDANCE_ELIXIR = REGISTRY.register("thunder_avoidance_elixir", () -> new DropItem(new Item.Properties().rarity(Rarity.UNCOMMON).food(TCRFoods.THUNDER_RESISTANCE_PELLET)));
+	public static final RegistryObject<Item> POISON_AVOIDANCE_ELIXIR = REGISTRY.register("poison_avoidance_elixir", () -> new DropItem(new Item.Properties().rarity(Rarity.UNCOMMON).food(TCRFoods.POISON_RESISTANCE_PELLET)));
+	public static final RegistryObject<Item> NINE_TURN_REVIVAL_ELIXIR = REGISTRY.register("nine_turn_revival_elixir", () -> new DropItem(new Item.Properties().rarity(Rarity.EPIC).food(TCRFoods.NINE_TRANSFORMATIONS_RESURRECTION_PELLET)));
+	public static final RegistryObject<Item> STRENGTH_PILL = REGISTRY.register("strength_pill", () -> new DropItem(new Item.Properties().rarity(Rarity.RARE).food(TCRFoods.POWER_PELLET)));
+	public static final RegistryObject<Item> AQUA_GOLD_ELIXIR = REGISTRY.register("aqua_gold_elixir", () -> new DropItem(new Item.Properties().rarity(Rarity.EPIC).food(TCRFoods.GOLDEN_PELLET)));
 
 //	public static final RegistryObject<Item> JELLY_CAT_SPAWN_EGG = registerEgg("jelly_cat_spawn_egg", TCRModEntities.JELLY_CAT);
 	public static final RegistryObject<Item> JELLY_CAT_SPAWN_EGG = REGISTRY.register("jelly_cat_spawn_egg",

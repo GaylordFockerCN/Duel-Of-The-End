@@ -1,12 +1,16 @@
 package com.gaboj1.tcr.event.listeners;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.effect.TCREffects;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainTalkableVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.item.custom.armor.OrichalcumArmorItem;
+import com.gaboj1.tcr.item.custom.boss_loot.TreeSpiritWand;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -15,6 +19,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -31,6 +36,7 @@ public class LivingEntityListener {
         LivingEntity livingEntity = event.getEntity();
         if (!event.isCanceled()) {
             OrichalcumArmorItem.handleArmorAbility(livingEntity);
+            TCREffects.onEntityUpdate(event);
         }
     }
 
@@ -39,20 +45,13 @@ public class LivingEntityListener {
      */
     @SubscribeEvent
     public static void onEntityDie(LivingDeathEvent event) {
-        ItemStack stack = event.getEntity().getMainHandItem();
-        if(new Random().nextInt(0,30) == 5 &&event.getSource().getEntity() instanceof Player player && stack.is(TCRModItems.TREE_SPIRIT_WAND.get()) && stack.getOrCreateTag().getBoolean("fromBoss")){
-            LivingEntity entity = event.getEntity();
-            if(entity instanceof PastoralPlainVillager || entity instanceof PastoralPlainTalkableVillager || entity instanceof PastoralPlainVillagerElder){
-                AttributeInstance instance = player.getAttribute(Attributes.MAX_HEALTH);
-                int cnt = player.getMainHandItem().getOrCreateTag().getInt("cnt");
-                if(instance != null){
-                    instance.addPermanentModifier(new AttributeModifier("killVillagerReward"+cnt++, 2.0f, AttributeModifier.Operation.ADDITION));
-                    player.displayClientMessage(Component.translatable("info.the_casket_of_reveries.health_added"), true);
-                    player.getMainHandItem().getOrCreateTag().putInt("cnt", cnt);
-                }
-            }
-        }
+        TreeSpiritWand.onKill(event);
+        TCREffects.onEntityDie(event);
+    }
 
+    @SubscribeEvent
+    public static void onEntityHurt(LivingHurtEvent event) {
+        TCREffects.onEntityHurt(event);
     }
 
 }

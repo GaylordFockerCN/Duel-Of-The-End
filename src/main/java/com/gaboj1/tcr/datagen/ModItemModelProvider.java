@@ -103,6 +103,19 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(TCRModItems.RED_WINE);
         simpleItem(TCRModItems.WAN_MING_PEARL);
 
+        simpleItem(TCRModItems.LIGHT_ELIXIR);
+        simpleItem(TCRModItems.ASCENSION_ELIXIR);
+        simpleItem(TCRModItems.LUCKY_ELIXIR);
+        simpleItem(TCRModItems.EVASION_ELIXIR);
+        simpleItem(TCRModItems.WATER_AVOIDANCE_ELIXIR);
+        simpleItem(TCRModItems.FIRE_AVOIDANCE_ELIXIR);
+        simpleItem(TCRModItems.COLD_AVOIDANCE_ELIXIR);
+        simpleItem(TCRModItems.THUNDER_AVOIDANCE_ELIXIR);
+        simpleItem(TCRModItems.POISON_AVOIDANCE_ELIXIR);
+        simpleItem(TCRModItems.NINE_TURN_REVIVAL_ELIXIR);
+        simpleItem(TCRModItems.STRENGTH_PILL);
+        simpleItem(TCRModItems.AQUA_GOLD_ELIXIR);
+
         simpleBlockItemBlockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER);
         simpleBlockItemBlockTexture(TCRModBlocks.CATNIP);
         saplingItem(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING);

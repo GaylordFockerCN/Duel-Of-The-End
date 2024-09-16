@@ -4,6 +4,10 @@ import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.block.TCRModBlocks;
 import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainTalkableVillager;
+import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillager;
+import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
+import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.item.renderer.TreeSpiritWandRenderer;
 import com.gaboj1.tcr.util.ItemUtil;
 import com.google.common.collect.ImmutableMultimap;
@@ -23,6 +27,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -34,6 +39,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -45,6 +51,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import software.bernie.geckolib.util.RenderUtils;
 
 import java.util.List;
+import java.util.Random;
 import java.util.function.Consumer;
 
 /**
@@ -109,6 +116,22 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
         }
 
         return InteractionResult.PASS;
+    }
+
+    public static void onKill(LivingDeathEvent event){
+        ItemStack stack = event.getEntity().getMainHandItem();
+        if(new Random().nextInt(0,30) == 5 &&event.getSource().getEntity() instanceof Player player && stack.is(TCRModItems.TREE_SPIRIT_WAND.get()) && stack.getOrCreateTag().getBoolean("fromBoss")){
+            LivingEntity entity = event.getEntity();
+            if(entity instanceof PastoralPlainVillager || entity instanceof PastoralPlainTalkableVillager || entity instanceof PastoralPlainVillagerElder){
+                AttributeInstance instance = player.getAttribute(Attributes.MAX_HEALTH);
+                int cnt = player.getMainHandItem().getOrCreateTag().getInt("cnt");
+                if(instance != null){
+                    instance.addPermanentModifier(new AttributeModifier("killVillagerReward"+cnt++, 2.0f, AttributeModifier.Operation.ADDITION));
+                    player.displayClientMessage(Component.translatable("info.the_casket_of_reveries.health_added_from_villager1"), true);
+                    player.getMainHandItem().getOrCreateTag().putInt("cnt", cnt);
+                }
+            }
+        }
     }
 
     /**
