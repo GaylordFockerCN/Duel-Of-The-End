@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.entity.custom.biome2;
 
+import com.gaboj1.tcr.entity.custom.AttackableGeoMob;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -23,10 +24,11 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class SnowSwordmanEntity extends PathfinderMob implements GeoEntity {
+public class SnowSwordmanEntity extends AttackableGeoMob implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private int attackTimer1, attackTimer2, attackTimer3;
 
-    public SnowSwordmanEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
+    public SnowSwordmanEntity(EntityType<? extends SnowSwordmanEntity> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_);
     }
     public static AttributeSupplier setAttributes() {
@@ -54,8 +56,35 @@ public class SnowSwordmanEntity extends PathfinderMob implements GeoEntity {
 
     @Override
     public boolean doHurtTarget(@NotNull Entity entity) {
-        triggerAnim("Attack", "attack" + getRandom().nextInt(2, 5));
+        int id = getRandom().nextInt(2, 5);
+        triggerAnim("Attack", "attack" + id);
+        switch (id){
+            case 2: attackTimer1 = 10 + 14; addTask(10 + 14, tick -> {
+
+            }); break;
+            case 3: attackTimer2 = 10 + 26; break;
+            case 4: attackTimer3 = 10 + 4; break;
+        }
         return super.doHurtTarget(entity);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if(!level().isClientSide){
+            if(attackTimer1 > 0){
+                attackTimer1--;
+                if(attackTimer1 == 1){
+                    tryHurtTarget(1);
+                }
+            }
+        }
+    }
+
+    public void tryHurtTarget(float damage){
+        if(getTarget() != null){
+            getTarget().hurt(this.damageSources().mobAttack(this), damage);
+        }
     }
 
     @Override
@@ -63,7 +92,6 @@ public class SnowSwordmanEntity extends PathfinderMob implements GeoEntity {
         controllers.add(new AnimationController<>(this, "controller",
                 10, this::predicate));
         controllers.add(new AnimationController<>(this, "Attack", 10, state -> PlayState.STOP)
-                .triggerableAnim("attack1", RawAnimation.begin().then("animation.model.attack1", Animation.LoopType.PLAY_ONCE))
                 .triggerableAnim("attack2", RawAnimation.begin().then("animation.model.attack2", Animation.LoopType.PLAY_ONCE))
                 .triggerableAnim("attack3", RawAnimation.begin().then("animation.model.attack3", Animation.LoopType.PLAY_ONCE))
                 .triggerableAnim("attack4", RawAnimation.begin().then("animation.model.attack4", Animation.LoopType.PLAY_ONCE))

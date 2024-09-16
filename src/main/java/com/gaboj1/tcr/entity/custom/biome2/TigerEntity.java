@@ -53,6 +53,8 @@ public class TigerEntity extends Monster implements GeoEntity {
     public static final EntityDataAccessor<Boolean> NEED_JUMP = SynchedEntityData.defineId(TigerEntity.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Boolean> HAS_TARGET = SynchedEntityData.defineId(TigerEntity.class, EntityDataSerializers.BOOLEAN);
     private boolean shot;
+    private int attackTimer1;
+    private int attackTimer2;
 
     public TigerEntity(EntityType<? extends TigerEntity> entityType, Level level) {
         super(entityType, level);
@@ -113,6 +115,24 @@ public class TigerEntity extends Monster implements GeoEntity {
             //同步Target用于渲染，不知道为什么客户端没检测到Target
             getEntityData().set(HAS_TARGET, getTarget() != null);
 
+            //延时攻击
+            if(attackTimer1 > 0){
+                attackTimer1--;
+                if(attackTimer1 == 1 && getTarget() != null && getTarget().distanceTo(this) < 3){
+                    getTarget().hurt(this.damageSources().mobAttack(this), 10);
+                }
+            }
+            //扇两巴掌
+            if(attackTimer2 > 0){
+                attackTimer2--;
+                if(attackTimer2 == 13 && getTarget() != null && getTarget().distanceTo(this) < 3){
+                    getTarget().setHealth(getTarget().getHealth() - 7);//打真伤，不然攻击间隔太短会霸体
+                }
+                if(attackTimer2 == 4 && getTarget() != null && getTarget().distanceTo(this) < 3){
+                    getTarget().setHealth(getTarget().getHealth() - 10);//打真伤，不然攻击间隔太短会霸体
+                }
+            }
+
         } else {
             //追目标
             if(getEntityData().get(NEED_JUMP)){
@@ -152,16 +172,17 @@ public class TigerEntity extends Monster implements GeoEntity {
         if(entity.distanceTo(this) > TigerChaseGoal.CHASE_DIS){
             triggerAnim("Attack", "attack2");
             getEntityData().set(NEED_JUMP, true);
-            return false;
         }
         switch (attackId){
             case 2, 3:
                 triggerAnim("Attack", "attack3");
+                attackTimer1 = 17;
                 break;
             default:
                 triggerAnim("Attack", "attack1");
+                attackTimer2 = 30;
         }
-        return super.doHurtTarget(entity);
+        return false;
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
