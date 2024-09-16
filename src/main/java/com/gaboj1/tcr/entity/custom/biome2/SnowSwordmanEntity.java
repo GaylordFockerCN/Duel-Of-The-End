@@ -1,10 +1,10 @@
 package com.gaboj1.tcr.entity.custom.biome2;
 
-import com.gaboj1.tcr.entity.custom.AttackableGeoMob;
+import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
+import com.gaboj1.tcr.entity.custom.AggressiveGeoMob;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -24,9 +24,8 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class SnowSwordmanEntity extends AttackableGeoMob implements GeoEntity {
+public class SnowSwordmanEntity extends AggressiveGeoMob implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    private int attackTimer1, attackTimer2, attackTimer3;
 
     public SnowSwordmanEntity(EntityType<? extends SnowSwordmanEntity> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_);
@@ -42,12 +41,12 @@ public class SnowSwordmanEntity extends AttackableGeoMob implements GeoEntity {
 
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
+        this.goalSelector.addGoal(2, new RangeMeleeAttackGoal(this, 1.0D, false, 3, 60));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
 
     /**
@@ -59,32 +58,18 @@ public class SnowSwordmanEntity extends AttackableGeoMob implements GeoEntity {
         int id = getRandom().nextInt(2, 5);
         triggerAnim("Attack", "attack" + id);
         switch (id){
-            case 2: attackTimer1 = 10 + 14; addTask(10 + 14, tick -> {
+            case 2:
+                addBasicAttackTask(10+14, 5, 2);
+                break;
+            case 3:
+                addMultiBasicAttackTask(10+26, 3, 2,18, 10);
+                break;
+            case 4:
 
-            }); break;
-            case 3: attackTimer2 = 10 + 26; break;
-            case 4: attackTimer3 = 10 + 4; break;
+                addBasicAttackTask(10+4, 5, 2);
+                break;
         }
         return super.doHurtTarget(entity);
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-        if(!level().isClientSide){
-            if(attackTimer1 > 0){
-                attackTimer1--;
-                if(attackTimer1 == 1){
-                    tryHurtTarget(1);
-                }
-            }
-        }
-    }
-
-    public void tryHurtTarget(float damage){
-        if(getTarget() != null){
-            getTarget().hurt(this.damageSources().mobAttack(this), damage);
-        }
     }
 
     @Override
@@ -101,9 +86,9 @@ public class SnowSwordmanEntity extends AttackableGeoMob implements GeoEntity {
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
         if(tAnimationState.isMoving()) {
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.move", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
+        } else {
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.idle", Animation.LoopType.LOOP));
         }
-        tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
     @Override
