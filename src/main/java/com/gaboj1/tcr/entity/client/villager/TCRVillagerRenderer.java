@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.entity.client.villager;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.entity.custom.villager.biome2.branch.MiaoYin;
@@ -61,22 +62,28 @@ public class TCRVillagerRenderer extends DynamicGeoEntityRenderer<TCRVillager> {
 
             // Do some quick render modifications depending on what the item is
             @Override
-            protected void renderStackForBone(PoseStack poseStack, GeoBone bone, ItemStack stack, TCRVillager animatable,
-                                              MultiBufferSource bufferSource, float partialTick, int packedLight, int packedOverlay) {
+            protected void renderStackForBone(PoseStack poseStack, GeoBone bone, ItemStack stack, TCRVillager villager, MultiBufferSource bufferSource, float partialTick, int packedLight, int packedOverlay) {
                 if (stack == TCRVillagerRenderer.this.elderMainHandItem) {
                     poseStack.mulPose(Axis.XP.rotationDegrees(-90f));
-                        poseStack.translate(0, 0.3, -0.45);
+                    poseStack.translate(0, 0.3, -0.45);
                 } else if (stack == TCRVillagerRenderer.this.offhandItem) {
                     poseStack.mulPose(Axis.XP.rotationDegrees(-90f));
-                        poseStack.translate(0, 0.3, 0.45);
-                        poseStack.mulPose(Axis.YP.rotationDegrees(180));
+                    poseStack.translate(0, 0.3, 0.45);
+                    poseStack.mulPose(Axis.YP.rotationDegrees(180));
                 }
 
                 if(stack == TCRVillagerRenderer.this.miaoYinMainHandItem){
-//                    poseStack.mulPose();
+                    poseStack.mulPose(Axis.XP.rotationDegrees(-50f));
+                    poseStack.translate(0, 0, -1.1);
+                    if(villager instanceof MiaoYin miaoYin && miaoYin.isSitting()){
+                        poseStack.mulPose(Axis.XP.rotationDegrees(30));
+                        poseStack.mulPose(Axis.YP.rotationDegrees(50));
+                        poseStack.mulPose(Axis.ZP.rotationDegrees(180));
+                        poseStack.translate(TCRConfig.TEST_X.get(), TCRConfig.TEST_Y.get(), TCRConfig.TEST_Z.get());
+                    }
                 }
 
-                super.renderStackForBone(poseStack, bone, stack, animatable, bufferSource, partialTick, packedLight, packedOverlay);
+                super.renderStackForBone(poseStack, bone, stack, villager, bufferSource, partialTick, packedLight, packedOverlay);
             }
         });
     }

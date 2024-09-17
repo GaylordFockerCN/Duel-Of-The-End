@@ -39,6 +39,7 @@ import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
 public class MiaoYin extends YueShiLineNpc {
     public static final EntityDataAccessor<Boolean> IS_SITTING = SynchedEntityData.defineId(MiaoYin.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Float> SIT_ROT = SynchedEntityData.defineId(MiaoYin.class, EntityDataSerializers.FLOAT);
     public MiaoYin(EntityType<? extends MiaoYin> pEntityType, Level pLevel) {
         super(pEntityType, pLevel, -1);
     }
@@ -47,18 +48,21 @@ public class MiaoYin extends YueShiLineNpc {
     protected void defineSynchedData() {
         super.defineSynchedData();
         getEntityData().define(IS_SITTING, false);
+        getEntityData().define(SIT_ROT, 0F);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         getEntityData().set(IS_SITTING, tag.getBoolean("is_sitting"));
+        getEntityData().set(SIT_ROT, tag.getFloat("sit_rot"));
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("is_sitting", getEntityData().get(IS_SITTING));
+        tag.putFloat("sit_rot", getEntityData().get(SIT_ROT));
     }
 
     @Override
@@ -76,6 +80,17 @@ public class MiaoYin extends YueShiLineNpc {
         return Component.translatable(TCRModEntities.MIAO_YIN.get().getDescriptionId());
     }
 
+    public void setIsSitting(boolean sit) {
+        getEntityData().set(IS_SITTING, sit);
+        if(sit){
+            getEntityData().set(SIT_ROT, yBodyRot);
+        }
+    }
+
+    public boolean isSitting(){
+        return getEntityData().get(IS_SITTING);
+    }
+
     @Override
     public void tick() {
         super.tick();
@@ -89,7 +104,22 @@ public class MiaoYin extends YueShiLineNpc {
                 level().addFreshEntity(wanderer);
                 this.discard();
             }
+        } else {
+            if(isSitting()){
+                setYBodyRot(getEntityData().get(SIT_ROT));
+            }
         }
+    }
+
+    /**
+     * 企图防止头旋转360
+     */
+    @Override
+    public void setYHeadRot(float rot) {
+        if(Math.abs(rot -yBodyRot) > 90){
+            return;
+        }
+        super.setYHeadRot(rot);
     }
 
     @Override
@@ -336,9 +366,13 @@ public class MiaoYin extends YueShiLineNpc {
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if(player.isCreative() && player.isShiftKeyDown()){
+            setIsSitting(!isSitting());
+            return InteractionResult.sidedSuccess(player.level().isClientSide);
+        }
         if(DataManager.stolenMiaoYin.getBool(player)){
             if (hand == InteractionHand.MAIN_HAND) {
-                this.lookAt(player, 180.0F, 180.0F);
+                this.getLookControl().setLookAt(player);
                 if (player instanceof ServerPlayer serverPlayer) {
                     if (this.getConversingPlayer() == null) {
                         CompoundTag data = new CompoundTag();
@@ -365,7 +399,7 @@ public class MiaoYin extends YueShiLineNpc {
         if(tAnimationState.isMoving()) {
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.move", Animation.LoopType.LOOP));
         } else {
-            if(getEntityData().get(IS_SITTING)){
+            if(isSitting()){
                 tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.unknown.miao_yin_idle", Animation.LoopType.LOOP));
             } else {
                 tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.unknown.miao_yin_idle2", Animation.LoopType.LOOP));

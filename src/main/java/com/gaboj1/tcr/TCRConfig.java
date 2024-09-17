@@ -29,6 +29,7 @@ public class TCRConfig {
     public static final ForgeConfigSpec.IntValue SPIRIT_LOG_CONSUME;
     //怪物随着世界等级提升的提升倍率
     public static final ForgeConfigSpec.DoubleValue MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP;
+    public static final ForgeConfigSpec.DoubleValue TEST_X, TEST_Y, TEST_Z;
     public static final ForgeConfigSpec SPEC;
 
     static {
@@ -36,7 +37,6 @@ public class TCRConfig {
 
         builder.push("Game Setting");
         ENABLE_SCALING = createBool(builder, "enable_scaling", false);
-//        MORE_HOLE = createBool(builder, "more_hole", false);
         ENABLE_BETTER_STRUCTURE_BLOCK_LOAD = createBool(builder, "enable_better_structure_block_load", true);
         ENABLE_BOSS_SPAWN_BLOCK_LOAD = createBool(builder, "enable_boss_spawn_block_load", true);
         ENABLE_TYPEWRITER_EFFECT = createBool(builder, "enable_typewriter_effect", true);
@@ -55,18 +55,25 @@ public class TCRConfig {
         MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP = createDouble(builder, "mob_multiplier_when_world_level_up", 1.2, 1.0);
         builder.pop();
 
+        builder.push("Test");
+        TEST_X = createDouble(builder, "test_x", 1.0, -Double.MIN_VALUE, "测试用x， 方便实时调某个数值");
+        TEST_Y = createDouble(builder, "test_y", 1.0, -Double.MIN_VALUE, "测试用y， 方便实时调某个数值");
+        TEST_Z = createDouble(builder, "test_z", 1.0, -Double.MIN_VALUE, "测试用z， 方便实时调某个数值");
+        builder.pop();
         SPEC = builder.build();
     }
 
     private static ForgeConfigSpec.BooleanValue createBool(ForgeConfigSpec.Builder builder, String key, boolean defaultValue, String... comment) {
         return builder
                 .translation("config."+TheCasketOfReveriesMod.MOD_ID+".common."+key)
+                .comment(comment)
                 .define(key, defaultValue);
     }
 
     private static ForgeConfigSpec.IntValue createInt(ForgeConfigSpec.Builder builder, String key, int defaultValue, int min, String... comment) {
         return builder
                 .translation("config."+TheCasketOfReveriesMod.MOD_ID+".common."+key)
+                .comment(comment)
                 .defineInRange(key, defaultValue, min, Integer.MAX_VALUE);
     }
 

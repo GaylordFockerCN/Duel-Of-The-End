@@ -21,7 +21,7 @@
 					"pivot": [0, 13.8, 0]
 				},
 				{
-					"name": "Head",
+					"name": "head",
 					"parent": "shangbanshen",
 					"pivot": [0, 24, 0],
 					"cubes": [
