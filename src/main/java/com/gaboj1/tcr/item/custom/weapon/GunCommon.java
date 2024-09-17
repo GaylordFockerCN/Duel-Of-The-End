@@ -2,13 +2,16 @@
 package com.gaboj1.tcr.item.custom.weapon;
 
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
+import com.gaboj1.tcr.event.PlayerModelEvent;
 import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.client.keymapping.KeyMappings;
 import com.gaboj1.tcr.entity.custom.BulletEntity;
 import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.client.TCRModSounds;
+import com.gaboj1.tcr.item.custom.PoseItem;
 import com.gaboj1.tcr.item.renderer.GunItemRenderer;
 import com.gaboj1.tcr.util.ItemUtil;
+import net.minecraft.client.model.PlayerModel;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -22,6 +25,8 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.RegistryObject;
 
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
@@ -50,7 +55,7 @@ import static com.gaboj1.tcr.item.TCRModItems.AMMO;
  * 为了子沙鹰类做准备，省的写很多重复的代码
  */
 
-public class GunCommon extends Item implements GeoItem {
+public class GunCommon extends Item implements GeoItem, PoseItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public boolean isReloading = false;
 
@@ -429,4 +434,31 @@ public class GunCommon extends Item implements GeoItem {
         return bullet.getDamageValue()==0;
     }
 
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void adjustInMainHand(PlayerModelEvent.SetupAngles.Post event, PlayerModel<?> model, boolean right) {
+        if(right){
+            model.rightArm.xRot = model.head.xRot + (float) Math.toRadians(-90);
+            model.rightArm.zRot = model.head.zRot;
+            model.rightArm.yRot = model.head.yRot;
+        }else {
+            model.leftArm.xRot = model.head.xRot + (float) Math.toRadians(-90);
+            model.leftArm.zRot = model.head.zRot;
+            model.leftArm.yRot = model.head.yRot;
+        }
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void adjustInOffHand(PlayerModelEvent.SetupAngles.Post event, PlayerModel<?> model, boolean right) {
+        if(right){
+            model.leftArm.xRot = model.head.xRot + (float) Math.toRadians(-90);
+            model.leftArm.zRot = model.head.zRot;
+            model.leftArm.yRot = model.head.yRot;
+        }else {
+            model.rightArm.xRot = model.head.xRot + (float) Math.toRadians(-90);
+            model.rightArm.zRot = model.head.zRot;
+            model.rightArm.yRot = model.head.yRot;
+        }
+    }
 }

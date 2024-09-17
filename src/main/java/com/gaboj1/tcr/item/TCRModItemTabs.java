@@ -137,6 +137,7 @@ public class TCRModItemTabs {
 						tabData.accept(TCRModItems.SPIRIT_WAND.get());
 						tabData.accept(TCRModItems.HEALTH_WAND.get());
 						tabData.accept(TCRModItems.TIGER_KARAMBIT.get());
+						tabData.accept(TCRModItems.PI_PA.get());
 
 						//盔甲
 						tabData.accept(TCRModItems.ORICHALCUM_HELMET.get());
@@ -172,6 +173,20 @@ public class TCRModItemTabs {
 						tabData.accept(TCRModItems.PINE_CONE.get());
 						tabData.accept(TCRModItems.RED_WINE.get());
 						tabData.accept(TCRModItems.CATNIP.get());
+
+						tabData.accept(TCRModItems.LIGHT_ELIXIR.get());
+						tabData.accept(TCRModItems.ASCENSION_ELIXIR.get());
+						tabData.accept(TCRModItems.LUCKY_ELIXIR.get());
+						tabData.accept(TCRModItems.EVASION_ELIXIR.get());
+						tabData.accept(TCRModItems.WATER_AVOIDANCE_ELIXIR.get());
+						tabData.accept(TCRModItems.FIRE_AVOIDANCE_ELIXIR.get());
+						tabData.accept(TCRModItems.COLD_AVOIDANCE_ELIXIR.get());
+						tabData.accept(TCRModItems.THUNDER_AVOIDANCE_ELIXIR.get());
+						tabData.accept(TCRModItems.POISON_AVOIDANCE_ELIXIR.get());
+						tabData.accept(TCRModItems.NINE_TURN_REVIVAL_ELIXIR.get());
+						tabData.accept(TCRModItems.STRENGTH_PILL.get());
+						tabData.accept(TCRModItems.AQUA_GOLD_ELIXIR.get());
+
 					}).build());
 
 }

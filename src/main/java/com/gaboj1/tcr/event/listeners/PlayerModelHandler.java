@@ -3,6 +3,7 @@ package com.gaboj1.tcr.event.listeners;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.event.PlayerModelEvent;
 import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.custom.PoseItem;
 import com.gaboj1.tcr.item.custom.weapon.GunCommon;
 import com.gaboj1.tcr.util.ItemUtil;
 import net.minecraft.client.model.PlayerModel;
@@ -30,32 +31,12 @@ public class PlayerModelHandler {
         Item mainHand = player.getMainHandItem().getItem();
         Item offHand = player.getOffhandItem().getItem();
         boolean right = player.getMainArm() == HumanoidArm.RIGHT;
-        PlayerModel model = event.getModelPlayer();
-        //持枪姿势
-        //TODO: 单手持枪做得帅一点
-        if(mainHand instanceof GunCommon){
-            if(right){
-                model.rightArm.xRot = model.head.xRot + (float) Math.toRadians(-90);
-                model.rightArm.zRot = model.head.zRot;
-                model.rightArm.yRot = model.head.yRot;
-            }else {
-                model.leftArm.xRot = model.head.xRot + (float) Math.toRadians(-90);
-                model.leftArm.zRot = model.head.zRot;
-                model.leftArm.yRot = model.head.yRot;
-            }
+        PlayerModel<?> model = event.getModelPlayer();
+        if(mainHand instanceof PoseItem poseItem){
+            poseItem.adjustInMainHand(event, model, right);
         }
-
-        if(offHand instanceof GunCommon){
-            if(right){
-                model.leftArm.xRot = model.head.xRot + (float) Math.toRadians(-90);
-                model.leftArm.zRot = model.head.zRot;
-                model.leftArm.yRot = model.head.yRot;
-            }else {
-                model.rightArm.xRot = model.head.xRot + (float) Math.toRadians(-90);
-                model.rightArm.zRot = model.head.zRot;
-                model.rightArm.yRot = model.head.yRot;
-            }
-
+        if(offHand instanceof PoseItem poseItem){
+            poseItem.adjustInOffHand(event, model, right);
         }
 
         //御剑飞行的姿势

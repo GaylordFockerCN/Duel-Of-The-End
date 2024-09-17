@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [8, 8],
 	"textures": {
-		"1": "block/texture"
+		"1": "the_casket_of_reveries:item/bingci"
 	},
 	"elements": [
 		{

@@ -64,6 +64,7 @@ public class TCRModItems {
 	public static final RegistryObject<Item> HOLY_SWORD = REGISTRY.register("holy_sword", FlySword::new);
 	public static final RegistryObject<Item> TIGER_KARAMBIT = REGISTRY.register("tiger_karambit", TigerKarambit::new);
 	public static final RegistryObject<Item> TIGER_SOUL_ICE = REGISTRY.register("hupobing", DropItem::new);
+	public static final RegistryObject<Item> PI_PA = REGISTRY.register("pi_pa", PiPa::new);
 
 	public static final RegistryObject<Item> DREAMSCAPE_COIN = REGISTRY.register("dreamscape_coin",() ->  new DropItem(new Item.Properties().setNoRepair().rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> DREAMSCAPE_COIN_PLUS = REGISTRY.register("dreamscape_coin_plus",() ->  new DropItem(new Item.Properties().setNoRepair().rarity(Rarity.EPIC)));

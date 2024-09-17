@@ -239,6 +239,10 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
 
     }
 
+    public void hurtByPiPa(Player player){
+
+    }
+
     /**
      * 掌门死了后要移除，并且判断是否杀死了全部宗师
      * 注意要先判断周围有没有玩家再发包，以免找不到玩家而存档又改掉了

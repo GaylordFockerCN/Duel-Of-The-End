@@ -3,6 +3,7 @@ package com.gaboj1.tcr.entity.custom.villager.biome2.branch;
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
 import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
 import com.gaboj1.tcr.item.TCRModItems;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
@@ -14,6 +15,9 @@ import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -27,12 +31,34 @@ import net.minecraft.world.level.block.entity.DropperBlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 
 import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
 public class MiaoYin extends YueShiLineNpc {
+    public static final EntityDataAccessor<Boolean> IS_SITTING = SynchedEntityData.defineId(MiaoYin.class, EntityDataSerializers.BOOLEAN);
     public MiaoYin(EntityType<? extends MiaoYin> pEntityType, Level pLevel) {
         super(pEntityType, pLevel, -1);
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        getEntityData().define(IS_SITTING, false);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        getEntityData().set(IS_SITTING, tag.getBoolean("is_sitting"));
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("is_sitting", getEntityData().get(IS_SITTING));
     }
 
     @Override
@@ -276,7 +302,8 @@ public class MiaoYin extends YueShiLineNpc {
                 discard();
                 break;
             case 11:
-                //获得成就，给予琵琶 TODO
+                //给予琵琶
+                player.addItem(TCRModItems.PI_PA.get().getDefaultInstance());
                 SaveUtil.biome2.isBranchEnd = true;
                 break;
             case 12:
@@ -325,4 +352,27 @@ public class MiaoYin extends YueShiLineNpc {
         }
         return super.mobInteract(player, hand);
     }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "controller",
+                10, this::predicate));
+        controllers.add(new AnimationController<>(this, "Guodu", 10, state -> PlayState.STOP)
+                .triggerableAnim("guodu", RawAnimation.begin().thenPlay("animation.unknown.miao_yin_guodu")));
+    }
+
+    protected <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
+        if(tAnimationState.isMoving()) {
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.move", Animation.LoopType.LOOP));
+        } else {
+            if(getEntityData().get(IS_SITTING)){
+                tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.unknown.miao_yin_idle", Animation.LoopType.LOOP));
+            } else {
+                tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.unknown.miao_yin_idle2", Animation.LoopType.LOOP));
+            }
+        }
+
+        return PlayState.CONTINUE;
+    }
+
 }

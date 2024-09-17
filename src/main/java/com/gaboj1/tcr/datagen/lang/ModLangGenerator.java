@@ -123,6 +123,8 @@ public class ModLangGenerator extends ModLangProvider {
         this.addItemUsageInfo(TCRModItems.TIGER_SOUL_ICE.get(),"冰虎的掉落物");
         this.add(TCRModItems.TIGER_KARAMBIT.get(),"冰虎爪刀");
         this.addItemUsageInfo(TCRModItems.TIGER_KARAMBIT.get(),"由虎魄冰和冰虎牙合成的锋利武器，背刺敌人时伤害翻倍并附带冻结效果。");
+        this.add(TCRModItems.PI_PA.get(),"琵琶");
+        this.addItemUsageInfo(TCRModItems.PI_PA.get(),"妙音的带有魔力的琵琶，右键以释放音波弹，但最好不要用它来敲击东西。");
 
         this.add(TCRModItems.COPY_RESIN.get(),"复制树脂");
         this.addItemUsageInfo(TCRModItems.COPY_RESIN.get(),"右键消耗以复制另一只手的物品");

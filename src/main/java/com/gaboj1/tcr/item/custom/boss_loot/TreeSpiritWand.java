@@ -75,7 +75,7 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
             return InteractionResultHolder.pass(itemStack);
         }
         FoodData foodData = pPlayer.getFoodData();
-        if(foodData.getFoodLevel()==0  || pPlayer.getHealth() == pPlayer.getMaxHealth()){
+        if(foodData.getFoodLevel() == 0 || pPlayer.getHealth() == pPlayer.getMaxHealth()){
             return InteractionResultHolder.pass(itemStack);
         }
         if(pLevel instanceof ServerLevel serverLevel){
