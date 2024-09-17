@@ -74,9 +74,10 @@ public class PiPa extends Item implements GeoItem, PoseItem {
             Vec3 target = player.getViewVector(1.0F).normalize();
             for(int i = 1; i < Mth.floor(target.length()) + 7; ++i) {
                 Vec3 pos = attacker.add(target.scale(i));
-                serverLevel.sendParticles(ParticleTypes.SONIC_BOOM, pos.x, pos.y, pos.z, 1, target.x, target.y, target.z, 0.001);
+                serverLevel.sendParticles(ParticleTypes.SONIC_BOOM, pos.x, pos.y, pos.z, 1, 0, 0, 0, 0);
             }
             stack.setDamageValue(stack.getDamageValue() + 1);
+            level.playSound(null, player.getX(), player.getY(), player.getZ(), TCRModSounds.PIPA.get(), SoundSource.BLOCKS, 1, 1);
             for(LivingEntity entity : EntityUtil.getNearByEntities(serverLevel, player, 20)){
                 if(EntityUtil.isInFront(entity, player, 20) && entity.distanceTo(player) < 10){
                     entity.hurt(player.damageSources().sonicBoom(player), 5);

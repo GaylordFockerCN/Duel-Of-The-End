@@ -824,6 +824,7 @@ public class ModLangGenerator extends ModLangProvider {
         this.addBiome(TCRBiomes.AIR,"空");
         this.addBiome(TCRBiomes.FINAL,"终焉之地");
 
+        this.addSubtitle(TCRModSounds.PIPA,"琵琶音波攻击");
         this.addSubtitle(TCRModSounds.DESERT_EAGLE_FIRE,"火枪开火");
         this.addSubtitle(TCRModSounds.DESERT_EAGLE_RELOAD,"火枪换弹");
         this.addSubtitle(TCRModSounds.TREE_MONSTERS_DEATH,"树怪死亡");

@@ -12,6 +12,7 @@ public class SoundGenerator extends TCRSoundProvider {
 
     @Override
     public void registerSounds() {
+        this.generateNewSoundWithSubtitle(TCRModSounds.PIPA, "item/pi_pa/", 5);
         this.generateNewSoundWithSubtitle(TCRModSounds.DESERT_EAGLE_FIRE, "item/desert_eagle/fire", 1);
         this.generateNewSoundWithSubtitle(TCRModSounds.DESERT_EAGLE_RELOAD, "item/desert_eagle/reload", 1);
         this.generateNewSoundWithSubtitle(TCRModSounds.TREE_MONSTERS_DEATH, "entity/tree_monsters/tree_monsters_death", 1);

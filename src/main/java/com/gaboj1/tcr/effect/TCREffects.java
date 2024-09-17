@@ -30,7 +30,7 @@ public class TCREffects {
     public static final RegistryObject<MobEffect> THUNDER_RESISTANCE = REGISTRY.register("thunder_resistance", ()->new SimpleMobEffect(MobEffectCategory.BENEFICIAL, 0xFCFF9C));
     public static final RegistryObject<MobEffect> POISON_RESISTANCE = REGISTRY.register("poison_resistance", ()->new SimpleMobEffect(MobEffectCategory.BENEFICIAL, 0x5AA970));
     public static final RegistryObject<MobEffect> FROZEN_RESISTANCE = REGISTRY.register("frozen_resistance", ()->new SimpleMobEffect(MobEffectCategory.BENEFICIAL, 0x0385A6));
-    public static final RegistryObject<MobEffect> HEALTH_BOOST = REGISTRY.register("health_boost", ()->new SimpleMobEffect(MobEffectCategory.BENEFICIAL, 0xEAFF00));
+    public static final RegistryObject<MobEffect> HEALTH_BOOST = REGISTRY.register("health_boost", GoldenPelletHealthBoostEffect::new);
     public static final RegistryObject<MobEffect> NINE_TRANSFORMATIONS_RESURRECTION = REGISTRY.register("nine_transformations_resurrection", ()->new SimpleMobEffect(MobEffectCategory.BENEFICIAL, 0){
         private int color = 0;
         @Override
