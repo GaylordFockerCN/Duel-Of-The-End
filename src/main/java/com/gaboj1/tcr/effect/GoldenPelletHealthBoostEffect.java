@@ -21,6 +21,9 @@ public class GoldenPelletHealthBoostEffect extends MobEffect {
         super(MobEffectCategory.HARMFUL, 0X79faff);
     }
 
+    /**
+     * 不知道为毛没用、？
+     */
     @Override
     public void applyEffectTick(@NotNull LivingEntity entity, int level) {
         if(entity.level() instanceof ServerLevel){

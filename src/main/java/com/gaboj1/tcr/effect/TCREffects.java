@@ -3,6 +3,7 @@ package com.gaboj1.tcr.effect;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.item.custom.armor.OrichalcumArmorItem;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -10,6 +11,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -19,6 +21,8 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.UUID;
 
 public class TCREffects {
 
@@ -71,15 +75,33 @@ public class TCREffects {
         }
     }
 
-    /**
-     * 解冻
-     */
     public static void onEntityUpdate(LivingEvent.LivingTickEvent event) {
-        LivingEntity livingEntity = event.getEntity();
-        if(livingEntity.hasEffect(FROZEN_RESISTANCE.get())){
-            if(livingEntity.hasEffect(TCREffects.FROZEN.get())){
-                livingEntity.removeEffect(TCREffects.FROZEN.get());
+
+        //扛冻
+        LivingEntity entity = event.getEntity();
+        if(entity.hasEffect(FROZEN_RESISTANCE.get())){
+            if(entity.hasEffect(TCREffects.FROZEN.get())){
+                entity.removeEffect(TCREffects.FROZEN.get());
             }
+        }
+
+        //提升上限
+        if(entity.hasEffect(TCREffects.HEALTH_BOOST.get()) && entity.level() instanceof ServerLevel){
+            AttributeInstance instance = entity.getAttribute(Attributes.MAX_HEALTH);
+            AttributeModifier modifier = new AttributeModifier(UUID.fromString("11AEAA56-376B-4498-935B-2F7F6811451"+entity.getRandom().nextInt(10)), "from gold pellet", 2, AttributeModifier.Operation.ADDITION);
+            boolean success = false;
+            if(instance != null && !instance.hasModifier(modifier)){
+                instance.addPermanentModifier(modifier);
+                success = true;
+            }
+            if(entity instanceof Player player){
+                if(success){
+                    player.displayClientMessage(Component.literal("info.the_casket_of_reveries.add_health_success"), true);
+                } else {
+                    player.displayClientMessage(Component.literal("info.the_casket_of_reveries.add_health_failed"), true);
+                }
+            }
+            entity.removeEffect(TCREffects.HEALTH_BOOST.get());
         }
 
     }

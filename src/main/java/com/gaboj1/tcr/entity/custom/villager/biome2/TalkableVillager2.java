@@ -67,18 +67,18 @@ public class TalkableVillager2 extends TCRTalkableVillager {
                         .addFinalChoice((BUILDER.buildDialogueOption(entityType,4)), (byte) 666);
                 break;
 
-            //药师 对话id分配：16~17 返回值分配：66
+            //药师 对话id分配：16~17 返回值分配：6
             case 1:
                 Component greeting2 = BUILDER.buildDialogueAnswer(entityType,random.nextInt(16,18));
                 builder.start(greeting2)
-                        .addFinalChoice(BUILDER.buildDialogueOption(entityType,1),(byte) 66);
+                        .addFinalChoice(BUILDER.buildDialogueOption(entityType,1),(byte) 6);
                 break;
 
-            //铁匠 对话id分配：12~13 返回值分配：66
+            //铁匠 对话id分配：12~13 返回值分配：5
             case 2:
                 Component greeting3 = BUILDER.buildDialogueAnswer(entityType,random.nextInt(12,14));
                 builder.start(greeting3)
-                        .addFinalChoice(BUILDER.buildDialogueOption(entityType,3),(byte) 66);
+                        .addFinalChoice(BUILDER.buildDialogueOption(entityType,3),(byte) 5);
                 break;
 
 
@@ -107,13 +107,6 @@ public class TalkableVillager2 extends TCRTalkableVillager {
                                 .addLeaf(BUILDER.buildDialogueOption(entityType,2), (byte) 4)
                 );
                 break;
-        }
-
-        if(SaveUtil.biome2.choice == 1){
-            if(Minecraft.getInstance().player != null){
-                talk(Minecraft.getInstance().player, true);
-            }
-            return;
         }
 
         if(builder.isEmpty()){
@@ -164,40 +157,64 @@ public class TalkableVillager2 extends TCRTalkableVillager {
                                 new ItemStack(TCRModItems.GUN_COMMON.get(), 1),
                                 new ItemStack(TCRModItems.ORICHALCUM.get(), 16),
                                 new ItemStack(TCRModItems.GUN_PLUS.get(), 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.TREE_DEMON_FRUIT.get(), 1),
-                                new ItemStack(TCRModItems.TREE_DEMON_HORN.get(), 1),
-                                new ItemStack(TCRModItems.TREE_SPIRIT_WAND.get(), 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 64),
-                                new ItemStack(TCRModItems.GUN_COMMON.get(), 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
-                                new ItemStack(TCRModItems.AMMO.get(), 2),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.ORICHALCUM.get(), 5),
-                                new ItemStack(TCRModItems.ORICHALCUM_HELMET.get(), 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.ORICHALCUM.get(), 8),
-                                new ItemStack(TCRModItems.ORICHALCUM_CHESTPLATE.get(), 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.ORICHALCUM.get(), 7),
-                                new ItemStack(TCRModItems.ORICHALCUM_LEGGINGS.get(), 1),
-                                16, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRModItems.ORICHALCUM.get(), 4),
-                                new ItemStack(TCRModItems.ORICHALCUM_BOOTS.get(), 1),
                                 16, 0, 0.02f)
                 );
                 break;
             case 4:
-                chat(BUILDER.buildDialogueAnswer(entityType,9,false));//真是有干劲啊，那我也要全力以赴了，朋友
+                chat(BUILDER.buildDialogueAnswer(entityType,9,false));
+                break;
+            case 5:
+                startCustomTrade(player,
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.GUN_COMMON.get(), 1),
+                                new ItemStack(TCRModItems.ORICHALCUM.get(), 16),
+                                new ItemStack(TCRModItems.GUN_PLUS.get(), 1),
+                                16, 0, 0.02f)
+                );
+                break;
+            case 6:
+                startCustomTrade(player,
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 5),
+                                new ItemStack(TCRModItems.LIGHT_ELIXIR.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 10),
+                                new ItemStack(TCRModItems.ASCENSION_ELIXIR.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 5),
+                                new ItemStack(TCRModItems.LUCKY_ELIXIR.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 5),
+                                new ItemStack(TCRModItems.EVASION_ELIXIR.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 5),
+                                new ItemStack(TCRModItems.WATER_AVOIDANCE_ELIXIR.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 5),
+                                new ItemStack(TCRModItems.FIRE_AVOIDANCE_ELIXIR.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 5),
+                                new ItemStack(TCRModItems.COLD_AVOIDANCE_ELIXIR.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 5),
+                                new ItemStack(TCRModItems.THUNDER_AVOIDANCE_ELIXIR.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 5),
+                                new ItemStack(TCRModItems.POISON_AVOIDANCE_ELIXIR.get(), 1),
+                                16, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 10),
+                                new ItemStack(TCRModItems.STRENGTH_PILL.get(), 1),
+                                16, 0, 0.02f)
+                );
                 break;
         }
 

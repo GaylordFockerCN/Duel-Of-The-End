@@ -21,6 +21,11 @@ public class ModLangGenerator extends ModLangProvider {
         this.addEffect(TCREffects.ORICHALCUM, "神金");
         this.addEffect(TCREffects.FLY_SPEED, "御剑飞行");
         this.addEffect(TCREffects.FROZEN, "冻结");
+        this.addEffect(TCREffects.NINE_TRANSFORMATIONS_RESURRECTION, "九转还魂");
+        this.addEffect(TCREffects.FROZEN_RESISTANCE, "冻结保护");
+        this.addEffect(TCREffects.THUNDER_RESISTANCE, "雷击保护");
+        this.addEffect(TCREffects.POISON_RESISTANCE, "中毒免疫");
+        this.addEffect(TCREffects.HEALTH_BOOST, "生命上限提升");
 
         this.addTask("kill_boss1", "清道夺邪魔", "杀死密林中危害牧歌原野安全的邪恶树魔");
 
@@ -317,6 +322,9 @@ public class ModLangGenerator extends ModLangProvider {
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,5,"不要拿去干坏事哦~");
         this.addVillagerDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,1,1,"我可是能创造所有人希冀的奇迹，交给我吧！");
         //学者
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-7,"我们这里是四个国家各自占据大陆，虽然文化有所差异，但我们的货币是通用的");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-8,"铁匠最近在研发一些新奇的东西，你可以去找他为你的装备升级");
+        this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-9,"海拉长老在几次的侦察以后找到了我们敌人所在的位置，想知道详细情报，先去询问她会比较好");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,7,"抱歉没注意到你，我一思考就容易陷进去了呢，哈哈");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,8,"知识从不对人吝啬");
         this.addDialog(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,9,"愿我的智慧为你扫开前路");
