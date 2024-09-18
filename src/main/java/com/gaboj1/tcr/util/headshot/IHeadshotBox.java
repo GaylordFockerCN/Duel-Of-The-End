@@ -2,6 +2,7 @@ package com.gaboj1.tcr.util.headshot;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.AABB;
 
 import javax.annotation.Nullable;
@@ -13,7 +14,7 @@ import javax.annotation.Nullable;
  * <p>
  * Author: MrCrayfish
  */
-public interface IHeadshotBox<T extends Entity>
+public interface IHeadshotBox<T extends LivingEntity>
 {
     /**
      * Gets a bounding box of the given entity's head in the world. This method can either return an

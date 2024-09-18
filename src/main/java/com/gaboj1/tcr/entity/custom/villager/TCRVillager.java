@@ -91,7 +91,7 @@ public abstract class TCRVillager extends Villager implements GeoEntity, ManySki
      * 不关心skinID是多少
      */
     public TCRVillager(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
-        this(pEntityType, pLevel, 0);
+        this(pEntityType, pLevel, 142857);
     }
 
     public int getMaleTypeCnt(){
@@ -115,7 +115,9 @@ public abstract class TCRVillager extends Villager implements GeoEntity, ManySki
         isAngry = true;
     }
 
-    //区别于getID
+    /**
+     * 区别于getID
+     */
     @Override
     public int getSkinID() {
         return this.getEntityData().get(DATA_SKIN_ID);

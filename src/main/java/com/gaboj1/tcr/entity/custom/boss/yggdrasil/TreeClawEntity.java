@@ -53,6 +53,10 @@ public class TreeClawEntity extends Mob implements GeoEntity {
                 .build();
     }
 
+    public YggdrasilEntity getYggdrasilEntity() {
+        return yggdrasilEntity;
+    }
+
     @Override
     public void tick() {
         super.tick();

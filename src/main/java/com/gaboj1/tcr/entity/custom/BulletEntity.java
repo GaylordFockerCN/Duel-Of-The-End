@@ -2,6 +2,7 @@
 package com.gaboj1.tcr.entity.custom;
 
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
+import com.gaboj1.tcr.entity.custom.boss.yggdrasil.TreeClawEntity;
 import com.gaboj1.tcr.util.headshot.BoundingBoxManager;
 import com.gaboj1.tcr.util.headshot.IHeadshotBox;
 import com.gaboj1.tcr.entity.TCRModEntities;
@@ -91,18 +92,26 @@ public class BulletEntity extends AbstractArrow implements ItemSupplier {
 
 	@Override
 	protected void onHitEntity(EntityHitResult result) {
-		//TODO: 改成直接判断有无碰撞然后直接受伤，而不是调用父类的hit，不然射速快会受到原版生物的受伤冷却的影响导致吞子弹
-		final Vec3 position = this.position();
 		Entity entity = result.getEntity();
+
+		//对第二boss有奇效
+		if(!level().isClientSide && entity instanceof TreeClawEntity treeClaw){
+			treeClaw.setSecondsOnFire(5);
+			if(treeClaw.getHealth() < treeClaw.getMaxHealth() / 2){
+				treeClaw.getYggdrasilEntity().setSecondsOnFire(8);
+			}
+		}
+
 		AABB boundingBox = entity.getBoundingBox();
 		Vec3 startVec = this.position();
 		Vec3 endVec = startVec.add(this.getDeltaMovement());
 		Vec3 hitPos = boundingBox.clip(startVec, endVec).orElse(null);
+
 		/* Check for headshot */
 		boolean headshot = false;
 		if(entity instanceof LivingEntity)
 		{
-			IHeadshotBox<LivingEntity> headshotBox = (IHeadshotBox<LivingEntity>) BoundingBoxManager.getHeadshotBoxes(entity.getType());
+			IHeadshotBox<LivingEntity> headshotBox = BoundingBoxManager.getHeadshotBoxes(entity.getType());
 			if(headshotBox != null)
 			{
 				AABB box = headshotBox.getHeadshotBox((LivingEntity) entity);
@@ -110,14 +119,8 @@ public class BulletEntity extends AbstractArrow implements ItemSupplier {
 				{
 					box = box.move(boundingBox.getCenter().x, boundingBox.minY, boundingBox.getCenter().z);
 					Optional<Vec3> headshotHitPos = box.clip(startVec, endVec);
-//					if(!headshotHitPos.isPresent())
-//					{
-//						box = box.inflate(Config.COMMON.gameplay.growBoundingBoxAmount.get(), 0, Config.COMMON.gameplay.growBoundingBoxAmount.get());
-//						headshotHitPos = box.clip(startVec, endVec);
-//					}
 					if(headshotHitPos.isPresent() && (hitPos == null || headshotHitPos.get().distanceTo(hitPos) < 0.5))
 					{
-						hitPos = headshotHitPos.get();
 						headshot = true;
 					}
 					if(headshot){

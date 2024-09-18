@@ -20,6 +20,10 @@ public class PastoralPlainVillager extends TCRVillager {
 
     public PastoralPlainVillager(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
         super(pEntityType, pLevel, TCRVillager.RANDOM_SKIN);
+        if(getSkinID() == 0){
+            int id = getRandom().nextInt(1,3);
+            setSkinID(getRandom().nextBoolean()?-id:id);
+        }
     }
 
     @Override

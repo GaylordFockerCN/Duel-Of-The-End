@@ -1,7 +1,6 @@
 package com.gaboj1.tcr.util.headshot;
-//import com.mrcrayfish.guns.Config;
+import com.gaboj1.tcr.entity.TCRModEntities;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -25,8 +24,8 @@ import java.util.WeakHashMap;
  */
 public class BoundingBoxManager
 {
-    private static Map<EntityType<?>, IHeadshotBox<?>> headshotBoxes = new HashMap<>();
-    private static WeakHashMap<Player, LinkedList<AABB>> playerBoxes = new WeakHashMap<>();
+    private static final Map<EntityType<?>, IHeadshotBox<?>> headshotBoxes = new HashMap<>();
+    private static final WeakHashMap<Player, LinkedList<AABB>> playerBoxes = new WeakHashMap<>();
 
     static
     {
@@ -83,6 +82,7 @@ public class BoundingBoxManager
         registerHeadshotBox(EntityType.ZOGLIN, new RotatedHeadshotBox<>(14.0, 16.0, 7.0, 19.0, false, true));
         registerHeadshotBox(EntityType.PIGLIN, new ChildHeadshotBox<>(8.0, 24.0, 0.75, 0.5));
         //TODO 添加模组生物
+//        registerHeadshotBox(TCRModEntities.YGGDRASIL.get(), new ChildHeadshotBox<>(8.0, 24.0, 0.75, 0.5));
     }
 
     /**
@@ -99,7 +99,7 @@ public class BoundingBoxManager
 
     @Nullable
     @SuppressWarnings("unchecked")
-    public static <T extends Entity> IHeadshotBox<T> getHeadshotBoxes(EntityType<T> type)
+    public static <T extends LivingEntity> IHeadshotBox<T> getHeadshotBoxes(EntityType<?> type)
     {
         return (IHeadshotBox<T>) headshotBoxes.get(type);
     }
@@ -107,9 +107,6 @@ public class BoundingBoxManager
     @SubscribeEvent(receiveCanceled = true)
     public void onPlayerTick(TickEvent.PlayerTickEvent event)
     {
-//        if(!Config.COMMON.gameplay.improvedHitboxes.get())
-//            return;
-
         if(event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END)
         {
             if(event.player.isSpectator())
