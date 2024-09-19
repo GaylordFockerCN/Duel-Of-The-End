@@ -136,8 +136,8 @@ public class TCRBiomes {
                 .specialEffects((new BiomeSpecialEffects.Builder())
                         .waterColor(0x000000)
                         .waterFogColor(0x1b8bbf)
-                        .grassColorOverride(0x000000)
-//                        .foliageColorOverride(0xd203fc)
+                        .grassColorOverride(0xffffff)
+                        .foliageColorOverride(0xffffff)
                         .fogColor(0x000000)
                         .skyColor(0x000000)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
@@ -189,6 +189,8 @@ public class TCRBiomes {
 
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, TCRPlacedFeatures.DENSE_FOREST_SPIRIT_TREE_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, TCRPlacedFeatures.DENSE_FOREST_SPIRIT_FLOWER_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_GRASS_TAIGA);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_GRASS_FOREST);
 
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(false)
@@ -200,6 +202,7 @@ public class TCRBiomes {
                         .waterColor(0x25faf2)
                         .waterFogColor(0x1b8bbf)
                         .grassColorOverride(0x4e7dae)
+                        .foliageColorOverride(0x4e7dae)//藤蔓也会变
                         .fogColor(0x000000)
                         .skyColor(0x000000)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)

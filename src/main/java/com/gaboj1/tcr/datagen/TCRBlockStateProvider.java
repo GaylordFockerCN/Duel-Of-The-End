@@ -62,6 +62,12 @@ public class TCRBlockStateProvider extends BlockStateProvider {
         blockWithItem(TCRBlocks.BOSS2_ROOM_2);
         blockWithItem(TCRBlocks.BOSS2_ROOM_3);
         blockWithItem(TCRBlocks.BOSS2_ROOM_4);
+        blockWithItem(TCRBlocks.BOSS2_ROOM_5);
+        blockWithItem(TCRBlocks.BOSS2_ROOM_6);
+        blockWithItem(TCRBlocks.BOSS2_ROOM_7);
+        blockWithItem(TCRBlocks.BOSS2_ROOM_8);
+        blockWithItem(TCRBlocks.BOSS2_ROOM_9);
+
     }
 
     private void saplingBlock(RegistryObject<Block> blockRegistryObject) {

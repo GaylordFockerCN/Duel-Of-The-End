@@ -3,6 +3,7 @@
   "downfall": 0.2,
   "effects": {
     "fog_color": 0,
+    "foliage_color": 5143982,
     "grass_color": 5143982,
     "mood_sound": {
       "block_search_extent": 8,
@@ -33,7 +34,9 @@
     [
       "minecraft:forest_flowers",
       "the_casket_of_reveries:dense_forest_spirit_tree_placed",
-      "the_casket_of_reveries:dense_forest_spirit_flower_placed"
+      "the_casket_of_reveries:dense_forest_spirit_flower_placed",
+      "minecraft:patch_grass_taiga",
+      "minecraft:patch_grass_forest"
     ]
   ],
   "has_precipitation": false,

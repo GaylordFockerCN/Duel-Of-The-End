@@ -48,6 +48,7 @@ public class TCRBlockLootTables extends BlockLootSubProvider {
                 createLeavesDrops(block, TCRBlocks.DENSE_FOREST_SPIRIT_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
 
         this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_SAPLING.get());
+        this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_VINE.get());
         this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_STAIRS.get());
         this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE.get());
         this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE_GATE.get());

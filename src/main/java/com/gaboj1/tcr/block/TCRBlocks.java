@@ -110,7 +110,8 @@ public class TCRBlocks {
 
     public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_SAPLING = registerBlock("dense_forest_spirit_sapling",
             () -> new SaplingBlock(new DenseSpiritTreeGrower(), BlockBehaviour.Properties.copy(Blocks.JUNGLE_SAPLING)));
-
+    public static final RegistryObject<Block>  DENSE_FOREST_SPIRIT_VINE = registerBlock("dense_forest_spirit_vine",
+            () -> new VineBlock(BlockBehaviour.Properties.copy(Blocks.VINE)));
     public static final RegistryObject<Block> BOSS2_ROOM_1 = registerBlock("boss2_room_1",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.QUARTZ_BRICKS).strength(-1.0F, 3600000.0F).noLootTable()));
     public static final RegistryObject<Block> BOSS2_ROOM_2 = registerBlock("boss2_room_2",
@@ -119,6 +120,16 @@ public class TCRBlocks {
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.PRISMARINE_BRICKS).strength(-1.0F, 3600000.0F).noLootTable()));
     public static final RegistryObject<Block> BOSS2_ROOM_4 = registerBlock("boss2_room_4",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.PRISMARINE_BRICKS).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_5 = registerBlock("boss2_room_5",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIAMOND_BLOCK).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_6 = registerBlock("boss2_room_6",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.EMERALD_BLOCK).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_7 = registerBlock("boss2_room_7",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.GOLD_BLOCK).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_8 = registerBlock("boss2_room_8",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_9 = registerBlock("boss2_room_9",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE).strength(-1.0F, 3600000.0F).noLootTable()));
 
     //神金矿
     public static final RegistryObject<Block> ORICHALCUM_ORE = registerBlock("orichalcum_ore",
