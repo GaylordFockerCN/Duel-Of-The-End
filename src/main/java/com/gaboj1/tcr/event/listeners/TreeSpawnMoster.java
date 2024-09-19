@@ -3,8 +3,8 @@ package com.gaboj1.tcr.event.listeners;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.custom.DenseForestTreeBlock;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.biome1.SmallTreeMonsterEntity;
-import com.gaboj1.tcr.entity.TCRModEntities;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.MobSpawnType;
@@ -30,7 +30,7 @@ public class TreeSpawnMoster {
         if (level instanceof ServerLevel serverLevel && player instanceof ServerPlayer serverPlayer && 1 == new Random().nextInt(10)) {// 1/10概率
 
             //生成树怪并获得成就
-            SmallTreeMonsterEntity entity = TCRModEntities.SMALL_TREE_MONSTER.get().spawn(serverLevel, event.getPos(), MobSpawnType.NATURAL);
+            SmallTreeMonsterEntity entity = TCREntities.SMALL_TREE_MONSTER.get().spawn(serverLevel, event.getPos(), MobSpawnType.NATURAL);
             entity.hurt(((ServerLevel) level).damageSources().playerAttack(player), 1f);
             entity.setTarget(player);
             TCRAdvancementData.getAdvancement("wow", serverPlayer);

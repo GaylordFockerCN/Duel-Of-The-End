@@ -1,13 +1,13 @@
 package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
 import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
 import com.gaboj1.tcr.entity.custom.biome1.SpriteEntity;
 import com.gaboj1.tcr.entity.custom.biome1.TreeGuardianEntity;
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
-import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
 import com.gaboj1.tcr.item.TCRItems;
@@ -66,7 +66,7 @@ import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
 
 public class YggdrasilEntity extends TCRBoss implements GeoEntity{
-    EntityType<?> entityType = TCRModEntities.YGGDRASIL.get();
+    EntityType<?> entityType = TCREntities.YGGDRASIL.get();
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.INT);
 
@@ -596,7 +596,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
             players.addAll(players2);
             for(Player player : players){
                 if(yggdrasil.mobs.size() <= 10){
-                    SpriteEntity mob = TCRModEntities.SPRITE.get().spawn(((ServerLevel) yggdrasil.level()), player.getOnPos().above(3), MobSpawnType.NATURAL);
+                    SpriteEntity mob = TCREntities.SPRITE.get().spawn(((ServerLevel) yggdrasil.level()), player.getOnPos().above(3), MobSpawnType.NATURAL);
                     if(mob == null){
                         return;
                     }

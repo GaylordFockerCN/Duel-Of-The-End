@@ -3,7 +3,7 @@ package com.gaboj1.tcr.entity.custom.villager.biome2.branch;
 import com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder;
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.villager.biome2.TalkableVillager2;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.network.PacketRelay;
@@ -48,7 +48,7 @@ public class TrialMaster extends YueShiLineNpc {
 
     @Override
     public @NotNull Component getDisplayName() {
-        return Component.translatable(TCRModEntities.TRIAL_MASTER.get().getDescriptionId());
+        return Component.translatable(TCREntities.TRIAL_MASTER.get().getDescriptionId());
     }
 
     @Override
@@ -124,7 +124,7 @@ public class TrialMaster extends YueShiLineNpc {
 
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
-        EntityType<MiaoYin> miaoYinType = TCRModEntities.MIAO_YIN.get();
+        EntityType<MiaoYin> miaoYinType = TCREntities.MIAO_YIN.get();
         switch (interactionID){
             case -2:
                 break;
@@ -146,7 +146,7 @@ public class TrialMaster extends YueShiLineNpc {
                 SaveUtil.biome2.trialTalked1 = true;
                 break;
             case 3:
-                miaoYin = TCRModEntities.MIAO_YIN.get().create(level());
+                miaoYin = TCREntities.MIAO_YIN.get().create(level());
                 if(miaoYin != null){
                     miaoYin.setPos(this.position().add(player.position()).scale(0.5));
                     level().addFreshEntity(miaoYin);
@@ -154,8 +154,8 @@ public class TrialMaster extends YueShiLineNpc {
                     DialogueComponentBuilder.displayClientMessages(player, 2000, false,
                             ()->{
                                 setConversingPlayer(null);
-                                TalkableVillager2 guard1 = TCRModEntities.VILLAGER2_TALKABLE.get().create(level());
-                                TalkableVillager2 guard2 = TCRModEntities.VILLAGER2_TALKABLE.get().create(level());
+                                TalkableVillager2 guard1 = TCREntities.VILLAGER2_TALKABLE.get().create(level());
+                                TalkableVillager2 guard2 = TCREntities.VILLAGER2_TALKABLE.get().create(level());
                                 if(guard1 != null && guard2 != null){
                                     guard1.setSkinID(0);
                                     guard2.setSkinID(0);

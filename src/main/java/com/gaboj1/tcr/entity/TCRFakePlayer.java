@@ -45,7 +45,7 @@ public class TCRFakePlayer extends LivingEntity{
     }
 
     public TCRFakePlayer(Player realPlayer, Level level, BlockPos pos) {
-        super(TCRModEntities.FAKE_PLAYER.get(), level);
+        super(TCREntities.FAKE_PLAYER.get(), level);
         setRealPlayer(realPlayer);
         getEntityData().set(BED_POS, pos);
     }

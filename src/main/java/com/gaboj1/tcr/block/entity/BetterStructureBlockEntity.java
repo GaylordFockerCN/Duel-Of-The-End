@@ -2,12 +2,10 @@ package com.gaboj1.tcr.block.entity;
 
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.block.TCRModBlockEntities;
-import com.gaboj1.tcr.block.TCRModBlocks;
-import com.gaboj1.tcr.util.ClientHelper;
+import com.gaboj1.tcr.block.TCRBlockEntities;
+import com.gaboj1.tcr.block.TCRBlocks;
 import com.google.common.collect.Lists;
 import net.minecraft.ResourceLocationException;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -45,7 +43,7 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
 
     @Override
     public @NotNull BlockEntityType<?> getType() {
-        return TCRModBlockEntities.BETTER_STRUCTURE_BLOCK_ENTITY.get();
+        return TCRBlockEntities.BETTER_STRUCTURE_BLOCK_ENTITY.get();
     }
 
     @Override
@@ -95,7 +93,7 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
 
         for(BlockPos blockpos : BlockPos.withinManhattan(minPos, maxPos.getX()-minPos.getX(), maxPos.getY()-minPos.getY(), maxPos.getZ()-minPos.getZ())) {
             BlockState blockstate = this.level.getBlockState(blockpos);
-            if (blockstate.is(Blocks.STRUCTURE_BLOCK) || blockstate.is(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get())) {
+            if (blockstate.is(Blocks.STRUCTURE_BLOCK) || blockstate.is(TCRBlocks.BETTER_STRUCTURE_BLOCK.get())) {
                 assert this.level != null;
                 BlockEntity entity = this.level.getBlockEntity(blockpos);
                 if (entity instanceof StructureBlockEntity) {

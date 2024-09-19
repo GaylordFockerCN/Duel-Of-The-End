@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.entity.custom.villager.biome2;
 
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.network.chat.Component;
@@ -40,9 +40,9 @@ public class Villager2 extends TCRVillager {
     @OnlyIn(Dist.CLIENT)
     public void talk(Player player, boolean isFWord){
         if(SaveUtil.biome2.choice != 1){
-            talk(player, Component.translatable(TCRModEntities.VILLAGER2.get().getDescriptionId()+".chat"+(r.nextInt(whatCanISay))));
+            talk(player, Component.translatable(TCREntities.VILLAGER2.get().getDescriptionId()+".chat"+(r.nextInt(whatCanISay))));
         }else {
-            talk(player, Component.translatable(TCRModEntities.VILLAGER2.get().getDescriptionId()+".fuck_chat"+(r.nextInt(whatCanISay))));
+            talk(player, Component.translatable(TCREntities.VILLAGER2.get().getDescriptionId()+".fuck_chat"+(r.nextInt(whatCanISay))));
         }
     }
 

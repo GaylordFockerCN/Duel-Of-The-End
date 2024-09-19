@@ -2,11 +2,11 @@
 package com.gaboj1.tcr.item.custom.weapon;
 
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.event.PlayerModelEvent;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.client.keymapping.KeyMappings;
 import com.gaboj1.tcr.entity.custom.BulletEntity;
-import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.item.custom.PoseItem;
 import com.gaboj1.tcr.item.renderer.GunItemRenderer;
@@ -157,7 +157,7 @@ public class GunCommon extends Item implements GeoItem, PoseItem {
                 if (world instanceof ServerLevel projectileLevel) {
                     Projectile _entityToSpawn =	new Object() {
                         public Projectile getArrow(Level level, Entity shooter, float damage, int knockBack, byte piercing) {
-                            AbstractArrow entityToSpawn = new BulletEntity(TCRModEntities.DESERT_EAGLE_BULLET.get(), level);
+                            AbstractArrow entityToSpawn = new BulletEntity(TCREntities.DESERT_EAGLE_BULLET.get(), level);
                             entityToSpawn.setOwner(shooter);
                             entityToSpawn.setNoGravity(true);
                             entityToSpawn.setBaseDamage(damage);

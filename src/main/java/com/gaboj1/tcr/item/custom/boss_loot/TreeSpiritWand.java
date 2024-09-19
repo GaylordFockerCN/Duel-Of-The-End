@@ -2,8 +2,8 @@ package com.gaboj1.tcr.item.custom.boss_loot;
 
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
-import com.gaboj1.tcr.block.TCRModBlocks;
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.block.TCRBlocks;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainTalkableVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
@@ -96,7 +96,7 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
         Player player = pContext.getPlayer();
         if(level instanceof ServerLevel serverLevel){
             assert player != null;
-            if(!player.isCreative() && ItemUtil.searchAndConsumeItem(player, TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get().asItem(), TCRConfig.SPIRIT_LOG_CONSUME.get()) == 0){
+            if(!player.isCreative() && ItemUtil.searchAndConsumeItem(player, TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get().asItem(), TCRConfig.SPIRIT_LOG_CONSUME.get()) == 0){
                 player.displayClientMessage(Component.translatable(this.getDescriptionId()+".no_spirit_tree"), true);
                 return InteractionResult.PASS;
             }
@@ -107,7 +107,7 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
             ItemStack itemStack = player.getItemInHand(pContext.getHand());//pContext.getItemInHand()不知道ok不ok
             summonAnim(serverLevel,player,itemStack);
             serverLevel.playSound(null,player.getX(),player.getY(),player.getZ(), SoundEvents.EVOKER_PREPARE_SUMMON, SoundSource.BLOCKS,1,1);
-            TCRModEntities.SMALL_TREE_MONSTER.get().spawn(serverLevel, pos.above(), MobSpawnType.SPAWN_EGG).tame(player);
+            TCREntities.SMALL_TREE_MONSTER.get().spawn(serverLevel, pos.above(), MobSpawnType.SPAWN_EGG).tame(player);
 
 
             if(!player.isCreative())

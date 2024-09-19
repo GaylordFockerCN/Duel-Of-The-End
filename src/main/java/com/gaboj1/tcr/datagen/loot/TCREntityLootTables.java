@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.datagen.loot;
 
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.item.TCRItems;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.world.entity.EntityType;
@@ -27,75 +27,75 @@ public class TCREntityLootTables extends EntityLootSubProvider {
     @Override
     public void generate() {
 
-        add(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),
+        add(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1))
                                 .add(LootItem.lootTableItem(TCRItems.ELDER_STAFF.get()))));
 
-        add(TCRModEntities.JELLY_CAT.get(), emptyLootTable());//TODO 加点残忍的掉落物
-        add(TCRModEntities.SQUIRREL.get(), emptyLootTable());//TODO 加点残忍的掉落物
-        add(TCRModEntities.CRAB.get(), emptyLootTable());//TODO 加点残忍的掉落物
+        add(TCREntities.JELLY_CAT.get(), emptyLootTable());//TODO 加点残忍的掉落物
+        add(TCREntities.SQUIRREL.get(), emptyLootTable());//TODO 加点残忍的掉落物
+        add(TCREntities.CRAB.get(), emptyLootTable());//TODO 加点残忍的掉落物
 
-        add(TCRModEntities.P1NERO.get(), emptyLootTable());
-        add(TCRModEntities.FAKE_PLAYER.get(), emptyLootTable());
+        add(TCREntities.P1NERO.get(), emptyLootTable());
+        add(TCREntities.FAKE_PLAYER.get(), emptyLootTable());
 
-        add(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), emptyLootTable());
-        add(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), emptyLootTable());
-        add(TCRModEntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), emptyLootTable());
+        add(TCREntities.PASTORAL_PLAIN_VILLAGER.get(), emptyLootTable());
+        add(TCREntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), emptyLootTable());
+        add(TCREntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), emptyLootTable());
 
-        add(TCRModEntities.VILLAGER2.get(), emptyLootTable());
-        add(TCRModEntities.VILLAGER2_STATIONARY.get(), emptyLootTable());
-        add(TCRModEntities.VILLAGER2_TALKABLE.get(), emptyLootTable());
-        add(TCRModEntities.MIAO_YIN.get(), emptyLootTable());
-        add(TCRModEntities.SHANG_REN.get(), emptyLootTable());
-        add(TCRModEntities.WANDERER.get(), emptyLootTable());
-        add(TCRModEntities.RECEPTIONIST.get(), emptyLootTable());
-        add(TCRModEntities.TRIAL_MASTER.get(), emptyLootTable());
-        add(TCRModEntities.CANG_LAN.get(), emptyLootTable());
-        add(TCRModEntities.ZHEN_YU.get(), emptyLootTable());
-        add(TCRModEntities.DUAN_SHAN.get(), emptyLootTable());
-        add(TCRModEntities.CUI_HUA.get(), emptyLootTable());
-        add(TCRModEntities.YUN_YI.get(), emptyLootTable());
-        add(TCRModEntities.YAN_XIN.get(), emptyLootTable());
+        add(TCREntities.VILLAGER2.get(), emptyLootTable());
+        add(TCREntities.VILLAGER2_STATIONARY.get(), emptyLootTable());
+        add(TCREntities.VILLAGER2_TALKABLE.get(), emptyLootTable());
+        add(TCREntities.MIAO_YIN.get(), emptyLootTable());
+        add(TCREntities.SHANG_REN.get(), emptyLootTable());
+        add(TCREntities.WANDERER.get(), emptyLootTable());
+        add(TCREntities.RECEPTIONIST.get(), emptyLootTable());
+        add(TCREntities.TRIAL_MASTER.get(), emptyLootTable());
+        add(TCREntities.CANG_LAN.get(), emptyLootTable());
+        add(TCREntities.ZHEN_YU.get(), emptyLootTable());
+        add(TCREntities.DUAN_SHAN.get(), emptyLootTable());
+        add(TCREntities.CUI_HUA.get(), emptyLootTable());
+        add(TCREntities.YUN_YI.get(), emptyLootTable());
+        add(TCREntities.YAN_XIN.get(), emptyLootTable());
 
 
-        add(TCRModEntities.TIGER.get(),
+        add(TCREntities.TIGER.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 0))
                                 .add(LootItem.lootTableItem(TCRItems.BASIC_RESIN.get())))
         );
 
-        add(TCRModEntities.BOXER.get(),
+        add(TCREntities.BOXER.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 0))
                                 .add(LootItem.lootTableItem(TCRItems.BASIC_RESIN.get())))
         );
 
-        add(TCRModEntities.BIG_HAMMER.get(),
+        add(TCREntities.BIG_HAMMER.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 0))
                                 .add(LootItem.lootTableItem(TCRItems.BASIC_RESIN.get())))
         );
 
-        add(TCRModEntities.SNOW_SWORDMAN.get(),
+        add(TCREntities.SNOW_SWORDMAN.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 0))
                                 .add(LootItem.lootTableItem(TCRItems.BASIC_RESIN.get())))
         );
 
-        add(TCRModEntities.SWORD_CONTROLLER.get(),
+        add(TCREntities.SWORD_CONTROLLER.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 0))
                                 .add(LootItem.lootTableItem(TCRItems.BASIC_RESIN.get())))
         );
 
-        add(TCRModEntities.SECOND_BOSS.get(),
+        add(TCREntities.SECOND_BOSS.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 0))
@@ -103,14 +103,14 @@ public class TCREntityLootTables extends EntityLootSubProvider {
         );
 
         /*Biome1 start*/
-        add(TCRModEntities.SMALL_TREE_MONSTER.get(),
+        add(TCREntities.SMALL_TREE_MONSTER.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 2))
                                 .add(LootItem.lootTableItem(TCRItems.HEART_OF_THE_SAPLING.get())))
         );
 
-        add(TCRModEntities.MIDDLE_TREE_MONSTER.get(),
+        add(TCREntities.MIDDLE_TREE_MONSTER.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 2))
@@ -120,7 +120,7 @@ public class TCREntityLootTables extends EntityLootSubProvider {
                                 .add(LootItem.lootTableItem(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get())))
         );
 
-        add(TCRModEntities.TREE_GUARDIAN.get(),
+        add(TCREntities.TREE_GUARDIAN.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 2))
@@ -137,14 +137,14 @@ public class TCREntityLootTables extends EntityLootSubProvider {
                                 .add(LootItem.lootTableItem(TCRItems.COPY_RESIN.get())))
         );
 
-        add(TCRModEntities.SPRITE.get(),
+        add(TCREntities.SPRITE.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 2))
                                 .add(LootItem.lootTableItem(TCRItems.STARLIT_DEWDROP.get())))
         );
 
-        add(TCRModEntities.YGGDRASIL.get(),
+        add(TCREntities.YGGDRASIL.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 2))
@@ -177,12 +177,12 @@ public class TCREntityLootTables extends EntityLootSubProvider {
                                 .add(LootItem.lootTableItem(TCRItems.COPY_RESIN.get())))
         );
 
-        add(TCRModEntities.TREE_CLAW.get(), emptyLootTable());
+        add(TCREntities.TREE_CLAW.get(), emptyLootTable());
         /*Biome1 end*/
 
-        add(TCRModEntities.SWORD.get(),emptyLootTable());
+        add(TCREntities.SWORD.get(),emptyLootTable());
 
-        add(TCRModEntities.RAIN_SCREEN_SWORD.get(),emptyLootTable());
+        add(TCREntities.RAIN_SCREEN_SWORD.get(),emptyLootTable());
 
 
     }
@@ -204,6 +204,6 @@ public class TCREntityLootTables extends EntityLootSubProvider {
 
     @Override
     protected Stream<EntityType<?>> getKnownEntityTypes() {
-        return TCRModEntities.REGISTRY.getEntries().stream().map(RegistryObject::get);
+        return TCREntities.REGISTRY.getEntries().stream().map(RegistryObject::get);
     }
 }

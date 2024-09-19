@@ -1,7 +1,6 @@
 package com.gaboj1.tcr.entity.custom.sword;
 
-import com.gaboj1.tcr.entity.TCRModEntities;
-import com.gaboj1.tcr.network.PacketRelay;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.core.BlockPos;
@@ -20,7 +19,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ClipContext;
@@ -48,7 +46,7 @@ public class RainCutterSwordEntity extends AbstractArrow implements AbstractSwor
     private static final EntityDataAccessor<Integer> RAIN_CUTTER_SWORD_ID = SynchedEntityData.defineId(RainCutterSwordEntity.class, EntityDataSerializers.INT);
 
     public RainCutterSwordEntity(PlayMessages.SpawnEntity packet, Level world) {
-        this(TCRModEntities.RAIN_CUTTER_SWORD.get(), world);
+        this(TCREntities.RAIN_CUTTER_SWORD.get(), world);
     }
 
     public RainCutterSwordEntity(EntityType<? extends AbstractArrow> p_19870_, Level p_19871_) {
@@ -58,7 +56,7 @@ public class RainCutterSwordEntity extends AbstractArrow implements AbstractSwor
     }
 
     public RainCutterSwordEntity(ItemStack itemStack, Level level, int swordID) {
-        this(TCRModEntities.RAIN_CUTTER_SWORD.get(), level);
+        this(TCREntities.RAIN_CUTTER_SWORD.get(), level);
         setSwordID(swordID);
         setItemStack(itemStack);
     }

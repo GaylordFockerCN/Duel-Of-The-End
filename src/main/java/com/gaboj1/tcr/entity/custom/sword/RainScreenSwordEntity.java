@@ -3,7 +3,7 @@ package com.gaboj1.tcr.entity.custom.sword;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.capability.TCRCapabilityProvider;
 import com.gaboj1.tcr.capability.TCRPlayer;
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -36,7 +36,7 @@ public class RainScreenSwordEntity extends SwordEntity{
     }
 
     public RainScreenSwordEntity(PlayMessages.SpawnEntity spawnEntity, Level level) {
-        this(TCRModEntities.RAIN_SCREEN_SWORD.get(), level);
+        this(TCREntities.RAIN_SCREEN_SWORD.get(), level);
     }
 
     @Override

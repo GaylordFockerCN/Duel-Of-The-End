@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.item;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.block.TCRModBlocks;
+import com.gaboj1.tcr.block.TCRBlocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
-public class TCRModItemTabs {
+public class TCRItemTabs {
 	public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, TheCasketOfReveriesMod.MOD_ID);
 
 	//方块
@@ -20,31 +20,35 @@ public class TCRModItemTabs {
 					.withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
 					.withTabsAfter(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "spawn_egg"))
 					.title(Component.translatable("item_group.the_casket_of_reveries.block"))
-					.icon(() -> new ItemStack(TCRModBlocks.PORTAL_BED.get()))
+					.icon(() -> new ItemStack(TCRBlocks.PORTAL_BED.get()))
 					.displayItems((parameters, tabData) -> {
 
-				tabData.accept(TCRModBlocks.BETTER_STRUCTURE_BLOCK.get());
-				tabData.accept(TCRModBlocks.PORTAL_BED.get());
-				tabData.accept(TCRModBlocks.PORTAL_BLOCK.get());
-				tabData.accept(TCRModBlocks.YGGDRASIL_BLOCK.get());
-				tabData.accept(TCRModBlocks.TIGER_TRIAL_BLOCK.get());
-				tabData.accept(TCRModBlocks.MIAO_YIN_BLOCK.get());
-				tabData.accept(TCRModBlocks.CATNIP.get());
-				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
-				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get());
-				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get());
-				tabData.accept(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get());
-				tabData.accept(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get());
-				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
-				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get());
-				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING.get());
-				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_STAIRS.get());
-				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB.get());
-				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE.get());
-				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE_GATE.get());
-				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR.get());
-				tabData.accept(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_TRAPDOOR.get());
-				tabData.accept(TCRModBlocks.ORICHALCUM_ORE.get());
+				tabData.accept(TCRBlocks.BETTER_STRUCTURE_BLOCK.get());
+				tabData.accept(TCRBlocks.PORTAL_BED.get());
+				tabData.accept(TCRBlocks.PORTAL_BLOCK.get());
+				tabData.accept(TCRBlocks.YGGDRASIL_BLOCK.get());
+				tabData.accept(TCRBlocks.TIGER_TRIAL_BLOCK.get());
+				tabData.accept(TCRBlocks.MIAO_YIN_BLOCK.get());
+				tabData.accept(TCRBlocks.CATNIP.get());
+				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
+				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get());
+				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get());
+				tabData.accept(TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get());
+				tabData.accept(TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get());
+				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
+				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get());
+				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_SAPLING.get());
+				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_STAIRS.get());
+				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB.get());
+				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE.get());
+				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE_GATE.get());
+				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR.get());
+				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_TRAPDOOR.get());
+				tabData.accept(TCRBlocks.ORICHALCUM_ORE.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_1.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_2.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_3.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_4.get());
 
 			}).build());
 

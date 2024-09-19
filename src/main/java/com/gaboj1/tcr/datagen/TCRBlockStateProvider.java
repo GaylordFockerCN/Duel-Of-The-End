@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.datagen;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.block.TCRModBlocks;
+import com.gaboj1.tcr.block.TCRBlocks;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
@@ -19,42 +19,49 @@ public class TCRBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
 
-        simpleBlockWithItem(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get(), models().cross(blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get()).getPath(),
-                blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get())).renderType("cutout"));
-        simpleBlockWithItem(TCRModBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER.get(), models().singleTexture("potted_dense_forest_spirit_flower", new ResourceLocation("flower_pot_cross"), "plant",
-                blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get())).renderType("cutout"));
+        simpleBlockWithItem(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get(), models().cross(blockTexture(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get()).getPath(),
+                blockTexture(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get())).renderType("cutout"));
+        simpleBlockWithItem(TCRBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER.get(), models().singleTexture("potted_dense_forest_spirit_flower", new ResourceLocation("flower_pot_cross"), "plant",
+                blockTexture(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get())).renderType("cutout"));
 
-        simpleBlockWithItem(TCRModBlocks.CATNIP.get(), models().cross(blockTexture(TCRModBlocks.CATNIP.get()).getPath(),
-                blockTexture(TCRModBlocks.CATNIP.get())).renderType("cutout"));
-        simpleBlockWithItem(TCRModBlocks.POTTED_CATNIP.get(), models().singleTexture("potted_catnip", new ResourceLocation("flower_pot_cross"), "plant",
-                blockTexture(TCRModBlocks.CATNIP.get())).renderType("cutout"));
+        simpleBlockWithItem(TCRBlocks.CATNIP.get(), models().cross(blockTexture(TCRBlocks.CATNIP.get()).getPath(),
+                blockTexture(TCRBlocks.CATNIP.get())).renderType("cutout"));
+        simpleBlockWithItem(TCRBlocks.POTTED_CATNIP.get(), models().singleTexture("potted_catnip", new ResourceLocation("flower_pot_cross"), "plant",
+                blockTexture(TCRBlocks.CATNIP.get())).renderType("cutout"));
 
-        logBlock(((RotatedPillarBlock) TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()));
-        axisBlock(((RotatedPillarBlock) TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get()),blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()),blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()));
+        logBlock(((RotatedPillarBlock) TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()));
+        axisBlock(((RotatedPillarBlock) TCRBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get()),blockTexture(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()),blockTexture(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()));
 
-        axisBlock(((RotatedPillarBlock) TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get()), blockTexture(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get()),
+        axisBlock(((RotatedPillarBlock) TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get()), blockTexture(TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get()),
                 new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "block/dense_forest_spirit_tree_log_top"));
-        axisBlock(((RotatedPillarBlock) TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get()), blockTexture(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get()),
-                blockTexture(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get()));
+        axisBlock(((RotatedPillarBlock) TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get()), blockTexture(TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get()),
+                blockTexture(TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get()));
 
-        blockItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG);
-        blockItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD);
-        blockItem(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG);
-        blockItem(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD);
-        blockWithItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS);
-        blockWithItem(TCRModBlocks.PORTAL_BLOCK);
-        blockWithItem(TCRModBlocks.YGGDRASIL_BLOCK);
-        blockWithItem(TCRModBlocks.TIGER_TRIAL_BLOCK);
-        blockWithItem(TCRModBlocks.MIAO_YIN_BLOCK);
-        blockWithItem(TCRModBlocks.ORICHALCUM_ORE);
-        leavesBlock(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES);
-        saplingBlock(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING);
-        stairsBlock(((StairBlock) TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_STAIRS.get()), blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get()));
-        slabBlock(((SlabBlock) TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB.get()), blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB.get()), blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get()));
-        fenceBlock(((FenceBlock) TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE.get()), blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get()));
-        fenceGateBlock(((FenceGateBlock) TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE_GATE.get()), blockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get()));
-        doorBlockWithRenderType(((DoorBlock) TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR.get()), modLoc("block/dense_forest_spirit_tree_door_bottom"), modLoc("block/dense_forest_spirit_tree_door_top"), "cutout");
-        trapdoorBlockWithRenderType(((TrapDoorBlock) TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_TRAPDOOR.get()), modLoc("block/dense_forest_spirit_tree_trapdoor"), true, "cutout");
+        blockItem(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG);
+        blockItem(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD);
+        blockItem(TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG);
+        blockItem(TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD);
+        blockWithItem(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS);
+        blockWithItem(TCRBlocks.PORTAL_BLOCK);
+
+        blockWithItem(TCRBlocks.YGGDRASIL_BLOCK);
+        blockWithItem(TCRBlocks.TIGER_TRIAL_BLOCK);
+        blockWithItem(TCRBlocks.MIAO_YIN_BLOCK);
+
+        blockWithItem(TCRBlocks.ORICHALCUM_ORE);
+        leavesBlock(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES);
+        saplingBlock(TCRBlocks.DENSE_FOREST_SPIRIT_SAPLING);
+        stairsBlock(((StairBlock) TCRBlocks.DENSE_FOREST_SPIRIT_TREE_STAIRS.get()), blockTexture(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get()));
+        slabBlock(((SlabBlock) TCRBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB.get()), blockTexture(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB.get()), blockTexture(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get()));
+        fenceBlock(((FenceBlock) TCRBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE.get()), blockTexture(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get()));
+        fenceGateBlock(((FenceGateBlock) TCRBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE_GATE.get()), blockTexture(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get()));
+        doorBlockWithRenderType(((DoorBlock) TCRBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR.get()), modLoc("block/dense_forest_spirit_tree_door_bottom"), modLoc("block/dense_forest_spirit_tree_door_top"), "cutout");
+        trapdoorBlockWithRenderType(((TrapDoorBlock) TCRBlocks.DENSE_FOREST_SPIRIT_TREE_TRAPDOOR.get()), modLoc("block/dense_forest_spirit_tree_trapdoor"), true, "cutout");
+
+        blockWithItem(TCRBlocks.BOSS2_ROOM_1);
+        blockWithItem(TCRBlocks.BOSS2_ROOM_2);
+        blockWithItem(TCRBlocks.BOSS2_ROOM_3);
+        blockWithItem(TCRBlocks.BOSS2_ROOM_4);
     }
 
     private void saplingBlock(RegistryObject<Block> blockRegistryObject) {

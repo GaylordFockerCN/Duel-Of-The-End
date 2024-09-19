@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.entity.custom.villager.biome2.branch;
 
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.client.Minecraft;
@@ -29,7 +29,7 @@ public class Wanderer extends YueShiLineNpc {
 
     @Override
     public @NotNull Component getDisplayName() {
-        return Component.translatable(TCRModEntities.WANDERER.get().getDescriptionId());
+        return Component.translatable(TCREntities.WANDERER.get().getDescriptionId());
     }
 
     @Override

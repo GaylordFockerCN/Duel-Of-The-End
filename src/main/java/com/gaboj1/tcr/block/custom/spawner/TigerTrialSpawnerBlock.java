@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.block.custom.spawner;
 
-import com.gaboj1.tcr.block.TCRModBlockEntities;
+import com.gaboj1.tcr.block.TCRBlockEntities;
 import com.gaboj1.tcr.block.entity.spawner.TigerTrialSpawnerBlockEntity;
 import com.gaboj1.tcr.entity.custom.biome2.TigerEntity;
 import com.gaboj1.tcr.util.SaveUtil;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class TigerTrialSpawnerBlock extends EntitySpawnerBlock {
     public TigerTrialSpawnerBlock(Properties pProperties) {
-        super(pProperties, TCRModBlockEntities.TIGER_TRIAL_SPAWNER_BLOCK_ENTITY::get);
+        super(pProperties, TCRBlockEntities.TIGER_TRIAL_SPAWNER_BLOCK_ENTITY::get);
     }
 
     @Override

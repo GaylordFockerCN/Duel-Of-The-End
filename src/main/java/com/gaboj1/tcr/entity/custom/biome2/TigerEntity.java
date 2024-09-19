@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.entity.custom.biome2;
 
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
 import com.gaboj1.tcr.entity.custom.IceThornEntity;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -137,7 +137,7 @@ public class TigerEntity extends Monster implements GeoEntity {
     private void shoot(LivingEntity entity) {
         if(level() instanceof ServerLevel serverLevel){
             for(int i = 0; i < 10; i++){
-                IceThornEntity thornEntity = new IceThornEntity(TCRModEntities.ICE_THORN_ENTITY.get(), serverLevel);
+                IceThornEntity thornEntity = new IceThornEntity(TCREntities.ICE_THORN_ENTITY.get(), serverLevel);
                 thornEntity.setOwner(this);
                 thornEntity.setNoGravity(true);
                 thornEntity.setBaseDamage(10);

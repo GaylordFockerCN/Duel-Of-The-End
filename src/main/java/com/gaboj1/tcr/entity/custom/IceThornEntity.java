@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.entity.custom;
 
 import com.gaboj1.tcr.effect.TCREffects;
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.item.TCRItems;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 @OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
 public class IceThornEntity extends AbstractArrow implements ItemSupplier {
     public IceThornEntity(PlayMessages.SpawnEntity packet, Level world) {
-        super(TCRModEntities.ICE_THORN_ENTITY.get(), world);
+        super(TCREntities.ICE_THORN_ENTITY.get(), world);
     }
 
     public IceThornEntity(EntityType<? extends IceThornEntity> type, Level world) {

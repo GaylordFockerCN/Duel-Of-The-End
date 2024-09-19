@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.datagen.tags;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.block.TCRModBlocks;
+import com.gaboj1.tcr.block.TCRBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
@@ -21,29 +21,29 @@ public class TCRBlockTagGenerator extends BlockTagsProvider {
     protected void addTags(HolderLookup.Provider pProvider) {
 
         this.tag(BlockTags.LOGS)
-                .add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get())
-                .add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get())
-                .add(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get())
-                .add(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get());
+                .add(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get())
+                .add(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get())
+                .add(TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get())
+                .add(TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get());
 
         this.tag(BlockTags.LOGS_THAT_BURN)
-                .add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get())
-                .add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get())
-                .add(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get())
-                .add(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get());
+                .add(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get())
+                .add(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get())
+                .add(TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get())
+                .add(TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get());
 
         this.tag(BlockTags.PLANKS)
-                .add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
+                .add(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
 
         this.tag(BlockTags.FENCES)
-                .add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE.get());
+                .add(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE.get());
         this.tag(BlockTags.FENCE_GATES)
-                .add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE_GATE.get());
+                .add(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE_GATE.get());
 
         this.tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(TCRModBlocks.ORICHALCUM_ORE.get()).addTag(Tags.Blocks.ORES);
+                .add(TCRBlocks.ORICHALCUM_ORE.get()).addTag(Tags.Blocks.ORES);
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(TCRModBlocks.ORICHALCUM_ORE.get());
+                .add(TCRBlocks.ORICHALCUM_ORE.get());
 
     }
 }

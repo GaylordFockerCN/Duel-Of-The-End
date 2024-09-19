@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.entity.custom.villager;
 
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.TCREntities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -17,7 +17,7 @@ import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
 public class P1nero extends TCRTalkableVillager {
 
-    private final EntityType<?> entityType = TCRModEntities.P1NERO.get();
+    private final EntityType<?> entityType = TCREntities.P1NERO.get();
     public P1nero(EntityType<? extends P1nero> pEntityType, Level pLevel) {
         super(pEntityType, pLevel, 1);
     }
@@ -29,7 +29,7 @@ public class P1nero extends TCRTalkableVillager {
 
     @Override
     public @NotNull Component getDisplayName() {
-        return Component.translatable(TCRModEntities.P1NERO.get().getDescriptionId());
+        return Component.translatable(TCREntities.P1NERO.get().getDescriptionId());
     }
 
     @Override

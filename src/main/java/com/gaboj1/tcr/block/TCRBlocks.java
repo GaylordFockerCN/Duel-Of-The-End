@@ -26,7 +26,7 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.function.Supplier;
 
 
-public class TCRModBlocks {
+public class TCRBlocks {
     public static final DeferredRegister<Block> REGISTRY =
             DeferredRegister.create(ForgeRegistries.BLOCKS, TheCasketOfReveriesMod.MOD_ID);
 
@@ -39,13 +39,13 @@ public class TCRModBlocks {
     public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_FLOWER = registerBlock("dense_forest_spirit_flower",
             ()-> new DenseForestSpiritFlower(() -> MobEffects.POISON, 5, BlockBehaviour.Properties.copy(Blocks.WITHER_ROSE)));
     public static final RegistryObject<Block> POTTED_DENSE_FOREST_SPIRIT_FLOWER = REGISTRY.register("potted_dense_forest_spirit_flower",
-            ()-> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER,
+            ()-> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_POPPY).noOcclusion()));
 
     public static final RegistryObject<Block> CATNIP = registerBlock("catnip_block",
             ()-> new FlowerBlock(() -> MobEffects.SLOW_FALLING, 0, BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
     public static final RegistryObject<Block> POTTED_CATNIP = REGISTRY.register("potted_catnip",
-            ()-> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), TCRModBlocks.CATNIP,
+            ()-> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), TCRBlocks.CATNIP,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_POPPY).noOcclusion()));
 
 
@@ -77,7 +77,7 @@ public class TCRModBlocks {
             });
 
     public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_TREE_STAIRS = registerBlock("dense_forest_spirit_tree_stairs",
-            ()->new StairBlock(()-> TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.OAK_STAIRS)));
+            ()->new StairBlock(()-> TCRBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.OAK_STAIRS)));
     public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_TREE_SLAB = registerBlock("dense_forest_spirit_tree_slab",
             ()->new SlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_SLAB)));
 
@@ -110,6 +110,15 @@ public class TCRModBlocks {
 
     public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_SAPLING = registerBlock("dense_forest_spirit_sapling",
             () -> new SaplingBlock(new DenseSpiritTreeGrower(), BlockBehaviour.Properties.copy(Blocks.JUNGLE_SAPLING)));
+
+    public static final RegistryObject<Block> BOSS2_ROOM_1 = registerBlock("boss2_room_1",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.QUARTZ_BRICKS).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_2 = registerBlock("boss2_room_2",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.QUARTZ_BRICKS).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_3 = registerBlock("boss2_room_3",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.PRISMARINE_BRICKS).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_4 = registerBlock("boss2_room_4",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.PRISMARINE_BRICKS).strength(-1.0F, 3600000.0F).noLootTable()));
 
     //神金矿
     public static final RegistryObject<Block> ORICHALCUM_ORE = registerBlock("orichalcum_ore",

@@ -2,7 +2,7 @@ package com.gaboj1.tcr.entity.custom.villager.biome2;
 
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.villager.TCRTalkableVillager;
 import com.gaboj1.tcr.item.TCRItems;
 import net.minecraft.client.Minecraft;
@@ -23,7 +23,7 @@ import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
 public class TalkableVillager2 extends TCRTalkableVillager {
 
-    private final EntityType<?> entityType = TCRModEntities.VILLAGER2_TALKABLE.get();
+    private final EntityType<?> entityType = TCREntities.VILLAGER2_TALKABLE.get();
 
     public TalkableVillager2(EntityType<? extends TalkableVillager2> entityType, Level level) {
         super(entityType, level,1);
@@ -218,7 +218,7 @@ public class TalkableVillager2 extends TCRTalkableVillager {
      */
     @Override
     public @NotNull Component getDisplayName() {
-        return Component.translatable(TCRModEntities.VILLAGER2_TALKABLE.get().getDescriptionId() + getSkinID());
+        return Component.translatable(TCREntities.VILLAGER2_TALKABLE.get().getDescriptionId() + getSkinID());
     }
 
     @Override

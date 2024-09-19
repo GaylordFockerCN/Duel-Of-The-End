@@ -2,7 +2,7 @@ package com.gaboj1.tcr.entity.custom.villager.biome2.branch;
 
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
@@ -74,7 +74,7 @@ public class MiaoYin extends YueShiLineNpc {
 
     @Override
     public @NotNull Component getDisplayName() {
-        return Component.translatable(TCRModEntities.MIAO_YIN.get().getDescriptionId());
+        return Component.translatable(TCREntities.MIAO_YIN.get().getDescriptionId());
     }
 
     public void setIsSitting(boolean sit) {
@@ -95,7 +95,7 @@ public class MiaoYin extends YueShiLineNpc {
         if(!level().isClientSide){
             //泄密后把乐师换成流浪者
             if(SaveUtil.biome2.talkToMaster){
-                Wanderer wanderer = TCRModEntities.WANDERER.get().create(level());
+                Wanderer wanderer = TCREntities.WANDERER.get().create(level());
                 assert wanderer != null;
                 wanderer.setPos(this.position());
                 level().addFreshEntity(wanderer);

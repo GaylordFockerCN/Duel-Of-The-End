@@ -2,7 +2,7 @@ package com.gaboj1.tcr.entity.custom.boss.second_boss;
 
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
 import com.gaboj1.tcr.entity.custom.villager.biome2.*;
 import com.gaboj1.tcr.network.PacketRelay;
@@ -15,8 +15,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.BossEvent;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
@@ -49,7 +47,7 @@ import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 public class SecondBossEntity extends TCRBoss implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    protected EntityType<?> entityType = TCRModEntities.SECOND_BOSS.get();
+    protected EntityType<?> entityType = TCREntities.SECOND_BOSS.get();
     private final Set<Integer> mastersId = new HashSet<>();
     public SecondBossEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_, BossEvent.BossBarColor.WHITE);
@@ -145,18 +143,18 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
                 double y = this.getY();
                 double z = this.getZ();
                 double r = 2;
-                FuryTideCangLan cangLan = TCRModEntities.CANG_LAN.get().create(level());
+                FuryTideCangLan cangLan = TCREntities.CANG_LAN.get().create(level());
                 assert cangLan != null;
                 cangLan.setPos(x + r, y, z);
-                BlazingFlameYanXin yanXin = TCRModEntities.YAN_XIN.get().create(level());
+                BlazingFlameYanXin yanXin = TCREntities.YAN_XIN.get().create(level());
                 yanXin.setPos(x + 0.5 * r, y, z + 0.866 * r);
-                IronfistDuanShan duanShan = TCRModEntities.DUAN_SHAN.get().create(level());
+                IronfistDuanShan duanShan = TCREntities.DUAN_SHAN.get().create(level());
                 duanShan.setPos(x - 0.5 * r, y, z + 0.866 * r);
-                SerpentWhispererCuiHua cuiHua = TCRModEntities.CUI_HUA.get().create(level());
+                SerpentWhispererCuiHua cuiHua = TCREntities.CUI_HUA.get().create(level());
                 cuiHua.setPos(x - r, y, z);
-                ThunderclapZhenYu zhenYu = TCRModEntities.ZHEN_YU.get().create(level());
+                ThunderclapZhenYu zhenYu = TCREntities.ZHEN_YU.get().create(level());
                 zhenYu.setPos(x - 0.5 * r, y, z - 0.866 * r);
-                WindwalkerYunYi yunYi = TCRModEntities.YUN_YI.get().create(level());
+                WindwalkerYunYi yunYi = TCREntities.YUN_YI.get().create(level());
                 yunYi.setPos(x + 0.5 * r, y, z - 0.866 * r);
                 level().addFreshEntity(cangLan);
                 level().addFreshEntity(yanXin);
@@ -281,7 +279,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
                 master.discard();
             }
         }
-        FuryTideCangLan cangLan = TCRModEntities.CANG_LAN.get().create(level());
+        FuryTideCangLan cangLan = TCREntities.CANG_LAN.get().create(level());
         assert cangLan != null;
         if(getTarget() != null){
             Vec3 vec3 = getTarget().position().add(this.position()).scale(0.5);

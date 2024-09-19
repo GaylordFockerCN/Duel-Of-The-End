@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.block.entity;
 
-import com.gaboj1.tcr.block.TCRModBlockEntities;
+import com.gaboj1.tcr.block.TCRBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -14,7 +14,6 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
-import software.bernie.geckolib.util.RenderUtils;
 
 public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -29,7 +28,7 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
     }
 
     public PortalBlockEntity(BlockPos pos, BlockState state) {
-        super(TCRModBlockEntities.PORTAL_BLOCK_ENTITY.get(), pos, state);
+        super(TCRBlockEntities.PORTAL_BLOCK_ENTITY.get(), pos, state);
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 

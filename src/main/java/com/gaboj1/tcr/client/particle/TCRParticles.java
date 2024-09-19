@@ -7,7 +7,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-public class TCRModParticles {
+public class TCRParticles {
     public static final DeferredRegister<ParticleType<?>> REGISTRY =
             DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, TheCasketOfReveriesMod.MOD_ID);
 

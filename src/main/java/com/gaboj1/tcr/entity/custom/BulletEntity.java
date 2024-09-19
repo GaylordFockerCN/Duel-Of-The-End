@@ -2,10 +2,10 @@
 package com.gaboj1.tcr.entity.custom;
 
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.TreeClawEntity;
 import com.gaboj1.tcr.util.headshot.BoundingBoxManager;
 import com.gaboj1.tcr.util.headshot.IHeadshotBox;
-import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.item.TCRItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
@@ -37,7 +37,7 @@ import java.util.Optional;
 @OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
 public class BulletEntity extends AbstractArrow implements ItemSupplier {
 	public BulletEntity(PlayMessages.SpawnEntity packet, Level world) {
-		super(TCRModEntities.DESERT_EAGLE_BULLET.get(), world);
+		super(TCREntities.DESERT_EAGLE_BULLET.get(), world);
 	}
 
 	public BulletEntity(EntityType<? extends BulletEntity> type, Level world) {

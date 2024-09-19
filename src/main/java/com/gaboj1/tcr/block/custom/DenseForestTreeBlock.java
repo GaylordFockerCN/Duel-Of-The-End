@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.block.custom;
 
-import com.gaboj1.tcr.block.TCRModBlocks;
+import com.gaboj1.tcr.block.TCRBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.AxeItem;
@@ -33,12 +33,12 @@ public class DenseForestTreeBlock extends RotatedPillarBlock {
     @Override
     public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ToolAction toolAction, boolean simulate) {
         if(context.getItemInHand().getItem() instanceof AxeItem) {
-            if(state.is(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get())) {
-                return TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
+            if(state.is(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get())) {
+                return TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
             }
 
-            if(state.is(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get())) {
-                return TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
+            if(state.is(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get())) {
+                return TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
             }
         }
 

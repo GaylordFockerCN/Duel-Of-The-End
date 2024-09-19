@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.datagen.tags;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.block.TCRModBlocks;
+import com.gaboj1.tcr.block.TCRBlocks;
 import com.gaboj1.tcr.item.TCRItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -23,13 +23,13 @@ public class TCRItemTagGenerator extends ItemTagsProvider {
     protected void addTags(HolderLookup.Provider pProvider) {
 
         this.tag(ItemTags.LOGS_THAT_BURN)
-                .add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get().asItem())
-                .add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get().asItem())
-                .add(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get().asItem())
-                .add(TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get().asItem());
+                .add(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get().asItem())
+                .add(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get().asItem())
+                .add(TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get().asItem())
+                .add(TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get().asItem());
 
         this.tag(ItemTags.PLANKS)
-                .add(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get().asItem());
+                .add(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get().asItem());
 
         this.tag(ItemTags.TRIMMABLE_ARMOR)
                 .add(TCRItems.ORICHALCUM_HELMET.get())

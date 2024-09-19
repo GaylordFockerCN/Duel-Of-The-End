@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.datagen.loot;
 
-import com.gaboj1.tcr.block.TCRModBlocks;
+import com.gaboj1.tcr.block.TCRBlocks;
 import com.gaboj1.tcr.item.TCRItems;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -138,7 +138,7 @@ public class TCRChestLootTables implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(Items.APPLE)).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 5.0F))
-                        .add(LootItem.lootTableItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
+                        .add(LootItem.lootTableItem(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
                 )
         );
 
@@ -171,7 +171,7 @@ public class TCRChestLootTables implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(TCRItems.INTERMEDIATE_RESIN.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 8.0F)))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 5.0F))
-                        .add(LootItem.lootTableItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 16.0F)))
+                        .add(LootItem.lootTableItem(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 16.0F)))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 1.0F))
                         .add(LootItem.lootTableItem(TCRItems.SUPER_RESIN.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
@@ -210,7 +210,7 @@ public class TCRChestLootTables implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(TCRItems.CATNIP.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 1.0F))
-                        .add(LootItem.lootTableItem(TCRModBlocks.CATNIP.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
+                        .add(LootItem.lootTableItem(TCRBlocks.CATNIP.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 2.0F))
                         .add(LootItem.lootTableItem(TCRItems.HEALTH_WAND.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
@@ -231,7 +231,7 @@ public class TCRChestLootTables implements LootTableSubProvider {
 
         builder.accept(TCRLoot.ALTAR1, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
-                        .add(LootItem.lootTableItem(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
+                        .add(LootItem.lootTableItem(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 1.0F))
                         .add(LootItem.lootTableItem(TCRItems.WITHERING_TOUCH.get())).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))

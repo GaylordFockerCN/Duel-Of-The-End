@@ -2,7 +2,7 @@ package com.gaboj1.tcr.entity.custom.sword;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.capability.TCRCapabilityProvider;
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.util.ClientHelper;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -13,11 +13,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -42,7 +38,7 @@ public class SwordEntity extends Entity implements AbstractSwordEntity{
         this.getEntityData().define(RIDER_UUID, Optional.empty());
     }
     public SwordEntity(ItemStack itemStack, Player rider) {
-        super(TCRModEntities.SWORD.get(), rider.level());
+        super(TCREntities.SWORD.get(), rider.level());
         this.rider = rider;
         this.getEntityData().define(ITEM_STACK, itemStack);
         this.getEntityData().define(RIDER_UUID, Optional.of(rider.getUUID()));

@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.datagen;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.block.TCRModBlocks;
+import com.gaboj1.tcr.block.TCRBlocks;
 import com.gaboj1.tcr.item.TCRItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
@@ -116,14 +116,14 @@ public class TCRItemModelProvider extends ItemModelProvider {
         simpleItem(TCRItems.STRENGTH_PILL);
         simpleItem(TCRItems.AQUA_GOLD_ELIXIR);
 
-        simpleBlockItemBlockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER);
-        simpleBlockItemBlockTexture(TCRModBlocks.CATNIP);
-        saplingItem(TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING);
-        fenceItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE, TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS);
-        simpleBlockItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR);
-        evenSimplerBlockItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_STAIRS);
-        evenSimplerBlockItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB);
-        evenSimplerBlockItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE_GATE);
+        simpleBlockItemBlockTexture(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER);
+        simpleBlockItemBlockTexture(TCRBlocks.CATNIP);
+        saplingItem(TCRBlocks.DENSE_FOREST_SPIRIT_SAPLING);
+        fenceItem(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE, TCRBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS);
+        simpleBlockItem(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR);
+        evenSimplerBlockItem(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_STAIRS);
+        evenSimplerBlockItem(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB);
+        evenSimplerBlockItem(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE_GATE);
 
         trimmedArmorItem(TCRItems.ORICHALCUM_HELMET);
         trimmedArmorItem(TCRItems.ORICHALCUM_CHESTPLATE);

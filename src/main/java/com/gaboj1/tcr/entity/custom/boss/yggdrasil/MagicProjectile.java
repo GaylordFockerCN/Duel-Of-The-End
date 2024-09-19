@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.TCREntities;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -33,7 +33,7 @@ public class MagicProjectile extends LlamaSpit {
     }
 
     public MagicProjectile(Level level, LivingEntity owner) {
-        this(TCRModEntities.MAGIC_PROJECTILE.get(), level);
+        this(TCREntities.MAGIC_PROJECTILE.get(), level);
         this.setOwner(owner);
         this.setPos(owner.getX() - (double)(owner.getBbWidth() + 1.0F) * 0.5 * (double) Mth.sin(owner.yBodyRot * 0.017453292F), owner.getEyeY() - 0.10000000149011612, owner.getZ() + (double)(owner.getBbWidth() + 1.0F) * 0.5 * (double)Mth.cos(owner.yBodyRot * 0.017453292F));
     }

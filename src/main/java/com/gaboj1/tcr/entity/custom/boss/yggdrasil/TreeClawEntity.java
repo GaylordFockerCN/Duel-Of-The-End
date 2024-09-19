@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.TCREntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
@@ -36,7 +36,7 @@ public class TreeClawEntity extends Mob implements GeoEntity {
     }
 
     public TreeClawEntity(Level world, YggdrasilEntity thrower, Player target){
-        super(TCRModEntities.TREE_CLAW.get(),world);
+        super(TCREntities.TREE_CLAW.get(),world);
         yggdrasilEntity = thrower;
         this.target = target;
         catchTimer = catchTimerMax;

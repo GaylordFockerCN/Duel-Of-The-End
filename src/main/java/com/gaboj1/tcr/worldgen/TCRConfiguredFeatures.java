@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.worldgen;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.block.TCRModBlocks;
+import com.gaboj1.tcr.block.TCRBlocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
@@ -40,22 +40,22 @@ public class TCRConfiguredFeatures {
         RuleTest stoneReplaceable = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
 
         List<OreConfiguration.TargetBlockState> orichalcum_ore = List.of(OreConfiguration.target(stoneReplaceable,
-                        TCRModBlocks.ORICHALCUM_ORE.get().defaultBlockState()));
+                        TCRBlocks.ORICHALCUM_ORE.get().defaultBlockState()));
 
         register(context, ORICHALCUM_ORE_KEY, Feature.ORE, new OreConfiguration(orichalcum_ore, 9));
 
         register(context, DENSE_FOREST_SPIRIT_TREE_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
-                BlockStateProvider.simple(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()),
+                BlockStateProvider.simple(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()),
                 new MegaJungleTrunkPlacer(10,12,19),
 
-                BlockStateProvider.simple(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get()),
+                BlockStateProvider.simple(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get()),
                 new MegaJungleFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 2),
 
                 new TwoLayersFeatureSize(1, 1, 2)).build());
 
         register(context, DENSE_FOREST_SPIRIT_FLOWER_KEY, Feature.FLOWER, new RandomPatchConfiguration(96, 6, 2,
                 PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(new NoiseProvider(2345L, new NormalNoise.NoiseParameters(0, 1.0), 0.020833334F,
-                        List.of(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get().defaultBlockState()))))));
+                        List.of(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get().defaultBlockState()))))));
 
 
     }

@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.item;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.item.custom.*;
 import com.gaboj1.tcr.item.custom.armor.OrichalcumArmorItem;
 import com.gaboj1.tcr.item.custom.boss_loot.FlySword;
@@ -100,68 +100,68 @@ public class TCRItems {
 
 //	public static final RegistryObject<Item> JELLY_CAT_SPAWN_EGG = registerEgg("jelly_cat_spawn_egg", TCRModEntities.JELLY_CAT);
 	public static final RegistryObject<Item> JELLY_CAT_SPAWN_EGG = REGISTRY.register("jelly_cat_spawn_egg",
-		() -> new ForgeSpawnEggItem(TCRModEntities.JELLY_CAT, 0xD57E36, 0x1D0D00,
+		() -> new ForgeSpawnEggItem(TCREntities.JELLY_CAT, 0xD57E36, 0x1D0D00,
 			new Item.Properties()));
 	public static final RegistryObject<Item> CATNIP = REGISTRY.register("catnip",  () -> new DropItem(new Item.Properties().food(Foods.APPLE)));
 	public static final RegistryObject<Item> SQUIRREL_SPAWN_EGG = REGISTRY.register("squirrel_spawn_egg",
-			() -> new ForgeSpawnEggItem(TCRModEntities.SQUIRREL, 0xD57E36, 0x1D0D00,
+			() -> new ForgeSpawnEggItem(TCREntities.SQUIRREL, 0xD57E36, 0x1D0D00,
 					new Item.Properties()));
 	public static final RegistryObject<Item> CRAB_SPAWN_EGG = REGISTRY.register("crab_spawn_egg",
-			() -> new ForgeSpawnEggItem(TCRModEntities.CRAB, 0xD57E36, 0x1D0D00,
+			() -> new ForgeSpawnEggItem(TCREntities.CRAB, 0xD57E36, 0x1D0D00,
 					new Item.Properties()));
 	public static final RegistryObject<Item> MIDDLE_TREE_MONSTER_SPAWN_EGG = REGISTRY.register("middle_tree_monster_spawn_egg",
-			() -> new ForgeSpawnEggItem(TCRModEntities.MIDDLE_TREE_MONSTER, 0xD57E36, 0x1D0D00,
+			() -> new ForgeSpawnEggItem(TCREntities.MIDDLE_TREE_MONSTER, 0xD57E36, 0x1D0D00,
 					new Item.Properties()));
 
 	public static final RegistryObject<Item> SMALL_TREE_MONSTER_SPAWN_EGG = REGISTRY.register("small_tree_monster_spawn_egg",
-			() -> new ForgeSpawnEggItem(TCRModEntities.SMALL_TREE_MONSTER, 0xD57E36, 0x1D0D00,
+			() -> new ForgeSpawnEggItem(TCREntities.SMALL_TREE_MONSTER, 0xD57E36, 0x1D0D00,
 					new Item.Properties()));
 
 	public static final RegistryObject<Item> TREE_GUARDIAN_SPAWN_EGG = REGISTRY.register("tree_guardian_spawn_egg",
-			() -> new ForgeSpawnEggItem(TCRModEntities.TREE_GUARDIAN, 0xD57E36, 0x1D0D00,
+			() -> new ForgeSpawnEggItem(TCREntities.TREE_GUARDIAN, 0xD57E36, 0x1D0D00,
 					new Item.Properties()));
 
 	public static final RegistryObject<Item> SPRITE_SPAWN_EGG = REGISTRY.register("sprite_spawn_egg",
-			() -> new ForgeSpawnEggItem(TCRModEntities.SPRITE, 1, 0x1D0D00,
+			() -> new ForgeSpawnEggItem(TCREntities.SPRITE, 1, 0x1D0D00,
 					new Item.Properties()));
 
 	public static final RegistryObject<Item> TIGER_SPAWN_EGG = REGISTRY.register("tiger_egg",
-			() -> new ForgeSpawnEggItem(TCRModEntities.TIGER, 0xD57E36, 0x1D0D00,
+			() -> new ForgeSpawnEggItem(TCREntities.TIGER, 0xD57E36, 0x1D0D00,
 					new Item.Properties()));
 
 	public static final RegistryObject<Item> BOXER_SPAWN_EGG = REGISTRY.register("boxer_egg",
-			() -> new ForgeSpawnEggItem(TCRModEntities.BOXER, 2, 0x1D0D00,
+			() -> new ForgeSpawnEggItem(TCREntities.BOXER, 2, 0x1D0D00,
 					new Item.Properties()));
 
 	public static final RegistryObject<Item> BIG_HAMMER_EGG = REGISTRY.register("big_hammer_egg",
-			() -> new ForgeSpawnEggItem(TCRModEntities.BIG_HAMMER, 3, 0x1D0D00,
+			() -> new ForgeSpawnEggItem(TCREntities.BIG_HAMMER, 3, 0x1D0D00,
 					new Item.Properties()));
 
 	public static final RegistryObject<Item> SNOW_SWORDMAN_SPAWN_EGG = REGISTRY.register("snow_swordman_spawn_egg",
-			() -> new ForgeSpawnEggItem(TCRModEntities.SNOW_SWORDMAN, 26, 0x1D0D00,
+			() -> new ForgeSpawnEggItem(TCREntities.SNOW_SWORDMAN, 26, 0x1D0D00,
 					new Item.Properties()));
 
 	public static final RegistryObject<Item> SWORD_CONTROLLER_SPAWN_EGG = REGISTRY.register("sword_controller_spawn_egg",
-			() -> new ForgeSpawnEggItem(TCRModEntities.SWORD_CONTROLLER, 50, 0x1D0D00,
+			() -> new ForgeSpawnEggItem(TCREntities.SWORD_CONTROLLER, 50, 0x1D0D00,
 					new Item.Properties()));
 
 	public static final RegistryObject<Item> SECOND_BOSS_SPAWN_EGG = REGISTRY.register("second_boss_spawn_egg",
-			() -> new ForgeSpawnEggItem(TCRModEntities.SECOND_BOSS, 800, 50,
+			() -> new ForgeSpawnEggItem(TCREntities.SECOND_BOSS, 800, 50,
 					new Item.Properties()));
 
 	public static final RegistryObject<Item> CANG_LAN_SPAWN_EGG = REGISTRY.register("cang_lan_spawn_egg",
-			() -> new ForgeSpawnEggItem(TCRModEntities.CANG_LAN, 6000, 50,
+			() -> new ForgeSpawnEggItem(TCREntities.CANG_LAN, 6000, 50,
 					new Item.Properties()));
 
 	public static final RegistryObject<Item> YGGDRASIL_SPAWN_EGG = REGISTRY.register("yggdrasil_spawn_egg",
-			() -> new ForgeSpawnEggItem(TCRModEntities.YGGDRASIL, 1, 0x1D0D00,
+			() -> new ForgeSpawnEggItem(TCREntities.YGGDRASIL, 1, 0x1D0D00,
 					new Item.Properties()));
 	public static final RegistryObject<Item> PASTORAL_PLAIN_VILLAGER_SPAWN_EGG = REGISTRY.register("pastoral_plain_villager_spawn_egg",
-			() -> new ForgeSpawnEggItem(TCRModEntities.PASTORAL_PLAIN_VILLAGER, 0xD99999, 0x1D0D00,
+			() -> new ForgeSpawnEggItem(TCREntities.PASTORAL_PLAIN_VILLAGER, 0xD99999, 0x1D0D00,
 					new Item.Properties()));
 
 	public static final RegistryObject<Item> PASTORAL_PLAIN_VILLAGER_ELDER_SPAWN_EGG = REGISTRY.register("pastoral_plain_villager_elder_spawn_egg",
-			() -> new ForgeSpawnEggItem(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER, 0xD99999, 0x1D0D00,
+			() -> new ForgeSpawnEggItem(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER, 0xD99999, 0x1D0D00,
 					new Item.Properties()));
 
 	public static RegistryObject<Item> registerEgg(String name, Supplier<? extends EntityType<? extends Mob>> type){

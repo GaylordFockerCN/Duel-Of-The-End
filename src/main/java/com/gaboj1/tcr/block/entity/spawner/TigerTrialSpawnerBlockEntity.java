@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.block.entity.spawner;
 
-import com.gaboj1.tcr.block.TCRModBlockEntities;
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.block.TCRBlockEntities;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.biome2.TigerEntity;
 import com.gaboj1.tcr.entity.custom.villager.biome2.branch.TrialMaster;
 import com.gaboj1.tcr.util.SaveUtil;
@@ -15,11 +15,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
-import software.bernie.geckolib.util.RenderUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +26,7 @@ public class TigerTrialSpawnerBlockEntity extends EntitySpawnerBlockEntity<Tiger
     private final List<Integer> tigers = new ArrayList<>();
     private boolean trialed, trialing;
     public TigerTrialSpawnerBlockEntity(BlockPos pos, BlockState state) {
-        super(TCRModBlockEntities.TIGER_TRIAL_SPAWNER_BLOCK_ENTITY.get(), TCRModEntities.TIGER.get(), pos, state);
+        super(TCRBlockEntities.TIGER_TRIAL_SPAWNER_BLOCK_ENTITY.get(), TCREntities.TIGER.get(), pos, state);
     }
 
     public void setTrialed(boolean trialed) {
@@ -88,7 +86,7 @@ public class TigerTrialSpawnerBlockEntity extends EntitySpawnerBlockEntity<Tiger
             }
         }
         if(blockEntity.isTrialing() && isEmpty){
-            TrialMaster trialMaster = TCRModEntities.TRIAL_MASTER.get().create(level);
+            TrialMaster trialMaster = TCREntities.TRIAL_MASTER.get().create(level);
             if(trialMaster != null){
                 blockEntity.trialing = false;
                 blockEntity.setTrialed(true);

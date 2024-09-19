@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.datagen;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.block.TCRModBlocks;
+import com.gaboj1.tcr.block.TCRBlocks;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.datagen.loot.TCRLoot;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
@@ -43,7 +43,7 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
             this.helper = existingFileHelper;
 
             Advancement theCasketOfReveries = Advancement.Builder.advancement()
-                    .display(TCRModBlocks.PORTAL_BED.get(),
+                    .display(TCRBlocks.PORTAL_BED.get(),
                             Component.translatable(pre+TheCasketOfReveriesMod.MOD_ID),
                             Component.translatable(pre+TheCasketOfReveriesMod.MOD_ID+".desc"),
                             new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/block/dense_forest_dirt.png"),
@@ -55,7 +55,7 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
 
             Advancement enterRealmOfTheDream = Advancement.Builder.advancement()
                     .parent(theCasketOfReveries)
-                    .display(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get(),
+                    .display(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get(),
                             Component.translatable(pre+"enter_realm_of_the_dream"),
                             Component.translatable(pre+"enter_realm_of_the_dream.desc"),
                             null,
@@ -80,7 +80,7 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
             name = "try_wake_up";
             Advancement tryWakeUp = Advancement.Builder.advancement()
                     .parent(enterRealmOfTheDream)
-                    .display(TCRModBlocks.PORTAL_BED.get(),
+                    .display(TCRBlocks.PORTAL_BED.get(),
                             Component.translatable(pre+name),
                             Component.translatable(pre+name+".desc"),
                             null,

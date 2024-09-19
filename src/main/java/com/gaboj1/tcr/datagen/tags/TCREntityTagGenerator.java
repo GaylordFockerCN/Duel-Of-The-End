@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.datagen.tags;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.entity.TCREntities;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -25,10 +25,10 @@ public class TCREntityTagGenerator extends EntityTypeTagsProvider {
     protected void addTags(HolderLookup.Provider pProvider) {
         super.addTags(pProvider);
         tag(MOB_IN_DENSE_FOREST).add(
-                TCRModEntities.SMALL_TREE_MONSTER.get(),
-                TCRModEntities.MIDDLE_TREE_MONSTER.get(),
-                TCRModEntities.TREE_GUARDIAN.get(),
-                TCRModEntities.SPRITE.get()
+                TCREntities.SMALL_TREE_MONSTER.get(),
+                TCREntities.MIDDLE_TREE_MONSTER.get(),
+                TCREntities.TREE_GUARDIAN.get(),
+                TCREntities.SPRITE.get()
 //                TCRModEntities.TIGER.get(),
 //                TCRModEntities.BOXER.get(),
 //                TCRModEntities.BIG_HAMMER.get(),

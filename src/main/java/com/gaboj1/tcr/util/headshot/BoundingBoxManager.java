@@ -1,5 +1,4 @@
 package com.gaboj1.tcr.util.headshot;
-import com.gaboj1.tcr.entity.TCRModEntities;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;

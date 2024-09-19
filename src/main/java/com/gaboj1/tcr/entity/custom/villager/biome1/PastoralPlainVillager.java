@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.entity.custom.villager.biome1;
 
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
-import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -44,9 +44,9 @@ public class PastoralPlainVillager extends TCRVillager {
     @OnlyIn(Dist.CLIENT)
     public void talk(Player player, boolean isFWord){
         if(SaveUtil.biome1.choice != 1){
-            talk(player, Component.translatable(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get().getDescriptionId()+".chat"+(r.nextInt(whatCanISay))));
+            talk(player, Component.translatable(TCREntities.PASTORAL_PLAIN_VILLAGER.get().getDescriptionId()+".chat"+(r.nextInt(whatCanISay))));
         }else {
-            talk(player, Component.translatable(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get().getDescriptionId()+".fuck_chat"+(r.nextInt(whatCanISay))));
+            talk(player, Component.translatable(TCREntities.PASTORAL_PLAIN_VILLAGER.get().getDescriptionId()+".fuck_chat"+(r.nextInt(whatCanISay))));
         }
     }
 

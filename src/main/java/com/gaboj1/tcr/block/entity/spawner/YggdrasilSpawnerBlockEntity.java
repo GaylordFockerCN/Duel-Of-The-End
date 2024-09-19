@@ -1,8 +1,8 @@
 package com.gaboj1.tcr.block.entity.spawner;
 
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
-import com.gaboj1.tcr.block.TCRModBlockEntities;
-import com.gaboj1.tcr.entity.TCRModEntities;
+import com.gaboj1.tcr.block.TCRBlockEntities;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
@@ -16,7 +16,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 public class YggdrasilSpawnerBlockEntity extends BossSpawnerBlockEntity<YggdrasilEntity> implements GeoBlockEntity {
 	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 	public YggdrasilSpawnerBlockEntity(BlockPos pos, BlockState state) {
-		super(TCRModBlockEntities.YGGDRASIL_SPAWNER_BLOCK_ENTITY.get(), TCRModEntities.YGGDRASIL.get(), pos, state);
+		super(TCRBlockEntities.YGGDRASIL_SPAWNER_BLOCK_ENTITY.get(), TCREntities.YGGDRASIL.get(), pos, state);
 	}
 
 	@Override

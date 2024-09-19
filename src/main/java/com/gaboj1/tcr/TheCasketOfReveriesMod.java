@@ -1,7 +1,7 @@
 package com.gaboj1.tcr;
 
-import com.gaboj1.tcr.block.TCRModBlockEntities;
-import com.gaboj1.tcr.block.TCRModBlocks;
+import com.gaboj1.tcr.block.TCRBlockEntities;
+import com.gaboj1.tcr.block.TCRBlocks;
 import com.gaboj1.tcr.block.entity.client.PortalBlockRenderer;
 import com.gaboj1.tcr.block.entity.client.TigerSpawnerRenderer;
 import com.gaboj1.tcr.block.entity.client.YggdrasilBlockRenderer;
@@ -9,8 +9,8 @@ import com.gaboj1.tcr.block.renderer.BetterStructureBlockRenderer;
 import com.gaboj1.tcr.block.renderer.PortalBedRenderer;
 import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.effect.TCREffects;
-import com.gaboj1.tcr.entity.TCRModEntities;
-import com.gaboj1.tcr.entity.TCRModVillagers;
+import com.gaboj1.tcr.entity.TCREntities;
+import com.gaboj1.tcr.entity.TCRVillagers;
 import com.gaboj1.tcr.entity.client.IceThornRenderer;
 import com.gaboj1.tcr.entity.client.TCRFakePlayerRenderer;
 import com.gaboj1.tcr.entity.client.big_hammer.BigHammerRenderer;
@@ -30,7 +30,7 @@ import com.gaboj1.tcr.entity.client.biome1.SmallTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.biome1.TreeGuardianRenderer;
 import com.gaboj1.tcr.entity.client.villager.TCRVillagerRenderer;
 import com.gaboj1.tcr.entity.custom.sword.SwordEntityRenderer;
-import com.gaboj1.tcr.item.TCRModItemTabs;
+import com.gaboj1.tcr.item.TCRItemTabs;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
@@ -86,13 +86,13 @@ public class TheCasketOfReveriesMod {
 
         TCRSounds.REGISTRY.register(bus);
         TCRItems.REGISTRY.register(bus);
-        TCRModBlocks.REGISTRY.register(bus);
-        TCRModBlockEntities.REGISTRY.register(bus);
-        TCRModEntities.REGISTRY.register(bus);
-        TCRModItemTabs.REGISTRY.register(bus);
+        TCRBlocks.REGISTRY.register(bus);
+        TCRBlockEntities.REGISTRY.register(bus);
+        TCREntities.REGISTRY.register(bus);
+        TCRItemTabs.REGISTRY.register(bus);
         TCREffects.REGISTRY.register(bus);
         TCRStructurePlacementTypes.STRUCTURE_PLACEMENT_TYPES.register(bus);
-        TCRModVillagers.register(bus);
+        TCRVillagers.register(bus);
         bus.addListener(this::commonSetup);
         bus.addListener(this::registerExtraStuff);
 
@@ -107,8 +107,8 @@ public class TheCasketOfReveriesMod {
     private void commonSetup(final FMLCommonSetupEvent event){
         TCRPacketHandler.register();
         event.enqueueWork(() -> {
-            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.getId(), TCRModBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER);
-            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(TCRModBlocks.CATNIP.getId(), TCRModBlocks.POTTED_CATNIP);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.getId(), TCRBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(TCRBlocks.CATNIP.getId(), TCRBlocks.POTTED_CATNIP);
         });
         try{
             File dir = FMLPaths.CONFIGDIR.get().resolve(TheCasketOfReveriesMod.MOD_ID).toFile();
@@ -157,64 +157,64 @@ public class TheCasketOfReveriesMod {
         public static void onClientSetup(FMLClientSetupEvent event){
 
 
-            EntityRenderers.register(TCRModEntities.SWORD.get(), SwordEntityRenderer::new);
-            EntityRenderers.register(TCRModEntities.RAIN_SCREEN_SWORD.get(), SwordEntityRenderer::new);
-            EntityRenderers.register(TCRModEntities.RAIN_CUTTER_SWORD.get(), SwordEntityRenderer::new);
-            EntityRenderers.register(TCRModEntities.MAGIC_PROJECTILE.get(), LlamaSpitRenderer::new);
+            EntityRenderers.register(TCREntities.SWORD.get(), SwordEntityRenderer::new);
+            EntityRenderers.register(TCREntities.RAIN_SCREEN_SWORD.get(), SwordEntityRenderer::new);
+            EntityRenderers.register(TCREntities.RAIN_CUTTER_SWORD.get(), SwordEntityRenderer::new);
+            EntityRenderers.register(TCREntities.MAGIC_PROJECTILE.get(), LlamaSpitRenderer::new);
 
-            EntityRenderers.register(TCRModEntities.MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterRenderer::new);
-            EntityRenderers.register(TCRModEntities.TREE_GUARDIAN.get(), TreeGuardianRenderer::new);
-            EntityRenderers.register(TCRModEntities.SMALL_TREE_MONSTER.get(), SmallTreeMonsterRenderer::new);
-            EntityRenderers.register(TCRModEntities.JELLY_CAT.get(), JellyCatRenderer::new);
-            EntityRenderers.register(TCRModEntities.SQUIRREL.get(), SquirrelRenderer::new);
-            EntityRenderers.register(TCRModEntities.CRAB.get(), CrabRenderer::new);
+            EntityRenderers.register(TCREntities.MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterRenderer::new);
+            EntityRenderers.register(TCREntities.TREE_GUARDIAN.get(), TreeGuardianRenderer::new);
+            EntityRenderers.register(TCREntities.SMALL_TREE_MONSTER.get(), SmallTreeMonsterRenderer::new);
+            EntityRenderers.register(TCREntities.JELLY_CAT.get(), JellyCatRenderer::new);
+            EntityRenderers.register(TCREntities.SQUIRREL.get(), SquirrelRenderer::new);
+            EntityRenderers.register(TCREntities.CRAB.get(), CrabRenderer::new);
 
-            EntityRenderers.register(TCRModEntities.P1NERO.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.FAKE_PLAYER.get(), TCRFakePlayerRenderer::new);
+            EntityRenderers.register(TCREntities.P1NERO.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.FAKE_PLAYER.get(), TCRFakePlayerRenderer::new);
 
-            EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.VILLAGER2.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.VILLAGER2_TALKABLE.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.VILLAGER2_STATIONARY.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.MIAO_YIN.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.SHANG_REN.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.RECEPTIONIST.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.WANDERER.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.TRIAL_MASTER.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.CANG_LAN.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.ZHEN_YU.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.DUAN_SHAN.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.CUI_HUA.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.YUN_YI.get(), TCRVillagerRenderer::new);
-            EntityRenderers.register(TCRModEntities.YAN_XIN.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.PASTORAL_PLAIN_VILLAGER.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.VILLAGER2.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.VILLAGER2_TALKABLE.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.VILLAGER2_STATIONARY.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.MIAO_YIN.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.SHANG_REN.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.RECEPTIONIST.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.WANDERER.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.TRIAL_MASTER.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.CANG_LAN.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.ZHEN_YU.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.DUAN_SHAN.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.CUI_HUA.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.YUN_YI.get(), TCRVillagerRenderer::new);
+            EntityRenderers.register(TCREntities.YAN_XIN.get(), TCRVillagerRenderer::new);
 
-            EntityRenderers.register(TCRModEntities.YGGDRASIL.get(), YggdrasilRenderer::new);
-            EntityRenderers.register(TCRModEntities.TREE_CLAW.get(), TreeClawRenderer::new);
+            EntityRenderers.register(TCREntities.YGGDRASIL.get(), YggdrasilRenderer::new);
+            EntityRenderers.register(TCREntities.TREE_CLAW.get(), TreeClawRenderer::new);
 
-            EntityRenderers.register(TCRModEntities.SPRITE.get(), SpriteRenderer::new);
-            EntityRenderers.register(TCRModEntities.BOXER.get(), BoxerRenderer::new);
-            EntityRenderers.register(TCRModEntities.BIG_HAMMER.get(), BigHammerRenderer::new);
-            EntityRenderers.register(TCRModEntities.SNOW_SWORDMAN.get(), SnowSwordmanRenderer::new);
-            EntityRenderers.register(TCRModEntities.SWORD_CONTROLLER.get(), SwordControllerRenderer::new);
-            EntityRenderers.register(TCRModEntities.SECOND_BOSS.get(), SecondBossRenderer::new);
+            EntityRenderers.register(TCREntities.SPRITE.get(), SpriteRenderer::new);
+            EntityRenderers.register(TCREntities.BOXER.get(), BoxerRenderer::new);
+            EntityRenderers.register(TCREntities.BIG_HAMMER.get(), BigHammerRenderer::new);
+            EntityRenderers.register(TCREntities.SNOW_SWORDMAN.get(), SnowSwordmanRenderer::new);
+            EntityRenderers.register(TCREntities.SWORD_CONTROLLER.get(), SwordControllerRenderer::new);
+            EntityRenderers.register(TCREntities.SECOND_BOSS.get(), SecondBossRenderer::new);
 
-            EntityRenderers.register(TCRModEntities.TIGER.get(), TigerRenderer::new);
+            EntityRenderers.register(TCREntities.TIGER.get(), TigerRenderer::new);
 
 
-            BlockEntityRenderers.register(TCRModBlockEntities.PORTAL_BED.get(), PortalBedRenderer::new);
+            BlockEntityRenderers.register(TCRBlockEntities.PORTAL_BED.get(), PortalBedRenderer::new);
         }
 
         @SubscribeEvent
         public static void onRendererSetup(EntityRenderersEvent.RegisterRenderers event){
-            event.registerBlockEntityRenderer(TCRModBlockEntities.BETTER_STRUCTURE_BLOCK_ENTITY.get(), BetterStructureBlockRenderer::new);
-            event.registerBlockEntityRenderer(TCRModBlockEntities.PORTAL_BLOCK_ENTITY.get(), PortalBlockRenderer::new);
-            event.registerEntityRenderer(TCRModEntities.DESERT_EAGLE_BULLET.get(), ThrownItemRenderer::new);
-            event.registerEntityRenderer(TCRModEntities.ICE_THORN_ENTITY.get(), IceThornRenderer::new);
-            event.registerBlockEntityRenderer(TCRModBlockEntities.YGGDRASIL_SPAWNER_BLOCK_ENTITY.get(), YggdrasilBlockRenderer::new);
-            event.registerBlockEntityRenderer(TCRModBlockEntities.TIGER_TRIAL_SPAWNER_BLOCK_ENTITY.get(), (context -> new TigerSpawnerRenderer()));
+            event.registerBlockEntityRenderer(TCRBlockEntities.BETTER_STRUCTURE_BLOCK_ENTITY.get(), BetterStructureBlockRenderer::new);
+            event.registerBlockEntityRenderer(TCRBlockEntities.PORTAL_BLOCK_ENTITY.get(), PortalBlockRenderer::new);
+            event.registerEntityRenderer(TCREntities.DESERT_EAGLE_BULLET.get(), ThrownItemRenderer::new);
+            event.registerEntityRenderer(TCREntities.ICE_THORN_ENTITY.get(), IceThornRenderer::new);
+            event.registerBlockEntityRenderer(TCRBlockEntities.YGGDRASIL_SPAWNER_BLOCK_ENTITY.get(), YggdrasilBlockRenderer::new);
+            event.registerBlockEntityRenderer(TCRBlockEntities.TIGER_TRIAL_SPAWNER_BLOCK_ENTITY.get(), (context -> new TigerSpawnerRenderer()));
         }
 
         @SubscribeEvent

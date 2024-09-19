@@ -47,7 +47,7 @@ import net.minecraft.world.entity.Entity;
 
 
 @Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class TCRModEntities {
+public class TCREntities {
 	public static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, TheCasketOfReveriesMod.MOD_ID);
 	public static final RegistryObject<EntityType<BulletEntity>> DESERT_EAGLE_BULLET = register("projectile_desert_eagle_bullet", EntityType.Builder.<BulletEntity>of(BulletEntity::new, MobCategory.MISC)
 			.setCustomClientFactory(BulletEntity::new).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.1f, 0.1f));
@@ -230,7 +230,7 @@ public class TCRModEntities {
 		event.put(BIG_HAMMER.get(),BigHammerEntity.setAttributes());
 		event.put(SNOW_SWORDMAN.get(),SnowSwordmanEntity.setAttributes());
 		event.put(SWORD_CONTROLLER.get(),SwordControllerEntity.setAttributes());
-		event.put(TCRModEntities.SECOND_BOSS.get(),SecondBossEntity.setAttributes());
+		event.put(TCREntities.SECOND_BOSS.get(),SecondBossEntity.setAttributes());
 	}
 
 	@SubscribeEvent
@@ -304,7 +304,7 @@ public class TCRModEntities {
 				SnowSwordmanEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(SWORD_CONTROLLER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				SwordControllerEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
-		event.register(TCRModEntities.SECOND_BOSS.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+		event.register(TCREntities.SECOND_BOSS.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				SecondBossEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 
 		event.register(TREE_CLAW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,

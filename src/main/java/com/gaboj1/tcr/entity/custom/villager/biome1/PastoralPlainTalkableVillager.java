@@ -1,10 +1,10 @@
 package com.gaboj1.tcr.entity.custom.villager.biome1;
 
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.villager.TCRTalkableVillager;
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
-import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.ItemUtil;
@@ -30,7 +30,7 @@ import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
 public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
 
-    private final EntityType<?> entityType = TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get();
+    private final EntityType<?> entityType = TCREntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get();
 
     public PastoralPlainTalkableVillager(EntityType<? extends PastoralPlainTalkableVillager> entityType, Level level) {
         super(entityType, level,1);
@@ -416,7 +416,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
      */
     @Override
     public @NotNull Component getDisplayName() {
-        return Component.translatable(TCRModEntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get().getDescriptionId() + getSkinID());
+        return Component.translatable(TCREntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get().getDescriptionId() + getSkinID());
     }
 
     @Override

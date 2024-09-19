@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.worldgen;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.block.TCRModBlocks;
+import com.gaboj1.tcr.block.TCRBlocks;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
@@ -36,7 +36,7 @@ public class TCRPlacedFeatures {
         register(context, DENSE_FOREST_SPIRIT_TREE_PLACED_KEY, configuredFeatures.getOrThrow(TCRConfiguredFeatures.DENSE_FOREST_SPIRIT_TREE_KEY),
                 // first:how many we're placing second:the chance getting extra(the third param)
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(50, 0.1f, 1),//TODO: change to suitable value.
-                        TCRModBlocks.DENSE_FOREST_SPIRIT_SAPLING.get()));
+                        TCRBlocks.DENSE_FOREST_SPIRIT_SAPLING.get()));
 
         register(context, DENSE_FOREST_SPIRIT_FLOWER_PLACED_KEY, configuredFeatures.getOrThrow(TCRConfiguredFeatures.DENSE_FOREST_SPIRIT_FLOWER_KEY),
                 CountPlacement.of(3), RarityFilter.onAverageOnceEvery(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
