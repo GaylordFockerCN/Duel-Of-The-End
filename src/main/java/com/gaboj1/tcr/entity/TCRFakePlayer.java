@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.entity;
 
 import com.gaboj1.tcr.block.entity.PortalBedEntity;
+import com.gaboj1.tcr.capability.TCRCapabilityProvider;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
@@ -23,6 +24,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -34,7 +36,6 @@ public class TCRFakePlayer extends LivingEntity{
     public static final EntityDataAccessor<Optional<UUID>> REAL_PLAYER_UUID = SynchedEntityData.defineId(TCRFakePlayer.class, EntityDataSerializers.OPTIONAL_UUID);
     public static final EntityDataAccessor<Boolean> IS_SLIM = SynchedEntityData.defineId(TCRFakePlayer.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<BlockPos> BED_POS = SynchedEntityData.defineId(TCRFakePlayer.class, EntityDataSerializers.BLOCK_POS);
-    public static final String KEY = "TCRFakePlayerID";
 
     public TCRFakePlayer(EntityType<? extends LivingEntity> entityType, Level level) {
         super(entityType, level);
@@ -121,11 +122,19 @@ public class TCRFakePlayer extends LivingEntity{
         } else {
             PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new SyncFakePlayerPacket(player.getId(), this.getId()), ((ServerPlayer) player));
         }
-        player.getPersistentData().putInt(KEY, this.getId());
+        player.getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {
+            tcrPlayer.setFakePlayerUuid(this.getUUID());
+        }));
     }
 
+    @Nullable
     public Player getRealPlayer(){
-        return level().getServer().getLevel(TCRDimension.P_SKY_ISLAND_LEVEL_KEY).getPlayerByUUID(getRealPlayerUuid());
+        try {
+            return Objects.requireNonNull(Objects.requireNonNull(level().getServer()).getLevel(TCRDimension.P_SKY_ISLAND_LEVEL_KEY)).getPlayerByUUID(getRealPlayerUuid());
+        } catch (NullPointerException e){
+            discard();
+        }
+        return null;
     }
 
     public UUID getRealPlayerUuid() {

@@ -1,9 +1,11 @@
 package com.gaboj1.tcr.util;
 
+import com.gaboj1.tcr.capability.TCRCapabilityProvider;
+import com.gaboj1.tcr.capability.TCRPlayer;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.PersistentBoolDataSyncPacket;
-import com.gaboj1.tcr.network.packet.clientbound.PersistentIntDataSyncPacket;
+import com.gaboj1.tcr.network.packet.clientbound.PersistentDoubleDataSyncPacket;
 import com.gaboj1.tcr.network.packet.clientbound.PersistentStringDataSyncPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -14,6 +16,8 @@ import net.minecraft.world.entity.player.Player;
 /**
  * 用于单一玩家数据，而不是全体数据，SaveUtil用于全体数据{@link SaveUtil}
  *
+ * 别骂了，后来才知道可以用Capability，不过我发现这个就相当于是封装过的Capability哈哈
+ *
  * 玩家的PersistentData管理
  * 本质上只是管理key。由于NBT标签不存在null，所以我加入了一个lock变量，如果还没lock就表示不确定性。比如isWhite，在玩家做出选择之前你不能确定是哪个阵营。
  * 虽然使用的时候麻烦了一点，但是多了个lock相当于把bool拆成四个量来用。
@@ -21,24 +25,27 @@ import net.minecraft.world.entity.player.Player;
  */
 public class DataManager {
 
-    public static void putData(Player player, String key, int value){
-        player.getPersistentData().putInt(key, value);
+    public static void putData(Player player, String key, double value){
+        getTCRPlayer(player).putDouble(key, value);
     }
     public static void putData(Player player, String key, String value){
-        player.getPersistentData().putString(key, value);
+        getTCRPlayer(player).putString(key, value);
     }
     public static void putData(Player player, String key, boolean value){
-        player.getPersistentData().putBoolean(key, value);
+        getTCRPlayer(player).putBoolean(key, value);
     }
 
     public static boolean getBool(Player player, String key){
-        return player.getPersistentData().getBoolean(key);
+        return getTCRPlayer(player).getBoolean(key);
     }
-    public static int getInt(Player player, String key){
-        return player.getPersistentData().getInt(key);
+    public static double getDouble(Player player, String key){
+        return getTCRPlayer(player).getDouble(key);
     }
     public static String getString(Player player, String key){
-        return player.getPersistentData().getString(key);
+        return getTCRPlayer(player).getString(key);
+    }
+    public static TCRPlayer getTCRPlayer(Player player){
+        return player.getCapability(TCRCapabilityProvider.TCR_PLAYER).orElse(new TCRPlayer());
     }
 
     //工匠送的火枪
@@ -78,12 +85,12 @@ public class DataManager {
         }
 
         public void init(Player player){
-            isLocked = player.getPersistentData().getBoolean(key+"isLocked");
+            isLocked = getTCRPlayer(player).getBoolean(key+"isLocked");
 
         }
 
         public boolean isLocked(Player player) {
-            return player.getPersistentData().getBoolean(key+"isLocked");
+            return getTCRPlayer(player).getBoolean(key+"isLocked");
         }
 
         public boolean isLocked(CompoundTag playerData) {
@@ -91,12 +98,12 @@ public class DataManager {
         }
 
         public void lock(Player player) {
-            player.getPersistentData().putBoolean(key+"isLocked",true);
+            getTCRPlayer(player).putBoolean(key+"isLocked",true);
             isLocked = true;
         }
 
         public void unLock(Player player) {
-            player.getPersistentData().putBoolean(key+"isLocked",false);
+            getTCRPlayer(player).putBoolean(key+"isLocked",false);
             LocalPlayer localPlayer = Minecraft.getInstance().player;
             isLocked = false;
         }
@@ -120,7 +127,7 @@ public class DataManager {
 
         public void putString(Player player, String value){
             if(!isLocked(player)){
-                player.getPersistentData().putString(key, value);
+                getTCRPlayer(player).putString(key, value);
                 if(player instanceof ServerPlayer serverPlayer){
                     PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PersistentStringDataSyncPacket(key, isLocked,value),serverPlayer);
                 }
@@ -128,7 +135,7 @@ public class DataManager {
         }
 
         public String getString(Player player){
-           return player.getPersistentData().getString(key);
+           return getTCRPlayer(player).getString(key);
         }
 
         public String getString(CompoundTag playerData){
@@ -136,49 +143,48 @@ public class DataManager {
         }
 
     }
-    public static class IntData extends Data {
+    public static class DoubleData extends Data {
 
-        private int defaultInt = 0;
+        private double defaultValue = 0;
 
-        public IntData(String key, int defaultInt, int id) {
+        public DoubleData(String key, double defaultValue, int id) {
             super(key,id);
-            this.defaultInt = defaultInt;
+            this.defaultValue = defaultValue;
         }
 
         public void init(Player player){
-            isLocked = player.getPersistentData().getBoolean(key+"isLocked");
-            putInt(player,defaultInt);
+            isLocked = getTCRPlayer(player).getBoolean(key+"isLocked");
+            putInt(player, defaultValue);
         }
 
-        public void putInt(Player player, int value){
+        public void putInt(Player player, double value){
             if(!isLocked(player)){
-                player.getPersistentData().putInt(key, value);
+                getTCRPlayer(player).putDouble(key, value);
                 if(player instanceof ServerPlayer serverPlayer){
-                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PersistentIntDataSyncPacket(key, isLocked,value),serverPlayer);
+                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PersistentDoubleDataSyncPacket(key, isLocked, value),serverPlayer);
                 }
             }
         }
 
-        public int getInt(Player player){
-            return player.getPersistentData().getInt(key);
+        public double getInt(Player player){
+            return getTCRPlayer(player).getDouble(key);
         }
 
-        public int getInt(CompoundTag playerData){
-            return playerData.getInt(key);
+        public double getInt(CompoundTag playerData){
+            return playerData.getDouble(key);
         }
 
     }
     public static class BoolData extends Data {
 
-        boolean defaultBool = false;
-        final int maxNum = 10;
+        boolean defaultBool;
         public BoolData(String key, boolean defaultBool,int id) {
             super(key, id);
             this.defaultBool = defaultBool;
         }
 
         public void init(Player player){
-            isLocked = player.getPersistentData().getBoolean(key+"isLocked");
+            isLocked = getTCRPlayer(player).getBoolean(key+"isLocked");
             putBool(player,defaultBool);
         }
 
@@ -186,7 +192,7 @@ public class DataManager {
             if(isLocked(player))
                 return;
 
-            player.getPersistentData().putBoolean(key, value);
+            getTCRPlayer(player).putBoolean(key, value);
             if(player instanceof ServerPlayer serverPlayer){
                 PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PersistentBoolDataSyncPacket(key, isLocked,value),serverPlayer);
             }
@@ -200,30 +206,10 @@ public class DataManager {
         }
 
         public boolean getBool(Player player){
-
-//            CompoundTag tag = player.getPersistentData();
-//            if(!tag.contains("bool")){
-//                ListTag boolTagsList = new ListTag();
-//                for (int i = 0; i < maxNum; i++) {
-//                    boolTagsList.add(new CompoundTag());
-//                }
-//                tag.put("bool", boolTagsList);
-//                return false;
-//            }
-//
-//            System.out.println(key+"local"+player.isLocalPlayer()+player.getPersistentData().getList("bool",maxNum).getCompound(x).getBoolean(key));//操你妈傻逼为啥这行输出不了也不给我报个错 后面发现原来是因为ServerPlayer不能在客户端用。。
-//
-//            System.out.println(key+player.getPersistentData().getBoolean(key));
-//            System.out.println("isLocked"+isLocked);
-//            ListTag bool = tag.getList("bool", maxNum);
-//            return bool.getCompound(x).getBoolean(key);
-
-//            System.out.println("isLocked"+isLocked);
-            return player.getPersistentData().getBoolean(key);
+            return getTCRPlayer(player).getBoolean(key);
         }
 
         public boolean getBool(CompoundTag playerData){
-//            System.out.println(playerData);
             return playerData.getBoolean(key);
         }
 

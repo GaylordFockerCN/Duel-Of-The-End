@@ -25,6 +25,10 @@ public abstract class TCRLangProvider extends LanguageProvider {
         this.add(key.getName(), name);
     }
 
+    public void addInfo(String key, String content){
+        this.add("info.the_casket_of_reveries." + key, content);
+    }
+
     public void addTask(String key, String task, String content){
         this.add("task."+TheCasketOfReveriesMod.MOD_ID+".", task);
         this.add("task_content."+TheCasketOfReveriesMod.MOD_ID+".", content);

@@ -21,16 +21,16 @@ public class TCRCapabilityProvider implements ICapabilityProvider, INBTSerializa
 
     public static Capability<TCRPlayer> TCR_PLAYER = CapabilityManager.get(new CapabilityToken<>() {});
 
-    private TCRPlayer TCRPlayer = null;
+    private TCRPlayer tcrPlayer = null;
     
-    private final LazyOptional<TCRPlayer> optional = LazyOptional.of(this::createSSPlayer);
+    private final LazyOptional<TCRPlayer> optional = LazyOptional.of(this::createTCRPlayer);
 
-    private TCRPlayer createSSPlayer() {
-        if(this.TCRPlayer == null){
-            this.TCRPlayer = new TCRPlayer();
+    private TCRPlayer createTCRPlayer() {
+        if(this.tcrPlayer == null){
+            this.tcrPlayer = new TCRPlayer();
         }
 
-        return this.TCRPlayer;
+        return this.tcrPlayer;
     }
 
     @Override
@@ -45,13 +45,13 @@ public class TCRCapabilityProvider implements ICapabilityProvider, INBTSerializa
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
-        createSSPlayer().saveNBTData(tag);
+        createTCRPlayer().saveNBTData(tag);
         return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundTag tag) {
-        createSSPlayer().loadNBTData(tag);
+        createTCRPlayer().loadNBTData(tag);
     }
 
     @Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID)

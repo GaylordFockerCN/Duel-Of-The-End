@@ -20,7 +20,8 @@ import java.util.Optional;
 @Mixin(CreateWorldScreen.class)
 public class CreateWorldScreenMixin {
 
-    @Shadow @Final private WorldCreationUiState uiState;
+    @Shadow @Final
+    WorldCreationUiState uiState;
 
     @Inject(method = "createNewWorldDirectory()Ljava/util/Optional;", at = @At("HEAD"))
     private void injected(CallbackInfoReturnable<Optional<LevelStorageSource.LevelStorageAccess>> cir){
