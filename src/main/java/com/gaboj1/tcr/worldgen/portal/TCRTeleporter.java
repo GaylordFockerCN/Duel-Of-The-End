@@ -51,10 +51,6 @@ public class TCRTeleporter implements ITeleporter {
         thisPos = thisPos.offset(5,70,0);//偏移一下不然会诞生在房子里（
         if(entity instanceof ServerPlayer player){
             player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 320, 1, false, true));
-            if(DataManager.isFirstEnter.getBool(player)){
-                player.displayClientMessage(Component.translatable("info.the_casket_of_reveries.first_enter"), true);
-                DataManager.isFirstEnter.putBool(player, false);
-            }
         }
         pos = new PortalInfo(thisPos.getCenter(), Vec3.ZERO, entity.getYRot(), entity.getXRot());
         //NOTE不要相信IDE，这里判空是必须的！

@@ -33,7 +33,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addKeyMapping(KeyMappings.RELOAD, "火枪换弹");
         this.addKeyMapping(KeyMappings.OPEN_PROGRESS, "查看进度");
 
-        this.add("info.the_casket_of_reveries.first_enter", "这是什么地方？找这里的长者问问看怎么回事吧？");
+        this.add("info.the_casket_of_reveries.first_enter", "这是什么地方？四处找人问问看怎么回事吧？");
         this.add("info.the_casket_of_reveries.enter_forbidden_biome","前面的区域，以后再来探索吧~");
         this.add("info.the_casket_of_reveries.teleport_lock","该区域尚未解锁");
         this.add("info.the_casket_of_reveries.teleport_unlock","成功激活此锚点！");
@@ -47,6 +47,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add("info.the_casket_of_reveries.add_health_success","成功提升血量上限！");
         this.add("info.the_casket_of_reveries.add_health_failed","提升血量上限失败！");
         this.add("info.the_casket_of_reveries.resurrection","成功还魂！！！");
+        this.addInfo("before_enter", "我必须带着下界之星，避免我无法从梦中醒来。");
 
         this.add("the_casket_of_reveries.button.boss1","泰兰妮尔之心");
         this.add("the_casket_of_reveries.button.boss2","九霄");

@@ -1,18 +1,21 @@
 package com.gaboj1.tcr.block.custom;
 
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.entity.PortalBedEntity;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
-import com.gaboj1.tcr.entity.TCRFakePlayer;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.PortalBlockScreenPacket;
+import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
@@ -29,8 +32,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.FakePlayerFactory;
 import org.jetbrains.annotations.NotNull;
 
 public class PortalBed extends BedBlock {
@@ -40,6 +41,10 @@ public class PortalBed extends BedBlock {
 
     @Override
     public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
+        if(!pPlayer.getItemInHand(pHand).is(Items.NETHER_STAR) && !pPlayer.isCreative()){
+            pPlayer.displayClientMessage(TheCasketOfReveriesMod.getInfo("before_enter"), true);
+            return InteractionResult.CONSUME;
+        }
         //统一Pos到床头
         if (pState.getValue(PART) != BedPart.HEAD) {
             pPos = pPos.relative(pState.getValue(FACING));
@@ -60,6 +65,8 @@ public class PortalBed extends BedBlock {
                 ServerLevel portalDimension = minecraftserver.getLevel(destinationResourcekey);
                 if (portalDimension != null && !pPlayer.isPassenger()) {
                     if(destinationResourcekey == TCRDimension.P_SKY_ISLAND_LEVEL_KEY) {
+                        if(DataManager.isFirstEnter.getBool(pPlayer)){
+                        }
                         //发包选择位置
                         CompoundTag data = new CompoundTag();
                         data.putBoolean("isVillage", true);

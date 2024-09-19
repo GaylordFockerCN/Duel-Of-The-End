@@ -1,9 +1,11 @@
 package com.gaboj1.tcr.network.packet.serverbound;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.capability.TCRCapabilityProvider;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.TCRFakePlayer;
 import com.gaboj1.tcr.network.packet.BasePacket;
+import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
@@ -78,12 +80,19 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
                     playerEntity.changeDimension(portalDimension, new TCRTeleporter(new BlockPos(destination.x, 170, destination.y), true));
                     TCRAdvancementData.getAdvancement(TheCasketOfReveriesMod.MOD_ID, serverPlayer);
                     TCRAdvancementData.getAdvancement("enter_realm_of_the_dream", serverPlayer);
+                    if(DataManager.isFirstEnter.getBool(serverPlayer)){
+                        serverPlayer.displayClientMessage(Component.translatable("info.the_casket_of_reveries.first_enter"), false);
+                        DataManager.isFirstEnter.putBool(serverPlayer, false);
+                    }
+                    //记录进入点
+                    serverPlayer.getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {
+                        tcrPlayer.setBedPointBeforeEnter(bedPos);
+                    }));
                     //召唤假人
                     TCRFakePlayer fakePlayer = new TCRFakePlayer(serverPlayer, currentLevel, bedPos);
                     fakePlayer.setPos(bedPos.getCenter());
                     currentLevel.addFreshEntity(fakePlayer);
                     fakePlayer.setSleepingPos(bedPos);
-                    serverPlayer.getPersistentData().putInt(TCRFakePlayer.KEY, fakePlayer.getId());
                 }
             }
         } else {

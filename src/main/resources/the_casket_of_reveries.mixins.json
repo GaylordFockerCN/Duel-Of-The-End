@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "plugin": "com.gaboj1.tcr.mixin.ObfuscateMixinPlugin",
   "mixins": [
+    "ItemMixin",
     "ServerGamePacketListenerImplMixin",
     "WorldOptionsMixin"
   ],

@@ -26,7 +26,7 @@ public class TCRPacketHandler {
         register(RenderWorldLevelPacket.class, RenderWorldLevelPacket::decode);
         register(PortalBlockScreenPacket.class, PortalBlockScreenPacket::decode);
         register(PersistentBoolDataSyncPacket.class, PersistentBoolDataSyncPacket::decode);
-        register(PersistentIntDataSyncPacket.class, PersistentIntDataSyncPacket::decode);
+        register(PersistentDoubleDataSyncPacket.class, PersistentDoubleDataSyncPacket::decode);
         register(PersistentStringDataSyncPacket.class, PersistentStringDataSyncPacket::decode);
         register(AddVillagerParticlePacket.class, AddVillagerParticlePacket::decode);
         register(SyncSwordOwnerPacket.class, SyncSwordOwnerPacket::decode);

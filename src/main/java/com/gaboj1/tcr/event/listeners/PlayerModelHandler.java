@@ -52,11 +52,6 @@ public class PlayerModelHandler {
                 modelPart.z = modelPart.x;
             };
             handleModelPart(setZtoX, model.leftArm, model.rightArm, model.leftLeg, model.rightLeg);
-
-//            Consumer<ModelPart> printXYZ = (modelPart)->{
-//                System.out.println(modelPart.x+" "+modelPart.y+" "+modelPart.z);
-//            };
-//            handleModelPart(printXYZ, model.rightArm);
         }
 
     }

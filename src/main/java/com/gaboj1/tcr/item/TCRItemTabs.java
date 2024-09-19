@@ -49,6 +49,11 @@ public class TCRItemTabs {
 				tabData.accept(TCRBlocks.BOSS2_ROOM_2.get());
 				tabData.accept(TCRBlocks.BOSS2_ROOM_3.get());
 				tabData.accept(TCRBlocks.BOSS2_ROOM_4.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_5.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_6.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_7.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_8.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_9.get());
 
 			}).build());
 

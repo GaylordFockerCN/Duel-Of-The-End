@@ -7,19 +7,19 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 
-public record PersistentIntDataSyncPacket(String key, boolean isLocked, int value) implements BasePacket {
+public record PersistentDoubleDataSyncPacket(String key, boolean isLocked, double value) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeComponent(Component.literal(key));
         buf.writeBoolean(isLocked);
-        buf.writeInt(value);
+        buf.writeDouble(value);
     }
 
-    public static PersistentIntDataSyncPacket decode(FriendlyByteBuf buf) {
+    public static PersistentDoubleDataSyncPacket decode(FriendlyByteBuf buf) {
         String key = buf.readComponent().getString();
         boolean isLocked =  buf.readBoolean();
-        int value = buf.readInt();
-        return new PersistentIntDataSyncPacket(key, isLocked, value);
+        double value = buf.readDouble();
+        return new PersistentDoubleDataSyncPacket(key, isLocked, value);
     }
 
     @Override
