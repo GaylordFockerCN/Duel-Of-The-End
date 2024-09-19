@@ -1,11 +1,7 @@
 package com.gaboj1.tcr.mixin;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.capability.TCRCapabilityProvider;
-import com.gaboj1.tcr.entity.TCRFakePlayer;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -21,7 +17,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.HashSet;
-import java.util.Optional;
 
 @Mixin(Item.class)
 public class ItemMixin{
