@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.item.custom;
 
 import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.item.custom.boss_loot.MagicWeapon;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -52,6 +52,6 @@ public class BasicResin extends Item {
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
-        pTooltipComponents.add(Component.translatable(TCRModItems.BASIC_RESIN.get().getDescriptionId()+".usage",scale*TCRConfig.REPAIR_VALUE.get()));
+        pTooltipComponents.add(Component.translatable(TCRItems.BASIC_RESIN.get().getDescriptionId()+".usage",scale*TCRConfig.REPAIR_VALUE.get()));
     }
 }

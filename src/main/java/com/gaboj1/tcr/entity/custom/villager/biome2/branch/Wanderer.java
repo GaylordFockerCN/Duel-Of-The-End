@@ -2,7 +2,7 @@ package com.gaboj1.tcr.entity.custom.villager.biome2.branch;
 
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.entity.TCRModEntities;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
@@ -46,7 +46,7 @@ public class Wanderer extends YueShiLineNpc {
     public void handleNpcInteraction(Player player, byte interactionID) {
         player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, 2, false), true);
         this.discard();
-        ItemEntity item = new ItemEntity(level(), getX(), getY(), getZ(), TCRModItems.PI_PA.get().getDefaultInstance());
+        ItemEntity item = new ItemEntity(level(), getX(), getY(), getZ(), TCRItems.PI_PA.get().getDefaultInstance());
         level().addFreshEntity(item);
         SaveUtil.biome2.isBranchEnd = true;
         setConversingPlayer(null);

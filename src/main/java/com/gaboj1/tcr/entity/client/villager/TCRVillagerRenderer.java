@@ -4,7 +4,7 @@ import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.entity.custom.villager.biome2.branch.MiaoYin;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -20,8 +20,8 @@ import javax.annotation.Nullable;
 public class TCRVillagerRenderer extends DynamicGeoEntityRenderer<TCRVillager> {
     private static final String LEFT_HAND = "LeftArm";
     private static final String RIGHT_HAND = "RightArm";
-    protected ItemStack elderMainHandItem = TCRModItems.ELDER_STAFF.get().getDefaultInstance();
-    protected ItemStack miaoYinMainHandItem = TCRModItems.PI_PA.get().getDefaultInstance();
+    protected ItemStack elderMainHandItem = TCRItems.ELDER_STAFF.get().getDefaultInstance();
+    protected ItemStack miaoYinMainHandItem = TCRItems.PI_PA.get().getDefaultInstance();
     protected ItemStack offhandItem;
     public TCRVillagerRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new TCRVillagerModel());

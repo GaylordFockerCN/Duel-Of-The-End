@@ -5,7 +5,7 @@ import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
 import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.entity.custom.villager.biome2.TalkableVillager2;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
@@ -131,7 +131,7 @@ public class TrialMaster extends YueShiLineNpc {
             case -1:
                 if(!DataManager.wanMingPearlGot.getBool(player)) {
                     DataManager.wanMingPearlGot.putBool(player, true);
-                    player.addItem(TCRModItems.WAN_MING_PEARL.get().getDefaultInstance());
+                    player.addItem(TCRItems.WAN_MING_PEARL.get().getDefaultInstance());
                 }
                 return;
             case 1:
@@ -142,7 +142,7 @@ public class TrialMaster extends YueShiLineNpc {
                 break;
             case 2:
                 talk(player, dBuilder.buildDialogueAnswer(15));
-                player.addItem(new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 16));
+                player.addItem(new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 16));
                 SaveUtil.biome2.trialTalked1 = true;
                 break;
             case 3:

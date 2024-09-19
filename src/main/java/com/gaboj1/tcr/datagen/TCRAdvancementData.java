@@ -2,7 +2,7 @@ package com.gaboj1.tcr.datagen;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.TCRModBlocks;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.datagen.loot.TCRLoot;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import net.minecraft.advancements.Advancement;
@@ -69,7 +69,7 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
             String name = "wow";
             Advancement wow = Advancement.Builder.advancement()
                     .parent(enterRealmOfTheDream)
-                    .display(TCRModItems.SMALL_TREE_MONSTER_SPAWN_EGG.get(),
+                    .display(TCRItems.SMALL_TREE_MONSTER_SPAWN_EGG.get(),
                             Component.translatable(pre+name),
                             Component.translatable(pre+name+".desc"),
                             null,
@@ -91,7 +91,7 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
             name = "melee_mage";
             Advancement melee_mage = Advancement.Builder.advancement()
                     .parent(enterRealmOfTheDream)//TODO 换成打过树妖后
-                    .display(TCRModItems.TREE_SPIRIT_WAND.get(),
+                    .display(TCRItems.TREE_SPIRIT_WAND.get(),
                             Component.translatable(pre+name),
                             Component.translatable(pre+name+".desc"),
                             null,
@@ -102,7 +102,7 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
             name = "mass_production";
             Advancement mass_production = Advancement.Builder.advancement()
                     .parent(enterRealmOfTheDream)//TODO 换成打过树妖后
-                    .display(TCRModItems.COPY_RESIN.get(),
+                    .display(TCRItems.COPY_RESIN.get(),
                             Component.translatable(pre+name),
                             Component.translatable(pre+name+".desc"),
                             null,
@@ -121,12 +121,12 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
                     .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
 
-            Advancement spend_money_like_water = registerAdvancement(enterRealmOfTheDream, "spend_money_like_water", FrameType.GOAL, TCRModItems.ORICHALCUM.get());
+            Advancement spend_money_like_water = registerAdvancement(enterRealmOfTheDream, "spend_money_like_water", FrameType.GOAL, TCRItems.ORICHALCUM.get());
 
             name = "die_for_summon";
             Advancement die_for_summon = Advancement.Builder.advancement()
                     .parent(enterRealmOfTheDream)//TODO 换成打过树妖后
-                    .display(TCRModItems.TREE_SPIRIT_WAND.get(),
+                    .display(TCRItems.TREE_SPIRIT_WAND.get(),
                             Component.translatable(pre+name),
                             Component.translatable(pre+name+".desc"),
                             null,
@@ -137,7 +137,7 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
             name = "day_dreamer";
             Advancement day_dreamer = Advancement.Builder.advancement()
                     .parent(enterRealmOfTheDream)
-                    .display(TCRModItems.GUN_COMMON.get(),
+                    .display(TCRItems.GUN_COMMON.get(),
                             Component.translatable(pre+name),
                             Component.translatable(pre+name+".desc"),
                             null,
@@ -148,7 +148,7 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
             name = "can_double_hold";
             Advancement can_double_hold = Advancement.Builder.advancement()
                     .parent(day_dreamer)
-                    .display(TCRModItems.GUN_COMMON.get(),
+                    .display(TCRItems.GUN_COMMON.get(),
                             Component.translatable(pre+name),
                             Component.translatable(pre+name+".desc"),
                             null,
@@ -159,7 +159,7 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
             name = "cats_friend";
             Advancement cats_friend = Advancement.Builder.advancement()
                     .parent(enterRealmOfTheDream)
-                    .display(TCRModItems.JELLY_CAT_SPAWN_EGG.get(),
+                    .display(TCRItems.JELLY_CAT_SPAWN_EGG.get(),
                             Component.translatable(pre+name),
                             Component.translatable(pre+name+".desc"),
                             null,

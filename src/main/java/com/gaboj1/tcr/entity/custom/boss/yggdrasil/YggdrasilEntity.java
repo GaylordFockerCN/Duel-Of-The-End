@@ -1,8 +1,6 @@
 package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.entity.NpcDialogue;
-import com.gaboj1.tcr.entity.ShadowableEntity;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
 import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
@@ -10,9 +8,9 @@ import com.gaboj1.tcr.entity.custom.biome1.SpriteEntity;
 import com.gaboj1.tcr.entity.custom.biome1.TreeGuardianEntity;
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.entity.TCRModEntities;
-import com.gaboj1.tcr.client.TCRModSounds;
+import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
@@ -26,15 +24,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.BossEvent;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -328,7 +323,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     }
 
     public SoundEvent getFightMusic(){
-        return TCRModSounds.BIOME1BOSS_FIGHT.get();
+        return TCRSounds.BIOME1BOSS_FIGHT.get();
     }
 
     /**
@@ -342,13 +337,13 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return TCRModSounds.YGGDRASIL_AMBIENT_SOUND.get();
+        return TCRSounds.YGGDRASIL_AMBIENT_SOUND.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(@NotNull DamageSource pDamageSource) {
-        return TCRModSounds.YGGDRASIL_CRY.get();
+        return TCRSounds.YGGDRASIL_CRY.get();
     }
 
     /**
@@ -459,7 +454,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                 getEntityData().set(STATE, 1);
                 getEntityData().set(IS_FIGHTING, true);
                 for(ItemStack itemStack : player.getInventory().items){
-                    if(itemStack.is(TCRModItems.WITHERING_TOUCH.get())){
+                    if(itemStack.is(TCRItems.WITHERING_TOUCH.get())){
                         modifyAttribute(itemStack.getCount());
                     }
                 }
@@ -485,10 +480,10 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                 SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskBackToBoss);
                 SaveUtil.biome1.finish(SaveUtil.BiomeData.BOSS, ((ServerLevel) level()));
                 if(!DataManager.boss1LootGot.getBool(player)){
-                    ItemStack wand = TCRModItems.TREE_SPIRIT_WAND.get().getDefaultInstance();
+                    ItemStack wand = TCRItems.TREE_SPIRIT_WAND.get().getDefaultInstance();
                     wand.getOrCreateTag().putBoolean("fromBoss", true);
                     player.addItem(wand);
-                    player.addItem(TCRModItems.DENSE_FOREST_CERTIFICATE.get().getDefaultInstance());
+                    player.addItem(TCRItems.DENSE_FOREST_CERTIFICATE.get().getDefaultInstance());
                     DataManager.boss1LootGot.putBool(player, true);
                 }
                 return;//NOTE：颁奖后面还有对话，不能setConversingPlayer为Null

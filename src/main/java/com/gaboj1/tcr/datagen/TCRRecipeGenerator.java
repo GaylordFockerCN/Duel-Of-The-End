@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.datagen;
 
 import com.gaboj1.tcr.block.TCRModBlocks;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -11,8 +11,8 @@ import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 
 import java.util.function.Consumer;
 
-public class ModRecipeGenerator extends ModRecipeProvider implements IConditionBuilder {
-    public ModRecipeGenerator(PackOutput output) {
+public class TCRRecipeGenerator extends TCRRecipeProvider implements IConditionBuilder {
+    public TCRRecipeGenerator(PackOutput output) {
         super(output);
     }
     @Override
@@ -27,18 +27,18 @@ public class ModRecipeGenerator extends ModRecipeProvider implements IConditionB
                 .pattern("   ")
                 .save(consumer);
 
-        nineBlockStorageRecipes(consumer, RecipeCategory.MISC, TCRModItems.BASIC_RESIN.get(), RecipeCategory.MISC, TCRModItems.INTERMEDIATE_RESIN.get());
-        nineBlockStorageRecipes(consumer, RecipeCategory.MISC, TCRModItems.INTERMEDIATE_RESIN.get(), RecipeCategory.MISC, TCRModItems.ADVANCED_RESIN.get());
-        nineBlockStorageRecipes(consumer, RecipeCategory.MISC, TCRModItems.ADVANCED_RESIN.get(), RecipeCategory.MISC, TCRModItems.SUPER_RESIN.get());
+        nineBlockStorageRecipes(consumer, RecipeCategory.MISC, TCRItems.BASIC_RESIN.get(), RecipeCategory.MISC, TCRItems.INTERMEDIATE_RESIN.get());
+        nineBlockStorageRecipes(consumer, RecipeCategory.MISC, TCRItems.INTERMEDIATE_RESIN.get(), RecipeCategory.MISC, TCRItems.ADVANCED_RESIN.get());
+        nineBlockStorageRecipes(consumer, RecipeCategory.MISC, TCRItems.ADVANCED_RESIN.get(), RecipeCategory.MISC, TCRItems.SUPER_RESIN.get());
 
-        nineBlockStorageRecipes(consumer, RecipeCategory.MISC, TCRModItems.DREAMSCAPE_COIN.get(), RecipeCategory.MISC, TCRModItems.DREAMSCAPE_COIN_PLUS.get());
+        nineBlockStorageRecipes(consumer, RecipeCategory.MISC, TCRItems.DREAMSCAPE_COIN.get(), RecipeCategory.MISC, TCRItems.DREAMSCAPE_COIN_PLUS.get());
 
         woodBlockStorageRecipes(consumer, RecipeCategory.DECORATIONS, TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get(), TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
         woodBlockStorageRecipes(consumer, RecipeCategory.DECORATIONS, TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get(), TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
         woodBlockStorageRecipes(consumer, RecipeCategory.DECORATIONS, TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get(), TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
         woodBlockStorageRecipes(consumer, RecipeCategory.DECORATIONS, TCRModBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get(), TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
 
-        this.oreSmelting(TCRModItems.ORICHALCUM.get(), TCRModItems.RAW_ORICHALCUM.get(), 0.7f, 200, consumer);
+        this.oreSmelting(TCRItems.ORICHALCUM.get(), TCRItems.RAW_ORICHALCUM.get(), 0.7f, 200, consumer);
 
     }
 

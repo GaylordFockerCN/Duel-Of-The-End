@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.entity;
 
 import com.gaboj1.tcr.block.entity.PortalBedEntity;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.SyncFakePlayerPacket;
@@ -157,7 +157,7 @@ public class TCRFakePlayer extends LivingEntity{
 
     @Override
     public @NotNull ItemStack getItemBySlot(@NotNull EquipmentSlot equipmentSlot) {
-        return new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get());
+        return new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get());
     }
 
     @Override

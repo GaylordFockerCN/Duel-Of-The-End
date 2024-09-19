@@ -4,7 +4,7 @@ import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.util.BookManager;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.PacketRelay;
@@ -96,7 +96,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        this.setItemInHand(InteractionHand.MAIN_HAND, TCRModItems.ELDER_STAFF.get().getDefaultInstance());
+        this.setItemInHand(InteractionHand.MAIN_HAND, TCRItems.ELDER_STAFF.get().getDefaultInstance());
 //        System.out.println(this.getItemInHand(InteractionHand.MAIN_HAND)+"client?"+this.isClientSide());
         if (hand == InteractionHand.MAIN_HAND) {
             if ( !this.level().isClientSide()) {
@@ -168,7 +168,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
             case -1:
                 //这个DataManager可以保留，每个玩家可以领一份
                 if(!DataManager.elderLoot1Got.getBool(player)){
-                    player.addItem(TCRModItems.ELDER_CAKE.get().getDefaultInstance());
+                    player.addItem(TCRItems.ELDER_CAKE.get().getDefaultInstance());
                     player.addItem(Items.DIAMOND.getDefaultInstance().copyWithCount(5));
                     DataManager.elderLoot1Got.putBool(player,true);
                 }else {
@@ -188,12 +188,12 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                 if(!DataManager.elderLoot2Got.getBool(player)){
                     int i = 2;
                     while(i-->0){
-                        ItemStack ammo = TCRModItems.AMMO.get().getDefaultInstance();
+                        ItemStack ammo = TCRItems.AMMO.get().getDefaultInstance();
                         ammo.setCount(64);
                         player.addItem(ammo);
                     }
-                    player.addItem(TCRModItems.GUN_PLUS.get().getDefaultInstance());
-                    player.addItem(TCRModItems.DENSE_FOREST_CERTIFICATE.get().getDefaultInstance());
+                    player.addItem(TCRItems.GUN_PLUS.get().getDefaultInstance());
+                    player.addItem(TCRItems.DENSE_FOREST_CERTIFICATE.get().getDefaultInstance());
                     DataManager.elderLoot2Got.putBool(player, true);
                 }
                 break;

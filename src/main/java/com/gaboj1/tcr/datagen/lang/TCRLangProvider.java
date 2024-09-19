@@ -16,8 +16,8 @@ import org.apache.commons.lang3.text.WordUtils;
 
 import java.util.function.Supplier;
 
-public abstract class ModLangProvider extends LanguageProvider {
-    public ModLangProvider(PackOutput output) {
+public abstract class TCRLangProvider extends LanguageProvider {
+    public TCRLangProvider(PackOutput output) {
         super(output, TheCasketOfReveriesMod.MOD_ID, "en_us");
     }
 

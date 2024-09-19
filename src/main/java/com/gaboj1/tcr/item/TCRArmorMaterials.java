@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 public enum TCRArmorMaterials implements ArmorMaterial {
     ORICHALCUM("orichalcum", 15, new int[]{ 1, 4, 4, 2 }, 25,
-            SoundEvents.ARMOR_EQUIP_GOLD, 3f, 0.3f, () -> Ingredient.of(TCRModItems.ORICHALCUM.get()));
+            SoundEvents.ARMOR_EQUIP_GOLD, 3f, 0.3f, () -> Ingredient.of(TCRItems.ORICHALCUM.get()));
 
     private final String name;
     private final int durabilityMultiplier;

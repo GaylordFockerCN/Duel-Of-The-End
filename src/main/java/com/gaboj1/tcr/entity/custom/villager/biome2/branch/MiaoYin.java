@@ -3,8 +3,7 @@ package com.gaboj1.tcr.entity.custom.villager.biome2.branch;
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
 import com.gaboj1.tcr.entity.TCRModEntities;
-import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
@@ -26,8 +25,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.DropperBlock;
-import net.minecraft.world.level.block.entity.DropperBlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
@@ -275,21 +272,21 @@ public class MiaoYin extends YueShiLineNpc {
         switch (interactionID){
             case -2:
                 //偷后的赎罪
-                ItemUtil.searchAndConsumeItem(player, TCRModItems.DREAMSCAPE_COIN.get(), 17);
+                ItemUtil.searchAndConsumeItem(player, TCRItems.DREAMSCAPE_COIN.get(), 17);
                 DataManager.stolenMiaoYin.putBool(player, false);
                 break;
             case -1:
                 //对话过程中施舍
-                ItemUtil.searchAndConsumeItem(player, TCRModItems.DREAMSCAPE_COIN.get(), 17);
+                ItemUtil.searchAndConsumeItem(player, TCRItems.DREAMSCAPE_COIN.get(), 17);
                 return;
             case 1:
                 chat(BUILDER.buildDialogueAnswer(entityType, 1));
-                ItemUtil.searchAndConsumeItem(player, TCRModItems.DREAMSCAPE_COIN.get(), 17);
+                ItemUtil.searchAndConsumeItem(player, TCRItems.DREAMSCAPE_COIN.get(), 17);
                 break;
             case 2:
                 if(!DataManager.stolenMiaoYin.getBool(player)){
                     DataManager.stolenMiaoYin.putBool(player, true);
-                    player.addItem(TCRModItems.DREAMSCAPE_COIN.get().getDefaultInstance().copyWithCount(17));
+                    player.addItem(TCRItems.DREAMSCAPE_COIN.get().getDefaultInstance().copyWithCount(17));
                     chat(BUILDER.buildDialogueAnswer(entityType, 0));
                 } else {
                     player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, -1), true);
@@ -310,7 +307,7 @@ public class MiaoYin extends YueShiLineNpc {
                 chat(BUILDER.buildDialogueAnswer(entityType, 19));
                 if(!DataManager.isMiaoYinGifted.getBool(player)){
                     DataManager.isMiaoYinGifted.putBool(player, true);
-                    player.addItem(TCRModItems.GOLDEN_WIND_AND_DEW.get().getDefaultInstance());
+                    player.addItem(TCRItems.GOLDEN_WIND_AND_DEW.get().getDefaultInstance());
                 }
                 break;
             case 7:
@@ -333,7 +330,7 @@ public class MiaoYin extends YueShiLineNpc {
                 break;
             case 11:
                 //给予琵琶
-                player.addItem(TCRModItems.PI_PA.get().getDefaultInstance());
+                player.addItem(TCRItems.PI_PA.get().getDefaultInstance());
                 SaveUtil.biome2.isBranchEnd = true;
                 break;
             case 12:
@@ -349,9 +346,9 @@ public class MiaoYin extends YueShiLineNpc {
                 } else {
                     if(DataManager.miaoYinMoney1.getBool(player)){
                         DataManager.miaoYinMoney1.lock(player);
-                        player.addItem(new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 14));
+                        player.addItem(new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 14));
                     } else {
-                        player.addItem(new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 13));
+                        player.addItem(new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 13));
                     }
                     DataManager.miaoYinMoney1.putBool(player, true);
                     chat(BUILDER.buildDialogueAnswer(entityType,82));

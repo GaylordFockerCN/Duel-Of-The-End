@@ -2,8 +2,8 @@ package com.gaboj1.tcr.entity.custom.dreamspirit;
 
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.ManySkinEntity;
-import com.gaboj1.tcr.client.TCRModSounds;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.client.TCRSounds;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -32,7 +32,6 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -149,7 +148,7 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
     @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player pPlayer, @NotNull InteractionHand pHand) {
         ItemStack handItem = pPlayer.getItemInHand(pHand);
-        if(this.getOwner() == null && handItem.is(TCRModItems.CATNIP.get())){
+        if(this.getOwner() == null && handItem.is(TCRItems.CATNIP.get())){
             handItem.shrink(1);
             this.tame(pPlayer);
             return InteractionResult.SUCCESS;
@@ -215,19 +214,19 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return TCRModSounds.JELLY_CAT_DEATH.get();
+        return TCRSounds.JELLY_CAT_DEATH.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return TCRModSounds.JELLY_CAT_AMBIENT.get();
+        return TCRSounds.JELLY_CAT_AMBIENT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return TCRModSounds.JELLY_CAT_HURT.get();
+        return TCRSounds.JELLY_CAT_HURT.get();
     }
 
     @Nullable

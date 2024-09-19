@@ -14,10 +14,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ModEntityTagGenerator extends EntityTypeTagsProvider {
+public class TCREntityTagGenerator extends EntityTypeTagsProvider {
     public static final TagKey<EntityType<?>> MOB_IN_DENSE_FOREST = create(TheCasketOfReveriesMod.prefix("mob_in_dense_forest"));
 
-    public ModEntityTagGenerator(PackOutput p_256095_, CompletableFuture<HolderLookup.Provider> p_256572_, @Nullable ExistingFileHelper existingFileHelper) {
+    public TCREntityTagGenerator(PackOutput p_256095_, CompletableFuture<HolderLookup.Provider> p_256572_, @Nullable ExistingFileHelper existingFileHelper) {
         super(p_256095_, p_256572_, TheCasketOfReveriesMod.MOD_ID, existingFileHelper);
     }
 

@@ -6,7 +6,7 @@ import com.gaboj1.tcr.entity.custom.boss.yggdrasil.TreeClawEntity;
 import com.gaboj1.tcr.util.headshot.BoundingBoxManager;
 import com.gaboj1.tcr.util.headshot.IHeadshotBox;
 import com.gaboj1.tcr.entity.TCRModEntities;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.network.chat.Component;
@@ -52,12 +52,12 @@ public class BulletEntity extends AbstractArrow implements ItemSupplier {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public @NotNull ItemStack getItem() {
-		return new ItemStack(TCRModItems.BULLET.get());
+		return new ItemStack(TCRItems.BULLET.get());
 	}
 
 	@Override
 	protected @NotNull ItemStack getPickupItem() {
-		return new ItemStack(TCRModItems.AMMO.get());
+		return new ItemStack(TCRItems.AMMO.get());
 	}
 
 	@Override
@@ -130,7 +130,7 @@ public class BulletEntity extends AbstractArrow implements ItemSupplier {
 							setBaseDamage(getBaseDamage()*2);
 						}
 						if(this.getOwner() instanceof Player player){
-							player.displayClientMessage(Component.literal("§c§l").append(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".headshot")),true);
+							player.displayClientMessage(Component.literal("§c§l").append(Component.translatable(TCRItems.GUN_COMMON.get().getDescriptionId()+".headshot")),true);
 						}
 					}
 				}

@@ -54,30 +54,30 @@ public class TCRModItemTabs {
 					.withTabsBefore(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "block"))
 					.withTabsAfter(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "loot"))
 					.title(Component.translatable("item_group.the_casket_of_reveries.spawn_egg"))
-					.icon(() -> new ItemStack(TCRModItems.JELLY_CAT_SPAWN_EGG.get()))
+					.icon(() -> new ItemStack(TCRItems.JELLY_CAT_SPAWN_EGG.get()))
 					.displayItems((parameters, tabData) -> {
 						//梦灵
-						tabData.accept(TCRModItems.JELLY_CAT_SPAWN_EGG.get());
-						tabData.accept(TCRModItems.SQUIRREL_SPAWN_EGG.get());
-						tabData.accept(TCRModItems.CRAB_SPAWN_EGG.get());
+						tabData.accept(TCRItems.JELLY_CAT_SPAWN_EGG.get());
+						tabData.accept(TCRItems.SQUIRREL_SPAWN_EGG.get());
+						tabData.accept(TCRItems.CRAB_SPAWN_EGG.get());
 						//Biome1
-						tabData.accept(TCRModItems.SMALL_TREE_MONSTER_SPAWN_EGG.get());
-						tabData.accept(TCRModItems.MIDDLE_TREE_MONSTER_SPAWN_EGG.get());
-						tabData.accept(TCRModItems.TREE_GUARDIAN_SPAWN_EGG.get());
-						tabData.accept(TCRModItems.SPRITE_SPAWN_EGG.get());
-						tabData.accept(TCRModItems.YGGDRASIL_SPAWN_EGG.get());
-						tabData.accept(TCRModItems.CANG_LAN_SPAWN_EGG.get());
+						tabData.accept(TCRItems.SMALL_TREE_MONSTER_SPAWN_EGG.get());
+						tabData.accept(TCRItems.MIDDLE_TREE_MONSTER_SPAWN_EGG.get());
+						tabData.accept(TCRItems.TREE_GUARDIAN_SPAWN_EGG.get());
+						tabData.accept(TCRItems.SPRITE_SPAWN_EGG.get());
+						tabData.accept(TCRItems.YGGDRASIL_SPAWN_EGG.get());
+						tabData.accept(TCRItems.CANG_LAN_SPAWN_EGG.get());
 
-						tabData.accept(TCRModItems.PASTORAL_PLAIN_VILLAGER_SPAWN_EGG.get());
-						tabData.accept(TCRModItems.PASTORAL_PLAIN_VILLAGER_ELDER_SPAWN_EGG.get());
+						tabData.accept(TCRItems.PASTORAL_PLAIN_VILLAGER_SPAWN_EGG.get());
+						tabData.accept(TCRItems.PASTORAL_PLAIN_VILLAGER_ELDER_SPAWN_EGG.get());
 
 						//Biome2
-						tabData.accept(TCRModItems.TIGER_SPAWN_EGG.get());
-						tabData.accept(TCRModItems.BOXER_SPAWN_EGG.get());
-						tabData.accept(TCRModItems.BIG_HAMMER_EGG.get());
-						tabData.accept(TCRModItems.SNOW_SWORDMAN_SPAWN_EGG.get());
-						tabData.accept(TCRModItems.SWORD_CONTROLLER_SPAWN_EGG.get());
-						tabData.accept(TCRModItems.SECOND_BOSS_SPAWN_EGG.get());
+						tabData.accept(TCRItems.TIGER_SPAWN_EGG.get());
+						tabData.accept(TCRItems.BOXER_SPAWN_EGG.get());
+						tabData.accept(TCRItems.BIG_HAMMER_EGG.get());
+						tabData.accept(TCRItems.SNOW_SWORDMAN_SPAWN_EGG.get());
+						tabData.accept(TCRItems.SWORD_CONTROLLER_SPAWN_EGG.get());
+						tabData.accept(TCRItems.SECOND_BOSS_SPAWN_EGG.get());
 
 
 					}).build());
@@ -87,40 +87,40 @@ public class TCRModItemTabs {
 			() -> CreativeModeTab.builder()
 					.withTabsBefore(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "spawn_egg"))
 					.title(Component.translatable("item_group.the_casket_of_reveries.loot"))
-					.icon(() -> new ItemStack(TCRModItems.WITHERING_TOUCH.get()))
+					.icon(() -> new ItemStack(TCRItems.WITHERING_TOUCH.get()))
 					.displayItems((parameters, tabData) -> {
 				//树脂
-				tabData.accept(TCRModItems.BASIC_RESIN.get());
-				tabData.accept(TCRModItems.INTERMEDIATE_RESIN.get());
-				tabData.accept(TCRModItems.ADVANCED_RESIN.get());
-				tabData.accept(TCRModItems.SUPER_RESIN.get());
-				tabData.accept(TCRModItems.COPY_RESIN.get());
+				tabData.accept(TCRItems.BASIC_RESIN.get());
+				tabData.accept(TCRItems.INTERMEDIATE_RESIN.get());
+				tabData.accept(TCRItems.ADVANCED_RESIN.get());
+				tabData.accept(TCRItems.SUPER_RESIN.get());
+				tabData.accept(TCRItems.COPY_RESIN.get());
 
 				//掉落物
-				tabData.accept(TCRModItems.ELDER_STAFF.get());
+				tabData.accept(TCRItems.ELDER_STAFF.get());
 
-				tabData.accept(TCRModItems.TREE_DEMON_HORN.get());
-				tabData.accept(TCRModItems.TREE_DEMON_MASK.get());
-				tabData.accept(TCRModItems.TREE_DEMON_FRUIT.get());
-				tabData.accept(TCRModItems.TREE_DEMON_BRANCH.get());
+				tabData.accept(TCRItems.TREE_DEMON_HORN.get());
+				tabData.accept(TCRItems.TREE_DEMON_MASK.get());
+				tabData.accept(TCRItems.TREE_DEMON_FRUIT.get());
+				tabData.accept(TCRItems.TREE_DEMON_BRANCH.get());
 
-				tabData.accept(TCRModItems.WITHERING_TOUCH.get());
+				tabData.accept(TCRItems.WITHERING_TOUCH.get());
 
-				tabData.accept(TCRModItems.HEART_OF_THE_SAPLING.get());
-				tabData.accept(TCRModItems.ESSENCE_OF_THE_ANCIENT_TREE.get());
-				tabData.accept(TCRModItems.BARK_OF_THE_GUARDIAN.get());
-				tabData.accept(TCRModItems.STARLIT_DEWDROP.get());
+				tabData.accept(TCRItems.HEART_OF_THE_SAPLING.get());
+				tabData.accept(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get());
+				tabData.accept(TCRItems.BARK_OF_THE_GUARDIAN.get());
+				tabData.accept(TCRItems.STARLIT_DEWDROP.get());
 
-				tabData.accept(TCRModItems.ICE_THORN.get());
-				tabData.accept(TCRModItems.TIGER_SOUL_ICE.get());
+				tabData.accept(TCRItems.ICE_THORN.get());
+				tabData.accept(TCRItems.TIGER_SOUL_ICE.get());
 
 				//货币
-				tabData.accept(TCRModItems.DENSE_FOREST_CERTIFICATE.get());
-				tabData.accept(TCRModItems.DREAMSCAPE_COIN.get());
-				tabData.accept(TCRModItems.DREAMSCAPE_COIN_PLUS.get());
-				tabData.accept(TCRModItems.WAN_MING_PEARL.get());
-				tabData.accept(TCRModItems.RAW_ORICHALCUM.get());
-				tabData.accept(TCRModItems.ORICHALCUM.get());
+				tabData.accept(TCRItems.DENSE_FOREST_CERTIFICATE.get());
+				tabData.accept(TCRItems.DREAMSCAPE_COIN.get());
+				tabData.accept(TCRItems.DREAMSCAPE_COIN_PLUS.get());
+				tabData.accept(TCRItems.WAN_MING_PEARL.get());
+				tabData.accept(TCRItems.RAW_ORICHALCUM.get());
+				tabData.accept(TCRItems.ORICHALCUM.get());
 
 			}).build());
 
@@ -128,26 +128,26 @@ public class TCRModItemTabs {
 			() -> CreativeModeTab.builder()
 					.withTabsBefore(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "spawn_egg"))
 					.title(Component.translatable("item_group.the_casket_of_reveries.weapon"))
-					.icon(() -> new ItemStack(TCRModItems.TIGER_KARAMBIT.get()))
+					.icon(() -> new ItemStack(TCRItems.TIGER_KARAMBIT.get()))
 					.displayItems((parameters, tabData) -> {
 
-						tabData.accept(TCRModItems.AMMO.get());
-						tabData.accept(TCRModItems.GUN_COMMON.get());
-						tabData.accept(TCRModItems.GUN_PLUS.get());
-						tabData.accept(TCRModItems.SPIRIT_WAND.get());
-						tabData.accept(TCRModItems.HEALTH_WAND.get());
-						tabData.accept(TCRModItems.TIGER_KARAMBIT.get());
-						tabData.accept(TCRModItems.PI_PA.get());
+						tabData.accept(TCRItems.AMMO.get());
+						tabData.accept(TCRItems.GUN_COMMON.get());
+						tabData.accept(TCRItems.GUN_PLUS.get());
+						tabData.accept(TCRItems.SPIRIT_WAND.get());
+						tabData.accept(TCRItems.HEALTH_WAND.get());
+						tabData.accept(TCRItems.TIGER_KARAMBIT.get());
+						tabData.accept(TCRItems.PI_PA.get());
 
 						//盔甲
-						tabData.accept(TCRModItems.ORICHALCUM_HELMET.get());
-						tabData.accept(TCRModItems.ORICHALCUM_CHESTPLATE.get());
-						tabData.accept(TCRModItems.ORICHALCUM_LEGGINGS.get());
-						tabData.accept(TCRModItems.ORICHALCUM_BOOTS.get());
+						tabData.accept(TCRItems.ORICHALCUM_HELMET.get());
+						tabData.accept(TCRItems.ORICHALCUM_CHESTPLATE.get());
+						tabData.accept(TCRItems.ORICHALCUM_LEGGINGS.get());
+						tabData.accept(TCRItems.ORICHALCUM_BOOTS.get());
 
 						//法宝
-						tabData.accept(TCRModItems.TREE_SPIRIT_WAND.get());
-						tabData.accept(TCRModItems.HOLY_SWORD.get());
+						tabData.accept(TCRItems.TREE_SPIRIT_WAND.get());
+						tabData.accept(TCRItems.HOLY_SWORD.get());
 
 					}).build());
 
@@ -155,37 +155,37 @@ public class TCRModItemTabs {
 			() -> CreativeModeTab.builder()
 					.withTabsBefore(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "spawn_egg"))
 					.title(Component.translatable("item_group.the_casket_of_reveries.food"))
-					.icon(() -> new ItemStack(TCRModItems.BLUE_BANANA.get()))
+					.icon(() -> new ItemStack(TCRItems.BLUE_BANANA.get()))
 					.displayItems((parameters, tabData) -> {
-						tabData.accept(TCRModItems.BLUE_BANANA.get());
-						tabData.accept(TCRModItems.DREAM_TA.get());
-						tabData.accept(TCRModItems.BEER.get());
-						tabData.accept(TCRModItems.COOKIE.get());
-						tabData.accept(TCRModItems.ELDER_CAKE.get());
-						tabData.accept(TCRModItems.EDEN_APPLE.get());
-						tabData.accept(TCRModItems.DRINK1.get());
-						tabData.accept(TCRModItems.DRINK2.get());
-						tabData.accept(TCRModItems.GOLDEN_WIND_AND_DEW.get());
-						tabData.accept(TCRModItems.GREEN_BANANA.get());
-						tabData.accept(TCRModItems.HOT_CHOCOLATE.get());
-						tabData.accept(TCRModItems.JUICE_TEA.get());
-						tabData.accept(TCRModItems.MAO_DAI.get());
-						tabData.accept(TCRModItems.PINE_CONE.get());
-						tabData.accept(TCRModItems.RED_WINE.get());
-						tabData.accept(TCRModItems.CATNIP.get());
+						tabData.accept(TCRItems.BLUE_BANANA.get());
+						tabData.accept(TCRItems.DREAM_TA.get());
+						tabData.accept(TCRItems.BEER.get());
+						tabData.accept(TCRItems.COOKIE.get());
+						tabData.accept(TCRItems.ELDER_CAKE.get());
+						tabData.accept(TCRItems.EDEN_APPLE.get());
+						tabData.accept(TCRItems.DRINK1.get());
+						tabData.accept(TCRItems.DRINK2.get());
+						tabData.accept(TCRItems.GOLDEN_WIND_AND_DEW.get());
+						tabData.accept(TCRItems.GREEN_BANANA.get());
+						tabData.accept(TCRItems.HOT_CHOCOLATE.get());
+						tabData.accept(TCRItems.JUICE_TEA.get());
+						tabData.accept(TCRItems.MAO_DAI.get());
+						tabData.accept(TCRItems.PINE_CONE.get());
+						tabData.accept(TCRItems.RED_WINE.get());
+						tabData.accept(TCRItems.CATNIP.get());
 
-						tabData.accept(TCRModItems.LIGHT_ELIXIR.get());
-						tabData.accept(TCRModItems.ASCENSION_ELIXIR.get());
-						tabData.accept(TCRModItems.LUCKY_ELIXIR.get());
-						tabData.accept(TCRModItems.EVASION_ELIXIR.get());
-						tabData.accept(TCRModItems.WATER_AVOIDANCE_ELIXIR.get());
-						tabData.accept(TCRModItems.FIRE_AVOIDANCE_ELIXIR.get());
-						tabData.accept(TCRModItems.COLD_AVOIDANCE_ELIXIR.get());
-						tabData.accept(TCRModItems.THUNDER_AVOIDANCE_ELIXIR.get());
-						tabData.accept(TCRModItems.POISON_AVOIDANCE_ELIXIR.get());
-						tabData.accept(TCRModItems.NINE_TURN_REVIVAL_ELIXIR.get());
-						tabData.accept(TCRModItems.STRENGTH_PILL.get());
-						tabData.accept(TCRModItems.AQUA_GOLD_ELIXIR.get());
+						tabData.accept(TCRItems.LIGHT_ELIXIR.get());
+						tabData.accept(TCRItems.ASCENSION_ELIXIR.get());
+						tabData.accept(TCRItems.LUCKY_ELIXIR.get());
+						tabData.accept(TCRItems.EVASION_ELIXIR.get());
+						tabData.accept(TCRItems.WATER_AVOIDANCE_ELIXIR.get());
+						tabData.accept(TCRItems.FIRE_AVOIDANCE_ELIXIR.get());
+						tabData.accept(TCRItems.COLD_AVOIDANCE_ELIXIR.get());
+						tabData.accept(TCRItems.THUNDER_AVOIDANCE_ELIXIR.get());
+						tabData.accept(TCRItems.POISON_AVOIDANCE_ELIXIR.get());
+						tabData.accept(TCRItems.NINE_TURN_REVIVAL_ELIXIR.get());
+						tabData.accept(TCRItems.STRENGTH_PILL.get());
+						tabData.accept(TCRItems.AQUA_GOLD_ELIXIR.get());
 
 					}).build());
 

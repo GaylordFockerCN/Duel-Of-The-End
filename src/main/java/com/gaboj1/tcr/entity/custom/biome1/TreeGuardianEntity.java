@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.entity.custom.biome1;
 
-import com.gaboj1.tcr.client.TCRModSounds;
+import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.util.BoundingBoxHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -36,7 +36,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Objects;
-import java.util.Random;
 
 public class TreeGuardianEntity extends Monster implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -113,13 +112,13 @@ public class TreeGuardianEntity extends Monster implements GeoEntity {
     @Nullable
     @Override
     protected SoundEvent getHurtSound(@NotNull DamageSource p_21239_) {
-        return TCRModSounds.TREE_MONSTERS_HURT.get();
+        return TCRSounds.TREE_MONSTERS_HURT.get();
     }
 //森林守护者死亡声音
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return TCRModSounds.TREE_MONSTERS_DEATH.get();
+        return TCRSounds.TREE_MONSTERS_DEATH.get();
     }
 
     @Override

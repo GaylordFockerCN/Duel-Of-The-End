@@ -5,7 +5,7 @@ import com.gaboj1.tcr.entity.custom.villager.TCRTalkableVillager;
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
 import com.gaboj1.tcr.entity.TCRModEntities;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.ItemUtil;
 import com.gaboj1.tcr.util.SaveUtil;
@@ -187,16 +187,16 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
 //                System.out.println(getVillagerData().getProfession());
                 startCustomTrade(player,
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 32),
-                                new ItemStack(TCRModItems.ORICHALCUM.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 32),
+                                new ItemStack(TCRItems.ORICHALCUM.get(), 1),
                                 16, 0, 0),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.ORICHALCUM.get(), 1),
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 48),
+                                new ItemStack(TCRItems.ORICHALCUM.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 48),
                                 16, 0, 1),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 5),
-                                new ItemStack(TCRModItems.HEALTH_WAND.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 5),
+                                new ItemStack(TCRItems.HEALTH_WAND.get(), 1),
                                 16, 0, 1)
 
                 );
@@ -209,44 +209,45 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 chat(BUILDER.buildDialogueAnswer(entityType,1,1,false));
                 startCustomTrade(player,
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.GUN_COMMON.get(), 1),
-                                new ItemStack(TCRModItems.ORICHALCUM.get(), 16),
-                                new ItemStack(TCRModItems.GUN_PLUS.get(), 1),
+                                new ItemStack(TCRItems.GUN_COMMON.get(), 1),
+                                new ItemStack(TCRItems.ORICHALCUM.get(), 16),
+                                new ItemStack(TCRItems.GUN_PLUS.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.TREE_DEMON_FRUIT.get(), 1),
-                                new ItemStack(TCRModItems.TREE_DEMON_HORN.get(), 1),
-                                new ItemStack(TCRModItems.TREE_SPIRIT_WAND.get(), 1),
+                                new ItemStack(TCRItems.TREE_DEMON_FRUIT.get(), 1),
+                                new ItemStack(TCRItems.TREE_DEMON_HORN.get(), 1),
+                                new ItemStack(TCRItems.TREE_SPIRIT_WAND.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 64),
-                                new ItemStack(TCRModItems.GUN_COMMON.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 16),
+                                new ItemStack(TCRItems.AMMO.get(), 2),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
-                                new ItemStack(TCRModItems.AMMO.get(), 2),
+                                new ItemStack(TCRItems.STARLIT_DEWDROP.get(), 4),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 20),
+                                new ItemStack(TCRItems.SPIRIT_WAND.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.ORICHALCUM.get(), 5),
-                                new ItemStack(TCRModItems.ORICHALCUM_HELMET.get(), 1),
+                                new ItemStack(TCRItems.ORICHALCUM.get(), 5),
+                                new ItemStack(TCRItems.ORICHALCUM_HELMET.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.ORICHALCUM.get(), 8),
-                                new ItemStack(TCRModItems.ORICHALCUM_CHESTPLATE.get(), 1),
+                                new ItemStack(TCRItems.ORICHALCUM.get(), 8),
+                                new ItemStack(TCRItems.ORICHALCUM_CHESTPLATE.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.ORICHALCUM.get(), 7),
-                                new ItemStack(TCRModItems.ORICHALCUM_LEGGINGS.get(), 1),
+                                new ItemStack(TCRItems.ORICHALCUM.get(), 7),
+                                new ItemStack(TCRItems.ORICHALCUM_LEGGINGS.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.ORICHALCUM.get(), 4),
-                                new ItemStack(TCRModItems.ORICHALCUM_BOOTS.get(), 1),
+                                new ItemStack(TCRItems.ORICHALCUM.get(), 4),
+                                new ItemStack(TCRItems.ORICHALCUM_BOOTS.get(), 1),
                                 16, 0, 0.02f)
                 );
                 break;
             case 111:
-                player.addItem(TCRModItems.GUN_COMMON.get().getDefaultInstance());
-                ItemStack ammo = TCRModItems.AMMO.get().getDefaultInstance();
+                player.addItem(TCRItems.GUN_COMMON.get().getDefaultInstance());
+                ItemStack ammo = TCRItems.AMMO.get().getDefaultInstance();
                 ammo.setCount(20);
                 player.addItem(ammo);
                 DataManager.gunGot.putBool(player,true);//存入得用玩家
@@ -257,13 +258,13 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
 
                 return;//NOTE 记得返回，否则对话中断！
             case 1:
-                ItemUtil.searchAndConsumeItem(player, TCRModItems.AMMO.get(), 20);
+                ItemUtil.searchAndConsumeItem(player, TCRItems.AMMO.get(), 20);
 //                player.addItem(Book.getBook("book1"));//测试书籍生成
                 chat(BUILDER.buildDialogueAnswer(entityType,4,false));//......
                 break;
             case 2:
                 if(!DataManager.ammoGot.getBool(player.getPersistentData())){
-                    ItemStack stack = TCRModItems.AMMO.get().getDefaultInstance();
+                    ItemStack stack = TCRItems.AMMO.get().getDefaultInstance();
                     stack.setCount(20);
                     player.addItem(stack);
                     chat(BUILDER.buildDialogueAnswer(entityType,5,false));//快给我，不然嘣了你
@@ -287,24 +288,24 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 chat(BUILDER.buildDialogueAnswer(entityType,15,false));
                 startCustomTrade(player,
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.HEART_OF_THE_SAPLING.get(), 1),
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 1),
+                                new ItemStack(TCRItems.HEART_OF_THE_SAPLING.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.ESSENCE_OF_THE_ANCIENT_TREE.get(), 1),
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 5),
+                                new ItemStack(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 5),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.BARK_OF_THE_GUARDIAN.get(), 1),
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 20),
+                                new ItemStack(TCRItems.BARK_OF_THE_GUARDIAN.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 20),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.STARLIT_DEWDROP.get(), 1),
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 15),
+                                new ItemStack(TCRItems.STARLIT_DEWDROP.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 15),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 5),
-                                new ItemStack(TCRModItems.BASIC_RESIN.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 5),
+                                new ItemStack(TCRItems.BASIC_RESIN.get(), 1),
                                 16, 0, 0.02f)
                 );
                 break;
@@ -318,39 +319,39 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 chat(BUILDER.buildDialogueAnswer(entityType,23,false));
                 startCustomTrade(player,
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 6),
-                                new ItemStack(TCRModItems.BEER.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 6),
+                                new ItemStack(TCRItems.BEER.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 12),
-                                new ItemStack(TCRModItems.DRINK1.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 12),
+                                new ItemStack(TCRItems.DRINK1.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 13),
-                                new ItemStack(TCRModItems.DRINK2.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 13),
+                                new ItemStack(TCRItems.DRINK2.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 3),
-                                new ItemStack(TCRModItems.DREAM_TA.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 3),
+                                new ItemStack(TCRItems.DREAM_TA.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 12),
-                                new ItemStack(TCRModItems.JUICE_TEA.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 12),
+                                new ItemStack(TCRItems.JUICE_TEA.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 20),
-                                new ItemStack(TCRModItems.HOT_CHOCOLATE.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 20),
+                                new ItemStack(TCRItems.HOT_CHOCOLATE.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 20),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 20),
                                 new ItemStack(Items.COOKED_BEEF, 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 16),
                                 new ItemStack(Items.COOKED_CHICKEN, 2),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 16),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 16),
                                 new ItemStack(Items.COOKED_PORKCHOP, 1),
                                 16, 0, 0.02f)
                 );
@@ -359,20 +360,20 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 chat(BUILDER.buildDialogueAnswer(entityType,-1,false));
                 startCustomTrade(player,
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 6),
-                                new ItemStack(TCRModItems.BEER.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 6),
+                                new ItemStack(TCRItems.BEER.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 12),
-                                new ItemStack(TCRModItems.DRINK1.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 12),
+                                new ItemStack(TCRItems.DRINK1.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 13),
-                                new ItemStack(TCRModItems.DRINK2.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 13),
+                                new ItemStack(TCRItems.DRINK2.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 3),
-                                new ItemStack(TCRModItems.DREAM_TA.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 3),
+                                new ItemStack(TCRItems.DREAM_TA.get(), 1),
                                 16, 0, 0.02f)
                 );
                 break;
@@ -380,22 +381,22 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 chat(BUILDER.buildDialogueAnswer(entityType,-1,false));
                 startCustomTrade(player,
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 10),
-                                new ItemStack(TCRModItems.JUICE_TEA.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 10),
+                                new ItemStack(TCRItems.JUICE_TEA.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 20),
-                                new ItemStack(TCRModItems.HOT_CHOCOLATE.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 20),
+                                new ItemStack(TCRItems.HOT_CHOCOLATE.get(), 1),
                                 16, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 2),
-                                new ItemStack(TCRModItems.COOKIE.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 2),
+                                new ItemStack(TCRItems.COOKIE.get(), 1),
                                 16, 0, 0.02f)
                 );
                 break;
             case 112:
                 if(!DataManager.drinkGot.getBool(player)){
-                    player.addItem(TCRModItems.DRINK2.get().getDefaultInstance());
+                    player.addItem(TCRItems.DRINK2.get().getDefaultInstance());
                     DataManager.drinkGot.putBool(player,true);
                 }else {
                     chat(BUILDER.buildDialogueAnswer(entityType,22,false));

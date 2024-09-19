@@ -20,7 +20,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
-public class TCRModItems {
+public class TCRItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, TheCasketOfReveriesMod.MOD_ID);
 	public static final RegistryObject<Item> AMMO = REGISTRY.register("ammo", () -> new Item(new Item.Properties().stacksTo(64)));
 	public static final RegistryObject<Item> GUN_COMMON = REGISTRY.register("gun", GunCommon::new);

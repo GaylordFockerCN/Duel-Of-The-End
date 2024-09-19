@@ -5,7 +5,7 @@ import com.gaboj1.tcr.block.custom.*;
 import com.gaboj1.tcr.block.custom.spawner.MiaoYinSpawnerBlock;
 import com.gaboj1.tcr.block.custom.spawner.TigerTrialSpawnerBlock;
 import com.gaboj1.tcr.block.custom.spawner.YggdrasilSpawnerBlock;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.worldgen.tree.DenseSpiritTreeGrower;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -132,7 +132,7 @@ public class TCRModBlocks {
     }
 
     private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block){
-        return TCRModItems.REGISTRY.register(name, ()->new BlockItem(block.get(),new Item.Properties()));
+        return TCRItems.REGISTRY.register(name, ()->new BlockItem(block.get(),new Item.Properties()));
     }
 
 }

@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.entity.custom.biome1;
 
-import com.gaboj1.tcr.client.TCRModSounds;
+import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -14,8 +14,6 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.npc.AbstractVillager;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,8 +24,6 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
-
-import java.util.UUID;
 
 public class SmallTreeMonsterEntity extends TamableAnimal implements GeoEntity {
     private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -81,13 +77,13 @@ public class SmallTreeMonsterEntity extends TamableAnimal implements GeoEntity {
     @Nullable
     @Override
     protected SoundEvent getHurtSound(@NotNull DamageSource p_21239_) {
-        return TCRModSounds.TREE_MONSTERS_HURT.get();
+        return TCRSounds.TREE_MONSTERS_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return TCRModSounds.TREE_MONSTERS_DEATH.get();
+        return TCRSounds.TREE_MONSTERS_DEATH.get();
     }
 
     @Override

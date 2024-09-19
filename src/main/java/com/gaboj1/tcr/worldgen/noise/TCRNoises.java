@@ -5,15 +5,10 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.entity.JigsawBlockEntity;
-import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
 import net.minecraft.world.level.levelgen.synth.NormalNoise.NoiseParameters;
 
-/**
- * @author the Aether
- */
-public class ModNoises {
+public class TCRNoises {
     public static final ResourceKey<NoiseParameters> TEMPERATURE = createKey("temperature");
     public static final ResourceKey<NoiseParameters> VEGETATION = createKey("vegetation");
 

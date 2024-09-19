@@ -2,7 +2,7 @@ package com.gaboj1.tcr.datagen;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.TCRModBlocks;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -21,7 +21,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.LinkedHashMap;
 
-public class ModItemModelProvider extends ItemModelProvider {
+public class TCRItemModelProvider extends ItemModelProvider {
 
     //Thank you kaupenjoe & El_Redstoniano!
     private static final LinkedHashMap<ResourceKey<TrimMaterial>, Float> trimMaterials = new LinkedHashMap<>();
@@ -38,83 +38,83 @@ public class ModItemModelProvider extends ItemModelProvider {
         trimMaterials.put(TrimMaterials.AMETHYST, 1.0F);
     }
 
-    public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+    public TCRItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, TheCasketOfReveriesMod.MOD_ID, existingFileHelper);
     }
 
     @Override
     protected void registerModels() {
 
-        handheldItem(TCRModItems.HEALTH_WAND);
+        handheldItem(TCRItems.HEALTH_WAND);
 
-        eggItem(TCRModItems.JELLY_CAT_SPAWN_EGG);
-        eggItem(TCRModItems.SQUIRREL_SPAWN_EGG);
-        eggItem(TCRModItems.CRAB_SPAWN_EGG);
-        eggItem(TCRModItems.SMALL_TREE_MONSTER_SPAWN_EGG);
-        eggItem(TCRModItems.MIDDLE_TREE_MONSTER_SPAWN_EGG);
-        eggItem(TCRModItems.TREE_GUARDIAN_SPAWN_EGG);
-        eggItem(TCRModItems.YGGDRASIL_SPAWN_EGG);
-        eggItem(TCRModItems.PASTORAL_PLAIN_VILLAGER_SPAWN_EGG);
-        eggItem(TCRModItems.PASTORAL_PLAIN_VILLAGER_ELDER_SPAWN_EGG);
-        eggItem(TCRModItems.SPRITE_SPAWN_EGG);
-        eggItem(TCRModItems.TIGER_SPAWN_EGG);
-        eggItem(TCRModItems.BOXER_SPAWN_EGG);
-        eggItem(TCRModItems.BIG_HAMMER_EGG);
-        eggItem(TCRModItems.SNOW_SWORDMAN_SPAWN_EGG);
-        eggItem(TCRModItems.SWORD_CONTROLLER_SPAWN_EGG);
-        eggItem(TCRModItems.SECOND_BOSS_SPAWN_EGG);
-        eggItem(TCRModItems.CANG_LAN_SPAWN_EGG);
+        eggItem(TCRItems.JELLY_CAT_SPAWN_EGG);
+        eggItem(TCRItems.SQUIRREL_SPAWN_EGG);
+        eggItem(TCRItems.CRAB_SPAWN_EGG);
+        eggItem(TCRItems.SMALL_TREE_MONSTER_SPAWN_EGG);
+        eggItem(TCRItems.MIDDLE_TREE_MONSTER_SPAWN_EGG);
+        eggItem(TCRItems.TREE_GUARDIAN_SPAWN_EGG);
+        eggItem(TCRItems.YGGDRASIL_SPAWN_EGG);
+        eggItem(TCRItems.PASTORAL_PLAIN_VILLAGER_SPAWN_EGG);
+        eggItem(TCRItems.PASTORAL_PLAIN_VILLAGER_ELDER_SPAWN_EGG);
+        eggItem(TCRItems.SPRITE_SPAWN_EGG);
+        eggItem(TCRItems.TIGER_SPAWN_EGG);
+        eggItem(TCRItems.BOXER_SPAWN_EGG);
+        eggItem(TCRItems.BIG_HAMMER_EGG);
+        eggItem(TCRItems.SNOW_SWORDMAN_SPAWN_EGG);
+        eggItem(TCRItems.SWORD_CONTROLLER_SPAWN_EGG);
+        eggItem(TCRItems.SECOND_BOSS_SPAWN_EGG);
+        eggItem(TCRItems.CANG_LAN_SPAWN_EGG);
 
-        simpleItem(TCRModItems.DREAMSCAPE_COIN);
-        simpleItem(TCRModItems.DREAMSCAPE_COIN_PLUS);
-        simpleItem(TCRModItems.ORICHALCUM);
-        simpleItem(TCRModItems.RAW_ORICHALCUM);
+        simpleItem(TCRItems.DREAMSCAPE_COIN);
+        simpleItem(TCRItems.DREAMSCAPE_COIN_PLUS);
+        simpleItem(TCRItems.ORICHALCUM);
+        simpleItem(TCRItems.RAW_ORICHALCUM);
 
-        simpleItem(TCRModItems.TREE_DEMON_HORN);
-        simpleItem(TCRModItems.TREE_DEMON_MASK);
-        simpleItem(TCRModItems.TREE_DEMON_BRANCH);
-        simpleItem(TCRModItems.TREE_DEMON_FRUIT);
+        simpleItem(TCRItems.TREE_DEMON_HORN);
+        simpleItem(TCRItems.TREE_DEMON_MASK);
+        simpleItem(TCRItems.TREE_DEMON_BRANCH);
+        simpleItem(TCRItems.TREE_DEMON_FRUIT);
 
-        simpleItem(TCRModItems.CATNIP);
-        simpleItem(TCRModItems.WITHERING_TOUCH);
-        simpleItem(TCRModItems.HEART_OF_THE_SAPLING);
-        simpleItem(TCRModItems.ESSENCE_OF_THE_ANCIENT_TREE);
-        simpleItem(TCRModItems.BARK_OF_THE_GUARDIAN);
-        simpleItem(TCRModItems.STARLIT_DEWDROP);
-        simpleItem(TCRModItems.DENSE_FOREST_CERTIFICATE);
-        simpleItem(TCRModItems.TIGER_SOUL_ICE);
+        simpleItem(TCRItems.CATNIP);
+        simpleItem(TCRItems.WITHERING_TOUCH);
+        simpleItem(TCRItems.HEART_OF_THE_SAPLING);
+        simpleItem(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE);
+        simpleItem(TCRItems.BARK_OF_THE_GUARDIAN);
+        simpleItem(TCRItems.STARLIT_DEWDROP);
+        simpleItem(TCRItems.DENSE_FOREST_CERTIFICATE);
+        simpleItem(TCRItems.TIGER_SOUL_ICE);
 
         //handheldItem()会变很大个，适合用于武器什么的
-        simpleItem(TCRModItems.BLUE_BANANA);
-        simpleItem(TCRModItems.DREAM_TA);
-        simpleItem(TCRModItems.BEER);
-        simpleItem(TCRModItems.COOKIE);
-        simpleItem(TCRModItems.ELDER_CAKE);
+        simpleItem(TCRItems.BLUE_BANANA);
+        simpleItem(TCRItems.DREAM_TA);
+        simpleItem(TCRItems.BEER);
+        simpleItem(TCRItems.COOKIE);
+        simpleItem(TCRItems.ELDER_CAKE);
         //说出来你可能不信，以下的小物品是训练chatGPT3.5仿写后修改的（大力解放生产力！）
-        simpleItem(TCRModItems.EDEN_APPLE);
-        simpleItem(TCRModItems.DRINK1);
-        simpleItem(TCRModItems.DRINK2);
-        simpleItem(TCRModItems.GOLDEN_WIND_AND_DEW);
-        simpleItem(TCRModItems.GREEN_BANANA);
-        simpleItem(TCRModItems.HOT_CHOCOLATE);
-        simpleItem(TCRModItems.JUICE_TEA);
-        simpleItem(TCRModItems.MAO_DAI);
-        simpleItem(TCRModItems.PINE_CONE);
-        simpleItem(TCRModItems.RED_WINE);
-        simpleItem(TCRModItems.WAN_MING_PEARL);
+        simpleItem(TCRItems.EDEN_APPLE);
+        simpleItem(TCRItems.DRINK1);
+        simpleItem(TCRItems.DRINK2);
+        simpleItem(TCRItems.GOLDEN_WIND_AND_DEW);
+        simpleItem(TCRItems.GREEN_BANANA);
+        simpleItem(TCRItems.HOT_CHOCOLATE);
+        simpleItem(TCRItems.JUICE_TEA);
+        simpleItem(TCRItems.MAO_DAI);
+        simpleItem(TCRItems.PINE_CONE);
+        simpleItem(TCRItems.RED_WINE);
+        simpleItem(TCRItems.WAN_MING_PEARL);
 
-        simpleItem(TCRModItems.LIGHT_ELIXIR);
-        simpleItem(TCRModItems.ASCENSION_ELIXIR);
-        simpleItem(TCRModItems.LUCKY_ELIXIR);
-        simpleItem(TCRModItems.EVASION_ELIXIR);
-        simpleItem(TCRModItems.WATER_AVOIDANCE_ELIXIR);
-        simpleItem(TCRModItems.FIRE_AVOIDANCE_ELIXIR);
-        simpleItem(TCRModItems.COLD_AVOIDANCE_ELIXIR);
-        simpleItem(TCRModItems.THUNDER_AVOIDANCE_ELIXIR);
-        simpleItem(TCRModItems.POISON_AVOIDANCE_ELIXIR);
-        simpleItem(TCRModItems.NINE_TURN_REVIVAL_ELIXIR);
-        simpleItem(TCRModItems.STRENGTH_PILL);
-        simpleItem(TCRModItems.AQUA_GOLD_ELIXIR);
+        simpleItem(TCRItems.LIGHT_ELIXIR);
+        simpleItem(TCRItems.ASCENSION_ELIXIR);
+        simpleItem(TCRItems.LUCKY_ELIXIR);
+        simpleItem(TCRItems.EVASION_ELIXIR);
+        simpleItem(TCRItems.WATER_AVOIDANCE_ELIXIR);
+        simpleItem(TCRItems.FIRE_AVOIDANCE_ELIXIR);
+        simpleItem(TCRItems.COLD_AVOIDANCE_ELIXIR);
+        simpleItem(TCRItems.THUNDER_AVOIDANCE_ELIXIR);
+        simpleItem(TCRItems.POISON_AVOIDANCE_ELIXIR);
+        simpleItem(TCRItems.NINE_TURN_REVIVAL_ELIXIR);
+        simpleItem(TCRItems.STRENGTH_PILL);
+        simpleItem(TCRItems.AQUA_GOLD_ELIXIR);
 
         simpleBlockItemBlockTexture(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER);
         simpleBlockItemBlockTexture(TCRModBlocks.CATNIP);
@@ -125,10 +125,10 @@ public class ModItemModelProvider extends ItemModelProvider {
         evenSimplerBlockItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB);
         evenSimplerBlockItem(TCRModBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE_GATE);
 
-        trimmedArmorItem(TCRModItems.ORICHALCUM_HELMET);
-        trimmedArmorItem(TCRModItems.ORICHALCUM_CHESTPLATE);
-        trimmedArmorItem(TCRModItems.ORICHALCUM_LEGGINGS);
-        trimmedArmorItem(TCRModItems.ORICHALCUM_BOOTS);
+        trimmedArmorItem(TCRItems.ORICHALCUM_HELMET);
+        trimmedArmorItem(TCRItems.ORICHALCUM_CHESTPLATE);
+        trimmedArmorItem(TCRItems.ORICHALCUM_LEGGINGS);
+        trimmedArmorItem(TCRItems.ORICHALCUM_BOOTS);
 
     }
 

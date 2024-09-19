@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.datagen.loot;
 
 import com.gaboj1.tcr.block.TCRModBlocks;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
@@ -19,8 +19,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
-public class ModBlockLootTables extends BlockLootSubProvider {
-    public ModBlockLootTables() {
+public class TCRBlockLootTables extends BlockLootSubProvider {
+    public TCRBlockLootTables() {
         super(Set.of(), FeatureFlags.REGISTRY.allFlags());
     }
 
@@ -31,12 +31,12 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
         //copy from VanillaBlockLoot (我真是天才~
         this.add(TCRModBlocks.PORTAL_BED.get(), (block) -> this.createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD));
-        this.add(TCRModBlocks.ORICHALCUM_ORE.get(), (block) -> this.createCopperLikeOreDrops(block, TCRModItems.RAW_ORICHALCUM.get(), 1, 1));
+        this.add(TCRModBlocks.ORICHALCUM_ORE.get(), (block) -> this.createCopperLikeOreDrops(block, TCRItems.RAW_ORICHALCUM.get(), 1, 1));
 
 //        this.dropSelf(TCRModBlocks.PORTAL_BLOCK.get());
         this.dropSelf(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
 //        this.dropOther(TCRModBlocks.CATNIP.get(), TCRModItems.CATNIP.get());
-        this.add(TCRModBlocks.CATNIP.get(), (block) -> this.createCopperLikeOreDrops(block, TCRModItems.CATNIP.get(), 1, 3));
+        this.add(TCRModBlocks.CATNIP.get(), (block) -> this.createCopperLikeOreDrops(block, TCRItems.CATNIP.get(), 1, 3));
         this.add(TCRModBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER.get(), createPotFlowerItemTable(TCRModBlocks.DENSE_FOREST_SPIRIT_FLOWER.get()));
         this.add(TCRModBlocks.POTTED_CATNIP.get(), createPotFlowerItemTable(TCRModBlocks.CATNIP.get()));
 

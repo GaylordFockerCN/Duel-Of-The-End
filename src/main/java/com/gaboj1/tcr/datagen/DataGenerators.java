@@ -1,8 +1,8 @@
 package com.gaboj1.tcr.datagen;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.datagen.lang.ModLangGenerator;
-import com.gaboj1.tcr.datagen.loot.ModLootTableProvider;
+import com.gaboj1.tcr.datagen.lang.TCRLangGenerator;
+import com.gaboj1.tcr.datagen.loot.TCRLootTableProvider;
 import com.gaboj1.tcr.datagen.sound.SoundGenerator;
 import com.gaboj1.tcr.datagen.tags.*;
 import net.minecraft.core.HolderLookup;
@@ -26,25 +26,25 @@ public class DataGenerators {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         //Client
-        generator.addProvider(event.includeClient(), new ModBlockStateProvider(output, helper));
-        generator.addProvider(event.includeClient(), new ModItemModelProvider(output, helper));
-        generator.addProvider(event.includeClient(), new ModLangGenerator(output));
+        generator.addProvider(event.includeClient(), new TCRBlockStateProvider(output, helper));
+        generator.addProvider(event.includeClient(), new TCRItemModelProvider(output, helper));
+        generator.addProvider(event.includeClient(), new TCRLangGenerator(output));
         generator.addProvider(event.includeClient(), new SoundGenerator(output, helper));
 
         //Server
-        generator.addProvider(event.includeServer(), new ModRecipeGenerator(output));
-        generator.addProvider(event.includeServer(), ModLootTableProvider.create(output));
+        generator.addProvider(event.includeServer(), new TCRRecipeGenerator(output));
+        generator.addProvider(event.includeServer(), TCRLootTableProvider.create(output));
         generator.addProvider(event.includeServer(), new TCRAdvancementData(output, lookupProvider, helper));
-        generator.addProvider(event.includeServer(), new ModEntityTagGenerator(output, lookupProvider, helper));
+        generator.addProvider(event.includeServer(), new TCREntityTagGenerator(output, lookupProvider, helper));
 
-        ModBlockTagGenerator blockTagGenerator = generator.addProvider(event.includeServer(),
-                new ModBlockTagGenerator(output, lookupProvider, helper));
-        generator.addProvider(event.includeServer(), new ModItemTagGenerator(output, lookupProvider, blockTagGenerator.contentsGetter(), helper));
-        generator.addProvider(event.includeServer(), new ModPoiTypeTagsProvider(output, lookupProvider, helper));
+        TCRBlockTagGenerator blockTagGenerator = generator.addProvider(event.includeServer(),
+                new TCRBlockTagGenerator(output, lookupProvider, helper));
+        generator.addProvider(event.includeServer(), new TCRItemTagGenerator(output, lookupProvider, blockTagGenerator.contentsGetter(), helper));
+        generator.addProvider(event.includeServer(), new TCRPoiTypeTagsProvider(output, lookupProvider, helper));
 
-        DatapackBuiltinEntriesProvider datapackProvider = new ModWorldGenProvider(output, lookupProvider);
+        DatapackBuiltinEntriesProvider datapackProvider = new TCRWorldGenProvider(output, lookupProvider);
         CompletableFuture<HolderLookup.Provider> provider = datapackProvider.getRegistryProvider();
-        generator.addProvider(event.includeServer(), new ModBiomeTagGenerator(output, provider, helper));
+        generator.addProvider(event.includeServer(), new TCRBiomeTagGenerator(output, provider, helper));
         generator.addProvider(event.includeServer(), datapackProvider);
     }
 }

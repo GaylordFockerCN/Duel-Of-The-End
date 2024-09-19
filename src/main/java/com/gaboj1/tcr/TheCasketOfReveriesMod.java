@@ -7,7 +7,7 @@ import com.gaboj1.tcr.block.entity.client.TigerSpawnerRenderer;
 import com.gaboj1.tcr.block.entity.client.YggdrasilBlockRenderer;
 import com.gaboj1.tcr.block.renderer.BetterStructureBlockRenderer;
 import com.gaboj1.tcr.block.renderer.PortalBedRenderer;
-import com.gaboj1.tcr.client.TCRModSounds;
+import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.effect.TCREffects;
 import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.entity.TCRModVillagers;
@@ -31,7 +31,7 @@ import com.gaboj1.tcr.entity.client.biome1.TreeGuardianRenderer;
 import com.gaboj1.tcr.entity.client.villager.TCRVillagerRenderer;
 import com.gaboj1.tcr.entity.custom.sword.SwordEntityRenderer;
 import com.gaboj1.tcr.item.TCRModItemTabs;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import com.gaboj1.tcr.worldgen.dimension.TCRChunkGenerator;
@@ -63,7 +63,6 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
-import software.bernie.geckolib.renderer.DynamicGeoEntityRenderer;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -85,8 +84,8 @@ public class TheCasketOfReveriesMod {
     public TheCasketOfReveriesMod(){
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        TCRModSounds.REGISTRY.register(bus);
-        TCRModItems.REGISTRY.register(bus);
+        TCRSounds.REGISTRY.register(bus);
+        TCRItems.REGISTRY.register(bus);
         TCRModBlocks.REGISTRY.register(bus);
         TCRModBlockEntities.REGISTRY.register(bus);
         TCRModEntities.REGISTRY.register(bus);

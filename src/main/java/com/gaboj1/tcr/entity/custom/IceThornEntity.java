@@ -2,7 +2,7 @@ package com.gaboj1.tcr.entity.custom;
 
 import com.gaboj1.tcr.effect.TCREffects;
 import com.gaboj1.tcr.entity.TCRModEntities;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -39,12 +39,12 @@ public class IceThornEntity extends AbstractArrow implements ItemSupplier {
     @Override
     @OnlyIn(Dist.CLIENT)
     public @NotNull ItemStack getItem() {
-        return new ItemStack(TCRModItems.ICE_THORN.get());
+        return new ItemStack(TCRItems.ICE_THORN.get());
     }
 
     @Override
     protected @NotNull ItemStack getPickupItem() {
-        return new ItemStack(TCRModItems.ICE_THORN.get());
+        return new ItemStack(TCRItems.ICE_THORN.get());
     }
 
     @Override

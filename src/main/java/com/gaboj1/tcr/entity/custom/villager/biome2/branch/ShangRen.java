@@ -3,13 +3,12 @@ package com.gaboj1.tcr.entity.custom.villager.biome2.branch;
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
 import com.gaboj1.tcr.entity.TCRModEntities;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.util.BookManager;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -85,8 +84,8 @@ public class ShangRen extends YueShiLineNpc {
                 chat(BUILDER.buildDialogueAnswer(entityType, 1));
                 startCustomTrade(player,
                         new MerchantOffer(
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN_PLUS.get(), 1),
-                                new ItemStack(TCRModItems.DREAMSCAPE_COIN.get(), 9),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 9),
                                 16, 0, 0)
                 );
                 break;

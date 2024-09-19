@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.item.custom.weapon;
 
-import com.gaboj1.tcr.client.TCRModSounds;
+import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.entity.custom.boss.second_boss.SecondBossEntity;
 import com.gaboj1.tcr.event.PlayerModelEvent;
 import com.gaboj1.tcr.item.custom.PoseItem;
@@ -77,7 +77,7 @@ public class PiPa extends Item implements GeoItem, PoseItem {
                 serverLevel.sendParticles(ParticleTypes.SONIC_BOOM, pos.x, pos.y, pos.z, 1, 0, 0, 0, 0);
             }
             stack.setDamageValue(stack.getDamageValue() + 1);
-            level.playSound(null, player.getX(), player.getY(), player.getZ(), TCRModSounds.PIPA.get(), SoundSource.BLOCKS, 1, 1);
+            level.playSound(null, player.getX(), player.getY(), player.getZ(), TCRSounds.PIPA.get(), SoundSource.BLOCKS, 1, 1);
             for(LivingEntity entity : EntityUtil.getNearByEntities(serverLevel, player, 20)){
                 if(EntityUtil.isInFront(entity, player, 20) && entity.distanceTo(player) < 10){
                     entity.hurt(player.damageSources().sonicBoom(player), 5);

@@ -3,11 +3,11 @@ package com.gaboj1.tcr.item.custom.weapon;
 
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.event.PlayerModelEvent;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.client.keymapping.KeyMappings;
 import com.gaboj1.tcr.entity.custom.BulletEntity;
 import com.gaboj1.tcr.entity.TCRModEntities;
-import com.gaboj1.tcr.client.TCRModSounds;
+import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.item.custom.PoseItem;
 import com.gaboj1.tcr.item.renderer.GunItemRenderer;
 import com.gaboj1.tcr.util.ItemUtil;
@@ -49,7 +49,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static com.gaboj1.tcr.item.TCRModItems.AMMO;
+import static com.gaboj1.tcr.item.TCRItems.AMMO;
 
 /**
  * 为了子沙鹰类做准备，省的写很多重复的代码
@@ -187,7 +187,7 @@ public class GunCommon extends Item implements GeoItem, PoseItem {
 
                 if (!world.isClientSide()) {
                     //播放音效
-                    world.playSound(null, x,y,z, TCRModSounds.DESERT_EAGLE_FIRE.get(), SoundSource.BLOCKS, 1, 1);
+                    world.playSound(null, x,y,z, TCRSounds.DESERT_EAGLE_FIRE.get(), SoundSource.BLOCKS, 1, 1);
                 } else {
                     //实现抖动
                     double[] recoilTimer = {0}; // 后坐力计时器
@@ -238,7 +238,7 @@ public class GunCommon extends Item implements GeoItem, PoseItem {
             } else if (hand == InteractionHand.MAIN_HAND && player.getOffhandItem().getItem() instanceof GunCommon) {//如果副手有枪就使用副手试试
                 player.getOffhandItem().getItem().use(world, player,InteractionHand.OFF_HAND);
             } else {//都没有就需要换弹了
-                player.displayClientMessage(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".reloadbutton", KeyMappings.RELOAD.saveString().toUpperCase()),true);
+                player.displayClientMessage(Component.translatable(TCRItems.GUN_COMMON.get().getDescriptionId()+".reloadbutton", KeyMappings.RELOAD.saveString().toUpperCase()),true);
             }
         }
         return InteractionResultHolder.pass(player.getItemInHand(hand));
@@ -254,13 +254,13 @@ public class GunCommon extends Item implements GeoItem, PoseItem {
         if (world instanceof ServerLevel){
 
             ItemStack anotherHandItemStake = player.getItemInHand(isMainHand?InteractionHand.OFF_HAND:InteractionHand.MAIN_HAND);
-            MutableComponent content = (isMainHand ? Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".main_hand_ammo") : Component.literal(" ").append(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".off_hand_ammo")));
+            MutableComponent content = (isMainHand ? Component.translatable(TCRItems.GUN_COMMON.get().getDescriptionId()+".main_hand_ammo") : Component.literal(" ").append(Component.translatable(TCRItems.GUN_COMMON.get().getDescriptionId()+".off_hand_ammo")));
             content.append(Component.literal(getBulletCount(handItemStake)+ "/" + GunCommon.MAX_AMMO));
 
             if(anotherHandItemStake.getItem() instanceof GunCommon){
-                content = Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".off_hand_ammo").append(
+                content = Component.translatable(TCRItems.GUN_COMMON.get().getDescriptionId()+".off_hand_ammo").append(
                         Component.literal((isMainHand ? getBulletCount(anotherHandItemStake) : getBulletCount(handItemStake)) + "/"+ GunCommon.MAX_AMMO + "      ")
-                                .append(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".main_hand_ammo")
+                                .append(Component.translatable(TCRItems.GUN_COMMON.get().getDescriptionId()+".main_hand_ammo")
                                         .append((isMainHand ? getBulletCount(handItemStake) : getBulletCount(anotherHandItemStake) )+ "/"+ GunCommon.MAX_AMMO)));
             }
             player.displayClientMessage(content,true);
@@ -271,8 +271,8 @@ public class GunCommon extends Item implements GeoItem, PoseItem {
     public void appendHoverText(@NotNull ItemStack itemstack, Level world, List<Component> list, @NotNull TooltipFlag flag) {
         ItemStack bulletItemStack = getBulletItemStack(itemstack,0);
         int ammo = bulletItemStack.getMaxDamage()-bulletItemStack.getDamageValue();
-        list.add(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".ammo_count").append(ammo+"/"+MAX_AMMO));
-        list.add(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".ammo_cooldown").append(String.format("%.2fs", coolDownTick*0.05)));
+        list.add(Component.translatable(TCRItems.GUN_COMMON.get().getDescriptionId()+".ammo_count").append(ammo+"/"+MAX_AMMO));
+        list.add(Component.translatable(TCRItems.GUN_COMMON.get().getDescriptionId()+".ammo_cooldown").append(String.format("%.2fs", coolDownTick*0.05)));
     }
 
 
@@ -349,16 +349,16 @@ public class GunCommon extends Item implements GeoItem, PoseItem {
         ItemStack offhandItem = player.getOffhandItem();
         if(mainHandItem.getItem() instanceof GunCommon item /*mainHandItem.getOrCreateTag().getBoolean(FatherDesertEagleItem.RELOADING_DONE_TAG)*/){
             if(isFull(mainHandItem)){
-                player.displayClientMessage(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".main_ammo_full"),true);
+                player.displayClientMessage(Component.translatable(TCRItems.GUN_COMMON.get().getDescriptionId()+".main_ammo_full"),true);
             } else if (item.isReloading) {
-                player.displayClientMessage(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".reloading"),true);
+                player.displayClientMessage(Component.translatable(TCRItems.GUN_COMMON.get().getDescriptionId()+".reloading"),true);
             }else doReload(player.getMainHandItem(),player,world,item.getAmmoType().get(),true);
         }
         if(offhandItem.getItem() instanceof GunCommon item && /*offhandItem.getOrCreateTag().getBoolean(FatherDesertEagleItem.RELOADING_DONE_TAG)*/!item.isReloading  && !isFull(offhandItem)){
             if(isFull(offhandItem)){
-                player.displayClientMessage(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".off_ammo_full"),true);
+                player.displayClientMessage(Component.translatable(TCRItems.GUN_COMMON.get().getDescriptionId()+".off_ammo_full"),true);
             } else if (item.isReloading) {
-                player.displayClientMessage(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".reloading"),true);
+                player.displayClientMessage(Component.translatable(TCRItems.GUN_COMMON.get().getDescriptionId()+".reloading"),true);
             }else doReload(player.getOffhandItem(),player,world,item.getAmmoType().get(),false);
         }
 
@@ -399,7 +399,7 @@ public class GunCommon extends Item implements GeoItem, PoseItem {
                         ((GunCommon)handItemStake.getItem()).reloadAnim(serverLevel, player, handItemStake);
                         //播放音效
                         //serverLevel.playSound(player, x,y,z, HDLModSounds.DESERTEAGLECRCRELOAD.get(), SoundSource.HOSTILE, 1, 1);
-                        serverLevel.playSound(null, x, y, z, TCRModSounds.DESERT_EAGLE_RELOAD.get(), SoundSource.BLOCKS, 1, 1);
+                        serverLevel.playSound(null, x, y, z, TCRSounds.DESERT_EAGLE_RELOAD.get(), SoundSource.BLOCKS, 1, 1);
                     }
 
                     Thread.sleep(GunCommon.RELOAD_TIME);
@@ -411,7 +411,7 @@ public class GunCommon extends Item implements GeoItem, PoseItem {
                     //显示子弹数量信息
                     showAmmoCount((Level) world, isMainHand, player, handItemStake);
                 }else{
-                    player.displayClientMessage(Component.translatable(TCRModItems.GUN_COMMON.get().getDescriptionId()+".no_ammo"),true);
+                    player.displayClientMessage(Component.translatable(TCRItems.GUN_COMMON.get().getDescriptionId()+".no_ammo"),true);
                 }
             } catch (Exception e) {//Exception高发地，实在不会搞
                 throw new RuntimeException(e);

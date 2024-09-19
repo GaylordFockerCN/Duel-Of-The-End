@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.entity.custom.biome1;
 
-import com.gaboj1.tcr.client.TCRModSounds;
+import com.gaboj1.tcr.client.TCRSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -26,9 +26,6 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
-
-import java.util.Random;
-import java.util.UUID;
 
 public class MiddleTreeMonsterEntity extends Monster implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -60,13 +57,13 @@ public class MiddleTreeMonsterEntity extends Monster implements GeoEntity {
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource p_21239_) {
-        return TCRModSounds.TREE_MONSTERS_HURT.get();
+        return TCRSounds.TREE_MONSTERS_HURT.get();
     }
     //中树怪死亡声音
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return TCRModSounds.TREE_MONSTERS_DEATH.get();
+        return TCRSounds.TREE_MONSTERS_DEATH.get();
     }
 
     @Override

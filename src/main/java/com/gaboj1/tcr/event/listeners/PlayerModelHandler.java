@@ -2,9 +2,8 @@ package com.gaboj1.tcr.event.listeners;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.event.PlayerModelEvent;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.item.custom.PoseItem;
-import com.gaboj1.tcr.item.custom.weapon.GunCommon;
 import com.gaboj1.tcr.util.ItemUtil;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -40,7 +39,7 @@ public class PlayerModelHandler {
         }
 
         //御剑飞行的姿势
-        if(ItemUtil.searchItem(player, TCRModItems.HOLY_SWORD.get()).getOrCreateTag().getBoolean("isFlying")){
+        if(ItemUtil.searchItem(player, TCRItems.HOLY_SWORD.get()).getOrCreateTag().getBoolean("isFlying")){
 
             Consumer<ModelPart> setRot = (modelPart)->{
                 modelPart.xRot = 0;

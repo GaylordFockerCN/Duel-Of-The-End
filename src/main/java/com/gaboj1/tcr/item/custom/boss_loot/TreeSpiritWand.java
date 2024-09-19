@@ -7,7 +7,7 @@ import com.gaboj1.tcr.entity.TCRModEntities;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainTalkableVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
-import com.gaboj1.tcr.item.TCRModItems;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.item.renderer.TreeSpiritWandRenderer;
 import com.gaboj1.tcr.util.ItemUtil;
 import com.google.common.collect.ImmutableMultimap;
@@ -48,7 +48,6 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
-import software.bernie.geckolib.util.RenderUtils;
 
 import java.util.List;
 import java.util.Random;
@@ -120,7 +119,7 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
 
     public static void onKill(LivingDeathEvent event){
         ItemStack stack = event.getEntity().getMainHandItem();
-        if(new Random().nextInt(0,30) == 5 &&event.getSource().getEntity() instanceof Player player && stack.is(TCRModItems.TREE_SPIRIT_WAND.get()) && stack.getOrCreateTag().getBoolean("fromBoss")){
+        if(new Random().nextInt(0,30) == 5 &&event.getSource().getEntity() instanceof Player player && stack.is(TCRItems.TREE_SPIRIT_WAND.get()) && stack.getOrCreateTag().getBoolean("fromBoss")){
             LivingEntity entity = event.getEntity();
             if(entity instanceof PastoralPlainVillager || entity instanceof PastoralPlainTalkableVillager || entity instanceof PastoralPlainVillagerElder){
                 AttributeInstance instance = player.getAttribute(Attributes.MAX_HEALTH);

@@ -2,7 +2,7 @@ package com.gaboj1.tcr.entity.custom.villager;
 
 import com.gaboj1.tcr.entity.ManySkinEntity;
 import com.gaboj1.tcr.entity.ai.behavior.TCRVillagerTasks;
-import com.gaboj1.tcr.client.TCRModSounds;
+import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.AddVillagerParticlePacket;
@@ -188,38 +188,38 @@ public abstract class TCRVillager extends Villager implements GeoEntity, ManySki
 
         //是坏人就唉声叹气一下
         if(SaveUtil.biome1.choice == 1){
-            SoundEvent sound = TCRModSounds.FEMALE_SIGH.get();
+            SoundEvent sound = TCRSounds.FEMALE_SIGH.get();
             int i = random.nextInt(2);
             sound = switch (i) {
-                case 0 -> TCRModSounds.FEMALE_SIGH.get();
-                case 1 -> TCRModSounds.FEMALE_HENG.get();
+                case 0 -> TCRSounds.FEMALE_SIGH.get();
+                case 1 -> TCRSounds.FEMALE_HENG.get();
                 default -> sound;
             };
-            SoundEvent sound2 = TCRModSounds.MALE_SIGH.get();
+            SoundEvent sound2 = TCRSounds.MALE_SIGH.get();
             int j = random.nextInt(2);
             sound2 = switch (j) {
-                case 0 -> TCRModSounds.MALE_HENG.get();
-                case 1 -> TCRModSounds.MALE_SIGH.get();
+                case 0 -> TCRSounds.MALE_HENG.get();
+                case 1 -> TCRSounds.MALE_SIGH.get();
                 default -> sound2;
             };
             return isFemale() ? sound : sound2;
         }
 
-        SoundEvent sound = TCRModSounds.FEMALE_VILLAGER_OHAYO.get();
+        SoundEvent sound = TCRSounds.FEMALE_VILLAGER_OHAYO.get();
         int i = random.nextInt(6);
         sound = switch (i) {
-            case 0 -> TCRModSounds.FEMALE_VILLAGER_HI.get();
-            case 1 -> TCRModSounds.FEMALE_VILLAGER_HELLO.get();
-            case 2 -> TCRModSounds.FEMALE_VILLAGER_HENG.get();
-            case 3 -> TCRModSounds.FEMALE_VILLAGER_HI_THERE.get();
-            case 4 -> TCRModSounds.FEMALE_VILLAGER_EI.get();
+            case 0 -> TCRSounds.FEMALE_VILLAGER_HI.get();
+            case 1 -> TCRSounds.FEMALE_VILLAGER_HELLO.get();
+            case 2 -> TCRSounds.FEMALE_VILLAGER_HENG.get();
+            case 3 -> TCRSounds.FEMALE_VILLAGER_HI_THERE.get();
+            case 4 -> TCRSounds.FEMALE_VILLAGER_EI.get();
             default -> sound;
         };
-        SoundEvent sound2 = TCRModSounds.MALE_HELLO.get();
+        SoundEvent sound2 = TCRSounds.MALE_HELLO.get();
         int j = random.nextInt(3);
         sound2 = switch (j) {
-            case 0 -> TCRModSounds.MALE_EYO.get();
-            case 1 -> TCRModSounds.MALE_HI.get();
+            case 0 -> TCRSounds.MALE_EYO.get();
+            case 1 -> TCRSounds.MALE_HI.get();
             default -> sound2;
         };
         return isFemale() ? sound : sound2;
@@ -227,12 +227,12 @@ public abstract class TCRVillager extends Villager implements GeoEntity, ManySki
 
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        return isFemale() ? TCRModSounds.FEMALE_VILLAGER_HURT.get() : TCRModSounds.MALE_GET_HURT.get();
+        return isFemale() ? TCRSounds.FEMALE_VILLAGER_HURT.get() : TCRSounds.MALE_GET_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return isFemale() ?  TCRModSounds.FEMALE_VILLAGER_DEATH.get() : TCRModSounds.MALE_DEATH.get();
+        return isFemale() ?  TCRSounds.FEMALE_VILLAGER_DEATH.get() : TCRSounds.MALE_DEATH.get();
     }
 
     /**

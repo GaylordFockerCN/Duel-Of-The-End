@@ -1,6 +1,5 @@
 package com.gaboj1.tcr.worldgen.structure.other;
 
-import com.gaboj1.tcr.datagen.tags.ModBiomeTagGenerator;
 import com.gaboj1.tcr.worldgen.structure.DecorationClearance;
 import com.gaboj1.tcr.worldgen.structure.TCRStructureTypes;
 import com.mojang.serialization.Codec;

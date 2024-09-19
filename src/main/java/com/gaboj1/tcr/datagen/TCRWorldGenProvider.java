@@ -5,12 +5,10 @@ import com.gaboj1.tcr.worldgen.TCRBiomeModifiers;
 import com.gaboj1.tcr.worldgen.TCRConfiguredFeatures;
 import com.gaboj1.tcr.worldgen.TCRPlacedFeatures;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
-import com.gaboj1.tcr.worldgen.noise.ModDensityFunctions;
+import com.gaboj1.tcr.worldgen.noise.TCRDensityFunctions;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
-import com.gaboj1.tcr.worldgen.noise.ModNoiseSettings;
-import com.gaboj1.tcr.worldgen.noise.ModNoises;
-import com.gaboj1.tcr.worldgen.structure.TCRStructureSets;
-import com.gaboj1.tcr.worldgen.structure.TCRStructures;
+import com.gaboj1.tcr.worldgen.noise.TCRNoiseSettings;
+import com.gaboj1.tcr.worldgen.noise.TCRNoises;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
@@ -21,7 +19,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-public class ModWorldGenProvider extends DatapackBuiltinEntriesProvider {
+public class TCRWorldGenProvider extends DatapackBuiltinEntriesProvider {
 
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
 //            .add(Registries.STRUCTURE, TCRStructures::bootstrap)
@@ -29,14 +27,14 @@ public class ModWorldGenProvider extends DatapackBuiltinEntriesProvider {
             .add(Registries.CONFIGURED_FEATURE, TCRConfiguredFeatures::bootstrap)
             .add(Registries.PLACED_FEATURE, TCRPlacedFeatures::bootstrap)
             .add(ForgeRegistries.Keys.BIOME_MODIFIERS, TCRBiomeModifiers::bootstrap)
-            .add(Registries.DENSITY_FUNCTION, ModDensityFunctions::bootstrap)
-            .add(Registries.NOISE, ModNoises::bootstrap)
-            .add(Registries.NOISE_SETTINGS, ModNoiseSettings::bootstrap)
+            .add(Registries.DENSITY_FUNCTION, TCRDensityFunctions::bootstrap)
+            .add(Registries.NOISE, TCRNoises::bootstrap)
+            .add(Registries.NOISE_SETTINGS, TCRNoiseSettings::bootstrap)
             .add(Registries.BIOME, TCRBiomes::boostrap)
             .add(Registries.LEVEL_STEM, TCRDimension::bootstrapStem)
             .add(Registries.DIMENSION_TYPE, TCRDimension::bootstrapType);
 
-    public ModWorldGenProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+    public TCRWorldGenProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, BUILDER, Set.of(TheCasketOfReveriesMod.MOD_ID));
     }
 }

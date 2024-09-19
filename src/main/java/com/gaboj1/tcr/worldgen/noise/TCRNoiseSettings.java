@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
 
-public class ModNoiseSettings {
+public class TCRNoiseSettings {
     public static final ResourceKey<NoiseGeneratorSettings> PLAIN = createKey("plain_noise_gen");
 
     private static ResourceKey<NoiseGeneratorSettings> createKey(String name) {
@@ -19,7 +19,7 @@ public class ModNoiseSettings {
     public static void bootstrap(BootstapContext<NoiseGeneratorSettings> context) {
         HolderGetter<DensityFunction> densityFunctions = context.lookup(Registries.DENSITY_FUNCTION);
         HolderGetter<NormalNoise.NoiseParameters> noise = context.lookup(Registries.NOISE);
-        context.register(PLAIN, ModNoiseBuilders.plainNoiseSettings(densityFunctions, noise));
+        context.register(PLAIN, TCRNoiseBuilders.plainNoiseSettings(densityFunctions, noise));
     }
 
 }

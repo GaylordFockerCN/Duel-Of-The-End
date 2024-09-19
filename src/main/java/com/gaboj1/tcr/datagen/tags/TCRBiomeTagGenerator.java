@@ -3,21 +3,18 @@ package com.gaboj1.tcr.datagen.tags;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BiomeTagsProvider;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
 import static com.gaboj1.tcr.worldgen.biome.TCRBiomeTags.*;
 
-public class ModBiomeTagGenerator extends BiomeTagsProvider {
+public class TCRBiomeTagGenerator extends BiomeTagsProvider {
 
 
-    public ModBiomeTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper helper) {
+    public TCRBiomeTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper helper) {
         super(output, provider, TheCasketOfReveriesMod.MOD_ID, helper);
     }
 

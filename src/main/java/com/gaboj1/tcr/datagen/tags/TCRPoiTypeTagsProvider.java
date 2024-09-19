@@ -11,8 +11,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ModPoiTypeTagsProvider extends PoiTypeTagsProvider {
-    public ModPoiTypeTagsProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pProvider, @Nullable ExistingFileHelper existingFileHelper) {
+public class TCRPoiTypeTagsProvider extends PoiTypeTagsProvider {
+    public TCRPoiTypeTagsProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pProvider, @Nullable ExistingFileHelper existingFileHelper) {
         super(pOutput, pProvider, TheCasketOfReveriesMod.MOD_ID, existingFileHelper);
     }
 

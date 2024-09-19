@@ -11,7 +11,7 @@ import net.minecraft.world.level.levelgen.DensityFunctions;
 import net.minecraft.world.level.levelgen.synth.BlendedNoise;
 
 
-public class ModDensityFunctions {
+public class TCRDensityFunctions {
     public static final ResourceKey<DensityFunction> BASE_3D_NOISE_PLAIN = createKey("base_3d_noise_plain");
 
     private static ResourceKey<DensityFunction> createKey(String name) {

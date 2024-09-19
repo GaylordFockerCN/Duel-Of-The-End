@@ -2,7 +2,7 @@ package com.gaboj1.tcr.worldgen.dimension;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.worldgen.biome.*;
-import com.gaboj1.tcr.worldgen.noise.ModNoiseSettings;
+import com.gaboj1.tcr.worldgen.noise.TCRNoiseSettings;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
@@ -59,9 +59,9 @@ public class TCRDimension {
 
         NoiseBasedChunkGenerator wrappedChunkGenerator = new NoiseBasedChunkGenerator(
                 TCRBiomeProvider.create(biomeRegistry),
-                noiseGenSettings.getOrThrow(ModNoiseSettings.PLAIN));
+                noiseGenSettings.getOrThrow(TCRNoiseSettings.PLAIN));
 
-        TCRChunkGenerator chunkGenerator = new TCRChunkGenerator(wrappedChunkGenerator, noiseGenSettings.getOrThrow(ModNoiseSettings.PLAIN));
+        TCRChunkGenerator chunkGenerator = new TCRChunkGenerator(wrappedChunkGenerator, noiseGenSettings.getOrThrow(TCRNoiseSettings.PLAIN));
         LevelStem stem = new LevelStem(dimTypes.getOrThrow(TCRDimension.P_SKY_ISLAND_TYPE), chunkGenerator);
         context.register(P_SKY_ISLAND_KEY, stem);
     }
