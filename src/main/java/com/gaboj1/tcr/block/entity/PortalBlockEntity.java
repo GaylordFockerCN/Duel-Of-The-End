@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.block.entity;
 
 import com.gaboj1.tcr.block.TCRBlockEntities;
+import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -19,12 +20,24 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private int id = 0;
-    public static final int maxID = 4;
+    public static final int maxID = 8;// 0~3: boss ; 4~7: village; 8: final
 
     private boolean isUnlock = false;
 
     public boolean isUnlock() {
         return isUnlock;
+    }
+
+    public void unlock(){
+        isUnlock = true;
+    }
+
+    public boolean isPlayerUnlock(Player player){
+        return DataManager.portalPointUnlockData.get(id).get(player);
+    }
+
+    public void setPlayerUnlock(Player player){
+        DataManager.portalPointUnlockData.get(id).put(player, true);
     }
 
     public PortalBlockEntity(BlockPos pos, BlockState state) {
@@ -54,25 +67,6 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
         player.sendSystemMessage(Component.literal("ID: "+id));
     }
 
-    public void unlock(){
-        isUnlock = true;
-    }
-
-    public String getTypeID(){
-        switch (id){
-            case 1:
-                return "boss1Unlocked";
-            case 2:
-                return "boss2Unlocked";
-            case 3:
-                return "boss3Unlocked";
-            case 4:
-                return "boss4Unlocked";
-            default:
-                return "finalUnlocked";
-        }
-    }
-
     public void activateAnim(){
         triggerAnim("Activate","activate1");
     }
@@ -86,7 +80,7 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
-        if(isUnlock){
+        if(isUnlock()){
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("unlock", Animation.LoopType.LOOP));
         }else {
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));

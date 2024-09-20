@@ -8,7 +8,6 @@ import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.PortalBlockScreenPacket;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -64,22 +63,27 @@ public class PortalBed extends BedBlock {
                 ServerLevel portalDimension = minecraftserver.getLevel(destinationResourcekey);
                 if (portalDimension != null && !pPlayer.isPassenger()) {
                     if(destinationResourcekey == TCRDimension.P_SKY_ISLAND_LEVEL_KEY) {
-                        if(DataManager.isFirstEnter.get(pPlayer)){
-                        }
                         //发包选择位置
                         CompoundTag data = new CompoundTag();
                         data.putBoolean("isVillage", true);
-                        data.putBoolean("isFromTeleporter", true);
+                        data.putBoolean("isFromPortalBed", true);
+                        if(!DataManager.isSecondEnter.get(pPlayer)){
+                            data.putBoolean("isSecondEnter", false);
+                            //传送后再设值为true
+                        } else {
+                            data.putBoolean("isSecondEnter", true);
+                        }
                         data.putInt("bedPosX", pPos.getX());
                         data.putInt("bedPosY", pPos.getY());
                         data.putInt("bedPosZ", pPos.getZ());
-                        pPlayer.getPersistentData().putBoolean("village1Unlocked", true);
-                        pPlayer.getPersistentData().putBoolean("village2Unlocked", true);
+                        for(DataManager.BoolData boolData : DataManager.portalPointUnlockData){
+                            data.putBoolean(boolData.getKey(), boolData.get(pPlayer));
+                        }
                         PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PortalBlockScreenPacket(data), ((ServerPlayer) pPlayer));
                     } else {
                         //爆炸并且获得成就
                         pLevel.removeBlock(pPos, false);
-                        BlockPos $$6 = pPos.relative(((Direction)pState.getValue(FACING)).getOpposite());
+                        BlockPos $$6 = pPos.relative(pState.getValue(FACING).getOpposite());
                         if (pLevel.getBlockState($$6).is(this)) {
                             pLevel.removeBlock($$6, false);
                         }

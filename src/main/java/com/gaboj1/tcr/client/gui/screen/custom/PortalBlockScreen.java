@@ -5,6 +5,7 @@ import com.gaboj1.tcr.client.gui.screen.component.PortalScreenComponent;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.serverbound.PortalBlockTeleportPacket;
+import com.gaboj1.tcr.util.DataManager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -23,20 +24,24 @@ import org.jetbrains.annotations.NotNull;
 public class PortalBlockScreen extends Screen {
     public static final ResourceLocation MY_BACKGROUND_LOCATION = new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"textures/gui/portal_background.png");
 
-    PortalScreenComponent bossFinal = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.final"), button -> this.finishChat((byte) 0));
-    PortalScreenComponent boss1 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss1"), button -> this.finishChat((byte) 1));
-    PortalScreenComponent boss2 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss2"), button -> this.finishChat((byte) 2));
-    PortalScreenComponent boss3 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss3"), button -> this.finishChat((byte) 3));
-    PortalScreenComponent boss4 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss4"), button -> this.finishChat((byte) 4));
+    PortalScreenComponent bossFinal = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.final"), button -> this.finishChat((byte) 9));
+    PortalScreenComponent biome1 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss1"), button -> this.finishChat((byte) 0));
+    PortalScreenComponent biome2 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss2"), button -> this.finishChat((byte) 1));
+    PortalScreenComponent biome3 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss3"), button -> this.finishChat((byte) 2));
+    PortalScreenComponent biome4 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss4"), button -> this.finishChat((byte) 3));
     private final boolean isVillage;
     private final boolean isFromTeleporter;
+    private final boolean isSecondEnter;
     private final BlockPos bedPos;
+    private final CompoundTag data;
 
 
     public PortalBlockScreen(CompoundTag serverPlayerData) {
         super(Component.empty());
+        data = serverPlayerData;
         isVillage = serverPlayerData.getBoolean("isVillage");
-        isFromTeleporter = serverPlayerData.getBoolean("isFromTeleporter");
+        isFromTeleporter = serverPlayerData.getBoolean("isFromPortalBed");
+        isSecondEnter = serverPlayerData.getBoolean("isSecondEnter");
         bedPos = new BlockPos(serverPlayerData.getInt("bedPosX"), serverPlayerData.getInt("bedPosY"), serverPlayerData.getInt("bedPosZ"));
     }
 
@@ -44,11 +49,26 @@ public class PortalBlockScreen extends Screen {
     protected void init() {
         positionButton();
         this.addRenderableWidget(bossFinal);
-        this.addRenderableWidget(boss1);
-        this.addRenderableWidget(boss2);
-        this.addRenderableWidget(boss3);
-        this.addRenderableWidget(boss4);
-
+        this.addRenderableWidget(biome1);
+        this.addRenderableWidget(biome2);
+        this.addRenderableWidget(biome3);
+        this.addRenderableWidget(biome4);
+        bossFinal.setEnable(true);
+        if(!isSecondEnter){
+            biome1.setEnable(true);
+            biome2.setEnable(true);
+            //3和4敬请期待！
+//            biome3.setEnable(true);
+//            biome4.setEnable(true);
+        } else {
+            if(isVillage){
+                biome1.setEnable(DataManager.villager1Unlock.get(data));
+                biome2.setEnable(DataManager.villager2Unlock.get(data));
+            } else {
+                biome1.setEnable(DataManager.boss1Unlock.get(data));
+                biome2.setEnable(DataManager.boss2Unlock.get(data));
+            }
+        }
         super.init();
     }
 
@@ -95,20 +115,20 @@ public class PortalBlockScreen extends Screen {
         bossFinal.setY(this.height / 2 - bossFinal.getHeight() / 2);
 
         //下
-        boss1.setX(this.width / 2 - boss1.getWidth() / 2);
-        boss1.setY(this.height *3 / 4 - boss1.getHeight() / 2);
+        biome1.setX(this.width / 2 - biome1.getWidth() / 2);
+        biome1.setY(this.height *3 / 4 - biome1.getHeight() / 2);
 
         //右
-        boss2.setX(this.width *3 / 4 - boss2.getWidth() / 2);
-        boss2.setY(this.height / 2 - boss2.getHeight() / 2);
+        biome2.setX(this.width *3 / 4 - biome2.getWidth() / 2);
+        biome2.setY(this.height / 2 - biome2.getHeight() / 2);
 
         //上
-        boss3.setX(this.width / 2 - boss3.getWidth() / 2);
-        boss3.setY(this.height / 4 - boss3.getHeight() / 2);
+        biome3.setX(this.width / 2 - biome3.getWidth() / 2);
+        biome3.setY(this.height / 4 - biome3.getHeight() / 2);
 
         //左
-        boss4.setX(this.width / 4 - boss4.getWidth() / 2);
-        boss4.setY(this.height / 2 - boss4.getHeight() / 2);
+        biome4.setX(this.width / 4 - biome4.getWidth() / 2);
+        biome4.setY(this.height / 2 - biome4.getHeight() / 2);
     }
 
 }

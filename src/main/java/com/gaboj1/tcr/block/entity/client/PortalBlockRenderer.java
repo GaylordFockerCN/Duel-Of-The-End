@@ -15,10 +15,14 @@ import software.bernie.geckolib.renderer.GeoBlockRenderer;
 
 public class PortalBlockRenderer extends GeoBlockRenderer<PortalBlockEntity> {
     public PortalBlockRenderer(BlockEntityRendererProvider.Context context) {
-        super(new DefaultedBlockGeoModel<>(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "portal_block")));
+        super(new DefaultedBlockGeoModel<>(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "portal_block")){
+            @Override
+            public ResourceLocation getTextureResource(PortalBlockEntity animatable) {
+                return super.getTextureResource(animatable);
+            }
+        });
     }
 
-    //没法继承render
     @Override
     public void defaultRender(PoseStack poseStack, PortalBlockEntity animatable, MultiBufferSource bufferSource, @Nullable RenderType renderType, @Nullable VertexConsumer buffer, float yaw, float partialTick, int packedLight) {
         poseStack.scale(2.0f,2.0f,2.0f);

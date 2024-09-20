@@ -11,7 +11,6 @@ import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import com.gaboj1.tcr.worldgen.portal.TCRTeleporter;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -28,12 +27,12 @@ import java.util.Objects;
 /**
  * 客户端发给服务端，进行传送判断并播放音效
  */
-public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, boolean isFromTeleporter, BlockPos bedPos) implements BasePacket {
+public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, boolean isFromPortalBed, BlockPos bedPos) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeByte(this.interactionID());
         buf.writeBoolean(this.isVillage());
-        buf.writeBoolean(this.isFromTeleporter());
+        buf.writeBoolean(this.isFromPortalBed());
         buf.writeBlockPos(this.bedPos());
     }
 
@@ -44,64 +43,71 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
     //TODO 修改不同的高度，修正偏移值。
     @Override
     public void execute(Player playerEntity) {
-        CompoundTag serverPlayerData = playerEntity.getPersistentData();
         Point destination;
         Vec3 offset = Vec3.ZERO;
-        boolean unlocked;
+        boolean unlocked = false;
         int height;
-        if(isVillage){
-            switch (this.interactionID()){
-                //第一第二可选
-                case 1: destination = BiomeMap.getInstance().getVillage1();height = 150;unlocked = serverPlayerData.getBoolean("village1Unlocked");;break;
-                case 2: destination = BiomeMap.getInstance().getVillage2()[0];height = 150;unlocked = serverPlayerData.getBoolean("village2Unlocked");break;
-                case 3: destination = BiomeMap.getInstance().getVillage3();height = 150;unlocked = serverPlayerData.getBoolean("village3Unlocked");break;
-                case 4: destination = BiomeMap.getInstance().getVillage4();height = 150;unlocked = serverPlayerData.getBoolean("village4Unlocked");break;
-                default:destination = BiomeMap.getInstance().getMainCenter();unlocked = SaveUtil.worldLevel >= 1;height = 200;//完成某一个群系的事件后才解锁主城
-            }
-        } else {
-            switch (this.interactionID()){
-                case 1: destination = BiomeMap.getInstance().getCenter1();height = 210;unlocked = serverPlayerData.getBoolean("boss1Unlocked");break;
-                case 2: destination = BiomeMap.getInstance().getCenter2();height = 220;unlocked = serverPlayerData.getBoolean("boss2Unlocked");break;
-                case 3: destination = BiomeMap.getInstance().getCenter3();height = 230;unlocked = serverPlayerData.getBoolean("boss3Unlocked");break;
-                case 4: destination = BiomeMap.getInstance().getCenter4();height = 240;unlocked = serverPlayerData.getBoolean("boss4Unlocked");break;
-                default:destination = BiomeMap.getInstance().getMainCenter();unlocked = SaveUtil.worldLevel >= 1;height = 200;//完成某一个群系的事件后才解锁主城
+        int id = this.interactionID;
+        if(!isVillage){
+            id += 4;
+        }
+        switch (id){
+            case 1: destination = BiomeMap.getInstance().getVillage1();height = 150;break;
+            case 2: destination = BiomeMap.getInstance().getVillage2()[0];height = 150;break;
+            case 3: destination = BiomeMap.getInstance().getVillage3();height = 150;break;
+            case 4: destination = BiomeMap.getInstance().getVillage4();height = 150;break;
+            case 5: destination = BiomeMap.getInstance().getCenter1();height = 210;break;
+            case 6: destination = BiomeMap.getInstance().getCenter2();height = 220;break;
+            case 7: destination = BiomeMap.getInstance().getCenter3();height = 230;break;
+            case 8: destination = BiomeMap.getInstance().getCenter4();height = 240;break;
+            default:destination = BiomeMap.getInstance().getMainCenter();unlocked = SaveUtil.worldLevel >= 1;height = 200;//完成某一个群系的事件后才解锁主城
+        }
+        if(id < 9){
+            if(!DataManager.isSecondEnter.get(playerEntity)){
+                unlocked = true;
+            } else {
+                unlocked = DataManager.portalPointUnlockData.get(this.interactionID).get(playerEntity);
             }
         }
 
-        //BiomeMap直接获取的是群系坐标，所以需要矫正一下。
-        destination = BiomeMap.getInstance().getBlockPos(destination);
+        if(unlocked || playerEntity.isCreative()){
+            //BiomeMap直接获取的是群系坐标，所以需要矫正一下。
+            destination = BiomeMap.getInstance().getBlockPos(destination);
 
-        if(isFromTeleporter){
-            if(playerEntity instanceof ServerPlayer serverPlayer){
-                ServerLevel currentLevel = serverPlayer.serverLevel();
-                ServerLevel portalDimension = Objects.requireNonNull(serverPlayer.getServer()).getLevel(TCRDimension.P_SKY_ISLAND_LEVEL_KEY);
-                if(portalDimension != null){
-                    playerEntity.changeDimension(portalDimension, new TCRTeleporter(new BlockPos(destination.x, 170, destination.y), true));
-                    TCRAdvancementData.getAdvancement(TheCasketOfReveriesMod.MOD_ID, serverPlayer);
-                    TCRAdvancementData.getAdvancement("enter_realm_of_the_dream", serverPlayer);
-                    if(DataManager.isFirstEnter.get(serverPlayer)){
-                        serverPlayer.displayClientMessage(Component.translatable("info.the_casket_of_reveries.first_enter"), false);
-                        DataManager.isFirstEnter.put(serverPlayer, false);
+            if(isFromPortalBed){
+                if(playerEntity instanceof ServerPlayer serverPlayer){
+                    ServerLevel currentLevel = serverPlayer.serverLevel();
+                    ServerLevel portalDimension = Objects.requireNonNull(serverPlayer.getServer()).getLevel(TCRDimension.P_SKY_ISLAND_LEVEL_KEY);
+                    if(portalDimension != null){
+                        playerEntity.changeDimension(portalDimension, new TCRTeleporter(new BlockPos(destination.x, 170, destination.y), true));
+                        TCRAdvancementData.getAdvancement(TheCasketOfReveriesMod.MOD_ID, serverPlayer);
+                        TCRAdvancementData.getAdvancement("enter_realm_of_the_dream", serverPlayer);
+                        if(!DataManager.isSecondEnter.get(serverPlayer)){
+                            serverPlayer.displayClientMessage(Component.translatable("info.the_casket_of_reveries.first_enter1"), false);
+                            serverPlayer.displayClientMessage(Component.translatable("info.the_casket_of_reveries.first_enter2"), false);
+                            serverPlayer.displayClientMessage(Component.translatable("info.the_casket_of_reveries.first_enter3"), false);
+                            DataManager.portalPointUnlockData.get(id).put(playerEntity, true);//解锁传送点
+                            DataManager.isSecondEnter.put(serverPlayer, true);
+                        }
+                        //记录进入点
+                        serverPlayer.getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {
+                            tcrPlayer.setBedPointBeforeEnter(bedPos);
+                        }));
+                        //召唤假人
+                        TCRFakePlayer fakePlayer = new TCRFakePlayer(serverPlayer, currentLevel, bedPos);
+                        fakePlayer.setPos(bedPos.getCenter());
+                        currentLevel.addFreshEntity(fakePlayer);
+                        fakePlayer.setSleepingPos(bedPos);
                     }
-                    //记录进入点
-                    serverPlayer.getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {
-                        tcrPlayer.setBedPointBeforeEnter(bedPos);
-                    }));
-                    //召唤假人
-                    TCRFakePlayer fakePlayer = new TCRFakePlayer(serverPlayer, currentLevel, bedPos);
-                    fakePlayer.setPos(bedPos.getCenter());
-                    currentLevel.addFreshEntity(fakePlayer);
-                    fakePlayer.setSleepingPos(bedPos);
                 }
-            }
-        } else {
-            if(unlocked || playerEntity.isCreative()){
+            } else {
                 Level level = playerEntity.level();
                 playerEntity.teleportTo(destination.x + offset.x,height + offset.y,destination.y + offset.z);
                 level.playSound(null,playerEntity.getX(),playerEntity.getY(),playerEntity.getZ(), SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS,1,1);//播放传送音效
-            }else {
-                playerEntity.sendSystemMessage(Component.translatable("info.the_casket_of_reveries.teleport_lock"));
             }
+        }else {
+            playerEntity.sendSystemMessage(Component.translatable("info.the_casket_of_reveries.teleport_lock"));
         }
+
     }
 }

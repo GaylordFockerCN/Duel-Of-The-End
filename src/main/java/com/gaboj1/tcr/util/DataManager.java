@@ -13,6 +13,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 用于单一玩家数据，而不是全体数据，SaveUtil用于全体数据{@link SaveUtil}
  *
@@ -25,43 +28,71 @@ import net.minecraft.world.entity.player.Player;
  */
 public class DataManager {
 
-    public static void putData(Player player, String key, double value){
+    public static void putData(Player player, String key, double value) {
         getTCRPlayer(player).putDouble(key, value);
     }
-    public static void putData(Player player, String key, String value){
+
+    public static void putData(Player player, String key, String value) {
         getTCRPlayer(player).putString(key, value);
     }
-    public static void putData(Player player, String key, boolean value){
+
+    public static void putData(Player player, String key, boolean value) {
         getTCRPlayer(player).putBoolean(key, value);
     }
 
-    public static boolean getBool(Player player, String key){
+    public static boolean getBool(Player player, String key) {
         return getTCRPlayer(player).getBoolean(key);
     }
-    public static double getDouble(Player player, String key){
+
+    public static double getDouble(Player player, String key) {
         return getTCRPlayer(player).getDouble(key);
     }
-    public static String getString(Player player, String key){
+
+    public static String getString(Player player, String key) {
         return getTCRPlayer(player).getString(key);
     }
-    public static TCRPlayer getTCRPlayer(Player player){
+
+    public static TCRPlayer getTCRPlayer(Player player) {
         return player.getCapability(TCRCapabilityProvider.TCR_PLAYER).orElse(new TCRPlayer());
     }
 
+    public static List<BoolData> portalPointUnlockData = new ArrayList<>();
+    public static BoolData villager1Unlock = new BoolData("villager1Unlock", false);
+    public static BoolData villager2Unlock = new BoolData("villager2Unlock", false);
+    public static BoolData villager3Unlock = new BoolData("villager3Unlock", false);
+    public static BoolData villager4Unlock = new BoolData("villager4Unlock", false);
+    public static BoolData boss1Unlock = new BoolData("boss1Unlock", false);
+    public static BoolData boss2Unlock = new BoolData("boss2Unlock", false);
+    public static BoolData boss3Unlock = new BoolData("boss3Unlock", false);
+    public static BoolData boss4Unlock = new BoolData("boss4Unlock", false);
+    public static BoolData finalUnlock = new BoolData("finalUnlock", false);
+    static {
+        portalPointUnlockData.add(villager1Unlock);
+        portalPointUnlockData.add(villager2Unlock);
+        portalPointUnlockData.add(villager3Unlock);
+        portalPointUnlockData.add(villager4Unlock);
+        portalPointUnlockData.add(boss1Unlock);
+        portalPointUnlockData.add(boss2Unlock);
+        portalPointUnlockData.add(boss3Unlock);
+        portalPointUnlockData.add(boss4Unlock);
+        portalPointUnlockData.add(finalUnlock);
+
+    }
+
     //工匠送的火枪
-    public static BoolData gunGot =  new BoolData("gun_got",false,4);
-    public static BoolData ammoGot =  new BoolData("ammo_got",false,5);
+    public static BoolData gunGot =  new BoolData("gun_got",false);
+    public static BoolData ammoGot =  new BoolData("ammo_got",false);
     //侍者送的饮料
-    public static BoolData drinkGot =  new BoolData("drink_got",false,6);
+    public static BoolData drinkGot =  new BoolData("drink_got",false);
     //长老送的
-    public static BoolData elderLoot1Got =  new BoolData("elder_loot1_got",false,7);
-    public static BoolData elderLoot2Got =  new BoolData("elder_loot2_got",false,8);
-    public static BoolData boss1LootGot =  new BoolData("boss1_loot_got",false,9);
-    public static BoolData isFirstEnter =  new BoolData("isFirstEnter",false,10);
-    public static BoolData isMiaoYinGifted =  new BoolData("isMiaoYinGifted",false,11);
-    public static BoolData stolenMiaoYin =  new BoolData("stolenMiaoYin",false,12);
-    public static BoolData wanMingPearlGot =  new BoolData("wanMingPearlGot",false,13);
-    public static BoolData miaoYinMoney1 =  new BoolData("miaoYinMoney1",false,14);
+    public static BoolData elderLoot1Got =  new BoolData("elder_loot1_got",false);
+    public static BoolData elderLoot2Got =  new BoolData("elder_loot2_got",false);
+    public static BoolData boss1LootGot =  new BoolData("boss1_loot_got",false);
+    public static BoolData isSecondEnter =  new BoolData("isFirstEnter",false);
+    public static BoolData isMiaoYinGifted =  new BoolData("isMiaoYinGifted",false);
+    public static BoolData stolenMiaoYin =  new BoolData("stolenMiaoYin",false);
+    public static BoolData wanMingPearlGot =  new BoolData("wanMingPearlGot",false);
+    public static BoolData miaoYinMoney1 =  new BoolData("miaoYinMoney1",false);
 
     //给予初始值
     public static void init(Player player){
@@ -75,9 +106,8 @@ public class DataManager {
         protected String key;
         protected boolean isLocked = false;//增加一个锁，用于初始化数据用
         protected int id;
-        public Data(String key, int id){
+        public Data(String key){
             this.key = key;
-            this.id = id;
         }
 
         public String getKey(){
@@ -118,8 +148,8 @@ public class DataManager {
         protected boolean isLocked = false;//增加一个锁
         protected String defaultString = "";
 
-        public StringData(String key, String defaultString, int id){
-            super(key,id);
+        public StringData(String key, String defaultString){
+            super(key);
             this.defaultString = defaultString;
         }
 
@@ -152,8 +182,8 @@ public class DataManager {
 
         private double defaultValue = 0;
 
-        public DoubleData(String key, double defaultValue, int id) {
-            super(key,id);
+        public DoubleData(String key, double defaultValue) {
+            super(key);
             this.defaultValue = defaultValue;
         }
 
@@ -185,8 +215,8 @@ public class DataManager {
     public static class BoolData extends Data<Boolean> {
 
         boolean defaultBool;
-        public BoolData(String key, boolean defaultBool,int id) {
-            super(key, id);
+        public BoolData(String key, boolean defaultBool) {
+            super(key);
             this.defaultBool = defaultBool;
         }
 

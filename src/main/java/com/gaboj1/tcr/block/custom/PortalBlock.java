@@ -17,7 +17,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -44,6 +43,7 @@ public class PortalBlock extends BaseEntityBlock{
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public @NotNull InteractionResult use(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult blockHitResult) {
 
         BlockEntity entity = level.getBlockEntity(pos);
@@ -54,8 +54,8 @@ public class PortalBlock extends BaseEntityBlock{
                 if(serverPlayer.isCreative()&&player.isShiftKeyDown()){
                     portalBlockEntity.changeId(player);
                 }else {
-                    if(!serverPlayer.getPersistentData().getBoolean(portalBlockEntity.getTypeID())){
-                        serverPlayer.getPersistentData().putBoolean(portalBlockEntity.getTypeID(),true);//解锁传送石！
+                    if(!portalBlockEntity.isPlayerUnlock(player)){
+                        portalBlockEntity.setPlayerUnlock(player);//解锁传送石！
                         serverPlayer.sendSystemMessage(Component.translatable("info.the_casket_of_reveries.teleport_unlock"));
                         portalBlockEntity.activateAnim();
                         level.playSound(null , player.getX(),player.getY(),player.getZ(), SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS,1,1);//播放末地传送门开启的音效
@@ -80,7 +80,7 @@ public class PortalBlock extends BaseEntityBlock{
     }
 
     @Override
-    public void appendHoverText(ItemStack p_49816_, @Nullable BlockGetter p_49817_, List<Component> components, TooltipFlag p_49819_) {
+    public void appendHoverText(@NotNull ItemStack p_49816_, @Nullable BlockGetter p_49817_, List<Component> components, @NotNull TooltipFlag p_49819_) {
         components.add(Component.translatable(this.getDescriptionId()+".usage"));
         super.appendHoverText(p_49816_, p_49817_, components, p_49819_);
     }
@@ -90,7 +90,9 @@ public class PortalBlock extends BaseEntityBlock{
         return Block.box(0,0,0,32,32,32);
     }
 
-    //粒子特效
+    /**
+     * 粒子特效
+     */
     @Override
     public void animateTick(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull RandomSource pRandom) {
         VoxelShape $$4 = this.getShape(pState, pLevel, pPos, CollisionContext.empty());

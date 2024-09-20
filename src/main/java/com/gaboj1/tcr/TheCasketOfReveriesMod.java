@@ -17,6 +17,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
@@ -71,7 +72,7 @@ public class TheCasketOfReveriesMod {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, TCRConfig.SPEC);
     }
 
-    public static Component getInfo(String key){
+    public static MutableComponent getInfo(String key){
         return Component.translatable("info.the_casket_of_reveries."+key);
     }
 

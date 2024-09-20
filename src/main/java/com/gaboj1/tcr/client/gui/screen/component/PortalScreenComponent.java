@@ -1,15 +1,28 @@
 package com.gaboj1.tcr.client.gui.screen.component;
 
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 分布在四个角以及中心的按钮
  */
 public class PortalScreenComponent extends Button {
+    private boolean enable;
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
     public PortalScreenComponent(MutableComponent message, Button.OnPress onPress) {
         super(Button.builder(appendBrackets(message), onPress).pos(0, 0).size(0, 12).createNarration(DEFAULT_NARRATION));
         this.width = Minecraft.getInstance().font.width(this.getMessage()) + 2;
@@ -23,5 +36,30 @@ public class PortalScreenComponent extends Button {
 
     public static MutableComponent appendBrackets(MutableComponent component) {
         return Component.literal("[").append(component).append("]");
+    }
+
+    /**
+     * 初步判断
+     */
+    @Override
+    public void onPress() {
+        if(!enable){
+            if(Minecraft.getInstance().player != null){
+                Minecraft.getInstance().player.displayClientMessage(TheCasketOfReveriesMod.getInfo("teleport_lock"), true);
+            }
+        } else {
+            super.onPress();
+        }
+    }
+
+    /**
+     * 上锁则显示上锁
+     */
+    @Override
+    public @NotNull Component getMessage() {
+        if(!enable){
+            return TheCasketOfReveriesMod.getInfo("teleport_lock").withStyle(ChatFormatting.BOLD, ChatFormatting.RED);
+        }
+        return super.getMessage();
     }
 }
