@@ -33,9 +33,9 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addKeyMapping(KeyMappings.RELOAD, "火枪换弹");
         this.addKeyMapping(KeyMappings.OPEN_PROGRESS, "查看进度");
 
-        this.add("info.the_casket_of_reveries.first_enter1", "这是什么地方？四处找人问问看怎么回事吧？");
-        this.add("info.the_casket_of_reveries.first_enter2", "这是什么地方？四处找人问问看怎么回事吧？");
-        this.add("info.the_casket_of_reveries.first_enter3", "这是什么地方？四处找人问问看怎么回事吧？");
+        this.add("info.the_casket_of_reveries.first_enter1", "§6[不知何处传来的声音]§r：我即是你，你即使我。旅途的终点，我们会再相见的。");
+        this.add("info.the_casket_of_reveries.first_enter2", "§6[不知何处传来的声音]§r：这个世界有诸多可能，有机会做出选择的时候，不要后悔。");
+        this.add("info.the_casket_of_reveries.first_enter3", "§6[不知何处传来的声音]§r：带上你的选择，来见我吧。");
         this.add("info.the_casket_of_reveries.enter_forbidden_biome","前面的区域，以后再来探索吧~");
         this.add("info.the_casket_of_reveries.teleport_lock","该区域尚未解锁");
         this.add("info.the_casket_of_reveries.teleport_unlock","成功激活此锚点！");
@@ -460,7 +460,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         //沧澜
         this.addDialog(TCREntities.CANG_LAN,1,"小兄弟，你风尘仆仆来到此地，可曾察觉这山巅与浮岛的天壤之别？");
         this.addDialog(TCREntities.CANG_LAN,2,"盟主征尽，当年于山巅论剑决出的武林至尊，如今却有违当初的誓言，不顾联盟生死。一场突如其来的天灾，暴露了他们的无能与我们的绝望。");
-        this.addDialog(TCREntities.CANG_LAN,3,"迫于盟主武力高强，我们只能任人鱼肉。更可恨的是，他们围剿资源，囤积武学秘籍，接连下达禁令，美其名曰维护江湖秩序。");
+        this.addDialog(TCREntities.CANG_LAN,3,"迫于盟主武力高强，我们只能任人鱼肉。更可恨的是，他们围剿资源，囤积各派武学秘籍，接连下达禁令，美其名曰维护江湖秩序。");
         this.addDialog(TCREntities.CANG_LAN,4,"如今，吾联合六大掌门，欲揭竿而起，剿灭那只顾一己私利的盟主，为武林除害，重建一个公平正义的江湖！小兄弟是否愿与我们同行？");
         this.addDialog(TCREntities.CANG_LAN,5,"甚好！侠士之加入，使义军如虎添翼。请随我们一同前往 %s 之地！");
         this.addDialog(TCREntities.CANG_LAN,6,"（点头）我理解，在你了解到盟主的铁腕政策后，我相信，你会回来的。");
