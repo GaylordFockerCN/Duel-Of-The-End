@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.item.custom;
+package com.gaboj1.tcr.item;
 
 import com.gaboj1.tcr.effect.TCREffects;
 import net.minecraft.world.effect.MobEffectInstance;

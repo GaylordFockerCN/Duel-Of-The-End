@@ -157,6 +157,15 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addItemUsageInfo(TCRItems.ORICHALCUM_LEGGINGS.get(),"神金套装，拥有非常高的韧性和击退抗性，但是护甲值较低。");
         this.addItemUsageInfo(TCRItems.ORICHALCUM_BOOTS.get(),"神金套装，拥有非常高的韧性和击退抗性，但是护甲值较低。");
 
+        this.add(TCRItems.ICE_TIGER_HELMET.get(),"冰虎头盔");
+        this.add(TCRItems.ICE_TIGER_CHESTPLATE.get(),"冰虎胸甲");
+        this.add(TCRItems.ICE_TIGER_LEGGINGS.get(),"冰虎护腿");
+        this.add(TCRItems.ICE_TIGER_BOOTS.get(),"冰虎靴子");
+        this.addItemUsageInfo(TCRItems.ICE_TIGER_HELMET.get(),"冰虎套装，");
+        this.addItemUsageInfo(TCRItems.ICE_TIGER_CHESTPLATE.get(),"");
+        this.addItemUsageInfo(TCRItems.ICE_TIGER_LEGGINGS.get(),"");
+        this.addItemUsageInfo(TCRItems.ICE_TIGER_BOOTS.get(),"");
+
 
         this.add(TCRItems.DREAMSCAPE_COIN.get(),"梦碎片");
         this.addItemUsageInfo(TCRItems.DREAMSCAPE_COIN.get(),"在梦之领域通用的货币，闪闪发光十分珍贵。九个梦碎片可以合成一个梦晶石");

@@ -130,6 +130,11 @@ public class TCRItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(TCRItems.ORICHALCUM_LEGGINGS);
         trimmedArmorItem(TCRItems.ORICHALCUM_BOOTS);
 
+//        simpleItem(TCRItems.ICE_TIGER_BOOTS);
+//        simpleItem(TCRItems.ICE_TIGER_CHESTPLATE);
+//        simpleItem(TCRItems.ICE_TIGER_HELMET);
+//        simpleItem(TCRItems.ICE_TIGER_LEGGINGS);
+
     }
 
     // Shoutout to El_Redstoniano for making this

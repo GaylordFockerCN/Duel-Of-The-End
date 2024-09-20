@@ -133,6 +133,7 @@ public class TCRItemTabs {
 
 			}).build());
 
+	//战斗用品
 	public static final RegistryObject<CreativeModeTab> WEAPON = REGISTRY.register("weapon",
 			() -> CreativeModeTab.builder()
 					.withTabsBefore(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "spawn_egg"))
@@ -154,12 +155,18 @@ public class TCRItemTabs {
 						tabData.accept(TCRItems.ORICHALCUM_LEGGINGS.get());
 						tabData.accept(TCRItems.ORICHALCUM_BOOTS.get());
 
+						tabData.accept(TCRItems.ICE_TIGER_HELMET.get());
+						tabData.accept(TCRItems.ICE_TIGER_CHESTPLATE.get());
+						tabData.accept(TCRItems.ICE_TIGER_LEGGINGS.get());
+						tabData.accept(TCRItems.ICE_TIGER_BOOTS.get());
+
 						//法宝
 						tabData.accept(TCRItems.TREE_SPIRIT_WAND.get());
 						tabData.accept(TCRItems.HOLY_SWORD.get());
 
 					}).build());
 
+	//可食用物品
 	public static final RegistryObject<CreativeModeTab> FOOD = REGISTRY.register("food",
 			() -> CreativeModeTab.builder()
 					.withTabsBefore(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "spawn_egg"))

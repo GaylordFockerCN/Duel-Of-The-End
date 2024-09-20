@@ -3,6 +3,7 @@ package com.gaboj1.tcr.item;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.item.custom.*;
+import com.gaboj1.tcr.item.custom.armor.IceTigerArmorItem;
 import com.gaboj1.tcr.item.custom.armor.OrichalcumArmorItem;
 import com.gaboj1.tcr.item.custom.boss_loot.FlySword;
 import com.gaboj1.tcr.item.custom.boss_loot.TreeSpiritWand;
@@ -46,6 +47,14 @@ public class TCRItems {
 			() -> new OrichalcumArmorItem(TCRArmorMaterials.ORICHALCUM, ArmorItem.Type.LEGGINGS, new Item.Properties()));
 	public static final RegistryObject<Item> ORICHALCUM_BOOTS = REGISTRY.register("orichalcum_boots",
 			() -> new OrichalcumArmorItem(TCRArmorMaterials.ORICHALCUM, ArmorItem.Type.BOOTS, new Item.Properties()));
+	public static final RegistryObject<Item> ICE_TIGER_HELMET = REGISTRY.register("ice_tiger_helmet",
+			() -> new IceTigerArmorItem(TCRArmorMaterials.ICE_TIGER, ArmorItem.Type.HELMET, new Item.Properties()));
+	public static final RegistryObject<Item> ICE_TIGER_CHESTPLATE = REGISTRY.register("ice_tiger_chestplate",
+			() -> new IceTigerArmorItem(TCRArmorMaterials.ICE_TIGER, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+	public static final RegistryObject<Item> ICE_TIGER_LEGGINGS = REGISTRY.register("ice_tiger_leggings",
+			() -> new IceTigerArmorItem(TCRArmorMaterials.ICE_TIGER, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+	public static final RegistryObject<Item> ICE_TIGER_BOOTS = REGISTRY.register("ice_tiger_boots",
+			() -> new IceTigerArmorItem(TCRArmorMaterials.ICE_TIGER, ArmorItem.Type.BOOTS, new Item.Properties()));
 	public static final RegistryObject<Item> TREE_SPIRIT_WAND = REGISTRY.register("tree_spirit_wand", TreeSpiritWand::new);
 
 	public static final RegistryObject<Item> SPIRIT_WAND = REGISTRY.register("spirit_wand", SpiritWand::new);
