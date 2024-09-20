@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.entity.custom.boss.second_boss;
 
+import com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder;
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
 import com.gaboj1.tcr.entity.TCREntities;
@@ -8,6 +9,7 @@ import com.gaboj1.tcr.entity.custom.villager.biome2.*;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
+import com.gaboj1.tcr.util.EntityUtil;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
@@ -41,6 +43,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
@@ -54,7 +57,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
     }
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, SaveUtil.getMobMultiplier(200))
+                .add(Attributes.MAX_HEALTH, 1)//TODO 测试用
                 .add(Attributes.ATTACK_DAMAGE, SaveUtil.getMobMultiplier(3))
                 .add(Attributes.ATTACK_SPEED, 0.5f)
                 .add(Attributes.MOVEMENT_SPEED, 0.30f)
@@ -248,12 +251,23 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
     public void removeMaster(Master master){
         mastersId.remove(master.getId());
         if(mastersId.isEmpty()){
-            if(getTarget() instanceof ServerPlayer serverPlayer){
-                SaveUtil.biome2.isElderDie = true;
-                sendDialoguePacket(serverPlayer);
-            } else if(level().getNearestPlayer(this, 48) instanceof ServerPlayer serverPlayer){
-                SaveUtil.biome2.isElderDie = true;
-                sendDialoguePacket(serverPlayer);
+            AtomicBoolean hasSend = new AtomicBoolean(false);
+            //苍澜说遗言
+            for(Player player : EntityUtil.getNearByPlayers(level(), this, 32)){
+                DialogueComponentBuilder.displayClientMessages(player, 2000, false, ()->{
+                    if(!hasSend.get()){
+                        if(getTarget() instanceof ServerPlayer serverPlayer){
+                            SaveUtil.biome2.isElderDie = true;
+                            sendDialoguePacket(serverPlayer);
+                        } else if(level().getNearestPlayer(this, 32) instanceof ServerPlayer serverPlayer){
+                            SaveUtil.biome2.isElderDie = true;
+                            sendDialoguePacket(serverPlayer);
+                        }
+                        hasSend.set(true);
+                    }
+                },
+                BUILDER.buildDialogue(TCREntities.CANG_LAN.get(), BUILDER.buildDialogueAnswer(TCREntities.CANG_LAN.get(), 12, false)),
+                BUILDER.buildDialogueAnswer(TCREntities.CANG_LAN.get(), 13, false));
             }
         }
     }

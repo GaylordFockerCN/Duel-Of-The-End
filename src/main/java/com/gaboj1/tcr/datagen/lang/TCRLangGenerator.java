@@ -461,27 +461,29 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addDialogChoice(TCREntities.YGGDRASIL,3,"海拉长老？背叛者？");
         this.addDialogChoice(TCREntities.YGGDRASIL,4,"你的话听起来更像是在为自己谋利。");
         this.addDialogChoice(TCREntities.YGGDRASIL,5,"你以为我会信了你的鬼话？（处决树魔）");
-        this.addDialogChoice(TCREntities.YGGDRASIL,6,"守护森林我义不容辞！（刺杀海拉）");
+        this.addDialogChoice(TCREntities.YGGDRASIL,6,"守护森林我义不容辞！（信任树魔，刺杀海拉）");
         this.addDialogChoice(TCREntities.YGGDRASIL,7,"（呈上人头）");
         this.addDialogChoice(TCREntities.YGGDRASIL,8,"万分感谢！");
         this.addDialogChoice(TCREntities.YGGDRASIL,9,"我将去往何方？");
 
         //沧澜
         this.addDialog(TCREntities.CANG_LAN,1,"小兄弟，你风尘仆仆来到此地，可曾察觉这山巅与浮岛的天壤之别？");
-        this.addDialog(TCREntities.CANG_LAN,2,"盟主征尽，当年于山巅论剑决出的武林至尊，如今却有违当初的誓言，不顾联盟生死。一场突如其来的天灾，暴露了他们的无能与我们的绝望。");
-        this.addDialog(TCREntities.CANG_LAN,3,"迫于盟主武力高强，我们只能任人鱼肉。更可恨的是，他们围剿资源，囤积各派武学秘籍，接连下达禁令，美其名曰维护江湖秩序。");
-        this.addDialog(TCREntities.CANG_LAN,4,"如今，吾联合六大掌门，欲揭竿而起，剿灭那只顾一己私利的盟主，为武林除害，重建一个公平正义的江湖！小兄弟是否愿与我们同行？");
-        this.addDialog(TCREntities.CANG_LAN,5,"甚好！侠士之加入，使义军如虎添翼。请随我们一同前往 %s 之地！");
-        this.addDialog(TCREntities.CANG_LAN,6,"（点头）我理解，在你了解到盟主的铁腕政策后，我相信，你会回来的。");
-        this.addDialog(TCREntities.CANG_LAN,7,"（站在废墟之上，目光坚定）我们的胜利是江湖的胜利！你的勇气和选择为我们赢得了自由的曙光");
-        this.addDialog(TCREntities.CANG_LAN,8,"（微笑着）这仅是一个开始，小兄弟。真正的工作现在才开始！我们将建立一个新的联盟，不再由谁独裁的联盟！");
-        this.addDialog(TCREntities.CANG_LAN,9,"（拍着玩家的肩膀）我们并肩作战，未来将由我们共同塑造！请小兄弟收下我们的微薄谢礼！");
-        this.addDialog(TCREntities.CANG_LAN,10,"这个嘛...牧歌原野似乎有着巨大的危机，位于 %s ，樱之原野似乎在进行大选，位于 %s 。亚特兰蒂斯嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通");
-        this.addDialog(TCREntities.CANG_LAN,11,"住手，盟主！你的谎言和暴政到此为止。我们是为了各弟子的生存与尊严，为了一个更加公平的江湖而来！");
+        this.addDialog(TCREntities.CANG_LAN,2,"当年老盟主仙逝，大岚教教主征尽，趁我闭关修炼，于山巅论剑赢得盟主之位。但我怀疑小小岚教得盟主之位，必是借助了非人之力。此等人不配享盟主之位！。");
+        this.addDialog(TCREntities.CANG_LAN,3,"迫于其武力高强，我们只能任人鱼肉。他们还囤积各派武学秘籍，残害武林同道，研制邪术，甚至其手下为夺权自相残杀，接连下达禁令，扰乱武林秩序。");
+        this.addDialog(TCREntities.CANG_LAN,4,"如今，吾联合六大门派，欲兴师问罪，剿灭岚教，小兄弟是否愿与我们同行？");
+        this.addDialog(TCREntities.CANG_LAN,5,"甚好！侠士之加入，义军如虎添翼！请随我们一同前往 %s 之地！");
+        this.addDialog(TCREntities.CANG_LAN,6,"我理解，在你了解到征尽之奸诈险恶后，我相信，你会回来的。");
+        this.addDialog(TCREntities.CANG_LAN,7,"（目光坚定）我们的胜利是江湖的胜利！你的勇气和选择为我们赢得了自由的曙光");
+        this.addDialog(TCREntities.CANG_LAN,8,"（微笑着）这仅是一个开始，小兄弟。真正的工作现在才开始！我们将建立一个新的联盟！哈哈哈哈！");
+        this.addDialog(TCREntities.CANG_LAN,9,"（拍着你的肩膀）未来将由我们共同塑造！请小兄弟收下我们的微薄谢礼！");
+        this.addDialog(TCREntities.CANG_LAN,10,"这个嘛...牧歌原野似乎有着巨大的危机，位于 %s ，樱之原野****，位于 %s 。至于北部的亚特兰蒂斯，常年无音讯。");
+        this.addDialog(TCREntities.CANG_LAN,11,"住手，征尽！你的谎言和暴政到此为止。我们是为了各门派的生存与尊严，为了江湖未来而来！");
+        this.addDialog(TCREntities.CANG_LAN,12,"师兄...我闭关这么久，精心策划，又联手六大门派，依旧没能胜过你么...你又为何不下杀手！");
+        this.addDialog(TCREntities.CANG_LAN,13,"（苍澜自尽了...）");
 
         this.addDialogChoice(TCREntities.CANG_LAN,0,"继续");
-        this.addDialogChoice(TCREntities.CANG_LAN,1,"（同情地）此等世道，实在令人痛心疾首！");
-        this.addDialogChoice(TCREntities.CANG_LAN,2,"我愿与诸位同道，共赴义举。我虽无意逐鹿，却知苍生苦楚。");
+        this.addDialogChoice(TCREntities.CANG_LAN,1,"此话怎讲？");
+        this.addDialogChoice(TCREntities.CANG_LAN,2,"我愿与诸位同道，共赴义举！");
         this.addDialogChoice(TCREntities.CANG_LAN,3,"我需亲眼目睹这一切，再作定夺。");
         this.addDialogChoice(TCREntities.CANG_LAN,4,"这一切...结束了吗？");
         this.addDialogChoice(TCREntities.CANG_LAN,5,"我也会尽我所能，帮助建设这个新世界。");
@@ -489,22 +491,23 @@ public class TCRLangGenerator extends TCRLangProvider {
 
         //Boss2
         this.addEntityAndEgg(TCREntities.SECOND_BOSS,"第二群系boss");
-        this.addDialog(TCREntities.SECOND_BOSS,0,"你终于来了...你可听闻，一群受人蛊惑的莽夫，欲揭竿而起，威胁到我们世代相传的秩序。我看并非对如今秩序不满，而是贪图我手中的武林秘籍。");
-        this.addDialog(TCREntities.SECOND_BOSS,1,"我受世界尽头之任，维护的不仅是江湖的稳定，更是群系的根基。武林秘籍倘若公之于众，若落入奸人手里，后果不堪设想！我需要你的剑，来助我守住此地。");
-        this.addDialog(TCREntities.SECOND_BOSS,2,"（大笑）哈哈哈哈，后生可畏，后生可畏！群系之基如今可取决于你的决定了。若你愿助我度过此难，我将给予你本应得到的力量。");
-        this.addDialog(TCREntities.SECOND_BOSS,3,"（冷笑）苍澜，你这是自寻死路！云逸，翠华，焰心，震宇，断山，你们也愿信他的鬼话？");
-        this.addDialog(TCREntities.SECOND_BOSS,4,"（审视着战场）你展现了非凡的勇气和力量，我的忠实盟友。奸人已被驱散，秩序得以维护。");
-        this.addDialog(TCREntities.SECOND_BOSS,5,"（坚定地）总得有人做出牺牲，可惜连累了其他几位掌门。好了，如今请收下你应得的那份力量吧。");
-        this.addDialog(TCREntities.SECOND_BOSS,6,"掌门战败，他们的弟子绝不会就此罢休，我将修养片刻，维护群系稳定的大业亦有一段距离。你的旅途也亦未终止。");
-        this.addDialog(TCREntities.SECOND_BOSS,7,"回溯密林位于 %s ，樱之原野位于 %s 。亚特兰蒂斯位于 %s 。这个世界的四大洲都不得安宁，不知世界尽头那边又有何动作。");
+        this.addDialog(TCREntities.SECOND_BOSS,0,"你终于来了...一群受人蛊惑的莽夫，欲取我人头来了。大岚教行于黑暗，却侍奉光明。我教原本与世无争，但自我接任盟主以来，不知怎地被视作异端邪教。");
+        this.addDialog(TCREntities.SECOND_BOSS,1,"老盟主仙逝，群龙总不能无首。抛开盟主本职不谈，我也有弘扬教义，净化江湖风气之意。此外，我欲召集众人研习各家武学，为武学发展贡献，不知为何外界却传成了这般...");
+        this.addDialog(TCREntities.SECOND_BOSS,2,"我的确寻求了『祂』的力量。若不先取得高位，伟业又从何实现？如今奸人挑拨，我的伟业怕是不成了。若是苍澜的话...");
+        this.addDialog(TCREntities.SECOND_BOSS,3,"（冷笑）师弟，自那一别，你依旧死性不改啊，此位于你于我又有何区别？何必如此害我？云逸，翠华，焰心，震宇，断山，你们也愿信他的鬼话？");
+        this.addDialog(TCREntities.SECOND_BOSS,4,"没想到他竟然选择了自尽...『祂』说的不错，相信你是对的。");
+        this.addDialog(TCREntities.SECOND_BOSS,5,"其他几位掌门，毕竟受人蛊惑，我会饶了他们性命。苍澜自尽前蒙羞说出了真相，此事一传出去，想必可以一改江湖对大岚教的误解罢。这几粒丹药乃是微薄谢礼，还请阁下收下。");
+        this.addDialog(TCREntities.SECOND_BOSS,6,"我知道你有很多疑惑，你想问的这些，日后再谈吧，我将修养片刻，眼下也有很多事未处理。");
+        this.addDialog(TCREntities.SECOND_BOSS,7,"回溯密林（ %s ）？，樱之原野（ %s ）？亦或是亚特兰蒂斯 %s ？这个世界的四大洲都不得安宁，不知世界尽头那边又有何动作。");
         this.addDialog(TCREntities.SECOND_BOSS,8,"江湖路远，有缘再见！");
+        this.addDialog(TCREntities.SECOND_BOSS,9,"若是苍澜的话...没关系的...都一样...");
 
         this.addDialogChoice(TCREntities.SECOND_BOSS,0,"继续");
-        this.addDialogChoice(TCREntities.SECOND_BOSS,1,"不满？秘籍？");
-        this.addDialogChoice(TCREntities.SECOND_BOSS,2,"我怎能凭你一面之词？");
-        this.addDialogChoice(TCREntities.SECOND_BOSS,3,"奸人速速退下！休想窃取秘籍！（支持盟主）");
-        this.addDialogChoice(TCREntities.SECOND_BOSS,4,"盟主，你所谓的秩序已然导致了混乱！（支持联军）");
-        this.addDialogChoice(TCREntities.SECOND_BOSS,5,"这场战斗...真的值得吗？");
+        this.addDialogChoice(TCREntities.SECOND_BOSS,1,"你认识我？与世无争为何欲得盟主之位？");
+        this.addDialogChoice(TCREntities.SECOND_BOSS,2,"为何平日无闻的大岚教能夺得盟主之位？");
+        this.addDialogChoice(TCREntities.SECOND_BOSS,3,"奸人速速退下！（支持征尽）");
+        this.addDialogChoice(TCREntities.SECOND_BOSS,4,"盟主，停下你的谎言！（支持联军）");
+        this.addDialogChoice(TCREntities.SECOND_BOSS,5,"接下来怎么办？为何称苍澜师弟？『祂』是谁？");
         this.addDialogChoice(TCREntities.SECOND_BOSS,6,"我将去往何方？");
 
         //厨娘

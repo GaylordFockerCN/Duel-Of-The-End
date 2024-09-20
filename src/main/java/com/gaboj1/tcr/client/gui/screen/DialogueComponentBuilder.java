@@ -65,26 +65,26 @@ public class DialogueComponentBuilder {
     public MutableComponent buildDialogueOption(EntityType<?> entityType, int skinID, int i) {
         return Component.translatable(entityType+".choice"+skinID+"_"+ i);
     }
-    public MutableComponent buildDialogueAnswer(EntityType<?> entityType, int i , boolean newLine) {
+    public MutableComponent buildDialogueAnswer(EntityType<?> entityType, int i, boolean newLine) {
         Component component = Component.translatable(entityType+".dialog"+i);
 
         return Component.literal(newLine?"\n":"").append(component);//换行符有效
     }
 
-    public MutableComponent buildDialogueAnswer(EntityType<?> entityType, int i ) {
+    public MutableComponent buildDialogueAnswer(EntityType<?> entityType, int i) {
         Component component = Component.translatable(entityType+".dialog"+i);
 
         return Component.literal("\n").append(component);//换行符有效
     }
 
-    public MutableComponent buildDialogueAnswer(EntityType<?> entityType, int skinID , int i ) {
+    public MutableComponent buildDialogueAnswer(EntityType<?> entityType, int skinID, int i) {
         Component component = Component.translatable(entityType+".dialog"+skinID+"_"+i);
 
         return Component.literal("\n").append(component);//换行符有效
     }
 
 
-    public MutableComponent buildDialogueAnswer(EntityType<?> entityType, int skinID , int i , boolean newLine) {
+    public MutableComponent buildDialogueAnswer(EntityType<?> entityType, int skinID, int i, boolean newLine) {
         Component component = Component.translatable(entityType+".dialog"+skinID+"_"+i);
         return Component.literal(newLine?"\n":"").append(component);//换行符有效
     }
