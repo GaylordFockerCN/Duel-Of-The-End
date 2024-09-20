@@ -11,7 +11,6 @@ import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.DyeColor;
@@ -65,7 +64,7 @@ public class PortalBed extends BedBlock {
                 ServerLevel portalDimension = minecraftserver.getLevel(destinationResourcekey);
                 if (portalDimension != null && !pPlayer.isPassenger()) {
                     if(destinationResourcekey == TCRDimension.P_SKY_ISLAND_LEVEL_KEY) {
-                        if(DataManager.isFirstEnter.getBool(pPlayer)){
+                        if(DataManager.isFirstEnter.get(pPlayer)){
                         }
                         //发包选择位置
                         CompoundTag data = new CompoundTag();

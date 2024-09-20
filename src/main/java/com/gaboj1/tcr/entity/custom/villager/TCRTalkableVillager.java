@@ -5,6 +5,7 @@ import com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
+import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -73,7 +74,7 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
                 this.lookAt(player, 180.0F, 180.0F);
                 if (player instanceof ServerPlayer serverPlayer) {
                     if (this.getConversingPlayer() == null) {
-                        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(),serverPlayer.getPersistentData().copy()), serverPlayer);
+                        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), DataManager.getTCRPlayer(serverPlayer).getData()), serverPlayer);
                         this.setConversingPlayer(serverPlayer);
                     }
                 }

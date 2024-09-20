@@ -70,7 +70,7 @@ public class DataManager {
         }
     }
 
-    public static class Data {
+    public abstract static class Data<T> {
 
         protected String key;
         protected boolean isLocked = false;//增加一个锁，用于初始化数据用
@@ -108,9 +108,12 @@ public class DataManager {
             isLocked = false;
         }
 
+        public abstract T get(Player player);
+        public abstract void put(Player player, T data);
+
     }
 
-    public static class StringData extends Data {
+    public static class StringData extends Data<String> {
 
         protected boolean isLocked = false;//增加一个锁
         protected String defaultString = "";
@@ -122,28 +125,30 @@ public class DataManager {
 
         @Override
         public void init(Player player) {
-            putString(player,defaultString);
+            put(player, defaultString);
         }
 
-        public void putString(Player player, String value){
+        @Override
+        public void put(Player player, String value) {
             if(!isLocked(player)){
                 getTCRPlayer(player).putString(key, value);
                 if(player instanceof ServerPlayer serverPlayer){
-                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PersistentStringDataSyncPacket(key, isLocked,value),serverPlayer);
+                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PersistentStringDataSyncPacket(key, isLocked, value),serverPlayer);
                 }
             }
         }
 
-        public String getString(Player player){
-           return getTCRPlayer(player).getString(key);
+        @Override
+        public String get(Player player){
+            return getTCRPlayer(player).getString(key);
         }
 
-        public String getString(CompoundTag playerData){
+        public String get(CompoundTag playerData){
             return playerData.getString(key);
         }
 
     }
-    public static class DoubleData extends Data {
+    public static class DoubleData extends Data<Double> {
 
         private double defaultValue = 0;
 
@@ -154,10 +159,11 @@ public class DataManager {
 
         public void init(Player player){
             isLocked = getTCRPlayer(player).getBoolean(key+"isLocked");
-            putInt(player, defaultValue);
+            put(player, defaultValue);
         }
 
-        public void putInt(Player player, double value){
+        @Override
+        public void put(Player player, Double value) {
             if(!isLocked(player)){
                 getTCRPlayer(player).putDouble(key, value);
                 if(player instanceof ServerPlayer serverPlayer){
@@ -166,16 +172,17 @@ public class DataManager {
             }
         }
 
-        public double getInt(Player player){
+        @Override
+        public Double get(Player player){
             return getTCRPlayer(player).getDouble(key);
         }
 
-        public double getInt(CompoundTag playerData){
+        public double get(CompoundTag playerData){
             return playerData.getDouble(key);
         }
 
     }
-    public static class BoolData extends Data {
+    public static class BoolData extends Data<Boolean> {
 
         boolean defaultBool;
         public BoolData(String key, boolean defaultBool,int id) {
@@ -185,31 +192,26 @@ public class DataManager {
 
         public void init(Player player){
             isLocked = getTCRPlayer(player).getBoolean(key+"isLocked");
-            putBool(player,defaultBool);
+            put(player,defaultBool);
         }
 
-        public void putBool(Player player, boolean value){
+        @Override
+        public void put(Player player, Boolean value){
             if(isLocked(player))
                 return;
 
             getTCRPlayer(player).putBoolean(key, value);
             if(player instanceof ServerPlayer serverPlayer){
-                PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PersistentBoolDataSyncPacket(key, isLocked,value),serverPlayer);
+                PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PersistentBoolDataSyncPacket(key, isLocked, value),serverPlayer);
             }
         }
 
-        public void putBool(CompoundTag playerData ,boolean bool){
-            if(isLocked(playerData))
-                return;
-            playerData.putBoolean(key,bool);
-
-        }
-
-        public boolean getBool(Player player){
+        @Override
+        public Boolean get(Player player){
             return getTCRPlayer(player).getBoolean(key);
         }
 
-        public boolean getBool(CompoundTag playerData){
+        public boolean get(CompoundTag playerData){
             return playerData.getBoolean(key);
         }
 

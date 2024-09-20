@@ -273,7 +273,7 @@ public class MiaoYin extends YueShiLineNpc {
             case -2:
                 //偷后的赎罪
                 ItemUtil.searchAndConsumeItem(player, TCRItems.DREAMSCAPE_COIN.get(), 17);
-                DataManager.stolenMiaoYin.putBool(player, false);
+                DataManager.stolenMiaoYin.put(player, false);
                 break;
             case -1:
                 //对话过程中施舍
@@ -284,8 +284,8 @@ public class MiaoYin extends YueShiLineNpc {
                 ItemUtil.searchAndConsumeItem(player, TCRItems.DREAMSCAPE_COIN.get(), 17);
                 break;
             case 2:
-                if(!DataManager.stolenMiaoYin.getBool(player)){
-                    DataManager.stolenMiaoYin.putBool(player, true);
+                if(!DataManager.stolenMiaoYin.get(player)){
+                    DataManager.stolenMiaoYin.put(player, true);
                     player.addItem(TCRItems.DREAMSCAPE_COIN.get().getDefaultInstance().copyWithCount(17));
                     chat(BUILDER.buildDialogueAnswer(entityType, 0));
                 } else {
@@ -305,8 +305,8 @@ public class MiaoYin extends YueShiLineNpc {
                 break;
             case 6:
                 chat(BUILDER.buildDialogueAnswer(entityType, 19));
-                if(!DataManager.isMiaoYinGifted.getBool(player)){
-                    DataManager.isMiaoYinGifted.putBool(player, true);
+                if(!DataManager.isMiaoYinGifted.get(player)){
+                    DataManager.isMiaoYinGifted.put(player, true);
                     player.addItem(TCRItems.GOLDEN_WIND_AND_DEW.get().getDefaultInstance());
                 }
                 break;
@@ -341,16 +341,16 @@ public class MiaoYin extends YueShiLineNpc {
                 level().addFreshEntity(item);
                 break;
             case 13:
-                if(DataManager.miaoYinMoney1.getBool(player) && DataManager.miaoYinMoney1.isLocked(player)){
+                if(DataManager.miaoYinMoney1.get(player) && DataManager.miaoYinMoney1.isLocked(player)){
                     chat(BUILDER.buildDialogueAnswer(entityType,84));
                 } else {
-                    if(DataManager.miaoYinMoney1.getBool(player)){
+                    if(DataManager.miaoYinMoney1.get(player)){
                         DataManager.miaoYinMoney1.lock(player);
                         player.addItem(new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 14));
                     } else {
                         player.addItem(new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 13));
                     }
-                    DataManager.miaoYinMoney1.putBool(player, true);
+                    DataManager.miaoYinMoney1.put(player, true);
                     chat(BUILDER.buildDialogueAnswer(entityType,82));
                 }
                 break;
@@ -367,7 +367,7 @@ public class MiaoYin extends YueShiLineNpc {
             setIsSitting(!isSitting());
             return InteractionResult.sidedSuccess(player.level().isClientSide);
         }
-        if(DataManager.stolenMiaoYin.getBool(player)){
+        if(DataManager.stolenMiaoYin.get(player)){
             if (hand == InteractionHand.MAIN_HAND) {
                 this.getLookControl().setLookAt(player);
                 if (player instanceof ServerPlayer serverPlayer) {

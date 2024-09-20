@@ -124,7 +124,7 @@ public class TCRPlayer {
     }
 
     public void saveNBTData(CompoundTag tag){
-        tag.put("data", data);
+        tag.put("customDataManager", data);
 
         tag.putUUID("fakePlayer", Objects.requireNonNullElseGet(fakePlayerUuid, UUID::randomUUID));
 
@@ -146,7 +146,7 @@ public class TCRPlayer {
     }
 
     public void loadNBTData(CompoundTag tag){
-        data = tag.getCompound("data");
+        data = tag.getCompound("customDataManager");
 
         fakePlayerUuid = tag.getUUID("fakePlayer");
         bedPointBeforeEnter = new BlockPos(tag.getInt("bedPointBeforeEnterX"), tag.getInt("bedPointBeforeEnterY"), tag.getInt("bedPointBeforeEnterZ"));

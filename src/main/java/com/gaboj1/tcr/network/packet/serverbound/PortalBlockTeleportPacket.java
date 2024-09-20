@@ -14,7 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -80,9 +79,9 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
                     playerEntity.changeDimension(portalDimension, new TCRTeleporter(new BlockPos(destination.x, 170, destination.y), true));
                     TCRAdvancementData.getAdvancement(TheCasketOfReveriesMod.MOD_ID, serverPlayer);
                     TCRAdvancementData.getAdvancement("enter_realm_of_the_dream", serverPlayer);
-                    if(DataManager.isFirstEnter.getBool(serverPlayer)){
+                    if(DataManager.isFirstEnter.get(serverPlayer)){
                         serverPlayer.displayClientMessage(Component.translatable("info.the_casket_of_reveries.first_enter"), false);
-                        DataManager.isFirstEnter.putBool(serverPlayer, false);
+                        DataManager.isFirstEnter.put(serverPlayer, false);
                     }
                     //记录进入点
                     serverPlayer.getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {

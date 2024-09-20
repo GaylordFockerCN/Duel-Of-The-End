@@ -43,12 +43,13 @@ public class PlayerEventListener {
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         DataManager.init(event.getEntity());
 
+        //主世界没假身就召唤假身，注意主世界和维度的区别
         Player player = event.getEntity();
         if(player instanceof ServerPlayer serverPlayer && serverPlayer.serverLevel().dimension() == TCRDimension.P_SKY_ISLAND_LEVEL_KEY && serverPlayer.getServer() != null){
             serverPlayer.getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {
-                if(tcrPlayer.getFakePlayerUuid() == null || !(serverPlayer.serverLevel().getEntity(tcrPlayer.getFakePlayerUuid()) instanceof TCRFakePlayer)){
+                ServerLevel overworld = serverPlayer.getServer().overworld();
+                if(tcrPlayer.getFakePlayerUuid() == null || !(overworld.getEntity(tcrPlayer.getFakePlayerUuid()) instanceof TCRFakePlayer)){
                     //召唤假人
-                    ServerLevel overworld = serverPlayer.getServer().overworld();
                     BlockPos bedBlockPos = tcrPlayer.getBedPointBeforeEnter();
                     TCRFakePlayer fakePlayer = new TCRFakePlayer(serverPlayer, overworld, bedBlockPos);
                     overworld.addFreshEntity(fakePlayer);

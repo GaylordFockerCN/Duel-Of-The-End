@@ -167,10 +167,10 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
             //接取任务
             case -1:
                 //这个DataManager可以保留，每个玩家可以领一份
-                if(!DataManager.elderLoot1Got.getBool(player)){
+                if(!DataManager.elderLoot1Got.get(player)){
                     player.addItem(TCRItems.ELDER_CAKE.get().getDefaultInstance());
                     player.addItem(Items.DIAMOND.getDefaultInstance().copyWithCount(5));
-                    DataManager.elderLoot1Got.putBool(player,true);
+                    DataManager.elderLoot1Got.put(player,true);
                 }else {
                     chat(111);
                 }
@@ -185,7 +185,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                 SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskBackToElder);
                 this.chat(BUILDER.buildDialogueAnswer(entityType,10));//再会，勇者！
                 SaveUtil.biome1.finish(SaveUtil.BiomeData.VILLAGER, ((ServerLevel) level()));
-                if(!DataManager.elderLoot2Got.getBool(player)){
+                if(!DataManager.elderLoot2Got.get(player)){
                     int i = 2;
                     while(i-->0){
                         ItemStack ammo = TCRItems.AMMO.get().getDefaultInstance();
@@ -194,7 +194,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     }
                     player.addItem(TCRItems.GUN_PLUS.get().getDefaultInstance());
                     player.addItem(TCRItems.DENSE_FOREST_CERTIFICATE.get().getDefaultInstance());
-                    DataManager.elderLoot2Got.putBool(player, true);
+                    DataManager.elderLoot2Got.put(player, true);
                 }
                 break;
         }

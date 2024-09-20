@@ -67,7 +67,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
 
             //工匠 对话id分配：0~6 返回值分配：0~2,110
             case 1:
-                if(!DataManager.gunGot.getBool(serverPlayerData)){
+                if(!DataManager.gunGot.get(serverPlayerData)){
                     builder.start(BUILDER.buildDialogueAnswer(entityType,0))
                             .addChoice(BUILDER.buildDialogueOption(entityType,0),BUILDER.buildDialogueAnswer(entityType,1))
                             .addChoice(BUILDER.buildDialogueOption(entityType,1),BUILDER.buildDialogueOption(entityType,2).withStyle(ChatFormatting.DARK_RED,ChatFormatting.BOLD))//我也可以吗？我想要把火铳！（内心真诚地默念一遍） 【获得火铳】
@@ -250,7 +250,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 ItemStack ammo = TCRItems.AMMO.get().getDefaultInstance();
                 ammo.setCount(20);
                 player.addItem(ammo);
-                DataManager.gunGot.putBool(player,true);//存入得用玩家
+                DataManager.gunGot.put(player,true);//存入得用玩家
 
                 if(player instanceof ServerPlayer serverPlayer){
                     TCRAdvancementData.getAdvancement("day_dreamer",serverPlayer);
@@ -263,12 +263,12 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 chat(BUILDER.buildDialogueAnswer(entityType,4,false));//......
                 break;
             case 2:
-                if(!DataManager.ammoGot.getBool(player.getPersistentData())){
+                if(!DataManager.ammoGot.get(player.getPersistentData())){
                     ItemStack stack = TCRItems.AMMO.get().getDefaultInstance();
                     stack.setCount(20);
                     player.addItem(stack);
                     chat(BUILDER.buildDialogueAnswer(entityType,5,false));//快给我，不然嘣了你
-                    DataManager.ammoGot.putBool(player,true);
+                    DataManager.ammoGot.put(player,true);
                 }
                 break;
             case 3:
@@ -310,7 +310,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 );
                 break;
             case 6:
-                chat(BUILDER.buildDialogueAnswer(entityType,16,false));//哦，那你一定要小心，那些传说听起来让人直做噩梦。
+                chat(BUILDER.buildDialogueAnswer(entityType,18,false));//哦，那你一定要小心，那些传说听起来让人直做噩梦。
                 break;
             case 7:
                 chat(BUILDER.buildDialogueAnswer(entityType,21,false));
@@ -395,9 +395,9 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 );
                 break;
             case 112:
-                if(!DataManager.drinkGot.getBool(player)){
+                if(!DataManager.drinkGot.get(player)){
                     player.addItem(TCRItems.DRINK2.get().getDefaultInstance());
-                    DataManager.drinkGot.putBool(player,true);
+                    DataManager.drinkGot.put(player,true);
                 }else {
                     chat(BUILDER.buildDialogueAnswer(entityType,22,false));
                 }

@@ -96,10 +96,14 @@ public class TCRFakePlayer extends LivingEntity{
     }
 
     public void callBackRealPlayer(){
-        this.discard();
         Player player = getRealPlayer();
         if(player != null){
-            player.teleportTo(((ServerLevel) level()), getX(), getY(), getZ(), new HashSet<>(), getXRot(), getYRot());
+            player.getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent(tcrPlayer -> {
+                BlockPos bedPos = tcrPlayer.getBedPointBeforeEnter();
+                if(player.teleportTo(((ServerLevel) level()), bedPos.getX(), bedPos.getY(), bedPos.getZ(), new HashSet<>(), player.getXRot(), player.getYRot())){
+                    this.discard();
+                }
+            });
         }
     }
 

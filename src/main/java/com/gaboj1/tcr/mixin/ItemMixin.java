@@ -25,7 +25,7 @@ public class ItemMixin{
      * 在维度里右键下界之星以返回。监听物品使用事件无效，因为下界之星无法右键。。
      */
     @Inject(method = "use", at = @At("HEAD"))
-    private void injected(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir){
+    private void netherStarPortal(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir){
         if(!level.isClientSide && player.getItemInHand(hand).is(Items.NETHER_STAR) && level.dimension() == TCRDimension.P_SKY_ISLAND_LEVEL_KEY && player.getServer() != null){
             player.getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {
                 ServerLevel overworld = player.getServer().overworld();

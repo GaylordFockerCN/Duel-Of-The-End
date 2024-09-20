@@ -129,8 +129,8 @@ public class TrialMaster extends YueShiLineNpc {
             case -2:
                 break;
             case -1:
-                if(!DataManager.wanMingPearlGot.getBool(player)) {
-                    DataManager.wanMingPearlGot.putBool(player, true);
+                if(!DataManager.wanMingPearlGot.get(player)) {
+                    DataManager.wanMingPearlGot.put(player, true);
                     player.addItem(TCRItems.WAN_MING_PEARL.get().getDefaultInstance());
                 }
                 return;

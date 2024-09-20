@@ -479,12 +479,12 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
             case 3:
                 SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskBackToBoss);
                 SaveUtil.biome1.finish(SaveUtil.BiomeData.BOSS, ((ServerLevel) level()));
-                if(!DataManager.boss1LootGot.getBool(player)){
+                if(!DataManager.boss1LootGot.get(player)){
                     ItemStack wand = TCRItems.TREE_SPIRIT_WAND.get().getDefaultInstance();
                     wand.getOrCreateTag().putBoolean("fromBoss", true);
                     player.addItem(wand);
                     player.addItem(TCRItems.DENSE_FOREST_CERTIFICATE.get().getDefaultInstance());
-                    DataManager.boss1LootGot.putBool(player, true);
+                    DataManager.boss1LootGot.put(player, true);
                 }
                 return;//NOTE：颁奖后面还有对话，不能setConversingPlayer为Null
             //任务成功且对话结束
