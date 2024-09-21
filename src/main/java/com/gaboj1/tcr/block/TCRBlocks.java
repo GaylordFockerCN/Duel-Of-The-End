@@ -2,6 +2,7 @@ package com.gaboj1.tcr.block;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.custom.*;
+import com.gaboj1.tcr.block.custom.spawner.BigHammerSpawnerBlock;
 import com.gaboj1.tcr.block.custom.spawner.MiaoYinSpawnerBlock;
 import com.gaboj1.tcr.block.custom.spawner.TigerTrialSpawnerBlock;
 import com.gaboj1.tcr.block.custom.spawner.YggdrasilSpawnerBlock;
@@ -144,6 +145,8 @@ public class TCRBlocks {
             () -> new TigerTrialSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(-1.0F, 3600000.0F).noOcclusion().noLootTable()));
     public static final RegistryObject<Block> MIAO_YIN_BLOCK = registerBlock("miao_yin_block",
             () -> new MiaoYinSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(-1.0F, 3600000.0F).noOcclusion().noLootTable()));
+    public static final RegistryObject<Block> ELITE_BIG_HAMMER_BLOCK = registerBlock("elite_big_hammer_block",
+            () -> new BigHammerSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(-1.0F, 3600000.0F).noOcclusion().noLootTable()));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){
         RegistryObject<T> toReturn = REGISTRY.register(name, block);

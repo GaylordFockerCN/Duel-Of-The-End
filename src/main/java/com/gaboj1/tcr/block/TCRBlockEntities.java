@@ -4,6 +4,7 @@ import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.entity.BetterStructureBlockEntity;
 import com.gaboj1.tcr.block.entity.PortalBedEntity;
 import com.gaboj1.tcr.block.entity.PortalBlockEntity;
+import com.gaboj1.tcr.block.entity.spawner.BigHammerSpawnerBlockEntity;
 import com.gaboj1.tcr.block.entity.spawner.MiaoYinSpawnerBlockEntity;
 import com.gaboj1.tcr.block.entity.spawner.TigerTrialSpawnerBlockEntity;
 import com.gaboj1.tcr.block.entity.spawner.YggdrasilSpawnerBlockEntity;
@@ -45,6 +46,11 @@ public class TCRBlockEntities {
             REGISTRY.register("miao_yin_spawner_block_entity", () ->
                     BlockEntityType.Builder.of(MiaoYinSpawnerBlockEntity::new,
                             TCRBlocks.MIAO_YIN_BLOCK.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<BigHammerSpawnerBlockEntity>> BIG_HAMMER_SPAWNER_BLOCK_ENTITY =
+            REGISTRY.register("big_hammer_spawner_block_entity", () ->
+                    BlockEntityType.Builder.of(BigHammerSpawnerBlockEntity::new,
+                            TCRBlocks.ELITE_BIG_HAMMER_BLOCK.get()).build(null));
 
 
 }

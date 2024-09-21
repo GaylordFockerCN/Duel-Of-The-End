@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.entity.custom.biome2;
 
 import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
-import com.gaboj1.tcr.entity.custom.AggressiveGeoMob;
+import com.gaboj1.tcr.entity.custom.TCRAggressiveGeoMob;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -26,7 +26,7 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class SwordControllerEntity extends AggressiveGeoMob implements GeoEntity {
+public class SwordControllerEntity extends TCRAggressiveGeoMob implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private boolean summoned;
 

@@ -47,6 +47,7 @@ public class TCRBlockStateProvider extends BlockStateProvider {
         blockWithItem(TCRBlocks.YGGDRASIL_BLOCK);
         blockWithItem(TCRBlocks.TIGER_TRIAL_BLOCK);
         blockWithItem(TCRBlocks.MIAO_YIN_BLOCK);
+        blockWithItem(TCRBlocks.ELITE_BIG_HAMMER_BLOCK);
 
         blockWithItem(TCRBlocks.ORICHALCUM_ORE);
         leavesBlock(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES);

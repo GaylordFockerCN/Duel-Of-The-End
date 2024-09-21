@@ -1,14 +1,18 @@
 package com.gaboj1.tcr.entity.custom.biome2;
 
+import com.gaboj1.tcr.entity.TCREliteMob;
 import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
 import com.gaboj1.tcr.entity.custom.IceThornEntity;
+import com.gaboj1.tcr.entity.custom.TCRAggressiveGeoMob;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -34,7 +38,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.UUID;
 
-public class TigerEntity extends Monster implements GeoEntity {
+public class TigerEntity extends TCRAggressiveGeoMob {
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private static final UUID HAS_TARGET_MODIFY = UUID.fromString("d2d057cc-f30f-11ed-a05b-1919bb114514");
@@ -47,6 +51,7 @@ public class TigerEntity extends Monster implements GeoEntity {
 
     public TigerEntity(EntityType<? extends TigerEntity> entityType, Level level) {
         super(entityType, level);
+        setBossInfoColor(BossEvent.BossBarColor.BLUE);
     }
 
     @Override

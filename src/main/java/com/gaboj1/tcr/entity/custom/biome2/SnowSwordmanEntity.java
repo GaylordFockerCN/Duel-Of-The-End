@@ -1,14 +1,13 @@
 package com.gaboj1.tcr.entity.custom.biome2;
 
 import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
-import com.gaboj1.tcr.entity.custom.AggressiveGeoMob;
+import com.gaboj1.tcr.entity.custom.TCRAggressiveGeoMob;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
@@ -24,7 +23,7 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class SnowSwordmanEntity extends AggressiveGeoMob implements GeoEntity {
+public class SnowSwordmanEntity extends TCRAggressiveGeoMob implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public SnowSwordmanEntity(EntityType<? extends SnowSwordmanEntity> p_21683_, Level p_21684_) {

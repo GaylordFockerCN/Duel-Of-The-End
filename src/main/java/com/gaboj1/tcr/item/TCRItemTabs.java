@@ -29,6 +29,7 @@ public class TCRItemTabs {
 				tabData.accept(TCRBlocks.YGGDRASIL_BLOCK.get());
 				tabData.accept(TCRBlocks.TIGER_TRIAL_BLOCK.get());
 				tabData.accept(TCRBlocks.MIAO_YIN_BLOCK.get());
+				tabData.accept(TCRBlocks.ELITE_BIG_HAMMER_BLOCK.get());
 				tabData.accept(TCRBlocks.CATNIP.get());
 				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
 				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get());

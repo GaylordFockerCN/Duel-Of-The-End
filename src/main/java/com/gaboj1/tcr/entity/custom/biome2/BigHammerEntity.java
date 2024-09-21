@@ -1,15 +1,14 @@
 package com.gaboj1.tcr.entity.custom.biome2;
 
 import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.entity.custom.TCRAggressiveGeoMob;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
@@ -20,7 +19,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
@@ -29,15 +27,16 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import static com.gaboj1.tcr.entity.custom.boss.TCRBoss.getPlayerAABB;
 
-public class BigHammerEntity extends PathfinderMob implements GeoEntity {
+public class BigHammerEntity extends TCRAggressiveGeoMob {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private boolean isRotating;
     private int rotatingTick;
     private int attackTick;
     private int attack2Tick;
 
-    public BigHammerEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
+    public BigHammerEntity(EntityType<? extends BigHammerEntity> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_);
+        setBossInfoColor(BossEvent.BossBarColor.WHITE);
     }
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()

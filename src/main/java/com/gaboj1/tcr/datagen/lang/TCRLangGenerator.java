@@ -257,6 +257,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRBlocks.YGGDRASIL_BLOCK.get(),"Yggdrasil召唤石");
         this.add(TCRBlocks.TIGER_TRIAL_BLOCK.get(),"试炼冰虎召唤石");
         this.add(TCRBlocks.MIAO_YIN_BLOCK.get(),"妙音召唤石");
+        this.add(TCRBlocks.ELITE_BIG_HAMMER_BLOCK.get(),"大锤子召唤石");
 
         this.addEntityAndEgg(TCREntities.JELLY_CAT,"猫猫果冻");
         this.addEntityAndEgg(TCREntities.SQUIRREL,"松鼠");
