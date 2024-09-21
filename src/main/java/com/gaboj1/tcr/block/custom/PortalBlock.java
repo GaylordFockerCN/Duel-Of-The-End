@@ -3,7 +3,6 @@ package com.gaboj1.tcr.block.custom;
 import com.gaboj1.tcr.block.entity.PortalBlockEntity;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.clientbound.PortalBlockIdSyncPacket;
 import com.gaboj1.tcr.network.packet.clientbound.PortalBlockScreenPacket;
 import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.core.BlockPos;
@@ -55,7 +54,6 @@ public class PortalBlock extends BaseEntityBlock{
                 //创造且潜行的情况下，按下即为切换传送锚点的类型。
                 if(serverPlayer.isCreative()&&player.isShiftKeyDown()){
                     portalBlockEntity.changeId();
-                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PortalBlockIdSyncPacket(pos, portalBlockEntity.getId()), serverPlayer);
                     player.sendSystemMessage(Component.literal("ID changed to: "+portalBlockEntity.getId()));
                 }else {
                     if(!portalBlockEntity.isPlayerUnlock(player)){

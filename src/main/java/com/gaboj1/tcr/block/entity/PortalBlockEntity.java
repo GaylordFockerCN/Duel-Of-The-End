@@ -29,6 +29,7 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
 
     public void unlock(){
         isUnlock = true;
+        setChanged();
     }
 
     public boolean isPlayerUnlock(Player player){
@@ -72,6 +73,7 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
             id = 0;
         }
         TheCasketOfReveriesMod.LOGGER.info(this + " id has changed to: "+id);
+        setChanged();
     }
 
     public void activateAnim(){
