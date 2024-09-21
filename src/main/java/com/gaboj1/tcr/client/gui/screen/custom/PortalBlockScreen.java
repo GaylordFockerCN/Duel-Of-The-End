@@ -30,19 +30,19 @@ public class PortalBlockScreen extends Screen {
     PortalScreenComponent biome3 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss3"), button -> this.finishChat((byte) 3));
     PortalScreenComponent biome4 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss4"), button -> this.finishChat((byte) 4));
     private final boolean isVillage;
-    private final boolean isFromTeleporter;
+    private final boolean isFromPortalBed;
     private final boolean isSecondEnter;
     private final BlockPos bedPos;
     private final CompoundTag data;
 
 
-    public PortalBlockScreen(CompoundTag serverPlayerData) {
+    public PortalBlockScreen(CompoundTag serverData) {
         super(Component.empty());
-        data = serverPlayerData;
-        isVillage = serverPlayerData.getBoolean("isVillage");
-        isFromTeleporter = serverPlayerData.getBoolean("isFromPortalBed");
-        isSecondEnter = serverPlayerData.getBoolean("isSecondEnter");
-        bedPos = new BlockPos(serverPlayerData.getInt("bedPosX"), serverPlayerData.getInt("bedPosY"), serverPlayerData.getInt("bedPosZ"));
+        data = serverData;
+        isVillage = serverData.getBoolean("isVillage");
+        isFromPortalBed = serverData.getBoolean("isFromPortalBed");
+        isSecondEnter = serverData.getBoolean("isSecondEnter");
+        bedPos = new BlockPos(serverData.getInt("bedPosX"), serverData.getInt("bedPosY"), serverData.getInt("bedPosZ"));
     }
 
     @Override
@@ -76,7 +76,7 @@ public class PortalBlockScreen extends Screen {
      * 服务端处理，不同id对应传送不同位置
     * */
     protected void finishChat(byte interactionID) {
-        PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new PortalBlockTeleportPacket(interactionID, isVillage, isFromTeleporter, bedPos));
+        PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new PortalBlockTeleportPacket(interactionID, isVillage, isFromPortalBed, bedPos));
         super.onClose();
     }
 

@@ -81,9 +81,11 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
                     ServerLevel portalDimension = Objects.requireNonNull(serverPlayer.getServer()).getLevel(TCRDimension.P_SKY_ISLAND_LEVEL_KEY);
                     if(portalDimension != null){
                         playerEntity.changeDimension(portalDimension, new TCRTeleporter(new BlockPos(destination.x, 170, destination.y), true));
-                        TCRAdvancementData.getAdvancement(TheCasketOfReveriesMod.MOD_ID, serverPlayer);
-                        TCRAdvancementData.getAdvancement("enter_realm_of_the_dream", serverPlayer);
+                        playerEntity.level().playSound(null,playerEntity.getX(),playerEntity.getY(),playerEntity.getZ(), SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS,1,1);
                         if(!DataManager.isSecondEnter.get(serverPlayer)){
+                            TCRAdvancementData.getAdvancement(TheCasketOfReveriesMod.MOD_ID, serverPlayer);
+                            TCRAdvancementData.getAdvancement("enter_realm_of_the_dream", serverPlayer);
+                            //输出首次进入维度的提示
                             DialogueComponentBuilder.displayClientMessages(serverPlayer, 6000, false, ()->{},
                                     TheCasketOfReveriesMod.getInfo("first_enter1"),
                                     TheCasketOfReveriesMod.getInfo("first_enter2"),
@@ -104,9 +106,8 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
                     }
                 }
             } else {
-                Level level = playerEntity.level();
                 playerEntity.teleportTo(destination.x + offset.x,height + offset.y,destination.y + offset.z);
-                level.playSound(null,playerEntity.getX(),playerEntity.getY(),playerEntity.getZ(), SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS,1,1);//播放传送音效
+                playerEntity.level().playSound(null,playerEntity.getX(),playerEntity.getY(),playerEntity.getZ(), SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS,1,1);
             }
         }else {
             playerEntity.sendSystemMessage(Component.translatable("info.the_casket_of_reveries.teleport_lock"));

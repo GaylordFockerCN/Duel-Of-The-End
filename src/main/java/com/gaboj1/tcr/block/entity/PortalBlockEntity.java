@@ -1,10 +1,10 @@
 package com.gaboj1.tcr.block.entity;
 
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.TCRBlockEntities;
 import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -18,9 +18,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-
     private int id = 0;
-    public static final int maxID = 8;// 0~3: boss ; 4~7: village; 8: final
+    public static final int maxID = 8;// 0~3: village ; 4~7: boss; 8: final
 
     private boolean isUnlock = false;
 
@@ -38,6 +37,14 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
 
     public void setPlayerUnlock(Player player){
         DataManager.portalPointUnlockData.get(id).put(player, true);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public PortalBlockEntity(BlockPos pos, BlockState state) {
@@ -59,12 +66,12 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
         super.load(tag);
     }
 
-    public void changeId(Player player){
+    public void changeId(){
         id++;
         if(id > maxID){
             id = 0;
         }
-        player.sendSystemMessage(Component.literal("ID: "+id));
+        TheCasketOfReveriesMod.LOGGER.info(this + " id has changed to: "+id);
     }
 
     public void activateAnim(){

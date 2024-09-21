@@ -3,9 +3,12 @@ package com.gaboj1.tcr.block.custom;
 import com.gaboj1.tcr.block.entity.PortalBlockEntity;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.packet.clientbound.PortalBlockIdSyncPacket;
 import com.gaboj1.tcr.network.packet.clientbound.PortalBlockScreenPacket;
+import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -20,7 +23,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -34,8 +36,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
- * 右键传送石碑
-* */
+ * 传送石碑
+ */
 public class PortalBlock extends BaseEntityBlock{
 
     public PortalBlock(Properties properties) {
@@ -52,7 +54,9 @@ public class PortalBlock extends BaseEntityBlock{
             if (player instanceof ServerPlayer serverPlayer) {
                 //创造且潜行的情况下，按下即为切换传送锚点的类型。
                 if(serverPlayer.isCreative()&&player.isShiftKeyDown()){
-                    portalBlockEntity.changeId(player);
+                    portalBlockEntity.changeId();
+                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PortalBlockIdSyncPacket(pos, portalBlockEntity.getId()), serverPlayer);
+                    player.sendSystemMessage(Component.literal("ID changed to: "+portalBlockEntity.getId()));
                 }else {
                     if(!portalBlockEntity.isPlayerUnlock(player)){
                         portalBlockEntity.setPlayerUnlock(player);//解锁传送石！
@@ -61,7 +65,17 @@ public class PortalBlock extends BaseEntityBlock{
                         level.playSound(null , player.getX(),player.getY(),player.getZ(), SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS,1,1);//播放末地传送门开启的音效
                     }else{
                         portalBlockEntity.activateAnim();
-                        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PortalBlockScreenPacket(serverPlayer.getPersistentData().copy()), serverPlayer);
+                        CompoundTag data = new CompoundTag();
+                        data.putBoolean("isVillage", portalBlockEntity.getId() < 4);
+                        data.putBoolean("isFromPortalBed", false);
+                        data.putBoolean("isSecondEnter", false);
+                        data.putInt("bedPosX", pos.getX());
+                        data.putInt("bedPosY", pos.getY());
+                        data.putInt("bedPosZ", pos.getZ());
+                        for(DataManager.BoolData boolData : DataManager.portalPointUnlockData){
+                            data.putBoolean(boolData.getKey(), boolData.get(player));
+                        }
+                        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PortalBlockScreenPacket(data), serverPlayer);
                     }
                 }
             }
@@ -85,10 +99,11 @@ public class PortalBlock extends BaseEntityBlock{
         super.appendHoverText(p_49816_, p_49817_, components, p_49819_);
     }
 
-    @Override
-    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos blockPos, @NotNull CollisionContext p_60558_) {
-        return Block.box(0,0,0,32,32,32);
-    }
+//    @Override
+//    @SuppressWarnings("deprecation")
+//    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos blockPos, @NotNull CollisionContext p_60558_) {
+//        return Block.box(0,0,0,32,32,32);
+//    }
 
     /**
      * 粒子特效
