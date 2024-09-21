@@ -143,13 +143,6 @@ public class FuryTideCangLan extends Master {
     }
 
     @Override
-    public void chat(Component component) {
-        if(conversingPlayer != null) {
-            conversingPlayer.sendSystemMessage(BUILDER.buildDialogue(this, component));
-        }
-    }
-
-    @Override
     public String getResourceName() {
         return "cang_lan";
     }

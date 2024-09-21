@@ -468,7 +468,7 @@ public class TCRLangGenerator extends TCRLangProvider {
 
         //沧澜
         this.addDialog(TCREntities.CANG_LAN,1,"小兄弟，你风尘仆仆来到此地，可曾察觉这山巅与浮岛的天壤之别？");
-        this.addDialog(TCREntities.CANG_LAN,2,"当年老盟主仙逝，大岚教教主征尽，趁我闭关修炼，于山巅论剑赢得盟主之位。但我怀疑小小岚教得盟主之位，必是借助了非人之力。此等人不配享盟主之位！。");
+        this.addDialog(TCREntities.CANG_LAN,2,"当年老盟主仙逝，大岚教教主征尽，趁我闭关修炼，于山巅论剑赢得盟主之位。但我怀疑小小岚教得盟主之位，必是借助了非人之力。此等人不配享盟主之位！");
         this.addDialog(TCREntities.CANG_LAN,3,"迫于其武力高强，我们只能任人鱼肉。他们还囤积各派武学秘籍，残害武林同道，研制邪术，甚至其手下为夺权自相残杀，接连下达禁令，扰乱武林秩序。");
         this.addDialog(TCREntities.CANG_LAN,4,"如今，吾联合六大门派，欲兴师问罪，剿灭岚教，小兄弟是否愿与我们同行？");
         this.addDialog(TCREntities.CANG_LAN,5,"甚好！侠士之加入，义军如虎添翼！请随我们一同前往 %s 之地！");
@@ -482,7 +482,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addDialog(TCREntities.CANG_LAN,13,"（苍澜自尽了...）");
 
         this.addDialogChoice(TCREntities.CANG_LAN,0,"继续");
-        this.addDialogChoice(TCREntities.CANG_LAN,1,"此话怎讲？");
+        this.addDialogChoice(TCREntities.CANG_LAN,1,"继续");
         this.addDialogChoice(TCREntities.CANG_LAN,2,"我愿与诸位同道，共赴义举！");
         this.addDialogChoice(TCREntities.CANG_LAN,3,"我需亲眼目睹这一切，再作定夺。");
         this.addDialogChoice(TCREntities.CANG_LAN,4,"这一切...结束了吗？");
@@ -490,7 +490,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addDialogChoice(TCREntities.CANG_LAN,6,"我将去往何方？");
 
         //Boss2
-        this.addEntityAndEgg(TCREntities.SECOND_BOSS,"第二群系boss");
+        this.addEntityAndEgg(TCREntities.SECOND_BOSS,"大岚教-征尽");
         this.addDialog(TCREntities.SECOND_BOSS,0,"你终于来了...一群受人蛊惑的莽夫，欲取我人头来了。大岚教行于黑暗，却侍奉光明。我教原本与世无争，但自我接任盟主以来，不知怎地被视作异端邪教。");
         this.addDialog(TCREntities.SECOND_BOSS,1,"老盟主仙逝，群龙总不能无首。抛开盟主本职不谈，我也有弘扬教义，净化江湖风气之意。此外，我欲召集众人研习各家武学，为武学发展贡献，不知为何外界却传成了这般...");
         this.addDialog(TCREntities.SECOND_BOSS,2,"我的确寻求了『祂』的力量。若不先取得高位，伟业又从何实现？如今奸人挑拨，我的伟业怕是不成了。若是苍澜的话...");
@@ -717,7 +717,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addDialogChoice(TCREntities.MIAO_YIN,39,"所以你的琵琶是那时候学的");
         this.addDialog(TCREntities.MIAO_YIN,41,"没错，虽然父亲后来又新娶了妻子，后妈对我很冷漠，但因为音乐，我的童年很快乐。可惜在我十四岁那年，我的父亲突然去世了，没人知晓原因。在那以后，家族的产业就落到了后妈身上，可惜后妈不善打理，只好拜托我的叔父。突然有一天，家中莫名起了大火，死伤了一众家仆，");
         this.addDialogChoice(TCREntities.MIAO_YIN,40,"继续");
-        this.addDialog(TCREntities.MIAO_YIN,42,"我的眼睛被熏瞎，家产也葬送火海……从此之后我便家徒四壁，后妈无法忍受，改嫁了，只剩叔父勉强支撑着抚养我，到了我十八岁时，叔父却又突然被宗主征兵带走，从此了无音讯，失去了一切依靠，我只剩下琵琶了，也就靠此漂泊谋生至今。然后现在，又遇到了你。");
+        this.addDialog(TCREntities.MIAO_YIN,42,"我的眼睛被熏瞎，家产也葬送火海……从此之后我便家徒四壁，后妈无法忍受，改嫁了，只剩叔父勉强支撑着抚养我，到了我十八岁时，叔父却又突然被征兵带走，从此了无音讯，失去了一切依靠，我只剩下琵琶了，也就靠此漂泊谋生至今。然后现在，又遇到了你。");
         this.addDialogChoice(TCREntities.MIAO_YIN,41,"你告诉我这些，不就更让我同情了吗…");
         this.addDialog(TCREntities.MIAO_YIN,43,"妾身确实是在谋求你的同情，不如说，其实我有一事相求。");
         this.addDialogChoice(TCREntities.MIAO_YIN,42,"什么事情");

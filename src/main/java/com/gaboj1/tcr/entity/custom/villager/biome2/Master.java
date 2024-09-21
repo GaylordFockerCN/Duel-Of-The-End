@@ -118,6 +118,10 @@ public abstract class Master extends TCRVillager implements NpcDialogue {
             this.getNavigation().stop();
         }
 
+        if(isSummonedByBoss()){
+            setTarget(level().getNearestPlayer(this, 64));
+        }
+
     }
 
     @Override
@@ -213,8 +217,5 @@ public abstract class Master extends TCRVillager implements NpcDialogue {
         }
         return InteractionResult.SUCCESS;
     }
-
-    @Override
-    public void chat(Component component) {}
 
 }

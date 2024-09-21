@@ -113,13 +113,6 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
         return this.conversingPlayer;
     }
 
-    @Override
-    public void chat(Component component) {
-        if(conversingPlayer != null) {
-            conversingPlayer.displayClientMessage(DialogueComponentBuilder.BUILDER.buildDialogue(this, component),false);
-        }
-    }
-
     /**
      * 开始贸易。
      * 首先会清空所有交易物品，再进行添加。为的是防止村民碰到工作方块而自动添加交易物品

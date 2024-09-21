@@ -1,8 +1,9 @@
 package com.gaboj1.tcr.entity;
 
+import com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -34,6 +35,10 @@ public interface NpcDialogue {
      */
     @Nullable
     Player getConversingPlayer();
-    void chat(Component component);
+    default void chat(Component component){
+        if(getConversingPlayer() != null) {
+            getConversingPlayer().displayClientMessage(DialogueComponentBuilder.BUILDER.buildDialogue((Entity) this, component),false);
+        }
+    }
 
 }

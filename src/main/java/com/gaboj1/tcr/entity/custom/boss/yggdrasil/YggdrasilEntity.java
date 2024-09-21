@@ -497,13 +497,6 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
         this.setConversingPlayer(null);
     }
 
-    @Override
-    public void chat(Component component) {
-        if(conversingPlayer != null) {
-            conversingPlayer.sendSystemMessage(BUILDER.buildDialogue(this, component));
-        }
-    }
-
     /**
      * 实现靠近就触发对话
      */

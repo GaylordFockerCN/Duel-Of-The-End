@@ -47,15 +47,12 @@ public class TCREffects {
     });
 
     /**
-     * 避雷避毒
+     * 避雷
      */
     public static void onEntityHurt(LivingHurtEvent event) {
         LivingEntity entity = event.getEntity();
         if(entity.hasEffect(THUNDER_RESISTANCE.get()) && event.getSource().is(DamageTypes.LIGHTNING_BOLT)){
             event.setCanceled(true);
-        }
-        if(entity.hasEffect(POISON_RESISTANCE.get()) && entity.hasEffect(MobEffects.POISON)){
-            entity.removeEffect(MobEffects.POISON);
         }
     }
 
@@ -83,6 +80,11 @@ public class TCREffects {
             if(entity.hasEffect(TCREffects.FROZEN.get())){
                 entity.removeEffect(TCREffects.FROZEN.get());
             }
+        }
+
+        //避毒
+        if(entity.hasEffect(POISON_RESISTANCE.get()) && entity.hasEffect(MobEffects.POISON)){
+            entity.removeEffect(MobEffects.POISON);
         }
 
         //提升上限

@@ -57,7 +57,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
     }
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 1)//TODO 测试用
+                .add(Attributes.MAX_HEALTH, 20)//TODO 测试用
                 .add(Attributes.ATTACK_DAMAGE, SaveUtil.getMobMultiplier(3))
                 .add(Attributes.ATTACK_SPEED, 0.5f)
                 .add(Attributes.MOVEMENT_SPEED, 0.30f)
@@ -137,7 +137,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID){
-            case -1: // 按esc也是返回0！！！
+            case -1:
                 //初次对话，召唤六大门派
                 if(!mastersId.isEmpty()){
                     return;
@@ -208,7 +208,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
                 break;
             case 3:
                 //结束boss对话
-                player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, 7), false);
+                chat(BUILDER.buildDialogueAnswer(entityType, 8, false));
                 level().explode(this, this.damageSources().explosion(this, this), null, getOnPos().getCenter(), 3F, false, Level.ExplosionInteraction.NONE);
                 this.discard();
                 break;
@@ -249,18 +249,18 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
      * 注意要先判断周围有没有玩家再发包，以免找不到玩家而存档又改掉了
      */
     public void removeMaster(Master master){
+        if(level().isClientSide){
+            return;
+        }
         mastersId.remove(master.getId());
         if(mastersId.isEmpty()){
             AtomicBoolean hasSend = new AtomicBoolean(false);
-            //苍澜说遗言
+            //苍澜说遗言 生存才有效
             for(Player player : EntityUtil.getNearByPlayers(level(), this, 32)){
                 DialogueComponentBuilder.displayClientMessages(player, 2000, false, ()->{
+                    SaveUtil.biome2.isElderDie = true;
                     if(!hasSend.get()){
-                        if(getTarget() instanceof ServerPlayer serverPlayer){
-                            SaveUtil.biome2.isElderDie = true;
-                            sendDialoguePacket(serverPlayer);
-                        } else if(level().getNearestPlayer(this, 32) instanceof ServerPlayer serverPlayer){
-                            SaveUtil.biome2.isElderDie = true;
+                        if(player instanceof ServerPlayer serverPlayer){
                             sendDialoguePacket(serverPlayer);
                         }
                         hasSend.set(true);
@@ -278,15 +278,18 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
     }
 
     @Override
-    public boolean hurt(@NotNull DamageSource entity, float v) {
-        if(SaveUtil.biome2.choice == SaveUtil.BiomeData.BOSS && entity.getEntity() instanceof Player){
+    public boolean hurt(@NotNull DamageSource source, float v) {
+        if(SaveUtil.biome2.choice == SaveUtil.BiomeData.BOSS && source.getEntity() instanceof Player){
             return false;
         }
-        return super.hurt(entity, v);
+        return super.hurt(source, v);
     }
 
     @Override
     public void die(@NotNull DamageSource source) {
+        if(SaveUtil.biome2.choice == SaveUtil.BiomeData.BOSS){
+            return;
+        }
         SaveUtil.biome2.isBossDie = true;
         for(int id : mastersId){
             if(level().getEntity(id) instanceof Master master){
@@ -306,11 +309,6 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
         level().addFreshEntity(cangLan);
         cangLan.sendDialoguePacket(((ServerPlayer) level().getNearestPlayer(this, 48)));
         super.die(source);
-    }
-
-    @Override
-    public void chat(Component component) {
-
     }
 
 }
