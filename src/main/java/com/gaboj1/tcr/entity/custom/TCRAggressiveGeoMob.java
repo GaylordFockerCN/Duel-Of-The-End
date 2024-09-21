@@ -102,6 +102,11 @@ public abstract class TCRAggressiveGeoMob extends Monster implements GeoEntity {
     }
 
     @Override
+    public boolean removeWhenFarAway(double p_21542_) {
+        return false;
+    }
+
+    @Override
     public void tick() {
         super.tick();
         for(TimeStamp event : queue){

@@ -25,10 +25,10 @@ public class PortalBlockScreen extends Screen {
     public static final ResourceLocation MY_BACKGROUND_LOCATION = new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"textures/gui/portal_background.png");
 
     PortalScreenComponent bossFinal = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.final"), button -> this.finishChat((byte) 9));
-    PortalScreenComponent biome1 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss1"), button -> this.finishChat((byte) 0));
-    PortalScreenComponent biome2 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss2"), button -> this.finishChat((byte) 1));
-    PortalScreenComponent biome3 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss3"), button -> this.finishChat((byte) 2));
-    PortalScreenComponent biome4 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss4"), button -> this.finishChat((byte) 3));
+    PortalScreenComponent biome1 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss1"), button -> this.finishChat((byte) 1));
+    PortalScreenComponent biome2 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss2"), button -> this.finishChat((byte) 2));
+    PortalScreenComponent biome3 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss3"), button -> this.finishChat((byte) 3));
+    PortalScreenComponent biome4 = new PortalScreenComponent(Component.translatable(TheCasketOfReveriesMod.MOD_ID+".button.boss4"), button -> this.finishChat((byte) 4));
     private final boolean isVillage;
     private final boolean isFromTeleporter;
     private final boolean isSecondEnter;

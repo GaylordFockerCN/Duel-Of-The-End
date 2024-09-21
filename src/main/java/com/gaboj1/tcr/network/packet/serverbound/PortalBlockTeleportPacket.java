@@ -2,6 +2,7 @@ package com.gaboj1.tcr.network.packet.serverbound;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.capability.TCRCapabilityProvider;
+import com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.TCRFakePlayer;
 import com.gaboj1.tcr.network.packet.BasePacket;
@@ -83,9 +84,11 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
                         TCRAdvancementData.getAdvancement(TheCasketOfReveriesMod.MOD_ID, serverPlayer);
                         TCRAdvancementData.getAdvancement("enter_realm_of_the_dream", serverPlayer);
                         if(!DataManager.isSecondEnter.get(serverPlayer)){
-                            serverPlayer.displayClientMessage(Component.translatable("info.the_casket_of_reveries.first_enter1"), false);
-                            serverPlayer.displayClientMessage(Component.translatable("info.the_casket_of_reveries.first_enter2"), false);
-                            serverPlayer.displayClientMessage(Component.translatable("info.the_casket_of_reveries.first_enter3"), false);
+                            DialogueComponentBuilder.displayClientMessages(serverPlayer, 6000, false, ()->{},
+                                    TheCasketOfReveriesMod.getInfo("first_enter1"),
+                                    TheCasketOfReveriesMod.getInfo("first_enter2"),
+                                    TheCasketOfReveriesMod.getInfo("first_enter3")
+                                    );
                             DataManager.portalPointUnlockData.get(id).put(playerEntity, true);//解锁传送点
                             DataManager.isSecondEnter.put(serverPlayer, true);
                         }

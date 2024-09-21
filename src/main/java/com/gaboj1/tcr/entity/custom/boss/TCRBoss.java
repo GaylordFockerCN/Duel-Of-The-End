@@ -160,4 +160,9 @@ public abstract class TCRBoss extends PathfinderMob implements NpcDialogue, Shad
     @Nullable
     public abstract SoundEvent getFightMusic();
 
+    @Override
+    public boolean removeWhenFarAway(double p_21542_) {
+        return false;
+    }
+
 }
