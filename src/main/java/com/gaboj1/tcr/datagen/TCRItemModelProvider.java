@@ -130,6 +130,25 @@ public class TCRItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(TCRItems.ORICHALCUM_LEGGINGS);
         trimmedArmorItem(TCRItems.ORICHALCUM_BOOTS);
 
+        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_1_STAIRS);
+        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_1_SLAB);
+        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_2_STAIRS);
+        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_2_SLAB);
+        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_3_STAIRS);
+        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_3_SLAB);
+        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_4_STAIRS);
+        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_4_SLAB);
+        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_5_STAIRS);
+        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_5_SLAB);
+        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_6_STAIRS);
+        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_6_SLAB);
+        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_7_STAIRS);
+        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_7_SLAB);
+        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_8_STAIRS);
+        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_8_SLAB);
+        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_9_STAIRS);
+        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_9_SLAB);
+
 //        simpleItem(TCRItems.ICE_TIGER_BOOTS);
 //        simpleItem(TCRItems.ICE_TIGER_CHESTPLATE);
 //        simpleItem(TCRItems.ICE_TIGER_HELMET);

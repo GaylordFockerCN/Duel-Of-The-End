@@ -53,7 +53,7 @@ public class PastoralPlainVillager extends TCRVillager {
     @Override
     public boolean hurt(DamageSource source, float v) {
         if(source.getEntity() instanceof ServerPlayer player && level().isClientSide && SaveUtil.biome1.choice == 2){
-            player.displayClientMessage(Component.literal("info.the_casket_of_reveries.alreadyAddWhite"),true);
+            player.displayClientMessage(Component.translatable("info.the_casket_of_reveries.alreadyAddWhite"),true);
             return false;
         }
         return super.hurt(source, v);

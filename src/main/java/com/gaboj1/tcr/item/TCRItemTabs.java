@@ -55,8 +55,27 @@ public class TCRItemTabs {
 				tabData.accept(TCRBlocks.BOSS2_ROOM_7.get());
 				tabData.accept(TCRBlocks.BOSS2_ROOM_8.get());
 				tabData.accept(TCRBlocks.BOSS2_ROOM_9.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_1_STAIRS.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_1_SLAB.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_2_STAIRS.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_2_SLAB.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_3_STAIRS.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_3_SLAB.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_4_STAIRS.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_4_SLAB.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_5_STAIRS.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_5_SLAB.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_6_STAIRS.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_6_SLAB.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_7_STAIRS.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_7_SLAB.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_8_STAIRS.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_8_SLAB.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_9_STAIRS.get());
+				tabData.accept(TCRBlocks.BOSS2_ROOM_9_SLAB.get());
 
-			}).build());
+
+					}).build());
 
 	//生物蛋
 	public static final RegistryObject<CreativeModeTab> SPAWN_EGG = REGISTRY.register("spawn_egg",

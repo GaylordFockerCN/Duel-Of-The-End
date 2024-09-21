@@ -131,6 +131,50 @@ public class TCRBlocks {
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).strength(-1.0F, 3600000.0F).noLootTable()));
     public static final RegistryObject<Block> BOSS2_ROOM_9 = registerBlock("boss2_room_9",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_1_STAIRS = registerBlock("boss2_room_1_stairs",
+            ()->new StairBlock(()-> TCRBlocks.BOSS2_ROOM_1.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICK_STAIRS).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_1_SLAB = registerBlock("boss2_room_1_slab",
+            ()->new SlabBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICK_SLAB).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_2_STAIRS = registerBlock("boss2_room_2_stairs",
+            ()->new StairBlock(()-> TCRBlocks.BOSS2_ROOM_2.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICK_STAIRS).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_2_SLAB = registerBlock("boss2_room_2_slab",
+            ()->new SlabBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICK_SLAB).strength(-1.0F, 3600000.0F).noLootTable()));
+
+    public static final RegistryObject<Block> BOSS2_ROOM_3_STAIRS = registerBlock("boss2_room_3_stairs",
+            ()->new StairBlock(()-> TCRBlocks.BOSS2_ROOM_3.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICK_STAIRS).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_3_SLAB = registerBlock("boss2_room_3_slab",
+            ()->new SlabBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICK_SLAB).strength(-1.0F, 3600000.0F).noLootTable()));
+
+    public static final RegistryObject<Block> BOSS2_ROOM_4_STAIRS = registerBlock("boss2_room_4_stairs",
+            ()->new StairBlock(()-> TCRBlocks.BOSS2_ROOM_4.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICK_STAIRS).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_4_SLAB = registerBlock("boss2_room_4_slab",
+            ()->new SlabBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICK_SLAB).strength(-1.0F, 3600000.0F).noLootTable()));
+
+    public static final RegistryObject<Block> BOSS2_ROOM_5_STAIRS = registerBlock("boss2_room_5_stairs",
+            ()->new StairBlock(()-> TCRBlocks.BOSS2_ROOM_5.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICK_STAIRS).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_5_SLAB = registerBlock("boss2_room_5_slab",
+            ()->new SlabBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICK_SLAB).strength(-1.0F, 3600000.0F).noLootTable()));
+
+    public static final RegistryObject<Block> BOSS2_ROOM_6_STAIRS = registerBlock("boss2_room_6_stairs",
+            ()->new StairBlock(()-> TCRBlocks.BOSS2_ROOM_6.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICK_STAIRS).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_6_SLAB = registerBlock("boss2_room_6_slab",
+            ()->new SlabBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICK_SLAB).strength(-1.0F, 3600000.0F).noLootTable()));
+
+    public static final RegistryObject<Block> BOSS2_ROOM_7_STAIRS = registerBlock("boss2_room_7_stairs",
+            ()->new StairBlock(()-> TCRBlocks.BOSS2_ROOM_7.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICK_STAIRS).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_7_SLAB = registerBlock("boss2_room_7_slab",
+            ()->new SlabBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICK_SLAB).strength(-1.0F, 3600000.0F).noLootTable()));
+
+    public static final RegistryObject<Block> BOSS2_ROOM_8_STAIRS = registerBlock("boss2_room_8_stairs",
+            ()->new StairBlock(()-> TCRBlocks.BOSS2_ROOM_8.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICK_STAIRS).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_8_SLAB = registerBlock("boss2_room_8_slab",
+            ()->new SlabBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICK_SLAB).strength(-1.0F, 3600000.0F).noLootTable()));
+
+    public static final RegistryObject<Block> BOSS2_ROOM_9_STAIRS = registerBlock("boss2_room_9_stairs",
+            ()->new StairBlock(()-> TCRBlocks.BOSS2_ROOM_9.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICK_STAIRS).strength(-1.0F, 3600000.0F).noLootTable()));
+    public static final RegistryObject<Block> BOSS2_ROOM_9_SLAB = registerBlock("boss2_room_9_slab",
+            ()->new SlabBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICK_SLAB).strength(-1.0F, 3600000.0F).noLootTable()));
+
 
     //神金矿
     public static final RegistryObject<Block> ORICHALCUM_ORE = registerBlock("orichalcum_ore",

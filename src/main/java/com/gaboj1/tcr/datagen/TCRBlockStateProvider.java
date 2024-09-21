@@ -68,6 +68,26 @@ public class TCRBlockStateProvider extends BlockStateProvider {
         blockWithItem(TCRBlocks.BOSS2_ROOM_7);
         blockWithItem(TCRBlocks.BOSS2_ROOM_8);
         blockWithItem(TCRBlocks.BOSS2_ROOM_9);
+        stairsBlock(((StairBlock) TCRBlocks.BOSS2_ROOM_1_STAIRS.get()), blockTexture(TCRBlocks.BOSS2_ROOM_1.get()));
+        slabBlock(((SlabBlock) TCRBlocks.BOSS2_ROOM_1_SLAB.get()), blockTexture(TCRBlocks.BOSS2_ROOM_1_SLAB.get()), blockTexture(TCRBlocks.BOSS2_ROOM_1.get()));
+        stairsBlock(((StairBlock) TCRBlocks.BOSS2_ROOM_2_STAIRS.get()), blockTexture(TCRBlocks.BOSS2_ROOM_2.get()));
+        slabBlock(((SlabBlock) TCRBlocks.BOSS2_ROOM_2_SLAB.get()), blockTexture(TCRBlocks.BOSS2_ROOM_2_SLAB.get()), blockTexture(TCRBlocks.BOSS2_ROOM_2.get()));
+        stairsBlock(((StairBlock) TCRBlocks.BOSS2_ROOM_3_STAIRS.get()), blockTexture(TCRBlocks.BOSS2_ROOM_3.get()));
+        slabBlock(((SlabBlock) TCRBlocks.BOSS2_ROOM_3_SLAB.get()), blockTexture(TCRBlocks.BOSS2_ROOM_3_SLAB.get()), blockTexture(TCRBlocks.BOSS2_ROOM_3.get()));
+        stairsBlock(((StairBlock) TCRBlocks.BOSS2_ROOM_4_STAIRS.get()), blockTexture(TCRBlocks.BOSS2_ROOM_4.get()));
+        slabBlock(((SlabBlock) TCRBlocks.BOSS2_ROOM_4_SLAB.get()), blockTexture(TCRBlocks.BOSS2_ROOM_4_SLAB.get()), blockTexture(TCRBlocks.BOSS2_ROOM_4.get()));
+        stairsBlock(((StairBlock) TCRBlocks.BOSS2_ROOM_5_STAIRS.get()), blockTexture(TCRBlocks.BOSS2_ROOM_5.get()));
+        slabBlock(((SlabBlock) TCRBlocks.BOSS2_ROOM_5_SLAB.get()), blockTexture(TCRBlocks.BOSS2_ROOM_5_SLAB.get()), blockTexture(TCRBlocks.BOSS2_ROOM_5.get()));
+        stairsBlock(((StairBlock) TCRBlocks.BOSS2_ROOM_6_STAIRS.get()), blockTexture(TCRBlocks.BOSS2_ROOM_6.get()));
+        slabBlock(((SlabBlock) TCRBlocks.BOSS2_ROOM_6_SLAB.get()), blockTexture(TCRBlocks.BOSS2_ROOM_6_SLAB.get()), blockTexture(TCRBlocks.BOSS2_ROOM_6.get()));
+        stairsBlock(((StairBlock) TCRBlocks.BOSS2_ROOM_7_STAIRS.get()), blockTexture(TCRBlocks.BOSS2_ROOM_7.get()));
+        slabBlock(((SlabBlock) TCRBlocks.BOSS2_ROOM_7_SLAB.get()), blockTexture(TCRBlocks.BOSS2_ROOM_7_SLAB.get()), blockTexture(TCRBlocks.BOSS2_ROOM_7.get()));
+        stairsBlock(((StairBlock) TCRBlocks.BOSS2_ROOM_8_STAIRS.get()), blockTexture(TCRBlocks.BOSS2_ROOM_8.get()));
+        slabBlock(((SlabBlock) TCRBlocks.BOSS2_ROOM_8_SLAB.get()), blockTexture(TCRBlocks.BOSS2_ROOM_8_SLAB.get()), blockTexture(TCRBlocks.BOSS2_ROOM_8.get()));
+        stairsBlock(((StairBlock) TCRBlocks.BOSS2_ROOM_9_STAIRS.get()), blockTexture(TCRBlocks.BOSS2_ROOM_9.get()));
+        slabBlock(((SlabBlock) TCRBlocks.BOSS2_ROOM_9_SLAB.get()), blockTexture(TCRBlocks.BOSS2_ROOM_9_SLAB.get()), blockTexture(TCRBlocks.BOSS2_ROOM_9.get()));
+
+
 
     }
 
