@@ -67,14 +67,14 @@ public class GunCommon extends Item implements GeoItem, PoseItem {
 
     protected float power = 15;//初速度
 
-    public static final int numAmmoItemsInGun = 1;
+    public static final int NUM_AMMO_ITEMS_IN_GUN = 1;
 
     public final static int MAX_AMMO = 7;
 
     protected RegistryObject<Item> ammoType = AMMO;;
 
     public GunCommon() {
-        super(new Item.Properties().stacksTo(1).fireResistant().rarity(Rarity.EPIC).defaultDurability(MAX_AMMO));//引入弹匣了再把这个删了
+        super(new Item.Properties().stacksTo(1).fireResistant().rarity(Rarity.RARE).defaultDurability(MAX_AMMO));//引入弹匣了再把这个删了
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 
@@ -304,7 +304,7 @@ public class GunCommon extends Item implements GeoItem, PoseItem {
         // 如果枪械的 NBT 标签中没有 "ammo" 标签，给它添加一个
         if (!gun.getTag().contains("ammo")) {
             ListTag ammoTagsList = new ListTag();
-            for (int i = 0; i < numAmmoItemsInGun; i++) {
+            for (int i = 0; i < NUM_AMMO_ITEMS_IN_GUN; i++) {
                 ammoTagsList.add(new CompoundTag());
             }
             gun.getTag().put("ammo", ammoTagsList);
@@ -321,7 +321,7 @@ public class GunCommon extends Item implements GeoItem, PoseItem {
         // 如果枪械的 NBT 标签中没有 "ammo" 标签，给它添加一个
         if (!gun.getOrCreateTag().contains("ammo")) {
             ListTag ammoTagsList = new ListTag();
-            for (int i = 0; i < numAmmoItemsInGun; i++) {
+            for (int i = 0; i < NUM_AMMO_ITEMS_IN_GUN; i++) {
                 ammoTagsList.add(new CompoundTag());
             }
             gun.getTag().put("ammo", ammoTagsList);

@@ -132,7 +132,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRItems.TIGER_KARAMBIT.get(),"冰虎爪刀");
         this.addItemUsageInfo(TCRItems.TIGER_KARAMBIT.get(),"由虎魄冰和冰虎牙合成的锋利武器，背刺敌人时伤害翻倍并附带冻结效果。");
         this.add(TCRItems.PI_PA.get(),"琵琶");
-        this.addItemUsageInfo(TCRItems.PI_PA.get(),"妙音的带有魔力的琵琶，右键以释放音波弹，但最好不要用它来敲击东西。");
+        this.addItemUsageInfo(TCRItems.PI_PA.get(),"妙音的带有魔力的琵琶，右键以释放音波弹，但最好不要用它来敲击东西。§6【警告：琵琶无法修复！！】");
 
         this.add(TCRItems.COPY_RESIN.get(),"复制树脂");
         this.addItemUsageInfo(TCRItems.COPY_RESIN.get(),"右键消耗以复制另一只手的物品");

@@ -174,17 +174,13 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
     public void handleNpcInteraction(Player player, byte interactionID) {
 
         //记录为已对话过。用于丰富对话多样性。
-        player.getPersistentData().putBoolean("hasTalkedTo"+getSkinID(),true);
+        DataManager.putData(player, "hasTalkedTo"+getSkinID(),true);
 
         switch (interactionID){
 
             //商人
             case -1:
                 chat(BUILDER.buildDialogueAnswer(entityType,-1,false));
-//                VillagerData data = getVillagerData();
-//                data.setProfession(TCRModVillagers.TCR_MERCHANT.get());//没有屌用
-//                setVillagerData(data);
-//                System.out.println(getVillagerData().getProfession());
                 startCustomTrade(player,
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 32),
@@ -272,7 +268,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 }
                 break;
             case 3:
-                chat(BUILDER.buildDialogueAnswer(entityType,9,false));//愿我的智慧为你扫开前路
+                chat(BUILDER.buildDialogueAnswer(entityType, -getRandom().nextInt(7, 10),false));
                 break;
             case 4:
                 chat(BUILDER.buildDialogueAnswer(entityType,12,false));//真是有干劲啊，那我也要全力以赴了，朋友
