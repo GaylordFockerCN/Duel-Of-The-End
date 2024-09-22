@@ -2,25 +2,25 @@ package com.gaboj1.tcr.datagen;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.TCRBlocks;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.datagen.loot.TCRLoot;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.FrameType;
-import net.minecraft.advancements.critereon.ChangeDimensionTrigger;
-import net.minecraft.advancements.critereon.ImpossibleTrigger;
+import net.minecraft.advancements.*;
+import net.minecraft.advancements.critereon.*;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeAdvancementProvider;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -38,7 +38,7 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
         private ExistingFileHelper helper;
         @SuppressWarnings("unused")
         @Override
-        public void generate(HolderLookup.Provider provider, Consumer<Advancement> consumer, ExistingFileHelper existingFileHelper) {
+        public void generate(HolderLookup.@NotNull Provider provider, @NotNull Consumer<Advancement> consumer, @NotNull ExistingFileHelper existingFileHelper) {
             this.consumer = consumer;
             this.helper = existingFileHelper;
 
@@ -48,9 +48,7 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
                             Component.translatable(pre+TheCasketOfReveriesMod.MOD_ID+".desc"),
                             new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/block/dense_forest_dirt.png"),
                             FrameType.TASK, false, false, false)
-//                    .addCriterion(TheCasketOfReveriesMod.MOD_ID, ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.SKY_ISLAND_LEVEL_KEY))
                     .addCriterion(TheCasketOfReveriesMod.MOD_ID, ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.P_SKY_ISLAND_LEVEL_KEY))
-//                    .addCriterion(TheCasketOfReveriesMod.MOD_ID, new ImpossibleTrigger.TriggerInstance())
                     .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, TheCasketOfReveriesMod.MOD_ID), existingFileHelper);
 
             Advancement enterRealmOfTheDream = Advancement.Builder.advancement()
@@ -60,116 +58,49 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
                             Component.translatable(pre+"enter_realm_of_the_dream.desc"),
                             null,
                             FrameType.TASK, true, true, false)
-//                    .addCriterion("enter_realm_of_the_dream", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.SKY_ISLAND_LEVEL_KEY))
                     .addCriterion("enter_realm_of_the_dream", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(TCRDimension.P_SKY_ISLAND_LEVEL_KEY))
-//                    .addCriterion("enter_realm_of_the_dream", new ImpossibleTrigger.TriggerInstance())
                     .rewards(new AdvancementRewards(0, new ResourceLocation[]{TCRLoot.ENTER_REALM_OF_THE_DREAM}, new ResourceLocation[0], CommandFunction.CacheableFunction.NONE))
                     .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "enter_realm_of_the_dream"), existingFileHelper);
 
-            String name = "wow";
-            Advancement wow = Advancement.Builder.advancement()
-                    .parent(enterRealmOfTheDream)
-                    .display(TCRItems.SMALL_TREE_MONSTER_SPAWN_EGG.get(),
-                            Component.translatable(pre+name),
-                            Component.translatable(pre+name+".desc"),
-                            null,
-                            FrameType.GOAL, true, true, true)
-                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
-                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
-
-            name = "try_wake_up";
-            Advancement tryWakeUp = Advancement.Builder.advancement()
-                    .parent(enterRealmOfTheDream)
-                    .display(TCRBlocks.PORTAL_BED.get(),
-                            Component.translatable(pre+name),
-                            Component.translatable(pre+name+".desc"),
-                            null,
-                            FrameType.GOAL, true, true, true)
-                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
-                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
-
-            name = "melee_mage";
-            Advancement melee_mage = Advancement.Builder.advancement()
-                    .parent(enterRealmOfTheDream)//TODO 换成打过树妖后
-                    .display(TCRItems.TREE_SPIRIT_WAND.get(),
-                            Component.translatable(pre+name),
-                            Component.translatable(pre+name+".desc"),
-                            null,
-                            FrameType.GOAL, true, true, true)
-                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
-                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
-
-            name = "mass_production";
-            Advancement mass_production = Advancement.Builder.advancement()
-                    .parent(enterRealmOfTheDream)//TODO 换成打过树妖后
-                    .display(TCRItems.COPY_RESIN.get(),
-                            Component.translatable(pre+name),
-                            Component.translatable(pre+name+".desc"),
-                            null,
-                            FrameType.GOAL, true, true, true)
-                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
-                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
-
-            name = "so_rich";
-            Advancement so_rich = Advancement.Builder.advancement()
-                    .parent(enterRealmOfTheDream)//TODO 换成打过树妖后
-                    .display(Items.GLASS_BOTTLE,
-                            Component.translatable(pre+name),
-                            Component.translatable(pre+name+".desc"),
-                            null,
-                            FrameType.GOAL, true, true, true)
-                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
-                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
-
+            //Biome1成就
+            Advancement wow = registerAdvancement(enterRealmOfTheDream, "wow", FrameType.GOAL, TCRItems.SMALL_TREE_MONSTER_SPAWN_EGG.get());
+            Advancement tryWakeUp = registerAdvancement(enterRealmOfTheDream, "try_wake_up", FrameType.GOAL, TCRBlocks.PORTAL_BED.get().asItem());
+            Advancement mass_production = registerAdvancement(enterRealmOfTheDream, "mass_production", FrameType.GOAL, TCRItems.COPY_RESIN.get());
+            Advancement so_rich = registerAdvancement(enterRealmOfTheDream, "so_rich", FrameType.GOAL, Items.GLASS_BOTTLE);
             Advancement spend_money_like_water = registerAdvancement(enterRealmOfTheDream, "spend_money_like_water", FrameType.GOAL, TCRItems.ORICHALCUM.get());
+            Advancement day_dreamer = registerAdvancement(enterRealmOfTheDream, "day_dreamer", FrameType.GOAL, TCRItems.GUN_COMMON.get());
+            Advancement can_double_hold = registerAdvancement(enterRealmOfTheDream, "can_double_hold", FrameType.GOAL, TCRItems.GUN_COMMON.get());
+            Advancement cats_friend = registerAdvancement(enterRealmOfTheDream, "cats_friend", FrameType.GOAL, TCRItems.JELLY_CAT_SPAWN_EGG.get());
+            Advancement first_cat = registerAdvancement(enterRealmOfTheDream, "first_cat", FrameType.GOAL, TCRItems.JELLY_CAT_SPAWN_EGG.get(), true, true, true, TameAnimalTrigger.TriggerInstance.tamedAnimal(EntityPredicate.Builder.entity().of(TCREntities.JELLY_CAT.get()).build()));
+            Advancement cat_food = registerAdvancement(enterRealmOfTheDream, "cat_food", FrameType.CHALLENGE, TCRItems.CATNIP.get(), true, true, true, ConsumeItemTrigger.TriggerInstance.usedItem(TCRItems.CATNIP.get()));
+            Advancement cat_jelly = registerAdvancement(enterRealmOfTheDream, "cat_jelly", FrameType.CHALLENGE, TCRItems.CAT_JELLY.get(), true, true, true, ConsumeItemTrigger.TriggerInstance.usedItem(TCRItems.CAT_JELLY.get()));
+            Advancement ride_llama = registerAdvancement(enterRealmOfTheDream, "ride_llama", FrameType.GOAL, Items.LLAMA_SPAWN_EGG);
 
-            name = "die_for_summon";
-            Advancement die_for_summon = Advancement.Builder.advancement()
-                    .parent(enterRealmOfTheDream)//TODO 换成打过树妖后
-                    .display(TCRItems.TREE_SPIRIT_WAND.get(),
-                            Component.translatable(pre+name),
-                            Component.translatable(pre+name+".desc"),
-                            null,
-                            FrameType.GOAL, true, true, true)
-                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
-                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
+            Advancement finish_biome_1 = registerAdvancement(enterRealmOfTheDream, "finish_biome_1", FrameType.CHALLENGE, TCRItems.DENSE_FOREST_CERTIFICATE.get());
+            Advancement die_for_summon = registerAdvancement(finish_biome_1, "die_for_summon", FrameType.GOAL, TCRItems.TREE_SPIRIT_WAND.get());
+            Advancement melee_mage = registerAdvancement(finish_biome_1, "melee_mage", FrameType.GOAL, TCRItems.TREE_SPIRIT_WAND.get());
 
-            name = "day_dreamer";
-            Advancement day_dreamer = Advancement.Builder.advancement()
-                    .parent(enterRealmOfTheDream)
-                    .display(TCRItems.GUN_COMMON.get(),
-                            Component.translatable(pre+name),
-                            Component.translatable(pre+name+".desc"),
-                            null,
-                            FrameType.GOAL, true, true, true)
-                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
-                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
-
-            name = "can_double_hold";
-            Advancement can_double_hold = Advancement.Builder.advancement()
-                    .parent(day_dreamer)
-                    .display(TCRItems.GUN_COMMON.get(),
-                            Component.translatable(pre+name),
-                            Component.translatable(pre+name+".desc"),
-                            null,
-                            FrameType.GOAL, true, true, true)
-                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
-                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
-
-            name = "cats_friend";
-            Advancement cats_friend = Advancement.Builder.advancement()
-                    .parent(enterRealmOfTheDream)
-                    .display(TCRItems.JELLY_CAT_SPAWN_EGG.get(),
-                            Component.translatable(pre+name),
-                            Component.translatable(pre+name+".desc"),
-                            null,
-                            FrameType.GOAL, true, true, true)
-                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
-                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), existingFileHelper);
+            //Biome2成就
+            Advancement finish_biome_2 = registerAdvancement(enterRealmOfTheDream, "finish_biome_2", FrameType.CHALLENGE, TCRItems.TREE_SPIRIT_WAND.get());
+            Advancement no_see = registerAdvancement(enterRealmOfTheDream, "no_see", FrameType.GOAL, TCRItems.PI_PA.get());
+            Advancement kill_shu_fu = registerAdvancement(enterRealmOfTheDream, "kill_shu_fu", FrameType.GOAL, TCRItems.PI_PA.get());
+            Advancement kill_shu_fu2 = registerAdvancement(enterRealmOfTheDream, "kill_shu_fu2", FrameType.GOAL, TCRItems.PI_PA.get());
 
         }
 
-        public Advancement registerAdvancement(Advancement parent, String name, FrameType type, Item display, boolean showToast, boolean announceToChat, boolean hidden){
+        public Advancement registerAdvancement(Advancement parent, String name, FrameType type, ItemLike display, boolean showToast, boolean announceToChat, boolean hidden){
+            return Advancement.Builder.advancement()
+                    .parent(parent)
+                    .display(display,
+                            Component.translatable(pre+name),
+                            Component.translatable(pre+name+".desc"),
+                            null,
+                            type, showToast, announceToChat, hidden)
+                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
+                    .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), helper);
+        }
+
+        public Advancement registerAdvancement(Advancement parent, String name, FrameType type, ItemLike display, boolean showToast, boolean announceToChat, boolean hidden, CriterionTriggerInstance instance){
             return Advancement.Builder.advancement()
                     .parent(parent)
                     .display(display,
@@ -177,11 +108,11 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
                             Component.translatable(pre+name+".desc"),
                             null,
                             type, true, true, true)
-                    .addCriterion(name, new ImpossibleTrigger.TriggerInstance())
+                    .addCriterion(name, instance)
                     .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name), helper);
         }
 
-        public Advancement registerAdvancement(Advancement parent, String name, FrameType type, Item display){
+        public Advancement registerAdvancement(Advancement parent, String name, FrameType type, ItemLike display){
             return registerAdvancement(parent, name, type, display, true, true, true);
         }
 

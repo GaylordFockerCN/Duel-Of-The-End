@@ -42,12 +42,10 @@ public class TCRConfig {
         builder.push("Game Setting");
         FAST_MOD = createBool(builder, "fast_mod", false, "快速模式，开启后将直接获得可以进入维度的装备");
         NO_PLOT_MODE = createBool(builder, "no_plot_mode", false, "无剧情模式，设为true后将直接挑战boss而没有主线对话。");//TODO 未实现
-        ENABLE_SCALING = createBool(builder, "enable_scaling", false);
-        ENABLE_BETTER_STRUCTURE_BLOCK_LOAD = createBool(builder, "enable_better_structure_block_load", true);
-        ENABLE_BOSS_SPAWN_BLOCK_LOAD = createBool(builder, "enable_boss_spawn_block_load", true);
-        ENABLE_TYPEWRITER_EFFECT = createBool(builder, "enable_typewriter_effect", true);
-        TYPEWRITER_EFFECT_SPEED = createInt(builder, "typewriter_effect_speed", 1, 1);
-        TYPEWRITER_EFFECT_INTERVAL = createInt(builder, "typewriter_effect_interval", 2, 1);
+        ENABLE_SCALING = createBool(builder, "enable_scaling", false, "启用后将对图生图的图片进行缩放，强制地图大小。");
+        ENABLE_TYPEWRITER_EFFECT = createBool(builder, "enable_typewriter_effect", true, "剧情对话是否使用打字机效果");
+        TYPEWRITER_EFFECT_SPEED = createInt(builder, "typewriter_effect_speed", 2, 1, "打字机效果打字速度");
+        TYPEWRITER_EFFECT_INTERVAL = createInt(builder, "typewriter_effect_interval", 2, 1, "打字机效果打字间隔");
         builder.pop();
 
         builder.push("Attribute Value");
@@ -67,6 +65,8 @@ public class TCRConfig {
         TEST_X = createDouble(builder, "test_x", 1.0, -Double.MIN_VALUE, "测试用x， 方便实时调某个数值");
         TEST_Y = createDouble(builder, "test_y", 1.0, -Double.MIN_VALUE, "测试用y， 方便实时调某个数值");
         TEST_Z = createDouble(builder, "test_z", 1.0, -Double.MIN_VALUE, "测试用z， 方便实时调某个数值");
+        ENABLE_BETTER_STRUCTURE_BLOCK_LOAD = createBool(builder, "enable_better_structure_block_load", true, "结构方块是否立即加载（开发人员用）");
+        ENABLE_BOSS_SPAWN_BLOCK_LOAD = createBool(builder, "enable_boss_spawn_block_load", true, "boss生成方块是否立即加载（开发人员用）");
         builder.pop();
         SPEC = builder.build();
     }

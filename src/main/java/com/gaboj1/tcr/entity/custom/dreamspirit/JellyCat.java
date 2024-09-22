@@ -129,6 +129,7 @@ public class JellyCat extends TamableAnimal implements GeoEntity, ManySkinEntity
     @Override
     public void tame(@NotNull Player player) {
         if(player instanceof ServerPlayer serverPlayer){
+            TCRAdvancementData.getAdvancement("first_cat", serverPlayer);
             serverPlayer.getPersistentData().putBoolean("tamed_jelly_cat"+Math.abs(getSkinID()),true);
             boolean isAllTamed = true;
             //没有-0所以从1开始编号

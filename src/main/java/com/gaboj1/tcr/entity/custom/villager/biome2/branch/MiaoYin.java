@@ -2,6 +2,7 @@ package com.gaboj1.tcr.entity.custom.villager.biome2.branch;
 
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
+import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.network.PacketRelay;
@@ -261,7 +262,7 @@ public class MiaoYin extends YueShiLineNpc {
                     .addChoice(66, 78)
                     .addChoice(67, 79)
                     .addChoice(68, 80)
-                    .addFinalChoice(69, (byte) 11);
+                    .addFinalChoice(69, (byte) 111);
         }
 
         Minecraft.getInstance().setScreen(builder.build());
@@ -329,8 +330,15 @@ public class MiaoYin extends YueShiLineNpc {
                 discard();
                 break;
             case 11:
-                //给予琵琶
+                //给予琵琶，结局2
                 player.addItem(TCRItems.PI_PA.get().getDefaultInstance());
+                TCRAdvancementData.getAdvancement("kill_shu_fu", ((ServerPlayer) player));
+                SaveUtil.biome2.isBranchEnd = true;
+                break;
+            case 111:
+                //给予琵琶，结局3
+                player.addItem(TCRItems.PI_PA.get().getDefaultInstance());
+                TCRAdvancementData.getAdvancement("kill_shu_fu2", ((ServerPlayer) player));
                 SaveUtil.biome2.isBranchEnd = true;
                 break;
             case 12:

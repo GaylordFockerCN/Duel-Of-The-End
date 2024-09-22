@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.network.packet.serverbound;
 
+import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.network.packet.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,6 +28,7 @@ public record ControlLlamaPacket(int llamaId, Vector3f viewVector) implements Ba
     @Override
     public void execute(@Nullable Player playerEntity) {
        if(playerEntity instanceof ServerPlayer serverPlayer){
+           TCRAdvancementData.getAdvancement("ride_llama", serverPlayer);
            if(serverPlayer.serverLevel().getEntity(llamaId) instanceof Llama llama){
                Vec3 pos = llama.position();
                Vec3 target = pos.add(viewVector.x, viewVector.y, viewVector.z);

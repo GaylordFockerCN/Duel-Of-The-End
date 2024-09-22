@@ -2,12 +2,15 @@ package com.gaboj1.tcr.util;
 
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.LevelableEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
@@ -212,6 +215,22 @@ public class SaveUtil {
                     levelableEntity.levelUp(worldLevel);
                 }
             }
+
+            for(ServerPlayer player : level.getPlayers((serverPlayer -> true))){
+                if(biome1.isFinished()){
+                    TCRAdvancementData.getAdvancement("finish_biome_1", player);
+                }
+                if(biome2.isFinished()){
+                    TCRAdvancementData.getAdvancement("finish_biome_2", player);
+                }
+                if(biome3.isFinished()){
+                    TCRAdvancementData.getAdvancement("finish_biome_3", player);
+                }
+                if(biome4.isFinished()){
+                    TCRAdvancementData.getAdvancement("finish_biome_4", player);
+                }
+            }
+
         }
 
         public boolean isFinished(){

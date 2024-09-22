@@ -215,6 +215,8 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addItemUsageInfo(TCRItems.RED_WINE.get(), "一种经过发酵的葡萄酒，风味独特，适合与美食搭配。");
         this.add(TCRItems.CATNIP.get(), "猫薄荷");
         this.addItemUsageInfo(TCRItems.CATNIP.get(), "可以用于驯服猫猫果冻");
+        this.add(TCRItems.CAT_JELLY.get(), "猫猫果冻");
+        this.addItemUsageInfo(TCRItems.CAT_JELLY.get(), "猫猫果冻的掉落物，或许可以吃看看？");
         this.add(TCRItems.WAN_MING_PEARL.get(), "万明珠");
         this.addItemUsageInfo(TCRItems.WAN_MING_PEARL.get(), "传闻世上有一宝珠，唤为万明，值千金。在月圆之夜，万明珠可汲取月光，迸发魔力，从而使周围的生物恢复视力，若非双目失明者，则可练成火眼金睛，视千里之远不在话下。");
         this.addItemUsageInfo(TCRItems.WAN_MING_PEARL.get(), "万明珠（？）", 1);
@@ -432,7 +434,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,3,"（凝视着你，眼中充满了期待）");
         this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,4,"（目光坚定）你带来的是希望的曙光，旅者。村庄的每个角落都感激你的勇气。");
         this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,5,"你的名字将被铭记。请接受我们的祝福，愿你的道路永远光明！");
-        this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,6,"我将为你指引其他群系的位置。『山水画廊』发生了天灾，位于%s，『樱之原野』似乎在进行大选，位于 %s。『亚特兰蒂斯』嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通。游历四方后，或许该回世界的中心看看了。");
+        this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,6,"我将为你指引其他群系的位置。『山水画廊』发生了天灾，位于%s，『樱之原野』似乎在 * * * * ，位于 %s。『亚特兰蒂斯』嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通。游历四方后，或许该回世界的中心看看了。");
         this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,7,"出发吧！勇者。");
         this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,10,"再会了！勇者。");
         this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,111,"你已经收过了哦~");
@@ -846,11 +848,16 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addAdvancement("die_for_summon","一命换一命","用生命值召唤小树妖而死");
         this.addAdvancement("day_dreamer","白日梦想家","通过村民帮助获得火铳");
         this.addAdvancement("can_double_hold","原来这也行？","双持火铳");
-        this.addAdvancement("cats_friend","猫猫之友","驯服所有种类的猫猫果冻");
+        this.addAdvancement("cats_friend","果冻猫之友","驯服所有种类的猫猫果冻");
         this.addAdvancement("spend_money_like_water","挥金如土","合成一套神金套装。神金，不拿去换钱却换一个普通的盔甲。");
         this.addAdvancement("first_cat","第一只猫","驯服一只猫猫果冻");
         this.addAdvancement("ride_llama","原来这也行？","第一次骑乘并控制羊驼");
         this.addAdvancement("finish_biome_1","密林之证","完成回溯密林的事件");
+        this.addAdvancement("cat_food","果冻猫的食物","品尝猫薄荷");
+        this.addAdvancement("cat_jelly","猫猫的味道","猫猫果冻那么可爱，你怎么忍心！！！");
+        this.addAdvancement("no_see","不见","最终还是没能帮助她么...");
+        this.addAdvancement("kill_shu_fu","好久不见，叔父","和妙音一起夺回了家产。");
+        this.addAdvancement("kill_shu_fu2","会再见的","通过万明珠帮妙音找到了杀父仇人。");
 
         this.addBiome(TCRBiomes.PASTORAL_PLAINS,"牧歌原野");
         this.addBiome(TCRBiomes.DENSE_FOREST,"回溯密林");

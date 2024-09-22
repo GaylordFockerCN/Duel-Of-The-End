@@ -76,6 +76,7 @@ public class TCRItemModelProvider extends ItemModelProvider {
         simpleItem(TCRItems.TREE_DEMON_FRUIT);
 
         simpleItem(TCRItems.CATNIP);
+        simpleItem(TCRItems.CAT_JELLY);
         simpleItem(TCRItems.WITHERING_TOUCH);
         simpleItem(TCRItems.HEART_OF_THE_SAPLING);
         simpleItem(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE);

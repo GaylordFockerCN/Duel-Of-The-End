@@ -3,11 +3,13 @@ package com.gaboj1.tcr.event.listeners;
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.capability.TCRCapabilityProvider;
+import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.TCRFakePlayer;
 import com.gaboj1.tcr.item.custom.weapon.GunCommon;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.serverbound.ControlLlamaPacket;
 import com.gaboj1.tcr.util.DataManager;
+import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeTags;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import net.minecraft.ChatFormatting;
@@ -29,7 +31,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -41,14 +42,31 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID)
 public class PlayerEventListener {
 
-    /**
-     * 初始化玩家数据
-     *
-     * 重新登录时如果在维度且主世界没有假身则召唤假身
-     */
     @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+
+        //补录，以防新玩家没有成就
+        if(event.getEntity().level() instanceof ServerLevel level){
+            for(ServerPlayer player : level.getPlayers((serverPlayer -> true))){
+                if(SaveUtil.biome1.isFinished()){
+                    TCRAdvancementData.getAdvancement("finish_biome_1", player);
+                }
+                if(SaveUtil.biome2.isFinished()){
+                    TCRAdvancementData.getAdvancement("finish_biome_2", player);
+                }
+                if(SaveUtil.biome3.isFinished()){
+                    TCRAdvancementData.getAdvancement("finish_biome_3", player);
+                }
+                if(SaveUtil.biome4.isFinished()){
+                    TCRAdvancementData.getAdvancement("finish_biome_4", player);
+                }
+            }
+        }
+
+        //初始化玩家数据
         DataManager.init(event.getEntity());
+
+        //检测是否是快速模式
         if(TCRConfig.FAST_MOD.get() && !DataManager.getFastModLoot.get(event.getEntity())){
             DataManager.getFastModLoot.put(event.getEntity(), true);
             event.getEntity().addItem(Items.NETHER_STAR.getDefaultInstance());
