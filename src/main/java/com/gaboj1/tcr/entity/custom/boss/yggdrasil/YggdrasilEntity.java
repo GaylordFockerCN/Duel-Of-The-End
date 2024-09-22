@@ -2,11 +2,11 @@ package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.TCREntities;
+import com.gaboj1.tcr.entity.ai.goal.BossRecoverGoal;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
 import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
 import com.gaboj1.tcr.entity.custom.biome1.SpriteEntity;
-import com.gaboj1.tcr.entity.custom.biome1.TreeGuardianEntity;
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
@@ -85,24 +85,26 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 500)
-                .add(Attributes.ATTACK_DAMAGE, 3)
+                .add(Attributes.MAX_HEALTH, 20)//TODO 测试用，原1000
+                .add(Attributes.ATTACK_DAMAGE, 10)
                 .add(Attributes.ATTACK_SPEED, 0.5f)
                 .add(Attributes.MOVEMENT_SPEED, 0.30f)
                 .build();
     }
 
     protected void registerGoals() {
-        this.goalSelector.addGoal(0,new ConversationTriggerGoal(this));
-        this.goalSelector.addGoal(1,new NpcDialogueGoal<>(this));
-        this.goalSelector.addGoal(2, new RangeMeleeAttackGoal(this, 1.0, true, 72, 40){
+
+        this.goalSelector.addGoal(0,new BossRecoverGoal(this, 72));
+        this.goalSelector.addGoal(1,new ConversationTriggerGoal(this));
+        this.goalSelector.addGoal(2,new NpcDialogueGoal<>(this));
+        this.goalSelector.addGoal(3, new RangeMeleeAttackGoal(this, 1.0, true, 72, 40){
             @Override
             public boolean canUse() {
                 return YggdrasilEntity.this.getEntityData().get(IS_FIGHTING) && super.canUse();
             }
         });
-        this.goalSelector.addGoal(3,new RecoverGoal(this));
-        this.goalSelector.addGoal(4, new SpawnTreeClawAtPointPositionGoal(this));
+        this.goalSelector.addGoal(4,new RecoverGoal(this));
+        this.goalSelector.addGoal(5, new SpawnTreeClawAtPointPositionGoal(this));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 
         this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Player.class, true));
@@ -184,7 +186,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     @Override
     public void die(@NotNull DamageSource source) {
         if(getEntityData().get(IS_SHADER)){
-            //二次挑战则直接死 TODO 不知道为什么无法杀死
+            //二次挑战则直接死
             superDie(source);
         }
         getEntityData().set(IS_FIGHTING, false);
@@ -258,16 +260,14 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                 boolean canRecover = false;
                 for(int entityID : mobs){
                     Entity entity = level().getEntity(entityID);
-                    if(entity instanceof TreeGuardianEntity treeGuardian && treeGuardian.getHealth()>=treeGuardian.getMaxHealth()/2){
+                    if(entity instanceof SpriteEntity spriteEntity && spriteEntity.getHealth() >= spriteEntity.getMaxHealth()/2){
                         canRecover = true;
                         break;
-                    }else if(entity != null){
-                        entity.discard();
                     }
                 }
                 if(canRecover){
                     recover();
-                    recoverTimer = 114514;
+                    recoverTimer = 114514;//保证只恢复一次
                 }
             } else if(recoverTimer <= maxRecoverTimer){
                 recoverTimer--;
@@ -300,7 +300,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                     double y = shootTarget.getY(0.3333333333333333) - projectile.getY();
                     double z = shootTarget.getZ() - this.getZ();
                     double $$5 = Math.sqrt(x * x + z * z) * 0.20000000298023224;
-                    projectile.setDamage(10);
+                    projectile.setDamage(((float) Objects.requireNonNull(getAttribute(Attributes.ATTACK_DAMAGE)).getValue()));
                     projectile.shoot(x, y + $$5, z, 1.5F, 10.0F);
                     level().addFreshEntity(projectile);
                 }
@@ -421,7 +421,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
             //还有别的情况吗？有就当还没打过处理吧，打的历战
             builder.start(BUILDER.buildDialogueAnswer(entityType,0))
                     .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,1))
-                    .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)0);
+                    .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)-1);
             getEntityData().set(IS_FIGHTING, true);
         }
         Minecraft.getInstance().setScreen(builder.build());
@@ -431,17 +431,17 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
      * 根据手持的枯萎之触的物品数量来削弱树魔的属性
      */
     private void modifyAttribute(int count){
-        AttributeModifier healthModifier = new AttributeModifier("health", -50, AttributeModifier.Operation.ADDITION);
         AttributeModifier attackSpeedModifier = new AttributeModifier("attackSpeed", -5, AttributeModifier.Operation.ADDITION);
-        AttributeModifier attackDamageModifier = new AttributeModifier("attackDamage", -2, AttributeModifier.Operation.ADDITION);
+        AttributeModifier attackDamageModifier = new AttributeModifier("attackDamage", -5, AttributeModifier.Operation.ADDITION);
         switch (count){
-            case 0:break;
-            case 1:
-                Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).addPermanentModifier(healthModifier);break;
-            case 2:
-                Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_SPEED)).addPermanentModifier(attackSpeedModifier);break;
+            case 0: break;
+            //细节不break
             default:
                 Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).addPermanentModifier(attackDamageModifier);
+            case 2:
+                Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_SPEED)).addPermanentModifier(attackSpeedModifier);
+            case 1:
+                setHealth(getMaxHealth() / 2);
         }
     }
 
@@ -453,15 +453,20 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                 SaveUtil.biome1.isBossTalked = true;
                 getEntityData().set(STATE, 1);
                 getEntityData().set(IS_FIGHTING, true);
+                int total = 0;
                 for(ItemStack itemStack : player.getInventory().items){
                     if(itemStack.is(TCRItems.WITHERING_TOUCH.get())){
-                        modifyAttribute(itemStack.getCount());
+                        total += itemStack.getCount();
                     }
+                }
+                modifyAttribute(total);
+                if(total > 1){
+                    chat(BUILDER.buildDialogueAnswer(entityType, -1, false));
                 }
                 break;
             //选择处决
             case 1:
-                player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, 14), false);
+                chat(BUILDER.buildDialogueAnswer(entityType, 14, false));
                 SaveUtil.biome1.isBossFought = true;//注意要处决或者接任务后再调这个，注意考虑对话中断的情况
                 realDie(player.damageSources().playerAttack(player));
                 SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskKillBoss);
@@ -585,8 +590,8 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
             }
             yggdrasil.triggerAnim("Summon", "summon");
             List<Player> players = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.DEFAULT, yggdrasil, getPlayerAABB(yggdrasil.getOnPos(), 10));
-            List<Player> players2 = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.forNonCombat(), yggdrasil, getPlayerAABB(yggdrasil.getOnPos(), 10));//创造测试用
-            players.addAll(players2);
+//            List<Player> players2 = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.forNonCombat(), yggdrasil, getPlayerAABB(yggdrasil.getOnPos(), 10));//创造测试用
+//            players.addAll(players2);
             for(Player player : players){
                 if(yggdrasil.mobs.size() <= 10){
                     SpriteEntity mob = TCREntities.SPRITE.get().spawn(((ServerLevel) yggdrasil.level()), player.getOnPos().above(3), MobSpawnType.NATURAL);

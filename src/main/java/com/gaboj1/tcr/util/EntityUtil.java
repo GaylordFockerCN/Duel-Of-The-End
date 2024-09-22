@@ -49,8 +49,8 @@ public class EntityUtil {
     /**
      * 获取附近的玩家
      */
-    public static List<Player> getNearByPlayers(Level level, LivingEntity self, int offset){
-        return level.getNearbyPlayers(TargetingConditions.DEFAULT, self, getPlayerAABB(self.getOnPos(), offset));
+    public static List<Player> getNearByPlayers(LivingEntity self, int offset){
+        return self.level().getNearbyPlayers(TargetingConditions.DEFAULT, self, getPlayerAABB(self.getOnPos(), offset));
     }
 
     public static List<LivingEntity> getNearByEntities(Level level, LivingEntity self, int offset){

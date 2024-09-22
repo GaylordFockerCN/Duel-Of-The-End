@@ -4,6 +4,7 @@ import com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder;
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
 import com.gaboj1.tcr.entity.TCREntities;
+import com.gaboj1.tcr.entity.ai.goal.BossRecoverGoal;
 import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
 import com.gaboj1.tcr.entity.custom.villager.biome2.*;
 import com.gaboj1.tcr.network.PacketRelay;
@@ -66,6 +67,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
     }
 
     protected void registerGoals() {
+        this.goalSelector.addGoal(0,new BossRecoverGoal(this, 72));
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
@@ -256,7 +258,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
         if(mastersId.isEmpty()){
             AtomicBoolean hasSend = new AtomicBoolean(false);
             //苍澜说遗言 生存才有效
-            for(Player player : EntityUtil.getNearByPlayers(level(), this, 32)){
+            for(Player player : EntityUtil.getNearByPlayers(this, 32)){
                 DialogueComponentBuilder.displayClientMessages(player, 2000, false, ()->{
                     SaveUtil.biome2.isElderDie = true;
                     if(!hasSend.get()){

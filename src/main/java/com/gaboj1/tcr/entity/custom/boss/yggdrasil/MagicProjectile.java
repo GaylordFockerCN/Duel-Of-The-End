@@ -11,12 +11,12 @@ import net.minecraft.world.phys.EntityHitResult;
 import org.jetbrains.annotations.NotNull;
 
 public class MagicProjectile extends LlamaSpit {
-    private int damage = 0;
+    private float damage = 0;
     public MagicProjectile(EntityType<? extends MagicProjectile> p_37248_, Level p_37249_) {
         super(p_37248_, p_37249_);
     }
 
-    public void setDamage(int damage) {
+    public void setDamage(float damage) {
         this.damage = damage;
     }
 

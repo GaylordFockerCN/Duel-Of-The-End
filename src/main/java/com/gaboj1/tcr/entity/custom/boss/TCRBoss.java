@@ -1,9 +1,11 @@
 package com.gaboj1.tcr.entity.custom.boss;
 
 import com.gaboj1.tcr.client.BossMusicPlayer;
+import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.entity.LevelableEntity;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ShadowableEntity;
+import com.gaboj1.tcr.entity.ai.goal.BossRecoverGoal;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -117,7 +119,7 @@ public abstract class TCRBoss extends PathfinderMob implements NpcDialogue, Shad
         //播放bgm
         if(level().isClientSide){
             if(getEntityData().get(IS_FIGHTING)){
-                BossMusicPlayer.playBossMusic(this, getFightMusic(), 32);
+                BossMusicPlayer.playBossMusic(this, getEntityData().get(IS_FIGHTING)? getFightMusic() : null, 32);
             }
         }
 

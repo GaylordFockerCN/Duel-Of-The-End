@@ -109,7 +109,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRItems.STARLIT_DEWDROP.get(),"星光露珠");
         this.addItemUsageInfo(TCRItems.STARLIT_DEWDROP.get(),"精灵的掉落物。可于牧歌原野工匠处锻造精灵法杖。");
         this.add(TCRItems.WITHERING_TOUCH.get(),"枯萎之触");
-        this.addItemUsageInfo(TCRItems.WITHERING_TOUCH.get(),"手持枯萎之触时，可以削弱树魔的力量。");
+        this.addItemUsageInfo(TCRItems.WITHERING_TOUCH.get(),"持有枯萎之触时触发与树魔的战斗，可以削弱树魔的力量。");
         this.add(TCRItems.DENSE_FOREST_CERTIFICATE.get(),"密林之证");
         this.addItemUsageInfo(TCRItems.DENSE_FOREST_CERTIFICATE.get(),"回溯密林群系事件完成的证明。");
         this.add(TCRItems.HEALTH_WAND.get(),"生命法杖");
@@ -448,6 +448,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         //Yggdrasil
         this.addEntityAndEgg(TCREntities.YGGDRASIL,"伊格德拉希尔");
         this.addEntityShaderName(TCREntities.YGGDRASIL, "伊格德拉希尔-残影");
+        this.addDialog(TCREntities.YGGDRASIL,-1,"这是...枯萎之触！你从何得来此物？！");
         this.addDialog(TCREntities.YGGDRASIL,0,"哦，可怜的年轻人，你还是来了…… 不对，你是完整的人！");
         this.addDialog(TCREntities.YGGDRASIL,1,"将你同化已经是不可能的了。看来只有消灭你了啊孩子……");
         this.addDialog(TCREntities.YGGDRASIL,2,"我必须承认，你的能力超出了我的预期。但很遗憾，你的到来打破了我们的平衡。");
@@ -847,6 +848,9 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addAdvancement("can_double_hold","原来这也行？","双持火铳");
         this.addAdvancement("cats_friend","猫猫之友","驯服所有种类的猫猫果冻");
         this.addAdvancement("spend_money_like_water","挥金如土","合成一套神金套装。神金，不拿去换钱却换一个普通的盔甲。");
+        this.addAdvancement("first_cat","第一只猫","驯服一只猫猫果冻");
+        this.addAdvancement("ride_llama","原来这也行？","第一次骑乘并控制羊驼");
+        this.addAdvancement("finish_biome_1","密林之证","完成回溯密林的事件");
 
         this.addBiome(TCRBiomes.PASTORAL_PLAINS,"牧歌原野");
         this.addBiome(TCRBiomes.DENSE_FOREST,"回溯密林");

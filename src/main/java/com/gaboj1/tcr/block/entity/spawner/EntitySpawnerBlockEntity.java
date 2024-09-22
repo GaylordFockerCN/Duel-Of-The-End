@@ -37,26 +37,29 @@ public abstract class EntitySpawnerBlockEntity<T extends Mob> extends BlockEntit
 	}
 
 	public static void tick(Level level, BlockPos pos,  BlockState state, EntitySpawnerBlockEntity<?> blockEntity) {
-		if (!TCRConfig.ENABLE_BOSS_SPAWN_BLOCK_LOAD.get() || blockEntity.spawned || !blockEntity.anyPlayerInRange()) {
-			return;
-		}
-		if (level.isClientSide()) {
+		if (level.isClientSide) {
 			if(blockEntity.getSpawnerParticle() != null){
 				double rx = pos.getX() + level.getRandom().nextFloat();
 				double ry = pos.getY() + level.getRandom().nextFloat();
 				double rz = pos.getZ() + level.getRandom().nextFloat();
 				level.addParticle(blockEntity.getSpawnerParticle(), rx, ry, rz, 0.0D, 0.0D, 0.0D);
 			}
-		} else {
+		}
+		if (!TCRConfig.ENABLE_BOSS_SPAWN_BLOCK_LOAD.get() || blockEntity.spawned || !blockEntity.anyPlayerInRange()) {
+			return;
+		}
+		if(!level.isClientSide){
 			if (level.getDifficulty() != Difficulty.PEACEFUL) {
 				if (blockEntity.spawnMyBoss((ServerLevel) level) != null) {
 					blockEntity.spawned = true;
+					blockEntity.setChanged();
 					if(blockEntity.shouldDestroySelf()){
 						level.destroyBlock(pos, true);
 					}
 				}
 			}
 		}
+
 	}
 
 	public abstract boolean shouldDestroySelf();

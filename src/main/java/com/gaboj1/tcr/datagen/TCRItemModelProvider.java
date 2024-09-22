@@ -153,6 +153,9 @@ public class TCRItemModelProvider extends ItemModelProvider {
         evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_9_STAIRS);
         evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_9_SLAB);
 
+        evenSimplerBlockItem(TCRBlocks.PORTAL_BLOCK);
+        evenSimplerBlockItem(TCRBlocks.YGGDRASIL_BLOCK);
+
 //        simpleItem(TCRItems.ICE_TIGER_BOOTS);
 //        simpleItem(TCRItems.ICE_TIGER_CHESTPLATE);
 //        simpleItem(TCRItems.ICE_TIGER_HELMET);

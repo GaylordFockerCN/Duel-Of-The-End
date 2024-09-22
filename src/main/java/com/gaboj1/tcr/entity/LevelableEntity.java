@@ -15,8 +15,8 @@ public interface LevelableEntity {
             AttributeInstance instance = entity.getAttribute(Attributes.MAX_HEALTH);
             if(instance != null){
                 AttributeModifier levelModifier = new AttributeModifier("level"+level, TCRConfig.MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP.get(), AttributeModifier.Operation.MULTIPLY_BASE);
-//                instance.removeModifiers();
                 instance.addPermanentModifier(levelModifier);
+                entity.setHealth(entity.getMaxHealth());
             }
 
         }
