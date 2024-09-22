@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
@@ -17,8 +18,8 @@ import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSi
 import net.minecraft.world.level.levelgen.feature.foliageplacers.MegaJungleFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.NoiseProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.NoiseThresholdProvider;
 import net.minecraft.world.level.levelgen.feature.treedecorators.LeaveVineDecorator;
-import net.minecraft.world.level.levelgen.feature.treedecorators.TrunkVineDecorator;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.MegaJungleTrunkPlacer;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
@@ -37,7 +38,7 @@ public class TCRConfiguredFeatures {
     //Plants
     public static final ResourceKey<ConfiguredFeature<?, ?>> DENSE_FOREST_SPIRIT_TREE_KEY = registerKey("dense_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> DENSE_FOREST_SPIRIT_FLOWER_KEY = registerKey("dense_flower");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> DENSE_FOREST_SPIRIT_VINE_KEY = registerKey("dense_vine");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CATNIP_KEY = registerKey("catnip_place");
 
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
 
@@ -61,7 +62,7 @@ public class TCRConfiguredFeatures {
                 PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(new NoiseProvider(2345L, new NormalNoise.NoiseParameters(0, 1.0), 0.020833334F,
                         List.of(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get().defaultBlockState()))))));
 
-        register(context, DENSE_FOREST_SPIRIT_VINE_KEY, Feature.VINES, FeatureConfiguration.NONE);
+        register(context, CATNIP_KEY, Feature.FLOWER, new RandomPatchConfiguration(32, 2, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(new NoiseThresholdProvider(2345L, new NormalNoise.NoiseParameters(0, 1.0), 0.005F, -0.8F, 0.33333334F, TCRBlocks.CATNIP.get().defaultBlockState(), List.of(), List.of())))));
 
     }
 

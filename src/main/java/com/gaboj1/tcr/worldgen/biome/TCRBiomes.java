@@ -221,6 +221,7 @@ public class TCRBiomes {
 
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+//        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, TCRPlacedFeatures.CATNIP_PLACED_KEY);//无效。？
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(true)
                 .downfall(0.2f)

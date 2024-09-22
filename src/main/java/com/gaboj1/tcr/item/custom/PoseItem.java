@@ -8,8 +8,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 /**
  * 方便物品调整手的姿势
  */
-@OnlyIn(Dist.CLIENT)
 public interface PoseItem {
+    @OnlyIn(Dist.CLIENT)
     void adjustInMainHand(PlayerModelEvent.SetupAngles.Post event, PlayerModel<?> model, boolean right);
+    @OnlyIn(Dist.CLIENT)
     void adjustInOffHand(PlayerModelEvent.SetupAngles.Post event, PlayerModel<?> model, boolean right);
 }

@@ -25,7 +25,7 @@ public class TCRPlacedFeatures {
 
     public static final ResourceKey<PlacedFeature> DENSE_FOREST_SPIRIT_TREE_PLACED_KEY = createKey("dense_forest_spirit_tree_placed");
     public static final ResourceKey<PlacedFeature> DENSE_FOREST_SPIRIT_FLOWER_PLACED_KEY = createKey("dense_forest_spirit_flower_placed");
-    public static final ResourceKey<PlacedFeature> DENSE_FOREST_SPIRIT_VINE_PLACED_KEY = createKey("dense_forest_spirit_vine_placed");
+    public static final ResourceKey<PlacedFeature> CATNIP_PLACED_KEY = createKey("catnip_placed");
 
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -44,8 +44,8 @@ public class TCRPlacedFeatures {
         register(context, DENSE_FOREST_SPIRIT_FLOWER_PLACED_KEY, configuredFeatures.getOrThrow(TCRConfiguredFeatures.DENSE_FOREST_SPIRIT_FLOWER_KEY),
                 CountPlacement.of(3), RarityFilter.onAverageOnceEvery(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
 
-        register(context, DENSE_FOREST_SPIRIT_VINE_PLACED_KEY, configuredFeatures.getOrThrow(TCRConfiguredFeatures.DENSE_FOREST_SPIRIT_VINE_KEY),
-                CountPlacement.of(127), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.absolute(64), VerticalAnchor.absolute(100)), BiomeFilter.biome());
+        register(context, CATNIP_PLACED_KEY, configuredFeatures.getOrThrow(TCRConfiguredFeatures.CATNIP_KEY),
+                CountPlacement.of(3), RarityFilter.onAverageOnceEvery(20), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
 
 
     }

@@ -102,6 +102,7 @@ public class PiPa extends Item implements GeoItem, PoseItem {
     }
 
     @Override
+    @OnlyIn(Dist.CLIENT)
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {
             private PiPaRenderer renderer;
