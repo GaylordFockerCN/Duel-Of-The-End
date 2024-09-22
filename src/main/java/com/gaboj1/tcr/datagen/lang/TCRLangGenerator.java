@@ -125,6 +125,14 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addItemUsageInfo(TCRItems.HOLY_SWORD.get(),"某位高人留下的圣剑",1);
         this.addItemUsageInfo(TCRItems.HOLY_SWORD.get(),"灵气值 ： %d",3);
 
+        this.add(TCRItems.BRAWLER_GLOVES.get(), "拳师手套");
+        this.addItemUsageInfo(TCRItems.BRAWLER_GLOVES.get(), "拳师的掉落物。");
+        this.add(TCRItems.HAMMER_BEARER_FRAGMENT.get(), "锤之碎片");
+        this.addItemUsageInfo(TCRItems.HAMMER_BEARER_FRAGMENT.get(), "大锤子的掉落物，可用于锻造旋风锤。");
+        this.add(TCRItems.SWORDMASTER_TALISMAN.get(), "御剑者护符");
+        this.addItemUsageInfo(TCRItems.SWORDMASTER_TALISMAN.get(), "御剑者的掉落物。");
+        this.add(TCRItems.ICE_TIGER_CLAW.get(), "冰虎之爪");
+        this.addItemUsageInfo(TCRItems.ICE_TIGER_CLAW.get(), "冰虎的掉落物");
         this.add(TCRItems.ICE_THORN.get(),"冰刺");
         this.addItemUsageInfo(TCRItems.ICE_THORN.get(),"冰虎的掉落物，可以当箭发射");
         this.add(TCRItems.TIGER_SOUL_ICE.get(),"虎魄冰");

@@ -6,7 +6,10 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 
 import java.util.function.Consumer;
@@ -18,13 +21,17 @@ public class TCRRecipeGenerator extends TCRRecipeProvider implements IConditionB
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TCRBlocks.PORTAL_BED.get())
-                .define('B', Items.BLACK_BED)
-                .define('C', Items.WITHER_ROSE)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TCRBlocks.PORTAL_BED.get())
+                .requires(ItemTags.BEDS)
+                .requires(Items.WITHER_ROSE)
                 .unlockedBy(getHasName(Items.WITHER_ROSE), has(Items.WITHER_ROSE))
-                .pattern(" C ")
-                .pattern(" B ")
-                .pattern("   ")
+                .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TCRItems.TIGER_KARAMBIT.get())
+                .requires(TCRItems.ICE_TIGER_CLAW.get())
+                .requires(TCRItems.TIGER_SOUL_ICE.get())
+                .requires(Blocks.OBSIDIAN)
+                .unlockedBy(getHasName(TCRItems.TIGER_SOUL_ICE.get()), has(TCRItems.TIGER_SOUL_ICE.get()))
                 .save(consumer);
 
         nineBlockStorageRecipes(consumer, RecipeCategory.MISC, TCRItems.BASIC_RESIN.get(), RecipeCategory.MISC, TCRItems.INTERMEDIATE_RESIN.get());

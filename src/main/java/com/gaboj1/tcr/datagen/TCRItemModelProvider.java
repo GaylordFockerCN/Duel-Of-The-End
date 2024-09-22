@@ -83,6 +83,10 @@ public class TCRItemModelProvider extends ItemModelProvider {
         simpleItem(TCRItems.STARLIT_DEWDROP);
         simpleItem(TCRItems.DENSE_FOREST_CERTIFICATE);
         simpleItem(TCRItems.TIGER_SOUL_ICE);
+        simpleItem(TCRItems.BRAWLER_GLOVES);
+        simpleItem(TCRItems.HAMMER_BEARER_FRAGMENT);
+        simpleItem(TCRItems.SWORDMASTER_TALISMAN);
+        simpleItem(TCRItems.ICE_TIGER_CLAW);
 
         //handheldItem()会变很大个，适合用于武器什么的
         simpleItem(TCRItems.BLUE_BANANA);

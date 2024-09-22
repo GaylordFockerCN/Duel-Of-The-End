@@ -71,6 +71,10 @@ public class TCRItems {
 	public static final RegistryObject<Item> DENSE_FOREST_CERTIFICATE = REGISTRY.register("dense_forest_certificate",  () -> new DropItem(new Item.Properties().rarity(Rarity.EPIC)));
 	public static final RegistryObject<Item> ELDER_STAFF = REGISTRY.register("elder_staff", DropItem::new);
 	public static final RegistryObject<Item> HOLY_SWORD = REGISTRY.register("holy_sword", FlySword::new);
+	public static final RegistryObject<Item> BRAWLER_GLOVES = REGISTRY.register("brawler_gloves", DropItem::new);
+	public static final RegistryObject<Item> HAMMER_BEARER_FRAGMENT = REGISTRY.register("hammer_bearer_fragment", DropItem::new);
+	public static final RegistryObject<Item> SWORDMASTER_TALISMAN = REGISTRY.register("swordmaster_talisman", DropItem::new);
+	public static final RegistryObject<Item> ICE_TIGER_CLAW = REGISTRY.register("ice_tiger_claw", DropItem::new);
 	public static final RegistryObject<Item> TIGER_KARAMBIT = REGISTRY.register("tiger_karambit", TigerKarambit::new);
 	public static final RegistryObject<Item> TIGER_SOUL_ICE = REGISTRY.register("hupobing", DropItem::new);
 	public static final RegistryObject<Item> PI_PA = REGISTRY.register("pi_pa", PiPa::new);

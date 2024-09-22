@@ -142,6 +142,10 @@ public class TCRItemTabs {
 
 				tabData.accept(TCRItems.ICE_THORN.get());
 				tabData.accept(TCRItems.TIGER_SOUL_ICE.get());
+				tabData.accept(TCRItems.ICE_TIGER_CLAW.get());
+				tabData.accept(TCRItems.BRAWLER_GLOVES.get());
+				tabData.accept(TCRItems.HAMMER_BEARER_FRAGMENT.get());
+				tabData.accept(TCRItems.SWORDMASTER_TALISMAN.get());
 
 				//货币
 				tabData.accept(TCRItems.DENSE_FOREST_CERTIFICATE.get());

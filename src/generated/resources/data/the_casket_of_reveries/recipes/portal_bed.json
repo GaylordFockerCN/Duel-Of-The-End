@@ -1,21 +1,15 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "minecraft:crafting_shapeless",
   "category": "misc",
-  "key": {
-    "B": {
-      "item": "minecraft:black_bed"
+  "ingredients": [
+    {
+      "tag": "minecraft:beds"
     },
-    "C": {
+    {
       "item": "minecraft:wither_rose"
     }
-  },
-  "pattern": [
-    " C ",
-    " B ",
-    "   "
   ],
   "result": {
     "item": "the_casket_of_reveries:portal_bed"
-  },
-  "show_notification": true
+  }
 }
