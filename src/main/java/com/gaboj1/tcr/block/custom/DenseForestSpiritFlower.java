@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.block.custom;
 
+import com.gaboj1.tcr.datagen.tags.TCREntityTagGenerator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
@@ -9,13 +10,13 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -24,9 +25,8 @@ public class  DenseForestSpiritFlower extends FlowerBlock {
         super(effectSupplier, p_53513_, p_53514_);
     }
 
-    //TODO 抄凋零玫瑰的，到时候换自己的特效
     @Override
-    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
+    public void animateTick(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull RandomSource pRandom) {
         VoxelShape $$4 = this.getShape(pState, pLevel, pPos, CollisionContext.empty());
         Vec3 $$5 = $$4.bounds().getCenter();
         double $$6 = (double)pPos.getX() + $$5.x;
@@ -40,17 +40,14 @@ public class  DenseForestSpiritFlower extends FlowerBlock {
     }
 
     @Override
-    public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
-//        if(pEntity.getTags().contains(ModEntityTagGenerator.MOB_IN_DENSE_FOREST)){//FIXME 生物防毒
-//            return;
-//        }
+    @SuppressWarnings("deprecation")
+    public void entityInside(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, Entity pEntity) {
+        if(pEntity.getType().getTags().anyMatch((entityTypeTagKey -> entityTypeTagKey == TCREntityTagGenerator.MOB_IN_DENSE_FOREST))){
+            return;
+        }
         if (!pLevel.isClientSide && pLevel.getDifficulty() != Difficulty.PEACEFUL) {
-//            if (pEntity instanceof LivingEntity) {
-            if (pEntity instanceof Player) {
-                LivingEntity $$4 = (LivingEntity)pEntity;
-                if (!$$4.isInvulnerableTo(pLevel.damageSources().wither())) {
-                    $$4.addEffect(new MobEffectInstance(MobEffects.POISON, 200));
-                }
+            if (pEntity instanceof LivingEntity entity) {
+                entity.addEffect(new MobEffectInstance(MobEffects.POISON, 200));
             }
         }
     }

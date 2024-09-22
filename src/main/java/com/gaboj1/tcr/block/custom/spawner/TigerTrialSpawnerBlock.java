@@ -25,6 +25,7 @@ public class TigerTrialSpawnerBlock extends EntitySpawnerBlock {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
         if(!pLevel.isClientSide){
             BlockEntity entity = pLevel.getBlockEntity(pPos);

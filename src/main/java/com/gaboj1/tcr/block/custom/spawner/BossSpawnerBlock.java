@@ -30,6 +30,7 @@ public abstract class BossSpawnerBlock extends BaseEntityBlock {
      * 右键两次召唤历战版boss，只负责刷材料，与剧情无关
      */
     @Override
+    @SuppressWarnings("deprecation")
     public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
         if(TCRConfig.ENABLE_BOSS_SPAWN_BLOCK_LOAD.get()){
             BlockEntity entity = pLevel.getBlockEntity(pPos);

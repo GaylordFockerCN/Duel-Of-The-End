@@ -33,7 +33,7 @@ public interface EnforcedHomePoint {
 			double hx = nbttaglist.getDouble(0);
 			double hy = nbttaglist.getDouble(1);
 			double hz = nbttaglist.getDouble(2);
-//			this.setRestrictionPoint(GlobalPos.of(TCRDimension.SKY_ISLAND_LEVEL_KEY, BlockPos.containing(hx, hy, hz)));
+			this.setRestrictionPoint(GlobalPos.of(TCRDimension.P_SKY_ISLAND_LEVEL_KEY, BlockPos.containing(hx, hy, hz)));
 		} else {
 			if (tag.contains("HomePos")) {
 				this.setRestrictionPoint(GlobalPos.CODEC.parse(NbtOps.INSTANCE, tag.get("HomePos")).resultOrPartial(TheCasketOfReveriesMod.LOGGER::error).orElse(null));

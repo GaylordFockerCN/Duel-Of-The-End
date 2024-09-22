@@ -101,7 +101,6 @@ public class PortalBed extends BedBlock {
         }
     }
 
-    //TODO 抄凋零玫瑰的，到时候换自己的特效
     @Override
     public void animateTick(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull RandomSource pRandom) {
         VoxelShape $$4 = this.getShape(pState, pLevel, pPos, CollisionContext.empty());

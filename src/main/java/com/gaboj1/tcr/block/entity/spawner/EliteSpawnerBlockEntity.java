@@ -16,7 +16,7 @@ public abstract class EliteSpawnerBlockEntity<T extends TCRAggressiveGeoMob> ext
     @Override
     public T spawnMyBoss(ServerLevelAccessor accessor) {
         T mob = super.spawnMyBoss(accessor);
-        mob.setElite();
+        mob.setElite(this.getBlockPos());
         return mob;
     }
 

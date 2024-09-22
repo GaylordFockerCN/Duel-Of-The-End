@@ -3,6 +3,7 @@ package com.gaboj1.tcr.entity.custom;
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.entity.TCREliteMob;
 import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -31,6 +32,7 @@ import java.util.UUID;
 public abstract class TCRAggressiveGeoMob extends Monster implements GeoEntity {
     private final Queue<TimeStamp> queue = new ArrayDeque<>();
     protected static final EntityDataAccessor<Boolean> IS_ELITE = SynchedEntityData.defineId(TCRAggressiveGeoMob.class, EntityDataSerializers.BOOLEAN);
+    protected static final EntityDataAccessor<BlockPos> ELITE_SPAWN_POS = SynchedEntityData.defineId(TCRAggressiveGeoMob.class, EntityDataSerializers.BLOCK_POS);
     protected final ServerBossEvent INFO = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.PURPLE, BossEvent.BossBarOverlay.PROGRESS);
     protected TCRAggressiveGeoMob(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
@@ -39,20 +41,26 @@ public abstract class TCRAggressiveGeoMob extends Monster implements GeoEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         getEntityData().define(IS_ELITE, false);
+        getEntityData().define(ELITE_SPAWN_POS, BlockPos.ZERO);
     }
 
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.getEntityData().set(IS_ELITE,tag.getBoolean("is_elite"));
+        this.getEntityData().set(ELITE_SPAWN_POS, new BlockPos(tag.getInt("elite_spawn_posX"), tag.getInt("elite_spawn_posY"), tag.getInt("elite_spawn_posZ")));
     }
 
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("is_elite", this.getEntityData().get(IS_ELITE));
+        BlockPos pos = getEntityData().get(ELITE_SPAWN_POS);
+        tag.putInt("elite_spawn_posX", pos.getX());
+        tag.putInt("elite_spawn_posY", pos.getY());
+        tag.putInt("elite_spawn_posZ", pos.getZ());
     }
-    public void setElite(){
+    public void setElite(BlockPos spawnPos){
         AttributeInstance instance1 = this.getAttribute(Attributes.MAX_HEALTH);
         AttributeInstance instance2 = this.getAttribute(Attributes.ATTACK_DAMAGE);
         AttributeModifier healthModifier = new AttributeModifier(UUID.fromString("d0d000cc-f30f-00ed-a05b-0000bb114514"), "Elite Mob", TCRConfig.ELITE_MOB_HEALTH_MULTIPLIER.get(), AttributeModifier.Operation.MULTIPLY_TOTAL);
@@ -65,6 +73,7 @@ public abstract class TCRAggressiveGeoMob extends Monster implements GeoEntity {
             instance2.addPermanentModifier(damageModifier);
         }
         getEntityData().set(IS_ELITE, true);
+        getEntityData().set(ELITE_SPAWN_POS, spawnPos);
     }
     protected void setBossInfoColor(BossEvent.BossBarColor color){
         INFO.setColor(color);
@@ -94,6 +103,19 @@ public abstract class TCRAggressiveGeoMob extends Monster implements GeoEntity {
         }
         return super.hurt(source, p_21017_);
     }
+
+    @Override
+    public void die(@NotNull DamageSource source) {
+        if(getEntityData().get(IS_ELITE)){
+            onEliteDie();
+        }
+        super.die(source);
+    }
+
+    /**
+     * 精英怪死亡事件，方便破墙什么的
+     */
+    public void onEliteDie(){};
 
     @Override
     public void stopSeenByPlayer(@NotNull ServerPlayer player) {

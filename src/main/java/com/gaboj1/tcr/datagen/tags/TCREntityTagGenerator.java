@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
@@ -22,19 +23,13 @@ public class TCREntityTagGenerator extends EntityTypeTagsProvider {
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider pProvider) {
+    protected void addTags(HolderLookup.@NotNull Provider pProvider) {
         super.addTags(pProvider);
         tag(MOB_IN_DENSE_FOREST).add(
                 TCREntities.SMALL_TREE_MONSTER.get(),
                 TCREntities.MIDDLE_TREE_MONSTER.get(),
                 TCREntities.TREE_GUARDIAN.get(),
                 TCREntities.SPRITE.get()
-//                TCRModEntities.TIGER.get(),
-//                TCRModEntities.BOXER.get(),
-//                TCRModEntities.BIG_HAMMER.get(),
-//                TCRModEntities.SNOW_SWORDMAN.get(),
-//                TCRModEntities.SWORD_CONTROLLER.get(),
-//                TCRModEntities.SECOND_BOSS.get()
         );
     }
 
