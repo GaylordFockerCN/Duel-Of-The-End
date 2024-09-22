@@ -67,7 +67,7 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
             if(!DataManager.isSecondEnter.get(playerEntity)){
                 unlocked = true;
             } else {
-                unlocked = DataManager.portalPointUnlockData.get(this.interactionID).get(playerEntity);
+                unlocked = DataManager.portalPointUnlockData.get(id - 1).get(playerEntity);
             }
         }
 
@@ -91,7 +91,7 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
                                     TheCasketOfReveriesMod.getInfo("first_enter2"),
                                     TheCasketOfReveriesMod.getInfo("first_enter3")
                                     );
-                            DataManager.portalPointUnlockData.get(id).put(playerEntity, true);//解锁传送点
+                            DataManager.portalPointUnlockData.get(id - 1).put(playerEntity, true);//解锁传送点
                             DataManager.isSecondEnter.put(serverPlayer, true);
                         }
                         //记录进入点
