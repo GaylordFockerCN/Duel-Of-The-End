@@ -268,7 +268,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 }
                 break;
             case 3:
-                chat(BUILDER.buildDialogueAnswer(entityType, -getRandom().nextInt(7, 10),false));
+                chat(BUILDER.buildDialogueAnswer(entityType, -getRandom().nextInt(6, 10),false));
                 break;
             case 4:
                 chat(BUILDER.buildDialogueAnswer(entityType,12,false));//真是有干劲啊，那我也要全力以赴了，朋友

@@ -50,6 +50,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add("info.the_casket_of_reveries.add_health_failed","提升血量上限失败！");
         this.add("info.the_casket_of_reveries.resurrection","成功还魂！！！");
         this.addInfo("before_enter", "我必须带着下界之星，避免我无法从梦中醒来。");
+        this.addInfo("fast_mod_tip", "使用凋零玫瑰与床合成进入维度所需的床。");
 
         this.add("the_casket_of_reveries.button.boss1","泰兰妮尔之心");
         this.add("the_casket_of_reveries.button.boss2","九霄");
@@ -112,6 +113,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRItems.DENSE_FOREST_CERTIFICATE.get(),"密林之证");
         this.addItemUsageInfo(TCRItems.DENSE_FOREST_CERTIFICATE.get(),"回溯密林群系事件完成的证明。");
         this.add(TCRItems.HEALTH_WAND.get(),"生命法杖");
+        this.addItemUsageInfo(TCRItems.HEALTH_WAND.get(),"右键以回复生命。耐久值随机损耗。");
         this.add(TCRItems.SPIRIT_WAND.get(),"精灵法杖");
         this.add(TCRItems.TREE_SPIRIT_WAND.get(),"树灵法杖");
         this.addItemInfo(TCRItems.TREE_SPIRIT_WAND.get(),"no_spirit_tree","密林灵树原木不足，无法召唤小树妖");
@@ -343,6 +345,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addDialog(TCREntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,5,"不要拿去干坏事哦~");
         this.addVillagerDialog(TCREntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,1,1,"我可是能创造所有人希冀的奇迹，交给我吧！");
         //学者
+        this.addDialog(TCREntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-6,"其实在这个世界里，骑在羊驼身上是可以控制方向的");
         this.addDialog(TCREntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-7,"我们这里是四个国家各自占据大陆，虽然文化有所差异，但我们的货币是通用的");
         this.addDialog(TCREntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-8,"铁匠最近在研发一些新奇的东西，你可以去找他为你的装备升级");
         this.addDialog(TCREntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,-9,"海拉长老在几次的侦察以后找到了我们敌人所在的位置，想知道详细情报，先去询问她会比较好");

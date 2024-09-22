@@ -31,7 +31,7 @@ import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome2.*;
 import com.gaboj1.tcr.entity.custom.villager.biome2.branch.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
@@ -40,10 +40,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.DeferredRegister;
-
-import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Entity;
 
 
 @Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -287,19 +283,19 @@ public class TCREntities {
 				CrabCrabYou::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 
 		event.register(SMALL_TREE_MONSTER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				SmallTreeMonsterEntity::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+				((entityType, serverLevelAccessor, mobSpawnType, blockPos, randomSource) -> true), SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(MIDDLE_TREE_MONSTER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				((entityType, serverLevelAccessor, mobSpawnType, blockPos, randomSource) -> true), SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(TREE_GUARDIAN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				TreeGuardianEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+				((entityType, serverLevelAccessor, mobSpawnType, blockPos, randomSource) -> true), SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(SPRITE.get(),SpawnPlacements.Type.ON_GROUND,Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				SpriteEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+				((entityType, serverLevelAccessor, mobSpawnType, blockPos, randomSource) -> true), SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(TIGER.get(),SpawnPlacements.Type.ON_GROUND,Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				TigerEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(BOXER.get(),SpawnPlacements.Type.ON_GROUND,Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				BoxerEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(BIG_HAMMER.get(),SpawnPlacements.Type.ON_GROUND,Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				BigHammerEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
-		event.register(MIDDLE_TREE_MONSTER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				MiddleTreeMonsterEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(SNOW_SWORDMAN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				SnowSwordmanEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(SWORD_CONTROLLER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
@@ -308,7 +304,7 @@ public class TCREntities {
 				SecondBossEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 
 		event.register(TREE_CLAW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				TreeClawEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+				((entityType, serverLevelAccessor, mobSpawnType, blockPos, randomSource) -> true), SpawnPlacementRegisterEvent.Operation.REPLACE);
 	}
 
 }

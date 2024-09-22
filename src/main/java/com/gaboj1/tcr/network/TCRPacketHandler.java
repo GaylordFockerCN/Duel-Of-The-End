@@ -38,6 +38,7 @@ public class TCRPacketHandler {
         register(UpdateFlySpeedPacket.class, UpdateFlySpeedPacket::decode);
         register(AddDialogPacket.class, AddDialogPacket::decode);
         register(GunReloadPacket.class, GunReloadPacket::decode);
+        register(ControlLlamaPacket.class, ControlLlamaPacket::decode);
 
         //双端
         register(SyncSaveUtilPacket.class, SyncSaveUtilPacket::decode);

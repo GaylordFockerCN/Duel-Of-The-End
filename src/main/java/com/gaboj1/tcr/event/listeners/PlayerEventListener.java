@@ -1,12 +1,17 @@
 package com.gaboj1.tcr.event.listeners;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.capability.TCRCapabilityProvider;
 import com.gaboj1.tcr.entity.TCRFakePlayer;
 import com.gaboj1.tcr.item.custom.weapon.GunCommon;
+import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.packet.serverbound.ControlLlamaPacket;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeTags;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
@@ -18,8 +23,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.animal.horse.Llama;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.phys.Vec3;
@@ -42,6 +49,12 @@ public class PlayerEventListener {
     @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         DataManager.init(event.getEntity());
+        if(TCRConfig.FAST_MOD.get() && !DataManager.getFastModLoot.get(event.getEntity())){
+            DataManager.getFastModLoot.put(event.getEntity(), true);
+            event.getEntity().addItem(Items.NETHER_STAR.getDefaultInstance());
+            event.getEntity().addItem(Items.WITHER_ROSE.getDefaultInstance());
+            event.getEntity().displayClientMessage(TheCasketOfReveriesMod.getInfo("fast_mod_tip").withStyle(ChatFormatting.BLUE), false);
+        }
 
         //主世界没假身就召唤假身，注意主世界和维度的区别
         Player player = event.getEntity();
@@ -65,22 +78,32 @@ public class PlayerEventListener {
     @SubscribeEvent
     public static void enterBiome(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
-        if(player.isCreative()){
-            return;
-        }
-        Level level = player.level();
-        Holder<Biome> currentBiome = level.getBiome(player.getOnPos());
-        if (currentBiome.is(TCRBiomeTags.FORBIDDEN_BIOME)) {
-
-            if (player instanceof ServerPlayer serverPlayer && player.getServer() != null) {
-                String commands = "/title "+player.getName().getString()+" title {\"text\":\""+ I18n.get("info.the_casket_of_reveries.enter_forbidden_biome") +"\"}";
-                player.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, player.position(), player.getRotationVector(), serverPlayer.serverLevel(), 4,
-                        player.getName().getString(), player.getDisplayName(), serverPlayer.server, player), commands);
+        //维度内可骑羊驼
+        if(player.level().dimension() == TCRDimension.P_SKY_ISLAND_LEVEL_KEY){
+            if(player instanceof LocalPlayer localPlayer && player.getVehicle() instanceof Llama llama){
+                if(llama.isTamed() && localPlayer.input.up){
+                    TCRPacketHandler.INSTANCE.sendToServer(new ControlLlamaPacket(llama.getId(), player.getViewVector(1.0f).scale(20.0).toVector3f()));
+                }
             }
-
-            player.displayClientMessage(Component.translatable("info.the_casket_of_reveries.enter_forbidden_biome"), true);
-            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 1, false, true));
         }
+
+        //禁止进入第三第四群系
+        if(!player.isCreative()){
+            Level level = player.level();
+            Holder<Biome> currentBiome = level.getBiome(player.getOnPos());
+            if (currentBiome.is(TCRBiomeTags.FORBIDDEN_BIOME)) {
+
+                if (player instanceof ServerPlayer serverPlayer && player.getServer() != null) {
+                    String commands = "/title "+player.getName().getString()+" title {\"text\":\""+ I18n.get("info.the_casket_of_reveries.enter_forbidden_biome") +"\"}";
+                    player.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, player.position(), player.getRotationVector(), serverPlayer.serverLevel(), 4,
+                            player.getName().getString(), player.getDisplayName(), serverPlayer.server, player), commands);
+                }
+
+                player.displayClientMessage(Component.translatable("info.the_casket_of_reveries.enter_forbidden_biome"), true);
+                player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 1, false, true));
+            }
+        }
+
     }
 
 

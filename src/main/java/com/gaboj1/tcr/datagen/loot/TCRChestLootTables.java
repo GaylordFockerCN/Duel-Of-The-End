@@ -212,7 +212,7 @@ public class TCRChestLootTables implements LootTableSubProvider {
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 1.0F))
                         .add(LootItem.lootTableItem(TCRBlocks.CATNIP.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
                 )
-                .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 2.0F))
+                .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 1.0F))
                         .add(LootItem.lootTableItem(TCRItems.HEALTH_WAND.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
                 )
         );

@@ -93,6 +93,7 @@ public class DataManager {
     public static BoolData stolenMiaoYin =  new BoolData("stolenMiaoYin",false);
     public static BoolData wanMingPearlGot =  new BoolData("wanMingPearlGot",false);
     public static BoolData miaoYinMoney1 =  new BoolData("miaoYinMoney1",false);
+    public static BoolData getFastModLoot =  new BoolData("getFastModLoot",false);
 
     //给予初始值
     public static void init(Player player){

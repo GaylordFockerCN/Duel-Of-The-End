@@ -3,6 +3,7 @@ package com.gaboj1.tcr;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class TCRConfig {
+    public static final ForgeConfigSpec.BooleanValue FAST_MOD;
     public static final ForgeConfigSpec.BooleanValue NO_PLOT_MODE;
     // 是否启用自定义地图生成时缩放
     public static final ForgeConfigSpec.BooleanValue ENABLE_SCALING;
@@ -39,6 +40,7 @@ public class TCRConfig {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
 
         builder.push("Game Setting");
+        FAST_MOD = createBool(builder, "fast_mod", false, "快速模式，开启后将直接获得可以进入维度的装备");
         NO_PLOT_MODE = createBool(builder, "no_plot_mode", false, "无剧情模式，设为true后将直接挑战boss而没有主线对话。");//TODO 未实现
         ENABLE_SCALING = createBool(builder, "enable_scaling", false);
         ENABLE_BETTER_STRUCTURE_BLOCK_LOAD = createBool(builder, "enable_better_structure_block_load", true);
