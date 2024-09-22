@@ -398,7 +398,7 @@ public abstract class TCRVillager extends Villager implements GeoEntity, ManySki
 //        if(isAngry) {
 //            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.attack", Animation.LoopType.LOOP));
 //        } else
-        if(tAnimationState.isMoving()) {
+        if(tAnimationState.isMoving() && !(this instanceof IStationaryVillager)) {
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.move", Animation.LoopType.LOOP));
         } else {
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.idle", Animation.LoopType.LOOP));

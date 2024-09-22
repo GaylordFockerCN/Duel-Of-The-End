@@ -42,7 +42,7 @@
 			"element_type": "minecraft:single_pool_element"
 		}
 	},{
-		"weight": 3,
+		"weight": 2,
 		"element": {
 			"location": "the_casket_of_reveries:village/village1/building/farmland",
 			"processors": "minecraft:empty",
