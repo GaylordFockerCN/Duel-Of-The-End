@@ -5,6 +5,7 @@ import com.gaboj1.tcr.item.TCRItems;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -58,77 +59,38 @@ public class TCREntityLootTables extends EntityLootSubProvider {
         add(TCREntities.CUI_HUA.get(), emptyLootTable());
         add(TCREntities.YUN_YI.get(), emptyLootTable());
         add(TCREntities.YAN_XIN.get(), emptyLootTable());
+        add(TCREntities.SECOND_BOSS.get(), emptyLootTable());
 
-
-        add(TCREntities.TIGER.get(),
-                LootTable.lootTable()
-                        .withPool(LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(0, 0))
-                                .add(LootItem.lootTableItem(TCRItems.BASIC_RESIN.get())))
-        );
-
-        add(TCREntities.BOXER.get(),
-                LootTable.lootTable()
-                        .withPool(LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(0, 0))
-                                .add(LootItem.lootTableItem(TCRItems.BASIC_RESIN.get())))
-        );
-
-        add(TCREntities.BIG_HAMMER.get(),
-                LootTable.lootTable()
-                        .withPool(LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(0, 0))
-                                .add(LootItem.lootTableItem(TCRItems.BASIC_RESIN.get())))
-        );
-
-        add(TCREntities.SNOW_SWORDMAN.get(),
-                LootTable.lootTable()
-                        .withPool(LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(0, 0))
-                                .add(LootItem.lootTableItem(TCRItems.BASIC_RESIN.get())))
-        );
-
-        add(TCREntities.SWORD_CONTROLLER.get(),
-                LootTable.lootTable()
-                        .withPool(LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(0, 0))
-                                .add(LootItem.lootTableItem(TCRItems.BASIC_RESIN.get())))
-        );
-
-        add(TCREntities.SECOND_BOSS.get(),
-                LootTable.lootTable()
-                        .withPool(LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(0, 0))
-                                .add(LootItem.lootTableItem(TCRItems.BASIC_RESIN.get())))
-        );
+        add(TCREntities.SWORD.get(),emptyLootTable());
+        add(TCREntities.RAIN_SCREEN_SWORD.get(),emptyLootTable());
 
         /*Biome1 start*/
         add(TCREntities.SMALL_TREE_MONSTER.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(0, 2))
+                                .setRolls(UniformGenerator.between(0, 1))
                                 .add(LootItem.lootTableItem(TCRItems.HEART_OF_THE_SAPLING.get())))
         );
 
         add(TCREntities.MIDDLE_TREE_MONSTER.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(0, 2))
+                                .setRolls(UniformGenerator.between(0, 1))
                                 .add(LootItem.lootTableItem(TCRItems.BASIC_RESIN.get())))
                         .withPool(LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(0, 2))
+                                .setRolls(UniformGenerator.between(0, 1))
                                 .add(LootItem.lootTableItem(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get())))
         );
 
         add(TCREntities.TREE_GUARDIAN.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(0, 2))
+                                .setRolls(UniformGenerator.between(0, 1))
                                 .add(LootItem.lootTableItem(TCRItems.BARK_OF_THE_GUARDIAN.get())))
                         .withPool(LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(1, 2))
+                                .setRolls(UniformGenerator.between(0, 1))
                                 .add(LootItem.lootTableItem(TCRItems.INTERMEDIATE_RESIN.get()).setWeight(1))
-                                .add(LootItem.lootTableItem(TCRItems.ADVANCED_RESIN.get()).setWeight(3)))
+                                .add(LootItem.lootTableItem(TCRItems.ADVANCED_RESIN.get()).setWeight(2)))
                         .withPool(LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1))
                                 .when(LootItemKilledByPlayerCondition.killedByPlayer())
@@ -140,7 +102,7 @@ public class TCREntityLootTables extends EntityLootSubProvider {
         add(TCREntities.SPRITE.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
-                                .setRolls(UniformGenerator.between(0, 2))
+                                .setRolls(UniformGenerator.between(0, 1))
                                 .add(LootItem.lootTableItem(TCRItems.STARLIT_DEWDROP.get())))
         );
 
@@ -180,9 +142,45 @@ public class TCREntityLootTables extends EntityLootSubProvider {
         add(TCREntities.TREE_CLAW.get(), emptyLootTable());
         /*Biome1 end*/
 
-        add(TCREntities.SWORD.get(),emptyLootTable());
+        //Biome2 start
+        add(TCREntities.TIGER.get(),
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(0, 1))
+                                .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.5F, 1))
+                                .add(LootItem.lootTableItem(TCRItems.TIGER_SOUL_ICE.get()).setWeight(1))
+                                .add(LootItem.lootTableItem(TCRItems.ICE_TIGER_CLAW.get()).setWeight(2)))
+        );
 
-        add(TCREntities.RAIN_SCREEN_SWORD.get(),emptyLootTable());
+        add(TCREntities.BOXER.get(),
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(0, 1))
+                                .add(LootItem.lootTableItem(TCRItems.BRAWLER_GLOVES.get())))
+        );
+
+        add(TCREntities.BIG_HAMMER.get(),
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(0, 1))
+                                .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.5F, 1))
+                                .add(LootItem.lootTableItem(TCRItems.HAMMER_BEARER_FRAGMENT.get())))
+        );
+
+        add(TCREntities.SNOW_SWORDMAN.get(),
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(0, 1))
+                                .add(LootItem.lootTableItem(Items.SNOWBALL)))
+        );
+
+        add(TCREntities.SWORD_CONTROLLER.get(),
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(0, 1))
+                                .add(LootItem.lootTableItem(TCRItems.SWORDMASTER_TALISMAN.get())))
+        );
+        //Biome2 end
 
 
     }

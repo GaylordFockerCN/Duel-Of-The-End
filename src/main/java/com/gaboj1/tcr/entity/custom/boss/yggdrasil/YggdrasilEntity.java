@@ -85,8 +85,8 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, SaveUtil.getMobMultiplier(200))
-                .add(Attributes.ATTACK_DAMAGE, SaveUtil.getMobMultiplier(3))
+                .add(Attributes.MAX_HEALTH, 500)
+                .add(Attributes.ATTACK_DAMAGE, 3)
                 .add(Attributes.ATTACK_SPEED, 0.5f)
                 .add(Attributes.MOVEMENT_SPEED, 0.30f)
                 .build();
