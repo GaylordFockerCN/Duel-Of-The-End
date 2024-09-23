@@ -94,6 +94,7 @@ public class DLA {
                 }
             }
         }
+//        FillClosedCircles.fill(blur);
     }
 
     /**
@@ -145,13 +146,13 @@ public class DLA {
         for(int i = 0; i < original.length; i++){
             for(int j = 0; j < original[0].length; j++){
                 if(original[i][j]){
-                    int distance = Math.abs(i - center) + Math.abs(j - center);
+                    double distance_2 = Math.pow(i - center, 2) + Math.pow(j - center, 2);
                     double sigma = size / 20.0;//3 sigma hhhh
 //                    blur[i][j] += value * (1 + (1 - (1 / (1 + size-distance))));
-                    double attenuation = Math.exp(-Math.pow(distance, 2) / (2 * Math.pow(sigma, 2)));
+                    double attenuation = Math.exp( -distance_2 / (2 * Math.pow(sigma, 2)));
 //                    blur[i][j] += (int) (size / 5 * (1 + attenuation));
-                    blur[i][j] += (int) (value * (0.5 + attenuation));
-//                    blur[i][j] += value;
+//                    blur[i][j] += (int) (value * (0.5 + attenuation));
+                    blur[i][j] += (int) (value + (size - Math.sqrt(distance_2)) / size * 10);
                 }
             }
         }
@@ -260,25 +261,65 @@ public class DLA {
         return result;
     }
 
+    /**
+     * 双线性插值
+     */
+    private static int[][] enlargeHeightMap(int[][] original, int size) {
+        int originalWidth = original.length;
+        int originalHeight = original[0].length;
+        int[][] enlarged = new int[size][size];
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                // 计算原始数组的坐标
+                double x = (double) i / size * originalWidth;
+                double y = (double) j / size * originalHeight;
+
+                int x0 = (int) Math.floor(x);
+                int x1 = Math.min(x0 + 1, originalWidth - 1);
+                int y0 = (int) Math.floor(y);
+                int y1 = Math.min(y0 + 1, originalHeight - 1);
+
+                double xFraction = x - x0;
+                double yFraction = y - y0;
+
+                // 双线性插值
+                int top = (int) (original[x0][y0] * (1 - xFraction) + original[x1][y0] * xFraction);
+                int bottom = (int) (original[x0][y1] * (1 - xFraction) + original[x1][y1] * xFraction);
+
+                // 放大高度值
+                enlarged[i][j] = (int) ((top * (1 - yFraction) + bottom * yFraction) * 4);
+            }
+        }
+        return enlarged;
+    }
+
+
+    /**
+     * 获取默认山的高度图
+     * @param size 高度图边长
+     * @return 高度图
+     */
     public int[][] getDefault(int size){
-        int cnt = 0;
-        while (blur.length < size){
-            cnt++;
-            doDLA(5, blur.length * (20 + cnt));
-            applyDLAResult(30, size);
+        int sizeS = size / 10;
+
+        while (blur.length < sizeS){
+            doDLA(5, blur.length * 2);
+            applyDLAResult(20, sizeS);
             applyConvolution(DLA.AVERAGE_KERNEL_5_5, 1);
-            interpolate();
-            applyConvolution(DLA.AVERAGE_KERNEL_3_3, 2);
+//            interpolate();
         }
-        if(blur.length > size){
-            blur = resizeArray(blur, size, size);
+        if(blur.length > sizeS){
+            blur = resizeArray(blur, sizeS, sizeS);
         }
-        applyConvolution(DLA.AVERAGE_KERNEL_3_3, 50);
+        applyConvolution(DLA.AVERAGE_KERNEL_3_3, 3);
+        blur = enlargeHeightMap(blur, size);
+        applyConvolution(DLA.AVERAGE_KERNEL_3_3, 3);
         return blur;
     }
 
     public static void main(String[] args) {
-        int size = 1600;
+        int size = 160;
         DLA dla = new DLA(114514);
         int[][] grid = dla.getDefault(size);
 

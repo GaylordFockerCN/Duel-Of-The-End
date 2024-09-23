@@ -3,6 +3,7 @@ package com.gaboj1.tcr;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class TCRConfig {
+    public static final ForgeConfigSpec.IntValue MIN_CHUNK_BETWEEN_STRUCTURE;
     public static final ForgeConfigSpec.BooleanValue FAST_MOD;
     public static final ForgeConfigSpec.BooleanValue NO_PLOT_MODE;
     // 是否启用自定义地图生成时缩放
@@ -40,6 +41,7 @@ public class TCRConfig {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
 
         builder.push("Game Setting");
+        MIN_CHUNK_BETWEEN_STRUCTURE = createInt(builder, "min_chunk_between_structure", 3, 0, "小建筑和主建筑的最小区块间距");
         FAST_MOD = createBool(builder, "fast_mod", false, "快速模式，开启后将直接获得可以进入维度的装备");
         NO_PLOT_MODE = createBool(builder, "no_plot_mode", false, "无剧情模式，设为true后将直接挑战boss而没有主线对话。");//TODO 未实现
         ENABLE_SCALING = createBool(builder, "enable_scaling", false, "启用后将对图生图的图片进行缩放，强制地图大小。");
