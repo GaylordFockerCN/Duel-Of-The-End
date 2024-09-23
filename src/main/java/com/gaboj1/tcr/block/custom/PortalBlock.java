@@ -49,20 +49,18 @@ public class PortalBlock extends BaseEntityBlock{
 
         BlockEntity entity = level.getBlockEntity(pos);
         if(entity instanceof PortalBlockEntity portalBlockEntity){
-
             if (player instanceof ServerPlayer serverPlayer) {
                 //创造且潜行的情况下，按下即为切换传送锚点的类型。
-                if(serverPlayer.isCreative()&&player.isShiftKeyDown()){
+                if(serverPlayer.isCreative() && player.isShiftKeyDown()){
                     portalBlockEntity.changeId();
                     player.sendSystemMessage(Component.literal("ID changed to: "+portalBlockEntity.getId()));
                 }else {
-                    if(!portalBlockEntity.isPlayerUnlock(player)){
+                    if(!portalBlockEntity.isPlayerUnlock(player) || !portalBlockEntity.isActivated()){
                         portalBlockEntity.setPlayerUnlock(player);//解锁传送石！
-                        serverPlayer.sendSystemMessage(Component.translatable("info.the_casket_of_reveries.teleport_unlock"));
                         portalBlockEntity.activateAnim();
+                        serverPlayer.sendSystemMessage(Component.translatable("info.the_casket_of_reveries.teleport_unlock"));
                         level.playSound(null , player.getX(),player.getY(),player.getZ(), SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS,1,1);//播放末地传送门开启的音效
                     }else{
-                        portalBlockEntity.activateAnim();
                         CompoundTag data = new CompoundTag();
                         data.putBoolean("isVillage", portalBlockEntity.getId() < 4);
                         data.putBoolean("isFromPortalBed", false);
@@ -77,17 +75,8 @@ public class PortalBlock extends BaseEntityBlock{
                     }
                 }
             }
-            new Thread(()->{
-                try {
-                    Thread.sleep(1500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                portalBlockEntity.unlock();//客户端服务端都需要unlock，并且要在播放解锁动画后再unlock
-            }).start();
-
+            portalBlockEntity.unlock();//客户端也同步 TODO 换个传输法
         }
-
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 

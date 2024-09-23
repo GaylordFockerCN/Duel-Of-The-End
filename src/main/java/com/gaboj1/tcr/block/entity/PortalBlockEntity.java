@@ -5,9 +5,11 @@ import com.gaboj1.tcr.block.TCRBlockEntities;
 import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -21,15 +23,22 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
     private int id = 0;
     public static final int maxID = 8;// 0~3: village ; 4~7: boss; 8: final
 
-    private boolean isUnlock = false;
+    private boolean isActivated;
 
-    public boolean isUnlock() {
-        return isUnlock;
+    public boolean isActivated() {
+        return isActivated;
     }
 
     public void unlock(){
-        isUnlock = true;
+        isActivated = true;
         setChanged();
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        if (level instanceof ServerLevel serverLevel)
+            serverLevel.getChunkSource().blockChanged(getBlockPos());
     }
 
     public boolean isPlayerUnlock(Player player){
@@ -54,17 +63,17 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        tag.putInt("TeleportId",id);
-        tag.putBoolean("isUnlock",isUnlock);
+    protected void saveAdditional(@NotNull CompoundTag tag) {
         super.saveAdditional(tag);
+        tag.putInt("TeleportId",id);
+        tag.putBoolean("isActivated", isActivated);
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        id = tag.getInt("TeleportId");
-        isUnlock = tag.getBoolean("isUnlock");
+    public void load(@NotNull CompoundTag tag) {
         super.load(tag);
+        id = tag.getInt("TeleportId");
+        isActivated = tag.getBoolean("isActivated");
     }
 
     public void changeId(){
@@ -85,14 +94,14 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
         controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
 
         controllerRegistrar.add(new AnimationController<>(this, "Activate", 0, state -> PlayState.STOP)
-                .triggerableAnim("activate1", RawAnimation.begin().thenPlay("activate")));
+                .triggerableAnim("activate1", RawAnimation.begin().then("unlock", Animation.LoopType.PLAY_ONCE)));
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
-        if(isUnlock()){
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("unlock", Animation.LoopType.LOOP));
-        }else {
+        if(isActivated()){
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+        }else {
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("lock", Animation.LoopType.LOOP));
         }
         return PlayState.CONTINUE;
     }
