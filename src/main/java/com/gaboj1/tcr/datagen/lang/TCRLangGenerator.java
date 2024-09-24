@@ -51,6 +51,10 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add("info.the_casket_of_reveries.resurrection","成功还魂！！！");
         this.addInfo("before_enter", "我必须带着下界之星，避免我无法从梦中醒来。");
         this.addInfo("fast_mod_tip", "使用凋零玫瑰与床合成进入维度所需的床。");
+        this.addInfo("wallet_get", "从碎梦袋取出梦晶石：%d， 取出梦碎片： %d");
+        this.addInfo("wallet_put", "从碎梦袋存入梦晶石：%d， 存入梦碎片： %d");
+        this.addInfo("wallet_plus_count", "梦晶石：%d");
+        this.addInfo("wallet_count", "梦碎片： %d");
 
         this.add("the_casket_of_reveries.button.boss1","泰兰妮尔之心");
         this.add("the_casket_of_reveries.button.boss2","九霄");
@@ -181,6 +185,8 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addItemUsageInfo(TCRItems.DREAMSCAPE_COIN.get(),"在梦之领域通用的货币，闪闪发光十分珍贵。九个梦碎片可以合成一个梦晶石");
         this.add(TCRItems.DREAMSCAPE_COIN_PLUS.get(),"梦晶石");
         this.addItemUsageInfo(TCRItems.DREAMSCAPE_COIN_PLUS.get(),"在梦之领域通用的货币，闪闪发光十分珍贵。一个梦晶石可以分解成九个梦碎片");
+        this.add(TCRItems.WALLET.get(),"碎梦袋");
+        this.addItemUsageInfo(TCRItems.WALLET.get(),"存取梦碎片和梦晶石的奇妙袋子，右键存入，潜行时右键取用");
 
         this.add(TCRItems.BLUE_BANANA.get(),"蓝蕉");
         this.addItemUsageInfo(TCRItems.BLUE_BANANA.get(),"蓝色的香蕉品种，不知道有什么特殊含义。");

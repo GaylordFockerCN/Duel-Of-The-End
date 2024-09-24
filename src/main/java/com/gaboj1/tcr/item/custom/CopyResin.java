@@ -1,6 +1,8 @@
 package com.gaboj1.tcr.item.custom;
 
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
+import com.gaboj1.tcr.item.TCRItems;
+import com.gaboj1.tcr.util.ItemUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -27,8 +29,7 @@ public class CopyResin extends Item {
         ItemStack handItem = pPlayer.getItemInHand(pUsedHand);
         if(!pLevel.isClientSide){
             pPlayer.getItemInHand(pUsedHand).shrink(1);
-            pPlayer.addItem(otherHandItem.copyWithCount(1));
-
+            ItemUtil.addItem(pPlayer, otherHandItem.getItem(), 1);
             TCRAdvancementData.getAdvancement("mass_production",(ServerPlayer) pPlayer);
 
             if(otherHandItem.isEmpty()) {

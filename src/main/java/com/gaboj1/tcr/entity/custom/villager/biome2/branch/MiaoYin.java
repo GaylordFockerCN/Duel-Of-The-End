@@ -331,13 +331,17 @@ public class MiaoYin extends YueShiLineNpc {
                 break;
             case 11:
                 //给予琵琶，结局2
-                player.addItem(TCRItems.PI_PA.get().getDefaultInstance());
+                if(!player.addItem(TCRItems.PI_PA.get().getDefaultInstance())){
+                    ItemUtil.addItemEntity(player, TCRItems.PI_PA.get(), 1);
+                }
                 TCRAdvancementData.getAdvancement("kill_shu_fu", ((ServerPlayer) player));
                 SaveUtil.biome2.isBranchEnd = true;
                 break;
             case 111:
                 //给予琵琶，结局3
-                player.addItem(TCRItems.PI_PA.get().getDefaultInstance());
+                if(!player.addItem(TCRItems.PI_PA.get().getDefaultInstance())){
+                    ItemUtil.addItemEntity(player, TCRItems.PI_PA.get(), 1);
+                }
                 TCRAdvancementData.getAdvancement("kill_shu_fu2", ((ServerPlayer) player));
                 SaveUtil.biome2.isBranchEnd = true;
                 break;

@@ -288,7 +288,7 @@ public class DLA {
                 int bottom = (int) (original[x0][y1] * (1 - xFraction) + original[x1][y1] * xFraction);
 
                 // 放大高度值
-                enlarged[i][j] = (int) ((top * (1 - yFraction) + bottom * yFraction) * 4);
+                enlarged[i][j] = (int) ((top * (1 - yFraction) + bottom * yFraction) * 3.5);
             }
         }
         return enlarged;

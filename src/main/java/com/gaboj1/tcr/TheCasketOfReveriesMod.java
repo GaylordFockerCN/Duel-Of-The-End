@@ -76,6 +76,10 @@ public class TheCasketOfReveriesMod {
         return Component.translatable("info.the_casket_of_reveries."+key);
     }
 
+    public static MutableComponent getInfo(String key, Object... objects){
+        return Component.translatable("info.the_casket_of_reveries."+key, objects);
+    }
+
     private void commonSetup(final FMLCommonSetupEvent event){
         TCRPacketHandler.register();
         event.enqueueWork(() -> {

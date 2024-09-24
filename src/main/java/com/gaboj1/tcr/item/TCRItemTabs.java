@@ -151,6 +151,7 @@ public class TCRItemTabs {
 				tabData.accept(TCRItems.DENSE_FOREST_CERTIFICATE.get());
 				tabData.accept(TCRItems.DREAMSCAPE_COIN.get());
 				tabData.accept(TCRItems.DREAMSCAPE_COIN_PLUS.get());
+				tabData.accept(TCRItems.WALLET.get());
 				tabData.accept(TCRItems.WAN_MING_PEARL.get());
 				tabData.accept(TCRItems.RAW_ORICHALCUM.get());
 				tabData.accept(TCRItems.ORICHALCUM.get());

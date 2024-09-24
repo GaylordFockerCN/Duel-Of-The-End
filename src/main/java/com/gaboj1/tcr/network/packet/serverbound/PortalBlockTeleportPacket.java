@@ -5,8 +5,10 @@ import com.gaboj1.tcr.capability.TCRCapabilityProvider;
 import com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.TCRFakePlayer;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.network.packet.BasePacket;
 import com.gaboj1.tcr.util.DataManager;
+import com.gaboj1.tcr.util.ItemUtil;
 import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
@@ -86,7 +88,9 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
                             TCRAdvancementData.getAdvancement(TheCasketOfReveriesMod.MOD_ID, serverPlayer);
                             TCRAdvancementData.getAdvancement("enter_realm_of_the_dream", serverPlayer);
                             //输出首次进入维度的提示
-                            DialogueComponentBuilder.displayClientMessages(serverPlayer, 6000, false, ()->{},
+                            DialogueComponentBuilder.displayClientMessages(serverPlayer, 6000, false, ()->{
+                                        ItemUtil.addItem(playerEntity, TCRItems.WALLET.get(), 1);
+                                    },
                                     TheCasketOfReveriesMod.getInfo("first_enter1"),
                                     TheCasketOfReveriesMod.getInfo("first_enter2"),
                                     TheCasketOfReveriesMod.getInfo("first_enter3")
