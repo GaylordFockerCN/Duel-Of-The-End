@@ -21,7 +21,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import java.awt.Point;
@@ -90,6 +89,7 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
                             //输出首次进入维度的提示
                             DialogueComponentBuilder.displayClientMessages(serverPlayer, 6000, false, ()->{
                                         ItemUtil.addItem(playerEntity, TCRItems.WALLET.get(), 1);
+                                        ItemUtil.addItem(playerEntity, TCRItems.RECALL_SCROLL.get(), 1);
                                     },
                                     TheCasketOfReveriesMod.getInfo("first_enter1"),
                                     TheCasketOfReveriesMod.getInfo("first_enter2"),

@@ -31,6 +31,7 @@ public class TCRPacketHandler {
         register(AddVillagerParticlePacket.class, AddVillagerParticlePacket::decode);
         register(SyncSwordOwnerPacket.class, SyncSwordOwnerPacket::decode);
         register(SyncFakePlayerPacket.class, SyncFakePlayerPacket::decode);
+        register(PortalBlockEntitySyncPacket.class, PortalBlockEntitySyncPacket::decode);
 
         // 发给服务端
         register(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);

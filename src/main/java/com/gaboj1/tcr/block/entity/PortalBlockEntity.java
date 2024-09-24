@@ -29,16 +29,33 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
         return isActivated;
     }
 
+    public void setActivated(boolean activated) {
+        isActivated = activated;
+    }
+
     public void unlock(){
         isActivated = true;
         setChanged();
     }
-
+    
+    /**
+     * 更新到客户端必备
+     */
     @Override
     public void setChanged() {
         super.setChanged();
         if (level instanceof ServerLevel serverLevel)
             serverLevel.getChunkSource().blockChanged(getBlockPos());
+    }
+
+    /**
+     * 更新到客户端必备
+     */
+    @Override
+    public @NotNull CompoundTag getUpdateTag() {
+        CompoundTag tag = new CompoundTag();
+        this.saveAdditional(tag);
+        return tag;
     }
 
     public boolean isPlayerUnlock(Player player){

@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.block.custom;
 
 import com.gaboj1.tcr.block.entity.PortalBlockEntity;
+import com.gaboj1.tcr.capability.TCRCapabilityProvider;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.PortalBlockScreenPacket;
@@ -50,6 +51,7 @@ public class PortalBlock extends BaseEntityBlock{
         BlockEntity entity = level.getBlockEntity(pos);
         if(entity instanceof PortalBlockEntity portalBlockEntity){
             if (player instanceof ServerPlayer serverPlayer) {
+                serverPlayer.getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> tcrPlayer.setLastPortalBlockPos(pos)));
                 //创造且潜行的情况下，按下即为切换传送锚点的类型。
                 if(serverPlayer.isCreative() && player.isShiftKeyDown()){
                     portalBlockEntity.changeId();

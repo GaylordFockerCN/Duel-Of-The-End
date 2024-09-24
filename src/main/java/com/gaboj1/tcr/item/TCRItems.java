@@ -82,6 +82,7 @@ public class TCRItems {
 	public static final RegistryObject<Item> DREAMSCAPE_COIN = REGISTRY.register("dreamscape_coin",() ->  new DropItem(new Item.Properties().setNoRepair().rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> DREAMSCAPE_COIN_PLUS = REGISTRY.register("dreamscape_coin_plus",() ->  new DropItem(new Item.Properties().setNoRepair().rarity(Rarity.EPIC)));
 	public static final RegistryObject<Item> WALLET = REGISTRY.register("wallet", Wallet::new);
+	public static final RegistryObject<Item> RECALL_SCROLL = REGISTRY.register("recall_scroll", RecallScroll::new);
 	public static final RegistryObject<Item> BLUE_BANANA = REGISTRY.register("blue_banana",() ->  new DropItem(new Item.Properties().food(TCRFoods.COMMON)));
 	public static final RegistryObject<Item> DREAM_TA = REGISTRY.register("dream_ta",() ->  new DrinkItem(new Item.Properties().food(TCRFoods.DREAM_DA)));
 	public static final RegistryObject<Item> BEER = REGISTRY.register("beer",() ->  new DrinkItem(new Item.Properties().food(TCRFoods.DREAM_DA)));

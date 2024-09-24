@@ -21,6 +21,7 @@ public class TCRPlayer {
     private CompoundTag data = new CompoundTag();
     private UUID fakePlayerUuid;
     private BlockPos bedPointBeforeEnter = BlockPos.ZERO;
+    private BlockPos lastPortalBlockPos = BlockPos.ZERO;
     private boolean isFlying;
     private boolean protectNextFall;
     private boolean hasSwordEntity;
@@ -82,6 +83,14 @@ public class TCRPlayer {
         return bedPointBeforeEnter;
     }
 
+    public void setLastPortalBlockPos(BlockPos lastPortalBlockPos) {
+        this.lastPortalBlockPos = lastPortalBlockPos;
+    }
+
+    public BlockPos getLastPortalBlockPos() {
+        return lastPortalBlockPos;
+    }
+
     public boolean isFlying() {
         return isFlying;
     }
@@ -132,6 +141,10 @@ public class TCRPlayer {
         tag.putInt("bedPointBeforeEnterY", bedPointBeforeEnter.getY());
         tag.putInt("bedPointBeforeEnterZ", bedPointBeforeEnter.getZ());
 
+        tag.putInt("lastPortalBlockPosX", lastPortalBlockPos.getX());
+        tag.putInt("lastPortalBlockPosY", lastPortalBlockPos.getY());
+        tag.putInt("lastPortalBlockPosZ", lastPortalBlockPos.getZ());
+
         tag.putBoolean("isFlying", isFlying);
         tag.putBoolean("protectNextFall", protectNextFall);
         tag.putBoolean("hasEntity", hasSwordEntity);
@@ -150,6 +163,7 @@ public class TCRPlayer {
 
         fakePlayerUuid = tag.getUUID("fakePlayer");
         bedPointBeforeEnter = new BlockPos(tag.getInt("bedPointBeforeEnterX"), tag.getInt("bedPointBeforeEnterY"), tag.getInt("bedPointBeforeEnterZ"));
+        lastPortalBlockPos = new BlockPos(tag.getInt("lastPortalBlockPosX"), tag.getInt("lastPortalBlockPosY"), tag.getInt("lastPortalBlockPosZ"));
 
         isFlying = tag.getBoolean("isFlying");
         protectNextFall = tag.getBoolean("protectNextFall");
@@ -167,6 +181,7 @@ public class TCRPlayer {
 
         fakePlayerUuid = old.fakePlayerUuid;
         bedPointBeforeEnter = old.bedPointBeforeEnter;
+        lastPortalBlockPos = old.lastPortalBlockPos;
 
         isFlying = old.isFlying;
         protectNextFall = old.protectNextFall;
