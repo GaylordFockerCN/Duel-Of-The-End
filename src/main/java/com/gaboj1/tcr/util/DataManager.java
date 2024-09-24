@@ -53,7 +53,7 @@ public class DataManager {
     }
 
     public static TCRPlayer getTCRPlayer(Player player) {
-        return player.getCapability(TCRCapabilityProvider.TCR_PLAYER).orElse(new TCRPlayer());
+        return player.getCapability(TCRCapabilityProvider.TCR_PLAYER).orElseThrow(() -> new IllegalStateException("Player " + player.getName().getContents() + " has no TCR Player Capability!"));
     }
 
     public static List<BoolData> portalPointUnlockData = new ArrayList<>();

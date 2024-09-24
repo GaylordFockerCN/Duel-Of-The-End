@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID)
-public class ServerStartOrStopListener {
+public class ServerEvents {
 
     /**
      * 获取存档名字，用于二次读取地图时用。

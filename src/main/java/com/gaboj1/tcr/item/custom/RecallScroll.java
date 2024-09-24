@@ -22,6 +22,9 @@ public class RecallScroll extends DropItem{
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
         if(!level.isClientSide && level.dimension() == TCRDimension.P_SKY_ISLAND_LEVEL_KEY){
             player.getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {
+                if(tcrPlayer.getLastPortalBlockPos().getCenter().equals(BlockPos.ZERO.getCenter())){
+                    return;
+                }
                 BlockPos last = tcrPlayer.getLastPortalBlockPos().offset(player.getRandom().nextInt(7) - 3, 2, player.getRandom().nextInt(7) - 3);
                 player.teleportTo(last.getX(), last.getY(), last.getZ());
                 level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PORTAL_TRAVEL, SoundSource.BLOCKS, 1, 1);

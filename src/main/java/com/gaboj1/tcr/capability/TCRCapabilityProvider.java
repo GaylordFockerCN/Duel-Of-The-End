@@ -67,9 +67,10 @@ public class TCRCapabilityProvider implements ICapabilityProvider, INBTSerializa
 
         @SubscribeEvent
         public static void onPlayerCloned(PlayerEvent.Clone event) {
+            event.getOriginal().reviveCaps();//。。。怎么之前没加这个也可以，现在没加不行
             if(event.isWasDeath()) {
                 event.getOriginal().getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent(oldStore -> {
-                    event.getOriginal().getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent(newStore -> {
+                    event.getEntity().getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent(newStore -> {
                         newStore.copyFrom(oldStore);
                     });
                 });

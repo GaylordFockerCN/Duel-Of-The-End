@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.entity;
 
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.entity.PortalBedEntity;
 import com.gaboj1.tcr.capability.TCRCapabilityProvider;
 import com.gaboj1.tcr.item.TCRItems;
@@ -135,10 +136,11 @@ public class TCRFakePlayer extends LivingEntity{
     public Player getRealPlayer(){
         try {
             return Objects.requireNonNull(Objects.requireNonNull(level().getServer()).getLevel(TCRDimension.P_SKY_ISLAND_LEVEL_KEY)).getPlayerByUUID(getRealPlayerUuid());
-        } catch (NullPointerException e){
+        } catch (Exception e){
             discard();
+            TheCasketOfReveriesMod.LOGGER.error("error when try to get real player", e);
+            return null;
         }
-        return null;
     }
 
     public UUID getRealPlayerUuid() {

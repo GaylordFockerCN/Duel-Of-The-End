@@ -34,10 +34,11 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
     }
 
     public void unlock(){
+        activateAnim();
         isActivated = true;
         setChanged();
     }
-    
+
     /**
      * 更新到客户端必备
      */

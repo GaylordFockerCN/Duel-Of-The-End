@@ -186,15 +186,15 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 32),
                                 new ItemStack(TCRItems.ORICHALCUM.get(), 1),
-                                16, 0, 0),
+                                142857, 0, 0),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.ORICHALCUM.get(), 1),
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 48),
-                                16, 0, 1),
+                                142857, 0, 1),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 5),
                                 new ItemStack(TCRItems.HEALTH_WAND.get(), 1),
-                                16, 0, 1)
+                                142857, 0, 1)
 
                 );
                 break;
@@ -209,37 +209,37 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                                 new ItemStack(TCRItems.GUN_COMMON.get(), 1),
                                 new ItemStack(TCRItems.ORICHALCUM.get(), 16),
                                 new ItemStack(TCRItems.GUN_PLUS.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.TREE_DEMON_FRUIT.get(), 1),
                                 new ItemStack(TCRItems.TREE_DEMON_HORN.get(), 1),
                                 new ItemStack(TCRItems.TREE_SPIRIT_WAND.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 16),
                                 new ItemStack(TCRItems.AMMO.get(), 2),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.STARLIT_DEWDROP.get(), 4),
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 20),
                                 new ItemStack(TCRItems.SPIRIT_WAND.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.ORICHALCUM.get(), 5),
                                 new ItemStack(TCRItems.ORICHALCUM_HELMET.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.ORICHALCUM.get(), 8),
                                 new ItemStack(TCRItems.ORICHALCUM_CHESTPLATE.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.ORICHALCUM.get(), 7),
                                 new ItemStack(TCRItems.ORICHALCUM_LEGGINGS.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.ORICHALCUM.get(), 4),
                                 new ItemStack(TCRItems.ORICHALCUM_BOOTS.get(), 1),
-                                16, 0, 0.02f)
+                                142857, 0, 0.02f)
                 );
                 break;
             case 111:
@@ -283,25 +283,25 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 chat(BUILDER.buildDialogueAnswer(entityType,15,false));
                 startCustomTrade(player,
                         new MerchantOffer(
-                                new ItemStack(TCRItems.HEART_OF_THE_SAPLING.get(), 1),
+                                new ItemStack(TCRItems.HEART_OF_THE_SAPLING.get(), 20),
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get(), 1),
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 5),
-                                16, 0, 0.02f),
+                                new ItemStack(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get(), 4),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.BARK_OF_THE_GUARDIAN.get(), 1),
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 20),
-                                16, 0, 0.02f),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.STARLIT_DEWDROP.get(), 1),
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 15),
-                                16, 0, 0.02f),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 5),
-                                new ItemStack(TCRItems.BASIC_RESIN.get(), 1),
-                                16, 0, 0.02f)
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
+                                new ItemStack(TCRItems.BASIC_RESIN.get(), 5),
+                                142857, 0, 0.02f)
                 );
                 break;
             case 6:
@@ -316,39 +316,39 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 6),
                                 new ItemStack(TCRItems.BEER.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 12),
                                 new ItemStack(TCRItems.DRINK1.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 13),
                                 new ItemStack(TCRItems.DRINK2.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 3),
                                 new ItemStack(TCRItems.DREAM_TA.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 12),
                                 new ItemStack(TCRItems.JUICE_TEA.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 20),
                                 new ItemStack(TCRItems.HOT_CHOCOLATE.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 20),
                                 new ItemStack(Items.COOKED_BEEF, 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 16),
                                 new ItemStack(Items.COOKED_CHICKEN, 2),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 16),
                                 new ItemStack(Items.COOKED_PORKCHOP, 1),
-                                16, 0, 0.02f)
+                                142857, 0, 0.02f)
                 );
                 break;
             case 11:
@@ -357,19 +357,19 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 6),
                                 new ItemStack(TCRItems.BEER.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 12),
                                 new ItemStack(TCRItems.DRINK1.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 13),
                                 new ItemStack(TCRItems.DRINK2.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 3),
                                 new ItemStack(TCRItems.DREAM_TA.get(), 1),
-                                16, 0, 0.02f)
+                                142857, 0, 0.02f)
                 );
                 break;
             case 12:
@@ -378,15 +378,15 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 10),
                                 new ItemStack(TCRItems.JUICE_TEA.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 20),
                                 new ItemStack(TCRItems.HOT_CHOCOLATE.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 2),
                                 new ItemStack(TCRItems.COOKIE.get(), 1),
-                                16, 0, 0.02f)
+                                142857, 0, 0.02f)
                 );
                 break;
             case 112:

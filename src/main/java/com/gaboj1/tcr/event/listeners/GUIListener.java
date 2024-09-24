@@ -14,6 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderGuiEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,6 +28,15 @@ public class GUIListener {
     public static void drawLevel(int worldLevel){
         GUIListener.worldLevel = worldLevel;
     }
+
+    /**
+     * 画自己的boss战血条
+     */
+    @SubscribeEvent
+    public static void onRenderGui(CustomizeGuiOverlayEvent.BossEventProgress event){
+
+    }
+
     /**
      * 绘制使用的图片名
      */
@@ -35,7 +45,7 @@ public class GUIListener {
         Screen screen = event.getScreen();
         GuiGraphics guiGraphics = event.getGuiGraphics();
         if ((screen instanceof GenericDirtMessageScreen || screen instanceof LevelLoadingScreen) && !TCRBiomeProvider.mapName.isEmpty()) {
-            Component mapName = Component.literal("[The Casket of Reveries] ").withStyle(ChatFormatting.BOLD,ChatFormatting.BLUE).append(Component.literal("Current Map : " + TCRBiomeProvider.mapName).withStyle(ChatFormatting.ITALIC,ChatFormatting.GOLD));
+            Component mapName = Component.literal("[The Casket of Reveries] ").withStyle(ChatFormatting.BOLD,ChatFormatting.BLUE).append(Component.literal("Current Map : " + TCRBiomeProvider.mapName).withStyle(ChatFormatting.GOLD));
             Font font = Minecraft.getInstance().font;
 //            int y = (screen.height - 7) - font.wordWrapHeight(mapName, screen.width);
             int y = 7 + font.wordWrapHeight(mapName, screen.width);

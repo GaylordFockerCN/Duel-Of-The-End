@@ -39,7 +39,7 @@ public class PlayerModelHandler {
         }
 
         //御剑飞行的姿势
-        if(ItemUtil.searchItem(player, TCRItems.HOLY_SWORD.get()).getOrCreateTag().getBoolean("isFlying")){
+        if(ItemUtil.searchItemStack(player, TCRItems.HOLY_SWORD.get()).getOrCreateTag().getBoolean("isFlying")){
 
             Consumer<ModelPart> setRot = (modelPart)->{
                 modelPart.xRot = 0;

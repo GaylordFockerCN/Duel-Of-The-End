@@ -4,6 +4,7 @@ import com.gaboj1.tcr.block.entity.PortalBlockEntity;
 import com.gaboj1.tcr.capability.TCRCapabilityProvider;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.packet.clientbound.PortalBlockEntitySyncPacket;
 import com.gaboj1.tcr.network.packet.clientbound.PortalBlockScreenPacket;
 import com.gaboj1.tcr.util.DataManager;
 import net.minecraft.core.BlockPos;
@@ -59,7 +60,8 @@ public class PortalBlock extends BaseEntityBlock{
                 }else {
                     if(!portalBlockEntity.isPlayerUnlock(player) || !portalBlockEntity.isActivated()){
                         portalBlockEntity.setPlayerUnlock(player);//解锁传送石！
-                        portalBlockEntity.activateAnim();
+                        portalBlockEntity.unlock();
+                        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PortalBlockEntitySyncPacket(pos, portalBlockEntity.isActivated(), portalBlockEntity.getId()), serverPlayer);
                         serverPlayer.sendSystemMessage(Component.translatable("info.the_casket_of_reveries.teleport_unlock"));
                         level.playSound(null , player.getX(),player.getY(),player.getZ(), SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS,1,1);//播放末地传送门开启的音效
                     }else{
@@ -77,7 +79,6 @@ public class PortalBlock extends BaseEntityBlock{
                     }
                 }
             }
-            portalBlockEntity.unlock();//客户端也同步 TODO 换个传输法
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }

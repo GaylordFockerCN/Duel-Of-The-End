@@ -54,8 +54,13 @@ public class TalkableVillager2 extends TCRTalkableVillager {
             //守卫 对话id分配：10~11 返回值：null
             case 0:
                 Component greeting1 = BUILDER.buildDialogueAnswer(entityType, random.nextInt(10,12));
-                builder.start(greeting1)
-                        .addFinalChoice((BUILDER.buildDialogueOption(entityType,4)), (byte) 666);
+                builder.setAnswerRoot(
+                        new TreeNode(greeting1)
+                                //交易
+                                .addLeaf(BUILDER.buildDialogueOption(entityType,1), (byte) 7)
+                                //离开
+                                .addLeaf(BUILDER.buildDialogueOption(entityType,4), (byte) 666)
+                );
                 break;
 
             //药师 对话id分配：16~17 返回值分配：6
@@ -125,22 +130,22 @@ public class TalkableVillager2 extends TCRTalkableVillager {
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 32),
                                 new ItemStack(TCRItems.ORICHALCUM.get(), 1),
-                                16, 0, 0),
+                                142857, 0, 0),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.ORICHALCUM.get(), 1),
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 48),
-                                16, 0, 1),
+                                142857, 0, 1),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 5),
                                 new ItemStack(TCRItems.HEALTH_WAND.get(), 1),
-                                16, 0, 1)
+                                142857, 0, 1)
                 );
                 break;
             case 2:
                 chat(BUILDER.buildDialogueAnswer(entityType,4));
                 break;
 
-                //女商人
+            //女商人
             case 3:
                 chat(BUILDER.buildDialogueAnswer(entityType,8,false));
                 startCustomTrade(player,
@@ -148,63 +153,100 @@ public class TalkableVillager2 extends TCRTalkableVillager {
                                 new ItemStack(TCRItems.GUN_COMMON.get(), 1),
                                 new ItemStack(TCRItems.ORICHALCUM.get(), 16),
                                 new ItemStack(TCRItems.GUN_PLUS.get(), 1),
-                                16, 0, 0.02f)
+                                142857, 0, 0.02f)
                 );
                 break;
             case 4:
                 chat(BUILDER.buildDialogueAnswer(entityType,9,false));
                 break;
+            //铁匠
             case 5:
                 startCustomTrade(player,
                         new MerchantOffer(
                                 new ItemStack(TCRItems.GUN_COMMON.get(), 1),
                                 new ItemStack(TCRItems.ORICHALCUM.get(), 16),
                                 new ItemStack(TCRItems.GUN_PLUS.get(), 1),
-                                16, 0, 0.02f)
+                                142857, 0, 0.02f)
                 );
                 break;
+            //药师
             case 6:
                 startCustomTrade(player,
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 5),
                                 new ItemStack(TCRItems.LIGHT_ELIXIR.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 10),
                                 new ItemStack(TCRItems.ASCENSION_ELIXIR.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 5),
                                 new ItemStack(TCRItems.LUCKY_ELIXIR.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 5),
                                 new ItemStack(TCRItems.EVASION_ELIXIR.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 5),
                                 new ItemStack(TCRItems.WATER_AVOIDANCE_ELIXIR.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 5),
                                 new ItemStack(TCRItems.FIRE_AVOIDANCE_ELIXIR.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 5),
                                 new ItemStack(TCRItems.COLD_AVOIDANCE_ELIXIR.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 5),
                                 new ItemStack(TCRItems.THUNDER_AVOIDANCE_ELIXIR.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 5),
                                 new ItemStack(TCRItems.POISON_AVOIDANCE_ELIXIR.get(), 1),
-                                16, 0, 0.02f),
+                                142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 10),
                                 new ItemStack(TCRItems.STRENGTH_PILL.get(), 1),
-                                16, 0, 0.02f)
+                                142857, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 24),
+                                new ItemStack(TCRItems.TIGER_SOUL_ICE.get(), 10),
+                                new ItemStack(TCRItems.NINE_TURN_REVIVAL_ELIXIR.get(), 1),
+                                142857, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 24),
+//                                new ItemStack(TCRItems.TIGER_SOUL_ICE.get(), 10), TODO 添加碧藕
+                                new ItemStack(TCRItems.AQUA_GOLD_ELIXIR.get(), 1),
+                                142857, 0, 0.02f)
+                );
+                break;
+            //守卫
+            case 7:
+                startCustomTrade(player,
+                        new MerchantOffer(
+                                new ItemStack(TCRItems.BRAWLER_GLOVES.get(), 5),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
+                                142857, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRItems.SWORDMASTER_TALISMAN.get(), 5),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
+                                142857, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRItems.HAMMER_BEARER_FRAGMENT.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
+                                142857, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRItems.TIGER_SOUL_ICE.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
+                                142857, 0, 0.02f),
+                        new MerchantOffer(
+                                new ItemStack(TCRItems.ICE_TIGER_CLAW.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
+                                142857, 0, 0.02f)
                 );
                 break;
         }

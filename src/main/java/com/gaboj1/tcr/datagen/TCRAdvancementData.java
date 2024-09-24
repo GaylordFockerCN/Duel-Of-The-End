@@ -85,6 +85,7 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
             Advancement no_see = registerAdvancement(enterRealmOfTheDream, "no_see", FrameType.GOAL, TCRItems.PI_PA.get());
             Advancement kill_shu_fu = registerAdvancement(enterRealmOfTheDream, "kill_shu_fu", FrameType.GOAL, TCRItems.PI_PA.get());
             Advancement kill_shu_fu2 = registerAdvancement(enterRealmOfTheDream, "kill_shu_fu2", FrameType.GOAL, TCRItems.PI_PA.get());
+            Advancement jump_1000 = registerAdvancement(enterRealmOfTheDream, "jump_1000", FrameType.GOAL, Items.RABBIT);
 
         }
 

@@ -148,7 +148,6 @@ public class TCRPlayer {
         tag.putBoolean("isFlying", isFlying);
         tag.putBoolean("protectNextFall", protectNextFall);
         tag.putBoolean("hasEntity", hasSwordEntity);
-        tag.putInt("hasSwordScreenEntity", swordScreenEntityCount);
         tag.putInt("rainCutterTimer", rainCutterTimer);
         tag.putBoolean("rainCutterCoolDown", isScreenCutterCoolDown);
         tag.putInt("yakshaMaskTimer", yakshaMaskTimer);
@@ -178,7 +177,6 @@ public class TCRPlayer {
 
     public void copyFrom(TCRPlayer old){
         data = old.data;
-
         fakePlayerUuid = old.fakePlayerUuid;
         bedPointBeforeEnter = old.bedPointBeforeEnter;
         lastPortalBlockPos = old.lastPortalBlockPos;
