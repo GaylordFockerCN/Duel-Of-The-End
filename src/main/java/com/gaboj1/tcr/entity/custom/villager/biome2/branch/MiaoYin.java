@@ -287,7 +287,7 @@ public class MiaoYin extends YueShiLineNpc {
             case 2:
                 if(!DataManager.stolenMiaoYin.get(player)){
                     DataManager.stolenMiaoYin.put(player, true);
-                    player.addItem(TCRItems.DREAMSCAPE_COIN.get().getDefaultInstance().copyWithCount(17));
+                    ItemUtil.addItem(player,TCRItems.DREAMSCAPE_COIN.get(),1);
                     chat(BUILDER.buildDialogueAnswer(entityType, 0));
                 } else {
                     player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, -1), true);
@@ -308,7 +308,7 @@ public class MiaoYin extends YueShiLineNpc {
                 chat(BUILDER.buildDialogueAnswer(entityType, 19));
                 if(!DataManager.isMiaoYinGifted.get(player)){
                     DataManager.isMiaoYinGifted.put(player, true);
-                    player.addItem(TCRItems.GOLDEN_WIND_AND_DEW.get().getDefaultInstance());
+                    ItemUtil.addItem(player,TCRItems.GOLDEN_WIND_AND_DEW.get(),1);
                 }
                 break;
             case 7:
@@ -331,17 +331,14 @@ public class MiaoYin extends YueShiLineNpc {
                 break;
             case 11:
                 //给予琵琶，结局2
-                if(!player.addItem(TCRItems.PI_PA.get().getDefaultInstance())){
-                    ItemUtil.addItemEntity(player, TCRItems.PI_PA.get(), 1);
-                }
+                ItemUtil.addItemEntity(player, TCRItems.PI_PA.get(), 1);
+
                 TCRAdvancementData.getAdvancement("kill_shu_fu", ((ServerPlayer) player));
                 SaveUtil.biome2.isBranchEnd = true;
                 break;
             case 111:
                 //给予琵琶，结局3
-                if(!player.addItem(TCRItems.PI_PA.get().getDefaultInstance())){
                     ItemUtil.addItemEntity(player, TCRItems.PI_PA.get(), 1);
-                }
                 TCRAdvancementData.getAdvancement("kill_shu_fu2", ((ServerPlayer) player));
                 SaveUtil.biome2.isBranchEnd = true;
                 break;
@@ -358,9 +355,9 @@ public class MiaoYin extends YueShiLineNpc {
                 } else {
                     if(DataManager.miaoYinMoney1.get(player)){
                         DataManager.miaoYinMoney1.lock(player);
-                        player.addItem(new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 14));
+                        ItemUtil.addItem(player,TCRItems.DREAMSCAPE_COIN_PLUS.get(),14);
                     } else {
-                        player.addItem(new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 13));
+                        ItemUtil.addItem(player,TCRItems.DREAMSCAPE_COIN_PLUS.get(), 13);
                     }
                     DataManager.miaoYinMoney1.put(player, true);
                     chat(BUILDER.buildDialogueAnswer(entityType,82));

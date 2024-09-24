@@ -10,6 +10,7 @@ import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
 import com.gaboj1.tcr.util.DataManager;
+import com.gaboj1.tcr.util.ItemUtil;
 import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.client.Minecraft;
@@ -168,8 +169,8 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
             case -1:
                 //这个DataManager可以保留，每个玩家可以领一份
                 if(!DataManager.elderLoot1Got.get(player)){
-                    player.addItem(TCRItems.ELDER_CAKE.get().getDefaultInstance());
-                    player.addItem(Items.DIAMOND.getDefaultInstance().copyWithCount(5));
+                    ItemUtil.addItem(player,TCRItems.ELDER_CAKE.get(),1);
+                    ItemUtil.addItem(player,Items.DIAMOND.getDefaultInstance().getItem(),1);
                     DataManager.elderLoot1Got.put(player,true);
                 }else {
                     chat(111);
@@ -189,11 +190,10 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     int i = 2;
                     while(i-->0){
                         ItemStack ammo = TCRItems.AMMO.get().getDefaultInstance();
-                        ammo.setCount(64);
-                        player.addItem(ammo);
+                        ItemUtil.addItem(player,ammo.getItem(),64);
                     }
-                    player.addItem(TCRItems.GUN_PLUS.get().getDefaultInstance());
-                    player.addItem(TCRItems.DENSE_FOREST_CERTIFICATE.get().getDefaultInstance());
+                    ItemUtil.addItem(player,TCRItems.GUN_PLUS.get(),1);
+                    ItemUtil.addItem(player,TCRItems.DENSE_FOREST_CERTIFICATE.get(),1);
                     DataManager.elderLoot2Got.put(player, true);
                 }
                 break;
@@ -243,7 +243,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskKillElder);
         SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskBackToBoss);
         if(source.getEntity() instanceof Player player){
-            player.addItem(BookManager.BIOME1_ELDER_DIARY_3.get());
+            ItemUtil.addItem(player,BookManager.BIOME1_ELDER_DIARY_3.get().getItem(),1);
         }
         super.die(source);
     }

@@ -15,6 +15,7 @@ import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
 import com.gaboj1.tcr.util.DataManager;
+import com.gaboj1.tcr.util.ItemUtil;
 import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.client.Minecraft;
@@ -487,8 +488,8 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                 if(!DataManager.boss1LootGot.get(player)){
                     ItemStack wand = TCRItems.TREE_SPIRIT_WAND.get().getDefaultInstance();
                     wand.getOrCreateTag().putBoolean("fromBoss", true);
-                    player.addItem(wand);
-                    player.addItem(TCRItems.DENSE_FOREST_CERTIFICATE.get().getDefaultInstance());
+                    ItemUtil.addItem(player,wand.getItem(),1);
+                    ItemUtil.addItem(player,TCRItems.DENSE_FOREST_CERTIFICATE.get(),1);
                     DataManager.boss1LootGot.put(player, true);
                 }
                 return;//NOTE：颁奖后面还有对话，不能setConversingPlayer为Null

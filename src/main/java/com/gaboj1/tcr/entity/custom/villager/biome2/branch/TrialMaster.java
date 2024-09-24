@@ -10,6 +10,7 @@ import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
 import com.gaboj1.tcr.util.DataManager;
+import com.gaboj1.tcr.util.ItemUtil;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
@@ -131,7 +132,7 @@ public class TrialMaster extends YueShiLineNpc {
             case -1:
                 if(!DataManager.wanMingPearlGot.get(player)) {
                     DataManager.wanMingPearlGot.put(player, true);
-                    player.addItem(TCRItems.WAN_MING_PEARL.get().getDefaultInstance());
+                    ItemUtil.addItem(player,TCRItems.WAN_MING_PEARL.get(),1);
                 }
                 return;
             case 1:
@@ -142,7 +143,7 @@ public class TrialMaster extends YueShiLineNpc {
                 break;
             case 2:
                 talk(player, dBuilder.buildDialogueAnswer(15));
-                player.addItem(new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 16));
+                ItemUtil.addItem(player,TCRItems.DREAMSCAPE_COIN_PLUS.get(), 16);
                 SaveUtil.biome2.trialTalked1 = true;
                 break;
             case 3:

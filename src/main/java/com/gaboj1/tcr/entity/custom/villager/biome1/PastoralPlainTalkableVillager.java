@@ -16,6 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
@@ -242,10 +243,9 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 );
                 break;
             case 111:
-                player.addItem(TCRItems.GUN_COMMON.get().getDefaultInstance());
+                ItemUtil.addItem(player,TCRItems.GUN_COMMON.get(),1);
                 ItemStack ammo = TCRItems.AMMO.get().getDefaultInstance();
-                ammo.setCount(20);
-                player.addItem(ammo);
+                ItemUtil.addItem(player,ammo.getItem(),20);
                 DataManager.gunGot.put(player,true);//存入得用玩家
 
                 if(player instanceof ServerPlayer serverPlayer){
@@ -261,8 +261,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
             case 2:
                 if(!DataManager.ammoGot.get(player.getPersistentData())){
                     ItemStack stack = TCRItems.AMMO.get().getDefaultInstance();
-                    stack.setCount(20);
-                    player.addItem(stack);
+                    ItemUtil.addItem(player,stack.getItem(),20);
                     chat(BUILDER.buildDialogueAnswer(entityType,5,false));//快给我，不然嘣了你
                     DataManager.ammoGot.put(player,true);
                 }
@@ -392,7 +391,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 break;
             case 112:
                 if(!DataManager.drinkGot.get(player)){
-                    player.addItem(TCRItems.DRINK2.get().getDefaultInstance());
+                    ItemUtil.addItem(player,TCRItems.DRINK2.get(),1);
                     DataManager.drinkGot.put(player,true);
                 }else {
                     chat(BUILDER.buildDialogueAnswer(entityType,22,false));

@@ -5,6 +5,7 @@ import com.gaboj1.tcr.client.gui.screen.TreeNode;
 import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.util.BookManager;
+import com.gaboj1.tcr.util.ItemUtil;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
@@ -93,14 +94,14 @@ public class ShangRen extends YueShiLineNpc {
                 SaveUtil.biome2.shangRenTalked = true;
                 //正常给
                 chat(BUILDER.buildDialogueAnswer(entityType, 11));
-                player.addItem(BookManager.BU_GAO.get());
+                ItemUtil.addItem(player,BookManager.BU_GAO.get().getItem(), 1);
                 player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, 13), false);
                 break;
             case 3:
                 SaveUtil.biome2.shangRenTalked = true;
                 //杀了
                 chat(BUILDER.buildDialogueAnswer(entityType, 12));
-                player.addItem(BookManager.BU_GAO.get());
+                ItemUtil.addItem(player,BookManager.BU_GAO.get().getItem(),1);
                 this.setHealth(0);
                 player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, 13), false);
                 break;
