@@ -10,7 +10,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
@@ -64,10 +63,10 @@ public class SaveUtil {
     };
     public static int firstChoiceBiome = 0;//0 means null
 
-    public static Biome1Data biome1 = new Biome1Data();
-    public static Biome2Data biome2 = new Biome2Data();
-    public static Biome3Data biome3 = new Biome3Data();
-    public static Biome4Data biome4 = new Biome4Data();
+    public static Biome1ProgressData biome1 = new Biome1ProgressData();
+    public static Biome2ProgressData biome2 = new Biome2ProgressData();
+    public static Biome3ProgressData biome3 = new Biome3ProgressData();
+    public static Biome4ProgressData biome4 = new Biome4ProgressData();
 
     public record Dialog (Component name, Component content) {
         @Override
@@ -150,13 +149,13 @@ public class SaveUtil {
         }
     }
 
-    public static class BiomeData {
+    public static class BiomeProgressData {
 
-        public BiomeData(){
+        public BiomeProgressData(){
 
         }
 
-        public BiomeData(int choice, boolean isBossDie, boolean isBossTalked, boolean isBossFought, boolean isElderDie, boolean isElderTalked) {
+        public BiomeProgressData(int choice, boolean isBossDie, boolean isBossTalked, boolean isBossFought, boolean isElderDie, boolean isElderTalked) {
             this.choice = choice;
             this.isBossDie = isBossDie;
             this.isBossTalked = isBossTalked;
@@ -201,10 +200,9 @@ public class SaveUtil {
          * 群系事件完成，升级世界等级，而且只能进行一次
          */
         public void finish(int choice, ServerLevel level){
-            if(this.choice != 0){
-                return;
+            if(this.choice == 0){
+                this.choice = choice;
             }
-            this.choice = choice;
             if(firstChoiceBiome == 0){
                 firstChoiceBiome = biome;
             }
@@ -243,13 +241,13 @@ public class SaveUtil {
         return new Dialog(Component.translatable( "task."+TheCasketOfReveriesMod.MOD_ID+task), Component.translatable( "task_content."+TheCasketOfReveriesMod.MOD_ID+task));
     }
 
-    public static class Biome1Data extends BiomeData{
+    public static class Biome1ProgressData extends BiomeProgressData {
 
         public static Dialog taskKillElder = buildTask("kill_elder1");
         public static Dialog taskKillBoss = buildTask("kill_boss1");
         public static Dialog taskBackToBoss = buildTask("back_boss1");//回去领赏
         public static Dialog taskBackToElder = buildTask("back_elder1");
-        public Biome1Data(){
+        public Biome1ProgressData(){
             biome = 1;
         }
 
@@ -289,7 +287,7 @@ public class SaveUtil {
 
     }
 
-    public static class Biome2Data extends BiomeData{
+    public static class Biome2ProgressData extends BiomeProgressData {
         public boolean miaoYinTalked1;//是否初次和乐师对话完
         public boolean shangRenTalked;//是否完成和商人的对话
         public boolean afterTrial;//是否通过了试炼
@@ -345,11 +343,11 @@ public class SaveUtil {
 
     }
 
-    public static class Biome3Data extends BiomeData{
+    public static class Biome3ProgressData extends BiomeProgressData {
 
     }
 
-    public static class Biome4Data extends BiomeData{
+    public static class Biome4ProgressData extends BiomeProgressData {
 
     }
 

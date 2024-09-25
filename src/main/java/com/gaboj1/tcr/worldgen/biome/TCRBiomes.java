@@ -7,6 +7,7 @@ import com.gaboj1.tcr.worldgen.TCRPlacedFeatures;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.Carvers;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -27,8 +28,8 @@ public class TCRBiomes {
     public static final ResourceKey<Biome> DENSE_FOREST = createBiomeKey("dense_forest_biome");
 
 
-    public static final ResourceKey<Biome> SAKURA = createBiomeKey("sakura_biome");
-    public static final ResourceKey<Biome> DARK_SAKURA = createBiomeKey("dark_sakura_biome");
+    public static final ResourceKey<Biome> DESERT = createBiomeKey("desert");
+    public static final ResourceKey<Biome> DESERT_CENTER = createBiomeKey("desert_center");
 
 
     //山水画廊 和 青云之巅
@@ -41,6 +42,7 @@ public class TCRBiomes {
     //Aquatic Majesty & Atlantis
     public static final ResourceKey<Biome> AQUATIC_MAJESTY = createBiomeKey("aquatic_majesty_biome");
     public static final ResourceKey<Biome> ATLANTIS = createBiomeKey("atlantis_biome");
+    public static final ResourceKey<Biome> RIVER = createBiomeKey("river");
 
 
     public static final ResourceKey<Biome> biomeBorder = TCRBiomes.AIR;
@@ -55,8 +57,8 @@ public class TCRBiomes {
     public static final ResourceKey<Biome> biome2Center = TCRBiomes.AZURE_SKIES;
 
 
-    public static final ResourceKey<Biome> biome3 = TCRBiomes.SAKURA;
-    public static final ResourceKey<Biome> biome3Center = TCRBiomes.DARK_SAKURA;
+    public static final ResourceKey<Biome> biome3 = TCRBiomes.DESERT;
+    public static final ResourceKey<Biome> biome3Center = TCRBiomes.DESERT_CENTER;
 
 
     public static final ResourceKey<Biome> biome4 = TCRBiomes.AQUATIC_MAJESTY;
@@ -70,7 +72,7 @@ public class TCRBiomes {
     public static void boostrap(BootstapContext<Biome> context) {
 
         context.register(AIR, createAirBiome(context));
-        context.register(FINAL, createAirBiome(context));
+        context.register(FINAL, createFinalBiome(context));
 
         context.register(PASTORAL_PLAINS, createPastoralPlainsBiome(context));
         context.register(DENSE_FOREST, createDenseForestBiome(context));
@@ -78,13 +80,13 @@ public class TCRBiomes {
         context.register(GALLERY_OF_SERENE, createGalleryOfSereneBiome(context));
         context.register(AZURE_SKIES, createAzureSkiesBiome(context));
 
-        context.register(SAKURA, createSakuraBiome(context));
-        context.register(DARK_SAKURA, createDarkSakuraBiome(context));
+        context.register(DESERT, createDesertBiome(context));
+        context.register(DESERT_CENTER, createDesertBiome(context));
 
         context.register(AQUATIC_MAJESTY, createAquaticMajestyBiome(context));
         context.register(ATLANTIS, createTestBiome(context,0x0060ff));
 
-
+        context.register(RIVER, createTestBiome(context,0x0060ff));
 
     }
 
@@ -145,6 +147,30 @@ public class TCRBiomes {
                 .build();
     }
 
+    public static Biome createFinalBiome(BootstapContext<Biome> context) {
+
+        MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
+        BiomeGenerationSettings.Builder biomeBuilder =
+                new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+
+        return new Biome.BiomeBuilder()
+                .hasPrecipitation(true)
+                .downfall(0.2f)
+                .temperature(0.8f)
+                .generationSettings(biomeBuilder.build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .specialEffects((new BiomeSpecialEffects.Builder())
+                        .waterColor(4159204)
+                        .waterFogColor(329011)
+                        .grassColorOverride(0xffffff)
+                        .foliageColorOverride(0xffffff)
+                        .fogColor(12638463)
+                        .skyColor(0xff9af7)
+                        .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                        .build())
+                .build();
+    }
+
     public static Biome createPastoralPlainsBiome(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
         spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(TCREntities.JELLY_CAT.get(), 2, 1, 2));
@@ -160,6 +186,8 @@ public class TCRBiomes {
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_GRASS_PLAIN);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.TREES_PLAINS);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, TCRPlacedFeatures.CATNIP_PLACED_KEY);
+
+        biomeBuilder.addCarver(GenerationStep.Carving.AIR, Carvers.CAVE_EXTRA_UNDERGROUND);
 
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(true)
@@ -222,6 +250,8 @@ public class TCRBiomes {
 
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.FLOWER_CHERRY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.TREES_CHERRY);
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(true)
                 .downfall(0.2f)
@@ -250,6 +280,8 @@ public class TCRBiomes {
 
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.FLOWER_CHERRY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.TREES_CHERRY);
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(true)
                 .downfall(0.2f)
@@ -267,22 +299,23 @@ public class TCRBiomes {
                 .build();
     }
 
-    public static Biome createSakuraBiome(BootstapContext<Biome> context) {
+    public static Biome createDesertBiome(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
-        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.FLOWER_PLAINS);
-        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.FLOWER_CHERRY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_CACTUS_DESERT);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_SUGAR_CANE_DESERT);
 
         return new Biome.BiomeBuilder()
-                .hasPrecipitation(true)
+                .hasPrecipitation(false)
                 .downfall(0.2f)
                 .temperature(0.8f)
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects((new BiomeSpecialEffects.Builder())
-                        .grassColorOverride(11983713)
+                        .grassColorOverride(0xffea00)
+                        .foliageColorOverride(0xffea00)
                         .waterColor(4159204)
                         .waterFogColor(329011)
                         .fogColor(12638463)

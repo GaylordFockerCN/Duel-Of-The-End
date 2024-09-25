@@ -2,14 +2,12 @@ package com.gaboj1.tcr.entity.custom.villager.biome2;
 
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.custom.boss.second_boss.SecondBossEntity;
-import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -132,7 +130,7 @@ public abstract class Master extends TCRVillager implements NpcDialogue {
      */
     @Override
     public boolean hurt(DamageSource source, float v) {
-        if((source.getEntity() instanceof Player && SaveUtil.biome2.choice == SaveUtil.BiomeData.BOSS) || source.getEntity() instanceof SecondBossEntity){
+        if((source.getEntity() instanceof Player && SaveUtil.biome2.choice == SaveUtil.BiomeProgressData.BOSS) || source.getEntity() instanceof SecondBossEntity){
             return super.hurt(source, v);
         }
         return false;
@@ -168,7 +166,7 @@ public abstract class Master extends TCRVillager implements NpcDialogue {
 
     @Override
     public boolean isAngry() {
-        return SaveUtil.BiomeData.BOSS == SaveUtil.biome2.choice || getEntityData().get(IS_FIGHTING);
+        return SaveUtil.BiomeProgressData.BOSS == SaveUtil.biome2.choice || getEntityData().get(IS_FIGHTING);
     }
 
     @Override

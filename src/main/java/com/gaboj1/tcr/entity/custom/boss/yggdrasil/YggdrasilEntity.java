@@ -222,8 +222,8 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
         triggerAnim("Death","death");
         superDie(damageSource);
         SaveUtil.biome1.isBossDie = true;
-        SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskKillBoss);
-        SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskBackToElder);
+        SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.taskKillBoss);
+        SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.taskBackToElder);
     }
 
 
@@ -470,21 +470,21 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                 chat(BUILDER.buildDialogueAnswer(entityType, 14, false));
                 SaveUtil.biome1.isBossFought = true;//注意要处决或者接任务后再调这个，注意考虑对话中断的情况
                 realDie(player.damageSources().playerAttack(player));
-                SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskKillBoss);
-                SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskBackToElder);
+                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.taskKillBoss);
+                SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.taskBackToElder);
                 break;
             //选择接任务
             case 2:
                 getEntityData().set(IS_FIGHTING, false);
                 setTarget(null);
                 chat(BUILDER.buildDialogueAnswer(entityType, 15, false));
-                SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskKillElder);
+                SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.taskKillElder);
                 SaveUtil.biome1.isBossFought = true;//注意要处决或者接任务后再调这个，注意考虑对话中断的情况
                 break;
             //任务成功
             case 3:
-                SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskBackToBoss);
-                SaveUtil.biome1.finish(SaveUtil.BiomeData.BOSS, ((ServerLevel) level()));
+                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.taskBackToBoss);
+                SaveUtil.biome1.finish(SaveUtil.BiomeProgressData.BOSS, ((ServerLevel) level()));
                 if(!DataManager.boss1LootGot.get(player)){
                     ItemStack wand = TCRItems.TREE_SPIRIT_WAND.get().getDefaultInstance();
                     wand.getOrCreateTag().putBoolean("fromBoss", true);

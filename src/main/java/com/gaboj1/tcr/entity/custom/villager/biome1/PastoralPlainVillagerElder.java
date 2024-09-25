@@ -177,15 +177,15 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                 }
                 this.chat(BUILDER.buildDialogueAnswer(entityType,7));
                 SaveUtil.biome1.isElderTalked = true;
-                SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskKillBoss);
+                SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.taskKillBoss);
                 break;
             case 0: //对话中断的代码！
 //                this.chat(Component.translatable("刚刚说到哪儿来着？"));
                 break;
             case 1: //回来领奖
-                SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskBackToElder);
+                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.taskBackToElder);
                 this.chat(BUILDER.buildDialogueAnswer(entityType,10));//再会，勇者！
-                SaveUtil.biome1.finish(SaveUtil.BiomeData.VILLAGER, ((ServerLevel) level()));
+                SaveUtil.biome1.finish(SaveUtil.BiomeProgressData.VILLAGER, ((ServerLevel) level()));
                 if(!DataManager.elderLoot2Got.get(player)){
                     int i = 2;
                     while(i-->0){
@@ -240,8 +240,8 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
         //TODO say遗言
         SaveUtil.biome1.isElderDie = true;
-        SaveUtil.TASK_SET.remove(SaveUtil.Biome1Data.taskKillElder);
-        SaveUtil.TASK_SET.add(SaveUtil.Biome1Data.taskBackToBoss);
+        SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.taskKillElder);
+        SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.taskBackToBoss);
         if(source.getEntity() instanceof Player player){
             ItemUtil.addItem(player,BookManager.BIOME1_ELDER_DIARY_3.get().getItem(),1);
         }

@@ -7,14 +7,16 @@ import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.ai.goal.BossRecoverGoal;
 import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
 import com.gaboj1.tcr.entity.custom.villager.biome2.*;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
 import com.gaboj1.tcr.util.EntityUtil;
+import com.gaboj1.tcr.util.ItemUtil;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.BossEvent;
@@ -194,7 +196,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
                     }
                 }
                 SaveUtil.biome2.isBossTalked = true;
-                SaveUtil.biome2.choice = SaveUtil.BiomeData.BOSS;
+                SaveUtil.biome2.choice = SaveUtil.BiomeProgressData.BOSS;
                 break;
             case 2:
                 //选择联军阵容
@@ -206,16 +208,20 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
                     }
                 }
                 SaveUtil.biome2.isBossTalked = true;
-                SaveUtil.biome2.choice = SaveUtil.BiomeData.VILLAGER;
+                SaveUtil.biome2.choice = SaveUtil.BiomeProgressData.VILLAGER;
                 break;
             case 3:
                 //结束boss对话
                 chat(BUILDER.buildDialogueAnswer(entityType, 8, false));
                 level().explode(this, this.damageSources().explosion(this, this), null, getOnPos().getCenter(), 3F, false, Level.ExplosionInteraction.NONE);
+                ItemUtil.addItem(player, TCRItems.AZURE_SKY_CERTIFICATE.get(), 1);
                 this.discard();
+                SaveUtil.biome2.finish(SaveUtil.BiomeProgressData.BOSS, (ServerLevel) level());
                 break;
             case 4:
                 //boss送礼
+                ItemUtil.addItem(player, TCRItems.NINE_TURN_REVIVAL_ELIXIR.get(), 9);
+                ItemUtil.addItem(player, TCRItems.AQUA_GOLD_ELIXIR.get(), 9);
                 return;
         }
         setConversingPlayer(null);
@@ -281,7 +287,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
 
     @Override
     public boolean hurt(@NotNull DamageSource source, float v) {
-        if(SaveUtil.biome2.choice == SaveUtil.BiomeData.BOSS && source.getEntity() instanceof Player){
+        if(SaveUtil.biome2.choice == SaveUtil.BiomeProgressData.BOSS && source.getEntity() instanceof Player){
             return false;
         }
         return super.hurt(source, v);
@@ -289,7 +295,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
 
     @Override
     public void die(@NotNull DamageSource source) {
-        if(SaveUtil.biome2.choice == SaveUtil.BiomeData.BOSS){
+        if(SaveUtil.biome2.choice == SaveUtil.BiomeProgressData.BOSS){
             return;
         }
         SaveUtil.biome2.isBossDie = true;

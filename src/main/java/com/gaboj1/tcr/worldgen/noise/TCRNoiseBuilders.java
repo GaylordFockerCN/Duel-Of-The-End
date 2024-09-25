@@ -20,31 +20,15 @@ public class TCRNoiseBuilders {
     private static final SurfaceRules.RuleSource AIR = SurfaceRules.state(Blocks.AIR.defaultBlockState());
     private static final SurfaceRules.RuleSource WATER = SurfaceRules.state(Blocks.WATER.defaultBlockState());
     private static final SurfaceRules.RuleSource STONE = SurfaceRules.state(Blocks.STONE.defaultBlockState());
-
-
-    public static NoiseGeneratorSettings skyIslandsNoiseSettings(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noise) {
-        return new NoiseGeneratorSettings(
-                new NoiseSettings(32, 48, 1, 1), // noiseSettings default:0 128 2 1
-                Blocks.STONE.defaultBlockState(), // defaultBlock
-                Blocks.GRASS_BLOCK.defaultBlockState(), // defaultFluid default:water
-                makeNoiseRouter(densityFunctions, noise), // noiseRouter
-                surfaceRules(), // surfaceRule
-                List.of(), // spawnTarget
-                -64, // seaLevel
-                false, // disableMobGeneration
-                false, // aquifersEnabled
-                false, // oreVeinsEnabled
-                false  // useLegacyRandomSource
-        );
-    }
+    private static final SurfaceRules.RuleSource SAND = SurfaceRules.state(Blocks.SAND.defaultBlockState());
+    private static final SurfaceRules.RuleSource SANDSTONE = SurfaceRules.state(Blocks.SANDSTONE.defaultBlockState());
 
     public static NoiseGeneratorSettings plainNoiseSettings(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noise) {
         return new NoiseGeneratorSettings(
                 new NoiseSettings(32, 256, 1, 2), // noiseSettings default:0 128 2 1
                 Blocks.STONE.defaultBlockState(), // defaultBlock
                 Blocks.GRASS_BLOCK.defaultBlockState(), // defaultFluid default:water
-//                pMakeNoiseRouter(densityFunctions, noise), // noiseRouter
-                overworld(densityFunctions,noise),
+                overworld(densityFunctions, noise),
                 pSurfaceRules(), // surfaceRule
                 List.of(), // spawnTarget
                 -64, // seaLevel
@@ -55,46 +39,19 @@ public class TCRNoiseBuilders {
         );
     }
 
-    //普通群系地表规则（瞎填
-    public static SurfaceRules.RuleSource surfaceRules() {
-
-        //让边界和中心群系全为空气
-        SurfaceRules.RuleSource air = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.AIR),AIR));
-        SurfaceRules.RuleSource finalBiome = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.FINAL),AIR));
-
-        //海洋
-        SurfaceRules.RuleSource water = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.biome4),WATER));
-        //瞎几把操作..
-        SurfaceRules.RuleSource noWater = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.waterBlockCheck(-1, 0), GRASS_BLOCK), DIRT);
-        SurfaceRules.RuleSource surface = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, noWater), SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DIRT));
-        SurfaceRules.RuleSource denseForest = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.DENSE_FOREST),GRASS_BLOCK), SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DIRT));
-        SurfaceRules.RuleSource all = SurfaceRules.sequence(finalBiome,surface,air,denseForest);
-
-        ImmutableList.Builder<SurfaceRules.RuleSource> builder = ImmutableList.builder();
-        builder
-                .add(finalBiome)
-                .add(air)
-                .add(water)
-                .add(surface)
-                .add(denseForest)
-                .add(SurfaceRules.ifTrue(SurfaceRules.abovePreliminarySurface(), all))//试试看abovePre这个
-                ;
-
-
-        return SurfaceRules.sequence(builder.build().toArray(SurfaceRules.RuleSource[]::new));
-    }
-
-    //平坦模式地表规则（较为单调，但是村庄能正常生成）
     public static SurfaceRules.RuleSource pSurfaceRules() {
 
-        //让边界和中心群系全为空气
-        SurfaceRules.RuleSource air = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.AIR),AIR));
-        SurfaceRules.RuleSource finalBiome = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.FINAL),AIR));
+        //让边界和最终群系
+        SurfaceRules.RuleSource air = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.AIR), AIR));
+        SurfaceRules.RuleSource finalBiome = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.FINAL), WATER));
 
         //海洋
-//        SurfaceRules.RuleSource water = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.biome4),WATER));
-//        SurfaceRules.RuleSource water = SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.biome4), SurfaceRules.sequence(SurfaceRules.ifTrue(surfaceNoiseAbove(1.75), STONE), SurfaceRules.ifTrue(surfaceNoiseAbove(-0.5), WATER)));
-        SurfaceRules.RuleSource water = SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.biome4), SurfaceRules.sequence(SurfaceRules.ifTrue(surfaceNoiseAbove(-1.75), WATER)));
+        SurfaceRules.RuleSource water = SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.biome4, TCRBiomes.biome4Center), SurfaceRules.sequence(SurfaceRules.ifTrue(surfaceNoiseAbove(-1.75), WATER)));
+
+        //沙漠
+        SurfaceRules.RuleSource desert = SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.biome3, TCRBiomes.biome3Center), SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.ON_CEILING, SANDSTONE), SAND));
+
+        //普通
         SurfaceRules.RuleSource overworldLike = SurfaceRules.sequence(
                 SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
                         SurfaceRules.sequence(
@@ -128,6 +85,7 @@ public class TCRNoiseBuilders {
                 .add(finalBiome)
                 .add(air)
                 .add(water)
+                .add(desert)
                 .add(overworldLike)
                 .add(SurfaceRules.ifTrue(SurfaceRules.verticalGradient("stone", VerticalAnchor.absolute(0), VerticalAnchor.absolute(8)), STONE));
         ;
@@ -140,57 +98,9 @@ public class TCRNoiseBuilders {
         return SurfaceRules.noiseCondition(Noises.SURFACE, value / 8.25, Double.MAX_VALUE);
     }
 
-    private static NoiseRouter makeNoiseRouter(HolderGetter<DensityFunction> pDensityFunctions, HolderGetter<NormalNoise.NoiseParameters> pNoiseParameters) {
-        return createNoiseRouter(pDensityFunctions, pNoiseParameters, buildFinalDensity(pDensityFunctions));
-
-//        return new NoiseRouter(DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero(), getFunction(pDensityFunctions, CONTINENTS), getFunction(pDensityFunctions,  EROSION), DensityFunctions.zero(), getFunction(pDensityFunctions, RIDGES), DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero());
-
-    }
-    private static NoiseRouter pMakeNoiseRouter(HolderGetter<DensityFunction> pDensityFunctions, HolderGetter<NormalNoise.NoiseParameters> pNoiseParameters) {
-        return createNoiseRouter(pDensityFunctions, pNoiseParameters, pBuildFinalDensity(pDensityFunctions));
-
-//        return new NoiseRouter(DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero(), getFunction(pDensityFunctions, CONTINENTS), getFunction(pDensityFunctions,  EROSION), DensityFunctions.zero(), getFunction(pDensityFunctions, RIDGES), DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero());
-
-    }
-
     private static DensityFunction noiseGradientDensity(DensityFunction p_212272_, DensityFunction p_212273_) {
         DensityFunction $$2 = DensityFunctions.mul(p_212273_, p_212272_);
         return DensityFunctions.mul(DensityFunctions.constant(4.0), $$2.quarterNegative());
-    }
-
-    private static DensityFunction buildFinalDensity(HolderGetter<DensityFunction> densityFunctions) {
-
-        DensityFunction density = getFunction(densityFunctions, ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"base_3d_noise")));
-
-//        density = DensityFunctions.add(density, DensityFunctions.constant(-0.13));//-0.13
-//        density = slide(density, 0, 128, 72, 0, -0.2, 8, 40, -0.1);
-//        density = slide(density, 0, 64, 64, 0, -0.2, 8, 40, -0.1);
-//        density = DensityFunctions.add(density, DensityFunctions.constant(-0.15));//-0.15
-//        density = DensityFunctions.blendDensity(density);
-        //不知道有无效果。。
-        density = DensityFunctions.interpolated(density);
-        density = DensityFunctions.interpolated(density);
-        density = DensityFunctions.interpolated(density);
-        density = DensityFunctions.interpolated(density);
-//        density = density.squeeze();
-//        return postProcess(slide(density, -64, 384, 80,  64, -0.078125, 0, 24, 0.1171875));
-        return density;
-    }
-
-    private static DensityFunction pBuildFinalDensity(HolderGetter<DensityFunction> densityFunctions) {
-
-        DensityFunction density = getFunction(densityFunctions, ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"base_3d_noise_plain")));
-
-//        density = DensityFunctions.add(density, DensityFunctions.constant(-0.13));//-0.13
-//        density = slide(density, 0, 128, 72, 0, -0.2, 8, 40, -0.1);
-//        density = slide(density, 0, 64, 64, 0, -0.2, 8, 40, -0.1);
-//        density = DensityFunctions.add(density, DensityFunctions.constant(-0.15));//-0.15
-//        density = DensityFunctions.blendDensity(density);
-        //不知道有无效果。。
-//        density = DensityFunctions.interpolated(density);
-//        density = density.squeeze();
-//        return postProcess(slide(density, -64, 384, 80,  64, -0.078125, 0, 24, 0.1171875));
-        return density;
     }
 
     private static DensityFunction postProcess(DensityFunction p_224493_) {
@@ -208,40 +118,11 @@ public class TCRNoiseBuilders {
         return DensityFunctions.lerp(bottomSlide, offset2, density);
     }
 
-    /**
-     * [CODE COPY] - {@link NoiseRouterData(HolderGetter, HolderGetter, DensityFunction)}.<br><br>
-     * Logic that called {@link NoiseRouterData (DensityFunction)} has been moved to {@link TCRNoiseBuilders#buildFinalDensity(HolderGetter)}.
-     */
-    private static NoiseRouter createNoiseRouter(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noise, DensityFunction finalDensity) {
-        DensityFunction shiftX = getFunction(densityFunctions, ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation("shift_x")));
-        DensityFunction shiftZ = getFunction(densityFunctions, ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation("shift_z")));
-        DensityFunction temperature = DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.25, noise.getOrThrow(TCRNoises.TEMPERATURE));
-        DensityFunction vegetation = DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.25, noise.getOrThrow(TCRNoises.VEGETATION));
-
-//        DensityFunction temperature = DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.25, noise.getOrThrow(Noises.TEMPERATURE));
-//        DensityFunction vegetation = DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.25, noise.getOrThrow(Noises.VEGETATION));
-        return new NoiseRouter(
-                DensityFunctions.zero(), // barrier noise
-                DensityFunctions.zero(), // fluid level floodedness noise
-                DensityFunctions.zero(), // fluid level spread noise
-                DensityFunctions.zero(), // lava noise
-                temperature, // temperature
-                vegetation, // vegetation
-                DensityFunctions.zero(), // continentalness noise
-                DensityFunctions.zero(), // erosion noise
-                DensityFunctions.zero(), // depth
-                DensityFunctions.zero(), // ridges
-                DensityFunctions.zero(), // initial density without jaggedness, not sure if this is needed. Some vanilla dimensions use this while others don't.
-                finalDensity, // finaldensity
-                DensityFunctions.zero(), // veinToggle
-                DensityFunctions.zero(), // veinRidged
-                DensityFunctions.zero()); // veinGap
-    }
-
     private static DensityFunction getFunction(HolderGetter<DensityFunction> densityFunctions, ResourceKey<DensityFunction> key) {
         return new DensityFunctions.HolderHolder(densityFunctions.getOrThrow(key));
     }
 
+    //以下改自原版主世界
     private static final ResourceKey<DensityFunction> SHIFT_X = createKey("shift_x");
     private static final ResourceKey<DensityFunction> SHIFT_Z = createKey("shift_z");
     public static final ResourceKey<DensityFunction> CONTINENTS = createKey("overworld/continents");
@@ -260,7 +141,6 @@ public class TCRNoiseBuilders {
     private static final ResourceKey<DensityFunction> SLOPED_CHEESE_AMPLIFIED = createKey("overworld_amplified/sloped_cheese");
     private static final ResourceKey<DensityFunction> ENTRANCES = createKey("overworld/caves/entrances");
     private static final ResourceKey<DensityFunction> NOODLE = createKey("overworld/caves/noodle");
-    private static final ResourceKey<DensityFunction> SLOPED_CHEESE_END = createKey("end/sloped_cheese");
     private static ResourceKey<DensityFunction> createKey(String location) {
         return ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation(location));
     }
@@ -269,10 +149,7 @@ public class TCRNoiseBuilders {
      * 抄原版的主世界噪声
      * 关键方法：
      *  DensityFunction function0 = DensityFunctions.interpolated($$15);//平滑
-     *  DensityFunction function =  DensityFunctions.add(DensityFunctions.yClampedGradient(-32, 256, 100, -100),function0);//缩放！！！！！！！！！！！超级关键的方法！试了好几十次才试出来
-     * @param densityFunctions
-     * @param noiseParameters
-     * @return
+     *  DensityFunction function =  DensityFunctions.add(DensityFunctions.yClampedGradient(-32, 256, 100, -100), function0);//缩放！！！！！！！！！！！超级关键的方法！试了好几十次才试出来
      */
     protected static NoiseRouter overworld(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noiseParameters) {
 
@@ -290,18 +167,19 @@ public class TCRNoiseBuilders {
         DensityFunction $$14 = noiseGradientDensity(DensityFunctions.cache2d($$12), $$13);
 
         //决定了地形
-        DensityFunction $$15 = getFunction(densityFunctions, SLOPED_CHEESE );
+        DensityFunction $$15 = getFunction(densityFunctions, SLOPED_CHEESE);
         //16-18为洞穴
         DensityFunction $$16 = DensityFunctions.mul(DensityFunctions.constant(5.0), getFunction(densityFunctions, ENTRANCES));
         DensityFunction $$18 = getFunction(densityFunctions, NOODLE);
-//        DensityFunction function = slide($$18, -32, 256, 128, 0, -0.2, 8, 40, -0.1);
-//        DensityFunction function = slide($$15, -32, 256, 128, 0, -0.2, 8, 40, -0.1);
         DensityFunction function0 = DensityFunctions.interpolated($$15);//平滑
-        DensityFunction function =  DensityFunctions.add(DensityFunctions.yClampedGradient(-32, 256, 100, -100),function0);//缩放！！！！！！！！！！！超级关键的方法！试了好几十次才试出来
+        DensityFunction function =  DensityFunctions.add(DensityFunctions.yClampedGradient(-32, 256, 100, -100),function0);//缩放统一为平原
 
         return new NoiseRouter($$4, $$5, $$6, $$7, $$10, $$11, getFunction(densityFunctions, CONTINENTS), getFunction(densityFunctions, EROSION), $$13, getFunction(densityFunctions, RIDGES), slideOverworld(false, DensityFunctions.add($$14, DensityFunctions.constant(-0.703125)).clamp(-64.0, 64.0)), function, DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero());
     }
 
+    /**
+     * 备用
+     */
     protected static NoiseRouter overworld_BACK_UP(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noiseParameters, boolean large, boolean amplified) {
         DensityFunction $$4 = DensityFunctions.noise(noiseParameters.getOrThrow(Noises.AQUIFER_BARRIER), 0.5);
         DensityFunction $$5 = DensityFunctions.noise(noiseParameters.getOrThrow(Noises.AQUIFER_FLUID_LEVEL_FLOODEDNESS), 0.67);

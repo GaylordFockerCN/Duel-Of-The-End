@@ -58,8 +58,8 @@ public class TCRLangGenerator extends TCRLangProvider {
 
         this.add("the_casket_of_reveries.button.boss1","泰兰妮尔之心");
         this.add("the_casket_of_reveries.button.boss2","九霄");
-        this.add("the_casket_of_reveries.button.boss3","敬请期待");
-        this.add("the_casket_of_reveries.button.boss4","敬请期待");
+        this.add("the_casket_of_reveries.button.boss3","阿图姆");
+        this.add("the_casket_of_reveries.button.boss4","亚特兰蒂斯");
         this.add("the_casket_of_reveries.button.final","终焉之地");
 
         this.addConfig("enable_better_structure_block_load","更好的结构方块是否立即刷新（默认开启，开发时关闭）");
@@ -442,7 +442,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,3,"（凝视着你，眼中充满了期待）");
         this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,4,"（目光坚定）你带来的是希望的曙光，旅者。村庄的每个角落都感激你的勇气。");
         this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,5,"你的名字将被铭记。请接受我们的祝福，愿你的道路永远光明！");
-        this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,6,"我将为你指引其他群系的位置。『山水画廊』发生了天灾，位于%s，『樱之原野』似乎在 * * * * ，位于 %s。『亚特兰蒂斯』嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通。游历四方后，或许该回世界的中心看看了。");
+        this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,6,"我将为你指引其他世界的位置。位于 %s 的『山水画廊』，位于 %s 的『无边沙海』，亦或是位于 %s 的『蓝礁海』。游历四方后，或许该回世界的中心看看了。听凭风引吧，孩子。");
         this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,7,"出发吧！勇者。");
         this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,10,"再会了！勇者。");
         this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,111,"你已经收过了哦~");
@@ -472,7 +472,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addDialog(TCREntities.YGGDRASIL,10,"很好，我将赐予你生命之力！");
         this.addDialog(TCREntities.YGGDRASIL,11,"享受这强大的力量吧！");
         this.addDialog(TCREntities.YGGDRASIL,12,"我将为你介绍其他地区的现状，我能感应到每个地区都存在着动荡。");
-        this.addDialog(TCREntities.YGGDRASIL,13,"位于%s的『青云之巅』皇位不保，位于%s的『深暗之樱』也有一位智者现世，他将以他的才智狠狠压榨那群傻子。至于『亚特兰蒂斯』嘛，这我就不清楚了，埋藏深海之国，消息比较不灵通。游历四方后，或许该回世界的中心看看了。");
+        this.addDialog(TCREntities.YGGDRASIL,13,"位于 %s 的『青云之巅』，位于 %s 的『阿图姆』，亦或是位于 %s 的『亚特兰蒂斯』，你都能找到和我一样的神使。");
         this.addDialog(TCREntities.YGGDRASIL,14,"不————你会后悔的！");
         this.addDialog(TCREntities.YGGDRASIL,15,"去吧，我就在此地等你的好消息。");
         this.addDialog(TCREntities.YGGDRASIL,16,"再会了，我将回去休养生息，也许有一天我们会在 『世界尽头』 再次相遇。");
@@ -499,7 +499,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addDialog(TCREntities.CANG_LAN,7,"（目光坚定）我们的胜利是江湖的胜利！你的勇气和选择为我们赢得了自由的曙光");
         this.addDialog(TCREntities.CANG_LAN,8,"（微笑着）这仅是一个开始，小兄弟。真正的工作现在才开始！我们将建立一个新的联盟！哈哈哈哈！");
         this.addDialog(TCREntities.CANG_LAN,9,"（拍着你的肩膀）未来将由我们共同塑造！请小兄弟收下我们的微薄谢礼！");
-        this.addDialog(TCREntities.CANG_LAN,10,"这个嘛...牧歌原野似乎有着巨大的危机，位于 %s ，樱之原野****，位于 %s 。至于北部的亚特兰蒂斯，常年无音讯。");
+        this.addDialog(TCREntities.CANG_LAN,10,"这个嘛...位于%s的『牧歌原野』，位于%s的『无边沙海』，亦或是位于%的『蓝礁海』。小兄弟有何想法？");
         this.addDialog(TCREntities.CANG_LAN,11,"住手，征尽！你的谎言和暴政到此为止。我们是为了各门派的生存与尊严，为了江湖未来而来！");
         this.addDialog(TCREntities.CANG_LAN,12,"师兄...我闭关这么久，精心策划，又联手六大门派，依旧没能胜过你么...你又为何不下杀手！");
         this.addDialog(TCREntities.CANG_LAN,13,"（苍澜自尽了...）");
@@ -521,7 +521,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addDialog(TCREntities.SECOND_BOSS,4,"没想到他竟然选择了自尽...『祂』说的不错，相信你是对的。");
         this.addDialog(TCREntities.SECOND_BOSS,5,"其他几位掌门，毕竟受人蛊惑，我会饶了他们性命。苍澜自尽前蒙羞说出了真相，此事一传出去，想必可以一改江湖对大岚教的误解罢。这几粒丹药乃是微薄谢礼，还请阁下收下。");
         this.addDialog(TCREntities.SECOND_BOSS,6,"我知道你有很多疑惑，你想问的这些，日后再谈吧，我将修养片刻，眼下也有很多事未处理。");
-        this.addDialog(TCREntities.SECOND_BOSS,7,"回溯密林（ %s ）？，樱之原野（ %s ）？亦或是亚特兰蒂斯 %s ？这个世界的四大洲都不得安宁，不知世界尽头那边又有何动作。");
+        this.addDialog(TCREntities.SECOND_BOSS,7,"回溯密林（ %s ）？，阿图姆（ %s ）？亦或是亚特兰蒂斯（ %s ）？这个世界的四大洲都不得安宁，不知世界尽头那边又有何动作。");
         this.addDialog(TCREntities.SECOND_BOSS,8,"江湖路远，有缘再见！");
         this.addDialog(TCREntities.SECOND_BOSS,9,"若是苍澜的话...没关系的...都一样...");
 
@@ -869,8 +869,8 @@ public class TCRLangGenerator extends TCRLangProvider {
 
         this.addBiome(TCRBiomes.PASTORAL_PLAINS,"牧歌原野");
         this.addBiome(TCRBiomes.DENSE_FOREST,"回溯密林");
-        this.addBiome(TCRBiomes.SAKURA,"樱之原野");
-        this.addBiome(TCRBiomes.DARK_SAKURA,"深暗之樱");
+        this.addBiome(TCRBiomes.DESERT,"无边沙海");
+        this.addBiome(TCRBiomes.DESERT_CENTER,"阿图姆");
         this.addBiome(TCRBiomes.GALLERY_OF_SERENE,"山水画廊");
         this.addBiome(TCRBiomes.AZURE_SKIES,"青云之巅");
         this.addBiome(TCRBiomes.AQUATIC_MAJESTY,"蓝礁海");

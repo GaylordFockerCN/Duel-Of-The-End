@@ -162,7 +162,10 @@
             "then_run": {
               "type": "minecraft:block",
               "result_state": {
-                "Name": "minecraft:air"
+                "Name": "minecraft:water",
+                "Properties": {
+                  "level": "0"
+                }
               }
             }
           }
@@ -193,7 +196,8 @@
         "if_true": {
           "type": "minecraft:biome",
           "biome_is": [
-            "the_casket_of_reveries:aquatic_majesty_biome"
+            "the_casket_of_reveries:aquatic_majesty_biome",
+            "the_casket_of_reveries:atlantis_biome"
           ]
         },
         "then_run": {
@@ -215,6 +219,43 @@
                     "level": "0"
                   }
                 }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "type": "minecraft:condition",
+        "if_true": {
+          "type": "minecraft:biome",
+          "biome_is": [
+            "the_casket_of_reveries:sakura_biome",
+            "the_casket_of_reveries:dark_sakura_biome"
+          ]
+        },
+        "then_run": {
+          "type": "minecraft:sequence",
+          "sequence": [
+            {
+              "type": "minecraft:condition",
+              "if_true": {
+                "type": "minecraft:stone_depth",
+                "add_surface_depth": false,
+                "offset": 0,
+                "secondary_depth_range": 0,
+                "surface_type": "ceiling"
+              },
+              "then_run": {
+                "type": "minecraft:block",
+                "result_state": {
+                  "Name": "minecraft:sandstone"
+                }
+              }
+            },
+            {
+              "type": "minecraft:block",
+              "result_state": {
+                "Name": "minecraft:sand"
               }
             }
           ]

@@ -7,9 +7,11 @@ import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.entity.custom.boss.second_boss.SecondBossEntity;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
+import com.gaboj1.tcr.util.ItemUtil;
 import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.client.Minecraft;
@@ -19,6 +21,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -130,11 +133,14 @@ public class FuryTideCangLan extends Master {
                 }
                 break;
             case 4:
-                //TODO 颁奖
+                //赠礼
+                ItemUtil.addItem(player, TCRItems.NINE_TURN_REVIVAL_ELIXIR.get(), 9);
+                ItemUtil.addItem(player, TCRItems.AQUA_GOLD_ELIXIR.get(), 9);
                 return;
             case 5:
-                //TODO 结束，给予凭证
-
+                //事件结束
+                ItemUtil.addItem(player, TCRItems.AZURE_SKY_CERTIFICATE.get(), 1);
+                SaveUtil.biome2.finish(SaveUtil.BiomeProgressData.VILLAGER, (ServerLevel) level());
                 setWaiting(false);
                 break;
         }
