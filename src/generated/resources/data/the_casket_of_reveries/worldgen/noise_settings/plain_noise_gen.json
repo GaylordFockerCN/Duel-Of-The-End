@@ -229,8 +229,8 @@
         "if_true": {
           "type": "minecraft:biome",
           "biome_is": [
-            "the_casket_of_reveries:sakura_biome",
-            "the_casket_of_reveries:dark_sakura_biome"
+            "the_casket_of_reveries:desert",
+            "the_casket_of_reveries:desert_center"
           ]
         },
         "then_run": {

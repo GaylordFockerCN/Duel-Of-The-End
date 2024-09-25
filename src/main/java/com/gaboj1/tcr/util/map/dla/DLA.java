@@ -4,9 +4,13 @@ import net.minecraft.util.Mth;
 
 import java.util.Random;
 
+/**
+ * 扩散有限聚集，二维数组代表高度图
+ * <a href="https://www.youtube.com/watch?v=gsJHzBTPG0Y">Better Mountain Generators That Aren't Perlin Noise or Erosion</a>
+ */
 public class DLA {
-
     private final Random random = new Random();
+    private static final double SCALE = 2;// 3.5的时候就1k多了
     private static final double[][] AVERAGE_KERNEL_5_5 = {
             { 1.0/25, 1.0/25, 1.0/25, 1.0/25, 1.0/25 },
             { 1.0/25, 1.0/25, 1.0/25, 1.0/25, 1.0/25 },
@@ -288,7 +292,7 @@ public class DLA {
                 int bottom = (int) (original[x0][y1] * (1 - xFraction) + original[x1][y1] * xFraction);
 
                 // 放大高度值
-                enlarged[i][j] = (int) ((top * (1 - yFraction) + bottom * yFraction) * 3.5);
+                enlarged[i][j] = (int) ((top * (1 - yFraction) + bottom * yFraction) * SCALE);
             }
         }
         return enlarged;

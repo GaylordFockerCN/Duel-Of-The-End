@@ -1,17 +1,17 @@
 package com.gaboj1.tcr.entity.custom.biome2;
 
-import com.gaboj1.tcr.entity.TCREliteMob;
 import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
 import com.gaboj1.tcr.entity.custom.IceThornEntity;
 import com.gaboj1.tcr.entity.custom.TCRAggressiveGeoMob;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -22,13 +22,13 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
@@ -70,6 +70,15 @@ public class TigerEntity extends TCRAggressiveGeoMob {
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.4)
                 .build();
     }
+
+    /**
+     * 检查是否在雪地生成
+     */
+    public static boolean checkTigerSpawnRules(@NotNull EntityType<? extends Mob> entityType, @NotNull LevelAccessor accessor, MobSpawnType spawnType, BlockPos blockPos, RandomSource source) {
+        BlockPos below = blockPos.below();
+        return (accessor.getBlockState(below).is(Blocks.SNOW) || accessor.getBlockState(below).is(Blocks.SNOW_BLOCK)) && (spawnType == MobSpawnType.SPAWNER || accessor.getBlockState(below).isValidSpawn(accessor, blockPos, entityType));
+    }
+
 
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));

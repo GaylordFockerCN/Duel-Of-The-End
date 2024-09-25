@@ -90,16 +90,6 @@ public class TCRBiomes {
 
     }
 
-    public static void globalOverworldGeneration(BiomeGenerationSettings.Builder builder) {
-        BiomeDefaultFeatures.addDefaultCarversAndLakes(builder);
-
-//        BiomeDefaultFeatures.addDefaultCrystalFormations(builder);
-//        BiomeDefaultFeatures.addDefaultMonsterRoom(builder);
-//        BiomeDefaultFeatures.addDefaultUndergroundVariety(builder);
-//        BiomeDefaultFeatures.addDefaultSprings(builder);
-//        BiomeDefaultFeatures.addSurfaceFreezing(builder);
-    }
-
     public static Biome createTestBiome(BootstapContext<Biome> context,int pGrassColorOverride) {
 
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
@@ -109,7 +99,7 @@ public class TCRBiomes {
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(true)
                 .downfall(0.2f)
-                .temperature(0.8f)
+                .temperature(0.5f)
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects((new BiomeSpecialEffects.Builder())
@@ -155,8 +145,8 @@ public class TCRBiomes {
 
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(true)
-                .downfall(0.2f)
-                .temperature(0.8f)
+                .downfall(0.0F)
+                .temperature(2.0F)
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects((new BiomeSpecialEffects.Builder())
@@ -284,8 +274,8 @@ public class TCRBiomes {
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.TREES_CHERRY);
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(true)
-                .downfall(0.2f)
-                .temperature(0.8f)
+                .downfall(0.9f)
+                .temperature(-0.3f)
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects((new BiomeSpecialEffects.Builder())
@@ -309,8 +299,8 @@ public class TCRBiomes {
 
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(false)
-                .downfall(0.2f)
-                .temperature(0.8f)
+                .downfall(0.0F)
+                .temperature(2.0F)
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects((new BiomeSpecialEffects.Builder())

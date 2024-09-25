@@ -54,25 +54,15 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
     @Override
     public void buildSurface(WorldGenRegion pLevel, StructureManager pStructureManager, RandomState pRandom, ChunkAccess pChunk) {
         super.buildSurface(pLevel, pStructureManager, pRandom, pChunk);
-//        if(TCRConfig.MORE_HOLE.get()){
-//            fixPrimerSurface(pLevel);
-//        }
-        buildPeak(pLevel);
+        buildMountain(pLevel);
     }
 
-    private void buildPeak(WorldGenRegion primer){
-
+    private void buildMountain(WorldGenRegion primer){
         BlockState grassTop = Blocks.GRASS_BLOCK.defaultBlockState();
         BlockState dirt = Blocks.DIRT.defaultBlockState();
-
         BlockState stone = Blocks.STONE.defaultBlockState();
-
         BlockState snowBlock = Blocks.SNOW_BLOCK.defaultBlockState();
-
         BlockState snow = Blocks.SNOW.defaultBlockState();
-
-//        Perlin perlin = new Perlin();
-//        perlin.setFrequency(0.03);
         if(this.getBiomeSource() instanceof TCRBiomeProvider provider){
 
             for (int z = 0; z < 16; z++) {
@@ -81,24 +71,23 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
                     //判断是否属于第二群系中心
                     BlockPos pos = primer.getCenter().getWorldPosition().offset(x, 0, z);
                     Optional<ResourceKey<Biome>> biome = primer.getBiome(pos).unwrapKey();
-                    if (!TCRBiomes.AZURE_SKIES.location().equals(biome.get().location()))
+                    if (!TCRBiomes.AZURE_SKIES.location().equals(biome.orElseThrow().location()))
                         continue;
-                    //NOTE! 要getCorrectValue，因为数组是正的，中心是(width/2,height/2),而实际群系中心是(0,0) 详情看BiomeForceLandMarkPlacement...
-//                    int correctX = provider.getCorrectValue(pos.getX()>>2);
-//                    int correctZ = provider.getCorrectValue(pos.getZ()>>2);
-//                    Point center = provider.getCenter2();
-//                    double dis = Math.sqrt(Math.pow(correctX - center.x,2)+Math.pow(correctZ-center.y,2)) * 4;//不能<<2哈哈
-//                    double t = Math.max(0, r-dis);
-//                    //double t = Math.pow(Math.max(0, r-dis),2) / 64;
-//                    //根据距离进行缩放
-//                    double scale = 0.01;
-//                    int height = (int) (perlin.get(correctX*scale,0 ,correctZ*scale) * t) + (int)(perlin.get(correctX*scale,0 ,correctZ*scale)*10-10);
 
+                    //寻找和周围的方块的最大差值，防止石头露出
+                    int maxDiff = 0;
                     int height = provider.getMountainHeight(pos);
+                    int eastH = provider.getMountainHeight(pos.east());
+                    int westH = provider.getMountainHeight(pos.west());
+                    int northH = provider.getMountainHeight(pos.north());
+                    int southH = provider.getMountainHeight(pos.south());
+                    if (height > eastH || height > westH || height > northH || height > southH) {
+                        maxDiff = Math.max(height - eastH, Math.max(height - westH, Math.max(height - northH, height - southH)));
+                    }
 
                     // 寻找最顶的方块
                     int gBase = 75;
-                    for (int y = 80; y > gBase; y--) {
+                    for (int y = 120; y > gBase; y--) {
                         Block currentBlock = primer.getBlockState(pos.atY(y)).getBlock();
                         if (currentBlock != Blocks.AIR) {
                             gBase = y;
@@ -107,21 +96,34 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
                     }
 
                     //造山咯
+                    int snowLine = (int) (gBase + 60 + 30 * Math.sin(2 * Math.PI * pos.getX() / 500.0));
                     int y  = 0;
-                    while(y ++ < height-1){
-                        primer.setBlock(pos.atY(gBase+y), stone, 3);
+                    if(height < snowLine){
+                        while(y <= height - 3){
+                            primer.setBlock(pos.atY(gBase + y), stone, 3);
+                            y++;
+                        }
+                        while(y <= height){
+                            primer.setBlock(pos.atY(gBase + y), dirt, 3);
+                            y++;
+                        }
+                    } else {
+                        //防止石头露出雪来
+                        while(y <= height - maxDiff){
+                            primer.setBlock(pos.atY(gBase + y), stone, 3);
+                            y++;
+                        }
+                        while(y <= height){
+                            primer.setBlock(pos.atY(gBase + y), snowBlock, 3);
+                            y++;
+                        }
                     }
-                    primer.setBlock(pos.atY(gBase+y), grassTop, 3);
-                    if(y > 50-new Random().nextInt(20)){
-//                        primer.setBlock(pos.atY(gBase+y-2), dirt, 3);
-                        primer.setBlock(pos.atY(gBase+y-2), stone, 3);
-                        primer.setBlock(pos.atY(gBase+y-1), snowBlock, 3);
-                        primer.setBlock(pos.atY(gBase+y), snowBlock, 3);
-//                        primer.setBlock(pos.atY(gBase+y+1), new Random().nextBoolean()?snowBlock:snow, 3);
-                        primer.setBlock(pos.atY(gBase+y+1), snowBlock, 3);
-//                        primer.setBlock(pos.atY(gBase+y+2), snow, 3);
-                    }else {
-                        primer.setBlock(pos.atY(gBase+y), grassTop, 3);
+
+                    if(y < snowLine){
+                        primer.setBlock(pos.atY(gBase + y), grassTop, 3);
+                    } else {
+                        primer.setBlock(pos.atY(gBase + y - 1), snowBlock, 3);
+                        primer.setBlock(pos.atY(gBase + y), snow, 3);
                     }
                 }
             }
