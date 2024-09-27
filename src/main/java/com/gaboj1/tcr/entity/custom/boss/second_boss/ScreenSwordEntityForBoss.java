@@ -20,8 +20,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Optional;
-
 /**
  * Boss的剑盾的实体
  */
@@ -33,10 +31,6 @@ public class ScreenSwordEntityForBoss extends Entity implements AbstractSwordEnt
 
     public ScreenSwordEntityForBoss(EntityType<?> p_19870_, Level p_19871_) {
         super(p_19870_, p_19871_);
-    }
-
-    public ScreenSwordEntityForBoss(PlayMessages.SpawnEntity spawnEntity, Level level) {
-        this(TCREntities.RAIN_SCREEN_SWORD_FOR_BOSS2.get(), level);
     }
 
     public ScreenSwordEntityForBoss(Level level, SecondBossEntity boss, int id){
@@ -116,13 +110,6 @@ public class ScreenSwordEntityForBoss extends Entity implements AbstractSwordEnt
     public void remove(@NotNull RemovalReason reason) {
         level().playSound(null, getX(), getY(), getZ(), SoundEvents.SHIELD_BREAK, SoundSource.BLOCKS, 1, 1);
         super.remove(reason);
-        if(owner != null){
-            owner.getShieldId().remove(this.getId());
-            if(owner.getShieldId().isEmpty()){
-                owner.setShieldCooldownTimer(600);
-                owner.getEntityData().set(SecondBossEntity.HAS_SWORD_SHIELD, false);
-            }
-        }
     }
 
     /**

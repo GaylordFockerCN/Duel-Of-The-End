@@ -24,7 +24,7 @@ import com.gaboj1.tcr.entity.client.dreamspirit.JellyCatRenderer;
 import com.gaboj1.tcr.entity.client.dreamspirit.SquirrelRenderer;
 import com.gaboj1.tcr.entity.client.dreamspirit.WindFeatherFalconRenderer;
 import com.gaboj1.tcr.entity.client.villager.TCRVillagerRenderer;
-import com.gaboj1.tcr.entity.custom.sword.SwordEntityRenderer;
+import com.gaboj1.tcr.entity.client.SwordEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.LlamaSpitRenderer;
@@ -43,6 +43,8 @@ public class ClientModEvents{
         EntityRenderers.register(TCREntities.RAIN_SCREEN_SWORD.get(), SwordEntityRenderer::new);
         EntityRenderers.register(TCREntities.RAIN_SCREEN_SWORD_FOR_BOSS2.get(), SwordEntityRenderer::new);
         EntityRenderers.register(TCREntities.RAIN_CUTTER_SWORD.get(), SwordEntityRenderer::new);
+        EntityRenderers.register(TCREntities.STELLAR_SWORD.get(), SwordEntityRenderer::new);
+        EntityRenderers.register(TCREntities.CONVERGENCE_SWORD.get(), SwordEntityRenderer::new);
         EntityRenderers.register(TCREntities.MAGIC_PROJECTILE.get(), LlamaSpitRenderer::new);
 
         EntityRenderers.register(TCREntities.MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterRenderer::new);

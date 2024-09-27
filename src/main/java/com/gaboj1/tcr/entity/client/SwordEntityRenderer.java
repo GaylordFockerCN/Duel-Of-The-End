@@ -1,5 +1,6 @@
-package com.gaboj1.tcr.entity.custom.sword;
+package com.gaboj1.tcr.entity.client;
 
+import com.gaboj1.tcr.entity.custom.sword.AbstractSwordEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;

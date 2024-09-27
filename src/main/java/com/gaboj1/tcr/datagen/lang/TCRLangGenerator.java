@@ -55,6 +55,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addInfo("wallet_put", "从碎梦袋存入梦晶石：%d， 存入梦碎片： %d");
         this.addInfo("wallet_plus_count", "梦晶石：%d");
         this.addInfo("wallet_count", "梦碎片： %d");
+        this.addInfo("second_boss_fight_tip", "造成大于10的伤害以破除征尽的剑帘");
 
         this.add("the_casket_of_reveries.button.boss1","泰兰妮尔之心");
         this.add("the_casket_of_reveries.button.boss2","九霄");
@@ -526,6 +527,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addDialog(TCREntities.SECOND_BOSS,7,"回溯密林（ %s ）？，阿图姆（ %s ）？亦或是亚特兰蒂斯（ %s ）？这个世界的四大洲都不得安宁，不知世界尽头那边又有何动作。");
         this.addDialog(TCREntities.SECOND_BOSS,8,"江湖路远，有缘再见！");
         this.addDialog(TCREntities.SECOND_BOSS,9,"若是苍澜的话...没关系的...都一样...");
+        this.addDialog(TCREntities.SECOND_BOSS,10,"呃啊！这是...什么力量？");
 
         this.addDialogChoice(TCREntities.SECOND_BOSS,0,"继续");
         this.addDialogChoice(TCREntities.SECOND_BOSS,1,"你认识我？与世无争为何欲得盟主之位？");

@@ -5,6 +5,8 @@ import com.gaboj1.tcr.entity.custom.biome1.*;
 import com.gaboj1.tcr.entity.custom.biome2.BigHammerEntity;
 import com.gaboj1.tcr.entity.custom.boss.second_boss.ScreenSwordEntityForBoss;
 import com.gaboj1.tcr.entity.custom.boss.second_boss.SecondBossEntity;
+import com.gaboj1.tcr.entity.custom.boss.second_boss.StellarSwordEntity;
+import com.gaboj1.tcr.entity.custom.boss.second_boss.SwordConvergenceEntity;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.MagicProjectile;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.TreeClawEntity;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
@@ -59,6 +61,10 @@ public class TCREntities {
 
 	public static final RegistryObject<EntityType<ScreenSwordEntityForBoss>> RAIN_SCREEN_SWORD_FOR_BOSS2 = register("rain_screen_sword_for_boss2",
 			EntityType.Builder.of(ScreenSwordEntityForBoss::new, MobCategory.CREATURE));
+	public static final RegistryObject<EntityType<StellarSwordEntity>> STELLAR_SWORD = register("stellar_sword", EntityType.Builder.<StellarSwordEntity>of(StellarSwordEntity::new, MobCategory.MISC)
+			.setCustomClientFactory(StellarSwordEntity::new).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(1f, 0.2f));
+	public static final RegistryObject<EntityType<SwordConvergenceEntity>> CONVERGENCE_SWORD = register("convergence_sword", EntityType.Builder.<SwordConvergenceEntity>of(SwordConvergenceEntity::new, MobCategory.MISC)
+			.setCustomClientFactory(SwordConvergenceEntity::new).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(1f, 0.2f));
 
 	public static final RegistryObject<EntityType<RainCutterSwordEntity>> RAIN_CUTTER_SWORD = register("rain_cutter_sword", EntityType.Builder.<RainCutterSwordEntity>of(RainCutterSwordEntity::new, MobCategory.MISC)
 			.setCustomClientFactory(RainCutterSwordEntity::new).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(1f, 0.2f));

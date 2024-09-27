@@ -87,8 +87,6 @@ public class PiPa extends Item implements GeoItem, PoseItem {
                     }
                     entity.hurt(player.damageSources().sonicBoom(player), 5);
                 }
-
-
             }
         }
         return InteractionResultHolder.fail(stack);//取消播放动画
