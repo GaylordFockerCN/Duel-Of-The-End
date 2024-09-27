@@ -94,6 +94,8 @@ public class TCRItemTabs {
 						tabData.accept(TCRItems.MIDDLE_TREE_MONSTER_SPAWN_EGG.get());
 						tabData.accept(TCRItems.TREE_GUARDIAN_SPAWN_EGG.get());
 						tabData.accept(TCRItems.SPRITE_SPAWN_EGG.get());
+						tabData.accept(TCRItems.HORRIBLE_TREE_MONSTER_SPAWN_EGG.get());
+						tabData.accept(TCRItems.WIND_FEATHER_FALCON_SPAWN_EGG.get());
 						tabData.accept(TCRItems.YGGDRASIL_SPAWN_EGG.get());
 						tabData.accept(TCRItems.CANG_LAN_SPAWN_EGG.get());
 

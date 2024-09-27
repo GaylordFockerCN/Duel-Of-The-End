@@ -291,6 +291,8 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addEntityAndEgg(TCREntities.SNOW_SWORDMAN,"雪人剑客");
         this.addEntityAndEgg(TCREntities.SWORD_CONTROLLER,"御剑者");
         this.addEntityAndEgg(TCREntities.TREE_GUARDIAN,"森林守护者");
+        this.addEntityAndEgg(TCREntities.HORRIBLE_TREE_MONSTER,"木哉");
+        this.addEntityAndEgg(TCREntities.WIND_FEATHER_FALCON,"风羽隼");
         this.addEntityAndEgg(TCREntities.PASTORAL_PLAIN_VILLAGER,"牧歌原野-村民");
         this.addEntityAndEgg(TCREntities.VILLAGER2,"青云之巅-村民");
         this.addEntityAndEgg(TCREntities.MIAO_YIN,"妙音");

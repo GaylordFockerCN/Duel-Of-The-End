@@ -57,6 +57,8 @@ public class TCRItemModelProvider extends ItemModelProvider {
         eggItem(TCRItems.PASTORAL_PLAIN_VILLAGER_SPAWN_EGG);
         eggItem(TCRItems.PASTORAL_PLAIN_VILLAGER_ELDER_SPAWN_EGG);
         eggItem(TCRItems.SPRITE_SPAWN_EGG);
+        eggItem(TCRItems.WIND_FEATHER_FALCON_SPAWN_EGG);
+        eggItem(TCRItems.HORRIBLE_TREE_MONSTER_SPAWN_EGG);
         eggItem(TCRItems.TIGER_SPAWN_EGG);
         eggItem(TCRItems.BOXER_SPAWN_EGG);
         eggItem(TCRItems.BIG_HAMMER_EGG);

@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.entity;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.entity.custom.biome1.*;
 import com.gaboj1.tcr.entity.custom.biome2.BigHammerEntity;
 import com.gaboj1.tcr.entity.custom.boss.second_boss.ScreenSwordEntityForBoss;
 import com.gaboj1.tcr.entity.custom.boss.second_boss.SecondBossEntity;
@@ -12,15 +13,12 @@ import com.gaboj1.tcr.entity.custom.dreamspirit.CrabCrabYou;
 import com.gaboj1.tcr.entity.custom.dreamspirit.JellyCat;
 import com.gaboj1.tcr.entity.custom.dreamspirit.Squirrel;
 import com.gaboj1.tcr.entity.custom.biome2.SnowSwordmanEntity;
-import com.gaboj1.tcr.entity.custom.biome1.SpriteEntity;
+import com.gaboj1.tcr.entity.custom.dreamspirit.WindFeatherFalconEntity;
 import com.gaboj1.tcr.entity.custom.sword.RainCutterSwordEntity;
 import com.gaboj1.tcr.entity.custom.sword.ScreenSwordEntity;
 import com.gaboj1.tcr.entity.custom.sword.SwordEntity;
 import com.gaboj1.tcr.entity.custom.biome2.SwordControllerEntity;
 import com.gaboj1.tcr.entity.custom.biome2.TigerEntity;
-import com.gaboj1.tcr.entity.custom.biome1.MiddleTreeMonsterEntity;
-import com.gaboj1.tcr.entity.custom.biome1.SmallTreeMonsterEntity;
-import com.gaboj1.tcr.entity.custom.biome1.TreeGuardianEntity;
 import com.gaboj1.tcr.entity.custom.villager.P1nero;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainStationaryVillager;
@@ -82,6 +80,18 @@ public class TCREntities {
 					() -> EntityType.Builder.of(TreeGuardianEntity::new, MobCategory.MONSTER)
 							.sized(0.78f, 2f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "tree_guardian").toString()));
+
+	public static final RegistryObject<EntityType<HorribleTreeMonsterEntity>> HORRIBLE_TREE_MONSTER =
+			REGISTRY.register("horrible_tree_monster",
+					() -> EntityType.Builder.of(HorribleTreeMonsterEntity::new, MobCategory.MONSTER)
+							.sized(0.96f, 1f)
+							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "horrible_tree_monster").toString()));
+
+	public static final RegistryObject<EntityType<WindFeatherFalconEntity>> WIND_FEATHER_FALCON =
+			REGISTRY.register("wind_feather_falcon",
+					() -> EntityType.Builder.of(WindFeatherFalconEntity::new, MobCategory.MONSTER)
+							.sized(0.70f, 1.75f)
+							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "wind_feather_falcon").toString()));
 
 	public static final RegistryObject<EntityType<SpriteEntity>> SPRITE =
 			REGISTRY.register("sprite",
@@ -197,6 +207,8 @@ public class TCREntities {
 		event.put(SMALL_TREE_MONSTER.get(), SmallTreeMonsterEntity.setAttributes());
 		event.put(TREE_GUARDIAN.get(), TreeGuardianEntity.setAttributes());//设置生物属性功能在此被调用
 		event.put(MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterEntity.setAttributes());
+		event.put(HORRIBLE_TREE_MONSTER.get(), HorribleTreeMonsterEntity.setAttributes());
+		event.put(WIND_FEATHER_FALCON.get(), WindFeatherFalconEntity.setAttributes());
 		event.put(JELLY_CAT.get(), JellyCat.setAttributes());
 		event.put(SQUIRREL.get(), Squirrel.setAttributes());
 		event.put(CRAB.get(), CrabCrabYou.setAttributes());
@@ -290,6 +302,10 @@ public class TCREntities {
 		event.register(MIDDLE_TREE_MONSTER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				((entityType, serverLevelAccessor, mobSpawnType, blockPos, randomSource) -> true), SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(TREE_GUARDIAN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				((entityType, serverLevelAccessor, mobSpawnType, blockPos, randomSource) -> true), SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(WIND_FEATHER_FALCON.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				((entityType, serverLevelAccessor, mobSpawnType, blockPos, randomSource) -> true), SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(HORRIBLE_TREE_MONSTER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				((entityType, serverLevelAccessor, mobSpawnType, blockPos, randomSource) -> true), SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(SPRITE.get(),SpawnPlacements.Type.ON_GROUND,Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				((entityType, serverLevelAccessor, mobSpawnType, blockPos, randomSource) -> true), SpawnPlacementRegisterEvent.Operation.REPLACE);

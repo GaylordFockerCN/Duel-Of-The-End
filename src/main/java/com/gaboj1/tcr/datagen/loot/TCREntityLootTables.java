@@ -100,6 +100,28 @@ public class TCREntityLootTables extends EntityLootSubProvider {
                                 .add(LootItem.lootTableItem(TCRItems.COPY_RESIN.get())))
         );
 
+        add(TCREntities.HORRIBLE_TREE_MONSTER.get(),
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(0, 1))
+                                .add(LootItem.lootTableItem(TCRItems.BASIC_RESIN.get())))
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(0, 1))
+                                .add(LootItem.lootTableItem(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get())))
+        );
+
+        add(TCREntities.WIND_FEATHER_FALCON.get(),
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(0, 1))
+                                .add(LootItem.lootTableItem(TCRItems.BASIC_RESIN.get())))
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(0, 1))
+                                .add(LootItem.lootTableItem(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get())))
+        );
+
+
+
         add(TCREntities.SPRITE.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()

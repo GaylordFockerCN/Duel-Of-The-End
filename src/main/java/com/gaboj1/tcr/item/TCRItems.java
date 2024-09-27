@@ -138,6 +138,14 @@ public class TCRItems {
 			() -> new ForgeSpawnEggItem(TCREntities.TREE_GUARDIAN, 0xD57E36, 0x1D0D00,
 					new Item.Properties()));
 
+	public static final RegistryObject<Item> HORRIBLE_TREE_MONSTER_SPAWN_EGG = REGISTRY.register("horrible_tree_monster_spawn_egg",
+			() -> new ForgeSpawnEggItem(TCREntities.HORRIBLE_TREE_MONSTER, 666, 888,
+					new Item.Properties()));
+
+	public static final RegistryObject<Item> WIND_FEATHER_FALCON_SPAWN_EGG = REGISTRY.register("wind_feather_falcon_spawn_egg",
+			() -> new ForgeSpawnEggItem(TCREntities.WIND_FEATHER_FALCON, 9999, 888,
+					new Item.Properties()));
+
 	public static final RegistryObject<Item> SPRITE_SPAWN_EGG = REGISTRY.register("sprite_spawn_egg",
 			() -> new ForgeSpawnEggItem(TCREntities.SPRITE, 1, 0x1D0D00,
 					new Item.Properties()));
