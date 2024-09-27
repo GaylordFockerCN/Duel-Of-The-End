@@ -3,7 +3,7 @@ package com.gaboj1.tcr.item.custom.boss_loot;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.capability.TCRCapabilityProvider;
 import com.gaboj1.tcr.entity.TCREntities;
-import com.gaboj1.tcr.entity.custom.sword.RainScreenSwordEntity;
+import com.gaboj1.tcr.entity.custom.sword.ScreenSwordEntity;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.SyncSwordOwnerPacket;
@@ -51,7 +51,7 @@ public class GuardSword extends MagicWeapon{
                 Set<Integer> swordID = tcrPlayer.getSwordScreensID();
 
                 for(int i = 0; i < 4; i++){
-                    RainScreenSwordEntity sword = TCREntities.RAIN_SCREEN_SWORD.get().spawn(player.serverLevel(), player.getOnPos(), MobSpawnType.MOB_SUMMONED);
+                    ScreenSwordEntity sword = TCREntities.RAIN_SCREEN_SWORD.get().spawn(player.serverLevel(), player.getOnPos(), MobSpawnType.MOB_SUMMONED);
                     if(sword == null){
                         return;
                     }

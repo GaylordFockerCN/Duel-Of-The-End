@@ -279,8 +279,8 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                 treeClawTimer--;
                 if(treeClawTimer == 1){
                     List<Player> players = this.level().getNearbyPlayers(TargetingConditions.DEFAULT, this, getPlayerAABB(getOnPos(), 20));
-                    List<Player> players2 = this.level().getNearbyPlayers(TargetingConditions.forNonCombat(), this, getPlayerAABB(getOnPos(), 20));//创造测试用
-                    players.addAll(players2);
+//                    List<Player> players2 = this.level().getNearbyPlayers(TargetingConditions.forNonCombat(), this, getPlayerAABB(getOnPos(), 20));//创造测试用
+//                    players.addAll(players2);
                     for (Player target : players) {
                         TreeClawEntity treeClaw = new TreeClawEntity(this.level(), this, target);
                         treeClaw.setPos(target.getX(), target.getY(), target.getZ());
@@ -554,7 +554,6 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
         public void start() {
             yggdrasil.triggerAnim("Summon", "summon");
             yggdrasil.treeClawTimer = 20;
-
 
             this.shootInterval = shootIntervalMax;
         }

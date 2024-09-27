@@ -34,6 +34,7 @@ public class TCRConfig {
     public static final ForgeConfigSpec.DoubleValue MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP;
     public static final ForgeConfigSpec.DoubleValue ELITE_MOB_HEALTH_MULTIPLIER;
     public static final ForgeConfigSpec.DoubleValue ELITE_MOB_DAMAGE_MULTIPLIER;
+    public static final ForgeConfigSpec.BooleanValue BOSS_LOOT_MULTIPLE;
     public static final ForgeConfigSpec.DoubleValue TEST_X, TEST_Y, TEST_Z;
     public static final ForgeConfigSpec SPEC;
 
@@ -61,6 +62,7 @@ public class TCRConfig {
         MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP = createDouble(builder, "mob_multiplier_when_world_level_up", 1.2, 1.0);
         ELITE_MOB_HEALTH_MULTIPLIER = createDouble(builder, "elite_mob_health_multiplier", 3.0, 1.0, "精英怪的血量加倍");
         ELITE_MOB_DAMAGE_MULTIPLIER = createDouble(builder, "elite_mob_damage_multiplier", 1.5, 1.0, "精英怪的伤害加倍");
+        BOSS_LOOT_MULTIPLE = createBool(builder, "boss_loot_multiple", true, "是否在多人模式下翻倍重要战利品");
         builder.pop();
 
         builder.push("Test");

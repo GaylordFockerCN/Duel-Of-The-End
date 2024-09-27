@@ -63,6 +63,7 @@ public class TCREntityLootTables extends EntityLootSubProvider {
 
         add(TCREntities.SWORD.get(),emptyLootTable());
         add(TCREntities.RAIN_SCREEN_SWORD.get(),emptyLootTable());
+        add(TCREntities.RAIN_SCREEN_SWORD_FOR_BOSS2.get(),emptyLootTable());
 
         /*Biome1 start*/
         add(TCREntities.SMALL_TREE_MONSTER.get(),

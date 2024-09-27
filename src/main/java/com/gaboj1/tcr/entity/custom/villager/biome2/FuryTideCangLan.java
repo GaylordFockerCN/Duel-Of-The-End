@@ -134,8 +134,8 @@ public class FuryTideCangLan extends Master {
                 break;
             case 4:
                 //赠礼
-                ItemUtil.addItem(player, TCRItems.NINE_TURN_REVIVAL_ELIXIR.get(), 9);
-                ItemUtil.addItem(player, TCRItems.AQUA_GOLD_ELIXIR.get(), 9);
+                ItemUtil.addItem(player, TCRItems.NINE_TURN_REVIVAL_ELIXIR.get(), 9, true);
+                ItemUtil.addItem(player, TCRItems.AQUA_GOLD_ELIXIR.get(), 9, true);
                 return;
             case 5:
                 //事件结束

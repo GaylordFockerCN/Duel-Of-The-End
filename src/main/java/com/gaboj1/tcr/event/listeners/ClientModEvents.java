@@ -39,6 +39,7 @@ public class ClientModEvents{
     public static void onClientSetup(FMLClientSetupEvent event){
         EntityRenderers.register(TCREntities.SWORD.get(), SwordEntityRenderer::new);
         EntityRenderers.register(TCREntities.RAIN_SCREEN_SWORD.get(), SwordEntityRenderer::new);
+        EntityRenderers.register(TCREntities.RAIN_SCREEN_SWORD_FOR_BOSS2.get(), SwordEntityRenderer::new);
         EntityRenderers.register(TCREntities.RAIN_CUTTER_SWORD.get(), SwordEntityRenderer::new);
         EntityRenderers.register(TCREntities.MAGIC_PROJECTILE.get(), LlamaSpitRenderer::new);
 

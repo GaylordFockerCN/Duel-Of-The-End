@@ -1,5 +1,7 @@
 package com.gaboj1.tcr.util;
 
+import com.gaboj1.tcr.TCRConfig;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -28,6 +30,15 @@ public class ItemUtil {
             } else {
                 addItemEntity(player, item, count);
             }
+        }
+    }
+
+    /**
+     * 是否是需要加倍翻倍的奖励
+     */
+    public static void addItem(Player player, Item item, int count, boolean isImportantLoot){
+        if(isImportantLoot && TCRConfig.BOSS_LOOT_MULTIPLE.get() && player.level() instanceof ServerLevel serverLevel){
+            addItem(player, item, serverLevel.getPlayers((serverPlayer -> true)).size() * count);
         }
     }
 

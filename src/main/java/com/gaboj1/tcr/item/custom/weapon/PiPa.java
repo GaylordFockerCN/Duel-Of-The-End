@@ -80,12 +80,14 @@ public class PiPa extends Item implements GeoItem, PoseItem {
             level.playSound(null, player.getX(), player.getY(), player.getZ(), TCRSounds.PIPA.get(), SoundSource.BLOCKS, 1, 1);
             for(LivingEntity entity : EntityUtil.getNearByEntities(serverLevel, player, 20)){
                 if(EntityUtil.isInFront(entity, player, 20) && entity.distanceTo(player) < 10){
+                    //对第二boss可破盾但无伤
+                    if(entity instanceof SecondBossEntity secondBoss){
+                        secondBoss.hurtByPiPa(player);
+                        break;
+                    }
                     entity.hurt(player.damageSources().sonicBoom(player), 5);
                 }
-                //对第二boss有奇效
-                if(entity instanceof SecondBossEntity secondBoss){
-                    secondBoss.hurtByPiPa(player);
-                }
+
 
             }
         }

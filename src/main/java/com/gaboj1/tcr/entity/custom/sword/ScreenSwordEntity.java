@@ -22,20 +22,20 @@ import java.util.UUID;
 /**
  * 都用EntityDataAccessor了还继承有点没必要..但是不知道怎么抛弃EntityDataAccessor
  */
-public class RainScreenSwordEntity extends SwordEntity{
+public class ScreenSwordEntity extends SwordEntity{
 
-    private static final EntityDataAccessor<Optional<UUID>> RIDER_UUID = SynchedEntityData.defineId(RainScreenSwordEntity.class, EntityDataSerializers.OPTIONAL_UUID);
-    private static final EntityDataAccessor<ItemStack> ITEM_STACK = SynchedEntityData.defineId(RainScreenSwordEntity.class, EntityDataSerializers.ITEM_STACK);
-    private static final EntityDataAccessor<Integer> RAIN_SCREEN_SWORD_ID = SynchedEntityData.defineId(RainScreenSwordEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Optional<UUID>> RIDER_UUID = SynchedEntityData.defineId(ScreenSwordEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    private static final EntityDataAccessor<ItemStack> ITEM_STACK = SynchedEntityData.defineId(ScreenSwordEntity.class, EntityDataSerializers.ITEM_STACK);
+    private static final EntityDataAccessor<Integer> RAIN_SCREEN_SWORD_ID = SynchedEntityData.defineId(ScreenSwordEntity.class, EntityDataSerializers.INT);
 
-    public RainScreenSwordEntity(EntityType<?> p_19870_, Level p_19871_) {
+    public ScreenSwordEntity(EntityType<?> p_19870_, Level p_19871_) {
         super(p_19870_, p_19871_);
         this.getEntityData().define(ITEM_STACK, ItemStack.EMPTY);
         this.getEntityData().define(RIDER_UUID, Optional.empty());
         this.getEntityData().define(RAIN_SCREEN_SWORD_ID, -1);
     }
 
-    public RainScreenSwordEntity(PlayMessages.SpawnEntity spawnEntity, Level level) {
+    public ScreenSwordEntity(PlayMessages.SpawnEntity spawnEntity, Level level) {
         this(TCREntities.RAIN_SCREEN_SWORD.get(), level);
     }
 
@@ -55,6 +55,9 @@ public class RainScreenSwordEntity extends SwordEntity{
         this.getEntityData().set(RIDER_UUID, Optional.of(rider.getUUID()));
     }
 
+    /**
+     * 0 ~ 3
+     */
     public void setSwordID(int swordID){
         getEntityData().set(RAIN_SCREEN_SWORD_ID, swordID);
     }

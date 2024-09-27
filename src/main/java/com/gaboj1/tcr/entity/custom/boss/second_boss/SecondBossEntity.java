@@ -6,6 +6,7 @@ import com.gaboj1.tcr.client.gui.screen.TreeNode;
 import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.ai.goal.BossRecoverGoal;
 import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
+import com.gaboj1.tcr.entity.custom.sword.ScreenSwordEntity;
 import com.gaboj1.tcr.entity.custom.villager.biome2.*;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.network.PacketRelay;
@@ -16,6 +17,9 @@ import com.gaboj1.tcr.util.ItemUtil;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -25,10 +29,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -44,24 +45,49 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
+/**
+ * 隔一阵子生剑盾，有盾的时候在天上飞，破盾则落地
+ * 在天上飞时：
+ * 1：发射追踪剑
+ * 2：发射一根剑，随后瞬移到身边横扫攻击
+ * 在地上：
+ * 1：蓄力砸地击飞
+ * 2：两种快慢刀，快快慢，快慢慢，打百分比真伤，接满三次必死
+ */
 public class SecondBossEntity extends TCRBoss implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    //是否有剑盾
+    protected static final EntityDataAccessor<Boolean> HAS_SWORD_SHIELD = SynchedEntityData.defineId(SecondBossEntity.class, EntityDataSerializers.BOOLEAN);
+    private final Set<Integer> shieldId = new HashSet<>();
+    private int shieldCooldownTimer;
+    private int rainCutterCooldownTimer;
+    private int stellaSwordCooldownTimer;
 
     protected EntityType<?> entityType = TCREntities.SECOND_BOSS.get();
     private final Set<Integer> mastersId = new HashSet<>();
     public SecondBossEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_, BossEvent.BossBarColor.WHITE);
     }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        getEntityData().define(HAS_SWORD_SHIELD, false);
+    }
+
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 20)//TODO 测试用
-                .add(Attributes.ATTACK_DAMAGE, SaveUtil.getMobMultiplier(3))
+                .add(Attributes.MAX_HEALTH, 20)//TODO 测试用，默认1024
+                .add(Attributes.ATTACK_DAMAGE, 5)
                 .add(Attributes.ATTACK_SPEED, 0.5f)
                 .add(Attributes.MOVEMENT_SPEED, 0.30f)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 114514)//不动如山！
@@ -70,12 +96,95 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
 
     protected void registerGoals() {
         this.goalSelector.addGoal(0,new BossRecoverGoal(this, 72));
-        this.goalSelector.addGoal(1, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new SummonSwordShieldGoal(this));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if(shieldCooldownTimer > 0){
+            shieldCooldownTimer--;
+        }
+
+        if(rainCutterCooldownTimer > 0){
+            rainCutterCooldownTimer--;
+        }
+
+        //在对话的时候要等
+        if(conversingPlayer != null){
+            setTarget(null);
+            this.getNavigation().stop();
+            this.getLookControl().setLookAt(conversingPlayer);
+        }
+
+        //苍澜插嘴的时候也要等
+        for(int i : mastersId){
+            if(level().getEntity(i) instanceof Master master && master.isWaiting()){
+                this.getNavigation().stop();
+                this.getLookControl().setLookAt(master);
+            }
+        }
+
+    }
+
+    /**
+     * 受到琵琶攻击直接破盾
+     */
+    public void hurtByPiPa(Player player){
+        breakAllShield();
+//        player.displayClientMessage();//TODO 输出对话
+    }
+
+    public void breakAllShield(){
+        for(int id : shieldId){
+            if(level().getEntity(id) instanceof ScreenSwordEntity entity){
+                entity.discard();
+            }
+        }
+    }
+
+    public Set<Integer> getShieldId() {
+        return shieldId;
+    }
+
+    /**
+     * 生盾冷却，即破盾后在地上逗留的时间
+     */
+    public void setShieldCooldownTimer(int shieldCooldownTimer) {
+        this.shieldCooldownTimer = shieldCooldownTimer;
+    }
+
+    /**
+     * 掌门死了后要移除，并且判断是否杀死了全部宗师
+     * 注意要先判断周围有没有玩家再发包，以免找不到玩家而存档又改掉了
+     */
+    public void removeMaster(Master master){
+        if(level().isClientSide){
+            return;
+        }
+        mastersId.remove(master.getId());
+        if(mastersId.isEmpty()){
+            AtomicBoolean hasSend = new AtomicBoolean(false);
+            //苍澜说遗言 生存才有效
+            for(Player player : EntityUtil.getNearByPlayers(this, 32)){
+                DialogueComponentBuilder.displayClientMessages(player, 2000, false, ()->{
+                            SaveUtil.biome2.isElderDie = true;
+                            if(!hasSend.get()){
+                                if(player instanceof ServerPlayer serverPlayer){
+                                    sendDialoguePacket(serverPlayer);
+                                }
+                                hasSend.set(true);
+                            }
+                        },
+                        BUILDER.buildDialogue(TCREntities.CANG_LAN.get(), BUILDER.buildDialogueAnswer(TCREntities.CANG_LAN.get(), 12, false)),
+                        BUILDER.buildDialogueAnswer(TCREntities.CANG_LAN.get(), 13, false));
+            }
+        }
     }
 
 
@@ -220,64 +329,11 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
                 break;
             case 4:
                 //boss送礼
-                ItemUtil.addItem(player, TCRItems.NINE_TURN_REVIVAL_ELIXIR.get(), 9);
-                ItemUtil.addItem(player, TCRItems.AQUA_GOLD_ELIXIR.get(), 9);
+                ItemUtil.addItem(player, TCRItems.NINE_TURN_REVIVAL_ELIXIR.get(), 9, true);
+                ItemUtil.addItem(player, TCRItems.AQUA_GOLD_ELIXIR.get(), 9, true);
                 return;
         }
         setConversingPlayer(null);
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-
-        //在对话的时候要等
-        if(conversingPlayer != null){
-            setTarget(null);
-            this.getNavigation().stop();
-            this.getLookControl().setLookAt(conversingPlayer);
-        }
-
-        //苍澜插嘴的时候也要等
-        for(int i : mastersId){
-            if(level().getEntity(i) instanceof Master master && master.isWaiting()){
-                this.getNavigation().stop();
-                this.getLookControl().setLookAt(master);
-            }
-        }
-
-    }
-
-    public void hurtByPiPa(Player player){
-
-    }
-
-    /**
-     * 掌门死了后要移除，并且判断是否杀死了全部宗师
-     * 注意要先判断周围有没有玩家再发包，以免找不到玩家而存档又改掉了
-     */
-    public void removeMaster(Master master){
-        if(level().isClientSide){
-            return;
-        }
-        mastersId.remove(master.getId());
-        if(mastersId.isEmpty()){
-            AtomicBoolean hasSend = new AtomicBoolean(false);
-            //苍澜说遗言 生存才有效
-            for(Player player : EntityUtil.getNearByPlayers(this, 32)){
-                DialogueComponentBuilder.displayClientMessages(player, 2000, false, ()->{
-                    SaveUtil.biome2.isElderDie = true;
-                    if(!hasSend.get()){
-                        if(player instanceof ServerPlayer serverPlayer){
-                            sendDialoguePacket(serverPlayer);
-                        }
-                        hasSend.set(true);
-                    }
-                },
-                BUILDER.buildDialogue(TCREntities.CANG_LAN.get(), BUILDER.buildDialogueAnswer(TCREntities.CANG_LAN.get(), 12, false)),
-                BUILDER.buildDialogueAnswer(TCREntities.CANG_LAN.get(), 13, false));
-            }
-        }
     }
 
     @Override
@@ -289,6 +345,13 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
     public boolean hurt(@NotNull DamageSource source, float v) {
         if(SaveUtil.biome2.choice == SaveUtil.BiomeProgressData.BOSS && source.getEntity() instanceof Player){
             return false;
+        }
+        //用剑抵挡一次伤害
+        if(!getShieldId().isEmpty()){
+            if(level().getEntity(getShieldId().iterator().next()) instanceof ScreenSwordEntityForBoss screenSwordEntityForBoss){
+                screenSwordEntityForBoss.discard();
+                return false;
+            }
         }
         return super.hurt(source, v);
     }
@@ -317,6 +380,51 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
         level().addFreshEntity(cangLan);
         cangLan.sendDialoguePacket(((ServerPlayer) level().getNearestPlayer(this, 48)));
         super.die(source);
+    }
+
+    /**
+     * 隔一段时间召唤个盾
+     */
+    private static class SummonSwordShieldGoal extends Goal{
+        private final SecondBossEntity boss;
+        private SummonSwordShieldGoal(SecondBossEntity boss){
+            this.boss = boss;
+        }
+        @Override
+        public boolean canUse() {
+            return !boss.getEntityData().get(HAS_SWORD_SHIELD) && boss.shieldCooldownTimer <= 0;
+        }
+
+        @Override
+        public void start() {
+            for(int i = 0; i < 4 ; i++){
+                ScreenSwordEntityForBoss sword = new ScreenSwordEntityForBoss(boss.level(), boss, i);
+                boss.level().addFreshEntity(sword);
+                sword.setPos(boss.getPosition(0.5f).add(sword.getOffset()));
+            }
+
+        }
+
+    }
+
+    /**
+     * 定期射剑，随机射三剑或者使用星斗归位剑
+     */
+    private static class SummonRainCutterSwordGoal extends Goal{
+        private final SecondBossEntity boss;
+        private SummonRainCutterSwordGoal(SecondBossEntity boss){
+            this.boss = boss;
+        }
+        @Override
+        public boolean canUse() {
+            return boss.getEntityData().get(HAS_SWORD_SHIELD) && boss.rainCutterCooldownTimer <= 0;
+        }
+
+        @Override
+        public void start() {
+            boss.rainCutterCooldownTimer = 100;
+
+        }
     }
 
 }

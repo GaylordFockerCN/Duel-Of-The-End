@@ -2,6 +2,7 @@ package com.gaboj1.tcr.entity;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.custom.biome2.BigHammerEntity;
+import com.gaboj1.tcr.entity.custom.boss.second_boss.ScreenSwordEntityForBoss;
 import com.gaboj1.tcr.entity.custom.boss.second_boss.SecondBossEntity;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.MagicProjectile;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.TreeClawEntity;
@@ -13,7 +14,7 @@ import com.gaboj1.tcr.entity.custom.dreamspirit.Squirrel;
 import com.gaboj1.tcr.entity.custom.biome2.SnowSwordmanEntity;
 import com.gaboj1.tcr.entity.custom.biome1.SpriteEntity;
 import com.gaboj1.tcr.entity.custom.sword.RainCutterSwordEntity;
-import com.gaboj1.tcr.entity.custom.sword.RainScreenSwordEntity;
+import com.gaboj1.tcr.entity.custom.sword.ScreenSwordEntity;
 import com.gaboj1.tcr.entity.custom.sword.SwordEntity;
 import com.gaboj1.tcr.entity.custom.biome2.SwordControllerEntity;
 import com.gaboj1.tcr.entity.custom.biome2.TigerEntity;
@@ -55,12 +56,14 @@ public class TCREntities {
 			EntityType.Builder.of(SwordEntity::new, MobCategory.CREATURE));
 
 
-	public static final RegistryObject<EntityType<RainScreenSwordEntity>> RAIN_SCREEN_SWORD = register("rain_screen_sword",
-			EntityType.Builder.of(RainScreenSwordEntity::new, MobCategory.CREATURE));
+	public static final RegistryObject<EntityType<ScreenSwordEntity>> RAIN_SCREEN_SWORD = register("rain_screen_sword",
+			EntityType.Builder.of(ScreenSwordEntity::new, MobCategory.CREATURE));
+
+	public static final RegistryObject<EntityType<ScreenSwordEntityForBoss>> RAIN_SCREEN_SWORD_FOR_BOSS2 = register("rain_screen_sword_for_boss2",
+			EntityType.Builder.of(ScreenSwordEntityForBoss::new, MobCategory.CREATURE));
 
 	public static final RegistryObject<EntityType<RainCutterSwordEntity>> RAIN_CUTTER_SWORD = register("rain_cutter_sword", EntityType.Builder.<RainCutterSwordEntity>of(RainCutterSwordEntity::new, MobCategory.MISC)
 			.setCustomClientFactory(RainCutterSwordEntity::new).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(1f, 0.2f));
-
 
 	public static final RegistryObject<EntityType<SmallTreeMonsterEntity>> SMALL_TREE_MONSTER =
 			REGISTRY.register("small_tree_monster",
