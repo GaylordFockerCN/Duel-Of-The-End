@@ -8,8 +8,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.logging.Level;
-
 /**
  * @author LZY
  * 做一些通用的物品栏处理
@@ -37,7 +35,7 @@ public class ItemUtil {
      * 是否是需要加倍翻倍的奖励
      */
     public static void addItem(Player player, Item item, int count, boolean isImportantLoot){
-        if(isImportantLoot && TCRConfig.BOSS_LOOT_MULTIPLE.get() && player.level() instanceof ServerLevel serverLevel){
+        if(isImportantLoot && TCRConfig.BOSS_HEALTH_AND_LOOT_MULTIPLE.get() && player.level() instanceof ServerLevel serverLevel){
             addItem(player, item, serverLevel.getPlayers((serverPlayer -> true)).size() * count);
         }
     }

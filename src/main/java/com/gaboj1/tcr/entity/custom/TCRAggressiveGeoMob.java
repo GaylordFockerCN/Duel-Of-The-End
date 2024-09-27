@@ -1,8 +1,8 @@
 package com.gaboj1.tcr.entity.custom;
 
 import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.entity.TCREliteMob;
-import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
+import com.gaboj1.tcr.entity.LevelableEntity;
+import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -13,7 +13,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -29,7 +28,7 @@ import java.util.UUID;
 /**
  * 因为geckolib没有时间戳事件，所以尝试写了一个，在{@link com.gaboj1.tcr.entity.custom.biome2.SnowSwordmanEntity}首次尝试
  */
-public abstract class TCRAggressiveGeoMob extends Monster implements GeoEntity {
+public abstract class TCRAggressiveGeoMob extends Monster implements GeoEntity, LevelableEntity, MultiPlayerBoostEntity {
     private final Queue<TimeStamp> queue = new ArrayDeque<>();
     protected static final EntityDataAccessor<Boolean> IS_ELITE = SynchedEntityData.defineId(TCRAggressiveGeoMob.class, EntityDataSerializers.BOOLEAN);
     protected static final EntityDataAccessor<BlockPos> ELITE_SPAWN_POS = SynchedEntityData.defineId(TCRAggressiveGeoMob.class, EntityDataSerializers.BLOCK_POS);
@@ -63,8 +62,8 @@ public abstract class TCRAggressiveGeoMob extends Monster implements GeoEntity {
     public void setElite(BlockPos spawnPos){
         AttributeInstance instance1 = this.getAttribute(Attributes.MAX_HEALTH);
         AttributeInstance instance2 = this.getAttribute(Attributes.ATTACK_DAMAGE);
-        AttributeModifier healthModifier = new AttributeModifier(UUID.fromString("d0d000cc-f30f-00ed-a05b-0000bb114514"), "Elite Mob", TCRConfig.ELITE_MOB_HEALTH_MULTIPLIER.get(), AttributeModifier.Operation.MULTIPLY_TOTAL);
-        AttributeModifier damageModifier = new AttributeModifier(UUID.fromString("d0d000cc-f30f-00ed-a05b-0000bb114514"), "Elite Mob", TCRConfig.ELITE_MOB_DAMAGE_MULTIPLIER.get(), AttributeModifier.Operation.MULTIPLY_TOTAL);
+        AttributeModifier healthModifier = new AttributeModifier(UUID.fromString("d0d000cc-f10f-00ed-a05b-0000bb114514"), "Elite Mob", TCRConfig.ELITE_MOB_HEALTH_MULTIPLIER.get(), AttributeModifier.Operation.MULTIPLY_TOTAL);
+        AttributeModifier damageModifier = new AttributeModifier(UUID.fromString("d0d000cc-f20f-00ed-a05b-0000bb114514"), "Elite Mob", TCRConfig.ELITE_MOB_DAMAGE_MULTIPLIER.get(), AttributeModifier.Operation.MULTIPLY_TOTAL);
         if(instance1 != null && !instance1.hasModifier(healthModifier)){
             instance1.addPermanentModifier(healthModifier);
             setHealth(getMaxHealth());

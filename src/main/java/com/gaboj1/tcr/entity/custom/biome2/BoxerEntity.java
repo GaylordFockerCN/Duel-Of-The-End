@@ -1,5 +1,7 @@
 package com.gaboj1.tcr.entity.custom.biome2;
 
+import com.gaboj1.tcr.entity.LevelableEntity;
+import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -32,7 +34,7 @@ import java.util.Objects;
 
 import static com.gaboj1.tcr.entity.custom.boss.TCRBoss.getPlayerAABB;
 
-public class BoxerEntity extends PathfinderMob implements GeoEntity {
+public class BoxerEntity extends PathfinderMob implements GeoEntity, LevelableEntity, MultiPlayerBoostEntity {
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     //是否需要追

@@ -17,7 +17,7 @@ public class ThunderclapZhenYu extends Master {
 
     public static AttributeSupplier setAttributes() {
         return PathfinderMob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 120.0D)
+                .add(Attributes.MAX_HEALTH, 226.0D)
                 .add(Attributes.ATTACK_DAMAGE, 10.0f)
                 .add(Attributes.ATTACK_SPEED, 1.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.4f)

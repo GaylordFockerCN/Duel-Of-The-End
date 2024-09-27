@@ -1,6 +1,8 @@
 package com.gaboj1.tcr.entity.custom.biome1;
 
 import com.gaboj1.tcr.client.TCRSounds;
+import com.gaboj1.tcr.entity.LevelableEntity;
+import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -25,7 +27,7 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class SmallTreeMonsterEntity extends TamableAnimal implements GeoEntity {
+public class SmallTreeMonsterEntity extends TamableAnimal implements GeoEntity, LevelableEntity, MultiPlayerBoostEntity {
     private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public SmallTreeMonsterEntity(EntityType<? extends TamableAnimal> entityType, Level level) {

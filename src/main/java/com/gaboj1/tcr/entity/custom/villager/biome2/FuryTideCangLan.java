@@ -53,7 +53,7 @@ public class FuryTideCangLan extends Master {
 
     public static AttributeSupplier setAttributes() {
         return PathfinderMob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 100.0D)
+                .add(Attributes.MAX_HEALTH, 227.6f)
                 .add(Attributes.ATTACK_DAMAGE, 10.0f)
                 .add(Attributes.ATTACK_SPEED, 1.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.4f)

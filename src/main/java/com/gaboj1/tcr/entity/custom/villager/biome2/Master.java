@@ -1,5 +1,7 @@
 package com.gaboj1.tcr.entity.custom.villager.biome2;
 
+import com.gaboj1.tcr.entity.LevelableEntity;
+import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.custom.boss.second_boss.SecondBossEntity;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
@@ -31,12 +33,14 @@ import software.bernie.geckolib.core.object.PlayState;
 /**
  * 不受彼此伤害，可以被玩家挑战
  */
-public abstract class Master extends TCRVillager implements NpcDialogue {
+public abstract class Master extends TCRVillager implements NpcDialogue, LevelableEntity, MultiPlayerBoostEntity {
     protected Player conversingPlayer;
     boolean waiting;
     public static final EntityDataAccessor<Integer> BOSS_ID = SynchedEntityData.defineId(Master.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Boolean> IS_TRAIL = SynchedEntityData.defineId(Master.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Boolean> IS_FIGHTING = SynchedEntityData.defineId(Master.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Boolean> IS_BOSS_SUMMONED = SynchedEntityData.defineId(Master.class, EntityDataSerializers.BOOLEAN);
+    private double damageFromBoss;
     public Master(EntityType<? extends TCRVillager> pEntityType, Level pLevel) {
         super(pEntityType, pLevel, 142857);
     }
@@ -45,6 +49,7 @@ public abstract class Master extends TCRVillager implements NpcDialogue {
     protected void defineSynchedData() {
         super.defineSynchedData();
         getEntityData().define(BOSS_ID, -1);
+        getEntityData().define(IS_TRAIL, false);
         getEntityData().define(IS_FIGHTING, false);
         getEntityData().define(IS_BOSS_SUMMONED, false);
     }
@@ -126,11 +131,18 @@ public abstract class Master extends TCRVillager implements NpcDialogue {
     public void thunderHit(@NotNull ServerLevel level, @NotNull LightningBolt lightningBolt) {}
 
     /**
-     * 免疫除了来自玩家和第二boss以外的伤害，防止互相攻击
+     * 免疫除了来自玩家和第二boss以外的伤害，防止互相攻击。若是试炼状态也可受伤
      */
     @Override
     public boolean hurt(DamageSource source, float v) {
-        if((source.getEntity() instanceof Player && SaveUtil.biome2.choice == SaveUtil.BiomeProgressData.BOSS) || source.getEntity() instanceof SecondBossEntity){
+        if(source.getEntity() instanceof SecondBossEntity entity){
+            damageFromBoss += v;
+            //还想boss帮你打架？做梦
+            if(damageFromBoss > getMaxHealth() / 3){
+                return false;
+            }
+        }
+        if((source.getEntity() instanceof Player && SaveUtil.biome2.choice == SaveUtil.BiomeProgressData.BOSS) || source.getEntity() instanceof SecondBossEntity || getEntityData().get(IS_TRAIL)){
             return super.hurt(source, v);
         }
         return false;

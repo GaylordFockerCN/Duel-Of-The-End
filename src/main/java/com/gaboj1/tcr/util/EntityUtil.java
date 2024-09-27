@@ -1,6 +1,8 @@
 package com.gaboj1.tcr.util;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -59,6 +61,14 @@ public class EntityUtil {
 
     public static <T extends LivingEntity> List<T> getNearByEntities(Class<T> aClass, Level level, LivingEntity self, int offset){
         return level.getNearbyEntities(aClass, TargetingConditions.DEFAULT, self, getPlayerAABB(self.getOnPos(), offset));
+    }
+
+    public static int getPlayerCount(ServerLevel level){
+        return getAllPlayers(level).size();
+    }
+
+    public static List<ServerPlayer> getAllPlayers(ServerLevel level){
+        return level.getPlayers((serverPlayer -> true));
     }
 
 }

@@ -28,6 +28,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -85,6 +86,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
     private final Set<Integer> mastersId = new HashSet<>();
     public SecondBossEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_, BossEvent.BossBarColor.WHITE);
+        setHealth(20);//TODO 测试用
     }
 
     @Override
@@ -95,7 +97,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 20)//TODO 测试用，默认1024
+                .add(Attributes.MAX_HEALTH, 1056)
                 .add(Attributes.ATTACK_DAMAGE, 5)
                 .add(Attributes.ATTACK_SPEED, 0.5f)
                 .add(Attributes.MOVEMENT_SPEED, 0.30f)
@@ -112,7 +114,9 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 
         this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, true, (livingEntity -> {
+            return isFighting() ? livingEntity instanceof Player : livingEntity instanceof Master;
+        })));
     }
 
     @Override
@@ -398,7 +402,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
                 break;
             case 2:
                 //选择联军阵容
-                getEntityData().set(IS_FIGHTING, true);
+                setIsFighting(true);
                 setTarget(player);
                 for(int id : mastersId){
                     if(level().getEntity(id) instanceof Master master){
@@ -490,7 +494,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
         }
         @Override
         public boolean canUse() {
-            return !boss.getEntityData().get(HAS_SWORD_SHIELD) && boss.shieldCooldownTimer <= 0;
+            return boss.isFighting() && !boss.getEntityData().get(HAS_SWORD_SHIELD) && boss.shieldCooldownTimer <= 0;
         }
 
         @Override
@@ -515,7 +519,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
         }
         @Override
         public boolean canUse() {
-            return boss.getEntityData().get(HAS_SWORD_SHIELD) && boss.swordAttackTimer-- < 0;
+            return boss.isFighting() && boss.getEntityData().get(HAS_SWORD_SHIELD) && boss.swordAttackTimer-- < 0;
         }
 
         @Override
