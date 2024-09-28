@@ -21,10 +21,10 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class HorribleTreeMonsterEntity extends Monster implements GeoEntity, LevelableEntity, MultiPlayerBoostEntity {
+public class UnknownEntity extends Monster implements GeoEntity, LevelableEntity, MultiPlayerBoostEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public HorribleTreeMonsterEntity(EntityType<? extends Monster> entityType, Level level) {
+    public UnknownEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
     }
 
