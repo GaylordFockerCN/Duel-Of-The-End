@@ -1,4 +1,6 @@
 package com.gaboj1.tcr.entity.custom.biome1;
+import com.gaboj1.tcr.entity.LevelableEntity;
+import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.MagicProjectile;
 import net.minecraft.world.entity.*;
@@ -23,7 +25,7 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class SpriteEntity extends Monster implements GeoEntity {
+public class SpriteEntity extends Monster implements GeoEntity, LevelableEntity, MultiPlayerBoostEntity {
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private int timer = 0;

@@ -4,11 +4,13 @@ import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.capability.TCRCapabilityProvider;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
+import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.entity.TCRFakePlayer;
 import com.gaboj1.tcr.item.custom.weapon.GunCommon;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.serverbound.ControlLlamaPacket;
 import com.gaboj1.tcr.util.DataManager;
+import com.gaboj1.tcr.util.EntityUtil;
 import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeTags;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
@@ -25,6 +27,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.horse.Llama;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -44,9 +47,8 @@ public class PlayerEventListener {
 
     @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
-
-        //补录，以防新玩家没有成就
         if(event.getEntity().level() instanceof ServerLevel level){
+            //补录，以防新玩家没有成就
             for(ServerPlayer player : level.getPlayers((serverPlayer -> true))){
                 if(SaveUtil.biome1.isFinished()){
                     TCRAdvancementData.getAdvancement("finish_biome_1", player);
@@ -61,6 +63,15 @@ public class PlayerEventListener {
                     TCRAdvancementData.getAdvancement("finish_biome_4", player);
                 }
             }
+            //动态调整怪物血量
+            if(TCRConfig.BOSS_HEALTH_AND_LOOT_MULTIPLE.get()){
+                for(Entity entity : level.getEntities().getAll()){
+                    if(entity instanceof MultiPlayerBoostEntity multiPlayerBoostEntity){
+                        multiPlayerBoostEntity.whenPlayerCountChange();
+                    }
+                }
+            }
+
         }
 
         //初始化玩家数据
@@ -88,6 +99,14 @@ public class PlayerEventListener {
                 }
             }));
         }
+    }
+
+    /**
+     * 玩家退出事件
+     */
+    @SubscribeEvent
+    public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event){
+
     }
 
     /**

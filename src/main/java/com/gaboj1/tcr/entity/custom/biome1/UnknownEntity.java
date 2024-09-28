@@ -1,5 +1,7 @@
 package com.gaboj1.tcr.entity.custom.biome1;
 
+import com.gaboj1.tcr.entity.LevelableEntity;
+import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -19,10 +21,10 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class UnknownEntity extends Monster implements GeoEntity {
+public class HorribleTreeMonsterEntity extends Monster implements GeoEntity, LevelableEntity, MultiPlayerBoostEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public UnknownEntity(EntityType<? extends Monster> entityType, Level level) {
+    public HorribleTreeMonsterEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
     }
 

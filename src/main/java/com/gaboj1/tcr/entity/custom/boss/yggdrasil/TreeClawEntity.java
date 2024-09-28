@@ -1,5 +1,7 @@
 package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
+import com.gaboj1.tcr.entity.LevelableEntity;
+import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.entity.TCREntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -23,7 +25,7 @@ import software.bernie.geckolib.util.RenderUtils;
 /**
  * 树爪继承自Mob，和平模式无法召唤！！
  */
-public class TreeClawEntity extends Mob implements GeoEntity {
+public class TreeClawEntity extends Mob implements GeoEntity, LevelableEntity, MultiPlayerBoostEntity {
     private YggdrasilEntity yggdrasilEntity;
     private Player target;
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);

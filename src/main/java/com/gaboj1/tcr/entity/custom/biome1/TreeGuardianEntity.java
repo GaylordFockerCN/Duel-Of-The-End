@@ -1,6 +1,8 @@
 package com.gaboj1.tcr.entity.custom.biome1;
 
 import com.gaboj1.tcr.client.TCRSounds;
+import com.gaboj1.tcr.entity.LevelableEntity;
+import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.util.BoundingBoxHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -37,7 +39,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Objects;
 
-public class TreeGuardianEntity extends Monster implements GeoEntity {
+public class TreeGuardianEntity extends Monster implements GeoEntity, LevelableEntity, MultiPlayerBoostEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public static final EntityDataAccessor<Boolean> IS_SUMMONED = SynchedEntityData.defineId(TreeGuardianEntity.class, EntityDataSerializers.BOOLEAN);//本来是记录用于判断回血的，但是发现后面没用了，不过可能有别的用处就先留着

@@ -82,11 +82,12 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
 
     public YggdrasilEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_, BossEvent.BossBarColor.BLUE);
+        setHealth(20);//TODO 测试用
     }
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 20)//TODO 测试用，原1000
+                .add(Attributes.MAX_HEALTH, 1422)
                 .add(Attributes.ATTACK_DAMAGE, 10)
                 .add(Attributes.ATTACK_SPEED, 0.5f)
                 .add(Attributes.MOVEMENT_SPEED, 0.30f)

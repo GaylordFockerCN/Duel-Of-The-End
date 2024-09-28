@@ -88,6 +88,14 @@ public abstract class TCRBoss extends PathfinderMob implements NpcDialogue, Shad
         return getEntityData().get(IS_SHADER);
     }
 
+    public boolean isFighting() {
+        return getEntityData().get(IS_FIGHTING);
+    }
+
+    public void setIsFighting(boolean isFighting){
+        getEntityData().set(IS_FIGHTING, isFighting);
+    }
+
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
