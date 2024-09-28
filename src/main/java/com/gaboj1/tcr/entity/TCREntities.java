@@ -87,16 +87,16 @@ public class TCREntities {
 							.sized(0.78f, 2f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "tree_guardian").toString()));
 
-	public static final RegistryObject<EntityType<HorribleTreeMonsterEntity>> HORRIBLE_TREE_MONSTER =
-			REGISTRY.register("horrible_tree_monster",
-					() -> EntityType.Builder.of(HorribleTreeMonsterEntity::new, MobCategory.MONSTER)
-							.sized(0.96f, 1f)
-							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "horrible_tree_monster").toString()));
+	public static final RegistryObject<EntityType<UnknownEntity>> UNKNOWN =
+			REGISTRY.register("unknown",
+					() -> EntityType.Builder.of(UnknownEntity::new, MobCategory.MONSTER)
+							.sized(1.3f, 1f)
+							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "unknow").toString()));
 
 	public static final RegistryObject<EntityType<WindFeatherFalconEntity>> WIND_FEATHER_FALCON =
 			REGISTRY.register("wind_feather_falcon",
 					() -> EntityType.Builder.of(WindFeatherFalconEntity::new, MobCategory.MONSTER)
-							.sized(0.70f, 1.75f)
+							.sized(0.55f, 1.6f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "wind_feather_falcon").toString()));
 
 	public static final RegistryObject<EntityType<SpriteEntity>> SPRITE =
@@ -213,7 +213,7 @@ public class TCREntities {
 		event.put(SMALL_TREE_MONSTER.get(), SmallTreeMonsterEntity.setAttributes());
 		event.put(TREE_GUARDIAN.get(), TreeGuardianEntity.setAttributes());//设置生物属性功能在此被调用
 		event.put(MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterEntity.setAttributes());
-		event.put(HORRIBLE_TREE_MONSTER.get(), HorribleTreeMonsterEntity.setAttributes());
+		event.put(UNKNOWN.get(), UnknownEntity.setAttributes());
 		event.put(WIND_FEATHER_FALCON.get(), WindFeatherFalconEntity.setAttributes());
 		event.put(JELLY_CAT.get(), JellyCat.setAttributes());
 		event.put(SQUIRREL.get(), Squirrel.setAttributes());
@@ -311,7 +311,7 @@ public class TCREntities {
 				((entityType, serverLevelAccessor, mobSpawnType, blockPos, randomSource) -> true), SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(WIND_FEATHER_FALCON.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				((entityType, serverLevelAccessor, mobSpawnType, blockPos, randomSource) -> true), SpawnPlacementRegisterEvent.Operation.REPLACE);
-		event.register(HORRIBLE_TREE_MONSTER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+		event.register(UNKNOWN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				((entityType, serverLevelAccessor, mobSpawnType, blockPos, randomSource) -> true), SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(SPRITE.get(),SpawnPlacements.Type.ON_GROUND,Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				((entityType, serverLevelAccessor, mobSpawnType, blockPos, randomSource) -> true), SpawnPlacementRegisterEvent.Operation.REPLACE);

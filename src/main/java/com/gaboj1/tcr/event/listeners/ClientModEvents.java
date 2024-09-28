@@ -11,7 +11,7 @@ import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.client.IceThornRenderer;
 import com.gaboj1.tcr.entity.client.TCRFakePlayerRenderer;
 import com.gaboj1.tcr.entity.client.big_hammer.BigHammerRenderer;
-import com.gaboj1.tcr.entity.client.biome1.HorribleTreeMonsterRenderer;
+import com.gaboj1.tcr.entity.client.biome1.UnknownRenderer;
 import com.gaboj1.tcr.entity.client.biome1.MiddleTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.biome1.SmallTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.biome1.TreeGuardianRenderer;
@@ -50,7 +50,7 @@ public class ClientModEvents{
         EntityRenderers.register(TCREntities.MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterRenderer::new);
         EntityRenderers.register(TCREntities.TREE_GUARDIAN.get(), TreeGuardianRenderer::new);
         EntityRenderers.register(TCREntities.SMALL_TREE_MONSTER.get(), SmallTreeMonsterRenderer::new);
-        EntityRenderers.register(TCREntities.HORRIBLE_TREE_MONSTER.get(), HorribleTreeMonsterRenderer::new);
+        EntityRenderers.register(TCREntities.UNKNOWN.get(), UnknownRenderer::new);
         EntityRenderers.register(TCREntities.WIND_FEATHER_FALCON.get(), WindFeatherFalconRenderer::new);
         EntityRenderers.register(TCREntities.JELLY_CAT.get(), JellyCatRenderer::new);
         EntityRenderers.register(TCREntities.SQUIRREL.get(), SquirrelRenderer::new);

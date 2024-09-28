@@ -100,7 +100,7 @@ public class TCREntityLootTables extends EntityLootSubProvider {
                                 .add(LootItem.lootTableItem(TCRItems.COPY_RESIN.get())))
         );
 
-        add(TCREntities.HORRIBLE_TREE_MONSTER.get(),
+        add(TCREntities.UNKNOWN.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 1))

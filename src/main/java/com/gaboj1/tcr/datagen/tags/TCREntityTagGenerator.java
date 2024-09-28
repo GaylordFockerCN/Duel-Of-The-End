@@ -29,7 +29,7 @@ public class TCREntityTagGenerator extends EntityTypeTagsProvider {
                 TCREntities.SMALL_TREE_MONSTER.get(),
                 TCREntities.MIDDLE_TREE_MONSTER.get(),
                 TCREntities.TREE_GUARDIAN.get(),
-                TCREntities.HORRIBLE_TREE_MONSTER.get(),
+                TCREntities.UNKNOWN.get(),
                 TCREntities.WIND_FEATHER_FALCON.get(),
                 TCREntities.SPRITE.get()
         );

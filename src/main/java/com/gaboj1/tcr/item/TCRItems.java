@@ -10,7 +10,6 @@ import com.gaboj1.tcr.item.custom.boss_loot.TreeSpiritWand;
 import com.gaboj1.tcr.item.custom.weapon.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -139,7 +138,7 @@ public class TCRItems {
 					new Item.Properties()));
 
 	public static final RegistryObject<Item> HORRIBLE_TREE_MONSTER_SPAWN_EGG = REGISTRY.register("horrible_tree_monster_spawn_egg",
-			() -> new ForgeSpawnEggItem(TCREntities.HORRIBLE_TREE_MONSTER, 666, 888,
+			() -> new ForgeSpawnEggItem(TCREntities.UNKNOWN, 666, 888,
 					new Item.Properties()));
 
 	public static final RegistryObject<Item> WIND_FEATHER_FALCON_SPAWN_EGG = REGISTRY.register("wind_feather_falcon_spawn_egg",
