@@ -96,7 +96,7 @@ public class TCREntities {
 	public static final RegistryObject<EntityType<WindFeatherFalconEntity>> WIND_FEATHER_FALCON =
 			REGISTRY.register("wind_feather_falcon",
 					() -> EntityType.Builder.of(WindFeatherFalconEntity::new, MobCategory.MONSTER)
-							.sized(0.55f, 1.6f)
+							.sized(0.55f, 1.3f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "wind_feather_falcon").toString()));
 
 	public static final RegistryObject<EntityType<SpriteEntity>> SPRITE =
