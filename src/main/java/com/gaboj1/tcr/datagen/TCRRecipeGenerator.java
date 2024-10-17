@@ -20,6 +20,39 @@ public class TCRRecipeGenerator extends TCRRecipeProvider implements IConditionB
     }
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, TCRItems.TREE_HELMET.get())
+                .pattern("AAA")
+                .pattern("A A")
+                .pattern("   ")
+                .define('A', TCRItems.HEART_OF_THE_SAPLING.get())
+                .unlockedBy(getHasName(TCRItems.HEART_OF_THE_SAPLING.get()), has(TCRItems.HEART_OF_THE_SAPLING.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, TCRItems.TREE_CHESTPLATE.get())
+                .pattern("A A")
+                .pattern("ABA")
+                .pattern("AAA")
+                .define('A', TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get())
+                .define('B', TCRItems.BARK_OF_THE_GUARDIAN.get())
+                .unlockedBy(getHasName(TCRItems.BARK_OF_THE_GUARDIAN.get()), has(TCRItems.BARK_OF_THE_GUARDIAN.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, TCRItems.TREE_LEGGINGS.get())
+                .pattern("ABA")
+                .pattern("A A")
+                .pattern("A A")
+                .define('A', TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get())
+                .define('B', TCRItems.BARK_OF_THE_GUARDIAN.get())
+                .unlockedBy(getHasName(TCRItems.BARK_OF_THE_GUARDIAN.get()), has(TCRItems.BARK_OF_THE_GUARDIAN.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, TCRItems.TREE_BOOTS.get())
+                .pattern("A A")
+                .pattern("A A")
+                .pattern("   ")
+                .define('A', TCRItems.HEART_OF_THE_SAPLING.get())
+                .unlockedBy(getHasName(TCRItems.HEART_OF_THE_SAPLING.get()), has(TCRItems.HEART_OF_THE_SAPLING.get()))
+                .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TCRBlocks.PORTAL_BED.get())
                 .requires(ItemTags.BEDS)

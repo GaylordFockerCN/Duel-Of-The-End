@@ -29,6 +29,11 @@ public class TCRBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(TCRBlocks.POTTED_CATNIP.get(), models().singleTexture("potted_catnip", new ResourceLocation("flower_pot_cross"), "plant",
                 blockTexture(TCRBlocks.CATNIP.get())).renderType("cutout"));
 
+        simpleBlockWithItem(TCRBlocks.BLUE_MUSHROOM.get(), models().cross(blockTexture(TCRBlocks.BLUE_MUSHROOM.get()).getPath(),
+                blockTexture(TCRBlocks.BLUE_MUSHROOM.get())).renderType("cutout"));
+        simpleBlockWithItem(TCRBlocks.POTTED_BLUE_MUSHROOM.get(), models().singleTexture("potted_blue_mushroom", new ResourceLocation("flower_pot_cross"), "plant",
+                blockTexture(TCRBlocks.BLUE_MUSHROOM.get())).renderType("cutout"));
+
         logBlock(((RotatedPillarBlock) TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()));
         axisBlock(((RotatedPillarBlock) TCRBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get()),blockTexture(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()),blockTexture(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()));
 

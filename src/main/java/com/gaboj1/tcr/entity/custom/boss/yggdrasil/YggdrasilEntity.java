@@ -88,7 +88,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 1422)
-                .add(Attributes.ATTACK_DAMAGE, 10)
+                .add(Attributes.ATTACK_DAMAGE, 20)
                 .add(Attributes.ATTACK_SPEED, 0.5f)
                 .add(Attributes.MOVEMENT_SPEED, 0.30f)
                 .build();
@@ -518,7 +518,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
         public boolean canUse() {
             if (yggdrasil.getTarget() instanceof ServerPlayer player) {
                 this.player = player;
-                return yggdrasil.distanceTo(player) < 10 && !SaveUtil.biome1.isBossTalked;
+                return !yggdrasil.isFighting() && yggdrasil.distanceTo(player) < 10 && !SaveUtil.biome1.isBossTalked;
             }
             return false;
         }

@@ -31,6 +31,7 @@ public class TCRItemTabs {
 				tabData.accept(TCRBlocks.MIAO_YIN_BLOCK.get());
 				tabData.accept(TCRBlocks.ELITE_BIG_HAMMER_BLOCK.get());
 				tabData.accept(TCRBlocks.CATNIP.get());
+				tabData.accept(TCRBlocks.BLUE_MUSHROOM.get());
 				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
 				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get());
 				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get());
@@ -188,6 +189,11 @@ public class TCRItemTabs {
 						tabData.accept(TCRItems.ICE_TIGER_LEGGINGS.get());
 						tabData.accept(TCRItems.ICE_TIGER_BOOTS.get());
 
+						tabData.accept(TCRItems.TREE_HELMET.get());
+						tabData.accept(TCRItems.TREE_CHESTPLATE.get());
+						tabData.accept(TCRItems.TREE_LEGGINGS.get());
+						tabData.accept(TCRItems.TREE_BOOTS.get());
+
 						//法宝
 						tabData.accept(TCRItems.TREE_SPIRIT_WAND.get());
 						tabData.accept(TCRItems.HOLY_SWORD.get());
@@ -217,6 +223,7 @@ public class TCRItemTabs {
 						tabData.accept(TCRItems.PINE_CONE.get());
 						tabData.accept(TCRItems.RED_WINE.get());
 						tabData.accept(TCRItems.CATNIP.get());
+						tabData.accept(TCRItems.BLUE_MUSHROOM.get());
 
 						tabData.accept(TCRItems.LIGHT_ELIXIR.get());
 						tabData.accept(TCRItems.ASCENSION_ELIXIR.get());

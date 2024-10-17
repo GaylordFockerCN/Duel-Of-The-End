@@ -1,12 +1,16 @@
 package com.gaboj1.tcr.item.custom.armor;
 
 import com.gaboj1.tcr.item.TCRItems;
-import com.gaboj1.tcr.item.renderer.armor.IceTigerArmorRenderer;
+import com.gaboj1.tcr.item.renderer.armor.TreeArmorRenderer;
+import com.gaboj1.tcr.util.ItemUtil;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -32,11 +36,40 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
-public final class IceTigerArmorItem extends ArmorItem implements GeoItem {
+public final class TreeArmorItem extends ArmorItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public IceTigerArmorItem(ArmorMaterial armorMaterial, Type type, Properties properties) {
+    public TreeArmorItem(ArmorMaterial armorMaterial, Type type, Properties properties) {
         super(armorMaterial, type, properties);
+    }
+
+    /**
+     * 获得再生效果，但着火时间延长
+     */
+    public static void onFullSet(LivingEntity livingEntity){
+        if(livingEntity.level() instanceof ServerLevel){
+            if(livingEntity.isOnFire()){
+                livingEntity.setRemainingFireTicks(100);
+                livingEntity.getArmorSlots().forEach((itemStack -> {
+                    itemStack.setDamageValue(itemStack.getDamageValue() + 1);
+                    if(itemStack.getDamageValue() >= itemStack.getMaxDamage()){
+                        itemStack.shrink(1);
+                    }
+                }));
+            } else {
+                if(!livingEntity.hasEffect(MobEffects.REGENERATION)){
+                    livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1));
+                }
+            }
+        }
+    }
+
+    public static boolean isFullSet(Entity entity){
+        return ItemUtil.isFullSets(entity, ObjectArrayList.of(
+                TCRItems.TREE_BOOTS.get(),
+                TCRItems.TREE_LEGGINGS.get(),
+                TCRItems.TREE_CHESTPLATE.get(),
+                TCRItems.TREE_HELMET.get()));
     }
 
     @Override
@@ -54,7 +87,7 @@ public final class IceTigerArmorItem extends ArmorItem implements GeoItem {
             @Override
             public @NotNull HumanoidModel<?> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
                 if (this.renderer == null)
-                    this.renderer = new IceTigerArmorRenderer();
+                    this.renderer = new TreeArmorRenderer();
                 this.renderer.prepForRender(livingEntity, itemStack, equipmentSlot, original);
                 return this.renderer;
             }
@@ -70,25 +103,17 @@ public final class IceTigerArmorItem extends ArmorItem implements GeoItem {
             state.setAnimation(RawAnimation.begin().thenLoop("animation.model.idle"));
             Entity entity = state.getData(DataTickets.ENTITY);
 
-            if (entity instanceof ArmorStand)
+            if (entity instanceof ArmorStand){
                 return PlayState.CONTINUE;
-
-            Set<Item> wornArmor = new ObjectOpenHashSet<>();
-
-            for (ItemStack stack : entity.getArmorSlots()) {
-                if (stack.isEmpty())
-                    return PlayState.STOP;
-
-                wornArmor.add(stack.getItem());
             }
 
-            boolean isFullSet = wornArmor.containsAll(ObjectArrayList.of(
-                    TCRItems.ICE_TIGER_BOOTS.get(),
-                    TCRItems.ICE_TIGER_LEGGINGS.get(),
-                    TCRItems.ICE_TIGER_CHESTPLATE.get(),
-                    TCRItems.ICE_TIGER_HELMET.get()));
+            for (ItemStack stack : entity.getArmorSlots()) {
+                if (stack.isEmpty()){
+                    return PlayState.STOP;
+                }
+            }
 
-            return isFullSet ? PlayState.CONTINUE : PlayState.STOP;
+            return isFullSet(entity) ? PlayState.CONTINUE : PlayState.STOP;
         }));
     }
 

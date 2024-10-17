@@ -33,7 +33,7 @@ public class YggdrasilModel extends GeoModel<YggdrasilEntity> {
     @Override
     public ResourceLocation getTextureResource(YggdrasilEntity entity) {
         if(entity.getEntityData().get(YggdrasilEntity.STATE) == 0){
-            return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/boss/yggdrasil.png");
+            return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/boss/yggdrasil1.png");
         }else {
             return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/entity/boss/yggdrasil2.png");
         }
@@ -41,6 +41,6 @@ public class YggdrasilModel extends GeoModel<YggdrasilEntity> {
 
     @Override
     public ResourceLocation getAnimationResource(YggdrasilEntity entity) {
-        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "animations/entity/yggdrasil.json");
+        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "animations/entity/yggdrasil.animation.json");
     }
 }

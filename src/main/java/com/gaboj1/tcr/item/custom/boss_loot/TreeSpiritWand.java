@@ -117,6 +117,9 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
         return InteractionResult.PASS;
     }
 
+    /**
+     * 1 / 30的概率吸取生命
+     */
     public static void onKill(LivingDeathEvent event){
         ItemStack stack = event.getEntity().getMainHandItem();
         if(new Random().nextInt(0,30) == 5 &&event.getSource().getEntity() instanceof Player player && stack.is(TCRItems.TREE_SPIRIT_WAND.get()) && stack.getOrCreateTag().getBoolean("fromBoss")){

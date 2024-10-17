@@ -106,11 +106,11 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRItems.TREE_DEMON_FRUIT.get(),"树魔之果");
         this.addItemUsageInfo(TCRItems.TREE_DEMON_FRUIT.get(),"树魔的掉落物，上面还带着点血迹。可于铁匠铺交换高阶材料。");
         this.add(TCRItems.HEART_OF_THE_SAPLING.get(),"树苗之心");
-        this.addItemUsageInfo(TCRItems.HEART_OF_THE_SAPLING.get(),"小树妖的掉落物。");
+        this.addItemUsageInfo(TCRItems.HEART_OF_THE_SAPLING.get(),"小树妖的掉落物，可用于合成树妖套装或在猎人处兑换货币。");
         this.add(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get(),"古木之髓");
-        this.addItemUsageInfo(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get(),"树妖的掉落物。");
+        this.addItemUsageInfo(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get(),"树妖的掉落物，可用于合成树妖套装或在猎人处兑换货币。");
         this.add(TCRItems.BARK_OF_THE_GUARDIAN.get(),"守护者之皮");
-        this.addItemUsageInfo(TCRItems.BARK_OF_THE_GUARDIAN.get(),"森林守护者的掉落物。");
+        this.addItemUsageInfo(TCRItems.BARK_OF_THE_GUARDIAN.get(),"森林守护者的掉落物，可用于合成树妖套装或在猎人处兑换货币。");
         this.add(TCRItems.STARLIT_DEWDROP.get(),"星光露珠");
         this.addItemUsageInfo(TCRItems.STARLIT_DEWDROP.get(),"精灵的掉落物。可于牧歌原野工匠处锻造精灵法杖。");
         this.add(TCRItems.WITHERING_TOUCH.get(),"枯萎之触");
@@ -120,6 +120,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRItems.HEALTH_WAND.get(),"生命法杖");
         this.addItemUsageInfo(TCRItems.HEALTH_WAND.get(),"右键以回复生命。耐久值随机损耗。");
         this.add(TCRItems.SPIRIT_WAND.get(),"精灵法杖");
+        this.addItemUsageInfo(TCRItems.SPIRIT_WAND.get(),"穿戴树妖套装时激活：右键后发射强力的魔法弹。");
         this.add(TCRItems.TREE_SPIRIT_WAND.get(),"树灵法杖");
         this.addItemInfo(TCRItems.TREE_SPIRIT_WAND.get(),"no_spirit_tree","密林灵树原木不足，无法召唤小树妖");
         this.addItemUsageInfo(TCRItems.TREE_SPIRIT_WAND.get(),"右键地面消耗密林原木和生命值召唤小树妖",1);
@@ -181,6 +182,15 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addItemUsageInfo(TCRItems.ICE_TIGER_LEGGINGS.get(),"");
         this.addItemUsageInfo(TCRItems.ICE_TIGER_BOOTS.get(),"");
 
+        this.add(TCRItems.TREE_HELMET.get(),"树妖之冠");
+        this.add(TCRItems.TREE_CHESTPLATE.get(),"树妖护胸");
+        this.add(TCRItems.TREE_LEGGINGS.get(),"树妖护腿");
+        this.add(TCRItems.TREE_BOOTS.get(),"树妖靴子");
+        this.addItemUsageInfo(TCRItems.TREE_HELMET.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，且激活精灵法杖。但极其不耐火。");
+        this.addItemUsageInfo(TCRItems.TREE_CHESTPLATE.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，且激活精灵法杖。但极其不耐火。");
+        this.addItemUsageInfo(TCRItems.TREE_LEGGINGS.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，且激活精灵法杖。但极其不耐火。");
+        this.addItemUsageInfo(TCRItems.TREE_BOOTS.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，且激活精灵法杖。但极其不耐火。");
+
 
         this.add(TCRItems.DREAMSCAPE_COIN.get(),"梦碎片");
         this.addItemUsageInfo(TCRItems.DREAMSCAPE_COIN.get(),"在梦之领域通用的货币，闪闪发光十分珍贵。九个梦碎片可以合成一个梦晶石");
@@ -224,6 +234,8 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addItemUsageInfo(TCRItems.RED_WINE.get(), "一种经过发酵的葡萄酒，风味独特，适合与美食搭配。");
         this.add(TCRItems.CATNIP.get(), "猫薄荷");
         this.addItemUsageInfo(TCRItems.CATNIP.get(), "可以用于驯服猫猫果冻");
+        this.add(TCRItems.BLUE_MUSHROOM.get(), "蓝蘑菇");
+        this.addItemUsageInfo(TCRItems.BLUE_MUSHROOM.get(), "生于回溯密林，可用于合成一些特殊的物品。");
         this.add(TCRItems.CAT_JELLY.get(), "猫猫果冻");
         this.addItemUsageInfo(TCRItems.CAT_JELLY.get(), "猫猫果冻的掉落物，或许可以吃看看？");
         this.add(TCRItems.WAN_MING_PEARL.get(), "万明珠");
@@ -269,6 +281,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_TRAPDOOR.get(),"灵木活板门");
         this.add(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get(),"密林灵花");
         this.add(TCRBlocks.CATNIP.get(),"猫薄荷");
+        this.add(TCRBlocks.BLUE_MUSHROOM.get(),"蓝蘑菇");
         this.add(TCRBlocks.DENSE_FOREST_SPIRIT_SAPLING.get(),"密林灵树树苗");
         this.add(TCRBlocks.PORTAL_BED.get(),"灵梦床");//等等，灵梦？
         this.add(TCRBlocks.PORTAL_BLOCK.get(),"天域凭证");//传送石碑

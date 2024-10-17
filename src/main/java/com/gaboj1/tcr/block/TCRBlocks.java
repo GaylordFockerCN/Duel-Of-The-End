@@ -48,6 +48,11 @@ public class TCRBlocks {
     public static final RegistryObject<Block> POTTED_CATNIP = REGISTRY.register("potted_catnip",
             ()-> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), TCRBlocks.CATNIP,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_POPPY).noOcclusion()));
+    public static final RegistryObject<Block> BLUE_MUSHROOM = registerBlock("blue_mushroom_block",
+            ()-> new FlowerBlock(() -> MobEffects.BLINDNESS, 0, BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
+    public static final RegistryObject<Block> POTTED_BLUE_MUSHROOM = REGISTRY.register("potted_blue_mushroom",
+            ()-> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), TCRBlocks.BLUE_MUSHROOM,
+                    BlockBehaviour.Properties.copy(Blocks.POTTED_POPPY).noOcclusion()));
 
 
     public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_TREE_LOG = registerBlock("dense_forest_spirit_tree_log",

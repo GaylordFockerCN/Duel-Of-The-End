@@ -5,9 +5,12 @@ import com.gaboj1.tcr.effect.TCREffects;
 import com.gaboj1.tcr.entity.LevelableEntity;
 import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.item.custom.armor.OrichalcumArmorItem;
+import com.gaboj1.tcr.item.custom.armor.TreeArmorItem;
 import com.gaboj1.tcr.item.custom.boss_loot.TreeSpiritWand;
 import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -29,15 +32,23 @@ public class LivingEntityListener {
             OrichalcumArmorItem.handleArmorAbility(livingEntity);
             TCREffects.onEntityUpdate(event);
         }
+
+        if(TreeArmorItem.isFullSet(livingEntity)){
+            TreeArmorItem.onFullSet(livingEntity);
+        }
     }
 
-    /**
-     * 1 / 30的概率吸取生命
-     */
     @SubscribeEvent
     public static void onEntityDie(LivingDeathEvent event) {
         TreeSpiritWand.onKill(event);
         TCREffects.onEntityDie(event);
+
+        //如果在维度里怪杀死了玩家则怪回满血
+        if(event.getEntity() instanceof ServerPlayer serverPlayer && serverPlayer.serverLevel().dimension() == TCRDimension.P_SKY_ISLAND_LEVEL_KEY){
+            if(event.getSource().getEntity() instanceof LivingEntity livingEntity){
+                livingEntity.setHealth(livingEntity.getMaxHealth());
+            }
+        }
     }
 
     @SubscribeEvent

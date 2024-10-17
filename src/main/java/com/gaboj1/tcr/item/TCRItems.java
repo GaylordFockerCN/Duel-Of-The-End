@@ -5,11 +5,13 @@ import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.item.custom.*;
 import com.gaboj1.tcr.item.custom.armor.IceTigerArmorItem;
 import com.gaboj1.tcr.item.custom.armor.OrichalcumArmorItem;
+import com.gaboj1.tcr.item.custom.armor.TreeArmorItem;
 import com.gaboj1.tcr.item.custom.boss_loot.FlySword;
 import com.gaboj1.tcr.item.custom.boss_loot.TreeSpiritWand;
 import com.gaboj1.tcr.item.custom.weapon.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -54,6 +56,15 @@ public class TCRItems {
 			() -> new IceTigerArmorItem(TCRArmorMaterials.ICE_TIGER, ArmorItem.Type.LEGGINGS, new Item.Properties()));
 	public static final RegistryObject<Item> ICE_TIGER_BOOTS = REGISTRY.register("ice_tiger_boots",
 			() -> new IceTigerArmorItem(TCRArmorMaterials.ICE_TIGER, ArmorItem.Type.BOOTS, new Item.Properties()));
+
+	public static final RegistryObject<Item> TREE_HELMET = REGISTRY.register("tree_helmet",
+			() -> new TreeArmorItem(TCRArmorMaterials.TREE, ArmorItem.Type.HELMET, new Item.Properties()));
+	public static final RegistryObject<Item> TREE_CHESTPLATE = REGISTRY.register("tree_chestplate",
+			() -> new TreeArmorItem(TCRArmorMaterials.TREE, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+	public static final RegistryObject<Item> TREE_LEGGINGS = REGISTRY.register("tree_leggings",
+			() -> new TreeArmorItem(TCRArmorMaterials.TREE, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+	public static final RegistryObject<Item> TREE_BOOTS = REGISTRY.register("tree_boots",
+			() -> new TreeArmorItem(TCRArmorMaterials.TREE, ArmorItem.Type.BOOTS, new Item.Properties()));
 	public static final RegistryObject<Item> TREE_SPIRIT_WAND = REGISTRY.register("tree_spirit_wand", TreeSpiritWand::new);
 
 	public static final RegistryObject<Item> SPIRIT_WAND = REGISTRY.register("spirit_wand", SpiritWand::new);
@@ -118,6 +129,7 @@ public class TCRItems {
 		() -> new ForgeSpawnEggItem(TCREntities.JELLY_CAT, 0xD57E36, 0x1D0D00,
 			new Item.Properties()));
 	public static final RegistryObject<Item> CATNIP = REGISTRY.register("catnip",  () -> new DropItem(new Item.Properties().food(TCRFoods.CATNIP)));
+	public static final RegistryObject<Item> BLUE_MUSHROOM = REGISTRY.register("blue_mushroom",  () -> new DropItem(new Item.Properties().food(Foods.MUSHROOM_STEW)));
 	public static final RegistryObject<Item> CAT_JELLY = REGISTRY.register("cat_jelly",  () -> new DropItem(new Item.Properties().food(TCRFoods.JELLY_CAT)));
 	public static final RegistryObject<Item> SQUIRREL_SPAWN_EGG = REGISTRY.register("squirrel_spawn_egg",
 			() -> new ForgeSpawnEggItem(TCREntities.SQUIRREL, 0xD57E36, 0x1D0D00,

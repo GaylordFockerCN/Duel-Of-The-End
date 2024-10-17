@@ -35,8 +35,10 @@ public class TCRBlockLootTables extends BlockLootSubProvider {
 
         this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
         this.add(TCRBlocks.CATNIP.get(), (block) -> this.createCopperLikeOreDrops(block, TCRItems.CATNIP.get(), 1, 3));
+        this.add(TCRBlocks.BLUE_MUSHROOM.get(), (block) -> this.createCopperLikeOreDrops(block, TCRItems.BLUE_MUSHROOM.get(), 1, 3));
         this.add(TCRBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER.get(), createPotFlowerItemTable(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get()));
-        this.add(TCRBlocks.POTTED_CATNIP.get(), createPotFlowerItemTable(TCRBlocks.CATNIP.get()));
+        this.add(TCRBlocks.POTTED_CATNIP.get(), createPotFlowerItemTable(TCRItems.CATNIP.get()));
+        this.add(TCRBlocks.POTTED_BLUE_MUSHROOM.get(), createPotFlowerItemTable(TCRItems.BLUE_MUSHROOM.get()));
 
         this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get());
         this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get());

@@ -91,7 +91,7 @@ public class TCREntities {
 			REGISTRY.register("unknown",
 					() -> EntityType.Builder.of(UnknownEntity::new, MobCategory.MONSTER)
 							.sized(1.3f, 1f)
-							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "unknow").toString()));
+							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "unknown").toString()));
 
 	public static final RegistryObject<EntityType<WindFeatherFalconEntity>> WIND_FEATHER_FALCON =
 			REGISTRY.register("wind_feather_falcon",

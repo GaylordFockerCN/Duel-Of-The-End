@@ -1,18 +1,38 @@
 package com.gaboj1.tcr.util;
 
 import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.item.TCRItems;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import software.bernie.geckolib.core.object.PlayState;
+
+import java.util.Set;
 
 /**
  * @author LZY
  * 做一些通用的物品栏处理
 */
 public class ItemUtil {
+
+    public static boolean isFullSets(Entity entity, ObjectArrayList<?> objects){
+        Set<Item> wornArmor = new ObjectOpenHashSet<>();
+
+        for (ItemStack stack : entity.getArmorSlots()) {
+            if (stack.isEmpty())
+                return false;
+
+            wornArmor.add(stack.getItem());
+        }
+
+        return wornArmor.containsAll(objects);
+    }
 
     /**
      * 添加物品，失败则掉落

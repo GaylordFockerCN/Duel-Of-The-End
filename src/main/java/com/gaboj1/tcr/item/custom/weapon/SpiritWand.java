@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.item.custom.weapon;
 
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.MagicProjectile;
+import com.gaboj1.tcr.item.custom.armor.TreeArmorItem;
 import com.gaboj1.tcr.item.renderer.SpiritWandRenderer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.nbt.CompoundTag;
@@ -54,6 +55,9 @@ public class SpiritWand extends Item implements GeoItem {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, @NotNull Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
+        if(!TreeArmorItem.isFullSet(pPlayer)){
+            return InteractionResultHolder.pass(itemStack);
+        }
         setDamage(itemStack, getDamage(itemStack) + 1);
         if(getDamage(itemStack) == getMaxDamage(itemStack)){
             itemStack.shrink(1);
