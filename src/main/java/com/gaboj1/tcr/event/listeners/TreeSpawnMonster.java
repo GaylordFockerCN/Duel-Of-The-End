@@ -41,7 +41,7 @@ public class TreeSpawnMonster {
             }
             //第一群系支线
             if(SaveUtil.biome1.smithTalked && block.defaultBlockState().is(TCRBlocks.BLUE_MUSHROOM.get()) && !SaveUtil.biome1.monsterSummoned){
-                UnknownEntity unknownEntity = TCREntities.UNKNOWN.get().spawn(serverLevel, event.getPos(), MobSpawnType.NATURAL);
+                UnknownEntity unknownEntity = TCREntities.UNKNOWN.get().spawn(serverLevel, event.getPos().above(5), MobSpawnType.NATURAL);
                 assert unknownEntity != null;
                 unknownEntity.setCanPurify(true);
                 serverLevel.addFreshEntity(unknownEntity);

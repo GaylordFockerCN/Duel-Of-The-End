@@ -4,6 +4,7 @@ import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.effect.TCREffects;
 import com.gaboj1.tcr.entity.LevelableEntity;
 import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
+import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.item.custom.armor.OrichalcumArmorItem;
 import com.gaboj1.tcr.item.custom.armor.TreeArmorItem;
 import com.gaboj1.tcr.item.custom.boss_loot.TreeSpiritWand;
@@ -11,6 +12,7 @@ import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -54,6 +56,10 @@ public class LivingEntityListener {
     @SubscribeEvent
     public static void onEntityHurt(LivingHurtEvent event) {
         TCREffects.onEntityHurt(event);
+        if(event.getSource().is(DamageTypes.FALL) && event.getEntity().getVehicle() != null && event.getEntity().getVehicle().getType() == TCREntities.WIND_FEATHER_FALCON.get()){
+            event.setAmount(0);
+            event.setCanceled(true);
+        }
     }
 
     /**

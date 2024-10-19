@@ -52,6 +52,16 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 //        this.setItemInHand(InteractionHand.MAIN_HAND,TCRModItems.ELDER_STAFF.get().getDefaultInstance());
     }
 
+    @Override
+    public boolean isFemale() {
+        return true;
+    }
+
+    @Override
+    public boolean isElder() {
+        return true;
+    }
+
     public static AttributeSupplier setAttributes() {//生物属性
         return Animal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 100.0D)//最大血量

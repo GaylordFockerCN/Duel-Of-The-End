@@ -71,6 +71,7 @@ public class TCRItemModelProvider extends ItemModelProvider {
         simpleItem(TCRItems.DREAMSCAPE_COIN_PLUS);
         simpleItem(TCRItems.WALLET);
         simpleItem(TCRItems.RECALL_SCROLL);
+        simpleItem(TCRItems.PURIFICATION_TALISMAN);
         simpleItem(TCRItems.ORICHALCUM);
         simpleItem(TCRItems.RAW_ORICHALCUM);
 

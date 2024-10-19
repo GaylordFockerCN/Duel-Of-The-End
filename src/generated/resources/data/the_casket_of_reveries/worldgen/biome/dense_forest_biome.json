@@ -51,16 +51,22 @@
         "type": "the_casket_of_reveries:small_tree_monster",
         "maxCount": 3,
         "minCount": 1,
-        "weight": 5
+        "weight": 100
       },
       {
         "type": "the_casket_of_reveries:middle_tree_monster",
         "maxCount": 2,
         "minCount": 1,
-        "weight": 3
+        "weight": 60
       },
       {
         "type": "the_casket_of_reveries:tree_guardian",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 20
+      },
+      {
+        "type": "the_casket_of_reveries:unknown",
         "maxCount": 1,
         "minCount": 1,
         "weight": 1

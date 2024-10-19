@@ -61,11 +61,16 @@ public class Smith extends MushroomLineNpc {
             //交付任务
             if(senderData.getBoolean("killed")){
                 builder.start(3)
-                        .addFinalChoice(2, (byte) 4);//领取普通奖励
-            }
-            if(senderData.getBoolean("heal")){
+                        .addFinalChoice(3, (byte) 4);//领取普通奖励
+            } else if(senderData.getBoolean("heal")){
                 builder.start(4)
-                        .addFinalChoice(2, (byte) 5);//领取隐藏奖励
+                        .addFinalChoice(3, (byte) 5);//领取隐藏奖励
+            } else {
+                //领了但未完成
+                builder.setAnswerRoot(new TreeNode(BUILDER.buildDialogueAnswer(0))
+                        .addLeaf(BUILDER.buildDialogueOption(0), (byte) 1)//接任务
+                        .addLeaf(BUILDER.buildDialogueOption(1), (byte) 2)//锻造请求
+                        .addLeaf(BUILDER.buildDialogueOption(2), (byte) 3));//离开
             }
         }
         if(!builder.isEmpty()){

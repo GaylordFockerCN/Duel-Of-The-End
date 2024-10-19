@@ -169,6 +169,14 @@ public class WindFeatherFalconEntity extends TamableAnimal implements GeoEntity 
         }
     }
 
+    @Override
+    public void tick() {
+        super.tick();
+        if(this.getControllingPassenger() != null){
+            this.getControllingPassenger().resetFallDistance();
+        }
+    }
+
     @Nullable
     public LivingEntity getControllingPassenger() {
         Entity var2 = this.getFirstPassenger();

@@ -199,9 +199,10 @@ public class TCRBiomes {
 
     public static Biome createDenseForestBiome(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
-        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(TCREntities.SMALL_TREE_MONSTER.get(), 5, 1, 3));
-        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(TCREntities.MIDDLE_TREE_MONSTER.get(), 3, 1, 2));
-        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(TCREntities.TREE_GUARDIAN.get(), 1, 1, 1));
+        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(TCREntities.SMALL_TREE_MONSTER.get(), 100, 1, 3));
+        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(TCREntities.MIDDLE_TREE_MONSTER.get(), 60, 1, 2));
+        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(TCREntities.TREE_GUARDIAN.get(), 20, 1, 1));
+        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(TCREntities.UNKNOWN.get(), 1, 1, 1));
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
         BiomeDefaultFeatures.addForestFlowers(biomeBuilder);

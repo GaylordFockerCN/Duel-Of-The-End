@@ -35,7 +35,7 @@ public class SoundGenerator extends TCRSoundProvider {
         this.generateNewSoundWithSubtitle(TCRSounds.JELLY_CAT_AMBIENT, "entity/jelly_cat/jelly_cat_ambient", 4);
         this.generateNewSoundWithSubtitle(TCRSounds.JELLY_CAT_HURT, "entity/jelly_cat/jelly_cat_hurt", 1);
         this.generateNewSoundWithSubtitle(TCRSounds.JELLY_CAT_DEATH, "entity/jelly_cat/jelly_cat_die", 1);
-        this.generateNewSoundWithSubtitle(TCRSounds.UNKNOWN_AMBIENT, "entity/unkown/", 5);
+        this.generateNewSoundWithSubtitle(TCRSounds.UNKNOWN_AMBIENT, "entity/unknown/", 3);
         generateNewSoundWithSubtitle(TCRSounds.MALE_DEATH, "entity/male_villager/male_death", 2);
         generateNewSoundWithSubtitle(TCRSounds.MALE_EYO, "entity/male_villager/male_eyo", 1);
         generateNewSoundWithSubtitle(TCRSounds.MALE_GET_HURT, "entity/male_villager/male_get_hurt", 3);

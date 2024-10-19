@@ -238,7 +238,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRItems.CATNIP.get(), "猫薄荷");
         this.addItemUsageInfo(TCRItems.CATNIP.get(), "可以用于驯服猫猫果冻");
         this.add(TCRItems.BLUE_MUSHROOM.get(), "蓝蘑菇");
-        this.addItemUsageInfo(TCRItems.BLUE_MUSHROOM.get(), "生于回溯密林，可用于合成一些特殊的物品。");
+        this.addItemUsageInfo(TCRItems.BLUE_MUSHROOM.get(), "生于回溯密林，食用后可防毒。避毒丹的主要合成材料。");
         this.add(TCRItems.CAT_JELLY.get(), "猫猫果冻");
         this.addItemUsageInfo(TCRItems.CAT_JELLY.get(), "猫猫果冻的掉落物，或许可以吃看看？");
         this.add(TCRItems.WAN_MING_PEARL.get(), "万明珠");
@@ -437,7 +437,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addDialogChoice(TCREntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,21,"购买饮料");
 
         this.addEntityAndEgg(TCREntities.SMITH,"史密斯");
-        this.addDialog(TCREntities.SMITH, 0, "勇敢的旅者，你愿为我深入密林，寻找那珍贵的蓝蘑菇吗？此物对于锻造火枪弹药至关重要。多年以前，艾莉诺失散在密林之中，我便对密林有了阴影。");
+        this.addDialog(TCREntities.SMITH, 0, "勇敢的旅者，你愿为我深入密林，寻找那珍贵的蓝蘑菇吗？多年以前，艾莉诺失散在密林之中，我便对密林有了阴影。");
         this.addDialog(TCREntities.SMITH, 1, "祝你好运，旅者！");
         this.addDialog(TCREntities.SMITH, 2, "好的，旅者");
         this.addDialog(TCREntities.SMITH, 3, "万分感谢！勇敢的旅者，请收下这把火枪，愿它伴你左右。");
@@ -475,7 +475,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,-1,"若你曾冲破世界的蛋壳拥抱地面的身躯，那你一定能帮助我们解决危害着这个村子的密林魔物。恳请您助我们一臂之力!");
         this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,0,"你，与我好像……不对，你不是投影，是完全的人！咳，你不是梦的居民。你一定能帮助我们解决危害着这个村子的密林魔物！");//
         this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,1,"只有精神才能入梦，我们只是投影，但你却是精神与肉体结合的完整之人。密林的魔物曾杀尽了穿过密林之人，只有我逃回了这里。魔物无时不危害着村民，恳请您助我们一臂之力！");
-        this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,2,"密林，就在 %s。勇者，千万不要受了那魔物的蛊惑！请收下我的诚意，愿为勇士尽绵薄之力。记住，密林中存在能削弱树魔力量的『枯萎之触』，找到它们能让你更轻松地击败树魔！");
+        this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,2,"密林，就在 %s。勇者，千万不要受了那魔物的蛊惑！请收下我的诚意，愿为勇士尽绵薄之力。记住，密林中存在能削弱树魔力量的『枯萎之触』，找到它们能让你更轻松地击败树魔！同时，这护符或许在危急时刻可以派上用场。");
         this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,3,"（凝视着你，眼中充满了期待）");
         this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,4,"（目光坚定）你带来的是希望的曙光，旅者。村庄的每个角落都感激你的勇气。");
         this.addDialog(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,5,"你的名字将被铭记。请接受我们的祝福，愿你的道路永远光明！");
