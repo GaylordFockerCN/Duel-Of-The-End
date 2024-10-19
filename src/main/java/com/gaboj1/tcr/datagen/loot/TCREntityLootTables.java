@@ -44,6 +44,8 @@ public class TCREntityLootTables extends EntityLootSubProvider {
         add(TCREntities.PASTORAL_PLAIN_VILLAGER.get(), emptyLootTable());
         add(TCREntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), emptyLootTable());
         add(TCREntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), emptyLootTable());
+        add(TCREntities.ELINOR.get(), emptyLootTable());
+        add(TCREntities.SMITH.get(), emptyLootTable());
 
         add(TCREntities.VILLAGER2.get(), emptyLootTable());
         add(TCREntities.VILLAGER2_STATIONARY.get(), emptyLootTable());

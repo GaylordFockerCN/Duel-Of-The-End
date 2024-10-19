@@ -170,6 +170,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                 //这个DataManager可以保留，每个玩家可以领一份
                 if(!DataManager.elderLoot1Got.get(player)){
                     ItemUtil.addItem(player,TCRItems.ELDER_CAKE.get(),1);
+                    ItemUtil.addItem(player,TCRItems.PURIFICATION_TALISMAN.get(),1);
                     ItemUtil.addItem(player,Items.DIAMOND.getDefaultInstance().getItem(),1);
                     DataManager.elderLoot1Got.put(player,true);
                 }else {

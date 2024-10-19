@@ -29,6 +29,8 @@ import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.entity.custom.*;
 
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillager;
+import com.gaboj1.tcr.entity.custom.villager.biome1.branch.Elinor;
+import com.gaboj1.tcr.entity.custom.villager.biome1.branch.Smith;
 import com.gaboj1.tcr.entity.custom.villager.biome2.*;
 import com.gaboj1.tcr.entity.custom.villager.biome2.branch.*;
 import net.minecraft.resources.ResourceLocation;
@@ -161,6 +163,11 @@ public class TCREntities {
 	public static final RegistryObject<EntityType<PastoralPlainVillagerElder>> PASTORAL_PLAIN_VILLAGER_ELDER = register("pastoral_plain_villager_elder",
 			EntityType.Builder.of(PastoralPlainVillagerElder::new, MobCategory.CREATURE));
 
+	public static final RegistryObject<EntityType<Smith>> SMITH = register("smith",
+			EntityType.Builder.of(Smith::new, MobCategory.CREATURE));
+	public static final RegistryObject<EntityType<Elinor>> ELINOR = register("elinor",
+			EntityType.Builder.of(Elinor::new, MobCategory.CREATURE));
+
 	public static final RegistryObject<EntityType<Villager2>> VILLAGER2 = register("villager2",
 			EntityType.Builder.of(Villager2::new, MobCategory.CREATURE));
 	public static final RegistryObject<EntityType<TalkableVillager2>> VILLAGER2_TALKABLE = register("villager2_talkable",
@@ -224,6 +231,8 @@ public class TCREntities {
 		event.put(PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), TCRVillager.setAttributes());
 		event.put(PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), TCRVillager.setAttributes());
 		event.put(PASTORAL_PLAIN_VILLAGER_ELDER.get(),PastoralPlainVillagerElder.setAttributes());
+		event.put(ELINOR.get(),PastoralPlainVillagerElder.setAttributes());
+		event.put(SMITH.get(),PastoralPlainVillagerElder.setAttributes());
 		event.put(YGGDRASIL.get(), YggdrasilEntity.setAttributes());
 		event.put(TREE_CLAW.get(), TreeClawEntity.setAttributes());
 		event.put(SPRITE.get(),SpriteEntity.setAttributes());
@@ -265,6 +274,10 @@ public class TCREntities {
 		event.register(PASTORAL_PLAIN_VILLAGER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				PastoralPlainVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(PASTORAL_PLAIN_VILLAGER_ELDER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				PastoralPlainVillagerElder::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(ELINOR.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				PastoralPlainVillagerElder::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(SMITH.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				PastoralPlainVillagerElder::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(VILLAGER2.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				PastoralPlainTalkableVillager::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);

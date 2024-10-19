@@ -18,7 +18,6 @@ public final class TCRSounds {
 	public static final RegistryObject<SoundEvent> YGGDRASIL_ATTACK_ONE = createEvent("entity.tcr.first_boss_attack1");
 	public static final RegistryObject<SoundEvent> YGGDRASIL_ATTACK_TWO = createEvent("entity.tcr.first_boss_attack2");
 	public static final RegistryObject<SoundEvent> YGGDRASIL_CRY = createEvent("entity.tcr.first_boss_cry");
-
 	public static final RegistryObject<SoundEvent> YGGDRASIL_RECOVER_LAUGHTER = createEvent("entity.tcr.first_boss_recover_laughter");
 	public static final RegistryObject<SoundEvent> FEMALE_VILLAGER_HELLO = createEvent("entity.tcr.female_villager_hello");
 	public static final RegistryObject<SoundEvent> FEMALE_VILLAGER_EI = createEvent("entity.tcr.female_villager_ei");
@@ -40,6 +39,9 @@ public final class TCRSounds {
 	public static final RegistryObject<SoundEvent> MALE_HENG = createEvent("entity.tcr.male_villager.male_heng");
 	public static final RegistryObject<SoundEvent> MALE_HI = createEvent("entity.tcr.male_villager.male_hi");
 	public static final RegistryObject<SoundEvent> MALE_SIGH = createEvent("entity.tcr.male_villager.male_sigh");
+	public static final RegistryObject<SoundEvent> UNKNOWN_AMBIENT = createEvent("entity.tcr.unknown.ambient");
+
+	//BGM
 	public static final RegistryObject<SoundEvent> BIOME1VILLAGE = createEvent("bgm.tcr.biome1.plain");
 	public static final RegistryObject<SoundEvent> BIOME1FOREST = createEvent("bgm.tcr.biome1.forest");
 	public static final RegistryObject<SoundEvent> BIOME1BOSS_FIGHT = createEvent("bgm.tcr.biome1.boss_fight");

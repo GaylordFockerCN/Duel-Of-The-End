@@ -159,6 +159,9 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRItems.ADVANCED_RESIN.get(),"高级树脂");
         this.add(TCRItems.SUPER_RESIN.get(),"超级树脂");
 
+        this.add(TCRItems.PURIFICATION_TALISMAN.get(),"净化护符");
+        this.addItemUsageInfo(TCRItems.PURIFICATION_TALISMAN.get(),"携带时可以免受密林某种力量的侵扰。或许有别的用途？");
+
         this.add(TCRItems.RAW_ORICHALCUM.get(),"粗神金");
         this.addItemUsageInfo(TCRItems.RAW_ORICHALCUM.get(),"神金，怎么在梦里还要挖矿？");
         this.add(TCRItems.ORICHALCUM.get(),"神金");
@@ -432,6 +435,24 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addDialogChoice(TCREntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,19,"谢谢，我想来一杯你们这里最畅销的饮料。");
         this.addDialogChoice(TCREntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,20,"我是来探险的，听说这附近有个古老的教堂，我想去看看。");
         this.addDialogChoice(TCREntities.PASTORAL_PLAIN_TALKABLE_VILLAGER,21,"购买饮料");
+
+        this.addEntityAndEgg(TCREntities.SMITH,"史密斯");
+        this.addDialog(TCREntities.SMITH, 0, "勇敢的旅者，你愿为我深入密林，寻找那珍贵的蓝蘑菇吗？此物对于锻造火枪弹药至关重要。多年以前，艾莉诺失散在密林之中，我便对密林有了阴影。");
+        this.addDialog(TCREntities.SMITH, 1, "祝你好运，旅者！");
+        this.addDialog(TCREntities.SMITH, 2, "好的，旅者");
+        this.addDialog(TCREntities.SMITH, 3, "万分感谢！勇敢的旅者，请收下这把火枪，愿它伴你左右。");
+        this.addDialog(TCREntities.SMITH, 4, "艾莉诺？！我从未想过有一天还能再见到你！（泪目）旅者，我不知该如何感谢你！这把火枪是我亲手锻造的，还有这些弹药，愿它们日后能助你一臂之力！欢迎回家，艾莉诺！");
+        this.addDialog(TCREntities.SMITH, 5, "好久不见，旅者！");
+        this.addDialogChoice(TCREntities.SMITH, 0, "当然，我将为您带回所需的材料");
+        this.addDialogChoice(TCREntities.SMITH, 1, "锻造请求");
+        this.addDialogChoice(TCREntities.SMITH, 2, "我还有别的事要做");
+        this.addDialogChoice(TCREntities.SMITH, 3, "收下");
+
+        this.addEntityAndEgg(TCREntities.ELINOR,"艾莉诺");
+        this.addDialog(TCREntities.ELINOR, 0, "我…我这是怎么了？我依稀记得，被密林的邪恶力量吞噬进了黑暗…是你，救了我？");
+        this.addDialog(TCREntities.ELINOR, 1, "感谢您！勇敢的旅者，我们回村去吧！");
+        this.addDialogChoice(TCREntities.ELINOR, 0, "是的，美丽的小姐");
+        this.addDialogChoice(TCREntities.ELINOR, 1, "原来护符是这么用的，作者真能藏");
 
         //P1nero
         this.addEntityAndEgg(TCREntities.P1NERO,"P1nero - “这个世界” 的 创世神之一");
@@ -877,9 +898,12 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addAdvancement("spend_money_like_water","挥金如土","合成一套神金套装。神金，不拿去换钱却换一个普通的盔甲。");
         this.addAdvancement("first_cat","第一只猫","驯服一只猫猫果冻");
         this.addAdvancement("ride_llama","原来这也行？","第一次骑乘并控制羊驼");
+        this.addAdvancement("purification_talisman","谁家小孩？","成功治愈被感染的Elinor。");
+
         this.addAdvancement("finish_biome_1","密林之证","完成回溯密林的事件");
         this.addAdvancement("cat_food","果冻猫的食物","品尝猫薄荷");
         this.addAdvancement("cat_jelly","猫猫的味道","猫猫果冻那么可爱，你怎么忍心！！！");
+
         this.addAdvancement("no_see","不见","最终还是没能帮助她么...");
         this.addAdvancement("kill_shu_fu","好久不见，叔父","和妙音一起夺回了家产。");
         this.addAdvancement("kill_shu_fu2","会再见的","通过万明珠帮妙音找到了杀父仇人。");
@@ -925,5 +949,6 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addSubtitle(TCRSounds.JELLY_CAT_AMBIENT, "猫猫果冻叫声");
         this.addSubtitle(TCRSounds.JELLY_CAT_HURT, "猫猫果冻受伤");
         this.addSubtitle(TCRSounds.JELLY_CAT_DEATH, "猫猫果冻死亡");
+        this.addSubtitle(TCRSounds.UNKNOWN_AMBIENT, "木哉：怪叫");
     }
 }

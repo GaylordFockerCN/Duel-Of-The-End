@@ -60,7 +60,7 @@ public class TCRConfiguredFeatures {
 
         register(context, DENSE_FOREST_SPIRIT_FLOWER_KEY, Feature.FLOWER, new RandomPatchConfiguration(96, 6, 2,
                 PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(new NoiseProvider(2345L, new NormalNoise.NoiseParameters(0, 1.0), 0.020833334F,
-                        List.of(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get().defaultBlockState()))))));
+                        List.of(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get().defaultBlockState(), TCRBlocks.BLUE_MUSHROOM.get().defaultBlockState()))))));
 
         register(context, CATNIP_KEY, Feature.FLOWER, new RandomPatchConfiguration(32, 2, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(new NoiseThresholdProvider(2345L, new NormalNoise.NoiseParameters(0, 1.0), 0.005F, -0.8F, 0.33333334F, TCRBlocks.CATNIP.get().defaultBlockState(), List.of(TCRBlocks.CATNIP.get().defaultBlockState()), List.of(TCRBlocks.CATNIP.get().defaultBlockState()))))));
 

@@ -63,6 +63,8 @@ public class ClientModEvents{
         EntityRenderers.register(TCREntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get(), TCRVillagerRenderer::new);
         EntityRenderers.register(TCREntities.PASTORAL_PLAIN_STATIONARY_VILLAGER.get(), TCRVillagerRenderer::new);
         EntityRenderers.register(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(), TCRVillagerRenderer::new);
+        EntityRenderers.register(TCREntities.ELINOR.get(), TCRVillagerRenderer::new);
+        EntityRenderers.register(TCREntities.SMITH.get(), TCRVillagerRenderer::new);
         EntityRenderers.register(TCREntities.VILLAGER2.get(), TCRVillagerRenderer::new);
         EntityRenderers.register(TCREntities.VILLAGER2_TALKABLE.get(), TCRVillagerRenderer::new);
         EntityRenderers.register(TCREntities.VILLAGER2_STATIONARY.get(), TCRVillagerRenderer::new);

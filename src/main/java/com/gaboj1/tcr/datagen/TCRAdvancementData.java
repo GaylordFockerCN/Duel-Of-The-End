@@ -75,6 +75,7 @@ public class TCRAdvancementData extends ForgeAdvancementProvider {
             Advancement cat_food = registerAdvancement(enterRealmOfTheDream, "cat_food", FrameType.CHALLENGE, TCRItems.CATNIP.get(), true, true, true, ConsumeItemTrigger.TriggerInstance.usedItem(TCRItems.CATNIP.get()));
             Advancement cat_jelly = registerAdvancement(enterRealmOfTheDream, "cat_jelly", FrameType.CHALLENGE, TCRItems.CAT_JELLY.get(), true, true, true, ConsumeItemTrigger.TriggerInstance.usedItem(TCRItems.CAT_JELLY.get()));
             Advancement ride_llama = registerAdvancement(enterRealmOfTheDream, "ride_llama", FrameType.GOAL, Items.LLAMA_SPAWN_EGG);
+            Advancement purification_talisman = registerAdvancement(enterRealmOfTheDream, "purification_talisman", FrameType.GOAL, TCRItems.PURIFICATION_TALISMAN.get());
 
             Advancement finish_biome_1 = registerAdvancement(enterRealmOfTheDream, "finish_biome_1", FrameType.CHALLENGE, TCRItems.DENSE_FOREST_CERTIFICATE.get());
             Advancement die_for_summon = registerAdvancement(finish_biome_1, "die_for_summon", FrameType.GOAL, TCRItems.TREE_SPIRIT_WAND.get());

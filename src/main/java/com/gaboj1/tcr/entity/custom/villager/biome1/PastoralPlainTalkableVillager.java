@@ -66,7 +66,27 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                         .addFinalChoice((BUILDER.buildDialogueOption(entityType,-3)), (byte) -1);
                 break;
 
+            //NOTE 废案
             //工匠 对话id分配：0~6 返回值分配：0~2,110
+//            case 1:
+//                if(!DataManager.gunGot.get(serverPlayerData)){
+//                    builder.start(BUILDER.buildDialogueAnswer(entityType,0))
+//                            .addChoice(BUILDER.buildDialogueOption(entityType,0),BUILDER.buildDialogueAnswer(entityType,1))
+//                            .addChoice(BUILDER.buildDialogueOption(entityType,1),BUILDER.buildDialogueOption(entityType,2).withStyle(ChatFormatting.DARK_RED,ChatFormatting.BOLD))//我也可以吗？我想要把火铳！（内心真诚地默念一遍） 【获得火铳】
+//                            .thenExecute((byte) 111)//代号111，获得沙鹰
+//                            .addChoice(BUILDER.buildDialogueOption(entityType,3),BUILDER.buildDialogueAnswer(entityType,2))
+//                            .addFinalChoice(BUILDER.buildDialogueOption(entityType,4),(byte) 0);//做梦吧你！火铳是我帮你祈祷出来的！
+//                }else {
+//                    builder.setAnswerRoot(
+//                            new TreeNode(BUILDER.buildDialogueAnswer(entityType,3))// ......
+//                                    .addChild(new TreeNode(BUILDER.buildDialogueAnswer(entityType,3),BUILDER.buildDialogueOption(entityType,4))// ......  ......
+//                                            .addLeaf(BUILDER.buildDialogueOption(entityType,5), (byte) 1)//快给我，不然嘣了你
+//                                            .addLeaf(BUILDER.buildDialogueOption(entityType,6), (byte) 2)//谢谢你的火铳~
+//                                    )
+//                                    .addLeaf(BUILDER.buildDialogueOption(entityType,13),(byte) 110)
+//                    );
+//                }
+//                break;
             case 1:
                 if(!DataManager.gunGot.get(serverPlayerData)){
                     builder.start(BUILDER.buildDialogueAnswer(entityType,0))

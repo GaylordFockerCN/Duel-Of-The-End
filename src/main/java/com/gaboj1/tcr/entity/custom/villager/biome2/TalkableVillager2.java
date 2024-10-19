@@ -209,6 +209,10 @@ public class TalkableVillager2 extends TCRTalkableVillager {
                                 new ItemStack(TCRItems.POISON_AVOIDANCE_ELIXIR.get(), 1),
                                 142857, 0, 0.02f),
                         new MerchantOffer(
+                                new ItemStack(TCRItems.BLUE_MUSHROOM.get(), 15),
+                                new ItemStack(TCRItems.POISON_AVOIDANCE_ELIXIR.get(), 1),
+                                142857, 0, 0.02f),
+                        new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 10),
                                 new ItemStack(TCRItems.STRENGTH_PILL.get(), 1),
                                 142857, 0, 0.02f),

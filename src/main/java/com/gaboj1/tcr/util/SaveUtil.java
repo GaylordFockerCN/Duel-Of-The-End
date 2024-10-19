@@ -242,11 +242,19 @@ public class SaveUtil {
     }
 
     public static class Biome1ProgressData extends BiomeProgressData {
-
+        public boolean smithTalked = false;//是否接取任务
+        public boolean monsterSummoned = false;//是否已召唤怪
+        public boolean killed = false;//是否杀死
+        public boolean heal = false;//是否治愈
+        public boolean isBranchFinish = false;//是否结局，和铁匠二次对话才是结局
         public static Dialog taskKillElder = buildTask("kill_elder1");
         public static Dialog taskKillBoss = buildTask("kill_boss1");
         public static Dialog taskBackToBoss = buildTask("back_boss1");//回去领赏
         public static Dialog taskBackToElder = buildTask("back_elder1");
+        //支线是否结束
+        public boolean isUnKnowMonsterDie(){
+            return smithTalked && (killed || heal);
+        }
         public Biome1ProgressData(){
             biome = 1;
         }
@@ -284,6 +292,35 @@ public class SaveUtil {
             return isBossDie;
         }
 
+        @Override
+        public CompoundTag toNbt() {
+            CompoundTag tag = new CompoundTag();
+
+            tag.putInt("choice", choice);
+            tag.putBoolean("isBossDie", isBossDie);
+            tag.putBoolean("isBossTalked", isBossTalked);
+            tag.putBoolean("isBossFought", isBossFought);
+            tag.putBoolean("isElderDie", isElderDie);
+            tag.putBoolean("isElderTalked", isElderTalked);
+
+            tag.putBoolean("smithTalked", smithTalked);
+            tag.putBoolean("killed", killed);
+            tag.putBoolean("heal", heal);
+            tag.putBoolean("isBranchFinish", isBranchFinish);
+            tag.putBoolean("monsterSummoned", monsterSummoned);
+            return tag;
+        }
+
+        @Override
+        public void fromNbt(CompoundTag serverData) {
+            super.fromNbt(serverData);
+            smithTalked = serverData.getBoolean("smithTalked");
+            heal = serverData.getBoolean("heal");
+            killed = serverData.getBoolean("killed");
+            isBranchFinish= serverData.getBoolean("isBranchFinish");
+            monsterSummoned = serverData.getBoolean("monsterSummoned");
+        }
+
 
     }
 
@@ -306,6 +343,7 @@ public class SaveUtil {
         @Override
         public CompoundTag toNbt() {
             CompoundTag tag = new CompoundTag();
+
             tag.putInt("choice", choice);
             tag.putBoolean("isBossDie", isBossDie);
             tag.putBoolean("isBossTalked", isBossTalked);

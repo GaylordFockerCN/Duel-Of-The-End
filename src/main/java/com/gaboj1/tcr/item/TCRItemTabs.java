@@ -130,6 +130,7 @@ public class TCRItemTabs {
 
 				//掉落物
 				tabData.accept(TCRItems.ELDER_STAFF.get());
+				tabData.accept(TCRItems.PURIFICATION_TALISMAN.get());
 
 				tabData.accept(TCRItems.TREE_DEMON_HORN.get());
 				tabData.accept(TCRItems.TREE_DEMON_MASK.get());
