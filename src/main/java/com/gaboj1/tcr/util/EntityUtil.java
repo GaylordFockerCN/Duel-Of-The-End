@@ -35,6 +35,18 @@ public class EntityUtil {
     }
 
     /**
+     * 获取视线和目标视线的夹角
+     */
+    public static double getViewDegree(Entity target, Entity self){
+        Vec3 targetView = target.getViewVector(1.0F);
+        Vec2 targetViewV2 = new Vec2(((float) targetView.x), ((float) targetView.z));
+        Vec3 view = self.getViewVector(1.0F);
+        Vec2 viewV2 = new Vec2(((float) view.x), ((float) view.z));
+        double angleRadians = Math.acos(targetViewV2.dot(viewV2)/(targetViewV2.length() * viewV2.length()));
+        return Math.toDegrees(angleRadians);
+    }
+
+    /**
      * 返回一个范围
      * @param pos 中心位置
      * @param offset 半径
