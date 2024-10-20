@@ -14,6 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -44,6 +45,17 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
     @Override
     public int getFemaleTypeCnt() {
         return 4;
+    }
+
+    /**
+     * 关键npc不能似，除非选boss阵营
+     */
+    @Override
+    public boolean hurt(DamageSource source, float v) {
+        if(!level().isClientSide){
+            return SaveUtil.biome1.choice == SaveUtil.BiomeProgressData.BOSS;
+        }
+        return false;
     }
 
     /**

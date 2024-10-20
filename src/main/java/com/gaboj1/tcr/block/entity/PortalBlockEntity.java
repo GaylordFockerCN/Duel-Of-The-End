@@ -112,14 +112,14 @@ public class PortalBlockEntity extends BlockEntity implements GeoBlockEntity {
         controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
 
         controllerRegistrar.add(new AnimationController<>(this, "Activate", 0, state -> PlayState.STOP)
-                .triggerableAnim("activate1", RawAnimation.begin().then("unlock", Animation.LoopType.PLAY_ONCE)));
+                .triggerableAnim("activate1", RawAnimation.begin().then("animation.model.unlock", Animation.LoopType.PLAY_ONCE)));
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
         if(isActivated()){
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.idle", Animation.LoopType.LOOP));
         }else {
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("lock", Animation.LoopType.LOOP));
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.model.lock", Animation.LoopType.LOOP));
         }
         return PlayState.CONTINUE;
     }
