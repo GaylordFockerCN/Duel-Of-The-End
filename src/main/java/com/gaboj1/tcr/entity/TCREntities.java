@@ -118,13 +118,13 @@ public class TCREntities {
 	public static final RegistryObject<EntityType<SuaLiong>> SUALIONG =
 			REGISTRY.register("sualiong",
 					() -> EntityType.Builder.of(SuaLiong::new, MobCategory.CREATURE)
-							.sized(2.2f, 2f)
+							.sized(2.2f, 4.3f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "sualiong").toString()));
 
 	public static final RegistryObject<EntityType<DesertFigure>> DESERT_FIGURE =
 			REGISTRY.register("desert_figure",
 					() -> EntityType.Builder.of(DesertFigure::new, MobCategory.CREATURE)
-							.sized(2.2f, 2f)
+							.sized(0.5f, 1f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "desert_figure").toString()));
 
 	public static final RegistryObject<EntityType<BoxerEntity>> BOXER =
