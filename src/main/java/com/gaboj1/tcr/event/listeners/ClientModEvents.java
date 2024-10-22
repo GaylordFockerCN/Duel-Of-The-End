@@ -16,6 +16,8 @@ import com.gaboj1.tcr.entity.client.biome1.MiddleTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.biome1.SmallTreeMonsterRenderer;
 import com.gaboj1.tcr.entity.client.biome1.TreeGuardianRenderer;
 import com.gaboj1.tcr.entity.client.biome2.*;
+import com.gaboj1.tcr.entity.client.biome3.DesertFigureRenderer;
+import com.gaboj1.tcr.entity.client.biome3.SuaLiongRenderer;
 import com.gaboj1.tcr.entity.client.boss.second_boss.SecondBossRenderer;
 import com.gaboj1.tcr.entity.client.boss.yggrasil.TreeClawRenderer;
 import com.gaboj1.tcr.entity.client.boss.yggrasil.YggdrasilRenderer;
@@ -91,6 +93,10 @@ public class ClientModEvents{
         EntityRenderers.register(TCREntities.SECOND_BOSS.get(), SecondBossRenderer::new);
 
         EntityRenderers.register(TCREntities.TIGER.get(), TigerRenderer::new);
+
+        //第三群系
+        EntityRenderers.register(TCREntities.SUALIONG.get(), SuaLiongRenderer::new);
+        EntityRenderers.register(TCREntities.DESERT_FIGURE.get(), DesertFigureRenderer::new);
 
 
         BlockEntityRenderers.register(TCRBlockEntities.PORTAL_BED.get(), PortalBedRenderer::new);

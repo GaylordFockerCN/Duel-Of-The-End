@@ -66,6 +66,8 @@ public class TCRItemModelProvider extends ItemModelProvider {
         eggItem(TCRItems.SWORD_CONTROLLER_SPAWN_EGG);
         eggItem(TCRItems.SECOND_BOSS_SPAWN_EGG);
         eggItem(TCRItems.CANG_LAN_SPAWN_EGG);
+        eggItem(TCRItems.SUALIONG_SPAWN_EGG);
+        eggItem(TCRItems.DESERT_FIGURE_SPAWN_EGG);
 
         simpleItem(TCRItems.DREAMSCAPE_COIN);
         simpleItem(TCRItems.DREAMSCAPE_COIN_PLUS);

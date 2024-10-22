@@ -190,6 +190,14 @@ public class TCRItems {
 			() -> new ForgeSpawnEggItem(TCREntities.CANG_LAN, 6000, 50,
 					new Item.Properties()));
 
+	public static final RegistryObject<Item> SUALIONG_SPAWN_EGG = REGISTRY.register("sualiong_spawn_egg",
+			() -> new ForgeSpawnEggItem(TCREntities.SUALIONG, 80000, 520,
+					new Item.Properties()));
+
+	public static final RegistryObject<Item> DESERT_FIGURE_SPAWN_EGG = REGISTRY.register("desert_figure_spawn_egg",
+			() -> new ForgeSpawnEggItem(TCREntities.DESERT_FIGURE, 80000, 520,
+					new Item.Properties()));
+
 	public static final RegistryObject<Item> YGGDRASIL_SPAWN_EGG = REGISTRY.register("yggdrasil_spawn_egg",
 			() -> new ForgeSpawnEggItem(TCREntities.YGGDRASIL, 1, 0x1D0D00,
 					new Item.Properties()));

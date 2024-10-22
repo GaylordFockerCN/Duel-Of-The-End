@@ -3,6 +3,8 @@ package com.gaboj1.tcr.entity;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.custom.biome1.*;
 import com.gaboj1.tcr.entity.custom.biome2.BigHammerEntity;
+import com.gaboj1.tcr.entity.custom.biome3.DesertFigure;
+import com.gaboj1.tcr.entity.custom.biome3.SuaLiong;
 import com.gaboj1.tcr.entity.custom.boss.second_boss.ScreenSwordEntityForBoss;
 import com.gaboj1.tcr.entity.custom.boss.second_boss.SecondBossEntity;
 import com.gaboj1.tcr.entity.custom.boss.second_boss.StellarSwordEntity;
@@ -112,6 +114,18 @@ public class TCREntities {
 					() -> EntityType.Builder.of(TigerEntity::new, MobCategory.CREATURE)
 							.sized(2.2f, 2f)
 							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "tiger").toString()));
+
+	public static final RegistryObject<EntityType<SuaLiong>> SUALIONG =
+			REGISTRY.register("sualiong",
+					() -> EntityType.Builder.of(SuaLiong::new, MobCategory.CREATURE)
+							.sized(2.2f, 2f)
+							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "sualiong").toString()));
+
+	public static final RegistryObject<EntityType<DesertFigure>> DESERT_FIGURE =
+			REGISTRY.register("desert_figure",
+					() -> EntityType.Builder.of(DesertFigure::new, MobCategory.CREATURE)
+							.sized(2.2f, 2f)
+							.build(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "desert_figure").toString()));
 
 	public static final RegistryObject<EntityType<BoxerEntity>> BOXER =
 			REGISTRY.register("boxer",
@@ -252,7 +266,9 @@ public class TCREntities {
 		event.put(YUN_YI.get(),WindwalkerYunYi.setAttributes());
 		event.put(YAN_XIN.get(),BlazingFlameYanXin.setAttributes());
 		event.put(TIGER.get(),TigerEntity.setAttributes());
+		event.put(SUALIONG.get(), SuaLiong.setAttributes());
 		event.put(BOXER.get(), BoxerEntity.setAttributes());
+		event.put(DESERT_FIGURE.get(), DesertFigure.setAttributes());
 		event.put(BIG_HAMMER.get(),BigHammerEntity.setAttributes());
 		event.put(SNOW_SWORDMAN.get(),SnowSwordmanEntity.setAttributes());
 		event.put(SWORD_CONTROLLER.get(),SwordControllerEntity.setAttributes());
@@ -340,7 +356,10 @@ public class TCREntities {
 				SwordControllerEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(TCREntities.SECOND_BOSS.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				SecondBossEntity::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
-
+		event.register(TCREntities.SUALIONG.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				SuaLiong::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(TCREntities.DESERT_FIGURE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				DesertFigure::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(TREE_CLAW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				((entityType, serverLevelAccessor, mobSpawnType, blockPos, randomSource) -> true), SpawnPlacementRegisterEvent.Operation.REPLACE);
 	}

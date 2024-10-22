@@ -111,6 +111,10 @@ public class TCRItemTabs {
 						tabData.accept(TCRItems.SWORD_CONTROLLER_SPAWN_EGG.get());
 						tabData.accept(TCRItems.SECOND_BOSS_SPAWN_EGG.get());
 
+						//Biome3
+						tabData.accept(TCRItems.SUALIONG_SPAWN_EGG.get());
+						tabData.accept(TCRItems.DESERT_FIGURE_SPAWN_EGG.get());
+
 
 					}).build());
 

@@ -131,6 +131,8 @@ public class TCREntityLootTables extends EntityLootSubProvider {
                                 .add(LootItem.lootTableItem(TCRItems.STARLIT_DEWDROP.get())))
         );
 
+
+
         add(TCREntities.YGGDRASIL.get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
@@ -207,6 +209,9 @@ public class TCREntityLootTables extends EntityLootSubProvider {
         );
         //Biome2 end
 
+        //Biome3 start
+        add(TCREntities.SUALIONG.get(), emptyLootTable());
+        add(TCREntities.DESERT_FIGURE.get(), emptyLootTable());
 
     }
 
