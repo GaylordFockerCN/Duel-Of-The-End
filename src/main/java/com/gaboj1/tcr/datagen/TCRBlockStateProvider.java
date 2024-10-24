@@ -34,6 +34,27 @@ public class TCRBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(TCRBlocks.POTTED_BLUE_MUSHROOM.get(), models().singleTexture("potted_blue_mushroom", new ResourceLocation("flower_pot_cross"), "plant",
                 blockTexture(TCRBlocks.BLUE_MUSHROOM.get())).renderType("cutout"));
 
+        simpleBlockWithItem(TCRBlocks.THIRST_BLOOD_ROSE.get(), models().cross(blockTexture(TCRBlocks.THIRST_BLOOD_ROSE.get()).getPath(),
+                blockTexture(TCRBlocks.THIRST_BLOOD_ROSE.get())).renderType("cutout"));
+        simpleBlockWithItem(TCRBlocks.POTTED_THIRST_BLOOD_ROSE.get(), models().singleTexture("potted_thirst_blood_rose", new ResourceLocation("flower_pot_cross"), "plant",
+                blockTexture(TCRBlocks.THIRST_BLOOD_ROSE.get())).renderType("cutout"));
+
+        simpleBlockWithItem(TCRBlocks.LAZY_ROSE.get(), models().cross(blockTexture(TCRBlocks.LAZY_ROSE.get()).getPath(),
+                blockTexture(TCRBlocks.LAZY_ROSE.get())).renderType("cutout"));
+        simpleBlockWithItem(TCRBlocks.POTTED_LAZY_ROSE.get(), models().singleTexture("potted_lazy_rose", new ResourceLocation("flower_pot_cross"), "plant",
+                blockTexture(TCRBlocks.LAZY_ROSE.get())).renderType("cutout"));
+
+        simpleBlockWithItem(TCRBlocks.MELANCHOLIC_ROSE.get(), models().cross(blockTexture(TCRBlocks.MELANCHOLIC_ROSE.get()).getPath(),
+                blockTexture(TCRBlocks.MELANCHOLIC_ROSE.get())).renderType("cutout"));
+        simpleBlockWithItem(TCRBlocks.POTTED_MELANCHOLIC_ROSE.get(), models().singleTexture("potted_melancholic_rose", new ResourceLocation("flower_pot_cross"), "plant",
+                blockTexture(TCRBlocks.MELANCHOLIC_ROSE.get())).renderType("cutout"));
+
+        simpleBlockWithItem(TCRBlocks.WITHERED_ROSE.get(), models().cross(blockTexture(TCRBlocks.WITHERED_ROSE.get()).getPath(),
+                blockTexture(TCRBlocks.WITHERED_ROSE.get())).renderType("cutout"));
+        simpleBlockWithItem(TCRBlocks.POTTED_WITHERED_ROSE.get(), models().singleTexture("potted_withered_rose", new ResourceLocation("flower_pot_cross"), "plant",
+                blockTexture(TCRBlocks.WITHERED_ROSE.get())).renderType("cutout"));
+
+
         logBlock(((RotatedPillarBlock) TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()));
         axisBlock(((RotatedPillarBlock) TCRBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get()),blockTexture(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()),blockTexture(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get()));
 

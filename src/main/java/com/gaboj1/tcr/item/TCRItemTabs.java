@@ -32,6 +32,10 @@ public class TCRItemTabs {
 				tabData.accept(TCRBlocks.ELITE_BIG_HAMMER_BLOCK.get());
 				tabData.accept(TCRBlocks.CATNIP.get());
 				tabData.accept(TCRBlocks.BLUE_MUSHROOM.get());
+				tabData.accept(TCRBlocks.THIRST_BLOOD_ROSE.get());
+				tabData.accept(TCRBlocks.LAZY_ROSE.get());
+				tabData.accept(TCRBlocks.MELANCHOLIC_ROSE.get());
+				tabData.accept(TCRBlocks.WITHERED_ROSE.get());
 				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
 				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get());
 				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get());

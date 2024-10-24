@@ -131,6 +131,8 @@ public class TCRItems {
 			new Item.Properties()));
 	public static final RegistryObject<Item> CATNIP = REGISTRY.register("catnip",  () -> new DropItem(new Item.Properties().food(TCRFoods.CATNIP)));
 	public static final RegistryObject<Item> BLUE_MUSHROOM = REGISTRY.register("blue_mushroom",  () -> new DropItem(new Item.Properties().food(Foods.MUSHROOM_STEW)));
+
+
 	public static final RegistryObject<Item> CAT_JELLY = REGISTRY.register("cat_jelly",  () -> new DropItem(new Item.Properties().food(TCRFoods.JELLY_CAT)));
 	public static final RegistryObject<Item> SQUIRREL_SPAWN_EGG = REGISTRY.register("squirrel_spawn_egg",
 			() -> new ForgeSpawnEggItem(TCREntities.SQUIRREL, 0xD57E36, 0x1D0D00,

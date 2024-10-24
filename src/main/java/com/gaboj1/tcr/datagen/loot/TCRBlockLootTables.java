@@ -36,9 +36,18 @@ public class TCRBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
         this.add(TCRBlocks.CATNIP.get(), (block) -> this.createCopperLikeOreDrops(block, TCRItems.CATNIP.get(), 1, 3));
         this.add(TCRBlocks.BLUE_MUSHROOM.get(), (block) -> this.createCopperLikeOreDrops(block, TCRItems.BLUE_MUSHROOM.get(), 1, 3));
+        this.dropSelf(TCRBlocks.THIRST_BLOOD_ROSE.get());
+        this.dropSelf(TCRBlocks.LAZY_ROSE.get());
+        this.dropSelf(TCRBlocks.MELANCHOLIC_ROSE.get());
+        this.dropSelf(TCRBlocks.WITHERED_ROSE.get());
         this.add(TCRBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER.get(), createPotFlowerItemTable(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get()));
         this.add(TCRBlocks.POTTED_CATNIP.get(), createPotFlowerItemTable(TCRItems.CATNIP.get()));
         this.add(TCRBlocks.POTTED_BLUE_MUSHROOM.get(), createPotFlowerItemTable(TCRItems.BLUE_MUSHROOM.get()));
+        this.add(TCRBlocks.POTTED_THIRST_BLOOD_ROSE.get(), createPotFlowerItemTable(TCRBlocks.THIRST_BLOOD_ROSE.get()));
+        this.add(TCRBlocks.POTTED_LAZY_ROSE.get(), createPotFlowerItemTable(TCRBlocks.LAZY_ROSE.get()));
+        this.add(TCRBlocks.POTTED_MELANCHOLIC_ROSE.get(), createPotFlowerItemTable(TCRBlocks.MELANCHOLIC_ROSE.get()));
+        this.add(TCRBlocks.POTTED_WITHERED_ROSE.get(), createPotFlowerItemTable(TCRBlocks.WITHERED_ROSE.get()));
+
 
         this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get());
         this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get());

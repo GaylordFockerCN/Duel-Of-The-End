@@ -131,6 +131,10 @@ public class TCRItemModelProvider extends ItemModelProvider {
 
         simpleBlockItemBlockTexture(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER);
         simpleBlockItemBlockTexture(TCRBlocks.CATNIP);
+        simpleBlockItemBlockTexture(TCRBlocks.THIRST_BLOOD_ROSE);
+        simpleBlockItemBlockTexture(TCRBlocks.LAZY_ROSE);
+        simpleBlockItemBlockTexture(TCRBlocks.MELANCHOLIC_ROSE);
+        simpleBlockItemBlockTexture(TCRBlocks.WITHERED_ROSE);
         saplingItem(TCRBlocks.DENSE_FOREST_SPIRIT_SAPLING);
         fenceItem(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE, TCRBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS);
         simpleBlockItem(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR);

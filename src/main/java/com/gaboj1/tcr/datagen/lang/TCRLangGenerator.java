@@ -285,6 +285,10 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get(),"密林灵花");
         this.add(TCRBlocks.CATNIP.get(),"猫薄荷");
         this.add(TCRBlocks.BLUE_MUSHROOM.get(),"蓝蘑菇");
+        this.add(TCRBlocks.THIRST_BLOOD_ROSE.get(),"嗜血玫瑰");
+        this.add(TCRBlocks.LAZY_ROSE.get(),"嗜眠玫瑰");
+        this.add(TCRBlocks.MELANCHOLIC_ROSE.get(),"蓝调玫瑰");
+        this.add(TCRBlocks.WITHERED_ROSE.get(),"枯萎玫瑰");
         this.add(TCRBlocks.DENSE_FOREST_SPIRIT_SAPLING.get(),"密林灵树树苗");
         this.add(TCRBlocks.PORTAL_BED.get(),"灵梦床");//等等，灵梦？
         this.add(TCRBlocks.PORTAL_BLOCK.get(),"天域凭证");//传送石碑

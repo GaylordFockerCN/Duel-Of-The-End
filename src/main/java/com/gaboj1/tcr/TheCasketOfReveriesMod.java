@@ -86,6 +86,12 @@ public class TheCasketOfReveriesMod {
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.getId(), TCRBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(TCRBlocks.CATNIP.getId(), TCRBlocks.POTTED_CATNIP);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(TCRBlocks.BLUE_MUSHROOM.getId(), TCRBlocks.POTTED_BLUE_MUSHROOM);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(TCRBlocks.THIRST_BLOOD_ROSE.getId(), TCRBlocks.POTTED_THIRST_BLOOD_ROSE);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(TCRBlocks.LAZY_ROSE.getId(), TCRBlocks.POTTED_LAZY_ROSE);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(TCRBlocks.MELANCHOLIC_ROSE.getId(), TCRBlocks.POTTED_MELANCHOLIC_ROSE);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(TCRBlocks.WITHERED_ROSE.getId(), TCRBlocks.POTTED_WITHERED_ROSE);
+
+
         });
         try{
             File dir = FMLPaths.CONFIGDIR.get().resolve(TheCasketOfReveriesMod.MOD_ID).toFile();
