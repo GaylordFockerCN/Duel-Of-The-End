@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.block.TCRBlocks;
 import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.ai.goal.BossRecoverGoal;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
@@ -45,10 +46,12 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -74,15 +77,26 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     private boolean canBeHurt;
     private int hurtTimer;
     private int shootTimer = 0;
+    @Nullable
     private Entity shootTarget;
     private int recoverTimer = 0;
     private int treeClawTimer = 0;
+    private int flowerTimer = 0;
     public final int maxRecoverTimer = 200;
     private final List<Integer> mobs = new ArrayList<>();
+    private static final List<RegistryObject<Block>> FLOWER_BLOCKS = new ArrayList<>();
 
     public YggdrasilEntity(EntityType<? extends PathfinderMob> p_21683_, Level p_21684_) {
         super(p_21683_, p_21684_, BossEvent.BossBarColor.BLUE);
-        setHealth(20);//TODO 测试用
+        FLOWER_BLOCKS.add(TCRBlocks.LAZY_ROSE);
+        FLOWER_BLOCKS.add(TCRBlocks.MELANCHOLIC_ROSE);
+        FLOWER_BLOCKS.add(TCRBlocks.WITHERED_ROSE);
+        FLOWER_BLOCKS.add(TCRBlocks.LAZY_ROSE);
+        FLOWER_BLOCKS.add(TCRBlocks.WITHERED_ROSE);
+        FLOWER_BLOCKS.add(TCRBlocks.THIRST_BLOOD_ROSE);
+        FLOWER_BLOCKS.add(TCRBlocks.POTTED_MELANCHOLIC_ROSE);
+        FLOWER_BLOCKS.add(TCRBlocks.BLUE_MUSHROOM);
+        setHealth(getMaxHealth() / 2 + 10);//TODO 测试用
     }
 
     public static AttributeSupplier setAttributes() {
@@ -95,19 +109,19 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     }
 
     protected void registerGoals() {
-
         this.goalSelector.addGoal(0,new BossRecoverGoal(this, 72));
         this.goalSelector.addGoal(1,new ConversationTriggerGoal(this));
         this.goalSelector.addGoal(2,new NpcDialogueGoal<>(this));
-        this.goalSelector.addGoal(3, new RangeMeleeAttackGoal(this, 1.0, true, 72, 40){
+        this.goalSelector.addGoal(3, new RangeMeleeAttackGoal(this, 1.0, true, 72, 80){
             @Override
             public boolean canUse() {
-                return YggdrasilEntity.this.getEntityData().get(IS_FIGHTING) && super.canUse();
+                return YggdrasilEntity.this.getEntityData().get(IS_FIGHTING) && shootTimer <= 0 && flowerTimer <=0 && treeClawTimer <=0 && super.canUse();
             }
         });
         this.goalSelector.addGoal(4,new RecoverGoal(this));
-        this.goalSelector.addGoal(5, new SpawnTreeClawAtPointPositionGoal(this));
-        this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(5, new SpawnTreeClawGoal(this));
+        this.goalSelector.addGoal(6, new SpawnFlowersGoal(this));
+//        this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 
         this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
@@ -229,7 +243,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
 
 
     @Override
-    public boolean hurt(DamageSource damageSource, float v) {
+    public boolean hurt(@NotNull DamageSource damageSource, float v) {
         if(damageSource.isCreativePlayer()){
             super.hurt(damageSource, v);
         }
@@ -296,15 +310,50 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
             //普攻的延迟发射，这个timer由goal触发
             if(shootTimer > 0){
                 shootTimer--;
-                if(shootTimer == 1){
+                double x, y, z;
+                if(shootTimer == 40 && shootTarget != null){
                     MagicProjectile projectile = new MagicProjectile(level(), this);
-                    double x = shootTarget.getX() - this.getX();
-                    double y = shootTarget.getY(0.3333333333333333) - projectile.getY();
-                    double z = shootTarget.getZ() - this.getZ();
-                    double $$5 = Math.sqrt(x * x + z * z) * 0.20000000298023224;
+                    x = shootTarget.getX() - this.getX();
+                    y = shootTarget.getY(0.3333) - projectile.getY();
+                    z = shootTarget.getZ() - this.getZ();
+                    double $$5 = Math.sqrt(x * x + z * z) * 0.2;
                     projectile.setDamage(((float) Objects.requireNonNull(getAttribute(Attributes.ATTACK_DAMAGE)).getValue()));
                     projectile.shoot(x, y + $$5, z, 1.5F, 10.0F);
                     level().addFreshEntity(projectile);
+                }
+                if(shootTimer == 31 || shootTimer == 51){
+                    MagicProjectile projectile = new MagicProjectile(level(), this);
+                    if(random.nextBoolean() && shootTarget != null){
+                        x = shootTarget.getX() - this.getX();
+                        y = shootTarget.getY(0.3333) - projectile.getY();
+                        z = shootTarget.getZ() - this.getZ();
+                        double h = Math.sqrt(x * x + z * z) * 0.2;
+                        y += h;
+                    } else {
+                        x = getViewVector(1.0F).x;
+                        y = getViewVector(1.0F).y;
+                        z = getViewVector(1.0F).z;
+                    }
+                    projectile.setDamage(((float) Objects.requireNonNull(getAttribute(Attributes.ATTACK_DAMAGE)).getValue()));
+                    projectile.shoot(x, y, z, 1.5F, 10.0F);
+                    level().addFreshEntity(projectile);
+                }
+            }
+
+            //花海技能
+            if(flowerTimer > 0){
+                flowerTimer--;
+                if(flowerTimer < 60){
+                    int dis = 60 - flowerTimer;
+                    for(int i = 0; i < dis / 2; i++){
+                        int offsetX = dis * (random.nextBoolean() ? 1 : -1) + random.nextInt(3);
+                        int offsetZ = dis * (random.nextBoolean() ? 1 : -1) + random.nextInt(3);
+                        BlockPos pos = getOnPos().offset(offsetX, 1, offsetZ);
+                        if(level().getBlockState(pos).isAir() && !level().getBlockState(pos.below()).isAir()){
+                            level().explode(this, this.damageSources().explosion(this, this), null, pos.getCenter(), 2, false, Level.ExplosionInteraction.NONE);
+                            level().setBlock(pos, FLOWER_BLOCKS.get(random.nextInt(FLOWER_BLOCKS.size())).get().defaultBlockState(), 3);
+                        }
+                    }
                 }
             }
 
@@ -433,18 +482,21 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
      * 根据手持的枯萎之触的物品数量来削弱树魔的属性
      */
     private void modifyAttribute(int count){
-        AttributeModifier attackSpeedModifier = new AttributeModifier("attackSpeed", -5, AttributeModifier.Operation.ADDITION);
-        AttributeModifier attackDamageModifier = new AttributeModifier("attackDamage", -5, AttributeModifier.Operation.ADDITION);
-        switch (count){
-            case 0: break;
-            //细节不break
-            default:
-                Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).addPermanentModifier(attackDamageModifier);
-            case 2:
-                Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_SPEED)).addPermanentModifier(attackSpeedModifier);
-            case 1:
-                setHealth(getMaxHealth() / 2);
-        }
+//        AttributeModifier attackSpeedModifier = new AttributeModifier("attackSpeed", -5, AttributeModifier.Operation.ADDITION);
+//        AttributeModifier attackDamageModifier = new AttributeModifier("attackDamage", -5, AttributeModifier.Operation.ADDITION);
+//        switch (count){
+//            case 0: break;
+//            default:
+//                Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).addPermanentModifier(attackDamageModifier);
+//            case 2:
+//                Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_SPEED)).addPermanentModifier(attackSpeedModifier);
+//            case 1:
+//                setHealth(getMaxHealth() / 2);
+//        }
+
+        AttributeModifier healthModify = new AttributeModifier("healthModify", 1 - 0.15 * count, AttributeModifier.Operation.MULTIPLY_BASE);
+        Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).addPermanentModifier(healthModify);
+        setHealth(getMaxHealth());
     }
 
     @Override
@@ -461,8 +513,9 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                         total += itemStack.getCount();
                     }
                 }
-                modifyAttribute(total);
-                if(total > 1){
+                if(total > 0){
+                    modifyAttribute(Math.min(total, 3));
+                    this.hurt(damageSources().magic(), 1.14514F);//为了播个音效
                     chat(BUILDER.buildDialogueAnswer(entityType, -1, false));
                 }
                 break;
@@ -536,19 +589,19 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     /**
      * 定时召唤树爪，击破树爪才能攻击boss
      */
-    public static class SpawnTreeClawAtPointPositionGoal extends Goal {
+    public static class SpawnTreeClawGoal extends Goal {
         private final YggdrasilEntity yggdrasil;
         private int shootInterval;
         public final int shootIntervalMax = 100;
 
-        public SpawnTreeClawAtPointPositionGoal(YggdrasilEntity yggdrasil) {
+        public SpawnTreeClawGoal(YggdrasilEntity yggdrasil) {
             this.yggdrasil = yggdrasil;
-            shootInterval = (int) (55 + yggdrasil.getHealth()/2);//开局就发射一个树爪，方便调试，血越少越频繁
+            shootInterval = shootIntervalMax;//开局就发射一个树爪，方便调试，血越少越频繁
         }
 
         @Override
         public boolean canUse() {
-            return --this.shootInterval <= 0 && yggdrasil.getEntityData().get(IS_FIGHTING) && SaveUtil.biome1.canAttackBoss();
+            return --this.shootInterval <= 0 && yggdrasil.getEntityData().get(IS_FIGHTING) && SaveUtil.biome1.canAttackBoss() && yggdrasil.shootTimer <= 0 && yggdrasil.flowerTimer <= 0;
         }
 
         @Override
@@ -556,6 +609,43 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
             yggdrasil.triggerAnim("Summon", "summon");
             yggdrasil.treeClawTimer = 20;
 
+            this.shootInterval = shootIntervalMax;
+        }
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
+        }
+    }
+
+
+    /**
+     * 定时召唤树爪，击破树爪才能攻击boss
+     */
+    public static class SpawnFlowersGoal extends Goal {
+        private final YggdrasilEntity yggdrasil;
+        private int shootInterval;
+        public final int shootIntervalMax = 300;
+
+        public SpawnFlowersGoal(YggdrasilEntity yggdrasil) {
+            this.yggdrasil = yggdrasil;
+            shootInterval = 0;
+        }
+
+        @Override
+        public boolean canUse() {
+            if(shootInterval > 0){
+                shootInterval--;
+            }
+            return this.shootInterval <= 0 && yggdrasil.getEntityData().get(IS_FIGHTING) && SaveUtil.biome1.canAttackBoss() && yggdrasil.getHealth() < yggdrasil.getMaxHealth() / 2 && yggdrasil.shootTimer <= 0 && yggdrasil.treeClawTimer <= 0;
+        }
+
+        @Override
+        public void start() {
+            yggdrasil.triggerAnim("Summon", "flower");
+            yggdrasil.flowerTimer = 76;
+            yggdrasil.turningLock(76);
+            yggdrasil.movementLock(76);
             this.shootInterval = shootIntervalMax;
         }
 
@@ -627,9 +717,16 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
      * 播放动画并发射
      */
     public boolean doHurtTarget(@NotNull Entity target){
+        getLookControl().setLookAt(target);
         triggerAnim("Attack","attack");
-        shootTimer = 20;
-        shootTarget = target;
+        shootTimer = 60;
+        if(getRandom().nextBoolean() && getHealth() < getMaxHealth() / 2){
+            shootTarget = target;
+        } else {
+            shootTarget = null;
+        }
+        turningLock(30);
+        movementLock(30);
         return true;
     }
 
@@ -640,13 +737,14 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                 10, this::predicate));
 
         //自定义触发
-        controllers.add(new AnimationController<>(this, "Recover", 10, state -> PlayState.STOP)
+        controllers.add(new AnimationController<>(this, "Recover", 5, state -> PlayState.CONTINUE)
                 .triggerableAnim("recover", RawAnimation.begin().then("recover", Animation.LoopType.PLAY_ONCE)));
-        controllers.add(new AnimationController<>(this, "Summon", 10, state -> PlayState.STOP)
-                .triggerableAnim("summon", RawAnimation.begin().then("attack1", Animation.LoopType.PLAY_ONCE)));
-        controllers.add(new AnimationController<>(this, "Attack", 10, state -> PlayState.CONTINUE)
+        controllers.add(new AnimationController<>(this, "Summon", 5, state -> PlayState.CONTINUE)
+                .triggerableAnim("summon", RawAnimation.begin().then("attack1", Animation.LoopType.PLAY_ONCE))
+                .triggerableAnim("flower", RawAnimation.begin().then("attack3", Animation.LoopType.PLAY_ONCE)));
+        controllers.add(new AnimationController<>(this, "Attack", 5, state -> PlayState.CONTINUE)
                 .triggerableAnim("attack", RawAnimation.begin().then("attack2", Animation.LoopType.PLAY_ONCE)));
-        controllers.add(new AnimationController<>(this, "Death", 10, state -> PlayState.STOP)
+        controllers.add(new AnimationController<>(this, "Death", 5, state -> PlayState.CONTINUE)
                 .triggerableAnim("death", RawAnimation.begin().then("death", Animation.LoopType.PLAY_ONCE)));
 
     }
@@ -654,10 +752,10 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
         if(tAnimationState.isMoving()) {//播放移动动画
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("wander", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
+        } else {
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
         }
-        tAnimationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-        return PlayState.STOP;
+        return PlayState.CONTINUE;
     }
 
     @Override

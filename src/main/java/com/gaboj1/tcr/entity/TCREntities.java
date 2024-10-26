@@ -54,7 +54,7 @@ public class TCREntities {
 			.setCustomClientFactory(BulletEntity::new).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.1f, 0.1f));
 	public static final RegistryObject<EntityType<IceThornEntity>> ICE_THORN_ENTITY = register("ice_thorn_entity", EntityType.Builder.<IceThornEntity>of(IceThornEntity::new, MobCategory.MISC)
 			.setCustomClientFactory(IceThornEntity::new).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.1f, 0.1f));
-	public static final RegistryObject<EntityType<MagicProjectile>> MAGIC_PROJECTILE = register("magic_projectile", EntityType.Builder.<MagicProjectile>of(MagicProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10));
+	public static final RegistryObject<EntityType<MagicProjectile>> MAGIC_PROJECTILE = register("magic_projectile", EntityType.Builder.<MagicProjectile>of(MagicProjectile::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(10));
 
 	public static final RegistryObject<EntityType<SwordEntity>> SWORD = register("sword",
 			EntityType.Builder.of(SwordEntity::new, MobCategory.CREATURE));

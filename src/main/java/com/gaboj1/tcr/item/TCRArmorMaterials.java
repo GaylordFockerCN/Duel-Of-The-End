@@ -10,11 +10,11 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.function.Supplier;
 
 public enum TCRArmorMaterials implements ArmorMaterial {
-    ORICHALCUM("orichalcum", 15, new int[]{ 1, 4, 4, 2 }, 10,
+    ORICHALCUM("orichalcum", 15, new int[]{ 1, 5, 4, 2 }, 10,
             SoundEvents.ARMOR_EQUIP_GOLD, 3f, 0.3f, () -> Ingredient.of(TCRItems.ORICHALCUM.get())),
-    TREE("tree", 33, new int[]{ 3, 6, 8, 3 }, 10,
+    TREE("tree", 33, new int[]{ 3, 5, 7, 3 }, 15,
             SoundEvents.ARMOR_EQUIP_DIAMOND, 0.5f, 0.0f, () -> Ingredient.of(TCRItems.TIGER_SOUL_ICE.get())),
-    ICE_TIGER("ice_tiger", 33, new int[]{ 3, 6, 8, 3 }, 10,
+    ICE_TIGER("ice_tiger", 33, new int[]{ 3, 5, 7, 3 }, 15,
         SoundEvents.ARMOR_EQUIP_DIAMOND, 2.0f, 0.5f, () -> Ingredient.of(TCRItems.TIGER_SOUL_ICE.get()));
 
     private final String name;

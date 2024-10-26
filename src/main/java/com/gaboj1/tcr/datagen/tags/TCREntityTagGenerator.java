@@ -26,13 +26,12 @@ public class TCREntityTagGenerator extends EntityTypeTagsProvider {
     protected void addTags(HolderLookup.@NotNull Provider pProvider) {
         super.addTags(pProvider);
         tag(MOB_IN_DENSE_FOREST).add(
+                TCREntities.YGGDRASIL.get(),
+                TCREntities.TREE_CLAW.get(),
                 TCREntities.SMALL_TREE_MONSTER.get(),
                 TCREntities.MIDDLE_TREE_MONSTER.get(),
                 TCREntities.TREE_GUARDIAN.get(),
                 TCREntities.UNKNOWN.get(),
-                TCREntities.WIND_FEATHER_FALCON.get(),
-                TCREntities.SUALIONG.get(),
-                TCREntities.DESERT_FIGURE.get(),
                 TCREntities.SPRITE.get()
         );
     }
@@ -41,7 +40,7 @@ public class TCREntityTagGenerator extends EntityTypeTagsProvider {
         return TagKey.create(Registries.ENTITY_TYPE, rl);
     }
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return "The Casket Of Reveries Entity Tags";
     }
 

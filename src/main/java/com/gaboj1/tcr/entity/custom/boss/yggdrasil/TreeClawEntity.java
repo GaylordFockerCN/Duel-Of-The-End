@@ -12,6 +12,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -30,7 +31,7 @@ public class TreeClawEntity extends Mob implements GeoEntity, LevelableEntity, M
     private Player target;
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private int catchTimer;
-    private final int catchTimerMax = 20;//逃离时间
+    private final int catchTimerMax = 10;//逃离时间
     private boolean isCatching;
     public TreeClawEntity(EntityType<? extends TreeClawEntity> p_37466_, Level p_37467_) {
          super(p_37466_, p_37467_);
@@ -51,7 +52,7 @@ public class TreeClawEntity extends Mob implements GeoEntity, LevelableEntity, M
 
     public static AttributeSupplier setAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 20D)
+                .add(Attributes.MAX_HEALTH, 142857)
                 .build();
     }
 
@@ -64,13 +65,16 @@ public class TreeClawEntity extends Mob implements GeoEntity, LevelableEntity, M
         super.tick();
         catchTimer--;
         if(catchTimer < 0 && !isCatching && this.target != null && !level().isClientSide && checkHit(target.getOnPos(),1)){
-            target.hurt(level().damageSources().magic(),10f);
+            target.hurt(level().damageSources().indirectMagic(this, yggdrasilEntity),10f);
             isCatching = true;
         }
         if(isCatching && this.target != null && !level().isClientSide){
             target.teleportTo(target.getX(),target.getY(),target.getZ());
         }
-        if(catchTimer < -catchTimerMax * 5){//禁锢5秒
+        if(catchTimer == -catchTimerMax * 14 + 10){
+            level().explode(this, this.damageSources().explosion(this, this), null, getOnPos().getCenter(), 3, false, Level.ExplosionInteraction.NONE);
+        }
+        if(catchTimer < -catchTimerMax * 14){
             this.discard();//时间够久就自毁
         }
     }
@@ -78,6 +82,14 @@ public class TreeClawEntity extends Mob implements GeoEntity, LevelableEntity, M
         BlockPos pos2 = getOnPos();
         return pos1.getX()<=pos2.getX()+offSet && pos1.getX()>=pos2.getX()-offSet
                 && pos1.getZ()<=pos2.getZ()+offSet && pos1.getZ()>=pos2.getZ()-offSet;
+    }
+
+    @Override
+    public boolean hurt(@NotNull DamageSource source, float p_21017_) {
+        if(source.getEntity() instanceof YggdrasilEntity){
+            return false;
+        }
+        return super.hurt(source, getMaxHealth() / 8 + 1);//打8次才死，机制怪，除非火枪
     }
 
     @Override

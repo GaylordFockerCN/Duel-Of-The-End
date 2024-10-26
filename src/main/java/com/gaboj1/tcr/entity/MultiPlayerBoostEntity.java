@@ -10,6 +10,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 
 import java.util.UUID;
 
+/**
+ * 多人时血量增加
+ */
 public interface MultiPlayerBoostEntity {
     default void whenPlayerCountChange(){
         LivingEntity entity = ((LivingEntity) this);

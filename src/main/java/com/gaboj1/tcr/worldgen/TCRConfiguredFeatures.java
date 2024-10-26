@@ -10,7 +10,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.ConstantInt;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
@@ -37,7 +36,7 @@ public class TCRConfiguredFeatures {
 
     //Plants
     public static final ResourceKey<ConfiguredFeature<?, ?>> DENSE_FOREST_SPIRIT_TREE_KEY = registerKey("dense_tree");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> DENSE_FOREST_SPIRIT_FLOWER_KEY = registerKey("dense_flower");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> DENSE_FOREST_FLOWER_KEY = registerKey("dense_flower");
     public static final ResourceKey<ConfiguredFeature<?, ?>> CATNIP_KEY = registerKey("catnip_place");
 
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
@@ -58,9 +57,24 @@ public class TCRConfiguredFeatures {
                 .decorators(ImmutableList.of(new LeaveVineDecorator(0.25F)))//添加藤蔓
                 .build());
 
-        register(context, DENSE_FOREST_SPIRIT_FLOWER_KEY, Feature.FLOWER, new RandomPatchConfiguration(96, 6, 2,
+        register(context, DENSE_FOREST_FLOWER_KEY, Feature.FLOWER, new RandomPatchConfiguration(96, 6, 2,
                 PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(new NoiseProvider(2345L, new NormalNoise.NoiseParameters(0, 1.0), 0.020833334F,
-                        List.of(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get().defaultBlockState(), TCRBlocks.BLUE_MUSHROOM.get().defaultBlockState()))))));
+                        List.of(
+                                TCRBlocks.THIRST_BLOOD_ROSE.get().defaultBlockState(), //NOTE: 太傻逼了密林里都是瞬间伤害的话
+                                TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get().defaultBlockState(),
+                                TCRBlocks.BLUE_MUSHROOM.get().defaultBlockState(),
+                                TCRBlocks.LAZY_ROSE.get().defaultBlockState(),
+                                TCRBlocks.WITHERED_ROSE.get().defaultBlockState(),
+                                TCRBlocks.MELANCHOLIC_ROSE.get().defaultBlockState(),
+                                TCRBlocks.BLUE_MUSHROOM.get().defaultBlockState(),
+                                TCRBlocks.LAZY_ROSE.get().defaultBlockState(),
+                                TCRBlocks.WITHERED_ROSE.get().defaultBlockState(),
+                                TCRBlocks.MELANCHOLIC_ROSE.get().defaultBlockState(),
+                                TCRBlocks.BLUE_MUSHROOM.get().defaultBlockState(),
+                                TCRBlocks.LAZY_ROSE.get().defaultBlockState(),
+                                TCRBlocks.WITHERED_ROSE.get().defaultBlockState(),
+                                TCRBlocks.MELANCHOLIC_ROSE.get().defaultBlockState()
+                        ))))));
 
         register(context, CATNIP_KEY, Feature.FLOWER, new RandomPatchConfiguration(32, 2, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(new NoiseThresholdProvider(2345L, new NormalNoise.NoiseParameters(0, 1.0), 0.005F, -0.8F, 0.33333334F, TCRBlocks.CATNIP.get().defaultBlockState(), List.of(TCRBlocks.CATNIP.get().defaultBlockState()), List.of(TCRBlocks.CATNIP.get().defaultBlockState()))))));
 

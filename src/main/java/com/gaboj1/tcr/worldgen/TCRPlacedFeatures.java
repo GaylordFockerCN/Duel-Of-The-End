@@ -41,7 +41,7 @@ public class TCRPlacedFeatures {
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(50, 0.1f, 1),//TODO: change to suitable value.
                         TCRBlocks.DENSE_FOREST_SPIRIT_SAPLING.get()));
 
-        register(context, DENSE_FOREST_SPIRIT_FLOWER_PLACED_KEY, configuredFeatures.getOrThrow(TCRConfiguredFeatures.DENSE_FOREST_SPIRIT_FLOWER_KEY),
+        register(context, DENSE_FOREST_SPIRIT_FLOWER_PLACED_KEY, configuredFeatures.getOrThrow(TCRConfiguredFeatures.DENSE_FOREST_FLOWER_KEY),
                 CountPlacement.of(3), RarityFilter.onAverageOnceEvery(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
 
         register(context, CATNIP_PLACED_KEY, configuredFeatures.getOrThrow(TCRConfiguredFeatures.CATNIP_KEY),

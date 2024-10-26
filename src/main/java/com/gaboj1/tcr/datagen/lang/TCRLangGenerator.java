@@ -114,7 +114,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRItems.STARLIT_DEWDROP.get(),"星光露珠");
         this.addItemUsageInfo(TCRItems.STARLIT_DEWDROP.get(),"精灵的掉落物。可于牧歌原野工匠处锻造精灵法杖。");
         this.add(TCRItems.WITHERING_TOUCH.get(),"枯萎之触");
-        this.addItemUsageInfo(TCRItems.WITHERING_TOUCH.get(),"持有枯萎之触时触发与树魔的战斗，可以削弱树魔的力量。");
+        this.addItemUsageInfo(TCRItems.WITHERING_TOUCH.get(),"背包内持有枯萎之触时触发与树魔的战斗，可以削弱树魔的生命上限。每次削减 15% 最多可削弱三次。");
         this.add(TCRItems.DENSE_FOREST_CERTIFICATE.get(),"密林之证");
         this.addItemUsageInfo(TCRItems.DENSE_FOREST_CERTIFICATE.get(),"回溯密林群系事件完成的证明。");
         this.add(TCRItems.HEALTH_WAND.get(),"生命法杖");
@@ -189,10 +189,10 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRItems.TREE_CHESTPLATE.get(),"树妖护胸");
         this.add(TCRItems.TREE_LEGGINGS.get(),"树妖护腿");
         this.add(TCRItems.TREE_BOOTS.get(),"树妖靴子");
-        this.addItemUsageInfo(TCRItems.TREE_HELMET.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，且激活精灵法杖。但极其不耐火。");
-        this.addItemUsageInfo(TCRItems.TREE_CHESTPLATE.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，且激活精灵法杖。但极其不耐火。");
-        this.addItemUsageInfo(TCRItems.TREE_LEGGINGS.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，且激活精灵法杖。但极其不耐火。");
-        this.addItemUsageInfo(TCRItems.TREE_BOOTS.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，且激活精灵法杖。但极其不耐火。");
+        this.addItemUsageInfo(TCRItems.TREE_HELMET.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，减少来自密林的怪物的攻击伤害（包括树魔！）并激活精灵法杖。但极其不耐火。");
+        this.addItemUsageInfo(TCRItems.TREE_CHESTPLATE.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，减少来自密林的怪物的攻击伤害（包括树魔！）并激活精灵法杖。但极其不耐火。");
+        this.addItemUsageInfo(TCRItems.TREE_LEGGINGS.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，减少来自密林的怪物的攻击伤害（包括树魔！）并激活精灵法杖。但极其不耐火。");
+        this.addItemUsageInfo(TCRItems.TREE_BOOTS.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，减少来自密林的怪物的攻击伤害（包括树魔！）并激活精灵法杖。但极其不耐火。");
 
 
         this.add(TCRItems.DREAMSCAPE_COIN.get(),"梦碎片");

@@ -1,5 +1,7 @@
 package com.gaboj1.tcr.item.custom.armor;
 
+import com.gaboj1.tcr.datagen.tags.TCREntityTagGenerator;
+import com.gaboj1.tcr.entity.custom.boss.yggdrasil.MagicProjectile;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.item.renderer.armor.TreeArmorRenderer;
 import com.gaboj1.tcr.util.ItemUtil;
@@ -9,6 +11,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -20,6 +23,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -61,6 +65,14 @@ public final class TreeArmorItem extends ArmorItem implements GeoItem {
                     livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1));
                 }
             }
+        }
+    }
+
+    public static void onLivingHurt(LivingHurtEvent event){
+        LivingEntity entity = event.getEntity();
+        //减伤来自密林的怪物的攻击
+        if (isFullSet(entity) && event.getSource().getEntity() != null && event.getSource().getEntity().getType().getTags().anyMatch((entityTypeTagKey -> entityTypeTagKey == TCREntityTagGenerator.MOB_IN_DENSE_FOREST))) {
+            event.setAmount(event.getAmount() * 0.45F);
         }
     }
 

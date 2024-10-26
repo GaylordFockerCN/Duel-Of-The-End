@@ -26,8 +26,8 @@ public class MagicProjectile extends LlamaSpit {
             super.onHitEntity(pResult);
         } else {
             Entity entity = this.getOwner();
-            if (entity instanceof LivingEntity livingentity) {
-                pResult.getEntity().hurt(this.damageSources().mobProjectile(this, livingentity), damage);
+            if (entity instanceof LivingEntity) {
+                pResult.getEntity().hurt(this.damageSources().indirectMagic(this, getOwner()), damage);
             }
         }
     }
@@ -35,7 +35,7 @@ public class MagicProjectile extends LlamaSpit {
     public MagicProjectile(Level level, LivingEntity owner) {
         this(TCREntities.MAGIC_PROJECTILE.get(), level);
         this.setOwner(owner);
-        this.setPos(owner.getX() - (double)(owner.getBbWidth() + 1.0F) * 0.5 * (double) Mth.sin(owner.yBodyRot * 0.017453292F), owner.getEyeY() - 0.10000000149011612, owner.getZ() + (double)(owner.getBbWidth() + 1.0F) * 0.5 * (double)Mth.cos(owner.yBodyRot * 0.017453292F));
+        this.setPos(owner.getX() - (double)(owner.getBbWidth() + 1.0F) * 0.5 * (double) Mth.sin(owner.yBodyRot * 0.0175F), owner.getEyeY() - 0.5, owner.getZ() + (double)(owner.getBbWidth() + 1.0F) * 0.5 * (double)Mth.cos(owner.yBodyRot * 0.0175F));
     }
 
 }

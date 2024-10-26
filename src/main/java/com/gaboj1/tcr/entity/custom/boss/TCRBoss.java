@@ -1,11 +1,10 @@
 package com.gaboj1.tcr.entity.custom.boss;
 
 import com.gaboj1.tcr.client.BossMusicPlayer;
-import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.entity.LevelableEntity;
+import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ShadowableEntity;
-import com.gaboj1.tcr.entity.ai.goal.BossRecoverGoal;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -18,24 +17,29 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * 方便统一调难度
  */
-public abstract class TCRBoss extends PathfinderMob implements NpcDialogue, ShadowableEntity, LevelableEntity {
+public abstract class TCRBoss extends PathfinderMob implements NpcDialogue, ShadowableEntity, LevelableEntity, MultiPlayerBoostEntity {
 
     @Nullable
     protected Player conversingPlayer;
     protected static final EntityDataAccessor<Boolean> IS_FIGHTING = SynchedEntityData.defineId(TCRBoss.class, EntityDataSerializers.BOOLEAN);
     protected static final EntityDataAccessor<Boolean> IS_SHADER = SynchedEntityData.defineId(TCRBoss.class, EntityDataSerializers.BOOLEAN);
     protected final ServerBossEvent bossInfo;
+    private int turningLockTicks = 0, movementLockTicks = 0;
+    private float lockYRot0 = 0;
+    private Vec3 pos0 = Vec3.ZERO;
     protected TCRBoss(EntityType<? extends PathfinderMob> type, Level level) {
         this(type, level, BossEvent.BossBarColor.PURPLE);
     }
@@ -97,6 +101,15 @@ public abstract class TCRBoss extends PathfinderMob implements NpcDialogue, Shad
     }
 
     @Override
+    public boolean hurt(@NotNull DamageSource source, float v) {
+        //防止超模
+        if(v > getMaxHealth() / 50){
+            v = getMaxHealth() / 50;
+        }
+        return super.hurt(source, v);
+    }
+
+    @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
         if (!this.level().isClientSide()) {
@@ -116,11 +129,38 @@ public abstract class TCRBoss extends PathfinderMob implements NpcDialogue, Shad
         bossInfo.removePlayer(player);
     }
 
+    /**
+     * 锁转向
+     */
+    public void turningLock(int tick){
+        turningLockTicks = tick;
+        lockYRot0 = getYRot();
+    }
+
+    /**
+     * 锁移动
+     */
+    public void movementLock(int tick){
+        movementLockTicks = tick;
+        pos0 = position();
+    }
+
     @Override
     public void tick() {
         super.tick();
-        //强制追，不知道为什么goal的那个追击坏了
-        if(getTarget() != null && getEntityData().get(IS_FIGHTING)){
+
+        if(turningLockTicks > 0 && lockYRot0 != 0){
+            turningLockTicks--;
+            setYBodyRot(lockYRot0);
+            setYHeadRot(lockYRot0);
+            setYRot(lockYRot0);
+        }
+
+        if(movementLockTicks > 0 && !pos0.equals(Vec3.ZERO)){
+            movementLockTicks--;
+            setPos(pos0);
+        } else if(getTarget() != null && getEntityData().get(IS_FIGHTING)){
+            //强制追，不知道为什么goal的那个追击坏了
             this.getNavigation().moveTo(getTarget(), 1.0f);
         }
 

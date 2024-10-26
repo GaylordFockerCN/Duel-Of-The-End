@@ -10,6 +10,8 @@ import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.worldgen.tree.DenseSpiritTreeGrower;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
@@ -38,46 +40,51 @@ public class TCRBlocks {
             () -> new PortalBed(DyeColor.WHITE,BlockBehaviour.Properties.copy(Blocks.BLACK_BED)));
 
     public static final RegistryObject<Block> DENSE_FOREST_SPIRIT_FLOWER = registerBlock("dense_forest_spirit_flower",
-            ()-> new DenseForestSpiritFlower(() -> MobEffects.POISON, 5, BlockBehaviour.Properties.copy(Blocks.WITHER_ROSE)));
+            ()-> new DenseForestFlower(() -> MobEffects.POISON, 0, BlockBehaviour.Properties.copy(Blocks.WITHER_ROSE)){
+                @Override
+                public SimpleParticleType getParticle() {
+                    return ParticleTypes.PORTAL;
+                }
+            });
     public static final RegistryObject<Block> POTTED_DENSE_FOREST_SPIRIT_FLOWER = REGISTRY.register("potted_dense_forest_spirit_flower",
             ()-> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_POPPY).noOcclusion()));
 
     public static final RegistryObject<Block> CATNIP = registerBlock("catnip_block",
-            ()-> new FlowerBlock(() -> MobEffects.SLOW_FALLING, 0, BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
+            ()-> new DenseForestFlower(() -> MobEffects.SLOW_FALLING, 0, BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
     public static final RegistryObject<Block> POTTED_CATNIP = REGISTRY.register("potted_catnip",
             ()-> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), TCRBlocks.CATNIP,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_POPPY).noOcclusion()));
 
     public static final RegistryObject<Block> BLUE_MUSHROOM = registerBlock("blue_mushroom_block",
-            ()-> new FlowerBlock(() -> MobEffects.BLINDNESS, 0, BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
+            ()-> new DenseForestFlower(() -> MobEffects.BLINDNESS, 0, BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
     public static final RegistryObject<Block> POTTED_BLUE_MUSHROOM = REGISTRY.register("potted_blue_mushroom",
             ()-> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), TCRBlocks.BLUE_MUSHROOM,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_POPPY).noOcclusion()));
 
     public static final RegistryObject<Block> THIRST_BLOOD_ROSE = registerBlock("thirst_blood_rose",
-            ()-> new FlowerBlock(() -> MobEffects.BLINDNESS, 0, BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
+            ()-> new DenseForestFlower(() -> MobEffects.HARM, 0, BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY), 20, 0));
 
     public static final RegistryObject<Block> POTTED_THIRST_BLOOD_ROSE = REGISTRY.register("potted_thirst_blood_rose",
             ()-> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), TCRBlocks.THIRST_BLOOD_ROSE,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_POPPY).noOcclusion()));
 
     public static final RegistryObject<Block> LAZY_ROSE = registerBlock("lazy_rose",
-            ()-> new FlowerBlock(() -> MobEffects.BLINDNESS, 0, BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
+            ()-> new DenseForestFlower(() -> MobEffects.MOVEMENT_SLOWDOWN, 0, BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY), 40, 4));
 
     public static final RegistryObject<Block> POTTED_LAZY_ROSE = REGISTRY.register("potted_lazy_rose",
             ()-> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), TCRBlocks.LAZY_ROSE,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_POPPY).noOcclusion()));
 
     public static final RegistryObject<Block> MELANCHOLIC_ROSE = registerBlock("melancholic_rose",
-            ()-> new FlowerBlock(() -> MobEffects.BLINDNESS, 0, BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
+            ()-> new DenseForestFlower(() -> MobEffects.DAMAGE_BOOST, 1, BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
 
     public static final RegistryObject<Block> POTTED_MELANCHOLIC_ROSE = REGISTRY.register("potted_melancholic_rose",
             ()-> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), TCRBlocks.MELANCHOLIC_ROSE,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_POPPY).noOcclusion()));
 
     public static final RegistryObject<Block> WITHERED_ROSE = registerBlock("withered_rose",
-            ()-> new FlowerBlock(() -> MobEffects.BLINDNESS, 0, BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
+            ()-> new FlowerBlock(() -> MobEffects.WITHER, 0, BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
 
     public static final RegistryObject<Block> POTTED_WITHERED_ROSE = REGISTRY.register("potted_withered_rose",
             ()-> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), TCRBlocks.WITHERED_ROSE,

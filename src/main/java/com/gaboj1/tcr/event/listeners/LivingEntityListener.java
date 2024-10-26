@@ -50,6 +50,9 @@ public class LivingEntityListener {
             if(event.getSource().getEntity() instanceof LivingEntity livingEntity){
                 livingEntity.setHealth(livingEntity.getMaxHealth());
             }
+            if(event.getSource().getDirectEntity() instanceof LivingEntity livingEntity){
+                livingEntity.setHealth(livingEntity.getMaxHealth());
+            }
         }
     }
 
@@ -60,6 +63,8 @@ public class LivingEntityListener {
             event.setAmount(0);
             event.setCanceled(true);
         }
+
+        TreeArmorItem.onLivingHurt(event);
     }
 
     /**
