@@ -71,7 +71,7 @@ public final class TreeArmorItem extends ArmorItem implements GeoItem {
     public static void onLivingHurt(LivingHurtEvent event){
         LivingEntity entity = event.getEntity();
         //减伤来自密林的怪物的攻击
-        if (isFullSet(entity) && event.getSource().getEntity() != null && event.getSource().getEntity().getType().getTags().anyMatch((entityTypeTagKey -> entityTypeTagKey == TCREntityTagGenerator.MOB_IN_DENSE_FOREST))) {
+        if (isFullSet(entity) && event.getSource().getEntity() != null && event.getSource().getEntity().getType().is(TCREntityTagGenerator.MOB_IN_DENSE_FOREST)) {
             event.setAmount(event.getAmount() * 0.45F);
         }
     }

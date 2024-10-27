@@ -1,10 +1,14 @@
 package com.gaboj1.tcr.entity.custom.boss;
 
 import com.gaboj1.tcr.client.BossMusicPlayer;
+import com.gaboj1.tcr.client.gui.BossBarHandler;
 import com.gaboj1.tcr.entity.LevelableEntity;
 import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ShadowableEntity;
+import com.gaboj1.tcr.network.PacketRelay;
+import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.packet.clientbound.SyncUuidPacket;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -48,6 +52,9 @@ public abstract class TCRBoss extends PathfinderMob implements NpcDialogue, Shad
         super(type, level);
         levelUp(SaveUtil.worldLevel);
         bossInfo = new ServerBossEvent(this.getDisplayName(), color, BossEvent.BossBarOverlay.PROGRESS);
+        if(!level.isClientSide){
+            PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncUuidPacket(bossInfo.getId(), getId()));
+        }
     }
 
     @Override

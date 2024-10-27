@@ -68,7 +68,7 @@ public class DenseForestFlower extends FlowerBlock {
     @Override
     @SuppressWarnings("deprecation")
     public void entityInside(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, Entity pEntity) {
-        if(pEntity.getType().getTags().anyMatch((entityTypeTagKey -> entityTypeTagKey == TCREntityTagGenerator.MOB_IN_DENSE_FOREST))){
+        if(pEntity.getType().is(TCREntityTagGenerator.MOB_IN_DENSE_FOREST)){
             return;
         }
         if (!pLevel.isClientSide && pLevel.getDifficulty() != Difficulty.PEACEFUL) {
