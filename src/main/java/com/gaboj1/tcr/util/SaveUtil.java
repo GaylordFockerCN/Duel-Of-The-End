@@ -430,6 +430,7 @@ public class SaveUtil {
     }
 
     public static boolean deleteCache(String fileName){
+        fromNbt(new CompoundTag());
         return getFile(fileName).delete();
     }
 

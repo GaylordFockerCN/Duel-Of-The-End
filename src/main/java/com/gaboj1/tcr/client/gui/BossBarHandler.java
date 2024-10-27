@@ -1,6 +1,8 @@
 package com.gaboj1.tcr.client.gui;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
 import com.gaboj1.tcr.entity.custom.boss.second_boss.SecondBossEntity;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
 import net.minecraft.client.Minecraft;
@@ -10,13 +12,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 
 import java.util.*;
 
 public class BossBarHandler {
-//    public static final Set<LivingEntity> BOSSES = Collections.newSetFromMap(new WeakHashMap<>());
-    public static final Map<UUID, Integer> BOSSES = new HashMap<>();
+    public static final Map<UUID, Integer> BOSSES = new HashMap<>();//一个BossBar对应一个实体的id，在实体构建的时候发包来设置
 
     public static boolean renderBossBar(GuiGraphics guiGraphics, LerpingBossEvent bossEvent, int x, int y){
         ResourceLocation barLocation;
@@ -24,17 +24,9 @@ public class BossBarHandler {
         if (BOSSES.isEmpty()) {
             return false;
         }
-        System.out.println("1");
-        Minecraft.getInstance().player.displayClientMessage(Component.literal(bossEvent.getId().toString()),true);
         if(BOSSES.containsKey(bossEvent.getId()) && Minecraft.getInstance().level != null){
             boss = Minecraft.getInstance().level.getEntity(BOSSES.get(bossEvent.getId()));
         }
-//        for (LivingEntity mob : BOSSES) {
-//            if (mob.getUUID().equals(bossEvent.getId())) {
-//                boss = mob;
-//                break;
-//            }
-//        }
         if(boss instanceof YggdrasilEntity){
             barLocation = new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/gui/bossbar/first_boss_bar.png");
         } else if(boss instanceof SecondBossEntity){
@@ -45,10 +37,16 @@ public class BossBarHandler {
         drawBar(guiGraphics, x, y, bossEvent, barLocation);
         //画名字
         Component component = bossEvent.getName();
+        Component health = Component.literal(String.format("(%d / %d)", (int)((TCRBoss) boss).getHealth(), (int)((TCRBoss) boss).getMaxHealth()));
         int textWidth = Minecraft.getInstance().font.width(component);
         int textX = Minecraft.getInstance().getWindow().getGuiScaledWidth() / 2 - textWidth / 2;
         int textY = y - 9;
         guiGraphics.drawString(Minecraft.getInstance().font, component, textX, textY, 16777215);
+        if(TCRConfig.SHOW_BOSS_HEALTH.get()){
+            int textWidth2 = Minecraft.getInstance().font.width(health);
+            int textX2 = Minecraft.getInstance().getWindow().getGuiScaledWidth() / 2 - textWidth2 / 2;
+            guiGraphics.drawString(Minecraft.getInstance().font, health, textX2, y, 16777215);
+        }
         return true;
     }
 

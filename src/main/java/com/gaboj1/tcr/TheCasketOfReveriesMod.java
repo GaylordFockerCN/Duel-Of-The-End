@@ -70,6 +70,7 @@ public class TheCasketOfReveriesMod {
         MinecraftForge.EVENT_BUS.register(this);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, TCRConfig.SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, TCRConfig.CLIENT_SPEC);
     }
 
     public static MutableComponent getInfo(String key){
