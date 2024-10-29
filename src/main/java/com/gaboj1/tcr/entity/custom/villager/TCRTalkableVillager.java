@@ -61,7 +61,7 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
     }
 
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+    public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         if(player.isCreative() ){//潜行右键切换村民种类，客户端服务端都需要改变。单单右键则输出当前id
             if(player.isShiftKeyDown()){
                 setSkinID(getSkinID()+1);

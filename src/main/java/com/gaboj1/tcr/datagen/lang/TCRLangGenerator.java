@@ -40,7 +40,9 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add("info.the_casket_of_reveries.teleport_lock","该区域尚未解锁");
         this.add("info.the_casket_of_reveries.teleport_unlock","成功激活此锚点！");
         this.add("info.the_casket_of_reveries.health_added_from_villager1","成功吸取了村民的生命。");
-        this.add("info.the_casket_of_reveries.boss1invincible","摧毁树爪或小怪以解除伊格德拉希尔无敌状态");
+        this.add("info.the_casket_of_reveries.boss1invincible","摧毁树爪以解除伊格德拉希尔无敌状态");
+        this.add("info.the_casket_of_reveries.boss1tip2","请及时杀死精灵，以免伊格德拉希尔恢复生命！");
+        this.add("info.the_casket_of_reveries.boss1tip3","小心伊格德拉希尔召唤的花，以免受到瞬间伤害等负面效果！");
         this.add("info.the_casket_of_reveries.alreadyAddWhite","你已经是村民阵营了，不能伤害村民哦");
         this.add("info.the_casket_of_reveries.cannot_spawn","目前的剧情进度还无法召唤此BOSS！");
         this.add("info.the_casket_of_reveries.sure_to_spawn","再次右键以召唤BOSS（用于刷材料，不影响剧情）");

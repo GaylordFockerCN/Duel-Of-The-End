@@ -82,7 +82,9 @@ public class TCRChestLootTables implements LootTableSubProvider {
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 2.0F))
                         .add(LootItem.lootTableItem(Items.GOLD_INGOT)).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 8.0F)))
                 )
-
+                .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 5.0F))
+                        .add(LootItem.lootTableItem(Items.LAPIS_LAZULI)).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 64.0F)))
+                )
         );
 
         builder.accept(TCRLoot.VILLAGE1SPECIAL2, LootTable.lootTable()
@@ -99,13 +101,16 @@ public class TCRChestLootTables implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(TCRItems.ORICHALCUM_HELMET.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 2.0F))
-                        .add(LootItem.lootTableItem(TCRItems.RAW_ORICHALCUM.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 8.0F)))
+                        .add(LootItem.lootTableItem(TCRItems.RAW_ORICHALCUM.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 6.0F)))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 3.0F))
                         .add(LootItem.lootTableItem(TCRItems.AMMO.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 6.0F)))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 2.0F))
                         .add(LootItem.lootTableItem(TCRItems.ORICHALCUM.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                )
+                .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 2.0F))
+                        .add(LootItem.lootTableItem(Items.LAPIS_LAZULI)).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 64.0F)))
                 )
         );
 

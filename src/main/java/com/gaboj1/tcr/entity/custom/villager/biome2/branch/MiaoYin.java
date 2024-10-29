@@ -371,7 +371,7 @@ public class MiaoYin extends YueShiLineNpc {
     }
 
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+    public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         if(player.isCreative() && player.isShiftKeyDown()){
             setIsSitting(!isSitting());
             return InteractionResult.sidedSuccess(player.level().isClientSide);

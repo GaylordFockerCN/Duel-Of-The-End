@@ -315,11 +315,11 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 chat(BUILDER.buildDialogueAnswer(entityType,15,false));
                 startCustomTrade(player,
                         new MerchantOffer(
-                                new ItemStack(TCRItems.HEART_OF_THE_SAPLING.get(), 20),
+                                new ItemStack(TCRItems.HEART_OF_THE_SAPLING.get(), 10),
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
                                 142857, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get(), 4),
+                                new ItemStack(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get(), 2),
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
                                 142857, 0, 0.02f),
                         new MerchantOffer(
@@ -328,7 +328,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                                 142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.STARLIT_DEWDROP.get(), 1),
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 3),
                                 142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
@@ -346,39 +346,39 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 chat(BUILDER.buildDialogueAnswer(entityType,23,false));
                 startCustomTrade(player,
                         new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 6),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
                                 new ItemStack(TCRItems.BEER.get(), 1),
                                 142857, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 12),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
                                 new ItemStack(TCRItems.DRINK1.get(), 1),
                                 142857, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 13),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
                                 new ItemStack(TCRItems.DRINK2.get(), 1),
                                 142857, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 3),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
                                 new ItemStack(TCRItems.DREAM_TA.get(), 1),
                                 142857, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 12),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
                                 new ItemStack(TCRItems.JUICE_TEA.get(), 1),
                                 142857, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 20),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 2),
                                 new ItemStack(TCRItems.HOT_CHOCOLATE.get(), 1),
                                 142857, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 20),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 4),
                                 new ItemStack(Items.COOKED_BEEF, 1),
                                 142857, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 16),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 2),
                                 new ItemStack(Items.COOKED_CHICKEN, 2),
                                 142857, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 16),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 3),
                                 new ItemStack(Items.COOKED_PORKCHOP, 1),
                                 142857, 0, 0.02f)
                 );
@@ -387,15 +387,15 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 chat(BUILDER.buildDialogueAnswer(entityType,-1,false));
                 startCustomTrade(player,
                         new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 6),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 2),
                                 new ItemStack(TCRItems.BEER.get(), 1),
                                 142857, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 12),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 2),
                                 new ItemStack(TCRItems.DRINK1.get(), 1),
                                 142857, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 13),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 2),
                                 new ItemStack(TCRItems.DRINK2.get(), 1),
                                 142857, 0, 0.02f),
                         new MerchantOffer(
@@ -408,11 +408,11 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                 chat(BUILDER.buildDialogueAnswer(entityType,-1,false));
                 startCustomTrade(player,
                         new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 10),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 2),
                                 new ItemStack(TCRItems.JUICE_TEA.get(), 1),
                                 142857, 0, 0.02f),
                         new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 20),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 3),
                                 new ItemStack(TCRItems.HOT_CHOCOLATE.get(), 1),
                                 142857, 0, 0.02f),
                         new MerchantOffer(

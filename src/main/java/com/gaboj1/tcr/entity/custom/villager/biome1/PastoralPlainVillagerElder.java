@@ -106,7 +106,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     }
 
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+    public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         this.setItemInHand(InteractionHand.MAIN_HAND, TCRItems.ELDER_STAFF.get().getDefaultInstance());
 //        System.out.println(this.getItemInHand(InteractionHand.MAIN_HAND)+"client?"+this.isClientSide());
         if (hand == InteractionHand.MAIN_HAND) {

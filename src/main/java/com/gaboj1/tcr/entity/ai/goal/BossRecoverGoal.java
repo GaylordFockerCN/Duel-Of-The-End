@@ -16,7 +16,7 @@ public class BossRecoverGoal extends Goal {
     }
     @Override
     public boolean canUse() {
-        return EntityUtil.getNearByPlayers(boss, dis).isEmpty();
+        return EntityUtil.getNearByEntities(boss, dis).isEmpty();
     }
 
     @Override

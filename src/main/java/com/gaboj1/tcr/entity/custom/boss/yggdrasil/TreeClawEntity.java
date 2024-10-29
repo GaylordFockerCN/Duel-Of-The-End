@@ -3,6 +3,7 @@ package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 import com.gaboj1.tcr.entity.LevelableEntity;
 import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.entity.TCREntities;
+import com.gaboj1.tcr.entity.custom.BulletEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
@@ -89,7 +90,10 @@ public class TreeClawEntity extends Mob implements GeoEntity, LevelableEntity, M
         if(source.getEntity() instanceof YggdrasilEntity){
             return false;
         }
-        return super.hurt(source, getMaxHealth() / 8 + 1);//打8次才死，机制怪，除非火枪
+        if(source.getDirectEntity() instanceof BulletEntity){
+            return super.hurt(source, getMaxHealth() / 2 + 1);//打8次才死，机制怪，除非火枪射两次
+        }
+        return super.hurt(source, getMaxHealth() / 6 + 1);//打8次才死，机制怪，除非火枪
     }
 
     @Override

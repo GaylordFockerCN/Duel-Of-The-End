@@ -12,6 +12,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class YueShiLineNpc extends TCRTalkableVillager {
     public YueShiLineNpc(EntityType<? extends TCRTalkableVillager> pEntityType, Level pLevel, int skinID) {
@@ -19,7 +20,7 @@ public abstract class YueShiLineNpc extends TCRTalkableVillager {
     }
 
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+    public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         if (hand == InteractionHand.MAIN_HAND) {
             this.getLookControl().setLookAt(player);
             if (player instanceof ServerPlayer serverPlayer) {

@@ -182,10 +182,13 @@ public abstract class TCRVillager extends Villager implements GeoEntity, ManySki
         super.addParticlesAroundSelf(particleTypes);
     }
 
-    @Nullable
     @Override
+    @Nullable
     protected SoundEvent getAmbientSound() {
-
+        // 1/5概率叫，降低叫的频率
+        if(getRandom().nextInt(5) != 1){
+            return null;
+        }
         //是坏人就唉声叹气一下
         if(SaveUtil.biome1.choice == 1){
             SoundEvent sound = TCRSounds.FEMALE_SIGH.get();
@@ -277,7 +280,6 @@ public abstract class TCRVillager extends Villager implements GeoEntity, ManySki
         pVillagerBrain.addActivity(Activity.REST, VillagerGoalPackages.getRestPackage(villagerprofession, 0.5F));
         pVillagerBrain.addActivity(Activity.IDLE, VillagerGoalPackages.getIdlePackage(villagerprofession, 0.5F));
         pVillagerBrain.addActivity(Activity.PANIC, VillagerGoalPackages.getPanicPackage(villagerprofession, 0.5F));
-//        pVillagerBrain.addActivity(Activity.FIGHT, VillagerGoalPackages.getPanicPackage(villagerprofession, 0.5F));//FIGHT不管用..
         pVillagerBrain.addActivity(Activity.PRE_RAID, VillagerGoalPackages.getPreRaidPackage(villagerprofession, 0.5F));
         pVillagerBrain.addActivity(Activity.RAID, VillagerGoalPackages.getRaidPackage(villagerprofession, 0.5F));
         pVillagerBrain.addActivity(Activity.HIDE, VillagerGoalPackages.getHidePackage(villagerprofession, 0.5F));
@@ -301,12 +303,13 @@ public abstract class TCRVillager extends Villager implements GeoEntity, ManySki
      * 重写村民的getTypeName防止因为职业而读取不到对话信息
     */
     @Override
-    protected Component getTypeName() {
+    protected @NotNull Component getTypeName() {
         return this.getType().getDescription();
     }
 
     @Override
-    public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
+    public @NotNull InteractionResult mobInteract(@NotNull Player pPlayer, @NotNull InteractionHand pHand) {
+
         if ( this.isAlive() && !this.isTrading() && !this.isSleeping() && !pPlayer.isSecondaryUseActive()) {
             if (canTalk && pPlayer instanceof ServerPlayer && pHand == InteractionHand.MAIN_HAND) {
                 talk(pPlayer, false);

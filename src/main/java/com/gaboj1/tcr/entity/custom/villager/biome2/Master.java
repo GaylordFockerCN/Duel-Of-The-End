@@ -212,7 +212,7 @@ public abstract class Master extends TCRVillager implements NpcDialogue, Levelab
     }
 
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand pHand) {
+    public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand pHand) {
         if (pHand == InteractionHand.MAIN_HAND) {
             if (!this.level().isClientSide()) {
                 this.lookAt(player, 180.0F, 180.0F);

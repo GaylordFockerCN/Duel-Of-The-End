@@ -14,6 +14,7 @@ import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class MushroomLineNpc extends TCRTalkableVillager {
     public MushroomLineNpc(EntityType<? extends TCRTalkableVillager> pEntityType, Level pLevel, int skinID) {
@@ -28,7 +29,7 @@ public abstract class MushroomLineNpc extends TCRTalkableVillager {
     }
 
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+    public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         if (hand == InteractionHand.MAIN_HAND) {
             this.getLookControl().setLookAt(player);
             if (player instanceof ServerPlayer serverPlayer) {

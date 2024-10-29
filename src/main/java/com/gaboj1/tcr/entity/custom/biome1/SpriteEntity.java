@@ -3,6 +3,7 @@ import com.gaboj1.tcr.entity.LevelableEntity;
 import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.MagicProjectile;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -80,6 +81,26 @@ public class SpriteEntity extends Monster implements GeoEntity, LevelableEntity,
         return false;
     }
 
+    /**
+     * 如果受到伤害过大则取消施法
+     */
+    @Override
+    public boolean hurt(@NotNull DamageSource source, float v) {
+        if(v > 10){
+            buff();
+        }
+        return super.hurt(source, v);
+    }
+
+    public void buff(){
+        timer = 0;
+        triggerAnim("Attack", "buff");
+        AttributeInstance instance = getAttribute(Attributes.ARMOR);
+        if(instance != null){
+            instance.addPermanentModifier(new AttributeModifier("buff modify", 5, AttributeModifier.Operation.ADDITION));
+        }
+    }
+
     @Override
     public void tick() {
         if(!level().isClientSide){
@@ -99,12 +120,7 @@ public class SpriteEntity extends Monster implements GeoEntity, LevelableEntity,
             }
 
             if(!buffed && getHealth() < getMaxHealth() / 2){
-                timer = 0;
-                triggerAnim("Attack", "buff");
-                AttributeInstance instance = getAttribute(Attributes.ARMOR);
-                if(instance != null){
-                    instance.addPermanentModifier(new AttributeModifier("buff modify", 5, AttributeModifier.Operation.ADDITION));
-                }
+                buff();
                 buffed = true;
             }
         }

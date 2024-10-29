@@ -61,18 +61,21 @@ public class EntityUtil {
     }
 
     /**
+     * 啥比Mojang获取附近实体非要视线对着才算
+     */
+    public static List<Entity> getNearByEntities(LivingEntity self, int offset){
+        return self.level().getEntities(self, getPlayerAABB(self.getOnPos(), offset), entity -> entity.distanceTo(self) < offset);
+    }
+
+    /**
      * 获取附近的玩家
      */
     public static List<Player> getNearByPlayers(LivingEntity self, int offset){
-        return self.level().getNearbyPlayers(TargetingConditions.DEFAULT, self, getPlayerAABB(self.getOnPos(), offset));
-    }
-
-    public static List<LivingEntity> getNearByEntities(Level level, LivingEntity self, int offset){
-        return level.getNearbyEntities(LivingEntity.class, TargetingConditions.DEFAULT, self, getPlayerAABB(self.getOnPos(), offset));
+        return self.level().getNearbyPlayers(TargetingConditions.forNonCombat(), self, getPlayerAABB(self.getOnPos(), offset));
     }
 
     public static <T extends LivingEntity> List<T> getNearByEntities(Class<T> aClass, Level level, LivingEntity self, int offset){
-        return level.getNearbyEntities(aClass, TargetingConditions.DEFAULT, self, getPlayerAABB(self.getOnPos(), offset));
+        return level.getNearbyEntities(aClass, TargetingConditions.forNonCombat(), self, getPlayerAABB(self.getOnPos(), offset));
     }
 
     public static int getPlayerCount(ServerLevel level){

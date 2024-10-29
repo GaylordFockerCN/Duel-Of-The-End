@@ -17,6 +17,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -79,7 +80,7 @@ public class PiPa extends Item implements GeoItem, PoseItem {
             }
             stack.setDamageValue(stack.getDamageValue() + 1);
             level.playSound(null, player.getX(), player.getY(), player.getZ(), TCRSounds.PIPA.get(), SoundSource.BLOCKS, 1, 1);
-            for(LivingEntity entity : EntityUtil.getNearByEntities(serverLevel, player, 20)){
+            for(Entity entity : EntityUtil.getNearByEntities(player, 20)){
                 if(EntityUtil.isInFront(entity, player, 20) && entity.distanceTo(player) < 10){
                     //对第二boss可破盾但无伤
                     if(entity instanceof SecondBossEntity secondBoss){

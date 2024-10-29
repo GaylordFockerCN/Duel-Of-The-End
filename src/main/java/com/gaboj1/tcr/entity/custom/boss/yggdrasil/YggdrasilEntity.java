@@ -16,6 +16,7 @@ import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
 import com.gaboj1.tcr.util.DataManager;
+import com.gaboj1.tcr.util.EntityUtil;
 import com.gaboj1.tcr.util.ItemUtil;
 import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
@@ -82,6 +83,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     private int recoverTimer = 0;
     private int treeClawTimer = 0;
     private int flowerTimer = 0;
+    private int recoverAnimTimer = 0;
     public final int maxRecoverTimer = 200;
     private final List<Integer> mobs = new ArrayList<>();
     private static final List<RegistryObject<Block>> FLOWER_BLOCKS = new ArrayList<>();
@@ -96,7 +98,6 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
         FLOWER_BLOCKS.add(TCRBlocks.THIRST_BLOOD_ROSE);
         FLOWER_BLOCKS.add(TCRBlocks.POTTED_MELANCHOLIC_ROSE);
         FLOWER_BLOCKS.add(TCRBlocks.BLUE_MUSHROOM);
-        setHealth(getMaxHealth() / 2 + 10);//TODO 测试用
     }
 
     public static AttributeSupplier setAttributes() {
@@ -109,10 +110,10 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     }
 
     protected void registerGoals() {
-        this.goalSelector.addGoal(0,new BossRecoverGoal(this, 72));
+        this.goalSelector.addGoal(0,new BossRecoverGoal(this, 100));
         this.goalSelector.addGoal(1,new ConversationTriggerGoal(this));
         this.goalSelector.addGoal(2,new NpcDialogueGoal<>(this));
-        this.goalSelector.addGoal(3, new RangeMeleeAttackGoal(this, 1.0, true, 72, 80){
+        this.goalSelector.addGoal(3, new RangeMeleeAttackGoal(this, 1.0, true, 22, 80){
             @Override
             public boolean canUse() {
                 return YggdrasilEntity.this.getEntityData().get(IS_FIGHTING) && shootTimer <= 0 && flowerTimer <=0 && treeClawTimer <=0 && super.canUse();
@@ -270,20 +271,28 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
         super.tick();
 
         if(!level().isClientSide){
+            if(recoverAnimTimer > 0){
+                recoverAnimTimer--;
+                setHealth(getHealth() + 2);
+                for(Entity entity : EntityUtil.getNearByEntities(this, 30)){
+                    if(entity instanceof Player player){
+                        player.displayClientMessage(Component.translatable("info.the_casket_of_reveries.boss1tip2"),true);
+                    }
+                }
+            }
 
             //恢复的倒计时，这个timer由goal触发
             if(recoverTimer <= 0){
                 boolean canRecover = false;
                 for(int entityID : mobs){
                     Entity entity = level().getEntity(entityID);
-                    if(entity instanceof SpriteEntity spriteEntity && spriteEntity.getHealth() >= spriteEntity.getMaxHealth()/2){
+                    if(entity instanceof SpriteEntity spriteEntity && spriteEntity.getHealth() >= spriteEntity.getMaxHealth() / 3){
                         canRecover = true;
                         break;
                     }
                 }
                 if(canRecover){
                     recover();
-                    recoverTimer = 114514;//保证只恢复一次
                 }
             } else if(recoverTimer <= maxRecoverTimer){
                 recoverTimer--;
@@ -321,7 +330,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                     projectile.shoot(x, y + $$5, z, 1.5F, 10.0F);
                     level().addFreshEntity(projectile);
                 }
-                if(shootTimer == 31 || shootTimer == 51){
+                if(shootTimer == 36 || shootTimer == 51){
                     MagicProjectile projectile = new MagicProjectile(level(), this);
                     if(random.nextBoolean() && shootTarget != null){
                         x = shootTarget.getX() - this.getX();
@@ -592,11 +601,11 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     public static class SpawnTreeClawGoal extends Goal {
         private final YggdrasilEntity yggdrasil;
         private int shootInterval;
-        public final int shootIntervalMax = 100;
+        public final int shootIntervalMax = 200;
 
         public SpawnTreeClawGoal(YggdrasilEntity yggdrasil) {
             this.yggdrasil = yggdrasil;
-            shootInterval = shootIntervalMax;//开局就发射一个树爪，方便调试，血越少越频繁
+            shootInterval = shootIntervalMax;
         }
 
         @Override
@@ -643,6 +652,11 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
         @Override
         public void start() {
             yggdrasil.triggerAnim("Summon", "flower");
+            for(Entity entity : EntityUtil.getNearByEntities(yggdrasil, 30)){
+                if(entity instanceof Player player){
+                    player.displayClientMessage(Component.translatable("info.the_casket_of_reveries.boss1tip3"),true);
+                }
+            }
             yggdrasil.flowerTimer = 76;
             yggdrasil.turningLock(76);
             yggdrasil.movementLock(76);
@@ -679,11 +693,13 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
             if(yggdrasil.level().isClientSide){
                 return;
             }
+            yggdrasil.getEntityData().set(STATE, 2);
             yggdrasil.triggerAnim("Summon", "summon");
             List<Player> players = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.DEFAULT, yggdrasil, getPlayerAABB(yggdrasil.getOnPos(), 10));
 //            List<Player> players2 = this.yggdrasil.level().getNearbyPlayers(TargetingConditions.forNonCombat(), yggdrasil, getPlayerAABB(yggdrasil.getOnPos(), 10));//创造测试用
 //            players.addAll(players2);
             for(Player player : players){
+                player.displayClientMessage(Component.translatable("info.the_casket_of_reveries.boss1tip2"),true);
                 if(yggdrasil.mobs.size() <= 10){
                     SpriteEntity mob = TCREntities.SPRITE.get().spawn(((ServerLevel) yggdrasil.level()), player.getOnPos().above(3), MobSpawnType.NATURAL);
                     if(mob == null){
@@ -709,8 +725,9 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
      */
     public void recover(){
         triggerAnim("Recover","recover");
-        getEntityData().set(STATE, 2);
-        setHealth(getHealth()+getMaxHealth()/4);
+        recoverAnimTimer = 100;
+        movementLock(100);
+        turningLock(100);
     }
 
     /**

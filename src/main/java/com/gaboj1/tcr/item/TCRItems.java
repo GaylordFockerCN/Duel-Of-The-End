@@ -11,10 +11,8 @@ import com.gaboj1.tcr.item.custom.boss_loot.TreeSpiritWand;
 import com.gaboj1.tcr.item.custom.weapon.*;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.*;
@@ -56,7 +54,7 @@ public class TCRItems {
 			() -> new OrichalcumArmorItem(TCRArmorMaterials.ORICHALCUM, ArmorItem.Type.BOOTS, new Item.Properties().rarity(TCRRarities.LIANG_PIN)));
 	public static final RegistryObject<Item> ORICHALCUM_BOW = REGISTRY.register("orichalcum_bow", () -> new OrichalcumBow(new Item.Properties().rarity(TCRRarities.LIANG_PIN).defaultDurability(128)));
 	public static final RegistryObject<Item> ORICHALCUM_CROSSBOW = REGISTRY.register("orichalcum_crossbow", () -> new OrichalcumCrossbow(new Item.Properties().rarity(TCRRarities.SHANG_PIN).defaultDurability(128)));
-	public static final RegistryObject<Item> GOD_ORICHALCUM_CROSSBOW = REGISTRY.register("god_orichalcum_crossbow", () -> new OrichalcumCrossbow(new Item.Properties().rarity(TCRRarities.TE_PIN).defaultDurability(768)){
+	public static final RegistryObject<Item> GOD_ORICHALCUM_CROSSBOW = REGISTRY.register("god_orichalcum_crossbow", () -> new OrichalcumCrossbow(new Item.Properties().rarity(TCRRarities.TE_PIN).defaultDurability(256)){
 		/**
 		 * 耐久翻倍，不会损坏，自带多重射击
 		 */

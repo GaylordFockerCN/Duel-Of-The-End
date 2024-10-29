@@ -99,10 +99,21 @@ public class PlayerEventListener {
 
     /**
      * 玩家退出事件
+     * 玩家退出假人跟着退出，防bug
      */
     @SubscribeEvent
     public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event){
-
+        //主世界没假身就召唤假身，注意主世界和维度的区别
+        Player player = event.getEntity();
+        if(player instanceof ServerPlayer serverPlayer && serverPlayer.serverLevel().dimension() == TCRDimension.P_SKY_ISLAND_LEVEL_KEY && serverPlayer.getServer() != null){
+            serverPlayer.getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {
+                ServerLevel overworld = serverPlayer.getServer().overworld();
+                if(overworld.getEntity(tcrPlayer.getFakePlayerUuid()) instanceof TCRFakePlayer fakePlayer){
+                    //召唤假人
+                    fakePlayer.discard();
+                }
+            }));
+        }
     }
 
     /**
