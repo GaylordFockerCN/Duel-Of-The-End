@@ -192,6 +192,13 @@ public class TCRItemTabs {
 						tabData.accept(TCRItems.ORICHALCUM_CHESTPLATE.get());
 						tabData.accept(TCRItems.ORICHALCUM_LEGGINGS.get());
 						tabData.accept(TCRItems.ORICHALCUM_BOOTS.get());
+						tabData.accept(TCRItems.ORICHALCUM_BOW.get());
+						tabData.accept(TCRItems.ORICHALCUM_CROSSBOW.get());
+						tabData.accept(TCRItems.GOD_ORICHALCUM_CROSSBOW.get());
+						tabData.accept(TCRItems.ORICHALCUM_SWORD.get());
+						tabData.accept(TCRItems.ORICHALCUM_GREAT_SWORD.get());
+						tabData.accept(TCRItems.ORICHALCUM_AXE.get());
+						tabData.accept(TCRItems.ORICHALCUM_PICKAXE.get());
 
 						tabData.accept(TCRItems.ICE_TIGER_HELMET.get());
 						tabData.accept(TCRItems.ICE_TIGER_CHESTPLATE.get());

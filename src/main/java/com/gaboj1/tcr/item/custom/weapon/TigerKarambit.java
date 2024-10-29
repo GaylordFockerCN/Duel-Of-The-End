@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.item.custom.weapon;
 
+import com.gaboj1.tcr.item.TCRRarities;
 import com.gaboj1.tcr.item.custom.DropItem;
 import com.gaboj1.tcr.util.EntityUtil;
 import com.google.common.collect.ImmutableMultimap;
@@ -20,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class TigerKarambit extends DropItem {
     public TigerKarambit() {
-        super(new Properties().stacksTo(1).rarity(Rarity.UNCOMMON).durability(1145));
+        super(new Properties().stacksTo(1).rarity(TCRRarities.SHANG_PIN).durability(1145));
     }
 
     @Override

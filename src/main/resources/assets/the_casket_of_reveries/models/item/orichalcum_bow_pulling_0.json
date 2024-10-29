@@ -1,0 +1,6 @@
+{
+    "parent": "the_casket_of_reveries:item/orichalcum_bow",
+    "textures": {
+        "layer0": "the_casket_of_reveries:item/bow_pulling_0"
+    }
+}

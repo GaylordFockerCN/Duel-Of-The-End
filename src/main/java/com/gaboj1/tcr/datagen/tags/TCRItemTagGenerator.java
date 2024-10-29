@@ -36,5 +36,12 @@ public class TCRItemTagGenerator extends ItemTagsProvider {
                 .add(TCRItems.ORICHALCUM_CHESTPLATE.get())
                 .add(TCRItems.ORICHALCUM_LEGGINGS.get())
                 .add(TCRItems.ORICHALCUM_BOOTS.get());
+
+        this.tag(ItemTags.SWORDS)
+                .add(TCRItems.ORICHALCUM_SWORD.get());
+        this.tag(ItemTags.AXES)
+                .add(TCRItems.ORICHALCUM_AXE.get());
+        this.tag(ItemTags.PICKAXES)
+                .add(TCRItems.ORICHALCUM_PICKAXE.get());
     }
 }

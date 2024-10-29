@@ -2,6 +2,7 @@ package com.gaboj1.tcr.item.custom;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.item.TCRItems;
+import com.gaboj1.tcr.item.TCRRarities;
 import com.gaboj1.tcr.util.ItemUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class Wallet extends DropItem{
     public Wallet() {
-        super(new Item.Properties().setNoRepair().stacksTo(1).rarity(Rarity.COMMON));
+        super(new Item.Properties().setNoRepair().stacksTo(1).rarity(TCRRarities.TE_PIN));
     }
 
     @Override

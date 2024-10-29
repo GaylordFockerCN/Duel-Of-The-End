@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.item.custom;
 
 import com.gaboj1.tcr.capability.TCRCapabilityProvider;
+import com.gaboj1.tcr.item.TCRRarities;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -15,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class RecallScroll extends DropItem{
     public RecallScroll(){
-        super(new Properties().rarity(Rarity.EPIC));
+        super(new Properties().rarity(TCRRarities.TE_PIN));
     }
 
     @Override

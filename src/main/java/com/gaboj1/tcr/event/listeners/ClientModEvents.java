@@ -28,20 +28,20 @@ import com.gaboj1.tcr.entity.client.dreamspirit.SquirrelRenderer;
 import com.gaboj1.tcr.entity.client.dreamspirit.WindFeatherFalconRenderer;
 import com.gaboj1.tcr.entity.client.villager.TCRVillagerRenderer;
 import com.gaboj1.tcr.entity.client.SwordEntityRenderer;
+import com.gaboj1.tcr.item.TCRItems;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.LlamaSpitRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.CrossbowItem;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-
-import static com.gaboj1.tcr.client.gui.BossBarHandler.BOSSES;
 
 @Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEvents{
@@ -106,6 +106,26 @@ public class ClientModEvents{
 
 
         BlockEntityRenderers.register(TCRBlockEntities.PORTAL_BED.get(), PortalBedRenderer::new);
+
+        event.enqueueWork(() ->{
+            ItemPropertyFunction PULL = (itemStack, level, entity, i) -> {
+                if (entity == null) {
+                    return 0.0F;
+                } else {
+                    return entity.getUseItem() != itemStack ? 0.0F : (float)(itemStack.getUseDuration() - entity.getUseItemRemainingTicks()) / 20.0F;
+                }
+            };
+            ItemPropertyFunction PULLING = (itemStack, level, entity, i) ->
+                    entity != null && entity.isUsingItem() && entity.getUseItem() == itemStack ? 1.0F : 0.0F;
+
+            ItemProperties.register(TCRItems.ORICHALCUM_BOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pull"), PULL);
+            ItemProperties.register(TCRItems.ORICHALCUM_BOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pulling"), PULLING);
+
+            ItemProperties.register(TCRItems.ORICHALCUM_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pull"), PULL);
+            ItemProperties.register(TCRItems.ORICHALCUM_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pulling"), PULLING);
+            ItemProperties.register(TCRItems.ORICHALCUM_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"charged"), (itemStack, level, entity, i) -> CrossbowItem.isCharged(itemStack) ? 1 : 0);
+        });
+
     }
 
     @SubscribeEvent

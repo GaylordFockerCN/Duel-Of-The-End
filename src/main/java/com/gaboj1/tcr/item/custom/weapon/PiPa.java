@@ -3,6 +3,7 @@ package com.gaboj1.tcr.item.custom.weapon;
 import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.entity.custom.boss.second_boss.SecondBossEntity;
 import com.gaboj1.tcr.event.PlayerModelEvent;
+import com.gaboj1.tcr.item.TCRRarities;
 import com.gaboj1.tcr.item.custom.PoseItem;
 import com.gaboj1.tcr.item.renderer.PiPaRenderer;
 import com.gaboj1.tcr.util.EntityUtil;
@@ -44,7 +45,7 @@ import java.util.function.Consumer;
 public class PiPa extends Item implements GeoItem, PoseItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public PiPa() {
-        super(new Properties().rarity(Rarity.RARE).stacksTo(1).durability(256));
+        super(new Properties().rarity(TCRRarities.XIAN_PIN).stacksTo(1).durability(256));
     }
 
     @Override

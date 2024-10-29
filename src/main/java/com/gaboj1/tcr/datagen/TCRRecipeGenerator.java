@@ -54,6 +54,33 @@ public class TCRRecipeGenerator extends TCRRecipeProvider implements IConditionB
                 .unlockedBy(getHasName(TCRItems.HEART_OF_THE_SAPLING.get()), has(TCRItems.HEART_OF_THE_SAPLING.get()))
                 .save(consumer);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, TCRItems.ORICHALCUM_SWORD.get())
+                .pattern(" A ")
+                .pattern(" A ")
+                .pattern(" B ")
+                .define('A', TCRItems.ORICHALCUM.get())
+                .define('B', Items.STICK)
+                .unlockedBy(getHasName(TCRItems.ORICHALCUM.get()), has(TCRItems.ORICHALCUM.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, TCRItems.ORICHALCUM_AXE.get())
+                .pattern("AA ")
+                .pattern("AB ")
+                .pattern(" B ")
+                .define('A', TCRItems.ORICHALCUM.get())
+                .define('B', Items.STICK)
+                .unlockedBy(getHasName(TCRItems.ORICHALCUM.get()), has(TCRItems.ORICHALCUM.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, TCRItems.ORICHALCUM_PICKAXE.get())
+                .pattern("AAA")
+                .pattern(" B ")
+                .pattern(" B ")
+                .define('A', TCRItems.ORICHALCUM.get())
+                .define('B', Items.STICK)
+                .unlockedBy(getHasName(TCRItems.ORICHALCUM.get()), has(TCRItems.ORICHALCUM.get()))
+                .save(consumer);
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TCRBlocks.PORTAL_BED.get())
                 .requires(ItemTags.BEDS)
                 .requires(Items.WITHER_ROSE)

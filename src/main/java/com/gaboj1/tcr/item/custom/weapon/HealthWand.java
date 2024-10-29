@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.item.custom.weapon;
 
+import com.gaboj1.tcr.item.TCRRarities;
 import com.gaboj1.tcr.item.custom.DropItem;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -14,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class HealthWand extends DropItem {
     public HealthWand() {
-        super(new Item.Properties().stacksTo(1).durability(16).rarity(Rarity.UNCOMMON));
+        super(new Item.Properties().stacksTo(1).durability(16).rarity(TCRRarities.LIANG_PIN));
     }
 
     /**

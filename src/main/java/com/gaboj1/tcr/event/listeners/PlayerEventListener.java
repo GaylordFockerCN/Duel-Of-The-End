@@ -10,15 +10,11 @@ import com.gaboj1.tcr.item.custom.weapon.GunCommon;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.serverbound.ControlLlamaPacket;
 import com.gaboj1.tcr.util.DataManager;
-import com.gaboj1.tcr.util.EntityUtil;
 import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeTags;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.resources.language.I18n;
-import net.minecraft.commands.CommandSource;
-import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
@@ -117,7 +113,8 @@ public class PlayerEventListener {
         Player player = event.player;
         //维度内可骑羊驼
         if(player.level().dimension() == TCRDimension.P_SKY_ISLAND_LEVEL_KEY){
-            if(player instanceof LocalPlayer localPlayer && player.getVehicle() instanceof Llama llama){
+            if(player.isLocalPlayer() && player.getVehicle() instanceof Llama llama){
+                LocalPlayer localPlayer = (LocalPlayer) player;
                 if(llama.isTamed() && localPlayer.input.up){
                     TCRPacketHandler.INSTANCE.sendToServer(new ControlLlamaPacket(llama.getId(), player.getViewVector(1.0f).scale(20.0).toVector3f()));
                 }
@@ -129,13 +126,6 @@ public class PlayerEventListener {
             Level level = player.level();
             Holder<Biome> currentBiome = level.getBiome(player.getOnPos());
             if (currentBiome.is(TCRBiomeTags.FORBIDDEN_BIOME)) {
-
-                if (player instanceof ServerPlayer serverPlayer && player.getServer() != null) {
-                    String commands = "/title "+player.getName().getString()+" title {\"text\":\""+ I18n.get("info.the_casket_of_reveries.enter_forbidden_biome") +"\"}";
-                    player.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, player.position(), player.getRotationVector(), serverPlayer.serverLevel(), 4,
-                            player.getName().getString(), player.getDisplayName(), serverPlayer.server, player), commands);
-                }
-
                 player.displayClientMessage(Component.translatable("info.the_casket_of_reveries.enter_forbidden_biome"), true);
                 player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 1, false, true));
             }

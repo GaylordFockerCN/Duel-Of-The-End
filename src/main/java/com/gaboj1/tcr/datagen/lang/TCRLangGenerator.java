@@ -175,6 +175,16 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addItemUsageInfo(TCRItems.ORICHALCUM_CHESTPLATE.get(),"神金套装，拥有非常高的韧性和击退抗性，但是护甲值较低。");
         this.addItemUsageInfo(TCRItems.ORICHALCUM_LEGGINGS.get(),"神金套装，拥有非常高的韧性和击退抗性，但是护甲值较低。");
         this.addItemUsageInfo(TCRItems.ORICHALCUM_BOOTS.get(),"神金套装，拥有非常高的韧性和击退抗性，但是护甲值较低。");
+        this.add(TCRItems.ORICHALCUM_SWORD.get(),"神金剑");
+        this.add(TCRItems.ORICHALCUM_GREAT_SWORD.get(),"神金巨剑");
+        this.add(TCRItems.ORICHALCUM_AXE.get(),"神金斧");
+        this.add(TCRItems.ORICHALCUM_PICKAXE.get(),"神金镐");
+        this.add(TCRItems.ORICHALCUM_BOW.get(),"神金弓");
+        this.addItemUsageInfo(TCRItems.ORICHALCUM_BOW.get(),"自带无限并一次可射出两发箭矢。");
+        this.add(TCRItems.ORICHALCUM_CROSSBOW.get(),"神金连弩");
+        this.addItemUsageInfo(TCRItems.ORICHALCUM_CROSSBOW.get(),"上膛一次即可连发，射击距离延长。");
+        this.add(TCRItems.GOD_ORICHALCUM_CROSSBOW.get(),"真·神金连弩");
+        this.addItemUsageInfo(TCRItems.GOD_ORICHALCUM_CROSSBOW.get(),"上膛一次即可连发，射击距离延长。耐久不会耗尽且自带多重射击。");
 
         this.add(TCRItems.ICE_TIGER_HELMET.get(),"冰虎头盔");
         this.add(TCRItems.ICE_TIGER_CHESTPLATE.get(),"冰虎胸甲");
@@ -500,6 +510,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addDialogChoice(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER,6,"感谢你，长老。");
         //Yggdrasil
         this.addEntityAndEgg(TCREntities.YGGDRASIL,"伊格德拉希尔");
+        this.addEntityAndEgg(TCREntities.TREE_CLAW,"树魔之爪");
         this.addEntityShaderName(TCREntities.YGGDRASIL, "伊格德拉希尔-残影");
         this.addDialog(TCREntities.YGGDRASIL,-1,"这是...枯萎之触！你从何得来此物？！");
         this.addDialog(TCREntities.YGGDRASIL,0,"哦，可怜的年轻人，你还是来了…… 不对，你是完整的人！");

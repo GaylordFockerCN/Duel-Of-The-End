@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.item.custom.weapon;
 
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.MagicProjectile;
+import com.gaboj1.tcr.item.TCRRarities;
 import com.gaboj1.tcr.item.custom.armor.TreeArmorItem;
 import com.gaboj1.tcr.item.renderer.SpiritWandRenderer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -34,7 +35,7 @@ public class SpiritWand extends Item implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public SpiritWand() {
-        super(new Properties().stacksTo(1).rarity(Rarity.RARE).defaultDurability(128));
+        super(new Properties().stacksTo(1).rarity(TCRRarities.SHANG_PIN).defaultDurability(128));
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 

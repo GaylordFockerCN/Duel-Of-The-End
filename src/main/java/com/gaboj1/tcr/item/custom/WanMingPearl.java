@@ -1,6 +1,8 @@
 package com.gaboj1.tcr.item.custom;
 
+import com.gaboj1.tcr.item.TCRRarities;
 import com.gaboj1.tcr.util.SaveUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -19,7 +21,7 @@ import java.util.List;
 public class WanMingPearl extends Item {
 
     public WanMingPearl() {
-        super(new Properties().setNoRepair().rarity(Rarity.EPIC));
+        super(new Properties().setNoRepair().rarity(TCRRarities.SHEN_ZHEN));
     }
 
     public WanMingPearl(Properties properties) {
@@ -32,9 +34,17 @@ public class WanMingPearl extends Item {
     }
 
     @Override
+    public @NotNull Component getDescription() {
+        if(SaveUtil.biome2.isBranchEnd){
+            return super.getDescription().copy().withStyle(ChatFormatting.DARK_GRAY);
+        }
+        return super.getDescription();
+    }
+
+    @Override
     public void appendHoverText(@NotNull ItemStack p_41421_, @Nullable Level p_41422_, @NotNull List<Component> components, @NotNull TooltipFlag p_41424_) {
         super.appendHoverText(p_41421_, p_41422_, components, p_41424_);
-        components.add(Component.translatable(this.getDescriptionId()+".usage" + (SaveUtil.biome2.isBranchEnd?"1":"")));
+        components.add(Component.translatable(this.getDescriptionId()+".usage" + (SaveUtil.biome2.isBranchEnd ? "1" : "")));
     }
 
 }
