@@ -6,6 +6,7 @@ import com.gaboj1.tcr.item.custom.*;
 import com.gaboj1.tcr.item.custom.armor.IceTigerArmorItem;
 import com.gaboj1.tcr.item.custom.armor.OrichalcumArmorItem;
 import com.gaboj1.tcr.item.custom.armor.TreeArmorItem;
+import com.gaboj1.tcr.item.custom.armor.TreeRobeItem;
 import com.gaboj1.tcr.item.custom.boss_loot.FlySword;
 import com.gaboj1.tcr.item.custom.boss_loot.TreeSpiritWand;
 import com.gaboj1.tcr.item.custom.weapon.*;
@@ -92,7 +93,17 @@ public class TCRItems {
 	public static final RegistryObject<Item> TREE_LEGGINGS = REGISTRY.register("tree_leggings",
 			() -> new TreeArmorItem(TCRArmorMaterials.TREE, ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(TCRRarities.SHANG_PIN)));
 	public static final RegistryObject<Item> TREE_BOOTS = REGISTRY.register("tree_boots",
-			() -> new TreeArmorItem(TCRArmorMaterials.TREE, ArmorItem.Type.BOOTS, new Item.Properties().rarity(TCRRarities.SHANG_PIN)));
+			() -> new TreeRobeItem(TCRArmorMaterials.TREE, ArmorItem.Type.BOOTS, new Item.Properties().rarity(TCRRarities.SHANG_PIN)));
+
+	public static final RegistryObject<Item> TREE_ROBE_HELMET = REGISTRY.register("tree_robe_helmet",
+			() -> new TreeRobeItem(TCRArmorMaterials.TREE_ROBE, ArmorItem.Type.HELMET, new Item.Properties().rarity(TCRRarities.XIAN_PIN)));
+
+	public static final RegistryObject<Item> TREE_ROBE_CHESTPLATE = REGISTRY.register("tree_robe_chestplate",
+			() -> new TreeRobeItem(TCRArmorMaterials.TREE_ROBE, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(TCRRarities.XIAN_PIN)));
+
+	public static final RegistryObject<Item> TREE_ROBE_BOOTS = REGISTRY.register("tree_robe_boots",
+			() -> new TreeRobeItem(TCRArmorMaterials.TREE_ROBE, ArmorItem.Type.BOOTS, new Item.Properties().rarity(TCRRarities.XIAN_PIN)));
+
 	public static final RegistryObject<Item> TREE_SPIRIT_WAND = REGISTRY.register("tree_spirit_wand", TreeSpiritWand::new);
 
 	public static final RegistryObject<Item> SPIRIT_WAND = REGISTRY.register("spirit_wand", SpiritWand::new);

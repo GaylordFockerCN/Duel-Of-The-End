@@ -201,10 +201,17 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRItems.TREE_CHESTPLATE.get(),"树妖护胸");
         this.add(TCRItems.TREE_LEGGINGS.get(),"树妖护腿");
         this.add(TCRItems.TREE_BOOTS.get(),"树妖靴子");
+        this.add(TCRItems.TREE_ROBE_HELMET.get(),"树魔法帽");
+        this.add(TCRItems.TREE_ROBE_CHESTPLATE.get(),"树魔法袍");
+        this.add(TCRItems.TREE_ROBE_BOOTS.get(),"树魔法靴");
         this.addItemUsageInfo(TCRItems.TREE_HELMET.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，减少来自密林的怪物的攻击伤害（包括树魔！）并激活精灵法杖。但极其不耐火。");
         this.addItemUsageInfo(TCRItems.TREE_CHESTPLATE.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，减少来自密林的怪物的攻击伤害（包括树魔！）并激活精灵法杖。但极其不耐火。");
         this.addItemUsageInfo(TCRItems.TREE_LEGGINGS.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，减少来自密林的怪物的攻击伤害（包括树魔！）并激活精灵法杖。但极其不耐火。");
         this.addItemUsageInfo(TCRItems.TREE_BOOTS.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，减少来自密林的怪物的攻击伤害（包括树魔！）并激活精灵法杖。但极其不耐火。");
+
+        this.addItemUsageInfo(TCRItems.TREE_ROBE_HELMET.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，减少来自密林的怪物的攻击伤害（包括树魔！）并激活精灵法杖。但极其不耐火。");
+        this.addItemUsageInfo(TCRItems.TREE_ROBE_CHESTPLATE.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，减少来自密林的怪物的攻击伤害（包括树魔！）并激活精灵法杖。但极其不耐火。");
+        this.addItemUsageInfo(TCRItems.TREE_ROBE_BOOTS.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，减少来自密林的怪物的攻击伤害（包括树魔！）并激活精灵法杖。但极其不耐火。");
 
 
         this.add(TCRItems.DREAMSCAPE_COIN.get(),"梦碎片");

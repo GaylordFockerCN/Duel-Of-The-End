@@ -1,8 +1,12 @@
 package com.gaboj1.tcr.item.custom.armor;
 
+import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.item.renderer.armor.IceTigerArmorRenderer;
 import com.gaboj1.tcr.item.renderer.armor.TreeRobeRenderer;
+import com.gaboj1.tcr.util.ItemUtil;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
@@ -31,6 +35,14 @@ public class TreeRobeItem extends ArmorItem implements GeoItem {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
 
+    }
+
+    //集齐全套装效果
+    public static boolean isFullSet(Entity entity){
+        return ItemUtil.isFullSets(entity, ObjectArrayList.of(
+                TCRItems.TREE_ROBE_HELMET.get(),
+                TCRItems.TREE_ROBE_CHESTPLATE.get(),
+                TCRItems.TREE_ROBE_BOOTS.get()));
     }
 
     @Override

@@ -210,6 +210,11 @@ public class TCRItemTabs {
 						tabData.accept(TCRItems.TREE_LEGGINGS.get());
 						tabData.accept(TCRItems.TREE_BOOTS.get());
 
+						tabData.accept(TCRItems.TREE_ROBE_HELMET.get());
+						tabData.accept(TCRItems.TREE_ROBE_CHESTPLATE.get());
+						tabData.accept(TCRItems.TREE_ROBE_BOOTS.get());
+
+
 						//法宝
 						tabData.accept(TCRItems.TREE_SPIRIT_WAND.get());
 						tabData.accept(TCRItems.HOLY_SWORD.get());
