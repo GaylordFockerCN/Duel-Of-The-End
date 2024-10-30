@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "the_casket_of_reveries:item/god_orichalcum1"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "the_casket_of_reveries:god_orichalcum": 1
+      },
+      "model": "the_casket_of_reveries:item/god_orichalcum1"
+    },
+    {
+      "predicate": {
+        "the_casket_of_reveries:god_orichalcum": 2
+      },
+      "model": "the_casket_of_reveries:item/god_orichalcum2"
+    },
+    {
+      "predicate": {
+        "the_casket_of_reveries:god_orichalcum": 3
+      },
+      "model": "the_casket_of_reveries:item/god_orichalcum3"
+    }
+  ]
+}

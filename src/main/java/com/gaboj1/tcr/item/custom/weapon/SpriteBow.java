@@ -1,5 +1,7 @@
 package com.gaboj1.tcr.item.custom.weapon;
 
+import com.gaboj1.tcr.entity.TCREntities;
+import com.gaboj1.tcr.entity.custom.SpriteBowArrow;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.network.chat.Component;
@@ -24,9 +26,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-public class OrichalcumBow extends BowItem {
+public class SpriteBow extends BowItem {
     protected static final UUID SPEED_UUID = UUID.fromString("FA233E1C-1145-1465-B01B-BCCE9785ACA3");
-    public OrichalcumBow(Properties properties) {
+    public SpriteBow(Properties properties) {
         super(properties);
     }
     @Override
@@ -34,7 +36,7 @@ public class OrichalcumBow extends BowItem {
         if (equipmentSlot == EquipmentSlot.MAINHAND) {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
             builder.putAll(super.getAttributeModifiers(equipmentSlot, stack));
-            builder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(SPEED_UUID, "Item modifier", 0.01, AttributeModifier.Operation.ADDITION));
+            builder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(SPEED_UUID, "Item modifier", 0.02, AttributeModifier.Operation.ADDITION));
             return builder.build();
         }
         return super.getAttributeModifiers(equipmentSlot, stack);
@@ -44,28 +46,17 @@ public class OrichalcumBow extends BowItem {
         return 25;
     }
 
-    public void releaseUsing(ItemStack p_40667_, Level p_40668_, LivingEntity p_40669_, int p_40670_) {
-        if (p_40669_ instanceof Player player) {
-            boolean flag = player.getAbilities().instabuild || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, p_40667_) > 0;
-            ItemStack itemstack = player.getProjectile(p_40667_);
+    public void releaseUsing(@NotNull ItemStack p_40667_, @NotNull Level level, @NotNull LivingEntity owner, int p_40670_) {
+        if (owner instanceof Player player) {
             int i = this.getUseDuration(p_40667_) - p_40670_;
-            i = ForgeEventFactory.onArrowLoose(p_40667_, p_40668_, player, i, !itemstack.isEmpty() || flag);
-            if (i < 0) {
-                return;
-            }
-
-            if (itemstack.isEmpty()) {
-                itemstack = new ItemStack(Items.ARROW);
-            }
 
             float f = getPowerForTime(i);
             if (!((double)f < 0.1)) {
-                boolean flag1 = player.getAbilities().instabuild || itemstack.getItem() instanceof ArrowItem && ((ArrowItem)itemstack.getItem()).isInfinite(itemstack, p_40667_, player);
-                if (!p_40668_.isClientSide) {
+                if (!level.isClientSide) {
                     //双重射击
                     for(int ii = 0; ii < 2 ; ii++){
-                        ArrowItem arrowitem = (ArrowItem)(itemstack.getItem() instanceof ArrowItem ? itemstack.getItem() : Items.ARROW);
-                        AbstractArrow abstractarrow = arrowitem.createArrow(p_40668_, itemstack, player);
+                        AbstractArrow abstractarrow = new SpriteBowArrow(level, player);
+                        abstractarrow.setPos(player.getX(), player.getEyeY() - 0.10000000149011612, player.getZ());
                         abstractarrow = this.customArrow(abstractarrow);
                         abstractarrow.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, f * 3.0F, 1.0F);
                         if (f == 1.0F) {
@@ -89,15 +80,13 @@ public class OrichalcumBow extends BowItem {
                         p_40667_.hurtAndBreak(1, player, (p_289501_) -> {
                             p_289501_.broadcastBreakEvent(player.getUsedItemHand());
                         });
-                        if (flag1 || player.getAbilities().instabuild && (itemstack.is(Items.SPECTRAL_ARROW) || itemstack.is(Items.TIPPED_ARROW))) {
-                            abstractarrow.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
-                        }
+                        abstractarrow.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
                         abstractarrow.setBaseDamage(abstractarrow.getBaseDamage() * 1.5F);//双重射击防霸体
-                        p_40668_.addFreshEntity(abstractarrow);
+                        level.addFreshEntity(abstractarrow);
                     }
                 }
 
-                p_40668_.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0F, 1.0F / (p_40668_.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+                level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 
                 player.awardStat(Stats.ITEM_USED.get(this));
             }

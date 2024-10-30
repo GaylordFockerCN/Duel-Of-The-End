@@ -44,7 +44,6 @@ public class WorldListEntryMixin {
             TCRBiomeProvider.updateBiomeMap(summary.getLevelId());
             //客户端读取
             SaveUtil.read(summary.getLevelId());
-            PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()));
         }
     }
 

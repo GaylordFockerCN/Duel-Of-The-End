@@ -29,6 +29,10 @@ public class SaveUtil {
         SaveUtil.alreadyInit = true;
     }
 
+    public static boolean isAlreadyInit() {
+        return alreadyInit;
+    }
+
     public static int worldLevel = 0;
 
     /**
@@ -458,6 +462,7 @@ public class SaveUtil {
      * @param serverData 从服务端发来的nbt
      */
     public static void fromNbt(CompoundTag serverData){
+        alreadyInit = true;
         worldLevel = serverData.getInt("worldLevel");
         setDialogListFromNbt(serverData.getCompound("dialogList"), serverData.getInt("dialogLength"));
         setTaskListFromNbt(serverData.getCompound("taskList"), serverData.getInt("taskLength"));

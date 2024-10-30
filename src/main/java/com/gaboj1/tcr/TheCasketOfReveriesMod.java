@@ -8,7 +8,10 @@ import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.TCRVillagers;
 import com.gaboj1.tcr.item.TCRItemTabs;
 import com.gaboj1.tcr.item.TCRItems;
+import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.packet.SyncSaveUtilPacket;
+import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import com.gaboj1.tcr.worldgen.dimension.TCRChunkGenerator;
 import com.gaboj1.tcr.worldgen.structure.TCRStructurePlacementTypes;
@@ -28,6 +31,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
@@ -91,8 +95,6 @@ public class TheCasketOfReveriesMod {
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(TCRBlocks.LAZY_ROSE.getId(), TCRBlocks.POTTED_LAZY_ROSE);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(TCRBlocks.MELANCHOLIC_ROSE.getId(), TCRBlocks.POTTED_MELANCHOLIC_ROSE);
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(TCRBlocks.WITHERED_ROSE.getId(), TCRBlocks.POTTED_WITHERED_ROSE);
-
-
         });
         try{
             File dir = FMLPaths.CONFIGDIR.get().resolve(TheCasketOfReveriesMod.MOD_ID).toFile();

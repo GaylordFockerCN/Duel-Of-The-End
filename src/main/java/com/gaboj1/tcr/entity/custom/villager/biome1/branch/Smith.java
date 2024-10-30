@@ -106,7 +106,7 @@ public class Smith extends MushroomLineNpc {
                         new MerchantOffer(
                                 new ItemStack(TCRItems.STARLIT_DEWDROP.get(), 4),
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 20),
-                                new ItemStack(TCRItems.SPIRIT_WAND.get(), 1),
+                                new ItemStack(TCRItems.SPRITE_WAND.get(), 1),
                                 142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.ORICHALCUM.get(), 5),

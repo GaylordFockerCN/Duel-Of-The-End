@@ -30,7 +30,6 @@ public record SyncSaveUtilPacket(CompoundTag serverData) implements BasePacket {
         //客户端
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             SaveUtil.fromNbt(serverData);
-            SaveUtil.setAlreadyInit();
         }
         //服务端
         if(playerEntity instanceof ServerPlayer serverPlayer){

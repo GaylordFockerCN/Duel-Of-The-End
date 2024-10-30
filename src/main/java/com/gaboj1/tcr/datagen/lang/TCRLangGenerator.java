@@ -121,8 +121,10 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addItemUsageInfo(TCRItems.DENSE_FOREST_CERTIFICATE.get(),"回溯密林群系事件完成的证明。");
         this.add(TCRItems.HEALTH_WAND.get(),"生命法杖");
         this.addItemUsageInfo(TCRItems.HEALTH_WAND.get(),"右键以回复生命。耐久值随机损耗。");
-        this.add(TCRItems.SPIRIT_WAND.get(),"精灵法杖");
-        this.addItemUsageInfo(TCRItems.SPIRIT_WAND.get(),"穿戴树妖套装时激活：右键后发射强力的魔法弹。");
+        this.add(TCRItems.SPRITE_WAND.get(),"精灵法杖");
+        this.addItemUsageInfo(TCRItems.SPRITE_WAND.get(),"穿戴树妖套装时激活：右键后发射强力的魔法弹。");
+        this.add(TCRItems.SPRITE_BOW.get(),"精灵之弓");
+        this.addItemUsageInfo(TCRItems.SPRITE_BOW.get(),"一次可射出两支精灵箭，将标记射中的敌人。");
         this.add(TCRItems.TREE_SPIRIT_WAND.get(),"树灵法杖");
         this.addItemInfo(TCRItems.TREE_SPIRIT_WAND.get(),"no_spirit_tree","密林灵树原木不足，无法召唤小树妖");
         this.addItemUsageInfo(TCRItems.TREE_SPIRIT_WAND.get(),"右键地面消耗密林原木和生命值召唤小树妖",1);

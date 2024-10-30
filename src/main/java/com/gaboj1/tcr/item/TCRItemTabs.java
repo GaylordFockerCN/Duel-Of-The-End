@@ -168,6 +168,7 @@ public class TCRItemTabs {
 				tabData.accept(TCRItems.WAN_MING_PEARL.get());
 				tabData.accept(TCRItems.RAW_ORICHALCUM.get());
 				tabData.accept(TCRItems.ORICHALCUM.get());
+				tabData.accept(TCRItems.GOD_ORICHALCUM.get());
 
 			}).build());
 
@@ -182,7 +183,6 @@ public class TCRItemTabs {
 						tabData.accept(TCRItems.AMMO.get());
 						tabData.accept(TCRItems.GUN_COMMON.get());
 						tabData.accept(TCRItems.GUN_PLUS.get());
-						tabData.accept(TCRItems.SPIRIT_WAND.get());
 						tabData.accept(TCRItems.HEALTH_WAND.get());
 						tabData.accept(TCRItems.TIGER_KARAMBIT.get());
 						tabData.accept(TCRItems.PI_PA.get());
@@ -209,6 +209,8 @@ public class TCRItemTabs {
 						tabData.accept(TCRItems.TREE_CHESTPLATE.get());
 						tabData.accept(TCRItems.TREE_LEGGINGS.get());
 						tabData.accept(TCRItems.TREE_BOOTS.get());
+						tabData.accept(TCRItems.SPRITE_BOW.get());
+						tabData.accept(TCRItems.SPRITE_WAND.get());
 
 						tabData.accept(TCRItems.TREE_ROBE_HELMET.get());
 						tabData.accept(TCRItems.TREE_ROBE_CHESTPLATE.get());

@@ -17,7 +17,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
@@ -254,7 +253,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                         new MerchantOffer(
                                 new ItemStack(TCRItems.STARLIT_DEWDROP.get(), 4),
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 20),
-                                new ItemStack(TCRItems.SPIRIT_WAND.get(), 1),
+                                new ItemStack(TCRItems.SPRITE_WAND.get(), 1),
                                 142857, 0, 0.02f),
                         new MerchantOffer(
                                 new ItemStack(TCRItems.ORICHALCUM.get(), 5),

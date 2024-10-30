@@ -7,7 +7,9 @@ import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.entity.TCRFakePlayer;
 import com.gaboj1.tcr.item.custom.weapon.GunCommon;
+import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.packet.SyncSaveUtilPacket;
 import com.gaboj1.tcr.network.packet.serverbound.ControlLlamaPacket;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.SaveUtil;
@@ -68,6 +70,11 @@ public class PlayerEventListener {
                 }
             }
 
+        } else {
+            //单机世界的同步数据
+            if(SaveUtil.isAlreadyInit()){
+                PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()));
+            }
         }
 
         //初始化玩家数据

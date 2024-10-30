@@ -46,9 +46,6 @@ public class TCRItems {
 	public static final RegistryObject<Item> RAW_ORICHALCUM = REGISTRY.register("raw_orichalcum", () -> new DropItem(new Item.Properties().rarity(TCRRarities.LIANG_PIN)));
 	//真·神金锭
 	public static final RegistryObject<Item> GOD_ORICHALCUM = REGISTRY.register("god_orichalcum", () -> new DropItem(new Item.Properties().rarity(TCRRarities.TE_PIN)));
-	//粗真·神金锭
-	public static final RegistryObject<Item> GOD_RAW_ORICHALCUM = REGISTRY.register("god_raw_orichalcum", () -> new DropItem(new Item.Properties().rarity(TCRRarities.TE_PIN)));
-
 	public static final RegistryObject<Item> ORICHALCUM_HELMET = REGISTRY.register("orichalcum_helmet",
 			() -> new OrichalcumArmorItem(TCRArmorMaterials.ORICHALCUM, ArmorItem.Type.HELMET, new Item.Properties().rarity(TCRRarities.LIANG_PIN)));
 	public static final RegistryObject<Item> ORICHALCUM_CHESTPLATE = REGISTRY.register("orichalcum_chestplate",
@@ -105,8 +102,8 @@ public class TCRItems {
 			() -> new TreeRobeItem(TCRArmorMaterials.TREE_ROBE, ArmorItem.Type.BOOTS, new Item.Properties().rarity(TCRRarities.XIAN_PIN)));
 
 	public static final RegistryObject<Item> TREE_SPIRIT_WAND = REGISTRY.register("tree_spirit_wand", TreeSpiritWand::new);
-
-	public static final RegistryObject<Item> SPIRIT_WAND = REGISTRY.register("spirit_wand", SpiritWand::new);
+	public static final RegistryObject<Item> SPRITE_BOW = REGISTRY.register("sprite_bow", () -> new SpriteBow(new Item.Properties().rarity(TCRRarities.SHANG_PIN)));
+	public static final RegistryObject<Item> SPRITE_WAND = REGISTRY.register("spirit_wand", SpiritWand::new);
 	public static final RegistryObject<Item> HEALTH_WAND = REGISTRY.register("health_wand", HealthWand::new);
 	public static final RegistryObject<Item> TREE_DEMON_HORN = REGISTRY.register("tree_demon_horn", () -> new DropItem(new Item.Properties().rarity(TCRRarities.XIAN_PIN)));
 	public static final RegistryObject<Item> TREE_DEMON_MASK = REGISTRY.register("tree_demon_mask", () -> new DropItem(new Item.Properties().rarity(TCRRarities.XIAN_PIN)));
