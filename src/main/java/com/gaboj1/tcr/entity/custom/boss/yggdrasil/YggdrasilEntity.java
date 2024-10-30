@@ -22,6 +22,7 @@ import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -49,6 +50,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
@@ -83,6 +85,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     private int recoverTimer = 0;
     private int treeClawTimer = 0;
     private int flowerTimer = 0;
+    private boolean flowerType;
     private int recoverAnimTimer = 0;
     public final int maxRecoverTimer = 200;
     private final List<Integer> mobs = new ArrayList<>();
@@ -354,16 +357,34 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                 flowerTimer--;
                 if(flowerTimer < 60){
                     int dis = 60 - flowerTimer;
-                    for(int i = 0; i < dis / 2; i++){
-                        int offsetX = dis * (random.nextBoolean() ? 1 : -1) + random.nextInt(3);
-                        int offsetZ = dis * (random.nextBoolean() ? 1 : -1) + random.nextInt(3);
-                        BlockPos pos = getOnPos().offset(offsetX, 1, offsetZ);
+                    //十字花
+                    if(flowerType){
+                        for(int i = 0; i < dis / 2; i++){
+                            int offsetX = dis * (random.nextBoolean() ? 1 : -1) + random.nextInt(3);
+                            int offsetZ = dis * (random.nextBoolean() ? 1 : -1) + random.nextInt(3);
+                            BlockPos pos = getOnPos().offset(offsetX, 1, offsetZ);
+                            if(level().getBlockState(pos).isAir() && !level().getBlockState(pos.below()).isAir()){
+                                level().explode(this, this.damageSources().explosion(this, this), null, pos.getCenter(), 2, false, Level.ExplosionInteraction.NONE);
+                                level().setBlock(pos, FLOWER_BLOCKS.get(random.nextInt(FLOWER_BLOCKS.size())).get().defaultBlockState(), 3);
+                            }
+                        }
+                    //直线花
+                    } else {
+                        Vec3 target = getViewVector(1.0F).normalize().scale(dis);
+                        BlockPos pos = getOnPos().offset((int) target.x, 1,(int) target.z);
                         if(level().getBlockState(pos).isAir() && !level().getBlockState(pos.below()).isAir()){
-                            level().explode(this, this.damageSources().explosion(this, this), null, pos.getCenter(), 2, false, Level.ExplosionInteraction.NONE);
+                            level().explode(this, this.damageSources().explosion(this, this), null, pos.getCenter(), 3, false, Level.ExplosionInteraction.NONE);
                             level().setBlock(pos, FLOWER_BLOCKS.get(random.nextInt(FLOWER_BLOCKS.size())).get().defaultBlockState(), 3);
+                            level().setBlock(pos.east().east(), FLOWER_BLOCKS.get(random.nextInt(FLOWER_BLOCKS.size())).get().defaultBlockState(), 3);
+                            level().setBlock(pos.west().west(), FLOWER_BLOCKS.get(random.nextInt(FLOWER_BLOCKS.size())).get().defaultBlockState(), 3);
+                            level().setBlock(pos.north().north(), FLOWER_BLOCKS.get(random.nextInt(FLOWER_BLOCKS.size())).get().defaultBlockState(), 3);
+                            level().setBlock(pos.south().south(), FLOWER_BLOCKS.get(random.nextInt(FLOWER_BLOCKS.size())).get().defaultBlockState(), 3);
                         }
                     }
+
                 }
+
+
             }
 
         }

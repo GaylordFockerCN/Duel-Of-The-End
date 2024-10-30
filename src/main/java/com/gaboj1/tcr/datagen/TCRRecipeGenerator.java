@@ -1,14 +1,14 @@
 package com.gaboj1.tcr.datagen;
 
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.TCRBlocks;
 import com.gaboj1.tcr.item.TCRItems;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.SmithingRecipe;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 
@@ -105,8 +105,8 @@ public class TCRRecipeGenerator extends TCRRecipeProvider implements IConditionB
         woodBlockStorageRecipes(consumer, RecipeCategory.DECORATIONS, TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get(), TCRBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
         woodBlockStorageRecipes(consumer, RecipeCategory.DECORATIONS, TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get(), TCRBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
 
-        this.oreSmelting(TCRItems.ORICHALCUM.get(), TCRItems.RAW_ORICHALCUM.get(), 0.7f, 200, consumer);
-
+        oreSmelting(TCRItems.ORICHALCUM.get(), TCRItems.RAW_ORICHALCUM.get(), 0.7f, 200, consumer);
+        smithing(consumer, TCRItems.GOD_ORICHALCUM.get(), TCRItems.ORICHALCUM_CROSSBOW.get(), Items.AIR, RecipeCategory.COMBAT, TCRItems.GOD_ORICHALCUM_CROSSBOW.get());
     }
 
 }

@@ -1,17 +1,14 @@
 package com.gaboj1.tcr.item.custom.armor;
 
 import com.gaboj1.tcr.datagen.tags.TCREntityTagGenerator;
-import com.gaboj1.tcr.entity.custom.boss.yggdrasil.MagicProjectile;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.item.renderer.armor.TreeArmorRenderer;
 import com.gaboj1.tcr.util.ItemUtil;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;

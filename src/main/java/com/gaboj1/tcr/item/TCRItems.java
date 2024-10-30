@@ -43,6 +43,10 @@ public class TCRItems {
 	public static final RegistryObject<Item> ORICHALCUM = REGISTRY.register("orichalcum", () -> new DropItem(new Item.Properties().rarity(TCRRarities.LIANG_PIN)));
 	//粗神金
 	public static final RegistryObject<Item> RAW_ORICHALCUM = REGISTRY.register("raw_orichalcum", () -> new DropItem(new Item.Properties().rarity(TCRRarities.LIANG_PIN)));
+	//真·神金锭
+	public static final RegistryObject<Item> GOD_ORICHALCUM = REGISTRY.register("god_orichalcum", () -> new DropItem(new Item.Properties().rarity(TCRRarities.TE_PIN)));
+	//粗真·神金锭
+	public static final RegistryObject<Item> GOD_RAW_ORICHALCUM = REGISTRY.register("god_raw_orichalcum", () -> new DropItem(new Item.Properties().rarity(TCRRarities.TE_PIN)));
 
 	public static final RegistryObject<Item> ORICHALCUM_HELMET = REGISTRY.register("orichalcum_helmet",
 			() -> new OrichalcumArmorItem(TCRArmorMaterials.ORICHALCUM, ArmorItem.Type.HELMET, new Item.Properties().rarity(TCRRarities.LIANG_PIN)));
