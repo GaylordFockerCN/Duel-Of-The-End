@@ -4,6 +4,8 @@ import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 
@@ -43,9 +45,13 @@ public class TCRRecipeProvider extends RecipeProvider {
                 .save(consumer, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, p_252237_));
     }
 
-    protected void oreSmelting(ItemLike result, ItemLike ingredient, float experience, int cookingTime, Consumer<FinishedRecipe> consume) {
+    protected static void oreSmelting(ItemLike result, ItemLike ingredient, float experience, int cookingTime, Consumer<FinishedRecipe> consume) {
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ingredient), RecipeCategory.MISC, result, experience, cookingTime).unlockedBy(getHasName(ingredient), has(ingredient))
                 .save(consume, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, getItemName(result)) + "_from_smelting" + "_" + getItemName(ingredient));
+    }
+
+    protected static void smithing(Consumer<FinishedRecipe> consumer, ItemLike ingredient1, ItemLike ingredient2, ItemLike ingredient3, RecipeCategory category, Item output) {
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ingredient1), Ingredient.of(ingredient2), Ingredient.of(ingredient3), category, output).unlocks(getHasName(ingredient1), has(ingredient1)).save(consumer, getItemName(output) + "_smithing");
     }
 
 }

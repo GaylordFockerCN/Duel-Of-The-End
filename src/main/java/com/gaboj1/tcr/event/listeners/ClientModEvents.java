@@ -118,12 +118,17 @@ public class ClientModEvents{
             ItemPropertyFunction PULLING = (itemStack, level, entity, i) ->
                     entity != null && entity.isUsingItem() && entity.getUseItem() == itemStack ? 1.0F : 0.0F;
 
+            ItemPropertyFunction CHARGED = (itemStack, level, entity, i) -> CrossbowItem.isCharged(itemStack) ? 1 : 0;
             ItemProperties.register(TCRItems.ORICHALCUM_BOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pull"), PULL);
             ItemProperties.register(TCRItems.ORICHALCUM_BOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pulling"), PULLING);
 
             ItemProperties.register(TCRItems.ORICHALCUM_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pull"), PULL);
             ItemProperties.register(TCRItems.ORICHALCUM_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pulling"), PULLING);
-            ItemProperties.register(TCRItems.ORICHALCUM_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"charged"), (itemStack, level, entity, i) -> CrossbowItem.isCharged(itemStack) ? 1 : 0);
+            ItemProperties.register(TCRItems.ORICHALCUM_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"charged"), CHARGED);
+            ItemProperties.register(TCRItems.GOD_ORICHALCUM_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pull"), PULL);
+            ItemProperties.register(TCRItems.GOD_ORICHALCUM_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pulling"), PULLING);
+            ItemProperties.register(TCRItems.GOD_ORICHALCUM_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"charged"), CHARGED);
+
         });
 
     }
