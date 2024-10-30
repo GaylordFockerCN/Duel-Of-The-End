@@ -5,9 +5,9 @@ import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.SyncSaveUtilPacket;
 import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.worldselection.WorldSelectionList;
 import net.minecraft.world.level.storage.LevelSummary;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -38,12 +38,14 @@ public class WorldListEntryMixin {
      */
     @Inject(method = "queueLoadScreen()V", at = @At("RETURN"))
     private void injectedQueueLoadScreen(CallbackInfo ci){
-        TCRBiomeProvider.LOGGER.info("On loadWorld Sync : " + summary.getLevelId() + " >> TCRBiomeProvider.worldName");
-        TCRBiomeProvider.LOGGER.info("Try to update biome map by new worldName");
-        TCRBiomeProvider.updateBiomeMap(summary.getLevelId());
-
-        //客户端读取
-        SaveUtil.read(summary.getLevelId());
+        if(FMLEnvironment.dist.isClient()){
+            TCRBiomeProvider.LOGGER.info("On loadWorld Sync : " + summary.getLevelId() + " >> TCRBiomeProvider.worldName");
+            TCRBiomeProvider.LOGGER.info("Try to update biome map by new worldName");
+            TCRBiomeProvider.updateBiomeMap(summary.getLevelId());
+            //客户端读取
+            SaveUtil.read(summary.getLevelId());
+            PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()));
+        }
     }
 
 //    @Inject(method = "loadWorld()V", at = @At("HEAD"))

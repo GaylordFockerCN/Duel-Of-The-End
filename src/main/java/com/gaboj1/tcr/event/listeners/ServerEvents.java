@@ -12,6 +12,7 @@ import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -27,10 +28,13 @@ public class ServerEvents {
     @SubscribeEvent
     public static void onServerAboutToStart(ServerAboutToStartEvent event){
         //服务端读取
-        if(TCRBiomeProvider.worldName.isEmpty()){
-            String levelName =  event.getServer().getWorldData().getLevelName();
-            TCRBiomeProvider.worldName = levelName;
-            SaveUtil.read(levelName);
+        if(FMLEnvironment.dist.isDedicatedServer()){
+            if(TCRBiomeProvider.worldName.isEmpty()){
+                String levelName = event.getServer().getWorldData().getLevelName();
+                TCRBiomeProvider.worldName = levelName;
+                TCRBiomeProvider.updateBiomeMap(levelName);
+                SaveUtil.read(levelName);
+            }
         }
     }
 
