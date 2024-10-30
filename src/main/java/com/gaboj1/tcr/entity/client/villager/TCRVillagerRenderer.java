@@ -79,7 +79,6 @@ public class TCRVillagerRenderer extends DynamicGeoEntityRenderer<TCRVillager> {
                         poseStack.mulPose(Axis.XP.rotationDegrees(30));
                         poseStack.mulPose(Axis.YP.rotationDegrees(50));
                         poseStack.mulPose(Axis.ZP.rotationDegrees(180));
-                        poseStack.translate(TCRConfig.TEST_X.get(), TCRConfig.TEST_Y.get(), TCRConfig.TEST_Z.get());
                     }
                 }
 

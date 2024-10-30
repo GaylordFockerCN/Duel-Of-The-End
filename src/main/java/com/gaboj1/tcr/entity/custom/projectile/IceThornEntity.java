@@ -1,4 +1,4 @@
-package com.gaboj1.tcr.entity.custom;
+package com.gaboj1.tcr.entity.custom.projectile;
 
 import com.gaboj1.tcr.effect.TCREffects;
 import com.gaboj1.tcr.entity.TCREntities;

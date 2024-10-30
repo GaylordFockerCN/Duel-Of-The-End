@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "the_casket_of_reveries:item/god_orichalcum1"
+    "layer0": "the_casket_of_reveries:item/god_ingot0"
   },
   "overrides": [
     {
@@ -21,6 +21,12 @@
         "the_casket_of_reveries:god_orichalcum": 3
       },
       "model": "the_casket_of_reveries:item/god_orichalcum3"
+    },
+    {
+      "predicate": {
+        "the_casket_of_reveries:god_orichalcum": 4
+      },
+      "model": "the_casket_of_reveries:item/god_orichalcum4"
     }
   ]
 }

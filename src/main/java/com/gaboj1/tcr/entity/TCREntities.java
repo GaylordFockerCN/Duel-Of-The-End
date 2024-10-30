@@ -18,6 +18,9 @@ import com.gaboj1.tcr.entity.custom.dreamspirit.JellyCat;
 import com.gaboj1.tcr.entity.custom.dreamspirit.Squirrel;
 import com.gaboj1.tcr.entity.custom.biome2.SnowSwordmanEntity;
 import com.gaboj1.tcr.entity.custom.dreamspirit.WindFeatherFalconEntity;
+import com.gaboj1.tcr.entity.custom.projectile.BulletEntity;
+import com.gaboj1.tcr.entity.custom.projectile.IceThornEntity;
+import com.gaboj1.tcr.entity.custom.projectile.SpriteBowArrow;
 import com.gaboj1.tcr.entity.custom.sword.RainCutterSwordEntity;
 import com.gaboj1.tcr.entity.custom.sword.ScreenSwordEntity;
 import com.gaboj1.tcr.entity.custom.sword.SwordEntity;
@@ -28,11 +31,11 @@ import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainStationaryVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainTalkableVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
-import com.gaboj1.tcr.entity.custom.*;
 
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillager;
 import com.gaboj1.tcr.entity.custom.villager.biome1.branch.Elinor;
 import com.gaboj1.tcr.entity.custom.villager.biome1.branch.Smith;
+import com.gaboj1.tcr.entity.custom.villager.biome1.branch.FaShi;
 import com.gaboj1.tcr.entity.custom.villager.biome2.*;
 import com.gaboj1.tcr.entity.custom.villager.biome2.branch.*;
 import net.minecraft.resources.ResourceLocation;
@@ -186,6 +189,8 @@ public class TCREntities {
 	public static final RegistryObject<EntityType<Elinor>> ELINOR = register("elinor",
 			EntityType.Builder.of(Elinor::new, MobCategory.CREATURE));
 
+	public static final RegistryObject<EntityType<FaShi>> ELIA = register("fa_shi",
+			EntityType.Builder.of(FaShi::new, MobCategory.CREATURE));
 	public static final RegistryObject<EntityType<Villager2>> VILLAGER2 = register("villager2",
 			EntityType.Builder.of(Villager2::new, MobCategory.CREATURE));
 	public static final RegistryObject<EntityType<TalkableVillager2>> VILLAGER2_TALKABLE = register("villager2_talkable",
@@ -251,6 +256,7 @@ public class TCREntities {
 		event.put(PASTORAL_PLAIN_VILLAGER_ELDER.get(),PastoralPlainVillagerElder.setAttributes());
 		event.put(ELINOR.get(),PastoralPlainVillagerElder.setAttributes());
 		event.put(SMITH.get(),PastoralPlainVillagerElder.setAttributes());
+		event.put(ELIA.get(),PastoralPlainVillagerElder.setAttributes());
 		event.put(YGGDRASIL.get(), YggdrasilEntity.setAttributes());
 		event.put(TREE_CLAW.get(), TreeClawEntity.setAttributes());
 		event.put(SPRITE.get(),SpriteEntity.setAttributes());
@@ -296,6 +302,8 @@ public class TCREntities {
 		event.register(PASTORAL_PLAIN_VILLAGER_ELDER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				PastoralPlainVillagerElder::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(ELINOR.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				PastoralPlainVillagerElder::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(ELIA.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				PastoralPlainVillagerElder::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(SMITH.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				PastoralPlainVillagerElder::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);

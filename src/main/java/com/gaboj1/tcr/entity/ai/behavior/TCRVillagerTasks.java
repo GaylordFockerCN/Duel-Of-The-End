@@ -45,6 +45,7 @@ public class TCRVillagerTasks {
             );
         }
 
+        //反击和对话
         return ImmutableList.of(
                 Pair.of(0, new TCRVillagerRetaliateTask()),
                 Pair.of(0, new NPCDialogueTask())

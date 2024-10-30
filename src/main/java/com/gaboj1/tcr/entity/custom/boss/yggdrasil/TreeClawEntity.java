@@ -3,7 +3,7 @@ package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 import com.gaboj1.tcr.entity.LevelableEntity;
 import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.entity.TCREntities;
-import com.gaboj1.tcr.entity.custom.BulletEntity;
+import com.gaboj1.tcr.entity.custom.projectile.BulletEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;

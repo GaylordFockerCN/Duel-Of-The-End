@@ -107,6 +107,10 @@ public class TCRRecipeGenerator extends TCRRecipeProvider implements IConditionB
 
         oreSmelting(TCRItems.ORICHALCUM.get(), TCRItems.RAW_ORICHALCUM.get(), 0.7f, 200, consumer);
         smithing(consumer, TCRItems.GOD_ORICHALCUM.get(), TCRItems.ORICHALCUM_CROSSBOW.get(), Items.AIR, RecipeCategory.COMBAT, TCRItems.GOD_ORICHALCUM_CROSSBOW.get());
+        smithing(consumer, TCRItems.TREE_BOOTS.get(), TCRItems.TREE_DEMON_BRANCH.get(), Items.AIR, RecipeCategory.COMBAT, TCRItems.TREE_ROBE_BOOTS.get());
+        smithing(consumer, TCRItems.TREE_HELMET.get(), TCRItems.TREE_DEMON_MASK.get(), Items.AIR, RecipeCategory.COMBAT, TCRItems.TREE_ROBE_HELMET.get());
+        smithing(consumer, TCRItems.TREE_CHESTPLATE.get(), TCRItems.TREE_DEMON_FRUIT.get(), Items.AIR, RecipeCategory.COMBAT, TCRItems.TREE_ROBE_CHESTPLATE.get());
+        smithing(consumer, TCRItems.SPRITE_WAND.get(), TCRItems.TREE_DEMON_BRANCH.get(), Items.AIR, RecipeCategory.COMBAT, TCRItems.TREE_SPIRIT_WAND.get());
     }
 
 }

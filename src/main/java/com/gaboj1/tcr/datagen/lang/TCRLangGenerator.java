@@ -124,7 +124,8 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRItems.SPRITE_WAND.get(),"精灵法杖");
         this.addItemUsageInfo(TCRItems.SPRITE_WAND.get(),"穿戴树妖套装时激活：右键后发射强力的魔法弹。");
         this.add(TCRItems.SPRITE_BOW.get(),"精灵之弓");
-        this.addItemUsageInfo(TCRItems.SPRITE_BOW.get(),"一次可射出两支精灵箭，将标记射中的敌人。");
+        this.add(TCREntities.SPRITE_BOW_ARROW.get(),"精灵之箭");
+        this.addItemUsageInfo(TCRItems.SPRITE_BOW.get(),"携带精灵力量的弓，不消耗箭失，可附魔多重射击。");
         this.add(TCRItems.TREE_SPIRIT_WAND.get(),"树灵法杖");
         this.addItemInfo(TCRItems.TREE_SPIRIT_WAND.get(),"no_spirit_tree","密林灵树原木不足，无法召唤小树妖");
         this.addItemUsageInfo(TCRItems.TREE_SPIRIT_WAND.get(),"右键地面消耗密林原木和生命值召唤小树妖",1);
@@ -170,6 +171,8 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addItemUsageInfo(TCRItems.RAW_ORICHALCUM.get(),"神金，怎么在梦里还要挖矿？");
         this.add(TCRItems.ORICHALCUM.get(),"神金");
         this.addItemUsageInfo(TCRItems.ORICHALCUM.get(),"神金，能让人突然想笑一下。");
+        this.add(TCRItems.GOD_ORICHALCUM.get(),"真·神金");
+        this.addItemUsageInfo(TCRItems.GOD_ORICHALCUM.get(),"稀有材料，由战利品箱或怪物掉落获得，可用于强化特定物品。");
 
         this.add(TCRItems.ORICHALCUM_HELMET.get(),"神金头盔");
         this.add(TCRItems.ORICHALCUM_CHESTPLATE.get(),"神金胸甲");
@@ -480,6 +483,12 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addDialog(TCREntities.ELINOR, 1, "感谢您！勇敢的旅者，我们回村去吧！");
         this.addDialogChoice(TCREntities.ELINOR, 0, "是的，美丽的小姐");
         this.addDialogChoice(TCREntities.ELINOR, 1, "原来护符是这么用的，作者真能藏");
+
+        this.addEntityAndEgg(TCREntities.ELIA,"艾莉娅");
+        this.addDialog(TCREntities.ELIA, 0, "嗨！我叫艾莉娅，有什么我可以帮助你的吗？");
+        this.addDialog(TCREntities.ELIA, 1, "当然可以！");
+        this.addDialogChoice(TCREntities.ELIA, 0, "魔法委托");
+        this.addDialogChoice(TCREntities.ELIA, 1, "再见");
 
         //P1nero
         this.addEntityAndEgg(TCREntities.P1NERO,"P1nero - “这个世界” 的 创世神之一");

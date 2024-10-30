@@ -39,7 +39,8 @@ public class TCRItems {
 	public static final RegistryObject<Item> SUPER_RESIN = REGISTRY.register("super_resin", () -> new BasicResin(new Item.Properties().setNoRepair().stacksTo(64).rarity(TCRRarities.TE_PIN),BasicResin.SUPER_RESIN));
 	public static final RegistryObject<Item> COPY_RESIN = REGISTRY.register("copy_resin", () -> new CopyResin(new Item.Properties().setNoRepair().stacksTo(64).rarity((TCRRarities.XIAN_PIN))));
 	public static final RegistryObject<Item> PURIFICATION_TALISMAN = REGISTRY.register("purification_talisman", () -> new PurificationTalisman(new Item.Properties().setNoRepair().stacksTo(1).rarity(TCRRarities.XIAN_PIN)));
-
+	public static final RegistryObject<Item> FLAME_THAT_GATHERSOULS = REGISTRY.register("flame_that_gathersouls", () -> new DropItem(new Item.Properties().setNoRepair().stacksTo(1).rarity(TCRRarities.TE_PIN)));
+	public static final RegistryObject<Item> OIL_LAMP_GATHER_SOULS = REGISTRY.register("oil_lamp_gather_souls", () -> new DropItem(new Item.Properties().setNoRepair().stacksTo(1).rarity(TCRRarities.TE_PIN)));
 	//神金（锭），原版金锭色阶 +70 -70 0
 	public static final RegistryObject<Item> ORICHALCUM = REGISTRY.register("orichalcum", () -> new DropItem(new Item.Properties().rarity(TCRRarities.LIANG_PIN)));
 	//粗神金
@@ -54,9 +55,9 @@ public class TCRItems {
 			() -> new OrichalcumArmorItem(TCRArmorMaterials.ORICHALCUM, ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(TCRRarities.LIANG_PIN)));
 	public static final RegistryObject<Item> ORICHALCUM_BOOTS = REGISTRY.register("orichalcum_boots",
 			() -> new OrichalcumArmorItem(TCRArmorMaterials.ORICHALCUM, ArmorItem.Type.BOOTS, new Item.Properties().rarity(TCRRarities.LIANG_PIN)));
-	public static final RegistryObject<Item> ORICHALCUM_BOW = REGISTRY.register("orichalcum_bow", () -> new OrichalcumBow(new Item.Properties().rarity(TCRRarities.LIANG_PIN).defaultDurability(128)));
-	public static final RegistryObject<Item> ORICHALCUM_CROSSBOW = REGISTRY.register("orichalcum_crossbow", () -> new OrichalcumCrossbow(new Item.Properties().rarity(TCRRarities.SHANG_PIN).defaultDurability(128)));
-	public static final RegistryObject<Item> GOD_ORICHALCUM_CROSSBOW = REGISTRY.register("god_orichalcum_crossbow", () -> new OrichalcumCrossbow(new Item.Properties().rarity(TCRRarities.TE_PIN).defaultDurability(256)){
+	public static final RegistryObject<Item> ORICHALCUM_BOW = REGISTRY.register("orichalcum_bow", () -> new OrichalcumBow(new Item.Properties().rarity(TCRRarities.LIANG_PIN).stacksTo(1).defaultDurability(128)));
+	public static final RegistryObject<Item> ORICHALCUM_CROSSBOW = REGISTRY.register("orichalcum_crossbow", () -> new OrichalcumCrossbow(new Item.Properties().rarity(TCRRarities.SHANG_PIN).stacksTo(1).defaultDurability(128)));
+	public static final RegistryObject<Item> GOD_ORICHALCUM_CROSSBOW = REGISTRY.register("god_orichalcum_crossbow", () -> new OrichalcumCrossbow(new Item.Properties().rarity(TCRRarities.TE_PIN).stacksTo(1).defaultDurability(256)){
 		/**
 		 * 耐久翻倍，不会损坏，自带多重射击
 		 */
@@ -102,7 +103,7 @@ public class TCRItems {
 			() -> new TreeRobeItem(TCRArmorMaterials.TREE_ROBE, ArmorItem.Type.BOOTS, new Item.Properties().rarity(TCRRarities.XIAN_PIN)));
 
 	public static final RegistryObject<Item> TREE_SPIRIT_WAND = REGISTRY.register("tree_spirit_wand", TreeSpiritWand::new);
-	public static final RegistryObject<Item> SPRITE_BOW = REGISTRY.register("sprite_bow", () -> new SpriteBow(new Item.Properties().rarity(TCRRarities.SHANG_PIN)));
+	public static final RegistryObject<Item> SPRITE_BOW = REGISTRY.register("sprite_bow", () -> new SpriteBow(new Item.Properties().defaultDurability(256).rarity(TCRRarities.SHANG_PIN)));
 	public static final RegistryObject<Item> SPRITE_WAND = REGISTRY.register("spirit_wand", SpiritWand::new);
 	public static final RegistryObject<Item> HEALTH_WAND = REGISTRY.register("health_wand", HealthWand::new);
 	public static final RegistryObject<Item> TREE_DEMON_HORN = REGISTRY.register("tree_demon_horn", () -> new DropItem(new Item.Properties().rarity(TCRRarities.XIAN_PIN)));

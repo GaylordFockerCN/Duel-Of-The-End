@@ -27,7 +27,7 @@ public class Smith extends MushroomLineNpc {
     private final EntityType<?> entityType = TCREntities.SMITH.get();
     private final DialogueComponentBuilder BUILDER = new DialogueComponentBuilder(entityType);
     public Smith(EntityType<? extends Smith> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel, 1);
+        super(pEntityType, pLevel);
     }
 
     @Override

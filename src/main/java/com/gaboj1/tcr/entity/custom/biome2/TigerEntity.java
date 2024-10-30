@@ -2,7 +2,7 @@ package com.gaboj1.tcr.entity.custom.biome2;
 
 import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
-import com.gaboj1.tcr.entity.custom.IceThornEntity;
+import com.gaboj1.tcr.entity.custom.projectile.IceThornEntity;
 import com.gaboj1.tcr.entity.custom.TCRAggressiveGeoMob;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;

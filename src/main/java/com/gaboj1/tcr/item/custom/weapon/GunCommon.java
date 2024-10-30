@@ -6,7 +6,7 @@ import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.event.PlayerModelEvent;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.client.keymapping.KeyMappings;
-import com.gaboj1.tcr.entity.custom.BulletEntity;
+import com.gaboj1.tcr.entity.custom.projectile.BulletEntity;
 import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.item.custom.PoseItem;
 import com.gaboj1.tcr.item.renderer.GunItemRenderer;

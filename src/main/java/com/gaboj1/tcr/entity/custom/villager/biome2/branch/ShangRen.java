@@ -30,6 +30,11 @@ public class ShangRen extends YueShiLineNpc {
     }
 
     @Override
+    public boolean isFemale() {
+        return true;
+    }
+
+    @Override
     public String getResourceName() {
         return "talkable/villager2-2";
     }

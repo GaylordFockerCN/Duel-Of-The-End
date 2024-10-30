@@ -29,10 +29,7 @@ import com.gaboj1.tcr.entity.client.villager.TCRVillagerRenderer;
 import com.gaboj1.tcr.entity.client.SwordEntityRenderer;
 import com.gaboj1.tcr.item.TCRItems;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.client.renderer.entity.LlamaSpitRenderer;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.client.renderer.entity.TippableArrowRenderer;
+import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.resources.ResourceLocation;
@@ -55,7 +52,7 @@ public class ClientModEvents{
         EntityRenderers.register(TCREntities.STELLAR_SWORD.get(), SwordEntityRenderer::new);
         EntityRenderers.register(TCREntities.CONVERGENCE_SWORD.get(), SwordEntityRenderer::new);
         EntityRenderers.register(TCREntities.MAGIC_PROJECTILE.get(), LlamaSpitRenderer::new);
-        EntityRenderers.register(TCREntities.SPRITE_BOW_ARROW.get(), TippableArrowRenderer::new);
+        EntityRenderers.register(TCREntities.SPRITE_BOW_ARROW.get(), SpectralArrowRenderer::new);
 
         EntityRenderers.register(TCREntities.MIDDLE_TREE_MONSTER.get(), MiddleTreeMonsterRenderer::new);
         EntityRenderers.register(TCREntities.TREE_GUARDIAN.get(), TreeGuardianRenderer::new);
@@ -75,6 +72,7 @@ public class ClientModEvents{
         EntityRenderers.register(TCREntities.PASTORAL_PLAIN_VILLAGER_ELDER.get(), TCRVillagerRenderer::new);
         EntityRenderers.register(TCREntities.ELINOR.get(), TCRVillagerRenderer::new);
         EntityRenderers.register(TCREntities.SMITH.get(), TCRVillagerRenderer::new);
+        EntityRenderers.register(TCREntities.ELIA.get(), TCRVillagerRenderer::new);
         EntityRenderers.register(TCREntities.VILLAGER2.get(), TCRVillagerRenderer::new);
         EntityRenderers.register(TCREntities.VILLAGER2_TALKABLE.get(), TCRVillagerRenderer::new);
         EntityRenderers.register(TCREntities.VILLAGER2_STATIONARY.get(), TCRVillagerRenderer::new);
@@ -122,17 +120,13 @@ public class ClientModEvents{
                     entity != null && entity.isUsingItem() && entity.getUseItem() == itemStack ? 1.0F : 0.0F;
 
             ItemPropertyFunction CHARGED = (itemStack, level, entity, i) -> CrossbowItem.isCharged(itemStack) ? 1 : 0;
-            ItemPropertyFunction SAN_LIAN_BO = (itemStack, level, entity, i) -> {
-                if(itemStack.is(TCRItems.GOD_ORICHALCUM.get())){
-                    int current = itemStack.getOrCreateTag().getInt("current");
-                    itemStack.getOrCreateTag().putInt("current", (current + 1) % 51);
-                    if(current > 30){
-                        current = 50 - current;
-                    }
-                    return Mth.lerpInt(current, 0, 2);
-                } else {
-                    return 1;
+            ItemPropertyFunction WU_LIAN_BO = (itemStack, level, entity, i) -> {
+                int current = itemStack.getOrCreateTag().getInt("current");
+                itemStack.getOrCreateTag().putInt("current", (current + 1) % 101);
+                if(current > 50){
+                    current = 101 - current;
                 }
+                return Mth.lerpInt(current / 52.0F, 0, 5);
             };//三连播
             ItemProperties.register(TCRItems.ORICHALCUM_BOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pull"), PULL);
             ItemProperties.register(TCRItems.ORICHALCUM_BOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pulling"), PULLING);
@@ -146,7 +140,7 @@ public class ClientModEvents{
             ItemProperties.register(TCRItems.GOD_ORICHALCUM_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pulling"), PULLING);
             ItemProperties.register(TCRItems.GOD_ORICHALCUM_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"charged"), CHARGED);
 
-            ItemProperties.register(TCRItems.GOD_ORICHALCUM.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"god_orichalcum"), SAN_LIAN_BO);
+            ItemProperties.register(TCRItems.GOD_ORICHALCUM.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"god_orichalcum"), WU_LIAN_BO);
 
         });
 

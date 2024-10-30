@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -22,6 +23,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class TCREffects {
@@ -73,9 +75,23 @@ public class TCREffects {
     }
 
     public static void onEntityUpdate(LivingEvent.LivingTickEvent event) {
+        LivingEntity entity = event.getEntity();
+
+        //神金，免疫所有负面效果
+        if(entity.hasEffect(ORICHALCUM.get())){
+            int level = Objects.requireNonNull(entity.getEffect(TCREffects.ORICHALCUM.get())).getAmplifier();
+            for(MobEffectInstance effectInstance :entity.getActiveEffects()){
+                if(!effectInstance.getEffect().isBeneficial()){
+                    if(level == 0){
+                        effectInstance.tick(entity, () -> {});//加速效果消失
+                    } else {
+                        entity.removeEffect(effectInstance.getEffect());
+                    }
+                }
+            }
+        }
 
         //扛冻
-        LivingEntity entity = event.getEntity();
         if(entity.hasEffect(FROZEN_RESISTANCE.get())){
             if(entity.hasEffect(TCREffects.FROZEN.get())){
                 entity.removeEffect(TCREffects.FROZEN.get());

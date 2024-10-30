@@ -21,17 +21,28 @@ import java.util.Set;
 */
 public class ItemUtil {
 
+    /**
+     * 判断是否全穿了
+     */
     public static boolean isFullSets(Entity entity, ObjectArrayList<?> objects){
-        Set<Item> wornArmor = new ObjectOpenHashSet<>();
+        return isFullSets(entity, objects, 4);
+    }
 
+    /**
+     * 判断穿了几件
+     * @param need 集齐了几套
+     */
+    public static boolean isFullSets(Entity entity, ObjectArrayList<?> objects, int need){
+        int cnt = 0;
         for (ItemStack stack : entity.getArmorSlots()) {
-            if (stack.isEmpty())
-                return false;
-
-            wornArmor.add(stack.getItem());
+            if (stack.isEmpty()){
+                continue;
+            }
+            if(objects.contains(stack)){
+                cnt++;
+            }
         }
-
-        return wornArmor.containsAll(objects);
+        return cnt >= need;
     }
 
     /**

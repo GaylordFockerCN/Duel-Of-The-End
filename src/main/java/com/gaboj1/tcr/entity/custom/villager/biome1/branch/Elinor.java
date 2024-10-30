@@ -20,7 +20,7 @@ public class Elinor extends MushroomLineNpc {
     private final EntityType<?> entityType = TCREntities.ELINOR.get();
     private final DialogueComponentBuilder BUILDER = new DialogueComponentBuilder(entityType);
     public Elinor(EntityType<? extends Elinor> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel, 1);
+        super(pEntityType, pLevel);
     }
 
     @Override
