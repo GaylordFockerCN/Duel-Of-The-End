@@ -37,7 +37,6 @@ import software.bernie.geckolib.renderer.GeoArmorRenderer;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
-import java.util.Set;
 import java.util.function.Consumer;
 
 public final class TreeArmorItem extends ArmorItem implements GeoItem {
