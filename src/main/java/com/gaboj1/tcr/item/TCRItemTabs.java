@@ -151,6 +151,9 @@ public class TCRItemTabs {
 				tabData.accept(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get());
 				tabData.accept(TCRItems.BARK_OF_THE_GUARDIAN.get());
 				tabData.accept(TCRItems.STARLIT_DEWDROP.get());
+				tabData.accept(TCRItems.SPRITE_STONE.get());
+				tabData.accept(TCRItems.OIL_LAMP_GATHER_SOULS.get());
+				tabData.accept(TCRItems.FLAME_THAT_GATHERSOULS.get());
 
 				tabData.accept(TCRItems.ICE_THORN.get());
 				tabData.accept(TCRItems.TIGER_SOUL_ICE.get());
@@ -180,14 +183,6 @@ public class TCRItemTabs {
 					.icon(() -> new ItemStack(TCRItems.TIGER_KARAMBIT.get()))
 					.displayItems((parameters, tabData) -> {
 
-						tabData.accept(TCRItems.AMMO.get());
-						tabData.accept(TCRItems.GUN_COMMON.get());
-						tabData.accept(TCRItems.GUN_PLUS.get());
-						tabData.accept(TCRItems.HEALTH_WAND.get());
-						tabData.accept(TCRItems.TIGER_KARAMBIT.get());
-						tabData.accept(TCRItems.PI_PA.get());
-
-						//盔甲
 						tabData.accept(TCRItems.ORICHALCUM_HELMET.get());
 						tabData.accept(TCRItems.ORICHALCUM_CHESTPLATE.get());
 						tabData.accept(TCRItems.ORICHALCUM_LEGGINGS.get());
@@ -200,25 +195,34 @@ public class TCRItemTabs {
 						tabData.accept(TCRItems.ORICHALCUM_AXE.get());
 						tabData.accept(TCRItems.ORICHALCUM_PICKAXE.get());
 
-						tabData.accept(TCRItems.ICE_TIGER_HELMET.get());
-						tabData.accept(TCRItems.ICE_TIGER_CHESTPLATE.get());
-						tabData.accept(TCRItems.ICE_TIGER_LEGGINGS.get());
-						tabData.accept(TCRItems.ICE_TIGER_BOOTS.get());
+						//BIOME1
+						tabData.accept(TCRItems.AMMO.get());
+						tabData.accept(TCRItems.GUN_COMMON.get());
+						tabData.accept(TCRItems.GUN_PLUS.get());
+						tabData.accept(TCRItems.HEALTH_WAND.get());
 
 						tabData.accept(TCRItems.TREE_HELMET.get());
 						tabData.accept(TCRItems.TREE_CHESTPLATE.get());
 						tabData.accept(TCRItems.TREE_LEGGINGS.get());
 						tabData.accept(TCRItems.TREE_BOOTS.get());
 						tabData.accept(TCRItems.SPRITE_BOW.get());
+						tabData.accept(TCRItems.BASIC_SPRITE_CROSSBOW.get());
+						tabData.accept(TCRItems.SPRITE_CROSSBOW.get());
 						tabData.accept(TCRItems.SPRITE_WAND.get());
 
 						tabData.accept(TCRItems.TREE_ROBE_HELMET.get());
 						tabData.accept(TCRItems.TREE_ROBE_CHESTPLATE.get());
 						tabData.accept(TCRItems.TREE_ROBE_BOOTS.get());
-
-
-						//法宝
 						tabData.accept(TCRItems.TREE_SPIRIT_WAND.get());
+
+						//BIOME2
+						tabData.accept(TCRItems.ICE_TIGER_HELMET.get());
+						tabData.accept(TCRItems.ICE_TIGER_CHESTPLATE.get());
+						tabData.accept(TCRItems.ICE_TIGER_LEGGINGS.get());
+						tabData.accept(TCRItems.ICE_TIGER_BOOTS.get());
+						tabData.accept(TCRItems.TIGER_KARAMBIT.get());
+
+						tabData.accept(TCRItems.PI_PA.get());
 						tabData.accept(TCRItems.HOLY_SWORD.get());
 
 					}).build());

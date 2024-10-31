@@ -78,7 +78,7 @@ public class FaShi extends MushroomLineNpc {
 //                            new ItemStack(TCRItems.TREE_SPIRIT_WAND.get(), 1),
 //                            142857, 0, 0.02f),// NOTE 改用锻造
                     new MerchantOffer(
-                            new ItemStack(TCRItems.STARLIT_DEWDROP.get(), 4),
+                            new ItemStack(TCRItems.STARLIT_DEWDROP.get(), 5),
                             new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 20),
                             new ItemStack(TCRItems.SPRITE_WAND.get(), 1),
                             142857, 0, 0.02f),
@@ -112,7 +112,15 @@ public class FaShi extends MushroomLineNpc {
                     new MerchantOffer(
                             new ItemStack(TCRBlocks.THIRST_BLOOD_ROSE.get(), 9),
                             PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.HARMING),
-                            142857, 0, 0.02f)
+                            142857, 0, 0.02f),
+                    new MerchantOffer(
+                            new ItemStack(TCRItems.STARLIT_DEWDROP.get(), 1),
+                            new ItemStack(TCRItems.ADVANCED_RESIN.get(), 3),
+                            142857, 0, 0.02f),
+                    new MerchantOffer(
+                            new ItemStack(TCRItems.HEART_OF_THE_SAPLING.get(), 9),
+                            new ItemStack(TCRItems.HEALTH_WAND.get(), 1),
+                            142857, 0, 1)
             );
         }
         setConversingPlayer(null);

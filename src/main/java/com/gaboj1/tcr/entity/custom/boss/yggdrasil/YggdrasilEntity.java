@@ -322,6 +322,11 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
             //普攻的延迟发射，这个timer由goal触发
             if(shootTimer > 0){
                 shootTimer--;
+                if(shootTimer > 50){
+                    if(getTarget() != null){
+                        this.getLookControl().setLookAt(getTarget());
+                    }
+                }
                 double x, y, z;
                 if(shootTimer == 40 && shootTarget != null){
                     MagicProjectile projectile = new MagicProjectile(level(), this);
@@ -763,8 +768,8 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
         } else {
             shootTarget = null;
         }
-        turningLock(30);
-        movementLock(30);
+        turningLock(60);
+        movementLock(60);
         return true;
     }
 

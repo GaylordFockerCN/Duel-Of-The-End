@@ -1,7 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "the_casket_of_reveries:item/god_crossbow_standby"
+        "layer0": "the_casket_of_reveries:item/sprite_crossbow0"
     },
     "display": {
         "thirdperson_righthand": {
@@ -30,34 +30,27 @@
             "predicate": {
                 "the_casket_of_reveries:pulling": 1
             },
-            "model": "the_casket_of_reveries:item/god_orichalcum_crossbow_pulling_0"
+            "model": "the_casket_of_reveries:item/sprite_crossbow0"
         },
         {
             "predicate": {
                 "the_casket_of_reveries:pulling": 1,
                 "the_casket_of_reveries:pull": 0.58
             },
-            "model": "the_casket_of_reveries:item/god_orichalcum_crossbow_pulling_1"
+            "model": "the_casket_of_reveries:item/sprite_crossbow1"
         },
         {
             "predicate": {
                 "the_casket_of_reveries:pulling": 1,
                 "the_casket_of_reveries:pull": 1.0
             },
-            "model": "the_casket_of_reveries:item/god_orichalcum_crossbow_pulling_2"
+            "model": "the_casket_of_reveries:item/sprite_crossbow2"
         },
         {
             "predicate": {
                 "the_casket_of_reveries:charged": 1
             },
-            "model": "the_casket_of_reveries:item/god_orichalcum_crossbow_arrow"
-        },
-        {
-            "predicate": {
-                "the_casket_of_reveries:charged": 1,
-                "the_casket_of_reveries:firework": 1
-            },
-            "model": "the_casket_of_reveries:item/god_orichalcum_crossbow_firework"
+            "model": "the_casket_of_reveries:item/sprite_crossbow3"
         }
     ]
 }

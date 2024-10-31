@@ -221,10 +221,6 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                         new MerchantOffer(
                                 new ItemStack(TCRItems.ORICHALCUM.get(), 1),
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 48),
-                                142857, 0, 1),
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 5),
-                                new ItemStack(TCRItems.HEALTH_WAND.get(), 1),
                                 142857, 0, 1)
 
                 );

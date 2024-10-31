@@ -1,0 +1,6 @@
+{
+    "parent": "the_casket_of_reveries:item/sprite_crossbow",
+    "textures": {
+        "layer0": "the_casket_of_reveries:item/sprite_crossbow1"
+    }
+}

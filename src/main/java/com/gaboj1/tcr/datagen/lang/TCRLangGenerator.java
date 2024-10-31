@@ -98,23 +98,25 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRItems.AMMO.get(),"火枪弹药");
 
         this.add(TCRItems.ELDER_STAFF.get(),"长老的拐杖");
-        this.addItemUsageInfo(TCRItems.ELDER_STAFF.get(),"长老生前用过的拐杖，上面还带着点血迹。");
+        this.addItemUsageInfo(TCRItems.ELDER_STAFF.get(),"长老生前用过的拐杖。");
         this.add(TCRItems.TREE_DEMON_HORN.get(),"树魔之角");
-        this.addItemUsageInfo(TCRItems.TREE_DEMON_HORN.get(),"树魔头上的角，上面还带着点血迹。可于铁匠铺交换高阶材料。");
+        this.addItemUsageInfo(TCRItems.TREE_DEMON_HORN.get(),"树魔头上的角。可用于某些装备的制造。");
         this.add(TCRItems.TREE_DEMON_MASK.get(),"树魔面具");
-        this.addItemUsageInfo(TCRItems.TREE_DEMON_MASK.get(),"树魔掉落的面具，上面还带着点血迹。可于铁匠铺交换高阶材料。");
+        this.addItemUsageInfo(TCRItems.TREE_DEMON_MASK.get(),"树魔掉落的面具上面还带着点血迹。可用于某些装备的制造。");
         this.add(TCRItems.TREE_DEMON_BRANCH.get(),"树魔之枝");
-        this.addItemUsageInfo(TCRItems.TREE_DEMON_BRANCH.get(),"树魔的掉落物，上面还带着点血迹。可于铁匠铺交换高阶材料。");
+        this.addItemUsageInfo(TCRItems.TREE_DEMON_BRANCH.get(),"树魔的掉落物上面还带着点血迹。可用于某些装备的制造。");
         this.add(TCRItems.TREE_DEMON_FRUIT.get(),"树魔之果");
-        this.addItemUsageInfo(TCRItems.TREE_DEMON_FRUIT.get(),"树魔的掉落物，上面还带着点血迹。可于铁匠铺交换高阶材料。");
+        this.addItemUsageInfo(TCRItems.TREE_DEMON_FRUIT.get(),"树魔的掉落物。可用于某些装备的制造。");
         this.add(TCRItems.HEART_OF_THE_SAPLING.get(),"树苗之心");
-        this.addItemUsageInfo(TCRItems.HEART_OF_THE_SAPLING.get(),"小树妖的掉落物，可用于合成树妖套装或在猎人处兑换货币。");
+        this.addItemUsageInfo(TCRItems.HEART_OF_THE_SAPLING.get(),"小树妖的掉落物，可用于某些装备的制造。");
         this.add(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get(),"古木之髓");
-        this.addItemUsageInfo(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get(),"树妖的掉落物，可用于合成树妖套装或在猎人处兑换货币。");
+        this.addItemUsageInfo(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get(),"树妖的掉落物，可用于某些装备的制造。");
         this.add(TCRItems.BARK_OF_THE_GUARDIAN.get(),"守护者之皮");
-        this.addItemUsageInfo(TCRItems.BARK_OF_THE_GUARDIAN.get(),"森林守护者的掉落物，可用于合成树妖套装或在猎人处兑换货币。");
+        this.addItemUsageInfo(TCRItems.BARK_OF_THE_GUARDIAN.get(),"森林守护者的掉落物，可用于某些装备的制造。");
         this.add(TCRItems.STARLIT_DEWDROP.get(),"星光露珠");
-        this.addItemUsageInfo(TCRItems.STARLIT_DEWDROP.get(),"精灵的掉落物。可于牧歌原野工匠处锻造精灵法杖。");
+        this.addItemUsageInfo(TCRItems.STARLIT_DEWDROP.get(),"精灵的掉落物，可用于某些装备的制造");
+        this.add(TCRItems.SPRITE_STONE.get(),"精灵之石");
+        this.addItemUsageInfo(TCRItems.SPRITE_STONE.get(),"精灵堡垒的战利品，可用于某些装备的制造");
         this.add(TCRItems.WITHERING_TOUCH.get(),"枯萎之触");
         this.addItemUsageInfo(TCRItems.WITHERING_TOUCH.get(),"背包内持有枯萎之触时触发与树魔的战斗，可以削弱树魔的生命上限。每次削减 15% 最多可削弱三次。");
         this.add(TCRItems.DENSE_FOREST_CERTIFICATE.get(),"密林之证");
@@ -126,6 +128,10 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRItems.SPRITE_BOW.get(),"精灵之弓");
         this.add(TCREntities.SPRITE_BOW_ARROW.get(),"精灵之箭");
         this.addItemUsageInfo(TCRItems.SPRITE_BOW.get(),"携带精灵力量的弓，不消耗箭失，可附魔多重射击。");
+        this.add(TCRItems.SPRITE_CROSSBOW.get(),"精灵之怒");
+        this.addItemUsageInfo(TCRItems.SPRITE_CROSSBOW.get(),"携带精灵力量的神弩，不消耗箭失，可附魔多重射击。上膛时按下shift + 右键可释放精灵之怒，距离越远伤害越高。");
+        this.add(TCRItems.BASIC_SPRITE_CROSSBOW.get(),"精灵之弩");
+        this.addItemUsageInfo(TCRItems.BASIC_SPRITE_CROSSBOW.get(),"携带精灵力量的弩，不消耗箭失，可附魔多重射击。");
         this.add(TCRItems.TREE_SPIRIT_WAND.get(),"树灵法杖");
         this.addItemInfo(TCRItems.TREE_SPIRIT_WAND.get(),"no_spirit_tree","密林灵树原木不足，无法召唤小树妖");
         this.addItemUsageInfo(TCRItems.TREE_SPIRIT_WAND.get(),"右键地面消耗密林原木和生命值召唤小树妖",1);
@@ -159,7 +165,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addItemUsageInfo(TCRItems.COPY_RESIN.get(),"右键消耗以复制另一只手的物品");
 
         this.add(TCRItems.BASIC_RESIN.get(),"初级树脂");
-        this.addItemUsageInfo(TCRItems.BASIC_RESIN.get(),"右键消耗以修复另一只手的物品，每次修复 %d 点耐久度");
+        this.addItemUsageInfo(TCRItems.BASIC_RESIN.get(),"右键消耗以修复另一只手的物品，每次修复 %d 点耐久度。稀有度越高越难以修复。");
         this.add(TCRItems.INTERMEDIATE_RESIN.get(),"中级树脂");
         this.add(TCRItems.ADVANCED_RESIN.get(),"高级树脂");
         this.add(TCRItems.SUPER_RESIN.get(),"超级树脂");

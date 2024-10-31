@@ -139,6 +139,12 @@ public class ClientModEvents{
             ItemProperties.register(TCRItems.GOD_ORICHALCUM_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pull"), PULL);
             ItemProperties.register(TCRItems.GOD_ORICHALCUM_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pulling"), PULLING);
             ItemProperties.register(TCRItems.GOD_ORICHALCUM_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"charged"), CHARGED);
+            ItemProperties.register(TCRItems.SPRITE_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pull"), PULL);
+            ItemProperties.register(TCRItems.SPRITE_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pulling"), PULLING);
+            ItemProperties.register(TCRItems.SPRITE_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"charged"), CHARGED);
+            ItemProperties.register(TCRItems.BASIC_SPRITE_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pull"), PULL);
+            ItemProperties.register(TCRItems.BASIC_SPRITE_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pulling"), PULLING);
+            ItemProperties.register(TCRItems.BASIC_SPRITE_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"charged"), CHARGED);
 
             ItemProperties.register(TCRItems.GOD_ORICHALCUM.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"god_orichalcum"), WU_LIAN_BO);
 

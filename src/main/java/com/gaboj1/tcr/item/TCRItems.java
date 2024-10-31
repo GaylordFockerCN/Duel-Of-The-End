@@ -57,7 +57,7 @@ public class TCRItems {
 			() -> new OrichalcumArmorItem(TCRArmorMaterials.ORICHALCUM, ArmorItem.Type.BOOTS, new Item.Properties().rarity(TCRRarities.LIANG_PIN)));
 	public static final RegistryObject<Item> ORICHALCUM_BOW = REGISTRY.register("orichalcum_bow", () -> new OrichalcumBow(new Item.Properties().rarity(TCRRarities.LIANG_PIN).stacksTo(1).defaultDurability(128)));
 	public static final RegistryObject<Item> ORICHALCUM_CROSSBOW = REGISTRY.register("orichalcum_crossbow", () -> new OrichalcumCrossbow(new Item.Properties().rarity(TCRRarities.SHANG_PIN).stacksTo(1).defaultDurability(128)));
-	public static final RegistryObject<Item> GOD_ORICHALCUM_CROSSBOW = REGISTRY.register("god_orichalcum_crossbow", () -> new OrichalcumCrossbow(new Item.Properties().rarity(TCRRarities.TE_PIN).stacksTo(1).defaultDurability(256)){
+	public static final RegistryObject<Item> GOD_ORICHALCUM_CROSSBOW = REGISTRY.register("god_orichalcum_crossbow", () -> new OrichalcumCrossbow(new Item.Properties().rarity(TCRRarities.XIAN_PIN).stacksTo(1).defaultDurability(256)){
 		/**
 		 * 耐久翻倍，不会损坏，自带多重射击
 		 */
@@ -104,6 +104,8 @@ public class TCRItems {
 
 	public static final RegistryObject<Item> TREE_SPIRIT_WAND = REGISTRY.register("tree_spirit_wand", TreeSpiritWand::new);
 	public static final RegistryObject<Item> SPRITE_BOW = REGISTRY.register("sprite_bow", () -> new SpriteBow(new Item.Properties().defaultDurability(256).rarity(TCRRarities.SHANG_PIN)));
+	public static final RegistryObject<Item> BASIC_SPRITE_CROSSBOW = REGISTRY.register("basic_sprite_crossbow", () -> new BasicSpriteCrossbow(new Item.Properties().defaultDurability(256).rarity(TCRRarities.SHANG_PIN)));
+	public static final RegistryObject<Item> SPRITE_CROSSBOW = REGISTRY.register("sprite_crossbow", () -> new SpriteCrossbow(new Item.Properties().defaultDurability(256).rarity(TCRRarities.XIAN_PIN)));
 	public static final RegistryObject<Item> SPRITE_WAND = REGISTRY.register("spirit_wand", SpiritWand::new);
 	public static final RegistryObject<Item> HEALTH_WAND = REGISTRY.register("health_wand", HealthWand::new);
 	public static final RegistryObject<Item> TREE_DEMON_HORN = REGISTRY.register("tree_demon_horn", () -> new DropItem(new Item.Properties().rarity(TCRRarities.XIAN_PIN)));
@@ -115,6 +117,7 @@ public class TCRItems {
 	public static final RegistryObject<Item> ESSENCE_OF_THE_ANCIENT_TREE = REGISTRY.register("essence_of_the_ancient_tree", DropItem::new);
 	public static final RegistryObject<Item> BARK_OF_THE_GUARDIAN = REGISTRY.register("bark_of_the_guardian", DropItem::new);
 	public static final RegistryObject<Item> STARLIT_DEWDROP = REGISTRY.register("starlit_dewdrop", DropItem::new);
+	public static final RegistryObject<Item> SPRITE_STONE = REGISTRY.register("sprite_stone", () -> new DropItem(new Item.Properties().rarity(TCRRarities.SHANG_PIN)));
 	public static final RegistryObject<Item> DENSE_FOREST_CERTIFICATE = REGISTRY.register("dense_forest_certificate",  () -> new DropItem(new Item.Properties().rarity(TCRRarities.SHEN_ZHEN)));
 	public static final RegistryObject<Item> ELDER_STAFF = REGISTRY.register("elder_staff", DropItem::new);
 	public static final RegistryObject<Item> HOLY_SWORD = REGISTRY.register("holy_sword", FlySword::new);

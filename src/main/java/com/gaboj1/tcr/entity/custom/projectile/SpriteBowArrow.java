@@ -2,6 +2,7 @@ package com.gaboj1.tcr.entity.custom.projectile;
 
 import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.util.FireworkUtil;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
@@ -17,6 +18,7 @@ public class SpriteBowArrow extends SpectralArrow {
     public SpriteBowArrow(Level level, LivingEntity owner) {
         super(TCREntities.SPRITE_BOW_ARROW.get(), level);
         setOwner(owner);
+        setPos(owner.getX(), owner.getEyeY() - 0.1, owner.getZ());
     }
 
     public SpriteBowArrow(EntityType<? extends SpriteBowArrow> entityType, Level level) {
@@ -31,8 +33,17 @@ public class SpriteBowArrow extends SpectralArrow {
             level().playLocalSound(position().x, position().y, position().z, SoundEvents.FIREWORK_ROCKET_LAUNCH, SoundSource.BLOCKS, 4.0F, (1.0F + (level().random.nextFloat() - level().random.nextFloat()) * 0.2F) * 0.7F, false);
             fired = true;
         }
-        if(fired && onGround()){
+        if(fired && (onGround() || inGround)){
             discard();
+        }
+        Vec3 vec3 = this.getDeltaMovement();
+        double d5 = vec3.x;
+        double d6 = vec3.y;
+        double d1 = vec3.z;
+        if (level().isClientSide && !(onGround()  || inGround)) {
+            for(int i = 0; i < 4; ++i) {
+                this.level().addParticle(ParticleTypes.FIREWORK, this.getX() + d5 * (double)i / 4.0, this.getY() + d6 * (double)i / 4.0, this.getZ() + d1 * (double)i / 4.0, -d5, -d6 + 0.2, -d1);
+            }
         }
     }
 
@@ -46,4 +57,5 @@ public class SpriteBowArrow extends SpectralArrow {
         }
         super.onHit(hitResult);
     }
+
 }

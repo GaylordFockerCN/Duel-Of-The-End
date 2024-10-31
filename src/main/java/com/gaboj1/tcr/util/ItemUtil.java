@@ -38,7 +38,7 @@ public class ItemUtil {
             if (stack.isEmpty()){
                 continue;
             }
-            if(objects.contains(stack)){
+            if(objects.contains(stack.getItem())){
                 cnt++;
             }
         }

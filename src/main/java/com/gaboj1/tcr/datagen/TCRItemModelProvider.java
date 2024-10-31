@@ -90,6 +90,7 @@ public class TCRItemModelProvider extends ItemModelProvider {
         simpleItem(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE);
         simpleItem(TCRItems.BARK_OF_THE_GUARDIAN);
         simpleItem(TCRItems.STARLIT_DEWDROP);
+        simpleItem(TCRItems.SPRITE_STONE);
         simpleItem(TCRItems.DENSE_FOREST_CERTIFICATE);
         simpleItem(TCRItems.TIGER_SOUL_ICE);
         simpleItem(TCRItems.BRAWLER_GLOVES);

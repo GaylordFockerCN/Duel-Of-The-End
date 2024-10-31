@@ -55,8 +55,8 @@ public class SpriteBow extends BowItem {
         if (equipmentSlot == EquipmentSlot.MAINHAND) {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
             builder.putAll(super.getAttributeModifiers(equipmentSlot, stack));
-            builder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(SPEED_UUID, "Item modifier", 0.02, AttributeModifier.Operation.ADDITION));
-            builder.put(Attributes.LUCK, new AttributeModifier(LUCKY, "Item modifier", 0.5, AttributeModifier.Operation.ADDITION));
+            builder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(SPEED_UUID, "Item modifier", 0.01, AttributeModifier.Operation.ADDITION));
+            builder.put(Attributes.LUCK, new AttributeModifier(LUCKY, "Item modifier", 0.25, AttributeModifier.Operation.ADDITION));
             return builder.build();
         }
         return super.getAttributeModifiers(equipmentSlot, stack);
@@ -77,7 +77,6 @@ public class SpriteBow extends BowItem {
                     int cnt = itemStack.getEnchantmentLevel(Enchantments.MULTISHOT) > 0 ? 3 : 1;
                     for(int ii = 0; ii < cnt ; ii++){
                         AbstractArrow abstractarrow = new SpriteBowArrow(level, player);
-                        abstractarrow.setPos(player.getX(), player.getEyeY() - 0.1, player.getZ());
                         abstractarrow = this.customArrow(abstractarrow);
                         if(cnt == 1){
                             abstractarrow.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, f * 3.0F, 1.0F);
