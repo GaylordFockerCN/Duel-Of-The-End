@@ -176,7 +176,10 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRItems.RAW_ORICHALCUM.get(),"粗神金");
         this.addItemUsageInfo(TCRItems.RAW_ORICHALCUM.get(),"神金，怎么在梦里还要挖矿？");
         this.add(TCRItems.ORICHALCUM.get(),"神金");
+        this.add(TCRItems.GOD_INGOT.get(),"神金锭（？）");
         this.addItemUsageInfo(TCRItems.ORICHALCUM.get(),"神金，能让人突然想笑一下。");
+        this.add(TCRItems.OIL_LAMP_GATHER_SOULS.get(),"聚魂油灯");
+        this.add(TCRItems.FLAME_THAT_GATHERSOULS.get(),"聚魂火把");
         this.add(TCRItems.GOD_ORICHALCUM.get(),"真·神金");
         this.addItemUsageInfo(TCRItems.GOD_ORICHALCUM.get(),"稀有材料，由战利品箱或怪物掉落获得，可用于强化特定物品。");
 
@@ -192,6 +195,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRItems.ORICHALCUM_GREAT_SWORD.get(),"神金巨剑");
         this.add(TCRItems.ORICHALCUM_AXE.get(),"神金斧");
         this.add(TCRItems.ORICHALCUM_PICKAXE.get(),"神金镐");
+        this.add(TCRItems.GOD_SHARP_AXE.get(),"真·神金斩斧");
         this.add(TCRItems.ORICHALCUM_BOW.get(),"神金弓");
         this.addItemUsageInfo(TCRItems.ORICHALCUM_BOW.get(),"自带无限并一次可射出两发箭矢。");
         this.add(TCRItems.ORICHALCUM_CROSSBOW.get(),"神金连弩");
@@ -325,6 +329,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCRBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER.get(),"密林灵花盆栽");
         this.add(TCRBlocks.POTTED_CATNIP.get(),"猫薄荷盆栽");
         this.add(TCRBlocks.ORICHALCUM_ORE.get(),"神金矿");
+        this.add(TCRBlocks.ORICHALCUM_BLOCK.get(),"神金块");
         this.add(TCRBlocks.YGGDRASIL_BLOCK.get(),"Yggdrasil召唤石");
         this.add(TCRBlocks.TIGER_TRIAL_BLOCK.get(),"试炼冰虎召唤石");
         this.add(TCRBlocks.MIAO_YIN_BLOCK.get(),"妙音召唤石");

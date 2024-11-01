@@ -76,6 +76,7 @@ public class TCRBlockStateProvider extends BlockStateProvider {
         blockWithItem(TCRBlocks.ELITE_BIG_HAMMER_BLOCK);
 
         blockWithItem(TCRBlocks.ORICHALCUM_ORE);
+        blockWithItem(TCRBlocks.ORICHALCUM_BLOCK);
         leavesBlock(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES);
         saplingBlock(TCRBlocks.DENSE_FOREST_SPIRIT_SAPLING);
         stairsBlock(((StairBlock) TCRBlocks.DENSE_FOREST_SPIRIT_TREE_STAIRS.get()), blockTexture(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get()));

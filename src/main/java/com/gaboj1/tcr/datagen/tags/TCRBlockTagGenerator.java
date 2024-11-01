@@ -43,7 +43,8 @@ public class TCRBlockTagGenerator extends BlockTagsProvider {
         this.tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(TCRBlocks.ORICHALCUM_ORE.get()).addTag(Tags.Blocks.ORES);
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(TCRBlocks.ORICHALCUM_ORE.get());
+                .add(TCRBlocks.ORICHALCUM_ORE.get())
+                .add(TCRBlocks.ORICHALCUM_BLOCK.get());
 
     }
 }

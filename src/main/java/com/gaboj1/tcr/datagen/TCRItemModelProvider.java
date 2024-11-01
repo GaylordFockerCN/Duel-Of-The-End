@@ -104,6 +104,7 @@ public class TCRItemModelProvider extends ItemModelProvider {
         handheldItem(TCRItems.ORICHALCUM_SWORD);
         handheldItem(TCRItems.ORICHALCUM_AXE);
         handheldItem(TCRItems.ORICHALCUM_PICKAXE);
+        handheldItem(TCRItems.GOD_SHARP_AXE);
 
         simpleItem(TCRItems.BLUE_BANANA);
         simpleItem(TCRItems.DREAM_TA);

@@ -219,6 +219,8 @@ public class TCRBlocks {
     //神金矿
     public static final RegistryObject<Block> ORICHALCUM_ORE = registerBlock("orichalcum_ore",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.GOLD_ORE)));
+    public static final RegistryObject<Block> ORICHALCUM_BLOCK = registerBlock("orichalcum_block",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.GOLD_BLOCK)));
 
     //注意：拿在手上是没有完整模型的，这里偷懒了，本来应该新建一个物品类的。不过反正生存模式用不到，开发者才用得到，就懒得做了hh
     public static final RegistryObject<Block> PORTAL_BLOCK = registerBlock("portal_block",

@@ -47,6 +47,7 @@ public class TCRItems {
 	public static final RegistryObject<Item> RAW_ORICHALCUM = REGISTRY.register("raw_orichalcum", () -> new DropItem(new Item.Properties().rarity(TCRRarities.LIANG_PIN)));
 	//真·神金锭
 	public static final RegistryObject<Item> GOD_ORICHALCUM = REGISTRY.register("god_orichalcum", () -> new DropItem(new Item.Properties().rarity(TCRRarities.TE_PIN)));
+	public static final RegistryObject<Item> GOD_INGOT = REGISTRY.register("god_ingot", () -> new DropItem(new Item.Properties().rarity(TCRRarities.SHANG_PIN)));
 	public static final RegistryObject<Item> ORICHALCUM_HELMET = REGISTRY.register("orichalcum_helmet",
 			() -> new OrichalcumArmorItem(TCRArmorMaterials.ORICHALCUM, ArmorItem.Type.HELMET, new Item.Properties().rarity(TCRRarities.LIANG_PIN)));
 	public static final RegistryObject<Item> ORICHALCUM_CHESTPLATE = REGISTRY.register("orichalcum_chestplate",
@@ -74,6 +75,7 @@ public class TCRItems {
 	public static final RegistryObject<Item> ORICHALCUM_GREAT_SWORD = REGISTRY.register("orichalcum_greatsword", () -> new Greatsword(TCRTiers.ORICHALCUM, 13, -3.5F, new Item.Properties().rarity(TCRRarities.LIANG_PIN)));
 	public static final RegistryObject<Item> ORICHALCUM_SWORD = REGISTRY.register("orichalcum_sword", () -> new SwordItem(TCRTiers.ORICHALCUM, 6, -2.4F, new Item.Properties().rarity(TCRRarities.LIANG_PIN)));
 	public static final RegistryObject<Item> ORICHALCUM_AXE = REGISTRY.register("orichalcum_axe", () -> new AxeItem(TCRTiers.ORICHALCUM, 8, -3.0F, new Item.Properties().rarity(TCRRarities.LIANG_PIN)));
+	public static final RegistryObject<Item> GOD_SHARP_AXE = REGISTRY.register("god_sharp_axe", () -> new GodAxeItem(TCRTiers.ORICHALCUM, 16, -2.4F, new Item.Properties().rarity(TCRRarities.TE_PIN)));
 	public static final RegistryObject<Item> ORICHALCUM_PICKAXE = REGISTRY.register("orichalcum_pickaxe", () -> new PickaxeItem(TCRTiers.ORICHALCUM, 3, -2.4F, new Item.Properties().rarity(TCRRarities.LIANG_PIN)));
 	public static final RegistryObject<Item> ICE_TIGER_HELMET = REGISTRY.register("ice_tiger_helmet",
 			() -> new IceTigerArmorItem(TCRArmorMaterials.ICE_TIGER, ArmorItem.Type.HELMET, new Item.Properties().rarity(TCRRarities.SHANG_PIN)));

@@ -32,6 +32,7 @@ public class TCRBlockLootTables extends BlockLootSubProvider {
         //copy from VanillaBlockLoot (我真是天才~
         this.add(TCRBlocks.PORTAL_BED.get(), (block) -> this.createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD));
         this.add(TCRBlocks.ORICHALCUM_ORE.get(), (block) -> this.createCopperLikeOreDrops(block, TCRItems.RAW_ORICHALCUM.get(), 1, 1));
+        this.dropSelf(TCRBlocks.ORICHALCUM_BLOCK.get());
 
         this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
         this.add(TCRBlocks.CATNIP.get(), (block) -> this.createCopperLikeOreDrops(block, TCRItems.CATNIP.get(), 1, 3));

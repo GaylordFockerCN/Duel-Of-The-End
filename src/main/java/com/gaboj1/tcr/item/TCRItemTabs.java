@@ -51,6 +51,7 @@ public class TCRItemTabs {
 				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR.get());
 				tabData.accept(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_TRAPDOOR.get());
 				tabData.accept(TCRBlocks.ORICHALCUM_ORE.get());
+				tabData.accept(TCRBlocks.ORICHALCUM_BLOCK.get());
 				tabData.accept(TCRBlocks.BOSS2_ROOM_1.get());
 				tabData.accept(TCRBlocks.BOSS2_ROOM_2.get());
 				tabData.accept(TCRBlocks.BOSS2_ROOM_3.get());
@@ -171,6 +172,7 @@ public class TCRItemTabs {
 				tabData.accept(TCRItems.WAN_MING_PEARL.get());
 				tabData.accept(TCRItems.RAW_ORICHALCUM.get());
 				tabData.accept(TCRItems.ORICHALCUM.get());
+				tabData.accept(TCRItems.GOD_INGOT.get());
 				tabData.accept(TCRItems.GOD_ORICHALCUM.get());
 
 			}).build());
@@ -193,6 +195,7 @@ public class TCRItemTabs {
 						tabData.accept(TCRItems.ORICHALCUM_SWORD.get());
 						tabData.accept(TCRItems.ORICHALCUM_GREAT_SWORD.get());
 						tabData.accept(TCRItems.ORICHALCUM_AXE.get());
+						tabData.accept(TCRItems.GOD_SHARP_AXE.get());
 						tabData.accept(TCRItems.ORICHALCUM_PICKAXE.get());
 
 						//BIOME1

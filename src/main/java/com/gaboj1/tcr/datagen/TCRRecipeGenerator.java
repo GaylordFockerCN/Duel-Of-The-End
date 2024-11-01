@@ -106,7 +106,19 @@ public class TCRRecipeGenerator extends TCRRecipeProvider implements IConditionB
         woodBlockStorageRecipes(consumer, RecipeCategory.DECORATIONS, TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get(), TCRBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
 
         oreSmelting(TCRItems.ORICHALCUM.get(), TCRItems.RAW_ORICHALCUM.get(), 0.7f, 200, consumer);
+        nineBlockStorageRecipes(consumer, RecipeCategory.MISC, TCRItems.ORICHALCUM.get(), RecipeCategory.MISC, TCRBlocks.ORICHALCUM_BLOCK.get());
+        oreSmelting(TCRBlocks.ORICHALCUM_BLOCK.get(), TCRItems.GOD_INGOT.get(), 2.5f, 400, consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TCRItems.GOD_ORICHALCUM.get())
+                .pattern("ACA")
+                .pattern("CBC")
+                .pattern("ACA")
+                .define('A', TCRItems.GOD_INGOT.get())
+                .define('B', TCRItems.OIL_LAMP_GATHER_SOULS.get())
+                .define('C', TCRItems.FLAME_THAT_GATHERSOULS.get())
+                .unlockedBy(getHasName(TCRItems.ORICHALCUM.get()), has(TCRItems.ORICHALCUM.get()))
+                .save(consumer);
         smithing(consumer, TCRItems.GOD_ORICHALCUM.get(), TCRItems.ORICHALCUM_CROSSBOW.get(), Items.AIR, RecipeCategory.COMBAT, TCRItems.GOD_ORICHALCUM_CROSSBOW.get());
+        smithing(consumer, TCRItems.GOD_ORICHALCUM.get(), TCRItems.ORICHALCUM_AXE.get(), TCRItems.ORICHALCUM_GREAT_SWORD.get(), RecipeCategory.COMBAT, TCRItems.GOD_SHARP_AXE.get());
         smithing(consumer, TCRItems.TREE_DEMON_BRANCH.get(), TCRItems.TREE_BOOTS.get(), Items.AIR, RecipeCategory.COMBAT, TCRItems.TREE_ROBE_BOOTS.get());
         smithing(consumer, TCRItems.TREE_DEMON_MASK.get(), TCRItems.TREE_HELMET.get(), Items.AIR, RecipeCategory.COMBAT, TCRItems.TREE_ROBE_HELMET.get());
         smithing(consumer, TCRItems.TREE_DEMON_FRUIT.get(), TCRItems.TREE_CHESTPLATE.get(), Items.AIR, RecipeCategory.COMBAT, TCRItems.TREE_ROBE_CHESTPLATE.get());
