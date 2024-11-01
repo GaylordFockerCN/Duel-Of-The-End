@@ -23,7 +23,7 @@ import net.minecraft.client.KeyMapping;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = {Dist.CLIENT})
 public class KeyMappings {
-	public static final KeyMapping RELOAD = new KeyMapping("key.tcr.gun_reload", GLFW.GLFW_KEY_R, "key.categories.tcr") {
+	public static final MyKeyMapping RELOAD = new MyKeyMapping("key.tcr.gun_reload", GLFW.GLFW_KEY_R, "key.categories.tcr") {
 		private boolean isDownOld = false;
 		private boolean isReloading = false;
 
@@ -47,7 +47,7 @@ public class KeyMappings {
 		}
 	};
 
-	public static final KeyMapping OPEN_PROGRESS = new KeyMapping(buildKey("open_progress"), GLFW.GLFW_KEY_J, "key.categories.tcr");
+	public static final MyKeyMapping OPEN_PROGRESS = new MyKeyMapping(buildKey("open_progress"), GLFW.GLFW_KEY_J, "key.categories.tcr");
 
 	public static String buildKey(String name){
 		return "key.tcr." + name;

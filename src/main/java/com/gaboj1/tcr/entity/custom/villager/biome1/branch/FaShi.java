@@ -102,6 +102,16 @@ public class FaShi extends MushroomLineNpc {
                             orichalcum2,
                             142857, 0, 0.02f),
                     new MerchantOffer(
+                            new ItemStack(TCRItems.HEART_OF_THE_SAPLING.get(), 1),
+                            new ItemStack(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get(), 1),
+                            new ItemStack(TCRItems.FLAME_THAT_GATHERSOULS.get(), 1),
+                            142857, 0, 1),
+                    new MerchantOffer(
+                            new ItemStack(TCRItems.BARK_OF_THE_GUARDIAN.get(), 1),
+                            new ItemStack(TCRItems.TREE_DEMON_FRUIT.get(), 1),
+                            new ItemStack(TCRItems.OIL_LAMP_GATHER_SOULS.get(), 1),
+                            142857, 0, 1),
+                    new MerchantOffer(
                             new ItemStack(TCRItems.BLUE_MUSHROOM.get(), 9),
                             poisonResistance,
                             142857, 0, 0.02f),

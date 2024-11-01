@@ -58,6 +58,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addInfo("wallet_plus_count", "梦晶石：%d");
         this.addInfo("wallet_count", "梦碎片： %d");
         this.addInfo("second_boss_fight_tip", "造成大于10的伤害以破除征尽的剑帘");
+        this.addInfo("current_tasks", "当前任务【按 %s 关闭】：");
 
         this.add("the_casket_of_reveries.button.boss1","泰兰妮尔之心");
         this.add("the_casket_of_reveries.button.boss2","九霄");

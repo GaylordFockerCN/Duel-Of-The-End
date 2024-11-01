@@ -89,7 +89,7 @@ public class DialogueAnswerComponent {
     }
 
     public void updateDialogue(Component message) {
-        updateSplitLines(splitLines,message);
+        updateSplitLines(splitLines, message);
     }
 
     private void updateSplitLines(List<NpcDialogueElement> pSplitLine, Component message){

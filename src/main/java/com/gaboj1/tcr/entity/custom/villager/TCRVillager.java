@@ -20,6 +20,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -180,6 +181,19 @@ public abstract class TCRVillager extends Villager implements GeoEntity, ManySki
 
     public void addParticlesAroundSelf(SimpleParticleType particleTypes){
         super.addParticlesAroundSelf(particleTypes);
+    }
+
+    /**
+     * 交易成功的音效
+     */
+    @Override
+    public @NotNull SoundEvent getNotifyTradeSound() {
+        return SoundEvents.EXPERIENCE_ORB_PICKUP;
+    }
+
+    @Override
+    protected @NotNull SoundEvent getTradeUpdatedSound(boolean p_35323_) {
+        return SoundEvents.EXPERIENCE_ORB_PICKUP;
     }
 
     @Override

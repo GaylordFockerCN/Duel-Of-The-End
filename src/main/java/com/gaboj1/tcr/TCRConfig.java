@@ -6,33 +6,10 @@ public class TCRConfig {
     public static final ForgeConfigSpec.IntValue MIN_CHUNK_BETWEEN_STRUCTURE;
     public static final ForgeConfigSpec.BooleanValue FAST_MOD;
     public static final ForgeConfigSpec.BooleanValue NO_PLOT_MODE;
-    // 是否启用自定义地图生成时缩放
     public static final ForgeConfigSpec.BooleanValue ENABLE_SCALING;
-    // 是否启用更多空洞的世界（地图更像空岛，类似天境，但是陆地较少）
-//    public static final ForgeConfigSpec.BooleanValue MORE_HOLE;
-    // Boss生成方块是否有效（默认开启，开发时关闭）
     public static final ForgeConfigSpec.BooleanValue ENABLE_BOSS_SPAWN_BLOCK_LOAD;
-    // 更好的结构方块是否立即刷新（默认开启，开发时关闭）
     public static final ForgeConfigSpec.BooleanValue ENABLE_BETTER_STRUCTURE_BLOCK_LOAD;
-    // 游戏内对话框是否使用打字机效果（对话逐字出现）
-    public static final ForgeConfigSpec.BooleanValue ENABLE_TYPEWRITER_EFFECT;
-    // 打字机效果的速度（一次出现几个字）
-    public static final ForgeConfigSpec.IntValue TYPEWRITER_EFFECT_SPEED;
-    // 打字机效果间隔（几个tick更新一次）
-    public static final ForgeConfigSpec.IntValue TYPEWRITER_EFFECT_INTERVAL;
-    //Boss是否显示血条
-    public static final ForgeConfigSpec.BooleanValue SHOW_BOSS_HEALTH;
-    //武器随着世界等级提升的提升倍率
-    public static final ForgeConfigSpec.DoubleValue WEAPON_MULTIPLIER_WHEN_WORLD_LEVEL_UP;
-    // 基础树脂的修复值
     public static final ForgeConfigSpec.IntValue REPAIR_VALUE;
-    // 树灵法杖参数
-    public static final ForgeConfigSpec.IntValue TREE_SPIRIT_WAND_HUNGRY_CONSUME;
-    // 树灵法杖恢复值
-    public static final ForgeConfigSpec.IntValue TREE_SPIRIT_WAND_HEAL;
-    // 树灵木消耗值
-    public static final ForgeConfigSpec.IntValue SPIRIT_LOG_CONSUME;
-    //怪物随着世界等级提升的提升倍率
     public static final ForgeConfigSpec.DoubleValue MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP;
     public static final ForgeConfigSpec.DoubleValue ELITE_MOB_HEALTH_MULTIPLIER;
     public static final ForgeConfigSpec.DoubleValue ELITE_MOB_DAMAGE_MULTIPLIER;
@@ -40,6 +17,14 @@ public class TCRConfig {
     public static final ForgeConfigSpec.IntValue BOSS_HEALTH_AND_LOOT_MULTIPLE_MAX;
     public static final ForgeConfigSpec.DoubleValue TEST_X, TEST_Y, TEST_Z;
     public static final ForgeConfigSpec SPEC;
+
+    public static final ForgeConfigSpec.BooleanValue ENABLE_TYPEWRITER_EFFECT;
+    public static final ForgeConfigSpec.IntValue TYPEWRITER_EFFECT_SPEED;
+    public static final ForgeConfigSpec.IntValue TYPEWRITER_EFFECT_INTERVAL;
+    public static final ForgeConfigSpec.BooleanValue SHOW_BOSS_HEALTH;
+    public static final ForgeConfigSpec.BooleanValue RENDER_CUSTOM_GUI;
+    public static final ForgeConfigSpec.DoubleValue TASK_X, TASK_Y, TASK_SIZE;
+    public static final ForgeConfigSpec.IntValue INTERVAL;
     public static final ForgeConfigSpec CLIENT_SPEC;
 
     static {
@@ -53,17 +38,13 @@ public class TCRConfig {
         builder.pop();
 
         builder.push("Attribute Value");
-        REPAIR_VALUE = createInt(builder, "repair_value", 1, 1);
-        TREE_SPIRIT_WAND_HUNGRY_CONSUME = createInt(builder, "tree_spirit_wand_hungry_consume", 2, 1);
-        TREE_SPIRIT_WAND_HEAL = createInt(builder, "tree_spirit_wand_heal", 10, 1);
-        SPIRIT_LOG_CONSUME = createInt(builder, "spirit_log_consume", 1, 1);
-        WEAPON_MULTIPLIER_WHEN_WORLD_LEVEL_UP = createDouble(builder, "weapon_multiplier_when_world_level_up", 1.2, 1.0);
+        REPAIR_VALUE = createInt(builder, "repair_value", 1, 1, "树脂基础修复值");
         builder.pop();
         builder.push("Monster Setting");
-        MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP = createDouble(builder, "mob_multiplier_when_world_level_up", 1.2, 1.0);
+        MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP = createDouble(builder, "mob_multiplier_when_world_level_up", 1.2, 1.0, "世界等级提升时怪物的属性提升倍数");
         ELITE_MOB_HEALTH_MULTIPLIER = createDouble(builder, "elite_mob_health_multiplier", 3.0, 1.0, "精英怪的血量加倍");
         ELITE_MOB_DAMAGE_MULTIPLIER = createDouble(builder, "elite_mob_damage_multiplier", 1.5, 1.0, "精英怪的伤害加倍");
-        BOSS_HEALTH_AND_LOOT_MULTIPLE = createBool(builder, "boss_health_and_loot_multiple", true, "是否在多人模式下boss血量增加，且重要战利品也增加");
+        BOSS_HEALTH_AND_LOOT_MULTIPLE = createBool(builder, "boss_health_and_loot_multiple", true, "是否在多人模式下boss血量增加");
         BOSS_HEALTH_AND_LOOT_MULTIPLE_MAX = createInt(builder, "boss_health_and_loot_multiple_max", 5, 1, "多人模式下boss血量增加的最大倍数");
         builder.pop();
 
@@ -81,6 +62,11 @@ public class TCRConfig {
         TYPEWRITER_EFFECT_SPEED = createInt(clientBuilder, "typewriter_effect_speed", 2, 1, "打字机效果打字速度");
         TYPEWRITER_EFFECT_INTERVAL = createInt(clientBuilder, "typewriter_effect_interval", 2, 1, "打字机效果打字间隔");
         SHOW_BOSS_HEALTH = createBool(clientBuilder, "show_boss_health", true, "是否显示Boss血量");
+        RENDER_CUSTOM_GUI = createBool(clientBuilder, "render_custom_gui", false, "是否显示自定义GUI（可通过快捷键设置，具体看按键绑定）");
+        TASK_X = createDouble(clientBuilder, "task_x", 0.8, 0, "任务提示框的x屏幕位置占比");
+        TASK_Y = createDouble(clientBuilder, "task_y", 0.3, 0, "任务提示框的y屏幕位置占比");
+        INTERVAL = createInt(clientBuilder, "task_interval", 1, 1, "任务提示框的各任务间隔");
+        TASK_SIZE = createDouble(clientBuilder, "task_size", 1, 0, "字体大小倍数");
 
         CLIENT_SPEC = clientBuilder.build();
     }

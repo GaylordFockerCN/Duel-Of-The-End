@@ -76,6 +76,7 @@ public class TCRItemModelProvider extends ItemModelProvider {
         simpleItem(TCRItems.PURIFICATION_TALISMAN);
         simpleItem(TCRItems.ORICHALCUM);
         simpleItem(TCRItems.RAW_ORICHALCUM);
+        simpleItem(TCRItems.GOD_INGOT);
 
         simpleItem(TCRItems.TREE_DEMON_HORN);
         simpleItem(TCRItems.TREE_DEMON_MASK);

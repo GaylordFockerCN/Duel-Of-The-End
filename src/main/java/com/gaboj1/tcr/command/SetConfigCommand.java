@@ -4,6 +4,7 @@ import com.gaboj1.tcr.TCRConfig;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -15,7 +16,7 @@ import java.util.Objects;
 public class SetConfigCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("tcr")
-                .then(Commands.literal("set").requires((commandSourceStack) -> commandSourceStack.hasPermission(2))
+                .then(Commands.literal("set_config").requires((commandSourceStack) -> commandSourceStack.hasPermission(2))
                     .then(Commands.literal("enable_better_structure_block_load")
                         .then(Commands.argument("value", BoolArgumentType.bool())
                                 .executes((context) -> setData(TCRConfig.ENABLE_BETTER_STRUCTURE_BLOCK_LOAD, BoolArgumentType.getBool(context, "value"), context))
@@ -40,6 +41,21 @@ public class SetConfigCommand {
                             .then(Commands.argument("value", DoubleArgumentType.doubleArg())
                                     .executes((context) -> setData(TCRConfig.TEST_Z, DoubleArgumentType.getDouble(context, "value"), context))
                             )
+                    )
+                    .then(Commands.literal("task_tip_x")
+                            .then(Commands.argument("value", DoubleArgumentType.doubleArg())
+                                    .executes((context) -> setData(TCRConfig.TASK_X, DoubleArgumentType.getDouble(context, "value"), context))
+                            )
+                    )
+                    .then(Commands.literal("task_tip_y")
+                            .then(Commands.argument("value", DoubleArgumentType.doubleArg())
+                                    .executes((context) -> setData(TCRConfig.TASK_Y, DoubleArgumentType.getDouble(context, "value"), context))
+                            )
+                    )
+                    .then(Commands.literal("task_tip_size")
+                            .then(Commands.argument("value", DoubleArgumentType.doubleArg())
+                                    .executes((context) -> setData(TCRConfig.TASK_SIZE, DoubleArgumentType.getDouble(context, "value"), context))
+                        )
                     )
                 )
         );

@@ -13,6 +13,9 @@ public class MyKeyMapping extends KeyMapping {
     public MyKeyMapping(String p_90821_, int p_90822_, String p_90823_) {
         super(p_90821_, p_90822_, p_90823_);
     }
+    public String getKeyName(){
+        return getKey().getName().split("\\.", 3)[2];
+    }
 
     @Override
     public void setDown(boolean down) {

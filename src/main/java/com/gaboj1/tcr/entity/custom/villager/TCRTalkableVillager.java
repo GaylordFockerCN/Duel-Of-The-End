@@ -129,12 +129,6 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
         for(MerchantOffer offer:merchantOffers){
             this.getOffers().add(offer);
         }
-//        if(!alreadyAddTrade){
-//            for(MerchantOffer offer:merchantOffers){
-//                this.getOffers().add(offer);
-//            }
-//        }
-//        alreadyAddTrade = true;
 
         this.setTradingPlayer(player);
         this.openTradingScreen(player, this.getDisplayName(), this.getVillagerData().getLevel());

@@ -36,13 +36,6 @@ public class SaveUtil {
     public static int worldLevel = 0;
 
     /**
-     * 获取随世界等级提升后的武器数值（即乘以倍率）
-     */
-    public static double getWeaponMultiplier(double weaponAttr){
-        return weaponAttr * (SaveUtil.worldLevel == 0 ? 1 : SaveUtil.worldLevel* TCRConfig.WEAPON_MULTIPLIER_WHEN_WORLD_LEVEL_UP.get());
-    }
-
-    /**
      * 获取随世界等级提升后的怪物数值（即乘以倍率）
      */
     public static double getMobMultiplier(double mobAttr){

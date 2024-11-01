@@ -50,6 +50,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.function.Consumer;
 
@@ -82,7 +83,7 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
             serverLevel.playSound(null,pPlayer.getX(),pPlayer.getY(),pPlayer.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS,1,1);
         }
         foodData.setFoodLevel(foodData.getFoodLevel()-TCRConfig.TREE_SPIRIT_WAND_HUNGRY_CONSUME.get());
-        pPlayer.heal(TCRConfig.TREE_SPIRIT_WAND_HEAL.get());
+        pPlayer.heal(10);
         if(!pPlayer.isCreative())
             itemStack.setDamageValue(itemStack.getDamageValue()+1);
         return InteractionResultHolder.pass(itemStack);
@@ -96,7 +97,7 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
         Player player = pContext.getPlayer();
         if(level instanceof ServerLevel serverLevel){
             assert player != null;
-            if(!player.isCreative() && ItemUtil.searchAndConsumeItem(player, TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get().asItem(), TCRConfig.SPIRIT_LOG_CONSUME.get()) == 0){
+            if(!player.isCreative() && ItemUtil.searchAndConsumeItem(player, TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get().asItem(), 1) == 0){
                 player.displayClientMessage(Component.translatable(this.getDescriptionId()+".no_spirit_tree"), true);
                 return InteractionResult.PASS;
             }
@@ -107,7 +108,7 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
             ItemStack itemStack = player.getItemInHand(pContext.getHand());//pContext.getItemInHand()不知道ok不ok
             summonAnim(serverLevel,player,itemStack);
             serverLevel.playSound(null,player.getX(),player.getY(),player.getZ(), SoundEvents.EVOKER_PREPARE_SUMMON, SoundSource.BLOCKS,1,1);
-            TCREntities.SMALL_TREE_MONSTER.get().spawn(serverLevel, pos.above(), MobSpawnType.SPAWN_EGG).tame(player);
+            Objects.requireNonNull(TCREntities.SMALL_TREE_MONSTER.get().spawn(serverLevel, pos.above(), MobSpawnType.SPAWN_EGG)).tame(player);
 
 
             if(!player.isCreative())
