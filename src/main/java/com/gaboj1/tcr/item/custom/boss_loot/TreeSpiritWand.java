@@ -1,6 +1,5 @@
 package com.gaboj1.tcr.item.custom.boss_loot;
 
-import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.block.TCRBlocks;
 import com.gaboj1.tcr.entity.TCREntities;
@@ -67,7 +66,9 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 
-    //右键空气消耗饱食度来回血
+    /**
+     * 右键空气消耗饱食度来回血
+     */
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
@@ -82,7 +83,7 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
             recoverAnim(serverLevel,pPlayer,itemStack);
             serverLevel.playSound(null,pPlayer.getX(),pPlayer.getY(),pPlayer.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS,1,1);
         }
-        foodData.setFoodLevel(foodData.getFoodLevel()-TCRConfig.TREE_SPIRIT_WAND_HUNGRY_CONSUME.get());
+        foodData.setFoodLevel(foodData.getFoodLevel() - 4);
         pPlayer.heal(10);
         if(!pPlayer.isCreative())
             itemStack.setDamageValue(itemStack.getDamageValue()+1);

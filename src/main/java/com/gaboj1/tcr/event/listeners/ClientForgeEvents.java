@@ -4,7 +4,6 @@ import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.client.gui.BossBarHandler;
 import com.gaboj1.tcr.client.gui.CustomGuiHandler;
-import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;

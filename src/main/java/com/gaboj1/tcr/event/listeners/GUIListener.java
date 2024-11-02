@@ -30,14 +30,6 @@ public class GUIListener {
     }
 
     /**
-     * 画自己的boss战血条
-     */
-    @SubscribeEvent
-    public static void onRenderGui(CustomizeGuiOverlayEvent.BossEventProgress event){
-
-    }
-
-    /**
      * 绘制使用的图片名
      */
     @SubscribeEvent

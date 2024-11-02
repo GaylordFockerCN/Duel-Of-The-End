@@ -7,6 +7,8 @@ public class TCRConfig {
     public static final ForgeConfigSpec.BooleanValue FAST_MOD;
     public static final ForgeConfigSpec.BooleanValue NO_PLOT_MODE;
     public static final ForgeConfigSpec.BooleanValue ENABLE_SCALING;
+    public static final ForgeConfigSpec.BooleanValue BROADCAST_DIALOG;
+    public static final ForgeConfigSpec.DoubleValue BROADCAST_DISTANCE;
     public static final ForgeConfigSpec.BooleanValue ENABLE_BOSS_SPAWN_BLOCK_LOAD;
     public static final ForgeConfigSpec.BooleanValue ENABLE_BETTER_STRUCTURE_BLOCK_LOAD;
     public static final ForgeConfigSpec.IntValue REPAIR_VALUE;
@@ -33,8 +35,10 @@ public class TCRConfig {
         builder.push("Game Setting");
         MIN_CHUNK_BETWEEN_STRUCTURE = createInt(builder, "min_chunk_between_structure", 3, 0, "小建筑和主建筑的最小区块间距");
         FAST_MOD = createBool(builder, "fast_mod", false, "快速模式，开启后将直接获得可以进入维度的装备");
-        NO_PLOT_MODE = createBool(builder, "no_plot_mode", false, "无剧情模式，设为true后将直接挑战boss而没有主线对话。");//TODO 未实现
+        NO_PLOT_MODE = createBool(builder, "no_plot_mode", false, "无剧情模式，设为true后将直接挑战boss而没有主线对话。【未实现！】");//TODO 未实现
         ENABLE_SCALING = createBool(builder, "enable_scaling", false, "启用后将对图生图的图片进行缩放，强制地图大小。");
+        BROADCAST_DIALOG = createBool(builder, "broadcast_dialog", true, "是否全局广播剧情对话");
+        BROADCAST_DISTANCE = createDouble(builder, "broadcast_distance", 50, 1, "广播范围");
         builder.pop();
 
         builder.push("Attribute Value");
@@ -64,9 +68,9 @@ public class TCRConfig {
         SHOW_BOSS_HEALTH = createBool(clientBuilder, "show_boss_health", true, "是否显示Boss血量");
         RENDER_CUSTOM_GUI = createBool(clientBuilder, "render_custom_gui", false, "是否显示自定义GUI（可通过快捷键设置，具体看按键绑定）");
         TASK_X = createDouble(clientBuilder, "task_x", 0.8, 0, "任务提示框的x屏幕位置占比");
-        TASK_Y = createDouble(clientBuilder, "task_y", 0.3, 0, "任务提示框的y屏幕位置占比");
-        INTERVAL = createInt(clientBuilder, "task_interval", 1, 1, "任务提示框的各任务间隔");
-        TASK_SIZE = createDouble(clientBuilder, "task_size", 1, 0, "字体大小倍数");
+        TASK_Y = createDouble(clientBuilder, "task_y", 0.1, 0, "任务提示框的y屏幕位置占比");
+        INTERVAL = createInt(clientBuilder, "task_interval", 100, 1, "任务提示框的各任务间隔");
+        TASK_SIZE = createDouble(clientBuilder, "task_size", 1, 0, "占据宽度");
 
         CLIENT_SPEC = clientBuilder.build();
     }

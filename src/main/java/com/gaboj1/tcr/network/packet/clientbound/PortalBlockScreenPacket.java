@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.network.packet.clientbound;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.network.packet.BasePacket;
 import com.gaboj1.tcr.network.packet.clientbound.clienthelp.HandlePackets;
 import net.minecraft.nbt.CompoundTag;
@@ -22,5 +23,6 @@ public record PortalBlockScreenPacket(CompoundTag tag) implements BasePacket {
     @Override
     public void execute(Player playerEntity) {
         HandlePackets.handlePortalBlockScreenPacket(tag);
+        TCRConfig.RENDER_CUSTOM_GUI.set(!tag.getBoolean("isSecondEnter"));//初次进入要渲染任务提示
     }
 }

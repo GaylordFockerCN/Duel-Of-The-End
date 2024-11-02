@@ -4,6 +4,10 @@ import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.LevelableEntity;
+import com.gaboj1.tcr.network.PacketRelay;
+import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.packet.SyncSaveUtilPacket;
+import com.gaboj1.tcr.network.packet.clientbound.BroadcastTaskFinishPacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.chat.Component;
@@ -46,16 +50,26 @@ public class SaveUtil {
     public static final HashSet<Dialog> DIALOG_SET = new HashSet<>();//优化用的，但是不知道能优化多少（
     public static final HashSet<Dialog> TASK_SET = new HashSet<>(){
 
+        @Override
+        public boolean add(Dialog dialog) {
+            if(super.add(dialog)){
+                PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()));
+                return true;
+            }
+            return false;
+        }
+
         /**
-         * 移除任务说明任务完成了
+         * 同步数据，并广播任务完成
          */
         @Override
         public boolean remove(Object o) {
-            //TODO 全局广播任务完成
-            if(o instanceof Dialog dialog){
-//                PacketRelay.sendToServer(TCRPacketHandler.INSTANCE,);
+            if(super.remove(o)){
+                PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new BroadcastTaskFinishPacket(((Dialog)o).name));
+                PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()));
+                return true;
             }
-            return super.remove(o);
+            return false;
         }
     };
     public static int firstChoiceBiome = 0;//0 means null
@@ -71,7 +85,7 @@ public class SaveUtil {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Dialog dialog = (Dialog) o;
-            return Objects.equals(name.toString(), dialog.name.toString()) && Objects.equals(content.toString(), dialog.content.toString());
+            return Objects.equals(name.getString(), dialog.name.getString()) && Objects.equals(content.getString(), dialog.content.getString());
         }
 
         @Override
@@ -79,7 +93,7 @@ public class SaveUtil {
             if(name == null || content == null){
                 return 0;
             }
-            return Objects.hash(name.toString(), content.toString());
+            return Objects.hash(name.getString(), content.getString());
         }
 
         @NotNull
@@ -91,6 +105,7 @@ public class SaveUtil {
         }
 
         public static Dialog fromNbt(CompoundTag dialog){
+            System.out.println(Component.Serializer.fromJson(dialog.getString("name")) + ", " +  Component.Serializer.fromJson(dialog.getString("content")));
             return new Dialog(Component.Serializer.fromJson(dialog.getString("name")), Component.Serializer.fromJson(dialog.getString("content")));
         }
 
@@ -122,15 +137,6 @@ public class SaveUtil {
         return dialogListNbt;
     }
 
-    public static CompoundTag getTaskListNbt(){
-        CompoundTag dialogListNbt = new CompoundTag();
-        List<Dialog> tasks = TASK_SET.stream().toList();
-        for(int i = 0; i < tasks.size(); i++){
-            dialogListNbt.put("task"+i, tasks.get(i).toNbt());
-        }
-        return dialogListNbt;
-    }
-
     public static void setDialogListFromNbt(CompoundTag DialogListTag, int size){
         DIALOG_LIST.clear();
         for(int i = 0; i < size; i++){
@@ -138,6 +144,15 @@ public class SaveUtil {
             DIALOG_LIST.add(dialog);
             DIALOG_SET.add(dialog);
         }
+    }
+
+    public static CompoundTag getTaskListNbt(){
+        CompoundTag dialogListNbt = new CompoundTag();
+        List<Dialog> tasks = TASK_SET.stream().toList();
+        for(int i = 0; i < tasks.size(); i++){
+            dialogListNbt.put("task" + i, tasks.get(i).toNbt());
+        }
+        return dialogListNbt;
     }
 
     public static void setTaskListFromNbt(CompoundTag taskListTag, int size){
@@ -235,7 +250,7 @@ public class SaveUtil {
     }
 
     public static Dialog buildTask(String task){
-        return new Dialog(Component.translatable( "task."+TheCasketOfReveriesMod.MOD_ID+task), Component.translatable( "task_content."+TheCasketOfReveriesMod.MOD_ID+task));
+        return new Dialog(Component.translatable( "task."+TheCasketOfReveriesMod.MOD_ID + "." + task), Component.translatable( "task_content."+TheCasketOfReveriesMod.MOD_ID + "." + task));
     }
 
     public static class Biome1ProgressData extends BiomeProgressData {
@@ -244,10 +259,12 @@ public class SaveUtil {
         public boolean killed = false;//是否杀死
         public boolean heal = false;//是否治愈
         public boolean isBranchFinish = false;//是否结局，和铁匠二次对话才是结局
-        public static Dialog taskKillElder = buildTask("kill_elder1");
-        public static Dialog taskKillBoss = buildTask("kill_boss1");
-        public static Dialog taskBackToBoss = buildTask("back_boss1");//回去领赏
-        public static Dialog taskBackToElder = buildTask("back_elder1");
+        public static final Dialog TASK_FIND_ELDER1 = buildTask("find_elder1");
+        public static final Dialog TASK_KILL_ELDER = buildTask("kill_elder1");
+        public static final Dialog TASK_KILL_BOSS = buildTask("kill_boss1");
+        public static final Dialog TASK_BACK_TO_BOSS = buildTask("back_boss1");//回去领赏
+        public static final Dialog TASK_BACK_TO_ELDER = buildTask("back_elder1");
+        public static final Dialog TASK_BLUE_MUSHROOM = buildTask("blue_mushroom");
         //支线是否结束
         public boolean isUnKnowMonsterDie(){
             return smithTalked && (killed || heal);
@@ -282,7 +299,7 @@ public class SaveUtil {
          * 战斗过且boss没死说明是接任务了。注意要做出选择后再标记战斗过，以免中断
          */
         public boolean killElderTaskGet(){
-            return TASK_SET.contains(taskKillElder);
+            return TASK_SET.contains(TASK_KILL_ELDER);
         }
 
         public boolean canGetElderReward(){
@@ -432,6 +449,14 @@ public class SaveUtil {
     }
 
     /**
+     * 清空数据
+     */
+    public static void clear(){
+        fromNbt(new CompoundTag());
+        alreadyInit = false;
+    }
+
+    /**
      * 把服务端的所有数据转成NBT方便发给客户端
      * @return 所有数据狠狠塞进NBT里
      */
@@ -455,6 +480,7 @@ public class SaveUtil {
      * @param serverData 从服务端发来的nbt
      */
     public static void fromNbt(CompoundTag serverData){
+        TheCasketOfReveriesMod.LOGGER.info("reading from: \n" + serverData);
         alreadyInit = true;
         worldLevel = serverData.getInt("worldLevel");
         setDialogListFromNbt(serverData.getCompound("dialogList"), serverData.getInt("dialogLength"));

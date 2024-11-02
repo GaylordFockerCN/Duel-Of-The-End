@@ -22,7 +22,6 @@ import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -241,8 +240,8 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
         triggerAnim("Death","death");
         superDie(damageSource);
         SaveUtil.biome1.isBossDie = true;
-        SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.taskKillBoss);
-        SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.taskBackToElder);
+        SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_KILL_BOSS);
+        SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.TASK_BACK_TO_ELDER);
     }
 
 
@@ -536,6 +535,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
 
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
+        SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_FIND_ELDER1);
         switch (interactionID){
             //初次对话结束，就是变成开始打了
             case -1:
@@ -559,20 +559,20 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                 chat(BUILDER.buildDialogueAnswer(entityType, 14, false));
                 SaveUtil.biome1.isBossFought = true;//注意要处决或者接任务后再调这个，注意考虑对话中断的情况
                 realDie(player.damageSources().playerAttack(player));
-                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.taskKillBoss);
-                SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.taskBackToElder);
+                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_KILL_BOSS);
+                SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.TASK_BACK_TO_ELDER);
                 break;
             //选择接任务
             case 2:
                 getEntityData().set(IS_FIGHTING, false);
                 setTarget(null);
                 chat(BUILDER.buildDialogueAnswer(entityType, 15, false));
-                SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.taskKillElder);
+                SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.TASK_KILL_ELDER);
                 SaveUtil.biome1.isBossFought = true;//注意要处决或者接任务后再调这个，注意考虑对话中断的情况
                 break;
             //任务成功
             case 3:
-                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.taskBackToBoss);
+                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_BACK_TO_BOSS);
                 SaveUtil.biome1.finish(SaveUtil.BiomeProgressData.BOSS, ((ServerLevel) level()));
                 if(!DataManager.boss1LootGot.get(player)){
                     ItemStack wand = TCRItems.TREE_SPIRIT_WAND.get().getDefaultInstance();

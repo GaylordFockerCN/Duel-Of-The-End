@@ -85,6 +85,7 @@ public class Smith extends MushroomLineNpc {
             //接任务
             case 1:
                 SaveUtil.biome1.smithTalked = true;
+                SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.TASK_BLUE_MUSHROOM);
                 player.displayClientMessage(BUILDER.buildDialogue(this, BUILDER.buildDialogueAnswer(1)), false);
                 break;
             case 2:
@@ -151,6 +152,7 @@ public class Smith extends MushroomLineNpc {
                 ItemUtil.addItem(player,TCRItems.GUN_COMMON.get(),1);
                 DataManager.gunGot.put(player,true);//存入得用玩家
                 SaveUtil.biome1.isBranchFinish = true;
+                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_BLUE_MUSHROOM);
                 break;
             case 5:
                 ItemUtil.addItem(player,TCRItems.GUN_PLUS.get(),1);
@@ -158,6 +160,7 @@ public class Smith extends MushroomLineNpc {
                 ItemUtil.addItem(player,ammo.getItem(),64);
                 DataManager.gunGot.put(player,true);//存入得用玩家
                 SaveUtil.biome1.isBranchFinish = true;
+                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_BLUE_MUSHROOM);
                 break;
         }
         setConversingPlayer(null);

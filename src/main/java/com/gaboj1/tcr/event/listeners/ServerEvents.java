@@ -6,6 +6,7 @@ import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.SyncSaveUtilPacket;
 import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
@@ -44,6 +45,7 @@ public class ServerEvents {
     @SubscribeEvent
     public static void onServerStop(ServerStoppedEvent event){
         SaveUtil.save(TCRBiomeProvider.worldName);
+        SaveUtil.clear();
     }
 
     /**

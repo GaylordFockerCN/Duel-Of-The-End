@@ -110,22 +110,19 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         this.setItemInHand(InteractionHand.MAIN_HAND, TCRItems.ELDER_STAFF.get().getDefaultInstance());
 //        System.out.println(this.getItemInHand(InteractionHand.MAIN_HAND)+"client?"+this.isClientSide());
         if (hand == InteractionHand.MAIN_HAND) {
-            if ( !this.level().isClientSide()) {
-//                if (DataManager.isWhite.getBool((ServerPlayer)player)) {
-                    this.lookAt(player, 180.0F, 180.0F);
-                    if (player instanceof ServerPlayer serverPlayer) {
-                        if (this.getConversingPlayer() == null) {
-                            CompoundTag serverData = new CompoundTag();
-                            serverData.putBoolean("canAttackElder", SaveUtil.biome1.canAttackElder());
-                            serverData.putBoolean("isElderTalked", SaveUtil.biome1.isElderTalked);
-                            serverData.putBoolean("canGetElderReward", SaveUtil.biome1.canGetElderReward());
-                            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverData), serverPlayer);
-                            this.setConversingPlayer(serverPlayer);
-                        }
+            if (!this.level().isClientSide()) {
+                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_FIND_ELDER1);
+                this.lookAt(player, 180.0F, 180.0F);
+                if (player instanceof ServerPlayer serverPlayer) {
+                    if (this.getConversingPlayer() == null) {
+                        CompoundTag serverData = new CompoundTag();
+                        serverData.putBoolean("canAttackElder", SaveUtil.biome1.canAttackElder());
+                        serverData.putBoolean("isElderTalked", SaveUtil.biome1.isElderTalked);
+                        serverData.putBoolean("canGetElderReward", SaveUtil.biome1.canGetElderReward());
+                        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverData), serverPlayer);
+                        this.setConversingPlayer(serverPlayer);
                     }
-//                } else {
-//                    talk(player,Component.translatable(""));
-//                }
+                }
                 return InteractionResult.SUCCESS;
             }
         }
@@ -188,13 +185,13 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                 }
                 this.chat(BUILDER.buildDialogueAnswer(entityType,7));
                 SaveUtil.biome1.isElderTalked = true;
-                SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.taskKillBoss);
+                SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.TASK_KILL_BOSS);
                 break;
             case 0: //对话中断的代码！
 //                this.chat(Component.translatable("刚刚说到哪儿来着？"));
                 break;
             case 1: //回来领奖
-                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.taskBackToElder);
+                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_BACK_TO_ELDER);
                 this.chat(BUILDER.buildDialogueAnswer(entityType,10));//再会，勇者！
                 SaveUtil.biome1.finish(SaveUtil.BiomeProgressData.VILLAGER, ((ServerLevel) level()));
                 if(!DataManager.elderLoot2Got.get(player)){
@@ -251,8 +248,8 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
         //TODO say遗言
         SaveUtil.biome1.isElderDie = true;
-        SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.taskKillElder);
-        SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.taskBackToBoss);
+        SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_KILL_ELDER);
+        SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.TASK_BACK_TO_BOSS);
         if(source.getEntity() instanceof Player player){
             ItemUtil.addItem(player,BookManager.BIOME1_ELDER_DIARY_3.get().getItem(),1);
         }

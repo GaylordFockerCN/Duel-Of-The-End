@@ -1,11 +1,11 @@
 package com.gaboj1.tcr.client.keymapping;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.client.gui.screen.custom.GameProgressScreen;
 import com.gaboj1.tcr.item.custom.weapon.GunCommon;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.RequestOpenProgressScreenPacket;
 import com.gaboj1.tcr.network.packet.serverbound.GunReloadPacket;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeTags;
 import net.minecraft.core.BlockPos;
@@ -65,13 +65,16 @@ public class KeyMappings {
 		 */
 		@SubscribeEvent
 		public static void onClientTick(TickEvent.ClientTickEvent event) {
-			if(OPEN_PROGRESS.isDown() && !(Minecraft.getInstance().screen instanceof GameProgressScreen)){
-				if(Minecraft.getInstance().level != null && Minecraft.getInstance().player != null){
-					BlockPos pos = Minecraft.getInstance().player.getOnPos();
-					if(Minecraft.getInstance().level.getBiome(pos).is(TCRBiomeTags.IS_TCR)){
-						PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new RequestOpenProgressScreenPacket(new CompoundTag()));
-					}
-				}
+//			if(OPEN_PROGRESS.isDown() && !(Minecraft.getInstance().screen instanceof GameProgressScreen)){
+//				if(Minecraft.getInstance().level != null && Minecraft.getInstance().player != null){
+//					BlockPos pos = Minecraft.getInstance().player.getOnPos();
+//					if(Minecraft.getInstance().level.getBiome(pos).is(TCRBiomeTags.IS_TCR)){
+//						PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new RequestOpenProgressScreenPacket(new CompoundTag()));
+//					}
+//				}
+//			}
+			if(OPEN_PROGRESS.isRelease()){
+				TCRConfig.RENDER_CUSTOM_GUI.set(!TCRConfig.RENDER_CUSTOM_GUI.get());
 			}
 		}
 	}

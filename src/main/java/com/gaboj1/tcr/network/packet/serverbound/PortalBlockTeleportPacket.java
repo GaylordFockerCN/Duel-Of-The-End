@@ -97,6 +97,7 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
                                     );
                             DataManager.portalPointUnlockData.get(id - 1).put(playerEntity, true);//解锁传送点
                             DataManager.isSecondEnter.put(serverPlayer, true);
+                            SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.TASK_FIND_ELDER1);
                         }
                         //记录进入点
                         serverPlayer.getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {

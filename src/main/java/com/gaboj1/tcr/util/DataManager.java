@@ -88,7 +88,7 @@ public class DataManager {
     public static BoolData elderLoot1Got =  new BoolData("elder_loot1_got",false);
     public static BoolData elderLoot2Got =  new BoolData("elder_loot2_got",false);
     public static BoolData boss1LootGot =  new BoolData("boss1_loot_got",false);
-    public static BoolData isSecondEnter =  new BoolData("isFirstEnter",false);
+    public static BoolData isSecondEnter =  new BoolData("isSecondEnter",false);
     public static BoolData isMiaoYinGifted =  new BoolData("isMiaoYinGifted",false);
     public static BoolData stolenMiaoYin =  new BoolData("stolenMiaoYin",false);
     public static BoolData wanMingPearlGot =  new BoolData("wanMingPearlGot",false);

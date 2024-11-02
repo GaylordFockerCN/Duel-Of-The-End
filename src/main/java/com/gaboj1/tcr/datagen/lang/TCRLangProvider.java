@@ -30,8 +30,8 @@ public abstract class TCRLangProvider extends LanguageProvider {
     }
 
     public void addTask(String key, String task, String content){
-        this.add("task."+TheCasketOfReveriesMod.MOD_ID+".", task);
-        this.add("task_content."+TheCasketOfReveriesMod.MOD_ID+".", content);
+        this.add("task."+TheCasketOfReveriesMod.MOD_ID+"." + key, task);
+        this.add("task_content."+TheCasketOfReveriesMod.MOD_ID+"." + key, content);
     }
 
     public void addBiome(ResourceKey<Biome> biome, String name) {

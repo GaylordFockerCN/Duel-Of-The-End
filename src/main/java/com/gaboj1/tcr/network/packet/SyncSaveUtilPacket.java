@@ -1,7 +1,5 @@
 package com.gaboj1.tcr.network.packet;
 
-import com.gaboj1.tcr.network.PacketRelay;
-import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
@@ -11,8 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * 发给服务端，同步对话记录，并向附近玩家广播对话
- * 客户端发就是请求同步
+ * 同步数据
  */
 public record SyncSaveUtilPacket(CompoundTag serverData) implements BasePacket {
 
@@ -27,13 +24,14 @@ public record SyncSaveUtilPacket(CompoundTag serverData) implements BasePacket {
 
     @Override
     public void execute(@Nullable Player playerEntity) {
+        //服务端
+        if(playerEntity instanceof ServerPlayer){
+            SaveUtil.fromNbt(serverData);
+            return;
+        }
         //客户端
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             SaveUtil.fromNbt(serverData);
-        }
-        //服务端
-        if(playerEntity instanceof ServerPlayer serverPlayer){
-            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()), serverPlayer);
         }
     }
 }

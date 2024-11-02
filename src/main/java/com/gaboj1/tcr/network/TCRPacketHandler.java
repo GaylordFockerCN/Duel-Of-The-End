@@ -33,6 +33,7 @@ public class TCRPacketHandler {
         register(SyncFakePlayerPacket.class, SyncFakePlayerPacket::decode);
         register(PortalBlockEntitySyncPacket.class, PortalBlockEntitySyncPacket::decode);
         register(SyncUuidPacket.class, SyncUuidPacket::decode);
+        register(BroadcastTaskFinishPacket.class, BroadcastTaskFinishPacket::decode);
 
         // 发给服务端
         register(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);

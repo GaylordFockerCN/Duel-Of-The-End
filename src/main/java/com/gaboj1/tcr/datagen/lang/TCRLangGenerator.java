@@ -27,7 +27,12 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addEffect(TCREffects.POISON_RESISTANCE, "中毒免疫");
         this.addEffect(TCREffects.HEALTH_BOOST, "生命上限提升");
 
+        this.addTask("find_elder1", "临村怀梦", "在村子里转转吧，说不定有人知道这世界的什么线索。");
         this.addTask("kill_boss1", "清道夺邪魔", "杀死密林中危害牧歌原野安全的邪恶树魔");
+        this.addTask("kill_elder1", "清道夺（邪魔？）", "杀死海拉长老");
+        this.addTask("back_boss1", "回去找伊格德拉希尔", "");
+        this.addTask("back_elder1", "回去找海拉长老", "");
+        this.addTask("blue_mushroom", "骇人的蓝色蘑菇", "前往密林采集蓝蘑菇并交给工匠史密斯");
 
         this.add("key.categories.tcr", "远梦之棺按键");
         this.addKeyMapping(KeyMappings.RELOAD, "火枪换弹");
@@ -59,6 +64,8 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addInfo("wallet_count", "梦碎片： %d");
         this.addInfo("second_boss_fight_tip", "造成大于10的伤害以破除征尽的剑帘");
         this.addInfo("current_tasks", "当前任务【按 %s 关闭】：");
+        this.addInfo("task_finish0", "任务 【");
+        this.addInfo("task_finish1", "】 已完成！");
 
         this.add("the_casket_of_reveries.button.boss1","泰兰妮尔之心");
         this.add("the_casket_of_reveries.button.boss2","九霄");
