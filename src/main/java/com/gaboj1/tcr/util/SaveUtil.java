@@ -1,6 +1,5 @@
 package com.gaboj1.tcr.util;
 
-import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.LevelableEntity;
@@ -54,20 +53,13 @@ public class SaveUtil {
         };
     }
 
-    /**
-     * 获取随世界等级提升后的怪物数值（即乘以倍率）
-     */
-    public static double getMobMultiplier(double mobAttr){
-        return mobAttr * (SaveUtil.worldLevel == 0 ? 1 : SaveUtil.worldLevel* TCRConfig.MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP.get());
-    }
-
     public static final List<Dialog> DIALOG_LIST = new ArrayList<>();
     public static final HashSet<Dialog> DIALOG_SET = new HashSet<>();//优化用的，但是不知道能优化多少（
-    public static final HashSet<Dialog> TASK_SET = new HashSet<>(){
+    public static final HashSet<Dialog> TASK_SET = new HashSet<>() {
 
         @Override
         public boolean add(Dialog dialog) {
-            if(super.add(dialog)){
+            if (super.add(dialog)) {
                 PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()));
                 return true;
             }
@@ -79,8 +71,8 @@ public class SaveUtil {
          */
         @Override
         public boolean remove(Object o) {
-            if(super.remove(o)){
-                Component message = TheCasketOfReveriesMod.getInfo("task_finish0").append(((Dialog)o).name.copy().withStyle(ChatFormatting.RED)).append(TheCasketOfReveriesMod.getInfo("task_finish1"));
+            if (super.remove(o)) {
+                Component message = TheCasketOfReveriesMod.getInfo("task_finish0").append(((Dialog) o).name.copy().withStyle(ChatFormatting.RED)).append(TheCasketOfReveriesMod.getInfo("task_finish1"));
                 PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new BroadcastMessagePacket(message, false));
                 PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()));
                 return true;
@@ -95,7 +87,22 @@ public class SaveUtil {
     public static Biome3ProgressData biome3 = new Biome3ProgressData();
     public static Biome4ProgressData biome4 = new Biome4ProgressData();
 
-    public record Dialog (Component name, Component content) {
+    public static class Dialog {
+        private Component name, content;
+
+        public Component getName() {
+            return name;
+        }
+
+        public Component getContent() {
+            return content;
+        }
+
+        public Dialog(Component name, Component content) {
+            this.name = name;
+            this.content = content;
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -110,6 +117,16 @@ public class SaveUtil {
                 return 0;
             }
             return Objects.hash(name.getString(), content.getString());
+        }
+
+        public Dialog setNameChatFormatting(ChatFormatting... chatFormatting){
+            this.name = this.name.copy().withStyle(chatFormatting);
+            return this;
+        }
+
+        public Dialog setContentChatFormatting(ChatFormatting... chatFormatting){
+            this.content = this.content.copy().withStyle(chatFormatting);
+            return this;
         }
 
         @NotNull
@@ -238,7 +255,6 @@ public class SaveUtil {
                 firstChoiceBiome = biome;
             }
             worldLevel++;
-
             for(Entity entity : level.getAllEntities()){
                 if(entity instanceof LevelableEntity levelableEntity){
                     levelableEntity.levelUp(worldLevel);
@@ -259,10 +275,10 @@ public class SaveUtil {
                     TCRAdvancementData.getAdvancement("finish_biome_4", player);
                 }
             }
-
             //全局广播
             Component message = TheCasketOfReveriesMod.getInfo("level_up", getWorldLevelName());
             PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new BroadcastMessagePacket(message, false));
+            PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()));
 
         }
 
@@ -273,7 +289,7 @@ public class SaveUtil {
     }
 
     public static Dialog buildTask(String task){
-        return new Dialog(Component.translatable( "task."+TheCasketOfReveriesMod.MOD_ID + "." + task), Component.translatable( "task_content."+TheCasketOfReveriesMod.MOD_ID + "." + task));
+        return new Dialog(Component.translatable("task." + TheCasketOfReveriesMod.MOD_ID + "." + task), Component.translatable("task_content." + TheCasketOfReveriesMod.MOD_ID + "." + task));
     }
 
     public static class Biome1ProgressData extends BiomeProgressData {
@@ -282,12 +298,12 @@ public class SaveUtil {
         public boolean killed = false;//是否杀死
         public boolean heal = false;//是否治愈
         public boolean isBranchFinish = false;//是否结局，和铁匠二次对话才是结局
-        public static final Dialog TASK_FIND_ELDER1 = buildTask("find_elder1");
-        public static final Dialog TASK_KILL_ELDER = buildTask("kill_elder1");
-        public static final Dialog TASK_KILL_BOSS = buildTask("kill_boss1");
-        public static final Dialog TASK_BACK_TO_BOSS = buildTask("back_boss1");//回去领赏
-        public static final Dialog TASK_BACK_TO_ELDER = buildTask("back_elder1");
-        public static final Dialog TASK_BLUE_MUSHROOM = buildTask("blue_mushroom");
+        public static final Dialog TASK_FIND_ELDER1 = buildTask("find_elder1").setNameChatFormatting(ChatFormatting.RED, ChatFormatting.BOLD);
+        public static final Dialog TASK_KILL_ELDER = buildTask("kill_elder1").setNameChatFormatting(ChatFormatting.RED, ChatFormatting.BOLD);
+        public static final Dialog TASK_KILL_BOSS = buildTask("kill_boss1").setNameChatFormatting(ChatFormatting.RED, ChatFormatting.BOLD);
+        public static final Dialog TASK_BACK_TO_BOSS = buildTask("back_boss1").setNameChatFormatting(ChatFormatting.RED, ChatFormatting.BOLD);//回去领赏
+        public static final Dialog TASK_BACK_TO_ELDER = buildTask("back_elder1").setNameChatFormatting(ChatFormatting.RED, ChatFormatting.BOLD);
+        public static final Dialog TASK_BLUE_MUSHROOM = buildTask("blue_mushroom").setNameChatFormatting(ChatFormatting.AQUA, ChatFormatting.BOLD);
         //支线是否结束
         public boolean isUnKnowMonsterDie(){
             return smithTalked && (killed || heal);

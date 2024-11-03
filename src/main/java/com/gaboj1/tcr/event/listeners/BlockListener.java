@@ -21,9 +21,9 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID)
-public class TreeSpawnMonster {
+public class BlockListener {
     @SubscribeEvent
-    public static void spawnTreeMonsterWhen(BlockEvent.BreakEvent event) {
+    public static void onBlockBreak(BlockEvent.BreakEvent event) {
         if(event.getLevel() instanceof ServerLevel serverLevel){
             Block block = event.getState().getBlock();
             //挖密林木概率出小树怪
@@ -46,6 +46,7 @@ public class TreeSpawnMonster {
                 unknownEntity.setCanPurify(true);
                 serverLevel.addFreshEntity(unknownEntity);
                 SaveUtil.biome1.monsterSummoned = true;
+                SaveUtil.biome1.killed = true;//先视为killed，治愈了再视为false
             }
         }
     }

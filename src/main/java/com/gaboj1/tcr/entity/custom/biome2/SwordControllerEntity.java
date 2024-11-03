@@ -35,8 +35,8 @@ public class SwordControllerEntity extends TCRAggressiveGeoMob {
     }
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, SaveUtil.getMobMultiplier(50))
-                .add(Attributes.ATTACK_DAMAGE, SaveUtil.getMobMultiplier(3))
+                .add(Attributes.MAX_HEALTH, 50)
+                .add(Attributes.ATTACK_DAMAGE, 3)
                 .add(Attributes.ATTACK_SPEED, 0.5f)
                 .add(Attributes.MOVEMENT_SPEED, 0.30f)
                 .build();

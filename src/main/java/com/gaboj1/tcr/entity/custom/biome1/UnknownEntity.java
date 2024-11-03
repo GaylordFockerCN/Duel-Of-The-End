@@ -166,6 +166,7 @@ public class UnknownEntity extends Monster implements GeoEntity, LevelableEntity
                     assert elinor != null;
                     serverLevel.addFreshEntity(elinor);
                     SaveUtil.biome1.heal = true;
+                    SaveUtil.biome1.killed= false;//因为一开始killed默认为true，以防玩家逃跑或怪异常不出现等情况。
                 }
                 this.discard();
             }

@@ -95,13 +95,6 @@ public class DataManager {
     public static BoolData miaoYinMoney1 =  new BoolData("miaoYinMoney1",false);
     public static BoolData getFastModLoot =  new BoolData("getFastModLoot",false);
 
-    //给予初始值
-    public static void init(Player player){
-        if(player == null) {
-            //TODO
-        }
-    }
-
     public abstract static class Data<T> {
 
         protected String key;

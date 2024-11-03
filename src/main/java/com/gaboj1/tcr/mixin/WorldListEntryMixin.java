@@ -42,7 +42,7 @@ public class WorldListEntryMixin {
             TCRBiomeProvider.LOGGER.info("On loadWorld Sync : " + summary.getLevelId() + " >> TCRBiomeProvider.worldName");
             TCRBiomeProvider.LOGGER.info("Try to update biome map by new worldName");
             TCRBiomeProvider.updateBiomeMap(summary.getLevelId());
-            //客户端读取
+            //纯客户端读取
             SaveUtil.read(summary.getLevelId());
         }
     }

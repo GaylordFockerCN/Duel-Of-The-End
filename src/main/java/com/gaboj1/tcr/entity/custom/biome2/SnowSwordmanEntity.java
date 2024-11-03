@@ -31,8 +31,8 @@ public class SnowSwordmanEntity extends TCRAggressiveGeoMob implements GeoEntity
     }
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, SaveUtil.getMobMultiplier(20))
-                .add(Attributes.ATTACK_DAMAGE, SaveUtil.getMobMultiplier(3))
+                .add(Attributes.MAX_HEALTH, 20)
+                .add(Attributes.ATTACK_DAMAGE, 3)
                 .add(Attributes.ATTACK_SPEED, 0.5f)
                 .add(Attributes.MOVEMENT_SPEED, 0.30f)
                 .build();

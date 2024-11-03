@@ -120,6 +120,7 @@ public class ClientModEvents{
                     entity != null && entity.isUsingItem() && entity.getUseItem() == itemStack ? 1.0F : 0.0F;
 
             ItemPropertyFunction CHARGED = (itemStack, level, entity, i) -> CrossbowItem.isCharged(itemStack) ? 1 : 0;
+            //五连播
             ItemPropertyFunction WU_LIAN_BO = (itemStack, level, entity, i) -> {
                 int current = itemStack.getOrCreateTag().getInt("current");
                 itemStack.getOrCreateTag().putInt("current", (current + 1) % 101);
@@ -127,6 +128,15 @@ public class ClientModEvents{
                     current = 101 - current;
                 }
                 return Mth.lerpInt(current / 52.0F, 0, 5);
+            };
+            //三连播
+            ItemPropertyFunction SAN_LIAN_BO = (itemStack, level, entity, i) -> {
+                int current = itemStack.getOrCreateTag().getInt("current");
+                itemStack.getOrCreateTag().putInt("current", (current + 1) % 61);
+                if(current > 30){
+                    current = 61 - current;
+                }
+                return Mth.lerpInt(current / 33.0F, 0, 3);
             };//三连播
             ItemProperties.register(TCRItems.ORICHALCUM_BOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pull"), PULL);
             ItemProperties.register(TCRItems.ORICHALCUM_BOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"pulling"), PULLING);
@@ -147,7 +157,8 @@ public class ClientModEvents{
             ItemProperties.register(TCRItems.BASIC_SPRITE_CROSSBOW.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"charged"), CHARGED);
 
             ItemProperties.register(TCRItems.GOD_ORICHALCUM.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"god_orichalcum"), WU_LIAN_BO);
-
+            ItemProperties.register(TCRItems.OIL_LAMP_GATHER_SOULS.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"oil_lamp_gather_souls"), SAN_LIAN_BO);
+            ItemProperties.register(TCRItems.FLAME_THAT_GATHERSOULS.get(), new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"flame_that_gathersouls"), SAN_LIAN_BO);
         });
 
     }

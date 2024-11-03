@@ -17,6 +17,9 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+/**
+ * 控制服务端SaveUtil的读写
+ */
 @Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID)
 public class ServerEvents {
 
@@ -28,7 +31,7 @@ public class ServerEvents {
      */
     @SubscribeEvent
     public static void onServerAboutToStart(ServerAboutToStartEvent event){
-        //服务端读取
+        //服务端读取，客户端从Mixin读
         if(FMLEnvironment.dist.isDedicatedServer()){
             if(TCRBiomeProvider.worldName.isEmpty()){
                 String levelName = event.getServer().getWorldData().getLevelName();
@@ -46,16 +49,6 @@ public class ServerEvents {
     public static void onServerStop(ServerStoppedEvent event){
         SaveUtil.save(TCRBiomeProvider.worldName);
         SaveUtil.clear();
-    }
-
-    /**
-     * 玩家加入服务端时同步服务端和客户端的数据
-     */
-    @SubscribeEvent
-    public static void onPlayerIn(PlayerEvent.PlayerLoggedInEvent event){
-        if(event.getEntity() instanceof ServerPlayer player){
-            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()), player);
-        }
     }
 
 }

@@ -206,7 +206,9 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     public void die(@NotNull DamageSource source) {
         if(getEntityData().get(IS_SHADER)){
             //二次挑战则直接死
+            triggerAnim("Death","death");
             superDie(source);
+            return;
         }
         getEntityData().set(IS_FIGHTING, false);
         setTarget(null);
@@ -465,7 +467,12 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
 
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
 
-        if(serverData.getBoolean("canGetBossReward")) {
+        if(getEntityData().get(IS_SHADER)){
+            builder.start(BUILDER.buildDialogueAnswer(entityType,0))
+                    .addChoice(BUILDER.buildDialogueOption(entityType,-1),BUILDER.buildDialogueAnswer(entityType,1))
+                    .addFinalChoice(BUILDER.buildDialogueOption(entityType,0),(byte)-1);
+            getEntityData().set(IS_FIGHTING, true);
+        } else if(serverData.getBoolean("canGetBossReward")) {
             //满足领奖条件
             builder.start(BUILDER.buildDialogueAnswer(entityType, 9))
                     .addChoice(BUILDER.buildDialogueOption(entityType, 7), BUILDER.buildDialogueAnswer(entityType, 10))
@@ -516,18 +523,6 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
      * 根据手持的枯萎之触的物品数量来削弱树魔的属性
      */
     private void modifyAttribute(int count){
-//        AttributeModifier attackSpeedModifier = new AttributeModifier("attackSpeed", -5, AttributeModifier.Operation.ADDITION);
-//        AttributeModifier attackDamageModifier = new AttributeModifier("attackDamage", -5, AttributeModifier.Operation.ADDITION);
-//        switch (count){
-//            case 0: break;
-//            default:
-//                Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).addPermanentModifier(attackDamageModifier);
-//            case 2:
-//                Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_SPEED)).addPermanentModifier(attackSpeedModifier);
-//            case 1:
-//                setHealth(getMaxHealth() / 2);
-//        }
-
         AttributeModifier healthModify = new AttributeModifier("healthModify", 1 - 0.15 * count, AttributeModifier.Operation.MULTIPLY_BASE);
         Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).addPermanentModifier(healthModify);
         setHealth(getMaxHealth());
@@ -536,6 +531,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
         SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_FIND_ELDER1);
+        SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_BACK_TO_BOSS);
         switch (interactionID){
             //初次对话结束，就是变成开始打了
             case -1:
@@ -567,12 +563,12 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                 getEntityData().set(IS_FIGHTING, false);
                 setTarget(null);
                 chat(BUILDER.buildDialogueAnswer(entityType, 15, false));
+                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_KILL_BOSS);
                 SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.TASK_KILL_ELDER);
                 SaveUtil.biome1.isBossFought = true;//注意要处决或者接任务后再调这个，注意考虑对话中断的情况
                 break;
             //任务成功
             case 3:
-                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_BACK_TO_BOSS);
                 SaveUtil.biome1.finish(SaveUtil.BiomeProgressData.BOSS, ((ServerLevel) level()));
                 if(!DataManager.boss1LootGot.get(player)){
                     ItemStack wand = TCRItems.TREE_SPIRIT_WAND.get().getDefaultInstance();

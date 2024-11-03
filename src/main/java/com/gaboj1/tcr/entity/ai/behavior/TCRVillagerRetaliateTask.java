@@ -89,7 +89,7 @@ public class TCRVillagerRetaliateTask extends Behavior<Mob> {
     }
 
     protected boolean checkRange(TCRVillager tcrVillager, LivingEntity target){
-        if(tcrVillager instanceof PastoralPlainVillagerElder){
+        if(tcrVillager.isElder()){
             //长老打得远一点很合理
             return !(tcrVillager.distanceTo(target) > 5);
         }else {

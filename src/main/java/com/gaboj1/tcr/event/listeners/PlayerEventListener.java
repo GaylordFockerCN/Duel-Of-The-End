@@ -45,40 +45,36 @@ public class PlayerEventListener {
 
     @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
-        if(event.getEntity().level() instanceof ServerLevel level){
+        if(event.getEntity() instanceof ServerPlayer serverPlayer){
             //补录，以防新玩家没有成就
-            for(ServerPlayer player : level.getPlayers((serverPlayer -> true))){
-                if(SaveUtil.biome1.isFinished()){
-                    TCRAdvancementData.getAdvancement("finish_biome_1", player);
-                }
-                if(SaveUtil.biome2.isFinished()){
-                    TCRAdvancementData.getAdvancement("finish_biome_2", player);
-                }
-                if(SaveUtil.biome3.isFinished()){
-                    TCRAdvancementData.getAdvancement("finish_biome_3", player);
-                }
-                if(SaveUtil.biome4.isFinished()){
-                    TCRAdvancementData.getAdvancement("finish_biome_4", player);
-                }
+            if(SaveUtil.biome1.isFinished()){
+                TCRAdvancementData.getAdvancement("finish_biome_1", serverPlayer);
+            }
+            if(SaveUtil.biome2.isFinished()){
+                TCRAdvancementData.getAdvancement("finish_biome_2", serverPlayer);
+            }
+            if(SaveUtil.biome3.isFinished()){
+                TCRAdvancementData.getAdvancement("finish_biome_3", serverPlayer);
+            }
+            if(SaveUtil.biome4.isFinished()){
+                TCRAdvancementData.getAdvancement("finish_biome_4", serverPlayer);
             }
             //动态调整怪物血量
             if(TCRConfig.BOSS_HEALTH_AND_LOOT_MULTIPLE.get()){
-                for(Entity entity : level.getEntities().getAll()){
+                for(Entity entity : serverPlayer.serverLevel().getEntities().getAll()){
                     if(entity instanceof MultiPlayerBoostEntity multiPlayerBoostEntity){
                         multiPlayerBoostEntity.whenPlayerCountChange();
                     }
                 }
             }
-
+            //同步客户端数据
+            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()), serverPlayer);
         } else {
             //单机世界的同步数据
             if(SaveUtil.isAlreadyInit()){
                 PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()));
             }
         }
-
-        //初始化玩家数据
-        DataManager.init(event.getEntity());
 
         //检测是否是快速模式
         if(TCRConfig.FAST_MOD.get() && !DataManager.getFastModLoot.get(event.getEntity())){

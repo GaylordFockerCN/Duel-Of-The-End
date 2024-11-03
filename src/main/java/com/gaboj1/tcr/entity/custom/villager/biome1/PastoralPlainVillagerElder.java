@@ -71,12 +71,6 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                 .build();
     }
 
-    protected void registerGoals() {
-        this.goalSelector.addGoal(1, new NpcDialogueGoal<>(this));
-        this.goalSelector.addGoal(4, new MoveTowardsRestrictionGoal(this, 0.35D));
-        super.registerGoals();
-    }
-
     /**
      * 带大脑的生物Goal会失效，所以只能在tick中实现这个操作
      */
@@ -100,7 +94,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     }
 
     @Override
-    public void stopSeenByPlayer(ServerPlayer serverPlayer) {
+    public void stopSeenByPlayer(@NotNull ServerPlayer serverPlayer) {
         super.stopSeenByPlayer(serverPlayer);
         this.bossInfo.removePlayer(serverPlayer);
     }
@@ -108,10 +102,10 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         this.setItemInHand(InteractionHand.MAIN_HAND, TCRItems.ELDER_STAFF.get().getDefaultInstance());
-//        System.out.println(this.getItemInHand(InteractionHand.MAIN_HAND)+"client?"+this.isClientSide());
         if (hand == InteractionHand.MAIN_HAND) {
             if (!this.level().isClientSide()) {
                 SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_FIND_ELDER1);
+                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_BACK_TO_ELDER);//是Set，没有也不影响
                 this.lookAt(player, 180.0F, 180.0F);
                 if (player instanceof ServerPlayer serverPlayer) {
                     if (this.getConversingPlayer() == null) {
@@ -191,7 +185,6 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 //                this.chat(Component.translatable("刚刚说到哪儿来着？"));
                 break;
             case 1: //回来领奖
-                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_BACK_TO_ELDER);
                 this.chat(BUILDER.buildDialogueAnswer(entityType,10));//再会，勇者！
                 SaveUtil.biome1.finish(SaveUtil.BiomeProgressData.VILLAGER, ((ServerLevel) level()));
                 if(!DataManager.elderLoot2Got.get(player)){
@@ -241,11 +234,9 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
     /**
      * 濒死则进入对话
-     * @param source
      */
     @Override
     public void die(DamageSource source) {
-
         //TODO say遗言
         SaveUtil.biome1.isElderDie = true;
         SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_KILL_ELDER);
