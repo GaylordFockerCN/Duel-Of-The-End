@@ -74,7 +74,7 @@ public class LivingEntityListener {
     public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
         if(event.getLevel() instanceof ServerLevel){
             if(event.getEntity() instanceof LevelableEntity levelableEntity){
-                levelableEntity.levelUp(SaveUtil.worldLevel);
+                levelableEntity.levelUp(SaveUtil.getWorldLevel());
             }
             if(event.getEntity() instanceof MultiPlayerBoostEntity multiPlayerBoostEntity){
                 multiPlayerBoostEntity.whenPlayerCountChange();

@@ -69,8 +69,8 @@ public class TCRConfig {
         RENDER_CUSTOM_GUI = createBool(clientBuilder, "render_custom_gui", false, "是否显示自定义GUI（可通过快捷键设置，具体看按键绑定）");
         TASK_X = createDouble(clientBuilder, "task_x", 0.8, 0, "任务提示框的x屏幕位置占比");
         TASK_Y = createDouble(clientBuilder, "task_y", 0.1, 0, "任务提示框的y屏幕位置占比");
-        INTERVAL = createInt(clientBuilder, "task_interval", 100, 1, "任务提示框的各任务间隔");
-        TASK_SIZE = createDouble(clientBuilder, "task_size", 1, 0, "占据宽度");
+        INTERVAL = createInt(clientBuilder, "task_interval", 12, 1, "任务提示框的各任务间隔");
+        TASK_SIZE = createDouble(clientBuilder, "task_size", 100, 0, "占据宽度");
 
         CLIENT_SPEC = clientBuilder.build();
     }

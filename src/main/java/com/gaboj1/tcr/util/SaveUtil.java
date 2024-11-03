@@ -7,7 +7,9 @@ import com.gaboj1.tcr.entity.LevelableEntity;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.SyncSaveUtilPacket;
-import com.gaboj1.tcr.network.packet.clientbound.BroadcastTaskFinishPacket;
+import com.gaboj1.tcr.network.packet.clientbound.BroadcastMessagePacket;
+import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.chat.Component;
@@ -37,7 +39,20 @@ public class SaveUtil {
         return alreadyInit;
     }
 
-    public static int worldLevel = 0;
+    private static int worldLevel = 0;
+    public static int getWorldLevel(){
+        return worldLevel;
+    }
+    public static String getWorldLevelName(){
+        return switch (worldLevel){
+            case 0 -> "N";
+            case 1 -> "Ⅰ";
+            case 2 -> "Ⅱ";
+            case 3 -> "Ⅲ";
+            case 4 -> "Ⅳ";
+            default -> throw new IllegalStateException("Unexpected worldLevel value: " + worldLevel);
+        };
+    }
 
     /**
      * 获取随世界等级提升后的怪物数值（即乘以倍率）
@@ -65,7 +80,8 @@ public class SaveUtil {
         @Override
         public boolean remove(Object o) {
             if(super.remove(o)){
-                PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new BroadcastTaskFinishPacket(((Dialog)o).name));
+                Component message = TheCasketOfReveriesMod.getInfo("task_finish0").append(((Dialog)o).name.copy().withStyle(ChatFormatting.RED)).append(TheCasketOfReveriesMod.getInfo("task_finish1"));
+                PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new BroadcastMessagePacket(message, false));
                 PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()));
                 return true;
             }
@@ -99,14 +115,14 @@ public class SaveUtil {
         @NotNull
         public CompoundTag toNbt(){
             CompoundTag dialog = new CompoundTag();
-            dialog.putString("name", Component.Serializer.toJson(name));
+            dialog.putString("message", Component.Serializer.toJson(name));
             dialog.putString("content", Component.Serializer.toJson(content));
             return dialog;
         }
 
         public static Dialog fromNbt(CompoundTag dialog){
-            System.out.println(Component.Serializer.fromJson(dialog.getString("name")) + ", " +  Component.Serializer.fromJson(dialog.getString("content")));
-            return new Dialog(Component.Serializer.fromJson(dialog.getString("name")), Component.Serializer.fromJson(dialog.getString("content")));
+            System.out.println(Component.Serializer.fromJson(dialog.getString("message")) + ", " +  Component.Serializer.fromJson(dialog.getString("content")));
+            return new Dialog(Component.Serializer.fromJson(dialog.getString("message")), Component.Serializer.fromJson(dialog.getString("content")));
         }
 
     }
@@ -212,6 +228,9 @@ public class SaveUtil {
          * 群系事件完成，升级世界等级，而且只能进行一次
          */
         public void finish(int choice, ServerLevel level){
+            if(level.dimension() != TCRDimension.P_SKY_ISLAND_LEVEL_KEY){
+                return;
+            }
             if(this.choice == 0){
                 this.choice = choice;
             }
@@ -240,6 +259,10 @@ public class SaveUtil {
                     TCRAdvancementData.getAdvancement("finish_biome_4", player);
                 }
             }
+
+            //全局广播
+            Component message = TheCasketOfReveriesMod.getInfo("level_up", getWorldLevelName());
+            PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new BroadcastMessagePacket(message, false));
 
         }
 

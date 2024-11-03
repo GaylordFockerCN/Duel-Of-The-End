@@ -33,7 +33,7 @@ public class GameProgressScreen extends Screen {
 
     public GameProgressScreen() {
         super(Component.literal("Progress"));
-        worldLevel = new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"textures/gui/world_level_"+SaveUtil.worldLevel+".png");
+        worldLevel = new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"textures/gui/world_level_"+SaveUtil.getWorldLevel()+".png");
 
     }
 

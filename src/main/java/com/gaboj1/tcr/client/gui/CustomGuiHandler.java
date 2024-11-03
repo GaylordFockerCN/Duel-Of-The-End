@@ -24,16 +24,21 @@ public class CustomGuiHandler {
         Font font = Minecraft.getInstance().font;
         int x = (int) (TCRConfig.TASK_X.get() * window.getGuiScaledWidth());
         int y = (int) (TCRConfig.TASK_Y.get() * window.getGuiScaledWidth());
+        int interval = TCRConfig.INTERVAL.get();
+        if(SaveUtil.getWorldLevel() > 0){
+            Component currentLevel = TheCasketOfReveriesMod.getInfo("current_level", SaveUtil.getWorldLevelName());
+            guiGraphics.drawString(font, currentLevel, x, y += interval, 0x00ffff, true);
+        }
         Component currentTasks = TheCasketOfReveriesMod.getInfo("current_tasks", KeyMappings.OPEN_PROGRESS.getKeyName());
-        guiGraphics.drawString(font, currentTasks, x, y += 12, 0x00ffff, true);
+        guiGraphics.drawString(font, currentTasks, x, y += interval, 0x00ffff, true);
         for(SaveUtil.Dialog dialog : SaveUtil.TASK_SET){
             List<FormattedCharSequence> listName = Minecraft.getInstance().font.split(dialog.name(), Math.min(window.getGuiScaledWidth() - x, TCRConfig.TASK_SIZE.get().intValue()));
             List<FormattedCharSequence> listDescription = Minecraft.getInstance().font.split(dialog.content(), Math.min(window.getGuiScaledWidth() - x, TCRConfig.TASK_SIZE.get().intValue()));
             for(FormattedCharSequence charSequence : listName){
-                guiGraphics.drawString(font, charSequence, x, y += 12, 0xff0000, true);
+                guiGraphics.drawString(font, charSequence, x, y += interval, 0xff0000, true);
             }
             for(FormattedCharSequence charSequence : listDescription){
-                guiGraphics.drawString(font, charSequence, x, y += 12, 0xFFFFFF, true);
+                guiGraphics.drawString(font, charSequence, x, y += interval, 0xFFFFFF, true);
             }
         }
     }

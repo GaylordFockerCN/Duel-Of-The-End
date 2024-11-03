@@ -50,7 +50,7 @@ public abstract class TCRBoss extends PathfinderMob implements NpcDialogue, Shad
 
     protected TCRBoss(EntityType<? extends PathfinderMob> type, Level level, BossEvent.BossBarColor color) {
         super(type, level);
-        levelUp(SaveUtil.worldLevel);
+        levelUp(SaveUtil.getWorldLevel());
         bossInfo = new ServerBossEvent(this.getDisplayName(), color, BossEvent.BossBarOverlay.PROGRESS);
         if(!level.isClientSide){
             PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncUuidPacket(bossInfo.getId(), getId()));

@@ -66,6 +66,8 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addInfo("current_tasks", "当前任务【按 %s 关闭】：");
         this.addInfo("task_finish0", "任务 【");
         this.addInfo("task_finish1", "】 已完成！");
+        this.addInfo("level_up", "世界等级已提升至：§4【 %s 】§r！");
+        this.addInfo("current_level", "当前世界等级：§4【 %s 】§r");
 
         this.add("the_casket_of_reveries.button.boss1","泰兰妮尔之心");
         this.add("the_casket_of_reveries.button.boss2","九霄");

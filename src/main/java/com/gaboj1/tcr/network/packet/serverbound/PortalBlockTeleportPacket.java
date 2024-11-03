@@ -62,7 +62,7 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
             case 6: destination = BiomeMap.getInstance().getCenter2();height = 220;break;
             case 7: destination = BiomeMap.getInstance().getCenter3();height = 230;break;
             case 8: destination = BiomeMap.getInstance().getCenter4();height = 240;break;
-            default:destination = BiomeMap.getInstance().getMainCenter();unlocked = SaveUtil.worldLevel >= 1;height = 200;//完成某一个群系的事件后才解锁主城
+            default:destination = BiomeMap.getInstance().getMainCenter();unlocked = SaveUtil.getWorldLevel() >= 1;height = 200;//完成某一个群系的事件后才解锁主城
         }
         if(id < 9){
             if(!DataManager.isSecondEnter.get(playerEntity)){

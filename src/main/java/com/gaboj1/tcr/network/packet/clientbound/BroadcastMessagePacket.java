@@ -1,9 +1,7 @@
 package com.gaboj1.tcr.network.packet.clientbound;
 
 import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.network.packet.BasePacket;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -11,22 +9,23 @@ import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * 发给客户端，广播任务完成
+ * 发给客户端，广播任务完成，用于一些没有玩家对象的地方。
  */
-public record BroadcastTaskFinishPacket(Component name) implements BasePacket {
+public record BroadcastMessagePacket(Component message, boolean actionBar) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
-        buf.writeComponent(name);
+        buf.writeComponent(message);
+        buf.writeBoolean(actionBar);
     }
 
-    public static BroadcastTaskFinishPacket decode(FriendlyByteBuf buf) {
-        return new BroadcastTaskFinishPacket(buf.readComponent());
+    public static BroadcastMessagePacket decode(FriendlyByteBuf buf) {
+        return new BroadcastMessagePacket(buf.readComponent(), buf.readBoolean());
     }
 
     @Override
     public void execute(@Nullable Player playerEntity) {
         if(Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && TCRConfig.BROADCAST_DIALOG.get()){
-            Minecraft.getInstance().player.displayClientMessage(TheCasketOfReveriesMod.getInfo("task_finish0").append(name.copy().withStyle(ChatFormatting.RED)).append(TheCasketOfReveriesMod.getInfo("task_finish1")), false);
+            Minecraft.getInstance().player.displayClientMessage(message, false);
         }
     }
 }
