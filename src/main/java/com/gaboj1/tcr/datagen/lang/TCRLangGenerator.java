@@ -56,6 +56,8 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add("info.the_casket_of_reveries.add_health_success","成功提升血量上限！");
         this.add("info.the_casket_of_reveries.add_health_failed","提升血量上限失败！");
         this.add("info.the_casket_of_reveries.resurrection","成功还魂！！！");
+        this.addInfo("need_super_resin", "高品质物品需使用超级树脂修复！");
+        this.addInfo("need_suit", "需套装激活！！");
         this.addInfo("before_enter", "我必须带着下界之星，避免我无法从梦中醒来。");
         this.addInfo("fast_mod_tip", "使用凋零玫瑰与床合成进入维度所需的床。");
         this.addInfo("wallet_get", "从碎梦袋取出梦晶石：%d， 取出梦碎片： %d");
@@ -139,15 +141,14 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.add(TCREntities.SPRITE_BOW_ARROW.get(),"精灵之箭");
         this.addItemUsageInfo(TCRItems.SPRITE_BOW.get(),"携带精灵力量的弓，不消耗箭失，可附魔多重射击。");
         this.add(TCRItems.SPRITE_CROSSBOW.get(),"精灵之怒");
-        this.addItemUsageInfo(TCRItems.SPRITE_CROSSBOW.get(),"携带精灵力量的神弩，不消耗箭失，可附魔多重射击。上膛时按下shift + 右键可释放精灵之怒，距离越远伤害越高。");
+        this.addItemUsageInfo(TCRItems.SPRITE_CROSSBOW.get(),"携带精灵力量的神弩，不消耗箭失，可附魔多重射击。穿树魔套时上膛并潜行时右键可释放精灵之怒，距离越远伤害越高。");
         this.add(TCRItems.BASIC_SPRITE_CROSSBOW.get(),"精灵之弩");
         this.addItemUsageInfo(TCRItems.BASIC_SPRITE_CROSSBOW.get(),"携带精灵力量的弩，不消耗箭失，可附魔多重射击。");
         this.add(TCRItems.TREE_SPIRIT_WAND.get(),"树灵法杖");
-        this.addItemInfo(TCRItems.TREE_SPIRIT_WAND.get(),"no_spirit_tree","密林灵树原木不足，无法召唤小树妖");
-        this.addItemUsageInfo(TCRItems.TREE_SPIRIT_WAND.get(),"右键地面消耗密林原木和生命值召唤小树妖",1);
-        this.addItemUsageInfo(TCRItems.TREE_SPIRIT_WAND.get(),"右键空气消耗饥饿值回血",2);
-        this.addItemUsageInfo(TCRItems.TREE_SPIRIT_WAND.get(),"只能使用超级树脂修复",3);
-        this.addItemUsageInfo(TCRItems.TREE_SPIRIT_WAND.get(),"当主手持有树灵法杖杀死牧歌原野的村民有极小概率增加最大生命上限！",4);
+//        this.addItemInfo(TCRItems.TREE_SPIRIT_WAND.get(),"no_spirit_tree","密林灵树原木不足，无法召唤小树妖");
+        this.addItemUsageInfo(TCRItems.TREE_SPIRIT_WAND.get(),"右键以发射魔法弹",1);
+        this.addItemUsageInfo(TCRItems.TREE_SPIRIT_WAND.get(),"穿着树魔法帽、法袍、法靴时，潜行时右键以释放花海之怒",2);
+        this.addItemUsageInfo(TCRItems.TREE_SPIRIT_WAND.get(),"当主手持有树灵法杖杀死牧歌原野的村民有极小概率增加最大生命上限！当前增加：%d",3);
 
 
         this.add(TCRItems.HOLY_SWORD.get(),"额滴圣剑");
@@ -234,9 +235,9 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addItemUsageInfo(TCRItems.TREE_LEGGINGS.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，减少来自密林的怪物的攻击伤害（包括树魔！）并激活精灵法杖。但极其不耐火。");
         this.addItemUsageInfo(TCRItems.TREE_BOOTS.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，减少来自密林的怪物的攻击伤害（包括树魔！）并激活精灵法杖。但极其不耐火。");
 
-        this.addItemUsageInfo(TCRItems.TREE_ROBE_HELMET.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，减少来自密林的怪物的攻击伤害（包括树魔！）并激活精灵法杖。但极其不耐火。");
-        this.addItemUsageInfo(TCRItems.TREE_ROBE_CHESTPLATE.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，减少来自密林的怪物的攻击伤害（包括树魔！）并激活精灵法杖。但极其不耐火。");
-        this.addItemUsageInfo(TCRItems.TREE_ROBE_BOOTS.get(),"树妖套装：穿戴四件套时将获得生命恢复效果，减少来自密林的怪物的攻击伤害（包括树魔！）并激活精灵法杖。但极其不耐火。");
+        this.addItemUsageInfo(TCRItems.TREE_ROBE_HELMET.get(),"树魔套装：免疫密林毒花的侵袭，提供额外生命，进一步减少来自密林魔物的攻击伤害，并可激活某些武器的使用。");
+        this.addItemUsageInfo(TCRItems.TREE_ROBE_CHESTPLATE.get(),"树魔套装：免疫密林毒花的侵袭，提供额外生命，进一步减少来自密林魔物的攻击伤害，并可激活某些武器的使用。");
+        this.addItemUsageInfo(TCRItems.TREE_ROBE_BOOTS.get(),"树魔套装：免疫密林毒花的侵袭，提供额外生命，进一步减少来自密林魔物的攻击伤害，并可激活某些武器的使用。");
 
 
         this.add(TCRItems.DREAMSCAPE_COIN.get(),"梦碎片");

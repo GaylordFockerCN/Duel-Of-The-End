@@ -1,6 +1,8 @@
 package com.gaboj1.tcr.item.custom.weapon;
 
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.entity.custom.projectile.SpriteBowArrow;
+import com.gaboj1.tcr.item.custom.armor.TreeRobeItem;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
@@ -75,7 +77,7 @@ public class SpriteCrossbow extends CrossbowItem {
     }
 
     /**
-     * shift+右键开大
+     * shift+右键开大，需套装激活
      */
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
@@ -85,6 +87,10 @@ public class SpriteCrossbow extends CrossbowItem {
         }
         if (isCharged(itemstack)) {
             if(player.isShiftKeyDown() && itemstack.getDamageValue() < itemstack.getMaxDamage() - 52){
+                if(!(TreeRobeItem.isFullSet(player) || player.isCreative())){
+                    player.displayClientMessage(TheCasketOfReveriesMod.getInfo("need_suit"), true);
+                    return InteractionResultHolder.fail(itemstack);
+                }
                 if(!player.isCreative()){
                     itemstack.setDamageValue(itemstack.getDamageValue() + 48);
                     player.getCooldowns().addCooldown(itemstack.getItem(), 200);

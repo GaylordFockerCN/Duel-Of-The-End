@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.block.custom;
 
 import com.gaboj1.tcr.datagen.tags.TCREntityTagGenerator;
+import com.gaboj1.tcr.item.custom.armor.TreeRobeItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.RandomSource;
@@ -68,7 +69,7 @@ public class DenseForestFlower extends FlowerBlock {
     @Override
     @SuppressWarnings("deprecation")
     public void entityInside(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, Entity pEntity) {
-        if(pEntity.getType().is(TCREntityTagGenerator.MOB_IN_DENSE_FOREST)){
+        if(pEntity.getType().is(TCREntityTagGenerator.MOB_IN_DENSE_FOREST) || TreeRobeItem.isFullSet(pEntity)){
             return;
         }
         if (!pLevel.isClientSide && pLevel.getDifficulty() != Difficulty.PEACEFUL) {

@@ -67,6 +67,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
@@ -76,6 +77,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.INT);
 
+    private static final UUID MODIFY_HEALTH = UUID.fromString("c9d011ac-f90f-11ed-a05b-1919bb114514");
     private boolean canBeHurt;
     private int hurtTimer;
     private int shootTimer = 0;
@@ -273,7 +275,6 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     @Override
     public void tick() {
         super.tick();
-
         if(!level().isClientSide){
             if(recoverAnimTimer > 0){
                 recoverAnimTimer--;
@@ -335,7 +336,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                     y = shootTarget.getY(0.3333) - projectile.getY();
                     z = shootTarget.getZ() - this.getZ();
                     double $$5 = Math.sqrt(x * x + z * z) * 0.2;
-                    projectile.setDamage(((float) Objects.requireNonNull(getAttribute(Attributes.ATTACK_DAMAGE)).getValue()));
+                    projectile.setDamage(((float) Objects.requireNonNull(getAttribute(Attributes.ATTACK_DAMAGE)).getValue()) * (SaveUtil.getWorldLevel() + 1) * 0.7F);
                     projectile.shoot(x, y + $$5, z, 1.5F, 10.0F);
                     level().addFreshEntity(projectile);
                 }
@@ -352,7 +353,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                         y = getViewVector(1.0F).y;
                         z = getViewVector(1.0F).z;
                     }
-                    projectile.setDamage(((float) Objects.requireNonNull(getAttribute(Attributes.ATTACK_DAMAGE)).getValue()));
+                    projectile.setDamage(((float) Objects.requireNonNull(getAttribute(Attributes.ATTACK_DAMAGE)).getValue() * (SaveUtil.getWorldLevel() + 1) * 0.7F));
                     projectile.shoot(x, y, z, 1.5F, 10.0F);
                     level().addFreshEntity(projectile);
                 }
@@ -521,9 +522,10 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
 
     /**
      * 根据手持的枯萎之触的物品数量来削弱树魔的属性
+     * FIXME 失效了？？
      */
     private void modifyAttribute(int count){
-        AttributeModifier healthModify = new AttributeModifier("healthModify", 1 - 0.15 * count, AttributeModifier.Operation.MULTIPLY_BASE);
+        AttributeModifier healthModify = new AttributeModifier(MODIFY_HEALTH, "healthModify", 1 - 0.15 * count, AttributeModifier.Operation.MULTIPLY_BASE);
         Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).addPermanentModifier(healthModify);
         setHealth(getMaxHealth());
     }

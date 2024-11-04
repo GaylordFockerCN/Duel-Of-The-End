@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.item.custom;
 
 import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.item.TCRRarities;
 import com.gaboj1.tcr.item.custom.boss_loot.MagicWeapon;
@@ -42,6 +43,7 @@ public class BasicResin extends Item {
         //只能用高级树脂修复高级材料，并且会有折扣
         if(otherHandItem.getRarity().equals(TCRRarities.XIAN_PIN) || otherHandItem.getRarity().equals(TCRRarities.SHEN_ZHEN) || otherHandItem.getRarity().equals(Rarity.EPIC)){
             if(!(scale == SUPER_RESIN)){
+                pPlayer.displayClientMessage(TheCasketOfReveriesMod.getInfo("need_super_resin"), true);
                 return InteractionResultHolder.fail(handItem);
             }
             _repairValue /= 9;

@@ -13,6 +13,6 @@ public class HolySwordModel extends DefaultedItemGeoModel<FlySword> {
 
     @Override
     public ResourceLocation getTextureResource(FlySword animatable) {
-        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/item/tree_spirit_wand.png");
+        return new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/item/tree_spirit_wand_old.png");
     }
 }

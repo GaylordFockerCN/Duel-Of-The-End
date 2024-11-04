@@ -61,6 +61,7 @@ public class TCRItems {
 	public static final RegistryObject<Item> GOD_ORICHALCUM_CROSSBOW = REGISTRY.register("god_orichalcum_crossbow", () -> new OrichalcumCrossbow(new Item.Properties().rarity(TCRRarities.XIAN_PIN).stacksTo(1).defaultDurability(256)){
 		/**
 		 * 耐久翻倍，不会损坏，自带多重射击
+		 * TODO 和真·神金套绑定在一起，需要真·神金套解锁
 		 */
 		@Override
 		public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
@@ -96,13 +97,13 @@ public class TCRItems {
 			() -> new TreeRobeItem(TCRArmorMaterials.TREE, ArmorItem.Type.BOOTS, new Item.Properties().rarity(TCRRarities.SHANG_PIN)));
 
 	public static final RegistryObject<Item> TREE_ROBE_HELMET = REGISTRY.register("tree_robe_helmet",
-			() -> new TreeRobeItem(TCRArmorMaterials.TREE_ROBE, ArmorItem.Type.HELMET, new Item.Properties().rarity(TCRRarities.XIAN_PIN)));
+			() -> new TreeRobeItem(TCRArmorMaterials.TREE_ROBE, ArmorItem.Type.HELMET, new Item.Properties().rarity(TCRRarities.TE_PIN)));
 
 	public static final RegistryObject<Item> TREE_ROBE_CHESTPLATE = REGISTRY.register("tree_robe_chestplate",
-			() -> new TreeRobeItem(TCRArmorMaterials.TREE_ROBE, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(TCRRarities.XIAN_PIN)));
+			() -> new TreeRobeItem(TCRArmorMaterials.TREE_ROBE, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(TCRRarities.TE_PIN)));
 
 	public static final RegistryObject<Item> TREE_ROBE_BOOTS = REGISTRY.register("tree_robe_boots",
-			() -> new TreeRobeItem(TCRArmorMaterials.TREE_ROBE, ArmorItem.Type.BOOTS, new Item.Properties().rarity(TCRRarities.XIAN_PIN)));
+			() -> new TreeRobeItem(TCRArmorMaterials.TREE_ROBE, ArmorItem.Type.BOOTS, new Item.Properties().rarity(TCRRarities.TE_PIN)));
 
 	public static final RegistryObject<Item> TREE_SPIRIT_WAND = REGISTRY.register("tree_spirit_wand", TreeSpiritWand::new);
 	public static final RegistryObject<Item> SPRITE_BOW = REGISTRY.register("sprite_bow", () -> new SpriteBow(new Item.Properties().defaultDurability(256).rarity(TCRRarities.SHANG_PIN)));

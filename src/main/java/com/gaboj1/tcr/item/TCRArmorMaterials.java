@@ -17,7 +17,7 @@ public enum TCRArmorMaterials implements ArmorMaterial {
     ICE_TIGER("ice_tiger", 33, new int[]{ 3, 5, 7, 3 }, 15,
         SoundEvents.ARMOR_EQUIP_DIAMOND, 2.0f, 0.5f, () -> Ingredient.of(TCRItems.TIGER_SOUL_ICE.get())),
 
-    TREE_ROBE("tree_robe", 33, new int[]{ 3, 5, 7, 3 }, 15,
+    TREE_ROBE("tree_robe", 33, new int[]{ 5, 8, 0, 5 }, 15,
     SoundEvents.ARMOR_EQUIP_DIAMOND, 2.0f, 0.5f, () -> Ingredient.of(TCRItems.TIGER_SOUL_ICE.get()));
 
 

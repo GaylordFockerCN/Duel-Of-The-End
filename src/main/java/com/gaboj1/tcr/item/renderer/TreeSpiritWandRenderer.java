@@ -19,13 +19,4 @@ public class TreeSpiritWandRenderer extends GeoItemRenderer<TreeSpiritWand> {
         addRenderLayer(new AutoGlowingGeoLayer<>(this));
     }
 
-    //官方给的解法。。等更新新版后就不需要了
-    @Override
-    public void preRender(PoseStack poseStack, TreeSpiritWand animatable, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.itemRenderTranslations = new Matrix4f(poseStack.last().pose());;
-        scaleModelForRender(this.scaleWidth, this.scaleHeight, poseStack, animatable, model, isReRender, partialTick, packedLight, packedOverlay);
-        if(!isReRender){
-            poseStack.translate(0.5f, 0.51f, 0.5f);
-        }
-    }
 }

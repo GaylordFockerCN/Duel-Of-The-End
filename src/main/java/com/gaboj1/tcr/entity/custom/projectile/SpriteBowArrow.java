@@ -18,7 +18,8 @@ public class SpriteBowArrow extends SpectralArrow {
     public SpriteBowArrow(Level level, LivingEntity owner) {
         super(TCREntities.SPRITE_BOW_ARROW.get(), level);
         setOwner(owner);
-        setPos(owner.getX(), owner.getEyeY() - 0.1, owner.getZ());
+        setPos(owner.getEyePosition().add(owner.getViewVector(1.0F).normalize().scale(2)));//从眼前发射
+        setGlowingTag(true);
     }
 
     public SpriteBowArrow(EntityType<? extends SpriteBowArrow> entityType, Level level) {

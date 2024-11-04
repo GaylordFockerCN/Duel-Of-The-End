@@ -2,6 +2,7 @@ package com.gaboj1.tcr.capability;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
@@ -33,6 +34,7 @@ public class TCRPlayer {
     private Set<Integer> swordID;
     private int anticipationTick;
     private ItemStack sword = ItemStack.EMPTY;
+    public final Set<Vec3i> flowerPos = new HashSet<>();
     public boolean getBoolean(String key){
         return data.getBoolean(key);
     }
