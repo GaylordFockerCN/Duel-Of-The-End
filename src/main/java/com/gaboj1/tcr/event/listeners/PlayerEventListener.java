@@ -6,10 +6,12 @@ import com.gaboj1.tcr.capability.TCRCapabilityProvider;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.entity.TCRFakePlayer;
+import com.gaboj1.tcr.entity.custom.boss.TCRBoss;
 import com.gaboj1.tcr.item.custom.weapon.GunCommon;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.SyncSaveUtilPacket;
+import com.gaboj1.tcr.network.packet.clientbound.SyncUuidPacket;
 import com.gaboj1.tcr.network.packet.serverbound.ControlLlamaPacket;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.SaveUtil;
@@ -69,6 +71,8 @@ public class PlayerEventListener {
             }
             //同步客户端数据
             PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()), serverPlayer);
+            //防止重进后boss的uuid不同
+            TCRBoss.SERVER_BOSSES.forEach(((uuid, integer) -> PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new SyncUuidPacket(uuid, integer), serverPlayer)));
         } else {
             //单机世界的同步数据
             if(SaveUtil.isAlreadyInit()){

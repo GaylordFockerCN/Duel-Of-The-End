@@ -1,8 +1,5 @@
 package com.gaboj1.tcr.mixin;
 
-import com.gaboj1.tcr.network.PacketRelay;
-import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.SyncSaveUtilPacket;
 import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import net.minecraft.client.gui.screens.worldselection.WorldSelectionList;
@@ -46,18 +43,5 @@ public class WorldListEntryMixin {
             SaveUtil.read(summary.getLevelId());
         }
     }
-
-//    @Inject(method = "loadWorld()V", at = @At("HEAD"))
-//    private void injectedLoadWorld(CallbackInfo ci){
-//        TCRBiomeProvider.LOGGER.info("On loadWorld Sync : " + summary.getLevelId() + " >> TCRBiomeProvider.worldName");
-//        TCRBiomeProvider.LOGGER.info("Trying update biome map by new worldName");
-//        TCRBiomeProvider.updateBiomeMap(summary.getLevelId());
-//    }
-
-//    @Inject(method = "joinWorld()V", at = @At("HEAD"))
-//    private void injectedJoinWorld(CallbackInfo ci){
-//        TCRBiomeProvider.worldName = summary.getLevelId();
-//        TCRBiomeProvider.LOGGER.info("On joinWorld Sync : " + summary.getLevelId() + " >> TCRBiomeProvider.worldName");
-//    }
 
 }

@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.entity.custom.villager;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder;
 import com.gaboj1.tcr.network.PacketRelay;
@@ -62,6 +63,9 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
 
     @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
+        if(TCRConfig.NO_PLOT_MODE.get()){
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
+        }
         if(player.isCreative() ){//潜行右键切换村民种类，客户端服务端都需要改变。单单右键则输出当前id
             if(player.isShiftKeyDown()){
                 setSkinID(getSkinID()+1);

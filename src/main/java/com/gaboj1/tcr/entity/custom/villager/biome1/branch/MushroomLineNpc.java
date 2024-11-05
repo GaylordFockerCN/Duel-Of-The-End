@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.entity.custom.villager.biome1.branch;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainStationaryVillager;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
@@ -21,6 +22,9 @@ public abstract class MushroomLineNpc extends PastoralPlainStationaryVillager {
 
     @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
+        if(TCRConfig.NO_PLOT_MODE.get()){
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
+        }
         if (hand == InteractionHand.MAIN_HAND) {
             if (player instanceof ServerPlayer serverPlayer) {
                 this.lookAt(player, 180.0F, 180.0F);

@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.TCRBlocks;
 import com.gaboj1.tcr.entity.TCREntities;
@@ -33,6 +34,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -71,13 +74,11 @@ import java.util.UUID;
 
 import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
-
 public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     EntityType<?> entityType = TCREntities.YGGDRASIL.get();
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(YggdrasilEntity.class, EntityDataSerializers.INT);
-
-    private static final UUID MODIFY_HEALTH = UUID.fromString("c9d011ac-f90f-11ed-a05b-1919bb114514");
+    private static final UUID MODIFY_HEALTH = UUID.fromString("a0d000ac-a00a-11ed-a05b-1919bb114514");
     private boolean canBeHurt;
     private int hurtTimer;
     private int shootTimer = 0;
@@ -206,10 +207,11 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
      */
     @Override
     public void die(@NotNull DamageSource source) {
-        if(getEntityData().get(IS_SHADER)){
+        if(getEntityData().get(IS_SHADER) || TCRConfig.NO_PLOT_MODE.get()){
             //二次挑战则直接死
             triggerAnim("Death","death");
             superDie(source);
+            SaveUtil.biome1.isBossDie = true;//给无剧情模式判断是否打过boss用
             return;
         }
         getEntityData().set(IS_FIGHTING, false);
@@ -444,7 +446,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     }
 
     public void sendDialoguePacket(ServerPlayer serverPlayer){
-        if(getEntityData().get(IS_FIGHTING)){
+        if(getEntityData().get(IS_FIGHTING) || TCRConfig.NO_PLOT_MODE.get()){
             return;
         }
         CompoundTag serverData = new CompoundTag();
@@ -525,9 +527,11 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
      * FIXME 失效了？？
      */
     private void modifyAttribute(int count){
+        float ordinal = getHealth();
         AttributeModifier healthModify = new AttributeModifier(MODIFY_HEALTH, "healthModify", - 0.15 * count, AttributeModifier.Operation.MULTIPLY_BASE);
         Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).addPermanentModifier(healthModify);
         setHealth(getMaxHealth());
+        TheCasketOfReveriesMod.LOGGER.info(getType().getDescriptionId() + "'s max health has changed from [" + ordinal + "] to : " + getMaxHealth());
     }
 
     @Override
@@ -588,6 +592,15 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                 break;
         }
         this.setConversingPlayer(null);
+    }
+
+    @Override
+    protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
+        if(TCRConfig.NO_PLOT_MODE.get()){
+            getEntityData().set(STATE, 1);
+            getEntityData().set(IS_FIGHTING, true);
+        }
+        return InteractionResult.FAIL;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.entity.custom.boss;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.client.BossMusicPlayer;
 import com.gaboj1.tcr.client.gui.BossBarHandler;
 import com.gaboj1.tcr.entity.LevelableEntity;
@@ -31,11 +32,15 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 /**
  * 方便统一调难度
  */
 public abstract class TCRBoss extends PathfinderMob implements NpcDialogue, ShadowableEntity, LevelableEntity, MultiPlayerBoostEntity {
-
+    public static final Map<UUID, Integer> SERVER_BOSSES = new HashMap<>();//用于客户端渲染bossBar
     @Nullable
     protected Player conversingPlayer;
     protected static final EntityDataAccessor<Boolean> IS_FIGHTING = SynchedEntityData.defineId(TCRBoss.class, EntityDataSerializers.BOOLEAN);
@@ -188,13 +193,13 @@ public abstract class TCRBoss extends PathfinderMob implements NpcDialogue, Shad
     @Override
     protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         if (hand == InteractionHand.MAIN_HAND) {
-            if (!this.level().isClientSide()) {
+            if (player instanceof ServerPlayer serverPlayer) {
                 this.lookAt(player, 180.0F, 180.0F);
-                if (player instanceof ServerPlayer serverPlayer) {
-                    if (this.getConversingPlayer() == null) {
-                        sendDialoguePacket(serverPlayer);
-                        this.setConversingPlayer(serverPlayer);
-                    }
+                if(TCRConfig.NO_PLOT_MODE.get()){
+                    getEntityData().set(IS_FIGHTING, true);
+                } else if (this.getConversingPlayer() == null) {
+                    sendDialoguePacket(serverPlayer);
+                    this.setConversingPlayer(serverPlayer);
                 }
                 return InteractionResult.SUCCESS;
             }

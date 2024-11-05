@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.entity.custom.villager;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.entity.ManySkinEntity;
 import com.gaboj1.tcr.entity.ai.behavior.TCRVillagerTasks;
 import com.gaboj1.tcr.client.TCRSounds;
@@ -323,7 +324,9 @@ public abstract class TCRVillager extends Villager implements GeoEntity, ManySki
 
     @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player pPlayer, @NotNull InteractionHand pHand) {
-
+        if(TCRConfig.NO_PLOT_MODE.get()){
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
+        }
         if ( this.isAlive() && !this.isTrading() && !this.isSleeping() && !pPlayer.isSecondaryUseActive()) {
             if (canTalk && pPlayer instanceof ServerPlayer && pHand == InteractionHand.MAIN_HAND) {
                 talk(pPlayer, false);

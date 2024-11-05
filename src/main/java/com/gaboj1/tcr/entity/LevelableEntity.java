@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.entity;
 
 import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -13,11 +14,12 @@ import java.util.UUID;
  */
 public interface LevelableEntity {
     default void levelUp(int level){
-        if(level > 0 && this instanceof LivingEntity entity){
+        if(level > 0 && this instanceof LivingEntity entity && !entity.level().isClientSide){
+            float ordinal = entity.getHealth();
             AttributeInstance instance = entity.getAttribute(Attributes.MAX_HEALTH);
             if(instance != null){
                 for(int i = 1; i <= level; i++){
-                    AttributeModifier levelModifier = new AttributeModifier(UUID.fromString("d2d114cc-f51f-41ed-a05b-2233bb11451"+level),"level"+level, Math.pow(TCRConfig.MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP.get(), level), AttributeModifier.Operation.MULTIPLY_BASE);
+                    AttributeModifier levelModifier = new AttributeModifier(UUID.fromString("d2d114cc-f88f-41ed-a05b-2233bb11451"+level),"level"+level, Math.pow(TCRConfig.MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP.get(), level), AttributeModifier.Operation.MULTIPLY_BASE);
                     if(i == level){
                         if(!instance.hasModifier(levelModifier)){
                             instance.addPermanentModifier(levelModifier);
@@ -28,6 +30,7 @@ public interface LevelableEntity {
                 }
             }
             entity.setHealth(entity.getMaxHealth());
+            TheCasketOfReveriesMod.LOGGER.info("[World Level Modify]" + entity.getType().getDescriptionId() + "'s max health has changed from [" + ordinal + "] to : " + entity.getMaxHealth());
         }
     }
 }

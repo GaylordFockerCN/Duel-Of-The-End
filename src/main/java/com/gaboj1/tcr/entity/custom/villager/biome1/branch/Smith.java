@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.entity.custom.villager.biome1.branch;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder;
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
@@ -11,6 +12,8 @@ import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
@@ -42,6 +45,74 @@ public class Smith extends MushroomLineNpc {
 
     @Override
     public void die(@NotNull DamageSource source) {}
+
+    @Override
+    public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
+        if(TCRConfig.NO_PLOT_MODE.get()){
+            startTrade(player);
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
+        }
+        return super.mobInteract(player, hand);
+    }
+
+    public void startTrade(Player player){
+        startCustomTrade(player,
+                new MerchantOffer(
+                        new ItemStack(TCRItems.GUN_COMMON.get(), 1),
+                        new ItemStack(TCRItems.ORICHALCUM.get(), 16),
+                        new ItemStack(TCRItems.GUN_PLUS.get(), 1),
+                        142857, 0, 0.02f),
+//                        new MerchantOffer(
+//                                new ItemStack(TCRItems.TREE_DEMON_FRUIT.get(), 1),
+//                                new ItemStack(TCRItems.TREE_DEMON_HORN.get(), 1),
+//                                new ItemStack(TCRItems.TREE_SPIRIT_WAND.get(), 1),
+//                                142857, 0, 0.02f), NOTE 换到法师那里
+                new MerchantOffer(
+                        new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 12),
+                        new ItemStack(TCRItems.AMMO.get(), 2),
+                        142857, 0, 0.02f),
+                new MerchantOffer(
+                        new ItemStack(TCRItems.STARLIT_DEWDROP.get(), 4),
+                        new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 20),
+                        new ItemStack(TCRItems.SPRITE_WAND.get(), 1),
+                        142857, 0, 0.02f),
+                new MerchantOffer(
+                        new ItemStack(TCRItems.ORICHALCUM.get(), 5),
+                        new ItemStack(TCRItems.ORICHALCUM_HELMET.get(), 1),
+                        142857, 0, 0.02f),
+                new MerchantOffer(
+                        new ItemStack(TCRItems.ORICHALCUM.get(), 8),
+                        new ItemStack(TCRItems.ORICHALCUM_CHESTPLATE.get(), 1),
+                        142857, 0, 0.02f),
+                new MerchantOffer(
+                        new ItemStack(TCRItems.ORICHALCUM.get(), 7),
+                        new ItemStack(TCRItems.ORICHALCUM_LEGGINGS.get(), 1),
+                        142857, 0, 0.02f),
+                new MerchantOffer(
+                        new ItemStack(TCRItems.ORICHALCUM.get(), 4),
+                        new ItemStack(TCRItems.ORICHALCUM_BOOTS.get(), 1),
+                        142857, 0, 0.02f),
+                new MerchantOffer(
+                        new ItemStack(TCRItems.ORICHALCUM_SWORD.get(), 1),
+                        new ItemStack(TCRItems.ORICHALCUM.get(), 3),
+                        new ItemStack(TCRItems.ORICHALCUM_GREAT_SWORD.get(), 1),
+                        142857, 0, 0.02f),
+                new MerchantOffer(
+                        new ItemStack(TCRItems.ORICHALCUM.get(), 32),
+                        new ItemStack(Items.IRON_INGOT, 4),
+                        new ItemStack(TCRItems.ORICHALCUM_CROSSBOW.get(), 1),
+                        142857, 0, 0.02f),
+                new MerchantOffer(
+                        new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 64),
+                        new ItemStack(Items.ARROW, 8),
+                        142857, 0, 0.02f),
+                new MerchantOffer(
+                        new ItemStack(TCRItems.ORICHALCUM.get(), 12),
+                        new ItemStack(Items.IRON_INGOT, 3),
+                        new ItemStack(TCRItems.ORICHALCUM_BOW.get(), 1),
+                        142857, 0, 0.02f)
+        );
+    }
 
     @OnlyIn(Dist.CLIENT)
     @Override
@@ -89,62 +160,7 @@ public class Smith extends MushroomLineNpc {
                 player.displayClientMessage(BUILDER.buildDialogue(this, BUILDER.buildDialogueAnswer(1)), false);
                 break;
             case 2:
-                startCustomTrade(player,
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.GUN_COMMON.get(), 1),
-                                new ItemStack(TCRItems.ORICHALCUM.get(), 16),
-                                new ItemStack(TCRItems.GUN_PLUS.get(), 1),
-                                142857, 0, 0.02f),
-//                        new MerchantOffer(
-//                                new ItemStack(TCRItems.TREE_DEMON_FRUIT.get(), 1),
-//                                new ItemStack(TCRItems.TREE_DEMON_HORN.get(), 1),
-//                                new ItemStack(TCRItems.TREE_SPIRIT_WAND.get(), 1),
-//                                142857, 0, 0.02f), NOTE 换到法师那里
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 12),
-                                new ItemStack(TCRItems.AMMO.get(), 2),
-                                142857, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.STARLIT_DEWDROP.get(), 4),
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 20),
-                                new ItemStack(TCRItems.SPRITE_WAND.get(), 1),
-                                142857, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.ORICHALCUM.get(), 5),
-                                new ItemStack(TCRItems.ORICHALCUM_HELMET.get(), 1),
-                                142857, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.ORICHALCUM.get(), 8),
-                                new ItemStack(TCRItems.ORICHALCUM_CHESTPLATE.get(), 1),
-                                142857, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.ORICHALCUM.get(), 7),
-                                new ItemStack(TCRItems.ORICHALCUM_LEGGINGS.get(), 1),
-                                142857, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.ORICHALCUM.get(), 4),
-                                new ItemStack(TCRItems.ORICHALCUM_BOOTS.get(), 1),
-                                142857, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.ORICHALCUM_SWORD.get(), 1),
-                                new ItemStack(TCRItems.ORICHALCUM.get(), 3),
-                                new ItemStack(TCRItems.ORICHALCUM_GREAT_SWORD.get(), 1),
-                                142857, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.ORICHALCUM.get(), 32),
-                                new ItemStack(Items.IRON_INGOT, 4),
-                                new ItemStack(TCRItems.ORICHALCUM_CROSSBOW.get(), 1),
-                                142857, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 64),
-                                new ItemStack(Items.ARROW, 8),
-                                142857, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.ORICHALCUM.get(), 12),
-                                new ItemStack(Items.IRON_INGOT, 3),
-                                new ItemStack(TCRItems.ORICHALCUM_BOW.get(), 1),
-                                142857, 0, 0.02f)
-                );
+                startTrade(player);
                 break;
             case 3:
                 break;

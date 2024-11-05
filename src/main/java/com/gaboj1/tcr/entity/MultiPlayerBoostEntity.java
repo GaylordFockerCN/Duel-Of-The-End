@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.entity;
 
 import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.util.EntityUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,6 +17,7 @@ import java.util.UUID;
 public interface MultiPlayerBoostEntity {
     default void whenPlayerCountChange(){
         LivingEntity entity = ((LivingEntity) this);
+        float ordinal = entity.getHealth();
         if(entity.level() instanceof ServerLevel serverLevel){
             float healthOrdinal = entity.getHealth();
             float maxHealthOrdinal = entity.getMaxHealth();
@@ -34,6 +36,7 @@ public interface MultiPlayerBoostEntity {
                 }
             }
             entity.setHealth(healthOrdinal * entity.getMaxHealth() / maxHealthOrdinal);//别忘了血量也要变
+            TheCasketOfReveriesMod.LOGGER.info("[Player Count Modify]" + entity.getType().getDescriptionId() + "'s max health has changed from [" + ordinal + "] to : " + entity.getMaxHealth());
         }
     }
 }

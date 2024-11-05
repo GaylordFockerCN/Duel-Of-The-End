@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.entity.custom.villager.biome1;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
@@ -102,20 +103,29 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
     @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         this.setItemInHand(InteractionHand.MAIN_HAND, TCRItems.ELDER_STAFF.get().getDefaultInstance());
+
         if (hand == InteractionHand.MAIN_HAND) {
-            if (!this.level().isClientSide()) {
+            if (player instanceof ServerPlayer serverPlayer) {
+                //无剧情模式
+                if(TCRConfig.NO_PLOT_MODE.get()){
+                    if(!DataManager.elderLoot1Got.get(player)){
+                        ItemUtil.addItem(player,TCRItems.ELDER_CAKE.get(),1);
+                        ItemUtil.addItem(player,TCRItems.PURIFICATION_TALISMAN.get(),1);
+                        ItemUtil.addItem(player,Items.DIAMOND.getDefaultInstance().getItem(),1);
+                        DataManager.elderLoot1Got.put(player,true);
+                    }
+                    return InteractionResult.SUCCESS;
+                }
                 SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_FIND_ELDER1);
                 SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_BACK_TO_ELDER);//是Set，没有也不影响
                 this.lookAt(player, 180.0F, 180.0F);
-                if (player instanceof ServerPlayer serverPlayer) {
-                    if (this.getConversingPlayer() == null) {
-                        CompoundTag serverData = new CompoundTag();
-                        serverData.putBoolean("canAttackElder", SaveUtil.biome1.canAttackElder());
-                        serverData.putBoolean("isElderTalked", SaveUtil.biome1.isElderTalked);
-                        serverData.putBoolean("canGetElderReward", SaveUtil.biome1.canGetElderReward());
-                        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverData), serverPlayer);
-                        this.setConversingPlayer(serverPlayer);
-                    }
+                if (this.getConversingPlayer() == null) {
+                    CompoundTag serverData = new CompoundTag();
+                    serverData.putBoolean("canAttackElder", SaveUtil.biome1.canAttackElder());
+                    serverData.putBoolean("isElderTalked", SaveUtil.biome1.isElderTalked);
+                    serverData.putBoolean("canGetElderReward", SaveUtil.biome1.canGetElderReward());
+                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverData), serverPlayer);
+                    this.setConversingPlayer(serverPlayer);
                 }
                 return InteractionResult.SUCCESS;
             }
