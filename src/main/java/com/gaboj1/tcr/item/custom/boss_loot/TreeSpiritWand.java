@@ -23,6 +23,7 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -89,7 +90,6 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         if(pPlayer instanceof ServerPlayer serverPlayer){
-            attackAnim(serverPlayer);
             //花海
             if(pPlayer.isShiftKeyDown()){
                 if(TreeRobeItem.isFullSet(serverPlayer) || serverPlayer.isCreative()){
@@ -106,13 +106,12 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
                 }
             } else {
                 if(!serverPlayer.isCreative()){
-                    serverPlayer.getCooldowns().addCooldown(this, 40);
+                    serverPlayer.getCooldowns().addCooldown(this, 20);
                 }
-                MagicProjectile projectile = new MagicProjectile(pLevel, serverPlayer);
-                projectile.setGlowingTag(true);
-                projectile.setDamage(18);
-                projectile.shootFromRotation(serverPlayer, serverPlayer.getXRot(), serverPlayer.getYRot(), 0.0F, 4.0F, 1.0F);
-                pLevel.addFreshEntity(projectile);
+                if(itemStack.getOrCreateTag().getInt("AttackTimer") == 0){
+                    itemStack.getOrCreateTag().putInt("AttackTimer", 15);
+                    attackAnim(serverPlayer);
+                }
             }
         }
         return InteractionResultHolder.fail(itemStack);
@@ -121,6 +120,18 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
     @Override
     public void inventoryTick(@NotNull ItemStack itemStack, @NotNull Level level, @NotNull Entity entity, int p_41407_, boolean p_41408_) {
         super.inventoryTick(itemStack, level, entity, p_41407_, p_41408_);
+        //延时发射
+        if(entity instanceof ServerPlayer serverPlayer){
+            if(itemStack.getOrCreateTag().getInt("AttackTimer") == 1){
+                MagicProjectile projectile = new MagicProjectile(level, serverPlayer);
+                projectile.setGlowingTag(true);
+                projectile.setDamage(18);
+                projectile.shootFromRotation(serverPlayer, serverPlayer.getXRot(), serverPlayer.getYRot(), 0.0F, 4.0F, 1.0F);
+                level.addFreshEntity(projectile);
+            }
+            itemStack.getOrCreateTag().putInt("AttackTimer", Math.max(0, itemStack.getOrCreateTag().getInt("AttackTimer") - 1));
+        }
+
         int startFlowerSeaCnt = entity.getPersistentData().getInt("start_flower_sea");
         if(startFlowerSeaCnt > 0){
             entity.getPersistentData().putInt("start_flower_sea", startFlowerSeaCnt - 1);
@@ -268,7 +279,7 @@ public class TreeSpiritWand extends MagicWeapon implements GeoItem {
             animationState.getController().setAnimation(RawAnimation.begin().then("animation.model.idle", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         })));
-        controllers.add(new AnimationController<>(this, "Attack", 10, state -> PlayState.STOP)
+        controllers.add(new AnimationController<>(this, "Attack", 0, state -> PlayState.STOP)
                 .triggerableAnim("attack", RawAnimation.begin().thenPlay("animation.model.attack")));
     }
 

@@ -525,7 +525,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
      * FIXME 失效了？？
      */
     private void modifyAttribute(int count){
-        AttributeModifier healthModify = new AttributeModifier(MODIFY_HEALTH, "healthModify", 1 - 0.15 * count, AttributeModifier.Operation.MULTIPLY_BASE);
+        AttributeModifier healthModify = new AttributeModifier(MODIFY_HEALTH, "healthModify", - 0.15 * count, AttributeModifier.Operation.MULTIPLY_BASE);
         Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).addPermanentModifier(healthModify);
         setHealth(getMaxHealth());
     }
