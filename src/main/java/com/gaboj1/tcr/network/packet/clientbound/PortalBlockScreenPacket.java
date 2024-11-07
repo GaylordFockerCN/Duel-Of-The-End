@@ -23,6 +23,8 @@ public record PortalBlockScreenPacket(CompoundTag tag) implements BasePacket {
     @Override
     public void execute(Player playerEntity) {
         HandlePackets.handlePortalBlockScreenPacket(tag);
-        TCRConfig.RENDER_CUSTOM_GUI.set(!tag.getBoolean("isSecondEnter"));//初次进入要渲染任务提示
+        if(!TCRConfig.NO_PLOT_MODE.get()){
+            TCRConfig.RENDER_CUSTOM_GUI.set(!tag.getBoolean("isSecondEnter"));//初次进入要渲染任务提示
+        }
     }
 }

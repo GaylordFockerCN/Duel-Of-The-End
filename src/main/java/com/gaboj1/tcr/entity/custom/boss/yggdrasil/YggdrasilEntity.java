@@ -207,11 +207,26 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
      */
     @Override
     public void die(@NotNull DamageSource source) {
-        if(getEntityData().get(IS_SHADER) || TCRConfig.NO_PLOT_MODE.get()){
-            //二次挑战则直接死
+        if(getEntityData().get(IS_SHADER) || SaveUtil.isNoPlotMode()){
+            //二次挑战或无剧情模式则直接死
             triggerAnim("Death","death");
             superDie(source);
             SaveUtil.biome1.isBossDie = true;//给无剧情模式判断是否打过boss用
+            if(SaveUtil.isNoPlotMode()){//无剧情也要升个世界等级
+                if(level() instanceof ServerLevel serverLevel){
+                    SaveUtil.biome1.finish(SaveUtil.biome1.isElderDie ? SaveUtil.Biome1ProgressData.BOSS : SaveUtil.Biome1ProgressData.VILLAGER, serverLevel);
+                }
+                if(source.getEntity() instanceof ServerPlayer serverPlayer){
+                    if(SaveUtil.biome1.isElderDie && !DataManager.boss1LootGot.get(serverPlayer)){
+                        ItemStack wand = TCRItems.TREE_SPIRIT_WAND.get().getDefaultInstance();
+                        wand.getOrCreateTag().putBoolean("fromBoss", true);
+                        ItemUtil.addItem(serverPlayer, wand.getItem(),1);
+                        ItemUtil.addItem(serverPlayer, TCRItems.DENSE_FOREST_CERTIFICATE.get(),1);
+                        DataManager.boss1LootGot.put(serverPlayer, true);
+                    }
+                }
+            }
+
             return;
         }
         getEntityData().set(IS_FIGHTING, false);
@@ -318,7 +333,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                         level().addFreshEntity(treeClaw);//树爪继承自Mob，和平模式无法召唤！！
                         treeClaw.setDeltaMovement(target.getDeltaMovement().scale(0.1));//追一下
                         treeClaw.catchPlayer();
-                        level().playSound(null, treeClaw.getOnPos(), SoundEvents.PLAYER_HURT, SoundSource.BLOCKS, 1.0f, 1.0f);
+                        level().playSound(null, treeClaw.getOnPos(), TCRSounds.YGGDRASIL_ATTACK_ONE.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
                     }
                 }
             }
@@ -446,7 +461,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     }
 
     public void sendDialoguePacket(ServerPlayer serverPlayer){
-        if(getEntityData().get(IS_FIGHTING) || TCRConfig.NO_PLOT_MODE.get()){
+        if(getEntityData().get(IS_FIGHTING) || SaveUtil.isNoPlotMode()){
             return;
         }
         CompoundTag serverData = new CompoundTag();
@@ -579,8 +594,8 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                 if(!DataManager.boss1LootGot.get(player)){
                     ItemStack wand = TCRItems.TREE_SPIRIT_WAND.get().getDefaultInstance();
                     wand.getOrCreateTag().putBoolean("fromBoss", true);
-                    ItemUtil.addItem(player,wand.getItem(),1);
-                    ItemUtil.addItem(player,TCRItems.DENSE_FOREST_CERTIFICATE.get(),1);
+                    ItemUtil.addItem(player, wand.getItem(),1);
+                    ItemUtil.addItem(player, TCRItems.DENSE_FOREST_CERTIFICATE.get(),1);
                     DataManager.boss1LootGot.put(player, true);
                 }
                 return;//NOTE：颁奖后面还有对话，不能setConversingPlayer为Null
@@ -596,11 +611,10 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
 
     @Override
     protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
-        if(TCRConfig.NO_PLOT_MODE.get()){
+        if(SaveUtil.isNoPlotMode()){
             getEntityData().set(STATE, 1);
-            getEntityData().set(IS_FIGHTING, true);
         }
-        return InteractionResult.FAIL;
+        return super.mobInteract(player, hand);
     }
 
     /**
@@ -695,8 +709,10 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                 }
             }
             yggdrasil.flowerTimer = 76;
+            yggdrasil.flowerType = !yggdrasil.flowerType;//交替释放十字花或直线花
             yggdrasil.turningLock(76);
             yggdrasil.movementLock(76);
+            yggdrasil.level().playSound(null, yggdrasil.getOnPos(), TCRSounds.YGGDRASIL_ATTACK_TWO.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
             this.shootInterval = shootIntervalMax;
         }
 

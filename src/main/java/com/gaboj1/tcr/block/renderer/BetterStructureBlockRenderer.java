@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.entity.StructureBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.StructureMode;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 
@@ -153,8 +154,8 @@ public class BetterStructureBlockRenderer extends StructureBlockRenderer {
         }
     }
 
-    public boolean shouldRenderOffScreen(BetterStructureBlockEntity pBlockEntity) {
+    @Override
+    public boolean shouldRenderOffScreen(@NotNull StructureBlockEntity entity) {
         return true;
     }
-
 }

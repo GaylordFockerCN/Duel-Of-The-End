@@ -1,0 +1,13 @@
+{
+  "structures": [
+    {
+      "structure": "the_casket_of_reveries:village2_1",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "the_casket_of_reveries:specific_location",
+    "structure": 4,
+    "hasGenerated": false
+  }
+}

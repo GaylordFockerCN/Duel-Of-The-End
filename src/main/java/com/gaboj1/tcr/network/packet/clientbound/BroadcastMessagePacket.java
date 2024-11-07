@@ -1,10 +1,13 @@
 package com.gaboj1.tcr.network.packet.clientbound;
 
 import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.network.packet.BasePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,8 +27,10 @@ public record BroadcastMessagePacket(Component message, boolean actionBar) imple
 
     @Override
     public void execute(@Nullable Player playerEntity) {
-        if(Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && TCRConfig.BROADCAST_DIALOG.get()){
-            Minecraft.getInstance().player.displayClientMessage(message, false);
+        Player player = Minecraft.getInstance().player;
+        if(player != null && Minecraft.getInstance().level != null && TCRConfig.BROADCAST_DIALOG.get()){
+            player.displayClientMessage(message, false);
+            player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.BLOCKS, 1, 1);
         }
     }
 }

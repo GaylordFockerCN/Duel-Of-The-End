@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.util;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.LevelableEntity;
@@ -39,6 +40,16 @@ public class SaveUtil {
     }
 
     private static int worldLevel = 0;
+    private static boolean noPlotMode = false;
+
+    public static void setNoPlotMode() {
+        noPlotMode = true;
+    }
+
+    public static boolean isNoPlotMode() {
+        return noPlotMode;
+    }
+
     public static int getWorldLevel(){
         return worldLevel;
     }
@@ -59,6 +70,9 @@ public class SaveUtil {
 
         @Override
         public boolean add(Dialog dialog) {
+            if(noPlotMode){
+                return false;
+            }
             if (super.add(dialog)) {
                 PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()));
                 return true;
@@ -250,6 +264,8 @@ public class SaveUtil {
             }
             if(this.choice == 0){
                 this.choice = choice;
+            } else {
+                return;//防止重复提升
             }
             if(firstChoiceBiome == 0){
                 firstChoiceBiome = biome;
@@ -320,10 +336,11 @@ public class SaveUtil {
         }
 
         /**
+         * 无剧情可以直接打了以增加boss战利品
          * 没接树魔任务不能打长老，打过boss且选择不处决则视为选择接了刺杀长老任务
          */
         public boolean canAttackElder(){
-            return choice != 2 && bossTaskReceived();
+            return noPlotMode || (choice != 2 && bossTaskReceived());
         }
 
         public boolean bossTaskReceived(){
@@ -502,6 +519,7 @@ public class SaveUtil {
     public static CompoundTag toNbt(){
         CompoundTag serverData = new CompoundTag();
         serverData.putInt("worldLevel", worldLevel);
+        serverData.putBoolean("noPlotMode", noPlotMode);
         serverData.putInt("dialogLength", DIALOG_LIST.size());
         serverData.put("dialogList", getDialogListNbt());
         serverData.putInt("taskLength", TASK_SET.size());
@@ -522,6 +540,7 @@ public class SaveUtil {
         TheCasketOfReveriesMod.LOGGER.info("reading from: \n" + serverData);
         alreadyInit = true;
         worldLevel = serverData.getInt("worldLevel");
+        noPlotMode = serverData.getBoolean("noPlotMode");
         setDialogListFromNbt(serverData.getCompound("dialogList"), serverData.getInt("dialogLength"));
         setTaskListFromNbt(serverData.getCompound("taskList"), serverData.getInt("taskLength"));
         firstChoiceBiome = serverData.getInt("firstChoiceBiome");

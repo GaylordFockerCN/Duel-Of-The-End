@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.network.packet.serverbound;
 
+import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.capability.TCRCapabilityProvider;
 import com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder;
@@ -77,6 +78,9 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
             destination = BiomeMap.getInstance().getBlockPos(destination);
 
             if(isFromPortalBed){
+                if(TCRConfig.NO_PLOT_MODE.get()){
+                    SaveUtil.setNoPlotMode();
+                }
                 if(playerEntity instanceof ServerPlayer serverPlayer){
                     ServerLevel currentLevel = serverPlayer.serverLevel();
                     ServerLevel portalDimension = Objects.requireNonNull(serverPlayer.getServer()).getLevel(TCRDimension.P_SKY_ISLAND_LEVEL_KEY);

@@ -202,7 +202,7 @@ public class TCRBiomeProvider extends BiomeSource {
 
 
     @Override
-    protected Codec<? extends BiomeSource> codec() {
+    protected @NotNull Codec<? extends BiomeSource> codec() {
         return TCR_CODEC;
     }
 

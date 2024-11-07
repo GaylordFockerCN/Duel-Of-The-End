@@ -23,7 +23,7 @@ public interface MultiPlayerBoostEntity {
             float maxHealthOrdinal = entity.getMaxHealth();
             int playerCount = EntityUtil.getPlayerCount(serverLevel);
             for(int i = 1; i <= TCRConfig.BOSS_HEALTH_AND_LOOT_MULTIPLE_MAX.get(); i++){
-                AttributeModifier modifier = new AttributeModifier(UUID.fromString("d2d110cc-f22f-11ed-a05b-1212bb11451"+i), "health_modify_in_multi_player", i, AttributeModifier.Operation.MULTIPLY_TOTAL);
+                AttributeModifier modifier = new AttributeModifier(UUID.fromString("d2d110cc-f22f-11ed-a05b-1212bb11451"+i), "health_modify_in_multi_player", i - 1, AttributeModifier.Operation.MULTIPLY_TOTAL);
                 AttributeInstance instance = entity.getAttribute(Attributes.MAX_HEALTH);
                 if(instance != null){
                     if(i == playerCount){

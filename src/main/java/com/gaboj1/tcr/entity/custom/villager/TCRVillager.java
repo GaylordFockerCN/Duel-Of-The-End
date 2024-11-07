@@ -324,7 +324,7 @@ public abstract class TCRVillager extends Villager implements GeoEntity, ManySki
 
     @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player pPlayer, @NotNull InteractionHand pHand) {
-        if(TCRConfig.NO_PLOT_MODE.get()){
+        if(SaveUtil.isNoPlotMode()){
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
         if ( this.isAlive() && !this.isTrading() && !this.isSleeping() && !pPlayer.isSecondaryUseActive()) {

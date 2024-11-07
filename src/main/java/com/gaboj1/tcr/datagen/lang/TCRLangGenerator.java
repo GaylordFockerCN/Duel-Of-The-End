@@ -69,7 +69,7 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addInfo("task_finish0", "任务 【");
         this.addInfo("task_finish1", "】 已完成！");
         this.addInfo("level_up", "世界等级已提升至：§4【§r %s §4】§r！");
-        this.addInfo("current_level", "当前世界等级：§4【 %s 】§r");
+        this.addInfo("current_level", "当前世界等级：§4【§r %s §4】§r");
 
         this.add("the_casket_of_reveries.button.boss1","泰兰妮尔之心");
         this.add("the_casket_of_reveries.button.boss2","九霄");
@@ -202,6 +202,10 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addItemUsageInfo(TCRItems.ORICHALCUM_CHESTPLATE.get(),"神金套装，拥有非常高的韧性和击退抗性，但是护甲值较低。");
         this.addItemUsageInfo(TCRItems.ORICHALCUM_LEGGINGS.get(),"神金套装，拥有非常高的韧性和击退抗性，但是护甲值较低。");
         this.addItemUsageInfo(TCRItems.ORICHALCUM_BOOTS.get(),"神金套装，拥有非常高的韧性和击退抗性，但是护甲值较低。");
+        this.add(TCRItems.GOD_ORICHALCUM_HELMET.get(),"真·神金头盔");
+        this.add(TCRItems.GOD_ORICHALCUM_CHESTPLATE.get(),"真·神金胸甲");
+        this.add(TCRItems.GOD_ORICHALCUM_LEGGINGS.get(),"真·神金护腿");
+        this.add(TCRItems.GOD_ORICHALCUM_BOOTS.get(),"真·神金靴子");
         this.add(TCRItems.ORICHALCUM_SWORD.get(),"神金剑");
         this.add(TCRItems.ORICHALCUM_GREAT_SWORD.get(),"神金巨剑");
         this.add(TCRItems.ORICHALCUM_AXE.get(),"神金斧");

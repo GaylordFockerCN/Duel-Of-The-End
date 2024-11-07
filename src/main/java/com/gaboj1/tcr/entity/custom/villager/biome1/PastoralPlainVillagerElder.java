@@ -1,8 +1,6 @@
 package com.gaboj1.tcr.entity.custom.villager.biome1;
 
-import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.entity.NpcDialogue;
-import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.item.TCRItems;
@@ -28,10 +26,8 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
@@ -50,7 +46,6 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
     public PastoralPlainVillagerElder(EntityType<? extends PastoralPlainVillagerElder> pEntityType, Level pLevel) {
         super(pEntityType, pLevel, -114514);
-//        this.setItemInHand(InteractionHand.MAIN_HAND,TCRModItems.ELDER_STAFF.get().getDefaultInstance());
     }
 
     @Override
@@ -107,12 +102,11 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         if (hand == InteractionHand.MAIN_HAND) {
             if (player instanceof ServerPlayer serverPlayer) {
                 //无剧情模式
-                if(TCRConfig.NO_PLOT_MODE.get()){
-                    if(!DataManager.elderLoot1Got.get(player)){
-                        ItemUtil.addItem(player,TCRItems.ELDER_CAKE.get(),1);
-                        ItemUtil.addItem(player,TCRItems.PURIFICATION_TALISMAN.get(),1);
-                        ItemUtil.addItem(player,Items.DIAMOND.getDefaultInstance().getItem(),1);
-                        DataManager.elderLoot1Got.put(player,true);
+                if(SaveUtil.isNoPlotMode()){
+                    if(SaveUtil.biome1.isBossDie && !DataManager.elderLoot2Got.get(player)){
+                        ItemUtil.addItem(player,TCRItems.DENSE_FOREST_CERTIFICATE.get(),1);
+                        ItemUtil.addItem(player,TCRItems.GOD_INGOT.get(),4);
+                        DataManager.elderLoot2Got.put(player, true);
                     }
                     return InteractionResult.SUCCESS;
                 }
@@ -198,13 +192,8 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                 this.chat(BUILDER.buildDialogueAnswer(entityType,10));//再会，勇者！
                 SaveUtil.biome1.finish(SaveUtil.BiomeProgressData.VILLAGER, ((ServerLevel) level()));
                 if(!DataManager.elderLoot2Got.get(player)){
-                    int i = 2;
-                    while(i-->0){
-                        ItemStack ammo = TCRItems.AMMO.get().getDefaultInstance();
-                        ItemUtil.addItem(player,ammo.getItem(),64);
-                    }
-                    ItemUtil.addItem(player,TCRItems.GUN_PLUS.get(),1);
                     ItemUtil.addItem(player,TCRItems.DENSE_FOREST_CERTIFICATE.get(),1);
+                    ItemUtil.addItem(player,TCRItems.GOD_INGOT.get(),6);
                     DataManager.elderLoot2Got.put(player, true);
                 }
                 break;
@@ -235,9 +224,9 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         if(!SaveUtil.biome1.canAttackElder()){
             return false;
         }
-        if(source.getEntity() instanceof ServerPlayer serverPlayer){
+        if(source.getEntity() instanceof ServerPlayer serverPlayer && !SaveUtil.isNoPlotMode()){
             bossInfo.addPlayer(serverPlayer);//亮血条！
-            talk(serverPlayer, Component.translatable(entityType.getDescriptionId()+".fuck_chat"+(r.nextInt(whatCanISay))));//长老被打也是会生气滴！
+            talk(serverPlayer, Component.translatable(entityType.getDescriptionId() + ".fuck_chat" + r.nextInt(whatCanISay)));
         }
         return super.hurt(source, v);
     }
@@ -247,7 +236,6 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
      */
     @Override
     public void die(DamageSource source) {
-        //TODO say遗言
         SaveUtil.biome1.isElderDie = true;
         SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_KILL_ELDER);
         SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.TASK_BACK_TO_BOSS);

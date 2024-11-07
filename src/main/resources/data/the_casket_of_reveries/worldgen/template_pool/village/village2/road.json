@@ -1,0 +1,13 @@
+{
+	"name": "the_casket_of_reveries:village/village2/road",
+	"fallback": "minecraft:empty",
+	"elements": [{
+		"weight": 1,
+		"element": {
+			"location": "the_casket_of_reveries:village/village2/road/road1",
+			"processors": "minecraft:empty",
+			"projection": "rigid",
+			"element_type": "minecraft:single_pool_element"
+		}
+	}]
+}

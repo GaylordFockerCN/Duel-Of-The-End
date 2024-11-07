@@ -291,22 +291,20 @@ public class BasicSpriteCrossbow extends CrossbowItem {
         return f;
     }
 
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
         List<ItemStack> list = getChargedProjectiles(stack);
         if (isCharged(stack) && !list.isEmpty()) {
-            ItemStack itemstack = (ItemStack)list.get(0);
+            ItemStack itemstack = list.get(0);
             tooltip.add(Component.translatable("item.minecraft.crossbow.projectile").append(CommonComponents.SPACE).append(itemstack.getDisplayName()));
             if (flag.isAdvanced() && itemstack.is(Items.FIREWORK_ROCKET)) {
                 List<Component> list1 = Lists.newArrayList();
                 Items.FIREWORK_ROCKET.appendHoverText(itemstack, level, list1, flag);
                 if (!list1.isEmpty()) {
-                    for(int i = 0; i < list1.size(); ++i) {
-                        list1.set(i, Component.literal("  ").append((Component)list1.get(i)).withStyle(ChatFormatting.GRAY));
-                    }
-
+                    list1.replaceAll(p130942 -> Component.literal("  ").append(p130942).withStyle(ChatFormatting.GRAY));
                     tooltip.addAll(list1);
                 }
             }
+            tooltip.add(Component.translatable(this.getDescriptionId()+".usage"));
         }
 
     }

@@ -195,7 +195,7 @@ public abstract class TCRBoss extends PathfinderMob implements NpcDialogue, Shad
         if (hand == InteractionHand.MAIN_HAND) {
             if (player instanceof ServerPlayer serverPlayer) {
                 this.lookAt(player, 180.0F, 180.0F);
-                if(TCRConfig.NO_PLOT_MODE.get()){
+                if(SaveUtil.isNoPlotMode()){
                     getEntityData().set(IS_FIGHTING, true);
                 } else if (this.getConversingPlayer() == null) {
                     sendDialoguePacket(serverPlayer);

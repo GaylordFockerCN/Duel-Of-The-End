@@ -35,7 +35,7 @@ public class TCRConfig {
         builder.push("Game Setting");
         MIN_CHUNK_BETWEEN_STRUCTURE = createInt(builder, "min_chunk_between_structure", 3, 0, "小建筑和主建筑的最小区块间距");
         FAST_MOD = createBool(builder, "fast_mod", false, "快速模式，开启后将直接获得可以进入维度的装备");
-        NO_PLOT_MODE = createBool(builder, "no_plot_mode", false, "无剧情模式，设为true后将直接挑战boss而没有主线对话。【未实现！】");//TODO 未实现
+        NO_PLOT_MODE = createBool(builder, "no_plot_mode", false, "！！在此config下启动的存档将无法重新开启主线剧情！！", "无剧情模式：设为true后将简化流程，没有剧情及任务。但仍可获得任务奖励。");
         ENABLE_SCALING = createBool(builder, "enable_scaling", false, "启用后将对图生图的图片进行缩放，强制地图大小。");
         BROADCAST_DIALOG = createBool(builder, "broadcast_dialog", true, "是否全局广播剧情对话");
         BROADCAST_DISTANCE = createDouble(builder, "broadcast_distance", 50, 1, "广播范围");

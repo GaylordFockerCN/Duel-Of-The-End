@@ -25,6 +25,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
@@ -32,9 +35,40 @@ import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
 
     private final EntityType<?> entityType = TCREntities.PASTORAL_PLAIN_TALKABLE_VILLAGER.get();
+    private final Map<Integer, List<MerchantOffer>> MERCHANT_MAP = new HashMap<>();
 
     public PastoralPlainTalkableVillager(EntityType<? extends PastoralPlainTalkableVillager> entityType, Level level) {
         super(entityType, level,1);
+        MERCHANT_MAP.put(-1, List.of(//商人
+                new MerchantOffer(
+                        new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 32),
+                        new ItemStack(TCRItems.ORICHALCUM.get(), 1),
+                        142857, 0, 0),
+                new MerchantOffer(
+                        new ItemStack(TCRItems.ORICHALCUM.get(), 1),
+                        new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 48),
+                        142857, 0, 1)));
+        MERCHANT_MAP.put(5, List.of(//猎人
+                new MerchantOffer(
+                        new ItemStack(TCRItems.HEART_OF_THE_SAPLING.get(), 10),
+                        new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
+                        142857, 0, 0.02f),
+                new MerchantOffer(
+                        new ItemStack(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get(), 2),
+                        new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
+                        142857, 0, 0.02f),
+                new MerchantOffer(
+                        new ItemStack(TCRItems.BARK_OF_THE_GUARDIAN.get(), 1),
+                        new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
+                        142857, 0, 0.02f),
+                new MerchantOffer(
+                        new ItemStack(TCRItems.STARLIT_DEWDROP.get(), 1),
+                        new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 3),
+                        142857, 0, 0.02f),
+                new MerchantOffer(
+                        new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
+                        new ItemStack(TCRItems.BASIC_RESIN.get(), 5),
+                        142857, 0, 0.02f)));
     }
 
     @Override
@@ -202,6 +236,10 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
 
     }
 
+    public void startCustomTrade(Player player) {
+        super.startCustomTrade(player, MERCHANT_MAP.get(getId()).toArray(new MerchantOffer[0]));
+    }
+
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
 
@@ -213,17 +251,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
             //商人
             case -1:
                 chat(BUILDER.buildDialogueAnswer(entityType,-1,false));
-                startCustomTrade(player,
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 32),
-                                new ItemStack(TCRItems.ORICHALCUM.get(), 1),
-                                142857, 0, 0),
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.ORICHALCUM.get(), 1),
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 48),
-                                142857, 0, 1)
-
-                );
+                startCustomTrade(player);
                 break;
             case 0:
                 //什么都不做
@@ -308,28 +336,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
             //猎人
             case 5:
                 chat(BUILDER.buildDialogueAnswer(entityType,15,false));
-                startCustomTrade(player,
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.HEART_OF_THE_SAPLING.get(), 10),
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
-                                142857, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE.get(), 2),
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
-                                142857, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.BARK_OF_THE_GUARDIAN.get(), 1),
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
-                                142857, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.STARLIT_DEWDROP.get(), 1),
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 3),
-                                142857, 0, 0.02f),
-                        new MerchantOffer(
-                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
-                                new ItemStack(TCRItems.BASIC_RESIN.get(), 5),
-                                142857, 0, 0.02f)
-                );
+                startCustomTrade(player);
                 break;
             case 6:
                 chat(BUILDER.buildDialogueAnswer(entityType,18,false));//哦，那你一定要小心，那些传说听起来让人直做噩梦。

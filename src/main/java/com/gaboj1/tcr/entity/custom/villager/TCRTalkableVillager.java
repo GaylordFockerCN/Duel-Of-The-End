@@ -1,12 +1,11 @@
 package com.gaboj1.tcr.entity.custom.villager;
 
-import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.entity.NpcDialogue;
-import com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
 import com.gaboj1.tcr.util.DataManager;
+import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -20,15 +19,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.Animation;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
 
 /**
  * 可对话且可贸易的村民，贸易无法升级（懒得研究升级系统，直接在要交易时插入自己的货物表，导致ban掉贸易升级机制）
- * @author LZY
+ * @author P1nero
  */
 public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
 
@@ -63,7 +57,7 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
 
     @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
-        if(TCRConfig.NO_PLOT_MODE.get()){
+        if(SaveUtil.isNoPlotMode()){
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
         if(player.isCreative() ){//潜行右键切换村民种类，客户端服务端都需要改变。单单右键则输出当前id
@@ -130,7 +124,7 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
      */
     public void startCustomTrade(Player player, MerchantOffer... merchantOffers){
         this.getOffers().clear();
-        for(MerchantOffer offer:merchantOffers){
+        for(MerchantOffer offer : merchantOffers){
             this.getOffers().add(offer);
         }
 
