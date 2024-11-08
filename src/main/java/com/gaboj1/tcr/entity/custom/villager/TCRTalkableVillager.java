@@ -58,6 +58,7 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
     @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         if(SaveUtil.isNoPlotMode()){
+            startCustomTrade(player);
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
         if(player.isCreative() ){//潜行右键切换村民种类，客户端服务端都需要改变。单单右键则输出当前id
@@ -131,6 +132,8 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
         this.setTradingPlayer(player);
         this.openTradingScreen(player, this.getDisplayName(), this.getVillagerData().getLevel());
     }
+
+    public void startCustomTrade(Player player){}
 
     /**
      * 为了防止交易被中断而强制不让它取消。。
