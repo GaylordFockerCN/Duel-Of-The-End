@@ -3,7 +3,6 @@ package com.gaboj1.tcr.entity.custom.biome2;
 import com.gaboj1.tcr.entity.LevelableEntity;
 import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
-import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;

@@ -1,13 +1,11 @@
 package com.gaboj1.tcr.client.gui.screen.custom;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.worldselection.EditGameRulesScreen;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
@@ -15,8 +13,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -33,7 +29,7 @@ public class GameProgressScreen extends Screen {
 
     public GameProgressScreen() {
         super(Component.literal("Progress"));
-        worldLevel = new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"textures/gui/world_level_"+SaveUtil.getWorldLevel()+".png");
+        worldLevel = new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"textures/gui/world_level_"+ TCRArchiveManager.getWorldLevel()+".png");
 
     }
 

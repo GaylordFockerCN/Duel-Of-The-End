@@ -10,7 +10,7 @@ import com.gaboj1.tcr.item.custom.armor.OrichalcumArmorItem;
 import com.gaboj1.tcr.item.custom.armor.TreeArmorItem;
 import com.gaboj1.tcr.item.custom.armor.TreeRobeItem;
 import com.gaboj1.tcr.item.custom.boss_loot.TreeSpiritWand;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -90,7 +90,7 @@ public class LivingEntityListener {
     public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
         if(event.getLevel() instanceof ServerLevel){
             if(event.getEntity() instanceof LevelableEntity levelableEntity){
-                levelableEntity.levelUp(SaveUtil.getWorldLevel());
+                levelableEntity.levelUp(TCRArchiveManager.getWorldLevel());
             }
             if(event.getEntity() instanceof MultiPlayerBoostEntity multiPlayerBoostEntity){
                 multiPlayerBoostEntity.whenPlayerCountChange();

@@ -5,9 +5,8 @@ import com.gaboj1.tcr.entity.LevelableEntity;
 import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.villager.biome1.branch.Elinor;
-import com.gaboj1.tcr.entity.custom.villager.biome2.branch.MiaoYin;
 import com.gaboj1.tcr.item.TCRItems;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -34,7 +33,6 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -138,7 +136,7 @@ public class UnknownEntity extends Monster implements GeoEntity, LevelableEntity
     @Override
     public void die(@NotNull DamageSource source) {
         if(canPurify()){
-            SaveUtil.biome1.killed = true;
+            TCRArchiveManager.biome1.killed = true;
         }
         super.die(source);
     }
@@ -165,8 +163,8 @@ public class UnknownEntity extends Monster implements GeoEntity, LevelableEntity
                     Elinor elinor = TCREntities.ELINOR.get().spawn(serverLevel, getOnPos(), MobSpawnType.NATURAL);
                     assert elinor != null;
                     serverLevel.addFreshEntity(elinor);
-                    SaveUtil.biome1.heal = true;
-                    SaveUtil.biome1.killed= false;//因为一开始killed默认为true，以防玩家逃跑或怪异常不出现等情况。
+                    TCRArchiveManager.biome1.heal = true;
+                    TCRArchiveManager.biome1.killed= false;//因为一开始killed默认为true，以防玩家逃跑或怪异常不出现等情况。
                 }
                 this.discard();
             }

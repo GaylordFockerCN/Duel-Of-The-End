@@ -4,7 +4,7 @@ import com.gaboj1.tcr.entity.custom.villager.TCRTalkableVillager;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -25,7 +25,7 @@ public abstract class YueShiLineNpc extends TCRTalkableVillager {
             this.getLookControl().setLookAt(player);
             if (player instanceof ServerPlayer serverPlayer) {
                 if (this.getConversingPlayer() == null) {
-                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), SaveUtil.biome2.toNbt()), serverPlayer);
+                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), TCRArchiveManager.biome2.toNbt()), serverPlayer);
                     this.setConversingPlayer(serverPlayer);
                 }
             }

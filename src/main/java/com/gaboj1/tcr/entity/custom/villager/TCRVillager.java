@@ -1,13 +1,12 @@
 package com.gaboj1.tcr.entity.custom.villager;
 
-import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.entity.ManySkinEntity;
 import com.gaboj1.tcr.entity.ai.behavior.TCRVillagerTasks;
 import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.AddVillagerParticlePacket;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Dynamic;
@@ -205,7 +204,7 @@ public abstract class TCRVillager extends Villager implements GeoEntity, ManySki
             return null;
         }
         //是坏人就唉声叹气一下
-        if(SaveUtil.biome1.choice == 1){
+        if(TCRArchiveManager.biome1.choice == 1){
             SoundEvent sound = TCRSounds.FEMALE_SIGH.get();
             int i = random.nextInt(2);
             sound = switch (i) {
@@ -324,7 +323,7 @@ public abstract class TCRVillager extends Villager implements GeoEntity, ManySki
 
     @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player pPlayer, @NotNull InteractionHand pHand) {
-        if(SaveUtil.isNoPlotMode()){
+        if(TCRArchiveManager.isNoPlotMode()){
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
         if ( this.isAlive() && !this.isTrading() && !this.isSleeping() && !pPlayer.isSecondaryUseActive()) {

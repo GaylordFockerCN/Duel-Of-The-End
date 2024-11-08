@@ -3,7 +3,7 @@ package com.gaboj1.tcr.block.entity.spawner;
 import com.gaboj1.tcr.block.TCRBlockEntities;
 import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.villager.biome2.branch.MiaoYin;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -17,7 +17,7 @@ public class MiaoYinSpawnerBlockEntity extends EntitySpawnerBlockEntity<MiaoYin>
 
     @Override
     public MiaoYin spawnMyBoss(ServerLevelAccessor accessor) {
-        if(SaveUtil.biome2.trialTalked2 || SaveUtil.biome2.chooseEnd3()){
+        if(TCRArchiveManager.biome2.trialTalked2 || TCRArchiveManager.biome2.chooseEnd3()){
             return super.spawnMyBoss(accessor);
         }
         return null;

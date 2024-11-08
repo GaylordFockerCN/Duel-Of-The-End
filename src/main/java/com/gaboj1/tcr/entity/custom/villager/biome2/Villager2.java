@@ -2,7 +2,7 @@ package com.gaboj1.tcr.entity.custom.villager.biome2;
 
 import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
@@ -39,7 +39,7 @@ public class Villager2 extends TCRVillager {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void talk(Player player, boolean isFWord){
-        if(SaveUtil.biome2.choice != 1){
+        if(TCRArchiveManager.biome2.choice != 1){
             talk(player, Component.translatable(TCREntities.VILLAGER2.get().getDescriptionId()+".chat"+(r.nextInt(whatCanISay))));
         }else {
             talk(player, Component.translatable(TCREntities.VILLAGER2.get().getDescriptionId()+".fuck_chat"+(r.nextInt(whatCanISay))));
@@ -48,7 +48,7 @@ public class Villager2 extends TCRVillager {
 
     @Override
     public boolean hurt(DamageSource source, float v) {
-        if(source.getEntity() instanceof ServerPlayer player && level().isClientSide && SaveUtil.biome2.choice == 2){
+        if(source.getEntity() instanceof ServerPlayer player && level().isClientSide && TCRArchiveManager.biome2.choice == 2){
             player.displayClientMessage(Component.literal("info.the_casket_of_reveries.alreadyAddWhite"),true);
             return false;
         }
@@ -60,7 +60,7 @@ public class Villager2 extends TCRVillager {
      */
     @Override
     public void die(DamageSource damageSource) {
-        if(damageSource.getEntity() instanceof Player && SaveUtil.biome2.choice != 1) {
+        if(damageSource.getEntity() instanceof Player && TCRArchiveManager.biome2.choice != 1) {
             setHealth(1);
             return;
         }

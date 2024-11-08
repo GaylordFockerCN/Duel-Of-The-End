@@ -10,7 +10,7 @@ import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.ItemUtil;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
@@ -99,22 +99,22 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         if (hand == InteractionHand.MAIN_HAND) {
             if (player instanceof ServerPlayer serverPlayer) {
                 //无剧情模式
-                if(SaveUtil.isNoPlotMode()){
-                    if(SaveUtil.biome1.isBossDie && !DataManager.elderLoot2Got.get(player)){
+                if(TCRArchiveManager.isNoPlotMode()){
+                    if(TCRArchiveManager.biome1.isBossDie && !DataManager.elderLoot2Got.get(player)){
                         ItemUtil.addItem(player,TCRItems.DENSE_FOREST_CERTIFICATE.get(),1);
                         ItemUtil.addItem(player,TCRItems.GOD_INGOT.get(),4);
                         DataManager.elderLoot2Got.put(player, true);
                     }
                     return InteractionResult.SUCCESS;
                 }
-                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_FIND_ELDER1);
-                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_BACK_TO_ELDER);//是Set，没有也不影响
+                TCRArchiveManager.TASK_SET.remove(TCRArchiveManager.Biome1ProgressData.TASK_FIND_ELDER1);
+                TCRArchiveManager.TASK_SET.remove(TCRArchiveManager.Biome1ProgressData.TASK_BACK_TO_ELDER);//是Set，没有也不影响
                 this.lookAt(player, 180.0F, 180.0F);
                 if (this.getConversingPlayer() == null) {
                     CompoundTag serverData = new CompoundTag();
-                    serverData.putBoolean("canAttackElder", SaveUtil.biome1.canAttackElder());
-                    serverData.putBoolean("isElderTalked", SaveUtil.biome1.isElderTalked);
-                    serverData.putBoolean("canGetElderReward", SaveUtil.biome1.canGetElderReward());
+                    serverData.putBoolean("canAttackElder", TCRArchiveManager.biome1.canAttackElder());
+                    serverData.putBoolean("isElderTalked", TCRArchiveManager.biome1.isElderTalked);
+                    serverData.putBoolean("canGetElderReward", TCRArchiveManager.biome1.canGetElderReward());
                     BiomeMap.toNBT(serverData);
                     PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverData), serverPlayer);
                     this.setConversingPlayer(serverPlayer);
@@ -172,15 +172,15 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     chat(111);
                 }
                 this.chat(BUILDER.buildDialogueAnswer(entityType,7));
-                SaveUtil.biome1.isElderTalked = true;
-                SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.TASK_KILL_BOSS);
+                TCRArchiveManager.biome1.isElderTalked = true;
+                TCRArchiveManager.TASK_SET.add(TCRArchiveManager.Biome1ProgressData.TASK_KILL_BOSS);
                 break;
             case 0: //对话中断的代码！
 //                this.chat(Component.translatable("刚刚说到哪儿来着？"));
                 break;
             case 1: //回来领奖
                 this.chat(BUILDER.buildDialogueAnswer(entityType,10));//再会，勇者！
-                SaveUtil.biome1.finish(SaveUtil.BiomeProgressData.VILLAGER, ((ServerLevel) level()));
+                TCRArchiveManager.biome1.finish(TCRArchiveManager.BiomeProgressData.VILLAGER, ((ServerLevel) level()));
                 if(!DataManager.elderLoot2Got.get(player)){
                     ItemUtil.addItem(player,TCRItems.DENSE_FOREST_CERTIFICATE.get(),1);
                     ItemUtil.addItem(player,TCRItems.GOD_INGOT.get(),6);
@@ -211,10 +211,10 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
     @Override
     public boolean hurt(DamageSource source, float v) {
-        if(!SaveUtil.biome1.canAttackElder()){
+        if(!TCRArchiveManager.biome1.canAttackElder()){
             return false;
         }
-        if(source.getEntity() instanceof ServerPlayer serverPlayer && !SaveUtil.isNoPlotMode()){
+        if(source.getEntity() instanceof ServerPlayer serverPlayer && !TCRArchiveManager.isNoPlotMode()){
             bossInfo.addPlayer(serverPlayer);//亮血条！
             talk(serverPlayer, Component.translatable(entityType.getDescriptionId() + ".fuck_chat" + r.nextInt(whatCanISay)));
         }
@@ -226,9 +226,9 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
      */
     @Override
     public void die(DamageSource source) {
-        SaveUtil.biome1.isElderDie = true;
-        SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_KILL_ELDER);
-        SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.TASK_BACK_TO_BOSS);
+        TCRArchiveManager.biome1.isElderDie = true;
+        TCRArchiveManager.TASK_SET.remove(TCRArchiveManager.Biome1ProgressData.TASK_KILL_ELDER);
+        TCRArchiveManager.TASK_SET.add(TCRArchiveManager.Biome1ProgressData.TASK_BACK_TO_BOSS);
         if(source.getEntity() instanceof Player player){
             ItemUtil.addItem(player,BookManager.BIOME1_ELDER_DIARY_3.get().getItem(),1);
         }

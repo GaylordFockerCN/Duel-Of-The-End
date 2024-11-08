@@ -1,6 +1,5 @@
 package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
-import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.TCRBlocks;
 import com.gaboj1.tcr.entity.TCREntities;
@@ -19,7 +18,7 @@ import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.EntityUtil;
 import com.gaboj1.tcr.util.ItemUtil;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -31,7 +30,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.InteractionHand;
@@ -145,7 +143,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
         super.readAdditionalSaveData(tag);
         this.getEntityData().set(STATE, tag.getInt("state"));
         if(tag.getInt("state") != 0){
-            SaveUtil.biome1.isBossTalked = true;//多余的保险措施？
+            TCRArchiveManager.biome1.isBossTalked = true;//多余的保险措施？
         }
     }
 
@@ -207,17 +205,17 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
      */
     @Override
     public void die(@NotNull DamageSource source) {
-        if(getEntityData().get(IS_SHADER) || SaveUtil.isNoPlotMode()){
+        if(getEntityData().get(IS_SHADER) || TCRArchiveManager.isNoPlotMode()){
             //二次挑战或无剧情模式则直接死
             triggerAnim("Death","death");
             superDie(source);
-            SaveUtil.biome1.isBossDie = true;//给无剧情模式判断是否打过boss用
-            if(SaveUtil.isNoPlotMode()){//无剧情也要升个世界等级
+            TCRArchiveManager.biome1.isBossDie = true;//给无剧情模式判断是否打过boss用
+            if(TCRArchiveManager.isNoPlotMode()){//无剧情也要升个世界等级
                 if(level() instanceof ServerLevel serverLevel){
-                    SaveUtil.biome1.finish(SaveUtil.biome1.isElderDie ? SaveUtil.Biome1ProgressData.BOSS : SaveUtil.Biome1ProgressData.VILLAGER, serverLevel);
+                    TCRArchiveManager.biome1.finish(TCRArchiveManager.biome1.isElderDie ? TCRArchiveManager.Biome1ProgressData.BOSS : TCRArchiveManager.Biome1ProgressData.VILLAGER, serverLevel);
                 }
                 if(source.getEntity() instanceof ServerPlayer serverPlayer){
-                    if(SaveUtil.biome1.isElderDie && !DataManager.boss1LootGot.get(serverPlayer)){
+                    if(TCRArchiveManager.biome1.isElderDie && !DataManager.boss1LootGot.get(serverPlayer)){
                         ItemStack wand = TCRItems.TREE_SPIRIT_WAND.get().getDefaultInstance();
                         wand.getOrCreateTag().putBoolean("fromBoss", true);
                         ItemUtil.addItem(serverPlayer, wand.getItem(),1);
@@ -232,7 +230,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
         getEntityData().set(IS_FIGHTING, false);
         setTarget(null);
         if(!level().isClientSide){
-            if(SaveUtil.biome1.isBossDie){
+            if(TCRArchiveManager.biome1.isBossDie){
                 triggerAnim("Death","death");
                 superDie(source);
                 return;
@@ -260,9 +258,9 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
         this.setHealth(0);
         triggerAnim("Death","death");
         superDie(damageSource);
-        SaveUtil.biome1.isBossDie = true;
-        SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_KILL_BOSS);
-        SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.TASK_BACK_TO_ELDER);
+        TCRArchiveManager.biome1.isBossDie = true;
+        TCRArchiveManager.TASK_SET.remove(TCRArchiveManager.Biome1ProgressData.TASK_KILL_BOSS);
+        TCRArchiveManager.TASK_SET.add(TCRArchiveManager.Biome1ProgressData.TASK_BACK_TO_ELDER);
     }
 
 
@@ -279,7 +277,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
         }
 
         //能不能打也得看进度，选了就不能背刺了，还没进战斗也不能打。
-        if(!getEntityData().get(IS_FIGHTING) || !SaveUtil.biome1.canAttackBoss()){
+        if(!getEntityData().get(IS_FIGHTING) || !TCRArchiveManager.biome1.canAttackBoss()){
             return false;
         }
 
@@ -353,7 +351,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                     y = shootTarget.getY(0.3333) - projectile.getY();
                     z = shootTarget.getZ() - this.getZ();
                     double $$5 = Math.sqrt(x * x + z * z) * 0.2;
-                    projectile.setDamage(((float) Objects.requireNonNull(getAttribute(Attributes.ATTACK_DAMAGE)).getValue()) * (SaveUtil.getWorldLevel() + 1) * 0.7F);
+                    projectile.setDamage(((float) Objects.requireNonNull(getAttribute(Attributes.ATTACK_DAMAGE)).getValue()) * (TCRArchiveManager.getWorldLevel() + 1) * 0.7F);
                     projectile.shoot(x, y + $$5, z, 1.5F, 10.0F);
                     level().addFreshEntity(projectile);
                 }
@@ -370,7 +368,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                         y = getViewVector(1.0F).y;
                         z = getViewVector(1.0F).z;
                     }
-                    projectile.setDamage(((float) Objects.requireNonNull(getAttribute(Attributes.ATTACK_DAMAGE)).getValue() * (SaveUtil.getWorldLevel() + 1) * 0.7F));
+                    projectile.setDamage(((float) Objects.requireNonNull(getAttribute(Attributes.ATTACK_DAMAGE)).getValue() * (TCRArchiveManager.getWorldLevel() + 1) * 0.7F));
                     projectile.shoot(x, y, z, 1.5F, 10.0F);
                     level().addFreshEntity(projectile);
                 }
@@ -461,15 +459,15 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
     }
 
     public void sendDialoguePacket(ServerPlayer serverPlayer){
-        if(getEntityData().get(IS_FIGHTING) || SaveUtil.isNoPlotMode()){
+        if(getEntityData().get(IS_FIGHTING) || TCRArchiveManager.isNoPlotMode()){
             return;
         }
         CompoundTag serverData = new CompoundTag();
-        serverData.putBoolean("canGetBossReward", SaveUtil.biome1.canGetBossReward());
-        serverData.putBoolean("isBossTalked", SaveUtil.biome1.isBossTalked);
-        serverData.putBoolean("isBossFought", SaveUtil.biome1.isBossFought);
-        serverData.putBoolean("isBossDie", SaveUtil.biome1.isBossDie);
-        serverData.putBoolean("killElderTaskGet", SaveUtil.biome1.killElderTaskGet());
+        serverData.putBoolean("canGetBossReward", TCRArchiveManager.biome1.canGetBossReward());
+        serverData.putBoolean("isBossTalked", TCRArchiveManager.biome1.isBossTalked);
+        serverData.putBoolean("isBossFought", TCRArchiveManager.biome1.isBossFought);
+        serverData.putBoolean("isBossDie", TCRArchiveManager.biome1.isBossDie);
+        serverData.putBoolean("killElderTaskGet", TCRArchiveManager.biome1.killElderTaskGet());
         BiomeMap.toNBT(serverData);
         PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverData), serverPlayer);
     }
@@ -548,12 +546,12 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
 
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
-        SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_FIND_ELDER1);
-        SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_BACK_TO_BOSS);
+        TCRArchiveManager.TASK_SET.remove(TCRArchiveManager.Biome1ProgressData.TASK_FIND_ELDER1);
+        TCRArchiveManager.TASK_SET.remove(TCRArchiveManager.Biome1ProgressData.TASK_BACK_TO_BOSS);
         switch (interactionID){
             //初次对话结束，就是变成开始打了
             case -1:
-                SaveUtil.biome1.isBossTalked = true;
+                TCRArchiveManager.biome1.isBossTalked = true;
                 getEntityData().set(STATE, 1);
                 getEntityData().set(IS_FIGHTING, true);
                 int total = 0;
@@ -571,23 +569,23 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
             //选择处决
             case 1:
                 chat(BUILDER.buildDialogueAnswer(entityType, 14, false));
-                SaveUtil.biome1.isBossFought = true;//注意要处决或者接任务后再调这个，注意考虑对话中断的情况
+                TCRArchiveManager.biome1.isBossFought = true;//注意要处决或者接任务后再调这个，注意考虑对话中断的情况
                 realDie(player.damageSources().playerAttack(player));
-                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_KILL_BOSS);
-                SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.TASK_BACK_TO_ELDER);
+                TCRArchiveManager.TASK_SET.remove(TCRArchiveManager.Biome1ProgressData.TASK_KILL_BOSS);
+                TCRArchiveManager.TASK_SET.add(TCRArchiveManager.Biome1ProgressData.TASK_BACK_TO_ELDER);
                 break;
             //选择接任务
             case 2:
                 getEntityData().set(IS_FIGHTING, false);
                 setTarget(null);
                 chat(BUILDER.buildDialogueAnswer(entityType, 15, false));
-                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_KILL_BOSS);
-                SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.TASK_KILL_ELDER);
-                SaveUtil.biome1.isBossFought = true;//注意要处决或者接任务后再调这个，注意考虑对话中断的情况
+                TCRArchiveManager.TASK_SET.remove(TCRArchiveManager.Biome1ProgressData.TASK_KILL_BOSS);
+                TCRArchiveManager.TASK_SET.add(TCRArchiveManager.Biome1ProgressData.TASK_KILL_ELDER);
+                TCRArchiveManager.biome1.isBossFought = true;//注意要处决或者接任务后再调这个，注意考虑对话中断的情况
                 break;
             //任务成功
             case 3:
-                SaveUtil.biome1.finish(SaveUtil.BiomeProgressData.BOSS, ((ServerLevel) level()));
+                TCRArchiveManager.biome1.finish(TCRArchiveManager.BiomeProgressData.BOSS, ((ServerLevel) level()));
                 if(!DataManager.boss1LootGot.get(player)){
                     ItemStack wand = TCRItems.TREE_SPIRIT_WAND.get().getDefaultInstance();
                     wand.getOrCreateTag().putBoolean("fromBoss", true);
@@ -608,7 +606,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
 
     @Override
     protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
-        if(SaveUtil.isNoPlotMode()){
+        if(TCRArchiveManager.isNoPlotMode()){
             getEntityData().set(STATE, 1);
         }
         return super.mobInteract(player, hand);
@@ -628,7 +626,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
         public boolean canUse() {
             if (yggdrasil.getTarget() instanceof ServerPlayer player) {
                 this.player = player;
-                return !yggdrasil.isFighting() && yggdrasil.distanceTo(player) < 10 && !SaveUtil.biome1.isBossTalked;
+                return !yggdrasil.isFighting() && yggdrasil.distanceTo(player) < 10 && !TCRArchiveManager.biome1.isBossTalked;
             }
             return false;
         }
@@ -658,7 +656,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
 
         @Override
         public boolean canUse() {
-            return --this.shootInterval <= 0 && yggdrasil.getEntityData().get(IS_FIGHTING) && SaveUtil.biome1.canAttackBoss() && yggdrasil.shootTimer <= 0 && yggdrasil.flowerTimer <= 0;
+            return --this.shootInterval <= 0 && yggdrasil.getEntityData().get(IS_FIGHTING) && TCRArchiveManager.biome1.canAttackBoss() && yggdrasil.shootTimer <= 0 && yggdrasil.flowerTimer <= 0;
         }
 
         @Override
@@ -694,7 +692,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
             if(shootInterval > 0){
                 shootInterval--;
             }
-            return this.shootInterval <= 0 && yggdrasil.getEntityData().get(IS_FIGHTING) && SaveUtil.biome1.canAttackBoss() && yggdrasil.getHealth() < yggdrasil.getMaxHealth() / 2 && yggdrasil.shootTimer <= 0 && yggdrasil.treeClawTimer <= 0;
+            return this.shootInterval <= 0 && yggdrasil.getEntityData().get(IS_FIGHTING) && TCRArchiveManager.biome1.canAttackBoss() && yggdrasil.getHealth() < yggdrasil.getMaxHealth() / 2 && yggdrasil.shootTimer <= 0 && yggdrasil.treeClawTimer <= 0;
         }
 
         @Override
@@ -735,7 +733,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
          */
         @Override
         public boolean canUse() {
-            return --this.summonInterval <= 0 && yggdrasil.getHealth() <= yggdrasil.getMaxHealth() / 2 && yggdrasil.getEntityData().get(IS_FIGHTING) && SaveUtil.biome1.canAttackBoss();
+            return --this.summonInterval <= 0 && yggdrasil.getHealth() <= yggdrasil.getMaxHealth() / 2 && yggdrasil.getEntityData().get(IS_FIGHTING) && TCRArchiveManager.biome1.canAttackBoss();
         }
 
         @Override

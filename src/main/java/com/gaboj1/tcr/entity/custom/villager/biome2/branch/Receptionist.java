@@ -2,7 +2,7 @@ package com.gaboj1.tcr.entity.custom.villager.biome2.branch;
 
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.entity.TCREntities;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -68,7 +68,7 @@ public class Receptionist extends YueShiLineNpc {
      */
     @Override
     public boolean hurt(DamageSource source, float v) {
-        if(SaveUtil.biome2.talkToMaster){
+        if(TCRArchiveManager.biome2.talkToMaster){
             return super.hurt(source, v);
         }
         return false;

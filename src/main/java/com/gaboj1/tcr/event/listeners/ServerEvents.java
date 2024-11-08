@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.event.listeners;
 
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
@@ -31,7 +31,7 @@ public class ServerEvents {
                 String levelName = event.getServer().getWorldData().getLevelName();
                 TCRBiomeProvider.worldName = levelName;
                 TCRBiomeProvider.updateBiomeMap(levelName);
-                SaveUtil.read(levelName);
+                TCRArchiveManager.read(levelName);
             }
         }
     }
@@ -41,8 +41,8 @@ public class ServerEvents {
      */
     @SubscribeEvent
     public static void onServerStop(ServerStoppedEvent event){
-        SaveUtil.save(TCRBiomeProvider.worldName);
-        SaveUtil.clear();
+        TCRArchiveManager.save(TCRBiomeProvider.worldName);
+        TCRArchiveManager.clear();
     }
 
 }

@@ -2,43 +2,29 @@ package com.gaboj1.tcr.entity.custom.villager.biome2;
 
 import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.client.gui.screen.TreeNode;
-import com.gaboj1.tcr.entity.NpcDialogue;
-import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.entity.custom.boss.second_boss.SecondBossEntity;
-import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
 import com.gaboj1.tcr.util.ItemUtil;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import static com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder.BUILDER;
 
@@ -140,7 +126,7 @@ public class FuryTideCangLan extends Master {
             case 5:
                 //事件结束
                 ItemUtil.addItem(player, TCRItems.AZURE_SKY_CERTIFICATE.get(), 1);
-                SaveUtil.biome2.finish(SaveUtil.BiomeProgressData.VILLAGER, (ServerLevel) level());
+                TCRArchiveManager.biome2.finish(TCRArchiveManager.BiomeProgressData.VILLAGER, (ServerLevel) level());
                 setWaiting(false);
                 break;
         }

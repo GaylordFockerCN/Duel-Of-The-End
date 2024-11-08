@@ -8,7 +8,7 @@ import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.biome1.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.biome1.UnknownEntity;
 import com.gaboj1.tcr.util.ItemUtil;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.MobSpawnType;
@@ -41,13 +41,13 @@ public class BlockListener {
                 }
             }
             //第一群系支线
-            if(SaveUtil.biome1.smithTalked && block.defaultBlockState().is(TCRBlocks.BLUE_MUSHROOM.get()) && !SaveUtil.biome1.monsterSummoned){
+            if(TCRArchiveManager.biome1.smithTalked && block.defaultBlockState().is(TCRBlocks.BLUE_MUSHROOM.get()) && !TCRArchiveManager.biome1.monsterSummoned){
                 UnknownEntity unknownEntity = TCREntities.UNKNOWN.get().spawn(serverLevel, event.getPos().above(5), MobSpawnType.NATURAL);
                 assert unknownEntity != null;
                 unknownEntity.setCanPurify(true);
                 serverLevel.addFreshEntity(unknownEntity);
-                SaveUtil.biome1.monsterSummoned = true;
-                SaveUtil.biome1.killed = true;//先视为killed，治愈了再视为false
+                TCRArchiveManager.biome1.monsterSummoned = true;
+                TCRArchiveManager.biome1.killed = true;//先视为killed，治愈了再视为false
                 if(event.getPlayer() != null){
                     ItemUtil.addItem(event.getPlayer(), TCRBlocks.BLUE_MUSHROOM.get().asItem(), 1);
                 }

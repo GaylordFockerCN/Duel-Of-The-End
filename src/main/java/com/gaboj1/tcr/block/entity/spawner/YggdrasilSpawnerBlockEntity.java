@@ -3,7 +3,7 @@ package com.gaboj1.tcr.block.entity.spawner;
 import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.YggdrasilEntity;
 import com.gaboj1.tcr.block.TCRBlockEntities;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -33,7 +33,7 @@ public class YggdrasilSpawnerBlockEntity extends BossSpawnerBlockEntity<Yggdrasi
 	 */
 	@Override
 	public boolean canSpawnShadow() {
-		return SaveUtil.biome1.isFinished();
+		return TCRArchiveManager.biome1.isFinished();
 	}
 
 	@Override

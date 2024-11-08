@@ -2,7 +2,7 @@ package com.gaboj1.tcr.network.packet.serverbound;
 
 import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.network.packet.BasePacket;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -27,7 +27,7 @@ public record AddDialogPacket(Component name, Component content, boolean broadca
 
     @Override
     public void execute(@Nullable Player playerEntity) {
-        SaveUtil.addDialog(name, content);
+        TCRArchiveManager.addDialog(name, content);
         if(playerEntity != null && broadcast && TCRConfig.BROADCAST_DIALOG.get()){
             for(Player player : playerEntity.level().players()){
                 if(player != playerEntity && player.getPosition(1.0f).distanceTo(playerEntity.getPosition(1.0f)) < TCRConfig.BROADCAST_DISTANCE.get()){

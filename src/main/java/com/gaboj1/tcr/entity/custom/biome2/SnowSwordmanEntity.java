@@ -2,7 +2,6 @@ package com.gaboj1.tcr.entity.custom.biome2;
 
 import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
 import com.gaboj1.tcr.entity.custom.TCRAggressiveGeoMob;
-import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;

@@ -81,30 +81,14 @@ repositories {
     flatDir {
         dir 'libs'
     }
-//    maven {
-//        name = "worldeditapi"
-//        url "https://maven.enginehub.org/repo/"
-//    }
 
 }
 
-jarJar.enable()
-//jarJar.fromRuntimeConfiguration()
-tasks.named('jarJar') {
-
-}
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.20.1:4.4.9')
-//    jarJar(group: 'org.spongepowered', name: 'noise', version: '[1.0,3.0)'){
-//        jarJar.pin(it, '2.0.0-SNAPSHOT')
-//    }
     minecraftLibrary ("org.spongepowered:noise:2.0.0-SNAPSHOT")
-
-//    implementation fg.deobf('libs:DistantHorizons:2.1.2-a-1.20.1-forge-fabric')
-//    implementation fg.deobf('com.sk89q.worldedit:worldedit-forge-mc1.20:7.2.15')
-//    implementation fg.deobf('com.sk89q.worldedit:worldedit-core:7.2.0')
 }
 
 mixin {
@@ -141,7 +125,6 @@ tasks.named('jar', Jar).configure {
         ])
     }
 
-    // This is the preferred method to reobfuscate your jar file
     finalizedBy 'reobfJar'
 }
 

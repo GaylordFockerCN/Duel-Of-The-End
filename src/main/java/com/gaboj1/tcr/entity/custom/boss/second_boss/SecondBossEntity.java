@@ -14,7 +14,7 @@ import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
 import com.gaboj1.tcr.util.EntityUtil;
 import com.gaboj1.tcr.util.ItemUtil;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -266,7 +266,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
             //苍澜说遗言 生存才有效
             for(Player player : EntityUtil.getNearByPlayers(this, 32)){
                 DialogueComponentBuilder.displayClientMessages(player, 2000, false, ()->{
-                            SaveUtil.biome2.isElderDie = true;
+                            TCRArchiveManager.biome2.isElderDie = true;
                             if(!hasSend.get()){
                                 if(player instanceof ServerPlayer serverPlayer){
                                     sendDialoguePacket(serverPlayer);
@@ -302,8 +302,8 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
 
     public void sendDialoguePacket(ServerPlayer serverPlayer){
         CompoundTag serverData = new CompoundTag();
-        serverData.putBoolean("isBossTalked",SaveUtil.biome2.isBossTalked);
-        serverData.putBoolean("isElderDie",SaveUtil.biome2.isElderDie);
+        serverData.putBoolean("isBossTalked", TCRArchiveManager.biome2.isBossTalked);
+        serverData.putBoolean("isElderDie", TCRArchiveManager.biome2.isElderDie);
         PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverData), serverPlayer);
     }
 
@@ -397,8 +397,8 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
                         master.startFighting(player);
                     }
                 }
-                SaveUtil.biome2.isBossTalked = true;
-                SaveUtil.biome2.choice = SaveUtil.BiomeProgressData.BOSS;
+                TCRArchiveManager.biome2.isBossTalked = true;
+                TCRArchiveManager.biome2.choice = TCRArchiveManager.BiomeProgressData.BOSS;
                 break;
             case 2:
                 //选择联军阵容
@@ -409,8 +409,8 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
                         master.startFighting(this);
                     }
                 }
-                SaveUtil.biome2.isBossTalked = true;
-                SaveUtil.biome2.choice = SaveUtil.BiomeProgressData.VILLAGER;
+                TCRArchiveManager.biome2.isBossTalked = true;
+                TCRArchiveManager.biome2.choice = TCRArchiveManager.BiomeProgressData.VILLAGER;
                 break;
             case 3:
                 //结束boss对话
@@ -418,7 +418,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
                 level().explode(this, this.damageSources().explosion(this, this), null, getOnPos().getCenter(), 3F, false, Level.ExplosionInteraction.NONE);
                 ItemUtil.addItem(player, TCRItems.AZURE_SKY_CERTIFICATE.get(), 1);
                 this.discard();
-                SaveUtil.biome2.finish(SaveUtil.BiomeProgressData.BOSS, (ServerLevel) level());
+                TCRArchiveManager.biome2.finish(TCRArchiveManager.BiomeProgressData.BOSS, (ServerLevel) level());
                 break;
             case 4:
                 //boss送礼
@@ -436,7 +436,7 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
 
     @Override
     public boolean hurt(@NotNull DamageSource source, float v) {
-        if(SaveUtil.biome2.choice == SaveUtil.BiomeProgressData.BOSS && source.getEntity() instanceof Player){
+        if(TCRArchiveManager.biome2.choice == TCRArchiveManager.BiomeProgressData.BOSS && source.getEntity() instanceof Player){
             return false;
         }
         //防止剑射到自己
@@ -459,11 +459,11 @@ public class SecondBossEntity extends TCRBoss implements GeoEntity {
 
     @Override
     public void die(@NotNull DamageSource source) {
-        if(SaveUtil.biome2.choice == SaveUtil.BiomeProgressData.BOSS){
+        if(TCRArchiveManager.biome2.choice == TCRArchiveManager.BiomeProgressData.BOSS){
             setHealth(1);
             return;
         }
-        SaveUtil.biome2.isBossDie = true;
+        TCRArchiveManager.biome2.isBossDie = true;
         for(int id : mastersId){
             if(level().getEntity(id) instanceof Master master){
                 master.discard();

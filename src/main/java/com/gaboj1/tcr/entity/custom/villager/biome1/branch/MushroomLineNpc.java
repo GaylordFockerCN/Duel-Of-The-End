@@ -5,7 +5,7 @@ import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainStationaryVilla
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -29,7 +29,7 @@ public abstract class MushroomLineNpc extends PastoralPlainStationaryVillager {
             if (player instanceof ServerPlayer serverPlayer) {
                 this.lookAt(player, 180.0F, 180.0F);
                 if (this.getConversingPlayer() == null) {
-                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), SaveUtil.biome1.toNbt()), serverPlayer);
+                    PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), TCRArchiveManager.biome1.toNbt()), serverPlayer);
                     this.setConversingPlayer(serverPlayer);
                 }
             }

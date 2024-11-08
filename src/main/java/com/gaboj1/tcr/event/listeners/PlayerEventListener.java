@@ -14,7 +14,7 @@ import com.gaboj1.tcr.network.packet.SyncSaveUtilPacket;
 import com.gaboj1.tcr.network.packet.clientbound.SyncUuidPacket;
 import com.gaboj1.tcr.network.packet.serverbound.ControlLlamaPacket;
 import com.gaboj1.tcr.util.DataManager;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeTags;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import net.minecraft.ChatFormatting;
@@ -49,16 +49,16 @@ public class PlayerEventListener {
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if(event.getEntity() instanceof ServerPlayer serverPlayer){
             //补录，以防新玩家没有成就
-            if(SaveUtil.biome1.isFinished()){
+            if(TCRArchiveManager.biome1.isFinished()){
                 TCRAdvancementData.getAdvancement("finish_biome_1", serverPlayer);
             }
-            if(SaveUtil.biome2.isFinished()){
+            if(TCRArchiveManager.biome2.isFinished()){
                 TCRAdvancementData.getAdvancement("finish_biome_2", serverPlayer);
             }
-            if(SaveUtil.biome3.isFinished()){
+            if(TCRArchiveManager.biome3.isFinished()){
                 TCRAdvancementData.getAdvancement("finish_biome_3", serverPlayer);
             }
-            if(SaveUtil.biome4.isFinished()){
+            if(TCRArchiveManager.biome4.isFinished()){
                 TCRAdvancementData.getAdvancement("finish_biome_4", serverPlayer);
             }
             //动态调整怪物血量
@@ -70,13 +70,13 @@ public class PlayerEventListener {
                 }
             }
             //同步客户端数据
-            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()), serverPlayer);
+            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(TCRArchiveManager.toNbt()), serverPlayer);
             //防止重进后boss的uuid不同
             TCRBoss.SERVER_BOSSES.forEach(((uuid, integer) -> PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new SyncUuidPacket(uuid, integer), serverPlayer)));
         } else {
             //单机世界的同步数据
-            if(SaveUtil.isAlreadyInit()){
-                PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()));
+            if(TCRArchiveManager.isAlreadyInit()){
+                PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(TCRArchiveManager.toNbt()));
             }
         }
 

@@ -8,7 +8,7 @@ import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -142,7 +142,7 @@ public abstract class Master extends TCRVillager implements NpcDialogue, Levelab
                 return false;
             }
         }
-        if((source.getEntity() instanceof Player && SaveUtil.biome2.choice == SaveUtil.BiomeProgressData.BOSS) || source.getEntity() instanceof SecondBossEntity || getEntityData().get(IS_TRAIL)){
+        if((source.getEntity() instanceof Player && TCRArchiveManager.biome2.choice == TCRArchiveManager.BiomeProgressData.BOSS) || source.getEntity() instanceof SecondBossEntity || getEntityData().get(IS_TRAIL)){
             return super.hurt(source, v);
         }
         return false;
@@ -178,7 +178,7 @@ public abstract class Master extends TCRVillager implements NpcDialogue, Levelab
 
     @Override
     public boolean isAngry() {
-        return SaveUtil.BiomeProgressData.BOSS == SaveUtil.biome2.choice || getEntityData().get(IS_FIGHTING);
+        return TCRArchiveManager.BiomeProgressData.BOSS == TCRArchiveManager.biome2.choice || getEntityData().get(IS_FIGHTING);
     }
 
     @Override
@@ -206,8 +206,8 @@ public abstract class Master extends TCRVillager implements NpcDialogue, Levelab
 
     public void sendDialoguePacket(ServerPlayer serverPlayer){
         CompoundTag serverData = new CompoundTag();
-        serverData.putBoolean("isElderTalked",SaveUtil.biome2.isElderTalked);
-        serverData.putBoolean("isBossDie",SaveUtil.biome2.isBossDie);
+        serverData.putBoolean("isElderTalked", TCRArchiveManager.biome2.isElderTalked);
+        serverData.putBoolean("isBossDie", TCRArchiveManager.biome2.isBossDie);
         PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverData), serverPlayer);
     }
 

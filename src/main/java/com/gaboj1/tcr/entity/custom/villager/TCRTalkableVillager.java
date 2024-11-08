@@ -5,7 +5,7 @@ import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
 import com.gaboj1.tcr.util.DataManager;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -57,7 +57,7 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
 
     @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
-        if(SaveUtil.isNoPlotMode()){
+        if(TCRArchiveManager.isNoPlotMode()){
             startCustomTrade(player);
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }

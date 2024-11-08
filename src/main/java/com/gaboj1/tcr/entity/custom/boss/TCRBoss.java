@@ -1,8 +1,6 @@
 package com.gaboj1.tcr.entity.custom.boss;
 
-import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.client.BossMusicPlayer;
-import com.gaboj1.tcr.client.gui.BossBarHandler;
 import com.gaboj1.tcr.entity.LevelableEntity;
 import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.entity.NpcDialogue;
@@ -10,7 +8,7 @@ import com.gaboj1.tcr.entity.ShadowableEntity;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.SyncUuidPacket;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -55,7 +53,7 @@ public abstract class TCRBoss extends PathfinderMob implements NpcDialogue, Shad
 
     protected TCRBoss(EntityType<? extends PathfinderMob> type, Level level, BossEvent.BossBarColor color) {
         super(type, level);
-        levelUp(SaveUtil.getWorldLevel());
+        levelUp(TCRArchiveManager.getWorldLevel());
         bossInfo = new ServerBossEvent(this.getDisplayName(), color, BossEvent.BossBarOverlay.PROGRESS);
         if(!level.isClientSide){
             PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncUuidPacket(bossInfo.getId(), getId()));
@@ -195,7 +193,7 @@ public abstract class TCRBoss extends PathfinderMob implements NpcDialogue, Shad
         if (hand == InteractionHand.MAIN_HAND) {
             if (player instanceof ServerPlayer serverPlayer) {
                 this.lookAt(player, 180.0F, 180.0F);
-                if(SaveUtil.isNoPlotMode()){
+                if(TCRArchiveManager.isNoPlotMode()){
                     getEntityData().set(IS_FIGHTING, true);
                 } else if (this.getConversingPlayer() == null) {
                     sendDialoguePacket(serverPlayer);

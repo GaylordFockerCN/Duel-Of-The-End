@@ -11,7 +11,7 @@ import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
 import com.gaboj1.tcr.util.BookManager;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.ItemUtil;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -24,7 +24,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -95,7 +94,7 @@ public class MiaoYin extends YueShiLineNpc {
         getNavigation().stop();//盲人行动不便很合理吧
         if(!level().isClientSide){
             //泄密后把乐师换成流浪者
-            if(SaveUtil.biome2.talkToMaster){
+            if(TCRArchiveManager.biome2.talkToMaster){
                 Wanderer wanderer = TCREntities.WANDERER.get().create(level());
                 assert wanderer != null;
                 wanderer.setPos(this.position());
@@ -302,7 +301,7 @@ public class MiaoYin extends YueShiLineNpc {
             case 5:
                 chat(BUILDER.buildDialogueAnswer(entityType, 14));
                 player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, 15), false);//任务提示
-                SaveUtil.biome2.miaoYinTalked1 = true;
+                TCRArchiveManager.biome2.miaoYinTalked1 = true;
                 break;
             case 6:
                 chat(BUILDER.buildDialogueAnswer(entityType, 19));
@@ -312,16 +311,16 @@ public class MiaoYin extends YueShiLineNpc {
                 }
                 break;
             case 7:
-                SaveUtil.biome2.chooseEnd2 = true;
+                TCRArchiveManager.biome2.chooseEnd2 = true;
                 return;
             case 8:
-                SaveUtil.biome2.chooseEnd2 = false;
+                TCRArchiveManager.biome2.chooseEnd2 = false;
                 return;
             case 9:
                 //初段对话，等隔天再来（即下次对话）
                 chat(BUILDER.buildDialogueAnswer(entityType,31, false));
                 player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType,32, true), false);
-                SaveUtil.biome2.miaoYinTalked2 = true;
+                TCRArchiveManager.biome2.miaoYinTalked2 = true;
                 break;
             case 10:
                 //出发
@@ -334,17 +333,17 @@ public class MiaoYin extends YueShiLineNpc {
                 ItemUtil.addItemEntity(player, TCRItems.PI_PA.get(), 1);
 
                 TCRAdvancementData.getAdvancement("kill_shu_fu", ((ServerPlayer) player));
-                SaveUtil.biome2.isBranchEnd = true;
+                TCRArchiveManager.biome2.isBranchEnd = true;
                 break;
             case 111:
                 //给予琵琶，结局3
                     ItemUtil.addItemEntity(player, TCRItems.PI_PA.get(), 1);
                 TCRAdvancementData.getAdvancement("kill_shu_fu2", ((ServerPlayer) player));
-                SaveUtil.biome2.isBranchEnd = true;
+                TCRArchiveManager.biome2.isBranchEnd = true;
                 break;
             case 12:
                 chat(BUILDER.buildDialogueAnswer(entityType,64));
-                SaveUtil.biome2.miaoYinTalked2 = true;
+                TCRArchiveManager.biome2.miaoYinTalked2 = true;
                 discard();
                 ItemEntity item = new ItemEntity(level(), getX(), getY(), getZ(), BookManager.MIAO_YIN_MESSAGE.get());
                 level().addFreshEntity(item);

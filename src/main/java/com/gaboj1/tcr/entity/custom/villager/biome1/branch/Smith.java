@@ -8,7 +8,7 @@ import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.ItemUtil;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -155,8 +155,8 @@ public class Smith extends MushroomLineNpc {
         switch (interactionID){
             //接任务
             case 1:
-                SaveUtil.biome1.smithTalked = true;
-                SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.TASK_BLUE_MUSHROOM);
+                TCRArchiveManager.biome1.smithTalked = true;
+                TCRArchiveManager.TASK_SET.add(TCRArchiveManager.Biome1ProgressData.TASK_BLUE_MUSHROOM);
                 player.displayClientMessage(BUILDER.buildDialogue(this, BUILDER.buildDialogueAnswer(1)), false);
                 break;
             case 2:
@@ -167,16 +167,16 @@ public class Smith extends MushroomLineNpc {
             case 4:
                 ItemUtil.addItem(player,TCRItems.GUN_COMMON.get(),1);
                 DataManager.gunGot.put(player,true);//存入得用玩家
-                SaveUtil.biome1.isBranchFinish = true;
-                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_BLUE_MUSHROOM);
+                TCRArchiveManager.biome1.isBranchFinish = true;
+                TCRArchiveManager.TASK_SET.remove(TCRArchiveManager.Biome1ProgressData.TASK_BLUE_MUSHROOM);
                 break;
             case 5:
                 ItemUtil.addItem(player,TCRItems.GUN_PLUS.get(),1);
                 ItemStack ammo = TCRItems.AMMO.get().getDefaultInstance();
                 ItemUtil.addItem(player,ammo.getItem(),64);
                 DataManager.gunGot.put(player,true);//存入得用玩家
-                SaveUtil.biome1.isBranchFinish = true;
-                SaveUtil.TASK_SET.remove(SaveUtil.Biome1ProgressData.TASK_BLUE_MUSHROOM);
+                TCRArchiveManager.biome1.isBranchFinish = true;
+                TCRArchiveManager.TASK_SET.remove(TCRArchiveManager.Biome1ProgressData.TASK_BLUE_MUSHROOM);
                 break;
         }
         setConversingPlayer(null);

@@ -1,6 +1,5 @@
-package com.gaboj1.tcr.util;
+package com.gaboj1.tcr.archive;
 
-import com.gaboj1.tcr.TCRConfig;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.LevelableEntity;
@@ -16,7 +15,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.util.*;
@@ -24,15 +22,15 @@ import java.util.*;
 /**
  * 保存游戏进度，这玩意儿应该所有人统一，所以用了自己的数据管理。
  */
-public class SaveUtil {
+public class TCRArchiveManager {
 
     private static boolean alreadyInit = false;
 
     /**
-     * 以服务端数据为准，如果已经被服务端同步过了，则不能读取客户端的数据，用于{@link SaveUtil#read(String)}
+     * 以服务端数据为准，如果已经被服务端同步过了，则不能读取客户端的数据，用于{@link TCRArchiveManager#read(String)}
      */
     public static void setAlreadyInit() {
-        SaveUtil.alreadyInit = true;
+        TCRArchiveManager.alreadyInit = true;
     }
 
     public static boolean isAlreadyInit() {
@@ -64,99 +62,15 @@ public class SaveUtil {
         };
     }
 
-    public static final List<Dialog> DIALOG_LIST = new ArrayList<>();
-    public static final HashSet<Dialog> DIALOG_SET = new HashSet<>();//优化用的，但是不知道能优化多少（
-    public static final HashSet<Dialog> TASK_SET = new HashSet<>() {
-
-        @Override
-        public boolean add(Dialog dialog) {
-            if(noPlotMode){
-                return false;
-            }
-            if (super.add(dialog)) {
-                PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()));
-                return true;
-            }
-            return false;
-        }
-
-        /**
-         * 同步数据，并广播任务完成
-         */
-        @Override
-        public boolean remove(Object o) {
-            if (super.remove(o)) {
-                Component message = TheCasketOfReveriesMod.getInfo("task_finish0").append(((Dialog) o).name.copy().withStyle(ChatFormatting.RED)).append(TheCasketOfReveriesMod.getInfo("task_finish1"));
-                PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new BroadcastMessagePacket(message, false));
-                PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()));
-                return true;
-            }
-            return false;
-        }
-    };
+    public static final List<Task> DIALOG_LIST = new ArrayList<>();
+    public static final HashSet<Task> DIALOG_SET = new HashSet<>();//优化用的，但是不知道能优化多少（
+    public static final TaskSet TASK_SET = new TaskSet();
     public static int firstChoiceBiome = 0;//0 means null
 
     public static Biome1ProgressData biome1 = new Biome1ProgressData();
     public static Biome2ProgressData biome2 = new Biome2ProgressData();
     public static Biome3ProgressData biome3 = new Biome3ProgressData();
     public static Biome4ProgressData biome4 = new Biome4ProgressData();
-
-    public static class Dialog {
-        private Component name, content;
-
-        public Component getName() {
-            return name;
-        }
-
-        public Component getContent() {
-            return content;
-        }
-
-        public Dialog(Component name, Component content) {
-            this.name = name;
-            this.content = content;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Dialog dialog = (Dialog) o;
-            return Objects.equals(name.getString(), dialog.name.getString()) && Objects.equals(content.getString(), dialog.content.getString());
-        }
-
-        @Override
-        public int hashCode() {
-            if(name == null || content == null){
-                return 0;
-            }
-            return Objects.hash(name.getString(), content.getString());
-        }
-
-        public Dialog setNameChatFormatting(ChatFormatting... chatFormatting){
-            this.name = this.name.copy().withStyle(chatFormatting);
-            return this;
-        }
-
-        public Dialog setContentChatFormatting(ChatFormatting... chatFormatting){
-            this.content = this.content.copy().withStyle(chatFormatting);
-            return this;
-        }
-
-        @NotNull
-        public CompoundTag toNbt(){
-            CompoundTag dialog = new CompoundTag();
-            dialog.putString("message", Component.Serializer.toJson(name));
-            dialog.putString("content", Component.Serializer.toJson(content));
-            return dialog;
-        }
-
-        public static Dialog fromNbt(CompoundTag dialog){
-            System.out.println(Component.Serializer.fromJson(dialog.getString("message")) + ", " +  Component.Serializer.fromJson(dialog.getString("content")));
-            return new Dialog(Component.Serializer.fromJson(dialog.getString("message")), Component.Serializer.fromJson(dialog.getString("content")));
-        }
-
-    }
 
     /**
      * 把对话添加到列表里
@@ -165,14 +79,14 @@ public class SaveUtil {
         if(name == null || content == null){
             return;
         }
-        Dialog dialog = new Dialog(name, content);
-        if(!DIALOG_SET.contains(dialog)){
-            DIALOG_LIST.add(dialog);
-            DIALOG_SET.add(dialog);
+        Task task = new Task(name, content);
+        if(!DIALOG_SET.contains(task)){
+            DIALOG_LIST.add(task);
+            DIALOG_SET.add(task);
         }
     }
 
-    public static List<Dialog> getDialogList() {
+    public static List<Task> getDialogList() {
         return DIALOG_LIST;
     }
 
@@ -187,15 +101,15 @@ public class SaveUtil {
     public static void setDialogListFromNbt(CompoundTag DialogListTag, int size){
         DIALOG_LIST.clear();
         for(int i = 0; i < size; i++){
-            Dialog dialog = Dialog.fromNbt(DialogListTag.getCompound("dialog"+i));
-            DIALOG_LIST.add(dialog);
-            DIALOG_SET.add(dialog);
+            Task task = Task.fromNbt(DialogListTag.getCompound("dialog"+i));
+            DIALOG_LIST.add(task);
+            DIALOG_SET.add(task);
         }
     }
 
     public static CompoundTag getTaskListNbt(){
         CompoundTag dialogListNbt = new CompoundTag();
-        List<Dialog> tasks = TASK_SET.stream().toList();
+        List<Task> tasks = TASK_SET.stream().toList();
         for(int i = 0; i < tasks.size(); i++){
             dialogListNbt.put("task" + i, tasks.get(i).toNbt());
         }
@@ -205,7 +119,7 @@ public class SaveUtil {
     public static void setTaskListFromNbt(CompoundTag taskListTag, int size){
         TASK_SET.clear();
         for(int i = 0; i < size; i++){
-            TASK_SET.add(Dialog.fromNbt(taskListTag.getCompound("task"+i)));
+            TASK_SET.add(Task.fromNbt(taskListTag.getCompound("task"+i)), false);
         }
     }
 
@@ -295,7 +209,7 @@ public class SaveUtil {
             //全局广播
             Component message = TheCasketOfReveriesMod.getInfo("level_up", getWorldLevelName());
             PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new BroadcastMessagePacket(message, false));
-            PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(SaveUtil.toNbt()));
+            PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(TCRArchiveManager.toNbt()));
 
         }
 
@@ -305,8 +219,8 @@ public class SaveUtil {
 
     }
 
-    public static Dialog buildTask(String task){
-        return new Dialog(Component.translatable("task." + TheCasketOfReveriesMod.MOD_ID + "." + task), Component.translatable("task_content." + TheCasketOfReveriesMod.MOD_ID + "." + task));
+    public static Task buildTask(String task){
+        return new Task(Component.translatable("task." + TheCasketOfReveriesMod.MOD_ID + "." + task), Component.translatable("task_content." + TheCasketOfReveriesMod.MOD_ID + "." + task));
     }
 
     public static class Biome1ProgressData extends BiomeProgressData {
@@ -315,12 +229,12 @@ public class SaveUtil {
         public boolean killed = false;//是否杀死
         public boolean heal = false;//是否治愈
         public boolean isBranchFinish = false;//是否结局，和铁匠二次对话才是结局
-        public static final Dialog TASK_FIND_ELDER1 = buildTask("find_elder1").setNameChatFormatting(ChatFormatting.RED, ChatFormatting.BOLD);
-        public static final Dialog TASK_KILL_ELDER = buildTask("kill_elder1").setNameChatFormatting(ChatFormatting.RED, ChatFormatting.BOLD);
-        public static final Dialog TASK_KILL_BOSS = buildTask("kill_boss1").setNameChatFormatting(ChatFormatting.RED, ChatFormatting.BOLD);
-        public static final Dialog TASK_BACK_TO_BOSS = buildTask("back_boss1").setNameChatFormatting(ChatFormatting.RED, ChatFormatting.BOLD);//回去领赏
-        public static final Dialog TASK_BACK_TO_ELDER = buildTask("back_elder1").setNameChatFormatting(ChatFormatting.RED, ChatFormatting.BOLD);
-        public static final Dialog TASK_BLUE_MUSHROOM = buildTask("blue_mushroom").setNameChatFormatting(ChatFormatting.AQUA, ChatFormatting.BOLD);
+        public static final Task TASK_FIND_ELDER1 = buildTask("find_elder1").setNameChatFormatting(ChatFormatting.RED, ChatFormatting.BOLD);
+        public static final Task TASK_KILL_ELDER = buildTask("kill_elder1").setNameChatFormatting(ChatFormatting.RED, ChatFormatting.BOLD);
+        public static final Task TASK_KILL_BOSS = buildTask("kill_boss1").setNameChatFormatting(ChatFormatting.RED, ChatFormatting.BOLD);
+        public static final Task TASK_BACK_TO_BOSS = buildTask("back_boss1").setNameChatFormatting(ChatFormatting.RED, ChatFormatting.BOLD);//回去领赏
+        public static final Task TASK_BACK_TO_ELDER = buildTask("back_elder1").setNameChatFormatting(ChatFormatting.RED, ChatFormatting.BOLD);
+        public static final Task TASK_BLUE_MUSHROOM = buildTask("blue_mushroom").setNameChatFormatting(ChatFormatting.AQUA, ChatFormatting.BOLD);
         //支线是否结束
         public boolean isUnKnowMonsterDie(){
             return smithTalked && (killed || heal);

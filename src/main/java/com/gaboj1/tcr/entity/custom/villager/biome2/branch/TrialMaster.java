@@ -11,7 +11,7 @@ import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.ItemUtil;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -55,7 +55,7 @@ public class TrialMaster extends YueShiLineNpc {
     public void tick() {
         super.tick();
         if(!level().isClientSide){
-            if(SaveUtil.biome2.miaoYinTalked2 && SaveUtil.biome2.chooseEnd2){//给妙音万明珠而且选择了结局2
+            if(TCRArchiveManager.biome2.miaoYinTalked2 && TCRArchiveManager.biome2.chooseEnd2){//给妙音万明珠而且选择了结局2
                 //把叔父替换为妙音（妙音独自杀了叔父）TODO
             }
         }
@@ -136,14 +136,14 @@ public class TrialMaster extends YueShiLineNpc {
                 return;
             case 1:
                 //选择告诉试炼主盲女的位置
-                SaveUtil.biome2.talkToMaster = true;
+                TCRArchiveManager.biome2.talkToMaster = true;
                 talk(player, dBuilder.buildDialogueAnswer(14));
                 discard();
                 break;
             case 2:
                 talk(player, dBuilder.buildDialogueAnswer(15));
                 ItemUtil.addItem(player,TCRItems.DREAMSCAPE_COIN_PLUS.get(), 16);
-                SaveUtil.biome2.trialTalked1 = true;
+                TCRArchiveManager.biome2.trialTalked1 = true;
                 break;
             case 3:
                 miaoYin = TCREntities.MIAO_YIN.get().create(level());
@@ -177,10 +177,10 @@ public class TrialMaster extends YueShiLineNpc {
             case 4:
                 DialogueComponentBuilder.displayClientMessages(player, 2000, false,
                         ()->{
-                            SaveUtil.biome2.isBranchEnd = true;
+                            TCRArchiveManager.biome2.isBranchEnd = true;
                             setConversingPlayer(null);
                             player.displayClientMessage(dBuilder.buildDialogueAnswer(27), false);
-                            SaveUtil.biome2.trialTalked2 = true;
+                            TCRArchiveManager.biome2.trialTalked2 = true;
                             if(miaoYin != null){
                                 miaoYin.discard();
                             }
@@ -199,7 +199,7 @@ public class TrialMaster extends YueShiLineNpc {
 
     @Override
     public boolean hurt(DamageSource source, float v) {
-        if(SaveUtil.biome2.talkToMaster || isAngry){
+        if(TCRArchiveManager.biome2.talkToMaster || isAngry){
             return super.realHurt(source, v);
         }
         return false;

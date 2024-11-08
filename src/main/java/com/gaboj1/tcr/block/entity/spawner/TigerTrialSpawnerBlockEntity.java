@@ -4,7 +4,7 @@ import com.gaboj1.tcr.block.TCRBlockEntities;
 import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.biome2.TigerEntity;
 import com.gaboj1.tcr.entity.custom.villager.biome2.branch.TrialMaster;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -90,7 +90,7 @@ public class TigerTrialSpawnerBlockEntity extends EntitySpawnerBlockEntity<Tiger
             if(trialMaster != null){
                 blockEntity.trialing = false;
                 blockEntity.setTrialed(true);
-                SaveUtil.biome2.afterTrial = true;
+                TCRArchiveManager.biome2.afterTrial = true;
                 Player player = level.getNearestPlayer(pos.getX(), pos.getY(), pos.getZ(), 32, false);
                 assert player != null;
                 trialMaster.setPos(pos.getCenter().add(player.position()).scale(0.5));

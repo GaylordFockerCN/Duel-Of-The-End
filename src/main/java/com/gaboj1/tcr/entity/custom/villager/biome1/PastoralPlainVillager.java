@@ -2,15 +2,13 @@ package com.gaboj1.tcr.entity.custom.villager.biome1;
 
 import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.villager.TCRVillager;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * 牧歌原野村民。继承主要是为了更好分配id
@@ -42,10 +40,10 @@ public class PastoralPlainVillager extends TCRVillager {
 
     @Override
     public void talk(Player player, boolean isFWord){
-        if(SaveUtil.isNoPlotMode()){
+        if(TCRArchiveManager.isNoPlotMode()){
             return;
         }
-        if(SaveUtil.biome1.choice != 1){
+        if(TCRArchiveManager.biome1.choice != 1){
             talk(player, Component.translatable(TCREntities.PASTORAL_PLAIN_VILLAGER.get().getDescriptionId() + ".chat" + (r.nextInt(whatCanISay))));
         }else {
             talk(player, Component.translatable(TCREntities.PASTORAL_PLAIN_VILLAGER.get().getDescriptionId() + ".fuck_chat" + (r.nextInt(whatCanISay))));
@@ -54,7 +52,7 @@ public class PastoralPlainVillager extends TCRVillager {
 
     @Override
     public boolean hurt(DamageSource source, float v) {
-        if(source.getEntity() instanceof ServerPlayer player && SaveUtil.biome1.choice == 2){
+        if(source.getEntity() instanceof ServerPlayer player && TCRArchiveManager.biome1.choice == 2){
             player.displayClientMessage(Component.translatable("info.the_casket_of_reveries.alreadyAddWhite"),true);
             return false;
         }
@@ -66,7 +64,7 @@ public class PastoralPlainVillager extends TCRVillager {
      */
     @Override
     public void die(DamageSource damageSource) {
-        if(damageSource.getEntity() instanceof Player && SaveUtil.biome1.choice != 1) {
+        if(damageSource.getEntity() instanceof Player && TCRArchiveManager.biome1.choice != 1) {
             setHealth(1);
             return;
         }

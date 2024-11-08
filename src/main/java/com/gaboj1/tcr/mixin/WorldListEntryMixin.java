@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.mixin;
 
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import net.minecraft.client.gui.screens.worldselection.WorldSelectionList;
 import net.minecraft.world.level.storage.LevelSummary;
@@ -27,7 +27,7 @@ public class WorldListEntryMixin {
     @Inject(method = "doDeleteWorld()V", at = @At("RETURN"))
     private void injectedDoDeleteWorld(CallbackInfo ci){
         TCRBiomeProvider.LOGGER.info("Deleting : " + summary.getLevelId() + ".dat -> "+ (TCRBiomeProvider.deleteCache(summary.getLevelId())?"SUCCESS":"FAILED"));
-        TCRBiomeProvider.LOGGER.info("Deleting : " + summary.getLevelId() + ".nbt -> "+ (SaveUtil.deleteCache(summary.getLevelId())?"SUCCESS":"FAILED"));
+        TCRBiomeProvider.LOGGER.info("Deleting : " + summary.getLevelId() + ".nbt -> "+ (TCRArchiveManager.deleteCache(summary.getLevelId())?"SUCCESS":"FAILED"));
     }
 
     /**
@@ -40,7 +40,7 @@ public class WorldListEntryMixin {
             TCRBiomeProvider.LOGGER.info("Try to update biome map by new worldName");
             TCRBiomeProvider.updateBiomeMap(summary.getLevelId());
             //纯客户端读取
-            SaveUtil.read(summary.getLevelId());
+            TCRArchiveManager.read(summary.getLevelId());
         }
     }
 

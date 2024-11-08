@@ -7,6 +7,7 @@ import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.PersistentBoolDataSyncPacket;
 import com.gaboj1.tcr.network.packet.clientbound.PersistentDoubleDataSyncPacket;
 import com.gaboj1.tcr.network.packet.clientbound.PersistentStringDataSyncPacket;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 用于单一玩家数据，而不是全体数据，SaveUtil用于全体数据{@link SaveUtil}
+ * 用于单一玩家数据，而不是全体数据，SaveUtil用于全体数据{@link TCRArchiveManager}
  *
  * 别骂了，后来才知道可以用Capability，不过我发现这个就相当于是封装过的Capability哈哈
  *

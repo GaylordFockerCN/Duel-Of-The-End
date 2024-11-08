@@ -3,7 +3,7 @@ package com.gaboj1.tcr.block.custom.spawner;
 import com.gaboj1.tcr.block.TCRBlockEntities;
 import com.gaboj1.tcr.block.entity.spawner.TigerTrialSpawnerBlockEntity;
 import com.gaboj1.tcr.entity.custom.biome2.TigerEntity;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -29,7 +29,7 @@ public class TigerTrialSpawnerBlock extends EntitySpawnerBlock {
     public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
         if(!pLevel.isClientSide){
             BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if(SaveUtil.biome2.miaoYinTalked1 && entity instanceof TigerTrialSpawnerBlockEntity blockEntity && !blockEntity.isTrialing() && !blockEntity.isTrialed()){
+            if(TCRArchiveManager.biome2.miaoYinTalked1 && entity instanceof TigerTrialSpawnerBlockEntity blockEntity && !blockEntity.isTrialing() && !blockEntity.isTrialed()){
                 for(int i = 0; i < 5 ; i++){
                     TigerEntity tiger = blockEntity.spawnMyBoss(((ServerLevel) pLevel));
                     pLevel.addFreshEntity(tiger);

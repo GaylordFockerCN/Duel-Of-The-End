@@ -7,7 +7,7 @@ import com.gaboj1.tcr.client.gui.screen.TreeNode;
 import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.ItemUtil;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -147,7 +147,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
     @Override
     public boolean hurt(DamageSource source, float v) {
         if(!level().isClientSide){
-            return SaveUtil.biome1.choice == SaveUtil.BiomeProgressData.BOSS;
+            return TCRArchiveManager.biome1.choice == TCRArchiveManager.BiomeProgressData.BOSS;
         }
         return false;
     }
@@ -241,7 +241,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
 
         }
 
-        if(SaveUtil.biome1.choice == 1){
+        if(TCRArchiveManager.biome1.choice == 1){
             if(Minecraft.getInstance().player != null){
                 talk(Minecraft.getInstance().player, true);
             }

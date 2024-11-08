@@ -2,7 +2,6 @@ package com.gaboj1.tcr.entity.custom.biome2;
 
 import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
 import com.gaboj1.tcr.entity.custom.TCRAggressiveGeoMob;
-import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -19,7 +18,6 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;

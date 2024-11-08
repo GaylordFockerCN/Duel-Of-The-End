@@ -1,10 +1,9 @@
 package com.gaboj1.tcr.item.custom;
 
 import com.gaboj1.tcr.item.TCRRarities;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -30,12 +29,12 @@ public class WanMingPearl extends Item {
 
     @Override
     public @NotNull Rarity getRarity(@NotNull ItemStack p_41461_) {
-        return SaveUtil.biome2.isBranchEnd ? Rarity.COMMON : Rarity.EPIC;
+        return TCRArchiveManager.biome2.isBranchEnd ? Rarity.COMMON : Rarity.EPIC;
     }
 
     @Override
     public @NotNull Component getDescription() {
-        if(SaveUtil.biome2.isBranchEnd){
+        if(TCRArchiveManager.biome2.isBranchEnd){
             return super.getDescription().copy().withStyle(ChatFormatting.DARK_GRAY);
         }
         return super.getDescription();
@@ -44,7 +43,7 @@ public class WanMingPearl extends Item {
     @Override
     public void appendHoverText(@NotNull ItemStack p_41421_, @Nullable Level p_41422_, @NotNull List<Component> components, @NotNull TooltipFlag p_41424_) {
         super.appendHoverText(p_41421_, p_41422_, components, p_41424_);
-        components.add(Component.translatable(this.getDescriptionId()+".usage" + (SaveUtil.biome2.isBranchEnd ? "1" : "")));
+        components.add(Component.translatable(this.getDescriptionId()+".usage" + (TCRArchiveManager.biome2.isBranchEnd ? "1" : "")));
     }
 
 }

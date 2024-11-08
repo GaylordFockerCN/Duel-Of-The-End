@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.network.packet;
 
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -26,12 +26,12 @@ public record SyncSaveUtilPacket(CompoundTag serverData) implements BasePacket {
     public void execute(@Nullable Player playerEntity) {
         //服务端
         if(playerEntity instanceof ServerPlayer){
-            SaveUtil.fromNbt(serverData);
+            TCRArchiveManager.fromNbt(serverData);
             return;
         }
         //客户端
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            SaveUtil.fromNbt(serverData);
+            TCRArchiveManager.fromNbt(serverData);
         }
     }
 }

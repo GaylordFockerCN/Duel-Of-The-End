@@ -4,7 +4,7 @@ import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.item.TCRItems;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -51,7 +51,7 @@ public class Wanderer extends YueShiLineNpc {
         ItemEntity item = new ItemEntity(level(), getX(), getY(), getZ(), TCRItems.PI_PA.get().getDefaultInstance());
         TCRAdvancementData.getAdvancement("no_see", ((ServerPlayer) player));
         level().addFreshEntity(item);
-        SaveUtil.biome2.isBranchEnd = true;
+        TCRArchiveManager.biome2.isBranchEnd = true;
         setConversingPlayer(null);
     }
 

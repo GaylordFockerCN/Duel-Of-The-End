@@ -10,7 +10,7 @@ import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.network.packet.BasePacket;
 import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.util.ItemUtil;
-import com.gaboj1.tcr.util.SaveUtil;
+import com.gaboj1.tcr.archive.TCRArchiveManager;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import com.gaboj1.tcr.worldgen.portal.TCRTeleporter;
@@ -63,7 +63,7 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
             case 6: destination = BiomeMap.getInstance().getCenter2();height = 220;break;
             case 7: destination = BiomeMap.getInstance().getCenter3();height = 230;break;
             case 8: destination = BiomeMap.getInstance().getCenter4();height = 240;break;
-            default:destination = BiomeMap.getInstance().getMainCenter();unlocked = SaveUtil.getWorldLevel() >= 1;height = 200;//完成某一个群系的事件后才解锁主城
+            default:destination = BiomeMap.getInstance().getMainCenter();unlocked = TCRArchiveManager.getWorldLevel() >= 1;height = 200;//完成某一个群系的事件后才解锁主城
         }
         if(id < 9){
             if(!DataManager.isSecondEnter.get(playerEntity)){
@@ -79,7 +79,7 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
 
             if(isFromPortalBed){
                 if(TCRConfig.NO_PLOT_MODE.get()){
-                    SaveUtil.setNoPlotMode();
+                    TCRArchiveManager.setNoPlotMode();
                 }
                 if(playerEntity instanceof ServerPlayer serverPlayer){
                     ServerLevel currentLevel = serverPlayer.serverLevel();
@@ -101,7 +101,7 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
                                     );
                             DataManager.portalPointUnlockData.get(id - 1).put(playerEntity, true);//解锁传送点
                             DataManager.isSecondEnter.put(serverPlayer, true);
-                            SaveUtil.TASK_SET.add(SaveUtil.Biome1ProgressData.TASK_FIND_ELDER1);
+                            TCRArchiveManager.TASK_SET.add(TCRArchiveManager.Biome1ProgressData.TASK_FIND_ELDER1);
                         }
                         //记录进入点
                         serverPlayer.getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {
