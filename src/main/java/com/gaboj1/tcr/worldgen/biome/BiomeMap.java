@@ -5,6 +5,7 @@ import com.gaboj1.tcr.worldgen.noise.NoiseMapGenerator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ReloadableResourceManager;
@@ -190,6 +191,40 @@ public class BiomeMap {
         INSTANCE = new BiomeMap();
         INSTANCE.generator = generator;
         INSTANCE.map = generator.getMap();
+    }
+
+    /**
+     * 把位置信息导入nbt方便客户端读
+     */
+    public static CompoundTag toNBT(CompoundTag tag){
+        if(INSTANCE == null){
+            return tag;
+        }
+        BlockPos biome1Center = INSTANCE.getBlockPos(INSTANCE.getCenter1(), 0);
+        BlockPos biome2Center = INSTANCE.getBlockPos(INSTANCE.getCenter2(), 0);
+        BlockPos biome3Center = INSTANCE.getBlockPos(INSTANCE.getCenter3(), 0);
+        BlockPos biome4Center = INSTANCE.getBlockPos(INSTANCE.getCenter4(), 0);
+        BlockPos biome1Village = INSTANCE.getBlockPos(INSTANCE.getVillage1(), 0);
+        BlockPos biome2Village = INSTANCE.getBlockPos(INSTANCE.getVillage2()[0], 0);
+        BlockPos biome3Village = INSTANCE.getBlockPos(INSTANCE.getVillage3(), 0);
+        BlockPos biome4Village = INSTANCE.getBlockPos(INSTANCE.getVillage4(), 0);
+        String center1 = "(" + biome1Center.getX()+", " + biome1Center.getZ() + ")";
+        String center2 = "(" + biome2Center.getX()+", " + biome2Center.getZ() + ")";
+        String center3 = "(" + biome3Center.getX()+", " + biome3Center.getZ() + ")";
+        String center4 = "(" + biome4Center.getX()+", " + biome4Center.getZ() + ")";
+        String village1 = "(" + biome1Village.getX()+", " + biome1Village.getZ() + ")";
+        String village2 = "(" + biome2Village.getX()+", " + biome2Village.getZ() + ")";
+        String village3 = "(" + biome3Village.getX()+", " + biome3Village.getZ() + ")";
+        String village4 = "(" + biome4Village.getX()+", " + biome4Village.getZ() + ")";
+        tag.putString("center1", center1);
+        tag.putString("center2", center2);
+        tag.putString("center3", center3);
+        tag.putString("center4", center4);
+        tag.putString("village1", village1);
+        tag.putString("village2", village2);
+        tag.putString("village3", village3);
+        tag.putString("village4", village4);
+        return tag;
     }
 
     public static void main(String[] args) {

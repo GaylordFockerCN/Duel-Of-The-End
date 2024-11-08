@@ -7,6 +7,7 @@ import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.TCREntities;
 import com.gaboj1.tcr.entity.custom.biome1.SmallTreeMonsterEntity;
 import com.gaboj1.tcr.entity.custom.biome1.UnknownEntity;
+import com.gaboj1.tcr.util.ItemUtil;
 import com.gaboj1.tcr.util.SaveUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -47,6 +48,9 @@ public class BlockListener {
                 serverLevel.addFreshEntity(unknownEntity);
                 SaveUtil.biome1.monsterSummoned = true;
                 SaveUtil.biome1.killed = true;//先视为killed，治愈了再视为false
+                if(event.getPlayer() != null){
+                    ItemUtil.addItem(event.getPlayer(), TCRBlocks.BLUE_MUSHROOM.get().asItem(), 1);
+                }
             }
         }
     }

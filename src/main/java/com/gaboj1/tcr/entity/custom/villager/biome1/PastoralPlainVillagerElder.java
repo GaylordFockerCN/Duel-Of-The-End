@@ -13,7 +13,6 @@ import com.gaboj1.tcr.util.ItemUtil;
 import com.gaboj1.tcr.util.SaveUtil;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
@@ -97,8 +96,6 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
 
     @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
-        this.setItemInHand(InteractionHand.MAIN_HAND, TCRItems.ELDER_STAFF.get().getDefaultInstance());
-
         if (hand == InteractionHand.MAIN_HAND) {
             if (player instanceof ServerPlayer serverPlayer) {
                 //无剧情模式
@@ -118,6 +115,7 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
                     serverData.putBoolean("canAttackElder", SaveUtil.biome1.canAttackElder());
                     serverData.putBoolean("isElderTalked", SaveUtil.biome1.isElderTalked);
                     serverData.putBoolean("canGetElderReward", SaveUtil.biome1.canGetElderReward());
+                    BiomeMap.toNBT(serverData);
                     PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverData), serverPlayer);
                     this.setConversingPlayer(serverPlayer);
                 }
@@ -136,32 +134,24 @@ public class PastoralPlainVillagerElder extends TCRVillager implements NpcDialog
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
         //击杀完boss1后回来见长老
         if(serverData.getBoolean("canGetElderReward")){
-            BiomeMap biomeMap = BiomeMap.getInstance();
-            BlockPos biome2Center = biomeMap.getBlockPos(biomeMap.getCenter2(),0);
-            BlockPos biome3Center = biomeMap.getBlockPos(biomeMap.getCenter3(),0);
-            String position2 = "("+ biome2Center.getX()+", "+biome2Center.getZ()+")";
-            String position3 = "("+ biome3Center.getX()+", "+biome3Center.getZ()+")";
+            String position2 = serverData.getString("center2");
+            String position3 = serverData.getString("center3");
+            String position4 = serverData.getString("center4");
             builder.start(3)
                     .addChoice(3,4)
                     .addChoice(4,5)
-                    .addChoice(BUILDER.buildDialogueOption(entityType,5), Component.literal("\n").append(Component.translatable(entityType + ".dialog6", position2, position3)))
+                    .addChoice(BUILDER.buildDialogueOption(entityType,5), Component.literal("\n").append(Component.translatable(entityType + ".dialog6", position2, position3, position4)))
                     .addFinalChoice(6,(byte)1);
         //初次与长老对话
         } else if(!serverData.getBoolean("isElderTalked")){
-            BiomeMap biomeMap = BiomeMap.getInstance();
-            BlockPos biome1Center = biomeMap.getBlockPos(biomeMap.getCenter1(),0);
-            String position = "("+biome1Center.getX()+", "+biome1Center.getZ()+")";
             builder.start(0)
-                    .addChoice(1,1)
-                    .addChoice(BUILDER.buildDialogueOption(entityType,0),BUILDER.buildDialogueAnswer(entityType,2,position))
-                    .addFinalChoice(-2,(byte)-1);
+                    .addChoice(1, 1)
+                    .addChoice(BUILDER.buildDialogueOption(entityType,0), BUILDER.buildDialogueAnswer(entityType, 2, serverData.getString("center1")))
+                    .addFinalChoice(-2, (byte)-1);
         //非初次对话
         } else {
-            BiomeMap biomeMap = BiomeMap.getInstance();
-            BlockPos biome1Center = biomeMap.getBlockPos(biomeMap.getCenter1(),0);
-            String position = "("+biome1Center.getX()+", "+biome1Center.getZ()+")";
-            builder.start(BUILDER.buildDialogueAnswer(entityType,2,position))
-                    .addFinalChoice(-2,(byte)114514);
+            builder.start(BUILDER.buildDialogueAnswer(entityType, 2, serverData.getString("center1")))
+                    .addFinalChoice(-2, (byte)114514);
         }
 
         Minecraft.getInstance().setScreen(builder.build());

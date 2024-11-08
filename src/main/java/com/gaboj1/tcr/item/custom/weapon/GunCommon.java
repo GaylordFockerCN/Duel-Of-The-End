@@ -238,7 +238,9 @@ public class GunCommon extends Item implements GeoItem, PoseItem {
             } else if (hand == InteractionHand.MAIN_HAND && player.getOffhandItem().getItem() instanceof GunCommon) {//如果副手有枪就使用副手试试
                 player.getOffhandItem().getItem().use(world, player,InteractionHand.OFF_HAND);
             } else {//都没有就需要换弹了
-                player.displayClientMessage(Component.translatable(TCRItems.GUN_COMMON.get().getDescriptionId()+".reloadbutton", KeyMappings.RELOAD.getKeyName()),true);
+                if(player.level().isClientSide){
+                    player.displayClientMessage(Component.translatable(TCRItems.GUN_COMMON.get().getDescriptionId()+".reloadbutton", KeyMappings.RELOAD.getKeyName()),true);
+                }
             }
         }
         return InteractionResultHolder.pass(player.getItemInHand(hand));

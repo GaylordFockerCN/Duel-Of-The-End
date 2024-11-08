@@ -117,6 +117,7 @@ public class TCRRecipeGenerator extends TCRRecipeProvider implements IConditionB
                 .define('C', TCRItems.FLAME_THAT_GATHERSOULS.get())
                 .unlockedBy(getHasName(TCRItems.FLAME_THAT_GATHERSOULS.get()), has(TCRItems.FLAME_THAT_GATHERSOULS.get()))
                 .save(consumer);
+        //TODO AIR换掉，否则JEI无法识别
         smithing(consumer, TCRItems.GOD_ORICHALCUM.get(), TCRItems.ORICHALCUM_CROSSBOW.get(), Items.AIR, RecipeCategory.COMBAT, TCRItems.GOD_ORICHALCUM_CROSSBOW.get());
         smithing(consumer, TCRItems.GOD_ORICHALCUM.get(), TCRItems.ORICHALCUM_AXE.get(), TCRItems.ORICHALCUM_GREAT_SWORD.get(), RecipeCategory.COMBAT, TCRItems.GOD_SHARP_AXE.get());
         smithing(consumer, TCRItems.TREE_DEMON_BRANCH.get(), TCRItems.TREE_BOOTS.get(), Items.AIR, RecipeCategory.COMBAT, TCRItems.TREE_ROBE_BOOTS.get());

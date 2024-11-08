@@ -26,8 +26,8 @@ public record NPCDialoguePacket(int id, CompoundTag tag) implements BasePacket {
     public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             if (Minecraft.getInstance().level.getEntity(this.id()) instanceof NpcDialogue npc) {
-                npc.openDialogueScreen(this.tag());
                 npc.setConversingPlayer(playerEntity);
+                npc.openDialogueScreen(this.tag());
             }
         }
     }

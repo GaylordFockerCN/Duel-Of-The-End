@@ -470,20 +470,17 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
         serverData.putBoolean("isBossFought", SaveUtil.biome1.isBossFought);
         serverData.putBoolean("isBossDie", SaveUtil.biome1.isBossDie);
         serverData.putBoolean("killElderTaskGet", SaveUtil.biome1.killElderTaskGet());
+        BiomeMap.toNBT(serverData);
         PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), serverData), serverPlayer);
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
     public void openDialogueScreen(CompoundTag serverData) {
-
-        BiomeMap biomeMap = BiomeMap.getInstance();
-        BlockPos biome2Center = biomeMap.getBlockPos(biomeMap.getCenter2(),0);
-        BlockPos biome3Center = biomeMap.getBlockPos(biomeMap.getCenter3(),0);
-        String position2 = "("+ biome2Center.getX()+", "+biome2Center.getZ()+")";
-        String position3 = "("+ biome3Center.getX()+", "+biome3Center.getZ()+")";
-
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
+        String position2 = serverData.getString("village2");
+        String position3 = serverData.getString("village3");
+        String position4 = serverData.getString("village4");
 
         if(getEntityData().get(IS_SHADER)){
             builder.start(BUILDER.buildDialogueAnswer(entityType,0))
@@ -497,7 +494,7 @@ public class YggdrasilEntity extends TCRBoss implements GeoEntity{
                     .thenExecute((byte) 3)//中途返回值进行处理但不结束对话
                     .addChoice(BUILDER.buildDialogueOption(entityType, 8), BUILDER.buildDialogueAnswer(entityType, 11))
                     .addChoice(BUILDER.buildDialogueOption(entityType, 9), BUILDER.buildDialogueAnswer(entityType, 12))
-                    .addChoice(BUILDER.buildDialogueOption(entityType, -1), Component.literal("\n").append(Component.translatable(entityType + ".dialog13", position2, position3)))
+                    .addChoice(BUILDER.buildDialogueOption(entityType, -1), Component.literal("\n").append(Component.translatable(entityType + ".dialog13", position2, position3, position4)))
                     .addFinalChoice(BUILDER.buildDialogueOption(entityType,-1),(byte)4);
         } else if(serverData.getBoolean("killElderTaskGet")){
             //未满足领奖条件但是任务已经领了

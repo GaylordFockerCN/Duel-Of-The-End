@@ -203,6 +203,7 @@ public class SaveUtil {
     }
 
     public static void setTaskListFromNbt(CompoundTag taskListTag, int size){
+        TASK_SET.clear();
         for(int i = 0; i < size; i++){
             TASK_SET.add(Dialog.fromNbt(taskListTag.getCompound("task"+i)));
         }
