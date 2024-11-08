@@ -61,7 +61,7 @@ public class TCRTalkableVillager extends TCRVillager implements NpcDialogue {
             startCustomTrade(player);
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
-        if(player.isCreative() ){//潜行右键切换村民种类，客户端服务端都需要改变。单单右键则输出当前id
+        if(player.isCreative()){//潜行右键切换村民种类，客户端服务端都需要改变。单单右键则输出当前id
             if(player.isShiftKeyDown()){
                 setSkinID(getSkinID()+1);
                 if(getSkinID() >= getMaleTypeCnt()){

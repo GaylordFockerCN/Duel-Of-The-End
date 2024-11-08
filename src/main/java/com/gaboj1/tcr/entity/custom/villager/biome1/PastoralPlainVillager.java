@@ -41,12 +41,14 @@ public class PastoralPlainVillager extends TCRVillager {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public void talk(Player player, boolean isFWord){
+        if(SaveUtil.isNoPlotMode()){
+            return;
+        }
         if(SaveUtil.biome1.choice != 1){
-            talk(player, Component.translatable(TCREntities.PASTORAL_PLAIN_VILLAGER.get().getDescriptionId()+".chat"+(r.nextInt(whatCanISay))));
+            talk(player, Component.translatable(TCREntities.PASTORAL_PLAIN_VILLAGER.get().getDescriptionId() + ".chat" + (r.nextInt(whatCanISay))));
         }else {
-            talk(player, Component.translatable(TCREntities.PASTORAL_PLAIN_VILLAGER.get().getDescriptionId()+".fuck_chat"+(r.nextInt(whatCanISay))));
+            talk(player, Component.translatable(TCREntities.PASTORAL_PLAIN_VILLAGER.get().getDescriptionId() + ".fuck_chat" + (r.nextInt(whatCanISay))));
         }
     }
 

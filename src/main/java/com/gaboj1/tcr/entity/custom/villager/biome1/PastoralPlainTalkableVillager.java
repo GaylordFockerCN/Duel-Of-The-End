@@ -100,7 +100,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                         new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 3),
                         new ItemStack(Items.COOKED_PORKCHOP, 1),
                         142857, 0, 0.02f)));
-        MERCHANT_MAP.put(-1, List.of(//商人
+        MERCHANT_MAP.put(0, List.of(//商人
                 new MerchantOffer(
                         new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 32),
                         new ItemStack(TCRItems.ORICHALCUM.get(), 1),
@@ -109,7 +109,7 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
                         new ItemStack(TCRItems.ORICHALCUM.get(), 1),
                         new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 48),
                         142857, 0, 1)));
-        MERCHANT_MAP.put(5, List.of(//猎人
+        MERCHANT_MAP.put(4, List.of(//猎人
                 new MerchantOffer(
                         new ItemStack(TCRItems.HEART_OF_THE_SAPLING.get(), 10),
                         new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 1),
@@ -257,7 +257,9 @@ public class PastoralPlainTalkableVillager extends TCRTalkableVillager {
     }
 
     public void startCustomTrade(Player player) {
-        super.startCustomTrade(player, MERCHANT_MAP.get(getSkinID()).toArray(new MerchantOffer[0]));
+        if(MERCHANT_MAP.containsKey(getSkinID())){
+            super.startCustomTrade(player, MERCHANT_MAP.get(getSkinID()).toArray(new MerchantOffer[0]));
+        }
     }
 
     @Override
