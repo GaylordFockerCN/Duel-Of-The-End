@@ -1,8 +1,11 @@
 package com.gaboj1.tcr.entity.custom.boss.yggdrasil;
 
+import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.entity.TCREntities;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -14,8 +17,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class MagicProjectile extends LlamaSpit {
     private float damage = 0;
-    public MagicProjectile(EntityType<? extends MagicProjectile> p_37248_, Level p_37249_) {
-        super(p_37248_, p_37249_);
+    public MagicProjectile(EntityType<? extends MagicProjectile> p_37248_, Level level) {
+        super(p_37248_, level);
+        level.playSound(null , getX(), getY(), getZ(), TCRSounds.YGGDRASIL_SHOOT_BALL.get(), SoundSource.BLOCKS,1,1);
     }
 
     public void setDamage(float damage) {

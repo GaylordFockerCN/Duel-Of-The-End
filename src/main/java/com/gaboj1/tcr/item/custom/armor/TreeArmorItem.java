@@ -58,7 +58,7 @@ public final class TreeArmorItem extends ArmorItem implements GeoItem {
                 }));
             } else {
                 if(!livingEntity.hasEffect(MobEffects.REGENERATION)){
-                    livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1));
+                    livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 0));
                 }
             }
         }

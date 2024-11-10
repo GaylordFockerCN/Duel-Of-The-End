@@ -1,10 +1,12 @@
 package com.gaboj1.tcr.entity.custom.villager;
 
+import com.gaboj1.tcr.entity.ai.behavior.TCRVillagerTasks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -27,7 +29,7 @@ public abstract class TCRStationaryVillager extends TCRTalkableVillager {
      */
     @Override
     protected void registerBrainGoals(Brain<Villager> pVillagerBrain) {
-
+        pVillagerBrain.addActivity(Activity.CORE, TCRVillagerTasks.getTCRVillagerCorePackage(this));
     }
 
     @Override

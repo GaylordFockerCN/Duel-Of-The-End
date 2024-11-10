@@ -122,7 +122,6 @@ public class MiaoYin extends YueShiLineNpc {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void openDialogueScreen(CompoundTag senderData) {
-
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this, entityType);
 
         TreeNode sameNode1 = new TreeNode(BUILDER.buildDialogueAnswer(entityType,12),BUILDER.buildDialogueOption(entityType,14))
@@ -305,6 +304,7 @@ public class MiaoYin extends YueShiLineNpc {
                 break;
             case 6:
                 chat(BUILDER.buildDialogueAnswer(entityType, 19));
+                TCRArchiveManager.addTask(TCRArchiveManager.Biome2ProgressData.TASK_FIND_TRAIL);
                 if(!DataManager.isMiaoYinGifted.get(player)){
                     DataManager.isMiaoYinGifted.put(player, true);
                     ItemUtil.addItem(player,TCRItems.GOLDEN_WIND_AND_DEW.get(),1);

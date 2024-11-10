@@ -7,6 +7,7 @@ import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.util.BookManager;
 import com.gaboj1.tcr.util.ItemUtil;
 import com.gaboj1.tcr.archive.TCRArchiveManager;
+import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -92,13 +93,17 @@ public class ShangRen extends YueShiLineNpc {
                         new MerchantOffer(
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 1),
                                 new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 9),
+                                16, 0, 0),
+                        new MerchantOffer(
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN.get(), 9),
+                                new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get(), 1),
                                 16, 0, 0)
                 );
                 break;
             case 2:
                 TCRArchiveManager.biome2.shangRenTalked = true;
                 //正常给
-                chat(BUILDER.buildDialogueAnswer(entityType, 11));
+                chat(BUILDER.buildDialogueAnswer(entityType, 11, "(" + BiomeMap.getInstance().getVillage2()[1].x + ", " + BiomeMap.getInstance().getVillage2()[1].y + ")"));
                 ItemUtil.addItem(player,BookManager.BU_GAO.get().getItem(), 1);
                 player.displayClientMessage(BUILDER.buildDialogueAnswer(entityType, 13), false);
                 break;

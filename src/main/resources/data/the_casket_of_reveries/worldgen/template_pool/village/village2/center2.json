@@ -1,10 +1,10 @@
 {
-	"name": "the_casket_of_reveries:village/village2/center1",
+	"name": "the_casket_of_reveries:village/village2/center2",
 	"fallback": "minecraft:empty",
 	"elements": [{
 		"weight": 1,
 		"element": {
-			"location": "the_casket_of_reveries:village/village2/building/center1test",
+			"location": "the_casket_of_reveries:village/village2/building/center2test",
 			"processors": "minecraft:empty",
 			"projection": "rigid",
 			"element_type": "minecraft:single_pool_element"

@@ -7,6 +7,7 @@ import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.SyncSaveUtilPacket;
 import com.gaboj1.tcr.network.packet.clientbound.BroadcastMessagePacket;
+import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -65,6 +66,13 @@ public class TCRArchiveManager {
     public static final List<Task> DIALOG_LIST = new ArrayList<>();
     public static final HashSet<Task> DIALOG_SET = new HashSet<>();//优化用的，但是不知道能优化多少（
     public static final TaskSet TASK_SET = new TaskSet();
+    public static void addTask(Task task){
+        TASK_SET.add(task);
+    }
+    public static void finishTask(Task task){
+        TASK_SET.remove(task);
+    }
+
     public static int firstChoiceBiome = 0;//0 means null
 
     public static Biome1ProgressData biome1 = new Biome1ProgressData();
@@ -223,6 +231,10 @@ public class TCRArchiveManager {
         return new Task(Component.translatable("task." + TheCasketOfReveriesMod.MOD_ID + "." + task), Component.translatable("task_content." + TheCasketOfReveriesMod.MOD_ID + "." + task));
     }
 
+    public static Task buildTask(String task, Object... objects){
+        return new Task(Component.translatable("task." + TheCasketOfReveriesMod.MOD_ID + "." + task), Component.translatable("task_content." + TheCasketOfReveriesMod.MOD_ID + "." + task, objects));
+    }
+
     public static class Biome1ProgressData extends BiomeProgressData {
         public boolean smithTalked = false;//是否接取任务
         public boolean monsterSummoned = false;//是否已召唤怪
@@ -320,6 +332,7 @@ public class TCRArchiveManager {
         public boolean chooseEnd2;//是否选到了结局2
         public boolean trialTalked2;//是否与试炼主人二次对话
         public boolean isBranchEnd;//支线是否全部完结
+        public static final Task TASK_FIND_TRAIL = buildTask("biome2_find_trail", "(" + BiomeMap.getInstance().getVillage2()[1].x + ", " + BiomeMap.getInstance().getVillage2()[1].y + ")").setNameChatFormatting(ChatFormatting.AQUA, ChatFormatting.BOLD);
 
         public boolean chooseEnd3(){
             return miaoYinTalked2 && !chooseEnd2;

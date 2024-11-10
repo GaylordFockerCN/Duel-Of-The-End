@@ -4,9 +4,9 @@ import com.gaboj1.tcr.client.TCRSounds;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-public class SoundGenerator extends TCRSoundProvider {
+public class TCRSoundGenerator extends TCRSoundProvider {
 
-    public SoundGenerator(PackOutput output, ExistingFileHelper helper) {
+    public TCRSoundGenerator(PackOutput output, ExistingFileHelper helper) {
         super(output, helper);
     }
 
@@ -17,8 +17,10 @@ public class SoundGenerator extends TCRSoundProvider {
         this.generateNewSoundWithSubtitle(TCRSounds.DESERT_EAGLE_RELOAD, "item/desert_eagle/reload", 1);
         this.generateNewSoundWithSubtitle(TCRSounds.TREE_MONSTERS_DEATH, "entity/tree_monsters/tree_monsters_death", 1);
         this.generateNewSoundWithSubtitle(TCRSounds.TREE_MONSTERS_HURT, "entity/tree_monsters/tree_monsters_hurt", 1);
+        this.generateNewSoundWithSubtitle(TCRSounds.JINGLING_DEATH, "entity/tree_monsters/jingling_death", 1);
         this.generateNewSoundWithSubtitle(TCRSounds.YGGDRASIL_AMBIENT_SOUND, "entity/yggdrasil/yggdrasil_sound", 1);
         this.generateNewSoundWithSubtitle(TCRSounds.YGGDRASIL_CRY, "entity/yggdrasil/yggdrasil_cry", 1);
+        this.generateNewSoundWithSubtitle(TCRSounds.YGGDRASIL_SHOOT_BALL, "entity/yggdrasil/ball", 1);
         this.generateNewSoundWithSubtitle(TCRSounds.YGGDRASIL_ATTACK_ONE, "entity/yggdrasil/yggdrasil_attack1", 1);
         this.generateNewSoundWithSubtitle(TCRSounds.YGGDRASIL_ATTACK_TWO, "entity/yggdrasil/yggdrasil_attack2", 1);
         this.generateNewSoundWithSubtitle(TCRSounds.YGGDRASIL_RECOVER_LAUGHTER, "entity/yggdrasil/yggdrasil_recover_laughter", 1);

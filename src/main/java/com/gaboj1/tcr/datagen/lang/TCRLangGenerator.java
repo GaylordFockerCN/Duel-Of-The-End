@@ -34,6 +34,8 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addTask("back_elder1", "回去找海拉长老", "");
         this.addTask("blue_mushroom", "骇人的蓝色蘑菇", "前往密林采集蓝蘑菇并交给工匠史密斯");
 
+        this.addTask("biome2_find_trail", "寻找试炼之所在", "前往 %s 处寻找传说中的万明珠。");
+
         this.add("key.categories.tcr", "远梦之棺按键");
         this.addKeyMapping(KeyMappings.RELOAD, "火枪换弹");
         this.addKeyMapping(KeyMappings.OPEN_PROGRESS, "查看进度");
@@ -987,8 +989,10 @@ public class TCRLangGenerator extends TCRLangProvider {
         this.addSubtitle(TCRSounds.DESERT_EAGLE_RELOAD,"火枪换弹");
         this.addSubtitle(TCRSounds.TREE_MONSTERS_DEATH,"树怪死亡");
         this.addSubtitle(TCRSounds.TREE_MONSTERS_HURT,"树怪受伤");
+        this.addSubtitle(TCRSounds.JINGLING_DEATH,"精灵死亡");
         this.addSubtitle(TCRSounds.YGGDRASIL_AMBIENT_SOUND,"伊格德拉希尔叫声");
         this.addSubtitle(TCRSounds.YGGDRASIL_CRY,"伊格德拉希尔:嚎啕大哭");
+        this.addSubtitle(TCRSounds.YGGDRASIL_SHOOT_BALL,"魔法球发射");
         this.addSubtitle(TCRSounds.YGGDRASIL_ATTACK_ONE,"伊格德拉希尔:发起攻击");
         this.addSubtitle(TCRSounds.YGGDRASIL_ATTACK_TWO,"伊格德拉希尔:发起攻击");
         this.addSubtitle(TCRSounds.YGGDRASIL_RECOVER_LAUGHTER,"伊格德拉希尔:治愈一笑");

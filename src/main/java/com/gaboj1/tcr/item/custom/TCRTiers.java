@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 
 public enum TCRTiers implements Tier {
     ORICHALCUM(0, 250, 12.0F, 0.0F, 15, () -> Ingredient.of(TCRItems.ORICHALCUM.get())),
-    GOD_ORICHALCUM(0, 250, 12.0F, 0.0F, 15, () -> Ingredient.of(TCRItems.ORICHALCUM.get()));
+    GOD_ORICHALCUM(4, 4031, 9.0F, 4.0F, 15, () -> Ingredient.of(TCRItems.GOD_INGOT.get()));
 
     private final int level;
     private final int uses;

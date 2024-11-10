@@ -71,8 +71,8 @@ public class DialogueComponentBuilder {
         return Component.literal(newLine?"\n":"").append(component);//换行符有效
     }
 
-    public MutableComponent buildDialogueAnswer(EntityType<?> entityType, int i) {
-        Component component = Component.translatable(entityType+".dialog"+i);
+    public MutableComponent buildDialogueAnswer(EntityType<?> entityType, int i, Object... objects) {
+        Component component = Component.translatable(entityType+".dialog" + i, objects);
 
         return Component.literal("\n").append(component);//换行符有效
     }

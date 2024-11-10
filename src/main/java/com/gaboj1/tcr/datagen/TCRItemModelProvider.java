@@ -82,6 +82,9 @@ public class TCRItemModelProvider extends ItemModelProvider {
         simpleItem(TCRItems.TREE_DEMON_MASK);
         simpleItem(TCRItems.TREE_DEMON_BRANCH);
         simpleItem(TCRItems.TREE_DEMON_FRUIT);
+        simpleItem(TCRItems.TREE_ROBE_HELMET);
+        simpleItem(TCRItems.TREE_ROBE_CHESTPLATE);
+        simpleItem(TCRItems.TREE_ROBE_BOOTS);
 
         simpleItem(TCRItems.CATNIP);
         simpleItem(TCRItems.BLUE_MUSHROOM);
@@ -90,6 +93,11 @@ public class TCRItemModelProvider extends ItemModelProvider {
         simpleItem(TCRItems.HEART_OF_THE_SAPLING);
         simpleItem(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE);
         simpleItem(TCRItems.BARK_OF_THE_GUARDIAN);
+        simpleItem(TCRItems.TREE_HELMET);
+        simpleItem(TCRItems.TREE_CHESTPLATE);
+        simpleItem(TCRItems.TREE_LEGGINGS);
+        simpleItem(TCRItems.TREE_BOOTS);
+
         simpleItem(TCRItems.STARLIT_DEWDROP);
         simpleItem(TCRItems.SPRITE_STONE);
         simpleItem(TCRItems.DENSE_FOREST_CERTIFICATE);

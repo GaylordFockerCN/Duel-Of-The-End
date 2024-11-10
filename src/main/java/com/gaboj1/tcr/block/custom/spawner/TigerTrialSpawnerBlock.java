@@ -28,6 +28,7 @@ public class TigerTrialSpawnerBlock extends EntitySpawnerBlock {
     @SuppressWarnings("deprecation")
     public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
         if(!pLevel.isClientSide){
+            TCRArchiveManager.finishTask(TCRArchiveManager.Biome2ProgressData.TASK_FIND_TRAIL);
             BlockEntity entity = pLevel.getBlockEntity(pPos);
             if(TCRArchiveManager.biome2.miaoYinTalked1 && entity instanceof TigerTrialSpawnerBlockEntity blockEntity && !blockEntity.isTrialing() && !blockEntity.isTrialed()){
                 for(int i = 0; i < 5 ; i++){

@@ -63,7 +63,7 @@ public class PortalBlock extends BaseEntityBlock{
                         portalBlockEntity.unlock();
                         PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PortalBlockEntitySyncPacket(pos, portalBlockEntity.isActivated(), portalBlockEntity.getId()), serverPlayer);
                         serverPlayer.sendSystemMessage(Component.translatable("info.the_casket_of_reveries.teleport_unlock"));
-                        level.playSound(null , player.getX(),player.getY(),player.getZ(), SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS,1,1);//播放末地传送门开启的音效
+                        level.playSound(null , player.getX(), player.getY(), player.getZ(), SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS,1,1);//播放末地传送门开启的音效
                     }else{
                         CompoundTag data = new CompoundTag();
                         data.putBoolean("isVillage", portalBlockEntity.getId() < 4);

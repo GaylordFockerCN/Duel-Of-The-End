@@ -3,7 +3,7 @@ package com.gaboj1.tcr.datagen;
 import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.datagen.lang.TCRLangGenerator;
 import com.gaboj1.tcr.datagen.loot.TCRLootTableProvider;
-import com.gaboj1.tcr.datagen.sound.SoundGenerator;
+import com.gaboj1.tcr.datagen.sound.TCRSoundGenerator;
 import com.gaboj1.tcr.datagen.tags.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -29,7 +29,7 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), new TCRBlockStateProvider(output, helper));
         generator.addProvider(event.includeClient(), new TCRItemModelProvider(output, helper));
         generator.addProvider(event.includeClient(), new TCRLangGenerator(output));
-        generator.addProvider(event.includeClient(), new SoundGenerator(output, helper));
+        generator.addProvider(event.includeClient(), new TCRSoundGenerator(output, helper));
 
         //Server
         generator.addProvider(event.includeServer(), new TCRRecipeGenerator(output));

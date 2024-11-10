@@ -300,7 +300,7 @@ public class NoiseMapGenerator implements Serializable {
         village1 = calculateVillage(center1);
 
 //        village2 = calculateVillage(center2);
-        int x = center2.x, y = center2.y, r = (int) (aCenterR * 0.5);
+        int x = center2.x, y = center2.y, r = (int) (aCenterR * 0.35);
         village2_0 = new Point(x + r, y);
         village2_1 = new Point((int) (x + 0.5 * r), (int) (y + 0.866 * r));
         village2_2 = new Point((int) (x - 0.5 * r), (int) (y + 0.866 * r));

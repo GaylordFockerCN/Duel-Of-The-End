@@ -1,8 +1,10 @@
 package com.gaboj1.tcr.entity.custom.biome1;
+import com.gaboj1.tcr.client.TCRSounds;
 import com.gaboj1.tcr.entity.LevelableEntity;
 import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.entity.ai.goal.RangeMeleeAttackGoal;
 import com.gaboj1.tcr.entity.custom.boss.yggdrasil.MagicProjectile;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -135,6 +137,11 @@ public class SpriteEntity extends Monster implements GeoEntity, LevelableEntity,
         Vec3 view = this.getViewVector(1.0F);
         projectile.shoot(view.x, view.y, view.z, 5.0F, 10.0F);
         level().addFreshEntity(projectile);
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return TCRSounds.JINGLING_DEATH.get();
     }
 
     public static AttributeSupplier setAttributes() {

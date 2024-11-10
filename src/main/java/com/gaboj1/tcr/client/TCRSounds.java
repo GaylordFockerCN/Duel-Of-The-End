@@ -14,7 +14,9 @@ public final class TCRSounds {
 	public static final RegistryObject<SoundEvent> DESERT_EAGLE_RELOAD = createEvent("item.tcr.desert_eagle_reload");
 	public static final RegistryObject<SoundEvent> TREE_MONSTERS_DEATH = createEvent("entity.tcr.tree_monsters_death");
 	public static final RegistryObject<SoundEvent> TREE_MONSTERS_HURT = createEvent("entity.tcr.tree_monsters_hurt");
+	public static final RegistryObject<SoundEvent> JINGLING_DEATH = createEvent("entity.tcr.jingling_death");
 	public static final RegistryObject<SoundEvent> YGGDRASIL_AMBIENT_SOUND = createEvent("entity.tcr.first_boss_ambient_sound");
+	public static final RegistryObject<SoundEvent> YGGDRASIL_SHOOT_BALL = createEvent("entity.tcr.first_boss_shoot_ball");
 	public static final RegistryObject<SoundEvent> YGGDRASIL_ATTACK_ONE = createEvent("entity.tcr.first_boss_attack1");
 	public static final RegistryObject<SoundEvent> YGGDRASIL_ATTACK_TWO = createEvent("entity.tcr.first_boss_attack2");
 	public static final RegistryObject<SoundEvent> YGGDRASIL_CRY = createEvent("entity.tcr.first_boss_cry");
