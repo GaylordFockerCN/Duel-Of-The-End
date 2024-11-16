@@ -1,9 +1,7 @@
 package com.gaboj1.tcr.client.keymapping;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
-import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.network.PacketRelay;
-import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.DOTEConfig;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraftforge.fml.common.Mod;
@@ -11,8 +9,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.api.distmarker.Dist;
-
-import net.minecraft.client.Minecraft;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = {Dist.CLIENT})
 public class KeyMappings {
@@ -43,7 +39,7 @@ public class KeyMappings {
 //				}
 //			}
 			if(OPEN_PROGRESS.isRelease()){
-				TCRConfig.RENDER_CUSTOM_GUI.set(!TCRConfig.RENDER_CUSTOM_GUI.get());
+				DOTEConfig.RENDER_CUSTOM_GUI.set(!DOTEConfig.RENDER_CUSTOM_GUI.get());
 			}
 		}
 	}

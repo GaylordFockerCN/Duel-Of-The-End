@@ -1,8 +1,8 @@
 package com.gaboj1.tcr.event.listeners;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
-import com.gaboj1.tcr.archive.TCRArchiveManager;
-import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
+import com.gaboj1.tcr.archive.DOTEArchiveManager;
+import com.gaboj1.tcr.worldgen.biome.DOTEBiomeProvider;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,11 +27,11 @@ public class ServerEvents {
     public static void onServerAboutToStart(ServerAboutToStartEvent event){
         //服务端读取，客户端从Mixin读
         if(FMLEnvironment.dist.isDedicatedServer()){
-            if(TCRBiomeProvider.worldName.isEmpty()){
+            if(DOTEBiomeProvider.worldName.isEmpty()){
                 String levelName = event.getServer().getWorldData().getLevelName();
-                TCRBiomeProvider.worldName = levelName;
-                TCRBiomeProvider.updateBiomeMap(levelName);
-                TCRArchiveManager.read(levelName);
+                DOTEBiomeProvider.worldName = levelName;
+                DOTEBiomeProvider.updateBiomeMap(levelName);
+                DOTEArchiveManager.read(levelName);
             }
         }
     }
@@ -41,8 +41,8 @@ public class ServerEvents {
      */
     @SubscribeEvent
     public static void onServerStop(ServerStoppedEvent event){
-        TCRArchiveManager.save(TCRBiomeProvider.worldName);
-        TCRArchiveManager.clear();
+        DOTEArchiveManager.save(DOTEBiomeProvider.worldName);
+        DOTEArchiveManager.clear();
     }
 
 }

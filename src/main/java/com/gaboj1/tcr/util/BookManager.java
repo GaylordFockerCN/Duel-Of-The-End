@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.util;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
-import com.gaboj1.tcr.datagen.lang.TCRLangGenerator;
+import com.gaboj1.tcr.datagen.lang.DOTELangGenerator;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.ListTag;
@@ -24,7 +24,7 @@ public class BookManager {
 
     /**
      * 获取书籍，key和LangGenerator里面的bookKey对应。
-     * {@link TCRLangGenerator#addBookAndContents(String bookKey, String bookTitle, String... pages)}
+     * {@link DOTELangGenerator#addBookAndContents(String bookKey, String bookTitle, String... pages)}
      */
     public static ItemStack getBook(String key, int pageCount){
         ItemStack book = new ItemStack(Items.WRITTEN_BOOK);

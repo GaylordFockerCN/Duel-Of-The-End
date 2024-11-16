@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.client.gui.screen;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
-import com.gaboj1.tcr.datagen.lang.TCRLangProvider;
+import com.gaboj1.tcr.datagen.lang.DOTELangProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -11,8 +11,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.registries.RegistryObject;
 
 /**
- * 用于辅助构造对话，提供生物类型即可获取对应的{@link TCRLangProvider#addDialog(RegistryObject, int, String)}
- * 和 {@link TCRLangProvider#addDialogChoice(RegistryObject, String, String)}
+ * 用于辅助构造对话，提供生物类型即可获取对应的{@link DOTELangProvider#addDialog(RegistryObject, int, String)}
+ * 和 {@link DOTELangProvider#addDialogChoice(RegistryObject, String, String)}
  */
 public class DialogueComponentBuilder {
 

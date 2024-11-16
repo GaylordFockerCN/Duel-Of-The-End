@@ -2,12 +2,11 @@ package com.gaboj1.tcr.entity;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.block.entity.PortalBedEntity;
-import com.gaboj1.tcr.capability.TCRCapabilityProvider;
-import com.gaboj1.tcr.item.TCRItems;
+import com.gaboj1.tcr.capability.DOTECapabilityProvider;
 import com.gaboj1.tcr.network.PacketRelay;
-import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.DOTEPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.SyncFakePlayerPacket;
-import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
+import com.gaboj1.tcr.worldgen.dimension.DOTEDimension;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -60,7 +59,7 @@ public class TCRFakePlayer extends LivingEntity{
     }
 
     public TCRFakePlayer(Player realPlayer, Level level, BlockPos pos) {
-        super(TCREntities.FAKE_PLAYER.get(), level);
+        super(DOTEEntities.FAKE_PLAYER.get(), level);
         setRealPlayer(realPlayer);
         getEntityData().set(BED_POS, pos);
     }
@@ -112,7 +111,7 @@ public class TCRFakePlayer extends LivingEntity{
     public void callBackRealPlayer(){
         Player player = getRealPlayer();
         if(player != null){
-            player.getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent(tcrPlayer -> {
+            player.getCapability(DOTECapabilityProvider.TCR_PLAYER).ifPresent(tcrPlayer -> {
                 BlockPos bedPos = tcrPlayer.getBedPointBeforeEnter();
                 if(player.teleportTo(((ServerLevel) level()), bedPos.getX(), bedPos.getY(), bedPos.getZ(), new HashSet<>(), player.getXRot(), player.getYRot())){
                     this.discard();
@@ -138,9 +137,9 @@ public class TCRFakePlayer extends LivingEntity{
                 getEntityData().set(IS_SLIM, true);
             }
         } else {
-            PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new SyncFakePlayerPacket(player.getId(), this.getId()), ((ServerPlayer) player));
+            PacketRelay.sendToPlayer(DOTEPacketHandler.INSTANCE, new SyncFakePlayerPacket(player.getId(), this.getId()), ((ServerPlayer) player));
         }
-        player.getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {
+        player.getCapability(DOTECapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {
             tcrPlayer.setFakePlayerUuid(this.getUUID());
         }));
     }
@@ -148,7 +147,7 @@ public class TCRFakePlayer extends LivingEntity{
     @Nullable
     public Player getRealPlayer(){
         try {
-            return Objects.requireNonNull(Objects.requireNonNull(level().getServer()).getLevel(TCRDimension.P_SKY_ISLAND_LEVEL_KEY)).getPlayerByUUID(getRealPlayerUuid());
+            return Objects.requireNonNull(Objects.requireNonNull(level().getServer()).getLevel(DOTEDimension.P_SKY_ISLAND_LEVEL_KEY)).getPlayerByUUID(getRealPlayerUuid());
         } catch (Exception e){
             discard();
             DuelOfTheEndMod.LOGGER.error("error when try to get real player", e);

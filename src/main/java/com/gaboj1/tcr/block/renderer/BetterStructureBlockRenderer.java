@@ -1,6 +1,5 @@
 package com.gaboj1.tcr.block.renderer;
 
-import com.gaboj1.tcr.block.entity.BetterStructureBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -32,6 +31,9 @@ public class BetterStructureBlockRenderer extends StructureBlockRenderer {
      */
     @Override
     public boolean shouldRender(@NotNull StructureBlockEntity pBlockEntity, @NotNull Vec3 pCameraPos) {
+        if(Minecraft.getInstance().player != null){
+            return Minecraft.getInstance().player.isCreative();
+        }
         return true;
     }
 

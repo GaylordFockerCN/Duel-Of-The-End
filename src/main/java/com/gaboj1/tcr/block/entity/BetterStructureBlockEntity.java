@@ -1,9 +1,9 @@
 package com.gaboj1.tcr.block.entity;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
-import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.block.TCRBlockEntities;
-import com.gaboj1.tcr.block.TCRBlocks;
+import com.gaboj1.tcr.DOTEConfig;
+import com.gaboj1.tcr.block.DOTEBlockEntities;
+import com.gaboj1.tcr.block.DOTEBlocks;
 import com.google.common.collect.Lists;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.core.BlockPos;
@@ -43,7 +43,7 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
 
     @Override
     public @NotNull BlockEntityType<?> getType() {
-        return TCRBlockEntities.BETTER_STRUCTURE_BLOCK_ENTITY.get();
+        return DOTEBlockEntities.BETTER_STRUCTURE_BLOCK_ENTITY.get();
     }
 
     @Override
@@ -93,7 +93,7 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
 
         for(BlockPos blockpos : BlockPos.withinManhattan(minPos, maxPos.getX()-minPos.getX(), maxPos.getY()-minPos.getY(), maxPos.getZ()-minPos.getZ())) {
             BlockState blockstate = this.level.getBlockState(blockpos);
-            if (blockstate.is(Blocks.STRUCTURE_BLOCK) || blockstate.is(TCRBlocks.BETTER_STRUCTURE_BLOCK.get())) {
+            if (blockstate.is(Blocks.STRUCTURE_BLOCK) || blockstate.is(DOTEBlocks.BETTER_STRUCTURE_BLOCK.get())) {
                 assert this.level != null;
                 BlockEntity entity = this.level.getBlockEntity(blockpos);
                 if (entity instanceof StructureBlockEntity) {
@@ -149,7 +149,7 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
 
         //当加载的时候强制加载一下区块，为了在结构内包含结构方块时以生成结构，省的调用红石。
         //用button是因为StructureBlockEditScreen的sendToServer方法不知道怎么搞成public，比较复杂，不如按钮简单。
-        if(this.level != null && !generated && TCRConfig.ENABLE_BETTER_STRUCTURE_BLOCK_LOAD.get()){
+        if(this.level != null && !generated && DOTEConfig.ENABLE_BETTER_STRUCTURE_BLOCK_LOAD.get()){
             if(this.level.isClientSide){
                 HandleStructureBlockLoad.load(this);
             }else {
@@ -158,6 +158,7 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
                 loadStructure(((ServerLevel) level));
             }
             generated = true;
+            this.level.destroyBlock(getBlockPos(), false);
         }
 
     }

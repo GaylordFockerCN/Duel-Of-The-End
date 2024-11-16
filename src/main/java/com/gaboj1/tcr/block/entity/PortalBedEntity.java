@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.block.entity;
 
-import com.gaboj1.tcr.block.TCRBlockEntities;
+import com.gaboj1.tcr.block.DOTEBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 
 public class PortalBedEntity extends BlockEntity {
     public PortalBedEntity(BlockPos pPos, BlockState pBlockState) {
-        super(TCRBlockEntities.PORTAL_BED.get(),pPos, pBlockState);
+        super(DOTEBlockEntities.PORTAL_BED.get(),pPos, pBlockState);
     }
 
     @Nullable

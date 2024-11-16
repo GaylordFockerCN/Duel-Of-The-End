@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.mixin;
 
-import com.gaboj1.tcr.capability.TCRCapabilityProvider;
-import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
+import com.gaboj1.tcr.capability.DOTECapabilityProvider;
+import com.gaboj1.tcr.worldgen.dimension.DOTEDimension;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -26,8 +26,8 @@ public class ItemMixin{
      */
     @Inject(method = "use", at = @At("HEAD"))
     private void netherStarPortal(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir){
-        if(!level.isClientSide && player.getItemInHand(hand).is(Items.NETHER_STAR) && level.dimension() == TCRDimension.P_SKY_ISLAND_LEVEL_KEY && player.getServer() != null){
-            player.getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {
+        if(!level.isClientSide && player.getItemInHand(hand).is(Items.NETHER_STAR) && level.dimension() == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY && player.getServer() != null){
+            player.getCapability(DOTECapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {
                 ServerLevel overworld = player.getServer().overworld();
                 Vec3 pos = tcrPlayer.getBedPointBeforeEnter().getCenter();
                 player.teleportTo(overworld, pos.x, pos.y, pos.z, new HashSet<>(), player.getXRot(), player.getYRot());

@@ -1,9 +1,9 @@
 package com.gaboj1.tcr.datagen;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
-import com.gaboj1.tcr.datagen.lang.TCRLangGenerator;
-import com.gaboj1.tcr.datagen.loot.TCRLootTableProvider;
-import com.gaboj1.tcr.datagen.sound.TCRSoundGenerator;
+import com.gaboj1.tcr.datagen.lang.DOTELangGenerator;
+import com.gaboj1.tcr.datagen.loot.DOTELootTableProvider;
+import com.gaboj1.tcr.datagen.sound.DOTESoundGenerator;
 import com.gaboj1.tcr.datagen.tags.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -26,25 +26,25 @@ public class DataGenerators {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         //Client
-        generator.addProvider(event.includeClient(), new TCRBlockStateProvider(output, helper));
-        generator.addProvider(event.includeClient(), new TCRItemModelProvider(output, helper));
-        generator.addProvider(event.includeClient(), new TCRLangGenerator(output));
-        generator.addProvider(event.includeClient(), new TCRSoundGenerator(output, helper));
+        generator.addProvider(event.includeClient(), new DOTEBlockStateProvider(output, helper));
+        generator.addProvider(event.includeClient(), new DOTEItemModelProvider(output, helper));
+        generator.addProvider(event.includeClient(), new DOTELangGenerator(output));
+        generator.addProvider(event.includeClient(), new DOTESoundGenerator(output, helper));
 
         //Server
-        generator.addProvider(event.includeServer(), new TCRRecipeGenerator(output));
-        generator.addProvider(event.includeServer(), TCRLootTableProvider.create(output));
-        generator.addProvider(event.includeServer(), new TCRAdvancementData(output, lookupProvider, helper));
-        generator.addProvider(event.includeServer(), new TCREntityTagGenerator(output, lookupProvider, helper));
+        generator.addProvider(event.includeServer(), new DOTERecipeGenerator(output));
+        generator.addProvider(event.includeServer(), DOTELootTableProvider.create(output));
+        generator.addProvider(event.includeServer(), new DOTEAdvancementData(output, lookupProvider, helper));
+        generator.addProvider(event.includeServer(), new DOTEEntityTagGenerator(output, lookupProvider, helper));
 
-        TCRBlockTagGenerator blockTagGenerator = generator.addProvider(event.includeServer(),
-                new TCRBlockTagGenerator(output, lookupProvider, helper));
-        generator.addProvider(event.includeServer(), new TCRItemTagGenerator(output, lookupProvider, blockTagGenerator.contentsGetter(), helper));
-        generator.addProvider(event.includeServer(), new TCRPoiTypeTagsProvider(output, lookupProvider, helper));
+        DOTEBlockTagGenerator blockTagGenerator = generator.addProvider(event.includeServer(),
+                new DOTEBlockTagGenerator(output, lookupProvider, helper));
+        generator.addProvider(event.includeServer(), new DOTEItemTagGenerator(output, lookupProvider, blockTagGenerator.contentsGetter(), helper));
+        generator.addProvider(event.includeServer(), new DOTEPoiTypeTagsProvider(output, lookupProvider, helper));
 
-        DatapackBuiltinEntriesProvider datapackProvider = new TCRWorldGenProvider(output, lookupProvider);
+        DatapackBuiltinEntriesProvider datapackProvider = new DOTEWorldGenProvider(output, lookupProvider);
         CompletableFuture<HolderLookup.Provider> provider = datapackProvider.getRegistryProvider();
-        generator.addProvider(event.includeServer(), new TCRBiomeTagGenerator(output, provider, helper));
+        generator.addProvider(event.includeServer(), new DOTEBiomeTagGenerator(output, provider, helper));
         generator.addProvider(event.includeServer(), datapackProvider);
     }
 }

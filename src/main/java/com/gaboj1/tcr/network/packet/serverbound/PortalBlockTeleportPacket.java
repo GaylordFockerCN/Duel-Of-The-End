@@ -1,16 +1,16 @@
 package com.gaboj1.tcr.network.packet.serverbound;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
-import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.capability.TCRCapabilityProvider;
+import com.gaboj1.tcr.DOTEConfig;
+import com.gaboj1.tcr.capability.DOTECapabilityProvider;
 import com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder;
-import com.gaboj1.tcr.datagen.TCRAdvancementData;
+import com.gaboj1.tcr.datagen.DOTEAdvancementData;
 import com.gaboj1.tcr.entity.TCRFakePlayer;
 import com.gaboj1.tcr.network.packet.BasePacket;
-import com.gaboj1.tcr.archive.TCRArchiveManager;
+import com.gaboj1.tcr.archive.DOTEArchiveManager;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
-import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
-import com.gaboj1.tcr.worldgen.portal.TCRTeleporter;
+import com.gaboj1.tcr.worldgen.dimension.DOTEDimension;
+import com.gaboj1.tcr.worldgen.portal.DOTETeleporter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -62,17 +62,17 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
             destination = BiomeMap.getInstance().getBlockPos(destination);
 
             if(isFromPortalBed){
-                if(TCRConfig.NO_PLOT_MODE.get()){
-                    TCRArchiveManager.setNoPlotMode();
+                if(DOTEConfig.NO_PLOT_MODE.get()){
+                    DOTEArchiveManager.setNoPlotMode();
                 }
                 if(playerEntity instanceof ServerPlayer serverPlayer){
                     ServerLevel currentLevel = serverPlayer.serverLevel();
-                    ServerLevel portalDimension = Objects.requireNonNull(serverPlayer.getServer()).getLevel(TCRDimension.P_SKY_ISLAND_LEVEL_KEY);
+                    ServerLevel portalDimension = Objects.requireNonNull(serverPlayer.getServer()).getLevel(DOTEDimension.P_SKY_ISLAND_LEVEL_KEY);
                     if(portalDimension != null){
-                        playerEntity.changeDimension(portalDimension, new TCRTeleporter(new BlockPos(destination.x, 170, destination.y), true));
+                        playerEntity.changeDimension(portalDimension, new DOTETeleporter(new BlockPos(destination.x, 170, destination.y)));
                         playerEntity.level().playSound(null,playerEntity.getX(),playerEntity.getY(),playerEntity.getZ(), SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS,1,1);
-                        TCRAdvancementData.getAdvancement(DuelOfTheEndMod.MOD_ID, serverPlayer);
-                        TCRAdvancementData.getAdvancement("enter_realm_of_the_dream", serverPlayer);
+                        DOTEAdvancementData.getAdvancement(DuelOfTheEndMod.MOD_ID, serverPlayer);
+                        DOTEAdvancementData.getAdvancement("enter_realm_of_the_dream", serverPlayer);
                         //输出首次进入维度的提示
                         DialogueComponentBuilder.displayClientMessages(serverPlayer, 6000, false, ()->{
 
@@ -82,7 +82,7 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
                                 DuelOfTheEndMod.getInfo("first_enter3")
                                 );
                         //记录进入点
-                        serverPlayer.getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {
+                        serverPlayer.getCapability(DOTECapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {
                             tcrPlayer.setBedPointBeforeEnter(bedPos);
                         }));
                         //召唤假人

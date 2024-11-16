@@ -1,8 +1,7 @@
 package com.gaboj1.tcr.client.gui;
 
-import com.gaboj1.tcr.DuelOfTheEndMod;
-import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.entity.custom.TCRBoss;
+import com.gaboj1.tcr.DOTEConfig;
+import com.gaboj1.tcr.entity.custom.DOTEBoss;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.LerpingBossEvent;
@@ -35,12 +34,12 @@ public class BossBarHandler {
         drawBar(guiGraphics, x, y, bossEvent, barLocation);
         //画名字
         Component component = bossEvent.getName();
-        Component health = Component.literal(String.format("(%d / %d)", (int)((TCRBoss) boss).getHealth(), (int)((TCRBoss) boss).getMaxHealth()));
+        Component health = Component.literal(String.format("(%d / %d)", (int)((DOTEBoss) boss).getHealth(), (int)((DOTEBoss) boss).getMaxHealth()));
         int textWidth = Minecraft.getInstance().font.width(component);
         int textX = Minecraft.getInstance().getWindow().getGuiScaledWidth() / 2 - textWidth / 2;
         int textY = y - 9;
         guiGraphics.drawString(Minecraft.getInstance().font, component, textX, textY, 16777215);
-        if(TCRConfig.SHOW_BOSS_HEALTH.get()){
+        if(DOTEConfig.SHOW_BOSS_HEALTH.get()){
             int textWidth2 = Minecraft.getInstance().font.width(health);
             int textX2 = Minecraft.getInstance().getWindow().getGuiScaledWidth() / 2 - textWidth2 / 2;
             guiGraphics.drawString(Minecraft.getInstance().font, health, textX2, y, 16777215);

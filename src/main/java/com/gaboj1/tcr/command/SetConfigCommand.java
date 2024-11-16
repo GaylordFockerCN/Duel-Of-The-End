@@ -1,17 +1,11 @@
 package com.gaboj1.tcr.command;
 
-import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.DOTEConfig;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.BoolArgumentType;
-import com.mojang.brigadier.arguments.DoubleArgumentType;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.common.ForgeConfigSpec;
-
-import java.util.Objects;
 
 public class SetConfigCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -23,8 +17,8 @@ public class SetConfigCommand {
         key.set(value);
         if(stack.getPlayer() != null){
             stack.getPlayer().displayClientMessage(Component.literal( context.getInput() + " : SUCCESS"), false);
-            if(key == TCRConfig.TEST_Y || key == TCRConfig.TEST_X || key == TCRConfig.TEST_Z){
-                stack.getPlayer().displayClientMessage(Component.literal(TCRConfig.TEST_X.get()+ ", " + TCRConfig.TEST_Y.get() + ", " + TCRConfig.TEST_Z.get()), false);
+            if(key == DOTEConfig.TEST_Y || key == DOTEConfig.TEST_X || key == DOTEConfig.TEST_Z){
+                stack.getPlayer().displayClientMessage(Component.literal(DOTEConfig.TEST_X.get()+ ", " + DOTEConfig.TEST_Y.get() + ", " + DOTEConfig.TEST_Z.get()), false);
             }
         }
         return 0;

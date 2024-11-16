@@ -1,17 +1,18 @@
 package com.gaboj1.tcr;
 
-import com.gaboj1.tcr.block.TCRBlockEntities;
-import com.gaboj1.tcr.block.TCRBlocks;
-import com.gaboj1.tcr.client.TCRSounds;
-import com.gaboj1.tcr.effect.TCREffects;
-import com.gaboj1.tcr.entity.TCREntities;
+import com.gaboj1.tcr.block.DOTEBlockEntities;
+import com.gaboj1.tcr.block.DOTEBlocks;
+import com.gaboj1.tcr.client.DOTESounds;
+import com.gaboj1.tcr.effect.DOTEEffects;
+import com.gaboj1.tcr.entity.DOTEEntities;
 import com.gaboj1.tcr.entity.TCRVillagers;
-import com.gaboj1.tcr.item.TCRItemTabs;
-import com.gaboj1.tcr.item.TCRItems;
-import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
-import com.gaboj1.tcr.worldgen.dimension.TCRChunkGenerator;
-import com.gaboj1.tcr.worldgen.structure.TCRStructurePlacementTypes;
+import com.gaboj1.tcr.event.listeners.ClientModEvents;
+import com.gaboj1.tcr.item.DOTEItemTabs;
+import com.gaboj1.tcr.item.DOTEItems;
+import com.gaboj1.tcr.network.DOTEPacketHandler;
+import com.gaboj1.tcr.worldgen.biome.DOTEBiomeProvider;
+import com.gaboj1.tcr.worldgen.dimension.DOTEChunkGenerator;
+import com.gaboj1.tcr.worldgen.structure.DOTEStructurePlacementTypes;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -29,7 +30,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
-import software.bernie.geckolib.GeckoLib;
 
 import java.io.File;
 import java.util.Locale;
@@ -44,24 +44,22 @@ public class DuelOfTheEndMod {
     public DuelOfTheEndMod(){
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        TCRSounds.REGISTRY.register(bus);
-        TCRItems.REGISTRY.register(bus);
-        TCRBlocks.REGISTRY.register(bus);
-        TCRBlockEntities.REGISTRY.register(bus);
-        TCREntities.REGISTRY.register(bus);
-        TCRItemTabs.REGISTRY.register(bus);
-        TCREffects.REGISTRY.register(bus);
-        TCRStructurePlacementTypes.STRUCTURE_PLACEMENT_TYPES.register(bus);
+        DOTESounds.REGISTRY.register(bus);
+        DOTEItems.REGISTRY.register(bus);
+        DOTEBlocks.REGISTRY.register(bus);
+        DOTEBlockEntities.REGISTRY.register(bus);
+        DOTEEntities.REGISTRY.register(bus);
+        DOTEItemTabs.REGISTRY.register(bus);
+        DOTEEffects.REGISTRY.register(bus);
+        DOTEStructurePlacementTypes.STRUCTURE_PLACEMENT_TYPES.register(bus);
         TCRVillagers.register(bus);
         bus.addListener(this::commonSetup);
         bus.addListener(this::registerExtraStuff);
 
-        GeckoLib.initialize();
-
         MinecraftForge.EVENT_BUS.register(this);
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, TCRConfig.SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, TCRConfig.CLIENT_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, DOTEConfig.SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, DOTEConfig.CLIENT_SPEC);
     }
 
     public static MutableComponent getInfo(String key){
@@ -73,7 +71,7 @@ public class DuelOfTheEndMod {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event){
-        TCRPacketHandler.register();
+        DOTEPacketHandler.register();
         event.enqueueWork(() -> {
         });
         try{
@@ -91,10 +89,10 @@ public class DuelOfTheEndMod {
     public void registerExtraStuff(RegisterEvent evt) {
         if (evt.getRegistryKey().equals(Registries.BIOME_SOURCE)) {
 //            Registry.register(BuiltInRegistries.BIOME_SOURCE, TheCasketOfReveriesMod.prefix("tcr_biomes"), ModBiomeProvider.TCR_CODEC);
-            Registry.register(BuiltInRegistries.BIOME_SOURCE, DuelOfTheEndMod.prefix("dote_biomes"), TCRBiomeProvider.TCR_CODEC);
+            Registry.register(BuiltInRegistries.BIOME_SOURCE, DuelOfTheEndMod.prefix("dote_biomes"), DOTEBiomeProvider.TCR_CODEC);
 
         }else if (evt.getRegistryKey().equals(Registries.CHUNK_GENERATOR)) {
-            Registry.register(BuiltInRegistries.CHUNK_GENERATOR, DuelOfTheEndMod.prefix("structure_locating_wrapper"), TCRChunkGenerator.CODEC);
+            Registry.register(BuiltInRegistries.CHUNK_GENERATOR, DuelOfTheEndMod.prefix("structure_locating_wrapper"), DOTEChunkGenerator.CODEC);
         }
     }
 

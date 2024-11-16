@@ -1,8 +1,8 @@
 package com.gaboj1.tcr.network.packet.serverbound;
 
-import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.DOTEConfig;
 import com.gaboj1.tcr.network.packet.BasePacket;
-import com.gaboj1.tcr.archive.TCRArchiveManager;
+import com.gaboj1.tcr.archive.DOTEArchiveManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -27,10 +27,10 @@ public record AddDialogPacket(Component name, Component content, boolean broadca
 
     @Override
     public void execute(@Nullable Player playerEntity) {
-        TCRArchiveManager.addDialog(name, content);
-        if(playerEntity != null && broadcast && TCRConfig.BROADCAST_DIALOG.get()){
+        DOTEArchiveManager.addDialog(name, content);
+        if(playerEntity != null && broadcast && DOTEConfig.BROADCAST_DIALOG.get()){
             for(Player player : playerEntity.level().players()){
-                if(player != playerEntity && player.getPosition(1.0f).distanceTo(playerEntity.getPosition(1.0f)) < TCRConfig.BROADCAST_DISTANCE.get()){
+                if(player != playerEntity && player.getPosition(1.0f).distanceTo(playerEntity.getPosition(1.0f)) < DOTEConfig.BROADCAST_DISTANCE.get()){
                     player.displayClientMessage(Component.literal("[").append(name.copy().withStyle(ChatFormatting.YELLOW)).append(Component.literal("]:")), false);
                     player.displayClientMessage(content, false);
                 }

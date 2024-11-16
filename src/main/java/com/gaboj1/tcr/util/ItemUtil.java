@@ -1,19 +1,13 @@
 package com.gaboj1.tcr.util;
 
-import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.item.TCRItems;
+import com.gaboj1.tcr.DOTEConfig;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import software.bernie.geckolib.core.object.PlayState;
-
-import java.util.Set;
 
 /**
  * @author LZY
@@ -66,7 +60,7 @@ public class ItemUtil {
      * 是否是需要加倍翻倍的奖励
      */
     public static void addItem(Player player, Item item, int count, boolean isImportantLoot){
-        if(isImportantLoot && TCRConfig.BOSS_HEALTH_AND_LOOT_MULTIPLE.get() && player.level() instanceof ServerLevel serverLevel){
+        if(isImportantLoot && DOTEConfig.BOSS_HEALTH_AND_LOOT_MULTIPLE.get() && player.level() instanceof ServerLevel serverLevel){
             addItem(player, item, serverLevel.getPlayers((serverPlayer -> true)).size() * count);
         }
     }

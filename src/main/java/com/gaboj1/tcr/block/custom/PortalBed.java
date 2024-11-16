@@ -2,10 +2,14 @@ package com.gaboj1.tcr.block.custom;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.block.entity.PortalBedEntity;
-import com.gaboj1.tcr.datagen.TCRAdvancementData;
-import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
+import com.gaboj1.tcr.datagen.DOTEAdvancementData;
+import com.gaboj1.tcr.worldgen.biome.BiomeMap;
+import com.gaboj1.tcr.worldgen.dimension.DOTEDimension;
+import com.gaboj1.tcr.worldgen.portal.DOTETeleporter;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Items;
@@ -52,13 +56,14 @@ public class PortalBed extends BedBlock {
             if (pLevel instanceof ServerLevel serverlevel && canSetSpawn(serverlevel) && !(Boolean)pState.getValue(OCCUPIED) ) {
 
                 MinecraftServer minecraftserver = serverlevel.getServer();
-                ResourceKey<Level> destinationResourcekey = (pLevel.dimension() == TCRDimension.P_SKY_ISLAND_LEVEL_KEY ?
-                                Level.OVERWORLD : TCRDimension.P_SKY_ISLAND_LEVEL_KEY);
+                ResourceKey<Level> destinationResourcekey = (pLevel.dimension() == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY ?
+                                Level.OVERWORLD : DOTEDimension.P_SKY_ISLAND_LEVEL_KEY);
 
                 ServerLevel portalDimension = minecraftserver.getLevel(destinationResourcekey);
                 if (portalDimension != null && !pPlayer.isPassenger()) {
-                    if(destinationResourcekey == TCRDimension.P_SKY_ISLAND_LEVEL_KEY) {
-
+                    if(destinationResourcekey == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY) {
+                        pPlayer.changeDimension(portalDimension, new DOTETeleporter(new BlockPos(BiomeMap.getInstance().getCenter1().x, 170, BiomeMap.getInstance().getCenter1().y)));
+                        pPlayer.level().playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS,1,1);
                     } else {
                         //爆炸并且获得成就
                         pLevel.removeBlock(pPos, false);
@@ -69,7 +74,7 @@ public class PortalBed extends BedBlock {
                         Vec3 $$7 = pPos.getCenter();
                         pLevel.explode(null, pLevel.damageSources().badRespawnPointExplosion($$7), null, $$7, 5.0F, true, Level.ExplosionInteraction.BLOCK);
 
-                        TCRAdvancementData.getAdvancement("try_wake_up",(ServerPlayer) pPlayer);
+                        DOTEAdvancementData.getAdvancement("try_wake_up",(ServerPlayer) pPlayer);
 
                     }
                 }

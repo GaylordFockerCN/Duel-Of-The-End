@@ -9,12 +9,13 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
+import java.io.Serializable;
 
 /**
  * 统一在这里调参数，共有默认地图和噪声生成地图两种形式
  */
 
-public class BiomeMap {
+public class BiomeMap implements Serializable {
 
     /**
      *世界的seed，为了使得不同seed生成的分布一致。
@@ -31,11 +32,11 @@ public class BiomeMap {
     }
 
     public Point getCenter1() {
-        return new Point(map.length / 2, map.length / 5);
+        return new Point(map.length / 2, map.length / 6);
     }
 
     public Point getCenter2() {
-        return new Point(map.length / 2, map.length * 4 / 5);
+        return new Point(map.length / 2, map.length * 5 / 6);
     }
 
     public Point getCenter() {
@@ -55,8 +56,8 @@ public class BiomeMap {
     }
     public Point getBlockPos(Point biomePos0) {
         Point biomePos = (Point) biomePos0.clone();
-        biomePos.x = (biomePos0.x-getR())*4;
-        biomePos.y = (biomePos0.y-getR())*4;
+        biomePos.x = (biomePos0.x - getR()) * 4;
+        biomePos.y = (biomePos0.y - getR()) * 4;
         return biomePos;
     }
 
@@ -77,8 +78,8 @@ public class BiomeMap {
             BufferedImage image;
             InputStream inputStream = getInputStream();
             image = ImageIO.read(inputStream);
-            TCRBiomeProvider.LOGGER.info("reading default_map");
-            TCRBiomeProvider.mapName = "default_map";
+            DOTEBiomeProvider.LOGGER.info("reading default_map");
+            DOTEBiomeProvider.mapName = "default_map";
             int height = image.getHeight();
             int width = image.getWidth();
             double[][] map = new double[height][width];
@@ -108,7 +109,7 @@ public class BiomeMap {
             return map;
 
         } catch (Exception e) {
-            TCRBiomeProvider.LOGGER.error("Dimension map image file exception! Map will be generated with default noise.",e);
+            DOTEBiomeProvider.LOGGER.error("Dimension map image file exception! Map will be generated with default noise.",e);
             return null;
         }
     }

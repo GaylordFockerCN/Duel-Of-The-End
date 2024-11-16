@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.client.gui.screen.component;
 
 import com.gaboj1.tcr.network.PacketRelay;
-import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.DOTEPacketHandler;
 import com.gaboj1.tcr.network.packet.serverbound.AddDialogPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -34,7 +34,7 @@ public class DialogueChoiceComponent extends Button {
     public void onPress() {
         super.onPress();
         if(Minecraft.getInstance().player != null){
-            PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new AddDialogPacket(Minecraft.getInstance().player.getDisplayName(), getMessage(), broadcast));
+            PacketRelay.sendToServer(DOTEPacketHandler.INSTANCE, new AddDialogPacket(Minecraft.getInstance().player.getDisplayName(), getMessage(), broadcast));
         }
     }
 

@@ -2,7 +2,7 @@ package com.gaboj1.tcr.archive;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.network.PacketRelay;
-import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.DOTEPacketHandler;
 import com.gaboj1.tcr.network.packet.SyncSaveUtilPacket;
 import com.gaboj1.tcr.network.packet.clientbound.BroadcastMessagePacket;
 import net.minecraft.ChatFormatting;
@@ -21,11 +21,11 @@ public class TaskSet extends HashSet<Task> {
      */
     @Override
     public boolean add(Task task) {
-        if(TCRArchiveManager.isNoPlotMode()){
+        if(DOTEArchiveManager.isNoPlotMode()){
             return false;
         }
         if (super.add(task)) {
-            PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(TCRArchiveManager.toNbt()));
+            PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new SyncSaveUtilPacket(DOTEArchiveManager.toNbt()));
             return true;
         }
         return false;
@@ -48,8 +48,8 @@ public class TaskSet extends HashSet<Task> {
     public boolean remove(Object o) {
         if (super.remove(o)) {
             Component message = DuelOfTheEndMod.getInfo("task_finish0").append(((Task) o).getName().copy().withStyle(ChatFormatting.RED)).append(DuelOfTheEndMod.getInfo("task_finish1"));
-            PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new BroadcastMessagePacket(message, false));
-            PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(TCRArchiveManager.toNbt()));
+            PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new BroadcastMessagePacket(message, false));
+            PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new SyncSaveUtilPacket(DOTEArchiveManager.toNbt()));
             return true;
         }
         return false;

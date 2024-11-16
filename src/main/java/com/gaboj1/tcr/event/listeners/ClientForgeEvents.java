@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.event.listeners;
 
-import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.DOTEConfig;
 import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.client.gui.BossBarHandler;
 import com.gaboj1.tcr.client.gui.CustomGuiHandler;
@@ -16,9 +16,9 @@ public class ClientForgeEvents {
 
     @SubscribeEvent
     public static void onRenderBossBar(CustomizeGuiOverlayEvent.BossEventProgress event) {
-        if(BossBarHandler.renderBossBar(event.getGuiGraphics(), event.getBossEvent(), event.getX(), event.getY())){
-            event.setCanceled(true);
-        }
+//        if(BossBarHandler.renderBossBar(event.getGuiGraphics(), event.getBossEvent(), event.getX(), event.getY())){
+//            event.setCanceled(true);
+//        }
     }
 
     /**
@@ -27,7 +27,7 @@ public class ClientForgeEvents {
     @SubscribeEvent
     public static void onRenderGui(RenderGuiEvent event) {
         GuiGraphics guiGraphics = event.getGuiGraphics();
-        if(TCRConfig.RENDER_CUSTOM_GUI.get()){
+        if(DOTEConfig.RENDER_CUSTOM_GUI.get()){
             CustomGuiHandler.renderCustomGui(guiGraphics);
         }
     }

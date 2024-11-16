@@ -1,11 +1,11 @@
 package com.gaboj1.tcr.client.gui.screen;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
-import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.DOTEConfig;
 import com.gaboj1.tcr.client.gui.screen.component.DialogueAnswerComponent;
 import com.gaboj1.tcr.client.gui.screen.component.DialogueChoiceComponent;
 import com.gaboj1.tcr.network.PacketRelay;
-import com.gaboj1.tcr.network.TCRPacketHandler;
+import com.gaboj1.tcr.network.DOTEPacketHandler;
 import com.gaboj1.tcr.network.packet.serverbound.AddDialogPacket;
 import com.gaboj1.tcr.network.packet.serverbound.NpcPlayerInteractPacket;
 import net.minecraft.ChatFormatting;
@@ -39,7 +39,7 @@ public class TCRDialogueScreen extends Screen {
 
     public TCRDialogueScreen(Entity entity, EntityType<?> entityType) {
         super(entity.getDisplayName());
-        typewriterInterval = TCRConfig.TYPEWRITER_EFFECT_INTERVAL.get();
+        typewriterInterval = DOTEConfig.TYPEWRITER_EFFECT_INTERVAL.get();
         this.dialogueAnswer = new DialogueAnswerComponent(this.buildDialogueAnswerName(entity.getDisplayName().copy().withStyle(ChatFormatting.YELLOW)).append(": "));
         this.entity = entity;
         this.entityType = entityType;
@@ -84,8 +84,8 @@ public class TCRDialogueScreen extends Screen {
      * @param component The message {@link Component}.
      */
     protected void setDialogueAnswer(Component component) {
-        PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new AddDialogPacket(entity.getDisplayName(), component, true));
-        if(TCRConfig.ENABLE_TYPEWRITER_EFFECT.get()){
+        PacketRelay.sendToServer(DOTEPacketHandler.INSTANCE, new AddDialogPacket(entity.getDisplayName(), component, true));
+        if(DOTEConfig.ENABLE_TYPEWRITER_EFFECT.get()){
             this.dialogueAnswer.updateTypewriterDialogue(component);
         }else {
             this.dialogueAnswer.updateDialogue(component);
@@ -112,7 +112,7 @@ public class TCRDialogueScreen extends Screen {
      * @see NpcPlayerInteractPacket
      */
     protected void finishChat(byte interactionID) {
-        PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new NpcPlayerInteractPacket(this.entity.getId(), interactionID));
+        PacketRelay.sendToServer(DOTEPacketHandler.INSTANCE, new NpcPlayerInteractPacket(this.entity.getId(), interactionID));
         super.onClose();
     }
 
@@ -120,7 +120,7 @@ public class TCRDialogueScreen extends Screen {
      * 发包但不关闭窗口
     * */
     protected void execute(byte interactionID) {
-        PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new NpcPlayerInteractPacket(this.entity.getId(), interactionID));
+        PacketRelay.sendToServer(DOTEPacketHandler.INSTANCE, new NpcPlayerInteractPacket(this.entity.getId(), interactionID));
     }
 
     @Override
@@ -128,7 +128,7 @@ public class TCRDialogueScreen extends Screen {
         this.renderBackground(guiGraphics);
         //guiGraphics.blit(MY_BACKGROUND_LOCATION, this.width/2 - 214/2, this.height/2 - 252/2, 0, 0, 214, 252);
 
-        if(TCRConfig.ENABLE_TYPEWRITER_EFFECT.get() && typewriterTimer < 0) {
+        if(DOTEConfig.ENABLE_TYPEWRITER_EFFECT.get() && typewriterTimer < 0) {
             this.dialogueAnswer.updateTypewriterDialogue();
             positionDialogue();
             typewriterTimer = typewriterInterval;

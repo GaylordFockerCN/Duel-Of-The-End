@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.block.custom.spawner;
 
-import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.DOTEConfig;
 import com.gaboj1.tcr.block.entity.spawner.BossSpawnerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -32,7 +32,7 @@ public abstract class BossSpawnerBlock extends BaseEntityBlock {
     @Override
     @SuppressWarnings("deprecation")
     public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
-        if(TCRConfig.ENABLE_BOSS_SPAWN_BLOCK_LOAD.get()){
+        if(DOTEConfig.ENABLE_BOSS_SPAWN_BLOCK_LOAD.get()){
             BlockEntity entity = pLevel.getBlockEntity(pPos);
             if(entity instanceof BossSpawnerBlockEntity<?> bossSpawnerBlockEntity && pPlayer instanceof ServerPlayer serverPlayer){
                 bossSpawnerBlockEntity.tryToSpawnShadow(serverPlayer);

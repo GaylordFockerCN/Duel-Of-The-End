@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.block.entity.spawner;
 
-import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.DOTEConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
@@ -45,7 +45,7 @@ public abstract class EntitySpawnerBlockEntity<T extends Mob> extends BlockEntit
 				level.addParticle(blockEntity.getSpawnerParticle(), rx, ry, rz, 0.0D, 0.0D, 0.0D);
 			}
 		}
-		if (!TCRConfig.ENABLE_BOSS_SPAWN_BLOCK_LOAD.get() || blockEntity.spawned || !blockEntity.anyPlayerInRange()) {
+		if (!DOTEConfig.ENABLE_BOSS_SPAWN_BLOCK_LOAD.get() || blockEntity.spawned || !blockEntity.anyPlayerInRange()) {
 			return;
 		}
 		if(!level.isClientSide){

@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.mixin;
 
-import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
+import com.gaboj1.tcr.worldgen.biome.DOTEBiomeProvider;
 import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.world.level.storage.LevelStorageSource;
@@ -25,7 +25,7 @@ public class CreateWorldScreenMixin {
 
     @Inject(method = "createNewWorldDirectory()Ljava/util/Optional;", at = @At("HEAD"))
     private void injected(CallbackInfoReturnable<Optional<LevelStorageSource.LevelStorageAccess>> cir){
-        TCRBiomeProvider.worldName = new File(uiState.getTargetFolder()).getName();
-        TCRBiomeProvider.LOGGER.info("On Create New World Sync : " + TCRBiomeProvider.worldName + " >> TCRBiomeProvider.worldName");
+        DOTEBiomeProvider.worldName = new File(uiState.getTargetFolder()).getName();
+        DOTEBiomeProvider.LOGGER.info("On Create New World Sync : " + DOTEBiomeProvider.worldName + " >> TCRBiomeProvider.worldName");
     }
 }

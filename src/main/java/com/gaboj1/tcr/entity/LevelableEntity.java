@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.entity;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
-import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.DOTEConfig;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -19,7 +19,7 @@ public interface LevelableEntity {
             AttributeInstance instance = entity.getAttribute(Attributes.MAX_HEALTH);
             if(instance != null){
                 for(int i = 1; i <= level; i++){
-                    AttributeModifier levelModifier = new AttributeModifier(UUID.fromString("d2d114cc-f88f-41ed-a05b-2233bb11451"+level),"level"+level, Math.pow(TCRConfig.MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP.get(), level) - 1, AttributeModifier.Operation.MULTIPLY_BASE);
+                    AttributeModifier levelModifier = new AttributeModifier(UUID.fromString("d2d114cc-f88f-41ed-a05b-2233bb11451"+level),"level"+level, Math.pow(DOTEConfig.MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP.get(), level) - 1, AttributeModifier.Operation.MULTIPLY_BASE);
                     if(i == level){
                         if(!instance.hasModifier(levelModifier)){
                             instance.addPermanentModifier(levelModifier);

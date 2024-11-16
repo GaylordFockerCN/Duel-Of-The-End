@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.entity;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
-import com.gaboj1.tcr.TCRConfig;
+import com.gaboj1.tcr.DOTEConfig;
 import com.gaboj1.tcr.util.EntityUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,7 +22,7 @@ public interface MultiPlayerBoostEntity {
             float healthOrdinal = entity.getHealth();
             float maxHealthOrdinal = entity.getMaxHealth();
             int playerCount = EntityUtil.getPlayerCount(serverLevel);
-            for(int i = 1; i <= TCRConfig.BOSS_HEALTH_AND_LOOT_MULTIPLE_MAX.get(); i++){
+            for(int i = 1; i <= DOTEConfig.BOSS_HEALTH_AND_LOOT_MULTIPLE_MAX.get(); i++){
                 AttributeModifier modifier = new AttributeModifier(UUID.fromString("d2d110cc-f22f-11ed-a05b-1212bb11451"+i), "health_modify_in_multi_player", i - 1, AttributeModifier.Operation.MULTIPLY_TOTAL);
                 AttributeInstance instance = entity.getAttribute(Attributes.MAX_HEALTH);
                 if(instance != null){

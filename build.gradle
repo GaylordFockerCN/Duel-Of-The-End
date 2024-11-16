@@ -69,10 +69,6 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     mavenCentral()
-    maven {
-        name = 'GeckoLib'
-        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
-    }
 
     maven {
         url "https://repo.spongepowered.org/repository/maven-public/"
@@ -87,8 +83,9 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.20.1:4.4.9')
-    minecraftLibrary ("org.spongepowered:noise:2.0.0-SNAPSHOT")
+    implementation fg.deobf('libs:XaerosWorldMap:1.38.8')
+    implementation fg.deobf('libs:epicfight:20.9.5')
+    implementation fg.deobf('libs:WeaponsOfMiracles:20.1.8.5.6')
 }
 
 mixin {

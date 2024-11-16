@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.worldgen.structure;
 
-import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
-import com.gaboj1.tcr.worldgen.dimension.TCRChunkGenerator;
+import com.gaboj1.tcr.worldgen.biome.DOTEBiomeProvider;
+import com.gaboj1.tcr.worldgen.dimension.DOTEChunkGenerator;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Vec3i;
@@ -33,13 +33,13 @@ public class PositionPlacement extends StructurePlacement {
         this.hasGenerated = false;
     }
 
-    public boolean isTCRPlacementChunk(TCRChunkGenerator chunkGen, ChunkAccess pChunk, int chunkX, int chunkZ) {
+    public boolean isTCRPlacementChunk(DOTEChunkGenerator chunkGen, ChunkAccess pChunk, int chunkX, int chunkZ) {
 
-        if(chunkGen.getBiomeSource() instanceof TCRBiomeProvider provider){
+        if(chunkGen.getBiomeSource() instanceof DOTEBiomeProvider provider){
             int correctX = provider.getCorrectValue(chunkX << 2);
             int correctZ = provider.getCorrectValue(chunkZ << 2);
 
-            for(TCRStructuresEnum structure : TCRStructuresEnum.values()){
+            for(DOTEStructuresEnum structure : DOTEStructuresEnum.values()){
                 if(checkStructure(structure, structure.getPoint(), correctX, correctZ))
                     return true;
             }
@@ -52,7 +52,7 @@ public class PositionPlacement extends StructurePlacement {
     /**
      * 判断该区块是否复合map所指定的结构的位置
      */
-    private boolean checkStructure(TCRStructuresEnum structure, Point point, int correctX, int correctZ){
+    private boolean checkStructure(DOTEStructuresEnum structure, Point point, int correctX, int correctZ){
 
         int deOffsetX = point.x - structure.getOffsetX();
         int deOffsetZ = point.y - structure.getOffsetZ();
@@ -76,7 +76,7 @@ public class PositionPlacement extends StructurePlacement {
 
     @Override
     public @NotNull StructurePlacementType<?> type() {
-        return TCRStructurePlacementTypes.SPECIFIC_LOCATION_PLACEMENT_TYPE.get();
+        return DOTEStructurePlacementTypes.SPECIFIC_LOCATION_PLACEMENT_TYPE.get();
     }
 
 }

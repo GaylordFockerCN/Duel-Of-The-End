@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.mixin;
 
-import com.gaboj1.tcr.archive.TCRArchiveManager;
-import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
+import com.gaboj1.tcr.archive.DOTEArchiveManager;
+import com.gaboj1.tcr.worldgen.biome.DOTEBiomeProvider;
 import net.minecraft.client.gui.screens.worldselection.WorldSelectionList;
 import net.minecraft.world.level.storage.LevelSummary;
 import net.minecraftforge.fml.loading.FMLEnvironment;
@@ -26,8 +26,8 @@ public class WorldListEntryMixin {
      */
     @Inject(method = "doDeleteWorld()V", at = @At("RETURN"))
     private void injectedDoDeleteWorld(CallbackInfo ci){
-        TCRBiomeProvider.LOGGER.info("Deleting : " + summary.getLevelId() + ".dat -> "+ (TCRBiomeProvider.deleteCache(summary.getLevelId())?"SUCCESS":"FAILED"));
-        TCRBiomeProvider.LOGGER.info("Deleting : " + summary.getLevelId() + ".nbt -> "+ (TCRArchiveManager.deleteCache(summary.getLevelId())?"SUCCESS":"FAILED"));
+        DOTEBiomeProvider.LOGGER.info("Deleting : " + summary.getLevelId() + ".dat -> "+ (DOTEBiomeProvider.deleteCache(summary.getLevelId())?"SUCCESS":"FAILED"));
+        DOTEBiomeProvider.LOGGER.info("Deleting : " + summary.getLevelId() + ".nbt -> "+ (DOTEArchiveManager.deleteCache(summary.getLevelId())?"SUCCESS":"FAILED"));
     }
 
     /**
@@ -36,11 +36,11 @@ public class WorldListEntryMixin {
     @Inject(method = "queueLoadScreen()V", at = @At("RETURN"))
     private void injectedQueueLoadScreen(CallbackInfo ci){
         if(FMLEnvironment.dist.isClient()){
-            TCRBiomeProvider.LOGGER.info("On loadWorld Sync : " + summary.getLevelId() + " >> TCRBiomeProvider.worldName");
-            TCRBiomeProvider.LOGGER.info("Try to update biome map by new worldName");
-            TCRBiomeProvider.updateBiomeMap(summary.getLevelId());
+            DOTEBiomeProvider.LOGGER.info("On loadWorld Sync : " + summary.getLevelId() + " >> TCRBiomeProvider.worldName");
+            DOTEBiomeProvider.LOGGER.info("Try to update biome map by new worldName");
+            DOTEBiomeProvider.updateBiomeMap(summary.getLevelId());
             //纯客户端读取
-            TCRArchiveManager.read(summary.getLevelId());
+            DOTEArchiveManager.read(summary.getLevelId());
         }
     }
 

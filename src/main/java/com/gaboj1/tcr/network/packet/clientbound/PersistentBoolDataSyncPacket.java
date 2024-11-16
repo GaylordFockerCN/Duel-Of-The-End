@@ -2,7 +2,7 @@ package com.gaboj1.tcr.network.packet.clientbound;
 
 import com.gaboj1.tcr.network.packet.BasePacket;
 import com.gaboj1.tcr.util.ClientHelper;
-import com.gaboj1.tcr.util.DataManager;
+import com.gaboj1.tcr.archive.DataManager;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
