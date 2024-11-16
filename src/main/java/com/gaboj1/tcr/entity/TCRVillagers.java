@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.entity;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.block.TCRBlocks;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.sounds.SoundEvents;
@@ -13,21 +13,9 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class TCRVillagers {
     public static final DeferredRegister<PoiType> POI_TYPES =
-            DeferredRegister.create(ForgeRegistries.POI_TYPES, TheCasketOfReveriesMod.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.POI_TYPES, DuelOfTheEndMod.MOD_ID);
     public static final DeferredRegister<VillagerProfession> VILLAGER_PROFESSIONS =
-            DeferredRegister.create(ForgeRegistries.VILLAGER_PROFESSIONS, TheCasketOfReveriesMod.MOD_ID);
-
-    //找个不可能的方块，让他不能自然生成。
-    public static final RegistryObject<PoiType> TCR_MERCHANT_POI = POI_TYPES.register("tcr_merchant_poi",
-            () -> new PoiType(ImmutableSet.copyOf(TCRBlocks.BETTER_STRUCTURE_BLOCK.get().getStateDefinition().getPossibleStates()),
-                    5, 5));
-
-    public static final RegistryObject<VillagerProfession> TCR_MERCHANT =
-            VILLAGER_PROFESSIONS.register("tcr_merchant", () -> new VillagerProfession("tcr_merchant",
-                    holder -> holder.get() == TCR_MERCHANT_POI.get(), holder -> holder.get() == TCR_MERCHANT_POI.get(),
-                    ImmutableSet.of(), ImmutableSet.of(), SoundEvents.VILLAGER_WORK_ARMORER));
-
-
+            DeferredRegister.create(ForgeRegistries.VILLAGER_PROFESSIONS, DuelOfTheEndMod.MOD_ID);
 
     public static void register(IEventBus eventBus) {
         POI_TYPES.register(eventBus);

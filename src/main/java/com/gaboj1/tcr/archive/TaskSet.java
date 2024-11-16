@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.archive;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.TCRPacketHandler;
 import com.gaboj1.tcr.network.packet.SyncSaveUtilPacket;
@@ -47,7 +47,7 @@ public class TaskSet extends HashSet<Task> {
     @Override
     public boolean remove(Object o) {
         if (super.remove(o)) {
-            Component message = TheCasketOfReveriesMod.getInfo("task_finish0").append(((Task) o).getName().copy().withStyle(ChatFormatting.RED)).append(TheCasketOfReveriesMod.getInfo("task_finish1"));
+            Component message = DuelOfTheEndMod.getInfo("task_finish0").append(((Task) o).getName().copy().withStyle(ChatFormatting.RED)).append(DuelOfTheEndMod.getInfo("task_finish1"));
             PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new BroadcastMessagePacket(message, false));
             PacketRelay.sendToAll(TCRPacketHandler.INSTANCE, new SyncSaveUtilPacket(TCRArchiveManager.toNbt()));
             return true;

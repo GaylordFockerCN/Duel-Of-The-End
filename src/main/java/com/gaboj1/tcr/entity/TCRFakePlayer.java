@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.entity;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.block.entity.PortalBedEntity;
 import com.gaboj1.tcr.capability.TCRCapabilityProvider;
 import com.gaboj1.tcr.item.TCRItems;
@@ -21,8 +21,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -44,6 +48,15 @@ public class TCRFakePlayer extends LivingEntity{
         if(!level.isClientSide && getRealPlayer() == null){
             discard();
         }
+    }
+
+    public static AttributeSupplier setAttributes() {
+        return Animal.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 50.0D)
+                .add(Attributes.ATTACK_DAMAGE, 2.0f)
+                .add(Attributes.ATTACK_SPEED, 2.0f)
+                .add(Attributes.MOVEMENT_SPEED, 0.4f)
+                .build();
     }
 
     public TCRFakePlayer(Player realPlayer, Level level, BlockPos pos) {
@@ -138,7 +151,7 @@ public class TCRFakePlayer extends LivingEntity{
             return Objects.requireNonNull(Objects.requireNonNull(level().getServer()).getLevel(TCRDimension.P_SKY_ISLAND_LEVEL_KEY)).getPlayerByUUID(getRealPlayerUuid());
         } catch (Exception e){
             discard();
-            TheCasketOfReveriesMod.LOGGER.error("error when try to get real player", e);
+            DuelOfTheEndMod.LOGGER.error("error when try to get real player", e);
             return null;
         }
     }
@@ -172,7 +185,7 @@ public class TCRFakePlayer extends LivingEntity{
 
     @Override
     public @NotNull ItemStack getItemBySlot(@NotNull EquipmentSlot equipmentSlot) {
-        return new ItemStack(TCRItems.DREAMSCAPE_COIN_PLUS.get());
+        return new ItemStack(Items.AIR);
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.gaboj1.tcr.entity.client;
 import com.gaboj1.tcr.entity.TCRFakePlayer;
 import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;

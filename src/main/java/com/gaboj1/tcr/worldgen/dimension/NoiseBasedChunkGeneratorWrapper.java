@@ -11,6 +11,7 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.blending.Blender;
 import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -27,22 +28,22 @@ public abstract class NoiseBasedChunkGeneratorWrapper extends NoiseBasedChunkGen
     }
 
     @Override
-    public void applyCarvers(WorldGenRegion region, long seed, RandomState random, BiomeManager biomeManager, StructureManager manager, ChunkAccess chunkAccess, GenerationStep.Carving carving) {
+    public void applyCarvers(@NotNull WorldGenRegion region, long seed, @NotNull RandomState random, @NotNull BiomeManager biomeManager, @NotNull StructureManager manager, @NotNull ChunkAccess chunkAccess, GenerationStep.@NotNull Carving carving) {
         this.delegate.applyCarvers(region, seed, random, biomeManager, manager, chunkAccess, carving);
     }
 
     @Override
-    public void buildSurface(WorldGenRegion level, StructureManager manager, RandomState random, ChunkAccess chunkAccess) {
+    public void buildSurface(@NotNull WorldGenRegion level, @NotNull StructureManager manager, @NotNull RandomState random, @NotNull ChunkAccess chunkAccess) {
         this.delegate.buildSurface(level, manager, random, chunkAccess);
     }
 
     @Override
-    public void spawnOriginalMobs(WorldGenRegion region) {
+    public void spawnOriginalMobs(@NotNull WorldGenRegion region) {
         this.delegate.spawnOriginalMobs(region);
     }
 
     @Override
-    public int getSpawnHeight(LevelHeightAccessor level) {
+    public int getSpawnHeight(@NotNull LevelHeightAccessor level) {
         return this.delegate.getSpawnHeight(level);
     }
 
@@ -52,7 +53,7 @@ public abstract class NoiseBasedChunkGeneratorWrapper extends NoiseBasedChunkGen
     }
 
     @Override
-    public CompletableFuture<ChunkAccess> fillFromNoise(Executor executor, Blender blender, RandomState random, StructureManager structureManager, ChunkAccess chunkAccess) {
+    public @NotNull CompletableFuture<ChunkAccess> fillFromNoise(@NotNull Executor executor, @NotNull Blender blender, @NotNull RandomState random, @NotNull StructureManager structureManager, @NotNull ChunkAccess chunkAccess) {
         return this.delegate.fillFromNoise(executor, blender, random, structureManager, chunkAccess);
     }
 
@@ -67,12 +68,12 @@ public abstract class NoiseBasedChunkGeneratorWrapper extends NoiseBasedChunkGen
     }
 
     @Override
-    public int getBaseHeight(int x, int z, Heightmap.Types heightMap, LevelHeightAccessor level, RandomState random) {
+    public int getBaseHeight(int x, int z, Heightmap.@NotNull Types heightMap, @NotNull LevelHeightAccessor level, @NotNull RandomState random) {
         return this.delegate.getBaseHeight(x, z, heightMap, level, random);
     }
 
     @Override
-    public NoiseColumn getBaseColumn(int x, int z, LevelHeightAccessor level, RandomState random) {
+    public @NotNull NoiseColumn getBaseColumn(int x, int z, @NotNull LevelHeightAccessor level, @NotNull RandomState random) {
         return this.delegate.getBaseColumn(x, z, level, random);
     }
 }

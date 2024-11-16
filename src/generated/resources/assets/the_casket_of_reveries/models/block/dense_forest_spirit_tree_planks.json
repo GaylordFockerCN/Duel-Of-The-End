@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "the_casket_of_reveries:block/dense_forest_spirit_tree_planks"
-  }
-}

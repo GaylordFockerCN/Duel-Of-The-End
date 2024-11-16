@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.block.entity;
 
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.block.TCRBlockEntities;
 import com.gaboj1.tcr.block.TCRBlocks;
 import com.google.common.collect.Lists;
@@ -154,7 +154,7 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
                 HandleStructureBlockLoad.load(this);
             }else {
                 //不知道为毛没用？
-                TheCasketOfReveriesMod.LOGGER.info("try to load custom structure block on server: {}", getStructureName());
+                DuelOfTheEndMod.LOGGER.info("try to load custom structure block on server: {}", getStructureName());
                 loadStructure(((ServerLevel) level));
             }
             generated = true;

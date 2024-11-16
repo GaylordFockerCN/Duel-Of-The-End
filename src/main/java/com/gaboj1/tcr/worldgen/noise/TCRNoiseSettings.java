@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.worldgen.noise;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
@@ -13,7 +13,7 @@ public class TCRNoiseSettings {
     public static final ResourceKey<NoiseGeneratorSettings> PLAIN = createKey("plain_noise_gen");
 
     private static ResourceKey<NoiseGeneratorSettings> createKey(String name) {
-        return ResourceKey.create(Registries.NOISE_SETTINGS, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name));
+        return ResourceKey.create(Registries.NOISE_SETTINGS, new ResourceLocation(DuelOfTheEndMod.MOD_ID, name));
     }
 
     public static void bootstrap(BootstapContext<NoiseGeneratorSettings> context) {

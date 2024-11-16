@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.datagen.tags;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.entity.TCREntities;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -16,25 +16,15 @@ import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 public class TCREntityTagGenerator extends EntityTypeTagsProvider {
-    public static final TagKey<EntityType<?>> MOB_IN_DENSE_FOREST = create(TheCasketOfReveriesMod.prefix("mob_in_dense_forest"));
+    public static final TagKey<EntityType<?>> MOB_IN_DENSE_FOREST = create(DuelOfTheEndMod.prefix("mob_in_dense_forest"));
 
     public TCREntityTagGenerator(PackOutput p_256095_, CompletableFuture<HolderLookup.Provider> p_256572_, @Nullable ExistingFileHelper existingFileHelper) {
-        super(p_256095_, p_256572_, TheCasketOfReveriesMod.MOD_ID, existingFileHelper);
+        super(p_256095_, p_256572_, DuelOfTheEndMod.MOD_ID, existingFileHelper);
     }
 
     @Override
     protected void addTags(HolderLookup.@NotNull Provider pProvider) {
         super.addTags(pProvider);
-        tag(MOB_IN_DENSE_FOREST).add(
-                TCREntities.YGGDRASIL.get(),
-                TCREntities.TREE_CLAW.get(),
-                TCREntities.SMALL_TREE_MONSTER.get(),
-                TCREntities.MIDDLE_TREE_MONSTER.get(),
-                TCREntities.TREE_GUARDIAN.get(),
-                TCREntities.UNKNOWN.get(),
-                TCREntities.SPRITE.get(),
-                TCREntities.MAGIC_PROJECTILE.get()
-        );
     }
 
     private static TagKey<EntityType<?>> create(ResourceLocation rl) {
@@ -42,7 +32,7 @@ public class TCREntityTagGenerator extends EntityTypeTagsProvider {
     }
     @Override
     public @NotNull String getName() {
-        return "The Casket Of Reveries Entity Tags";
+        return "Duel Of The End Entity Tags";
     }
 
 }

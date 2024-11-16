@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.entity;
 
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -30,7 +30,7 @@ public interface LevelableEntity {
                 }
             }
             entity.setHealth(entity.getMaxHealth());
-            TheCasketOfReveriesMod.LOGGER.info("[World Level Modify]" + entity.getType().getDescriptionId() + "'s max health has changed from [" + ordinal + "] to : " + entity.getMaxHealth());
+            DuelOfTheEndMod.LOGGER.info("[World Level Modify]" + entity.getType().getDescriptionId() + "'s max health has changed from [" + ordinal + "] to : " + entity.getMaxHealth());
         }
     }
 }

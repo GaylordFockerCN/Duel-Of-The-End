@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.datagen.sound;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -12,7 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
 public abstract class TCRSoundProvider extends SoundDefinitionsProvider {
 
     protected TCRSoundProvider(PackOutput output, ExistingFileHelper helper) {
-        super(output, TheCasketOfReveriesMod.MOD_ID, helper);
+        super(output, DuelOfTheEndMod.MOD_ID, helper);
     }
 
     public void generateNewSoundWithSubtitle(RegistryObject<SoundEvent> event, String baseSoundDirectory, int numberOfSounds) {
@@ -23,10 +23,10 @@ public abstract class TCRSoundProvider extends SoundDefinitionsProvider {
         SoundDefinition definition = SoundDefinition.definition();
         if (subtitle) {
             String[] splitSoundName = event.getId().getPath().split("\\.", 3);
-            definition.subtitle("subtitles."+TheCasketOfReveriesMod.MOD_ID+"." + splitSoundName[0] + "." + splitSoundName[2]);
+            definition.subtitle("subtitles."+ DuelOfTheEndMod.MOD_ID+"." + splitSoundName[0] + "." + splitSoundName[2]);
         }
         for (int i = 1; i <= numberOfSounds; i++) {
-            definition.with(SoundDefinition.Sound.sound(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, baseSoundDirectory + (numberOfSounds > 1 ? "_"+i : "")), SoundDefinition.SoundType.SOUND));
+            definition.with(SoundDefinition.Sound.sound(new ResourceLocation(DuelOfTheEndMod.MOD_ID, baseSoundDirectory + (numberOfSounds > 1 ? "_"+i : "")), SoundDefinition.SoundType.SOUND));
         }
         this.add(event, definition);
     }
@@ -35,7 +35,7 @@ public abstract class TCRSoundProvider extends SoundDefinitionsProvider {
         SoundDefinition definition = SoundDefinition.definition();
         if (subtitle) {
             String[] splitSoundName = event.getId().getPath().split("\\.", 3);
-            definition.subtitle("subtitles."+TheCasketOfReveriesMod.MOD_ID+"." + splitSoundName[0] + "." + splitSoundName[2]);
+            definition.subtitle("subtitles."+ DuelOfTheEndMod.MOD_ID+"." + splitSoundName[0] + "." + splitSoundName[2]);
         }
         for (int i = 1; i <= numberOfSounds; i++) {
             definition.with(SoundDefinition.Sound.sound(new ResourceLocation(baseSoundDirectory + (numberOfSounds > 1 ? i : "")), SoundDefinition.SoundType.SOUND));
@@ -57,7 +57,7 @@ public abstract class TCRSoundProvider extends SoundDefinitionsProvider {
         SoundDefinition definition = SoundDefinition.definition();
         if (subtitle) {
             String[] splitSoundName = event.getId().getPath().split("\\.", 3);
-            definition.subtitle("subtitles."+TheCasketOfReveriesMod.MOD_ID+"." + splitSoundName[0] + "." + splitSoundName[2]);
+            definition.subtitle("subtitles."+ DuelOfTheEndMod.MOD_ID+"." + splitSoundName[0] + "." + splitSoundName[2]);
         }
         this.add(event, definition
                 .with(SoundDefinition.Sound.sound(referencedSound.getLocation(), SoundDefinition.SoundType.EVENT)));
@@ -71,14 +71,14 @@ public abstract class TCRSoundProvider extends SoundDefinitionsProvider {
 
     public void makeMusicDisc(RegistryObject<SoundEvent> event, String discName) {
         this.add(event, SoundDefinition.definition()
-                .with(SoundDefinition.Sound.sound(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "music/" + discName), SoundDefinition.SoundType.SOUND)
+                .with(SoundDefinition.Sound.sound(new ResourceLocation(DuelOfTheEndMod.MOD_ID, "music/" + discName), SoundDefinition.SoundType.SOUND)
                         .stream()));
     }
 
     public void generateParrotSound(RegistryObject<SoundEvent> event, SoundEvent referencedSound) {
         SoundDefinition definition = SoundDefinition.definition();
         String[] splitSoundName = event.getId().getPath().split("\\.", 3);
-        definition.subtitle("subtitles."+TheCasketOfReveriesMod.MOD_ID+"." + splitSoundName[0] + "." + splitSoundName[2]);
+        definition.subtitle("subtitles."+ DuelOfTheEndMod.MOD_ID+"." + splitSoundName[0] + "." + splitSoundName[2]);
 
         this.add(event, definition
                 .with(SoundDefinition.Sound.sound(referencedSound.getLocation(), SoundDefinition.SoundType.EVENT).pitch(1.8F).volume(0.6F)));

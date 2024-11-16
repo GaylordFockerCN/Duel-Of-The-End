@@ -13,7 +13,7 @@ import net.minecraft.server.level.ServerLevel;
  */
 public class TCRTimeCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        dispatcher.register(Commands.literal("tcr")
+        dispatcher.register(Commands.literal("dote")
                 .then(Commands.literal("time").requires((commandSourceStack) -> commandSourceStack.hasPermission(2))
                         .then(Commands.literal("set")
                                 .then(Commands.literal("day").executes((context) -> setTime(context.getSource(), 3000)))

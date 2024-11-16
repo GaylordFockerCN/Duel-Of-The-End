@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.datagen;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.datagen.lang.TCRLangGenerator;
 import com.gaboj1.tcr.datagen.loot.TCRLootTableProvider;
 import com.gaboj1.tcr.datagen.sound.TCRSoundGenerator;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.concurrent.CompletableFuture;
 
-@Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = DuelOfTheEndMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {

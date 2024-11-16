@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.client.gui.screen.component;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -45,7 +45,7 @@ public class PortalScreenComponent extends Button {
     public void onPress() {
         if(!enable){
             if(Minecraft.getInstance().player != null){
-                Minecraft.getInstance().player.displayClientMessage(TheCasketOfReveriesMod.getInfo("teleport_lock"), true);
+                Minecraft.getInstance().player.displayClientMessage(DuelOfTheEndMod.getInfo("teleport_lock"), true);
             }
         } else {
             super.onPress();
@@ -58,7 +58,7 @@ public class PortalScreenComponent extends Button {
     @Override
     public @NotNull Component getMessage() {
         if(!enable){
-            return TheCasketOfReveriesMod.getInfo("teleport_lock").withStyle(ChatFormatting.BOLD, ChatFormatting.RED);
+            return DuelOfTheEndMod.getInfo("teleport_lock").withStyle(ChatFormatting.BOLD, ChatFormatting.RED);
         }
         return super.getMessage();
     }

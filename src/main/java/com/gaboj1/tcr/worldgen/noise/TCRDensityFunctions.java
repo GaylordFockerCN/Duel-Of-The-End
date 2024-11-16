@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.worldgen.noise;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
@@ -15,7 +15,7 @@ public class TCRDensityFunctions {
     public static final ResourceKey<DensityFunction> BASE_3D_NOISE_PLAIN = createKey("base_3d_noise_plain");
 
     private static ResourceKey<DensityFunction> createKey(String name) {
-        return ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name));
+        return ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation(DuelOfTheEndMod.MOD_ID, name));
     }
 
     public static void bootstrap(BootstapContext<DensityFunction> context) {

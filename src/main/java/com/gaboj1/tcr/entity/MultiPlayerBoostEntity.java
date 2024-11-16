@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.entity;
 
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.util.EntityUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -36,7 +36,7 @@ public interface MultiPlayerBoostEntity {
                 }
             }
             entity.setHealth(healthOrdinal * entity.getMaxHealth() / maxHealthOrdinal);//别忘了血量也要变
-            TheCasketOfReveriesMod.LOGGER.info("[Player Count Modify]" + entity.getType().getDescriptionId() + "'s max health has changed from [" + ordinal + "] to : " + entity.getMaxHealth());
+            DuelOfTheEndMod.LOGGER.info("[Player Count Modify]" + entity.getType().getDescriptionId() + "'s max health has changed from [" + ordinal + "] to : " + entity.getMaxHealth());
         }
     }
 }

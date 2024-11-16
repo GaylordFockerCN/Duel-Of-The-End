@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.worldgen.noise;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
@@ -13,7 +13,7 @@ public class TCRNoises {
     public static final ResourceKey<NoiseParameters> VEGETATION = createKey("vegetation");
 
     private static ResourceKey<NoiseParameters> createKey(String name) {
-        return ResourceKey.create(Registries.NOISE, new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, name));
+        return ResourceKey.create(Registries.NOISE, new ResourceLocation(DuelOfTheEndMod.MOD_ID, name));
     }
 
 

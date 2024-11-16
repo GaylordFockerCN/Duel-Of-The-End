@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.datagen;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.block.TCRBlocks;
 import com.gaboj1.tcr.item.TCRItems;
 import net.minecraft.data.PackOutput;
@@ -39,163 +39,17 @@ public class TCRItemModelProvider extends ItemModelProvider {
     }
 
     public TCRItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(output, TheCasketOfReveriesMod.MOD_ID, existingFileHelper);
+        super(output, DuelOfTheEndMod.MOD_ID, existingFileHelper);
     }
 
     @Override
     protected void registerModels() {
 
-        handheldItem(TCRItems.HEALTH_WAND);
-
-        eggItem(TCRItems.JELLY_CAT_SPAWN_EGG);
-        eggItem(TCRItems.SQUIRREL_SPAWN_EGG);
-        eggItem(TCRItems.CRAB_SPAWN_EGG);
-        eggItem(TCRItems.SMALL_TREE_MONSTER_SPAWN_EGG);
-        eggItem(TCRItems.MIDDLE_TREE_MONSTER_SPAWN_EGG);
-        eggItem(TCRItems.TREE_GUARDIAN_SPAWN_EGG);
-        eggItem(TCRItems.YGGDRASIL_SPAWN_EGG);
-        eggItem(TCRItems.PASTORAL_PLAIN_VILLAGER_SPAWN_EGG);
-        eggItem(TCRItems.PASTORAL_PLAIN_VILLAGER_ELDER_SPAWN_EGG);
-        eggItem(TCRItems.SPRITE_SPAWN_EGG);
-        eggItem(TCRItems.WIND_FEATHER_FALCON_SPAWN_EGG);
-        eggItem(TCRItems.HORRIBLE_TREE_MONSTER_SPAWN_EGG);
-        eggItem(TCRItems.TIGER_SPAWN_EGG);
-        eggItem(TCRItems.BOXER_SPAWN_EGG);
-        eggItem(TCRItems.BIG_HAMMER_EGG);
-        eggItem(TCRItems.SNOW_SWORDMAN_SPAWN_EGG);
-        eggItem(TCRItems.SWORD_CONTROLLER_SPAWN_EGG);
-        eggItem(TCRItems.SECOND_BOSS_SPAWN_EGG);
-        eggItem(TCRItems.CANG_LAN_SPAWN_EGG);
-        eggItem(TCRItems.SUALIONG_SPAWN_EGG);
-        eggItem(TCRItems.DESERT_FIGURE_SPAWN_EGG);
-
-        simpleItem(TCRItems.DREAMSCAPE_COIN);
-        simpleItem(TCRItems.DREAMSCAPE_COIN_PLUS);
-        simpleItem(TCRItems.WALLET);
-        simpleItem(TCRItems.RECALL_SCROLL);
-        simpleItem(TCRItems.PURIFICATION_TALISMAN);
-        simpleItem(TCRItems.ORICHALCUM);
-        simpleItem(TCRItems.RAW_ORICHALCUM);
-        simpleItem(TCRItems.GOD_INGOT);
-
-        simpleItem(TCRItems.TREE_DEMON_HORN);
-        simpleItem(TCRItems.TREE_DEMON_MASK);
-        simpleItem(TCRItems.TREE_DEMON_BRANCH);
-        simpleItem(TCRItems.TREE_DEMON_FRUIT);
-        simpleItem(TCRItems.TREE_ROBE_HELMET);
-        simpleItem(TCRItems.TREE_ROBE_CHESTPLATE);
-        simpleItem(TCRItems.TREE_ROBE_BOOTS);
-
-        simpleItem(TCRItems.CATNIP);
-        simpleItem(TCRItems.BLUE_MUSHROOM);
-        simpleItem(TCRItems.CAT_JELLY);
-        simpleItem(TCRItems.WITHERING_TOUCH);
-        simpleItem(TCRItems.HEART_OF_THE_SAPLING);
-        simpleItem(TCRItems.ESSENCE_OF_THE_ANCIENT_TREE);
-        simpleItem(TCRItems.BARK_OF_THE_GUARDIAN);
-        simpleItem(TCRItems.TREE_HELMET);
-        simpleItem(TCRItems.TREE_CHESTPLATE);
-        simpleItem(TCRItems.TREE_LEGGINGS);
-        simpleItem(TCRItems.TREE_BOOTS);
-
-        simpleItem(TCRItems.STARLIT_DEWDROP);
-        simpleItem(TCRItems.SPRITE_STONE);
-        simpleItem(TCRItems.DENSE_FOREST_CERTIFICATE);
-        simpleItem(TCRItems.TIGER_SOUL_ICE);
-        simpleItem(TCRItems.BRAWLER_GLOVES);
-        simpleItem(TCRItems.HAMMER_BEARER_FRAGMENT);
-        simpleItem(TCRItems.SWORDMASTER_TALISMAN);
-        simpleItem(TCRItems.ICE_TIGER_CLAW);
-//        simpleItem(TCRItems.FLAME_THAT_GATHERSOULS);
-//        simpleItem(TCRItems.OIL_LAMP_GATHER_SOULS);
-
-        //handheldItem()会变很大个，适合用于武器什么的
-        handheldItem(TCRItems.ORICHALCUM_SWORD);
-        handheldItem(TCRItems.ORICHALCUM_AXE);
-        handheldItem(TCRItems.ORICHALCUM_PICKAXE);
-        handheldItem(TCRItems.GOD_SHARP_AXE);
-
-        simpleItem(TCRItems.BLUE_BANANA);
-        simpleItem(TCRItems.DREAM_TA);
-        simpleItem(TCRItems.BEER);
-        simpleItem(TCRItems.COOKIE);
-        simpleItem(TCRItems.ELDER_CAKE);
-        //说出来你可能不信，以下的小物品是训练chatGPT3.5仿写后修改的（大力解放生产力！）
-        simpleItem(TCRItems.EDEN_APPLE);
-        simpleItem(TCRItems.DRINK1);
-        simpleItem(TCRItems.DRINK2);
-        simpleItem(TCRItems.GOLDEN_WIND_AND_DEW);
-        simpleItem(TCRItems.GREEN_BANANA);
-        simpleItem(TCRItems.HOT_CHOCOLATE);
-        simpleItem(TCRItems.JUICE_TEA);
-        simpleItem(TCRItems.MAO_DAI);
-        simpleItem(TCRItems.PINE_CONE);
-        simpleItem(TCRItems.RED_WINE);
-        simpleItem(TCRItems.WAN_MING_PEARL);
-
-        simpleItem(TCRItems.LIGHT_ELIXIR);
-        simpleItem(TCRItems.ASCENSION_ELIXIR);
-        simpleItem(TCRItems.LUCKY_ELIXIR);
-        simpleItem(TCRItems.EVASION_ELIXIR);
-        simpleItem(TCRItems.WATER_AVOIDANCE_ELIXIR);
-        simpleItem(TCRItems.FIRE_AVOIDANCE_ELIXIR);
-        simpleItem(TCRItems.COLD_AVOIDANCE_ELIXIR);
-        simpleItem(TCRItems.THUNDER_AVOIDANCE_ELIXIR);
-        simpleItem(TCRItems.POISON_AVOIDANCE_ELIXIR);
-        simpleItem(TCRItems.NINE_TURN_REVIVAL_ELIXIR);
-        simpleItem(TCRItems.STRENGTH_PILL);
-        simpleItem(TCRItems.AQUA_GOLD_ELIXIR);
-
-        simpleBlockItemBlockTexture(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER);
-        simpleBlockItemBlockTexture(TCRBlocks.CATNIP);
-        simpleBlockItemBlockTexture(TCRBlocks.THIRST_BLOOD_ROSE);
-        simpleBlockItemBlockTexture(TCRBlocks.LAZY_ROSE);
-        simpleBlockItemBlockTexture(TCRBlocks.MELANCHOLIC_ROSE);
-        simpleBlockItemBlockTexture(TCRBlocks.WITHERED_ROSE);
-        saplingItem(TCRBlocks.DENSE_FOREST_SPIRIT_SAPLING);
-        fenceItem(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE, TCRBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS);
-        simpleBlockItem(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR);
-        evenSimplerBlockItem(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_STAIRS);
-        evenSimplerBlockItem(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB);
-        evenSimplerBlockItem(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE_GATE);
-
-        trimmedArmorItem(TCRItems.ORICHALCUM_HELMET);
-        trimmedArmorItem(TCRItems.ORICHALCUM_CHESTPLATE);
-        trimmedArmorItem(TCRItems.ORICHALCUM_LEGGINGS);
-        trimmedArmorItem(TCRItems.ORICHALCUM_BOOTS);
-
-        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_1_STAIRS);
-        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_1_SLAB);
-        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_2_STAIRS);
-        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_2_SLAB);
-        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_3_STAIRS);
-        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_3_SLAB);
-        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_4_STAIRS);
-        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_4_SLAB);
-        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_5_STAIRS);
-        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_5_SLAB);
-        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_6_STAIRS);
-        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_6_SLAB);
-        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_7_STAIRS);
-        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_7_SLAB);
-        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_8_STAIRS);
-        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_8_SLAB);
-        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_9_STAIRS);
-        evenSimplerBlockItem(TCRBlocks.BOSS2_ROOM_9_SLAB);
-
-        evenSimplerBlockItem(TCRBlocks.PORTAL_BLOCK);
-        evenSimplerBlockItem(TCRBlocks.YGGDRASIL_BLOCK);
-
-//        simpleItem(TCRItems.ICE_TIGER_BOOTS);
-//        simpleItem(TCRItems.ICE_TIGER_CHESTPLATE);
-//        simpleItem(TCRItems.ICE_TIGER_HELMET);
-//        simpleItem(TCRItems.ICE_TIGER_LEGGINGS);
-
     }
 
     // Shoutout to El_Redstoniano for making this
     private void trimmedArmorItem(RegistryObject<Item> itemRegistryObject) {
-        final String MOD_ID = TheCasketOfReveriesMod.MOD_ID; // Change this to your mod x
+        final String MOD_ID = DuelOfTheEndMod.MOD_ID; // Change this to your mod x
 
         if(itemRegistryObject.get() instanceof ArmorItem armorItem) {
             trimMaterials.entrySet().forEach(entry -> {
@@ -248,23 +102,23 @@ public class TCRItemModelProvider extends ItemModelProvider {
     private ItemModelBuilder saplingItem(RegistryObject<Block> item) {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"block/" + item.getId().getPath()));
+                new ResourceLocation(DuelOfTheEndMod.MOD_ID,"block/" + item.getId().getPath()));
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item) {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"item/" + item.getId().getPath()));
+                new ResourceLocation(DuelOfTheEndMod.MOD_ID,"item/" + item.getId().getPath()));
     }
 
     private ItemModelBuilder handheldItem(RegistryObject<Item> item) {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/handheld")).texture("layer0",
-                new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"item/" + item.getId().getPath()));
+                new ResourceLocation(DuelOfTheEndMod.MOD_ID,"item/" + item.getId().getPath()));
     }
 
     public void evenSimplerBlockItem(RegistryObject<Block> block) {
-        this.withExistingParent(TheCasketOfReveriesMod.MOD_ID + ":" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath(),
+        this.withExistingParent(DuelOfTheEndMod.MOD_ID + ":" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath(),
                 modLoc("block/" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath()));
     }
 
@@ -275,28 +129,28 @@ public class TCRItemModelProvider extends ItemModelProvider {
 
     public void fenceItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock) {
         this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/fence_inventory"))
-                .texture("texture",  new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
+                .texture("texture",  new ResourceLocation(DuelOfTheEndMod.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
     }
 
     public void buttonItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock) {
         this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/button_inventory"))
-                .texture("texture",  new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
+                .texture("texture",  new ResourceLocation(DuelOfTheEndMod.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
     }
 
     public void wallItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock) {
         this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/wall_inventory"))
-                .texture("wall",  new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
+                .texture("wall",  new ResourceLocation(DuelOfTheEndMod.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
     }
 
     private ItemModelBuilder simpleBlockItem(RegistryObject<Block> item) {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"item/" + item.getId().getPath()));
+                new ResourceLocation(DuelOfTheEndMod.MOD_ID,"item/" + item.getId().getPath()));
     }
 
     private ItemModelBuilder simpleBlockItemBlockTexture(RegistryObject<Block> item) {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"block/" + item.getId().getPath()));
+                new ResourceLocation(DuelOfTheEndMod.MOD_ID,"block/" + item.getId().getPath()));
     }
 }

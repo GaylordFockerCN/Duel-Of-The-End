@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.datagen;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.worldgen.TCRBiomeModifiers;
 import com.gaboj1.tcr.worldgen.TCRConfiguredFeatures;
 import com.gaboj1.tcr.worldgen.TCRPlacedFeatures;
@@ -35,6 +35,6 @@ public class TCRWorldGenProvider extends DatapackBuiltinEntriesProvider {
             .add(Registries.DIMENSION_TYPE, TCRDimension::bootstrapType);
 
     public TCRWorldGenProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries, BUILDER, Set.of(TheCasketOfReveriesMod.MOD_ID));
+        super(output, registries, BUILDER, Set.of(DuelOfTheEndMod.MOD_ID));
     }
 }

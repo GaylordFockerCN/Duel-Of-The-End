@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.capability;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = DuelOfTheEndMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TCRCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
     public static Capability<TCRPlayer> TCR_PLAYER = CapabilityManager.get(new CapabilityToken<>() {});
@@ -54,13 +54,13 @@ public class TCRCapabilityProvider implements ICapabilityProvider, INBTSerializa
         createTCRPlayer().loadNBTData(tag);
     }
 
-    @Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID)
+    @Mod.EventBusSubscriber(modid = DuelOfTheEndMod.MOD_ID)
     public static class Registration {
         @SubscribeEvent
         public static void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
             if (event.getObject() instanceof Player) {
                if(!event.getObject().getCapability(TCRCapabilityProvider.TCR_PLAYER).isPresent()){
-                   event.addCapability(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "tcr_player"), new TCRCapabilityProvider());
+                   event.addCapability(new ResourceLocation(DuelOfTheEndMod.MOD_ID, "tcr_player"), new TCRCapabilityProvider());
                }
             }
         }

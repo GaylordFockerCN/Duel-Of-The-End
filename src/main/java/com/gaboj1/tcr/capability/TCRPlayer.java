@@ -1,16 +1,10 @@
 package com.gaboj1.tcr.capability;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -23,18 +17,6 @@ public class TCRPlayer {
     private UUID fakePlayerUuid;
     private BlockPos bedPointBeforeEnter = BlockPos.ZERO;
     private BlockPos lastPortalBlockPos = BlockPos.ZERO;
-    private boolean isFlying;
-    private boolean protectNextFall;
-    private boolean hasSwordEntity;
-    private int swordScreenEntityCount;
-    private int rainCutterTimer;
-    private boolean isScreenCutterCoolDown;
-    private int yakshaMaskTimer;
-    private int flyingTick;
-    private Set<Integer> swordID;
-    private int anticipationTick;
-    private ItemStack sword = ItemStack.EMPTY;
-    public final Set<Vec3i> flowerPos = new HashSet<>();
     public boolean getBoolean(String key){
         return data.getBoolean(key);
     }
@@ -69,7 +51,7 @@ public class TCRPlayer {
         if(fakePlayerUuid != null){
             consumer.accept(fakePlayerUuid);
         } else {
-            TheCasketOfReveriesMod.LOGGER.error("fakePlayerUuid is null!");
+            DuelOfTheEndMod.LOGGER.error("fakePlayerUuid is null!");
         }
     }
 
@@ -93,46 +75,6 @@ public class TCRPlayer {
         return lastPortalBlockPos;
     }
 
-    public boolean isFlying() {
-        return isFlying;
-    }
-
-    public void setHasSwordEntity(boolean hasSwordEntity) {
-        this.hasSwordEntity = hasSwordEntity;
-    }
-
-    public int getSwordScreenEntityCount() {
-        return swordScreenEntityCount;
-    }
-
-    public void setSwordScreenEntityCount(int swordScreenEntityCount) {
-        if(swordScreenEntityCount < 0){
-            return;
-        }
-        this.swordScreenEntityCount = swordScreenEntityCount;
-    }
-
-    public void setSwordID(Set<Integer> swordID) {
-        this.swordID = swordID;
-    }
-
-    public Set<Integer> getSwordScreensID() {
-        if(swordID == null){
-            swordID = new HashSet<>();
-        }
-        return swordID;
-    }
-
-    public ItemStack getSword() {
-        if(sword == null){
-            return ItemStack.EMPTY;
-        }
-        return sword;
-    }
-
-    public void setSword(ItemStack sword) {
-        this.sword = sword;
-    }
 
     public void saveNBTData(CompoundTag tag){
         tag.put("customDataManager", data);
@@ -146,17 +88,6 @@ public class TCRPlayer {
         tag.putInt("lastPortalBlockPosX", lastPortalBlockPos.getX());
         tag.putInt("lastPortalBlockPosY", lastPortalBlockPos.getY());
         tag.putInt("lastPortalBlockPosZ", lastPortalBlockPos.getZ());
-
-        tag.putBoolean("isFlying", isFlying);
-        tag.putBoolean("protectNextFall", protectNextFall);
-        tag.putBoolean("hasEntity", hasSwordEntity);
-        tag.putInt("rainCutterTimer", rainCutterTimer);
-        tag.putBoolean("rainCutterCoolDown", isScreenCutterCoolDown);
-        tag.putInt("yakshaMaskTimer", yakshaMaskTimer);
-        tag.putInt("anticipationTick", anticipationTick);
-        tag.putInt("flyingTick", flyingTick);
-
-        tag.put("sword", Objects.requireNonNullElseGet(sword.serializeNBT(), CompoundTag::new));
     }
 
     public void loadNBTData(CompoundTag tag){
@@ -166,15 +97,6 @@ public class TCRPlayer {
         bedPointBeforeEnter = new BlockPos(tag.getInt("bedPointBeforeEnterX"), tag.getInt("bedPointBeforeEnterY"), tag.getInt("bedPointBeforeEnterZ"));
         lastPortalBlockPos = new BlockPos(tag.getInt("lastPortalBlockPosX"), tag.getInt("lastPortalBlockPosY"), tag.getInt("lastPortalBlockPosZ"));
 
-        isFlying = tag.getBoolean("isFlying");
-        protectNextFall = tag.getBoolean("protectNextFall");
-        hasSwordEntity = tag.getBoolean("hasEntity");
-        rainCutterTimer = tag.getInt("rainCutterTimer");
-        isScreenCutterCoolDown = tag.getBoolean("rainCutterCoolDown");
-        yakshaMaskTimer = tag.getInt("yakshaMaskTimer");
-        anticipationTick = tag.getInt("anticipationTick");
-        flyingTick = tag.getInt("flyingTick");
-        sword = ItemStack.of(tag.getCompound("sword"));
     }
 
     public void copyFrom(TCRPlayer old){
@@ -183,15 +105,6 @@ public class TCRPlayer {
         bedPointBeforeEnter = old.bedPointBeforeEnter;
         lastPortalBlockPos = old.lastPortalBlockPos;
 
-        isFlying = old.isFlying;
-        protectNextFall = old.protectNextFall;
-        hasSwordEntity = old.hasSwordEntity;
-        rainCutterTimer = old.rainCutterTimer;
-        isScreenCutterCoolDown = old.isScreenCutterCoolDown;
-        yakshaMaskTimer = old.yakshaMaskTimer;
-        anticipationTick = old.anticipationTick;
-        flyingTick = old.flyingTick;
-        sword = old.sword;
     }
 
 }

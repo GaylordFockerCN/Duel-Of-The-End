@@ -57,44 +57,6 @@ public class DataManager {
         return player.getCapability(TCRCapabilityProvider.TCR_PLAYER).orElseThrow(() -> new IllegalStateException("Player " + player.getName().getContents() + " has no TCR Player Capability!"));
     }
 
-    public static List<BoolData> portalPointUnlockData = new ArrayList<>();
-    public static BoolData villager1Unlock = new BoolData("villager1Unlock", false);
-    public static BoolData villager2Unlock = new BoolData("villager2Unlock", false);
-    public static BoolData villager3Unlock = new BoolData("villager3Unlock", false);
-    public static BoolData villager4Unlock = new BoolData("villager4Unlock", false);
-    public static BoolData boss1Unlock = new BoolData("boss1Unlock", false);
-    public static BoolData boss2Unlock = new BoolData("boss2Unlock", false);
-    public static BoolData boss3Unlock = new BoolData("boss3Unlock", false);
-    public static BoolData boss4Unlock = new BoolData("boss4Unlock", false);
-    public static BoolData finalUnlock = new BoolData("finalUnlock", false);
-    static {
-        portalPointUnlockData.add(villager1Unlock);
-        portalPointUnlockData.add(villager2Unlock);
-        portalPointUnlockData.add(villager3Unlock);
-        portalPointUnlockData.add(villager4Unlock);
-        portalPointUnlockData.add(boss1Unlock);
-        portalPointUnlockData.add(boss2Unlock);
-        portalPointUnlockData.add(boss3Unlock);
-        portalPointUnlockData.add(boss4Unlock);
-        portalPointUnlockData.add(finalUnlock);
-
-    }
-
-    //工匠送的火枪
-    public static BoolData gunGot =  new BoolData("gun_got",false);
-    public static BoolData ammoGot =  new BoolData("ammo_got",false);
-    //侍者送的饮料
-    public static BoolData drinkGot =  new BoolData("drink_got",false);
-    //长老送的
-    public static BoolData elderLoot1Got =  new BoolData("elder_loot1_got",false);
-    public static BoolData elderLoot2Got =  new BoolData("elder_loot2_got",false);
-    public static BoolData boss1LootGot =  new BoolData("boss1_loot_got",false);
-    public static BoolData isSecondEnter =  new BoolData("isSecondEnter",false);
-    public static BoolData isMiaoYinGifted =  new BoolData("isMiaoYinGifted",false);
-    public static BoolData stolenMiaoYin =  new BoolData("stolenMiaoYin",false);
-    public static BoolData wanMingPearlGot =  new BoolData("wanMingPearlGot",false);
-    public static BoolData miaoYinMoney1 =  new BoolData("miaoYinMoney1",false);
-    public static BoolData getFastModLoot =  new BoolData("getFastModLoot",false);
 
     public abstract static class Data<T> {
 

@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.client.gui.screen;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.datagen.lang.TCRLangProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -36,7 +36,7 @@ public class DialogueComponentBuilder {
                 try {
                     Thread.sleep(interval);
                 } catch (InterruptedException e) {
-                    TheCasketOfReveriesMod.LOGGER.error(e.getMessage());
+                    DuelOfTheEndMod.LOGGER.error(e.getMessage());
                 }
             }
             onDialogEnd.run();

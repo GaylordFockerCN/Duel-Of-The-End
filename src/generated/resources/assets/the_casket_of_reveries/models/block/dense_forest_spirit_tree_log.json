@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "the_casket_of_reveries:block/dense_forest_spirit_tree_log_top",
-    "side": "the_casket_of_reveries:block/dense_forest_spirit_tree_log"
-  }
-}

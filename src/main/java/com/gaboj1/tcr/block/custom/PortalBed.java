@@ -1,15 +1,10 @@
 package com.gaboj1.tcr.block.custom;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.block.entity.PortalBedEntity;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
-import com.gaboj1.tcr.network.PacketRelay;
-import com.gaboj1.tcr.network.TCRPacketHandler;
-import com.gaboj1.tcr.network.packet.clientbound.PortalBlockScreenPacket;
-import com.gaboj1.tcr.util.DataManager;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.DyeColor;
@@ -40,7 +35,7 @@ public class PortalBed extends BedBlock {
     @Override
     public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
         if(!pPlayer.getItemInHand(pHand).is(Items.NETHER_STAR) && !pPlayer.isCreative()){
-            pPlayer.displayClientMessage(TheCasketOfReveriesMod.getInfo("before_enter"), true);
+            pPlayer.displayClientMessage(DuelOfTheEndMod.getInfo("before_enter"), true);
             return InteractionResult.CONSUME;
         }
         //统一Pos到床头
@@ -63,23 +58,7 @@ public class PortalBed extends BedBlock {
                 ServerLevel portalDimension = minecraftserver.getLevel(destinationResourcekey);
                 if (portalDimension != null && !pPlayer.isPassenger()) {
                     if(destinationResourcekey == TCRDimension.P_SKY_ISLAND_LEVEL_KEY) {
-                        //发包选择位置
-                        CompoundTag data = new CompoundTag();
-                        data.putBoolean("isVillage", true);
-                        data.putBoolean("isFromPortalBed", true);
-                        if(!DataManager.isSecondEnter.get(pPlayer)){
-                            data.putBoolean("isSecondEnter", false);
-                            //传送后再设值为true
-                        } else {
-                            data.putBoolean("isSecondEnter", true);
-                        }
-                        data.putInt("bedPosX", pPos.getX());
-                        data.putInt("bedPosY", pPos.getY());
-                        data.putInt("bedPosZ", pPos.getZ());
-                        for(DataManager.BoolData boolData : DataManager.portalPointUnlockData){
-                            data.putBoolean(boolData.getKey(), boolData.get(pPlayer));
-                        }
-                        PacketRelay.sendToPlayer(TCRPacketHandler.INSTANCE, new PortalBlockScreenPacket(data), ((ServerPlayer) pPlayer));
+
                     } else {
                         //爆炸并且获得成就
                         pLevel.removeBlock(pPos, false);
@@ -116,7 +95,7 @@ public class PortalBed extends BedBlock {
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return new PortalBedEntity(pos, state);
     }
 

@@ -1,24 +1,19 @@
 package com.gaboj1.tcr.item;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
 public enum TCRArmorMaterials implements ArmorMaterial {
-    ORICHALCUM("orichalcum", 15, new int[]{ 1, 5, 4, 2 }, 10,
-            SoundEvents.ARMOR_EQUIP_GOLD, 3f, 0.3f, () -> Ingredient.of(TCRItems.ORICHALCUM.get())),
-    TREE("tree", 33, new int[]{ 3, 5, 7, 3 }, 15,
-            SoundEvents.ARMOR_EQUIP_DIAMOND, 0.5f, 0.0f, () -> Ingredient.of(TCRItems.STARLIT_DEWDROP.get())),
-    ICE_TIGER("ice_tiger", 33, new int[]{ 3, 5, 7, 3 }, 15,
-        SoundEvents.ARMOR_EQUIP_DIAMOND, 2.0f, 0.5f, () -> Ingredient.of(TCRItems.TIGER_SOUL_ICE.get())),
-
-    TREE_ROBE("tree_robe", 33, new int[]{ 7, 8, 0, 7 }, 15,
-    SoundEvents.ARMOR_EQUIP_DIAMOND, 2.0f, 0.5f, () -> Ingredient.of(TCRItems.TIGER_SOUL_ICE.get()));
+    TEST("test", 15, new int[]{ 1, 5, 4, 2 }, 10,
+            SoundEvents.ARMOR_EQUIP_GOLD, 3f, 0.3f, () -> Ingredient.of(Items.IRON_INGOT));
 
 
 
@@ -61,18 +56,18 @@ public enum TCRArmorMaterials implements ArmorMaterial {
     }
 
     @Override
-    public SoundEvent getEquipSound() {
+    public @NotNull SoundEvent getEquipSound() {
         return this.equipSound;
     }
 
     @Override
-    public Ingredient getRepairIngredient() {
+    public @NotNull Ingredient getRepairIngredient() {
         return this.repairIngredient.get();
     }
 
     @Override
-    public String getName() {
-        return TheCasketOfReveriesMod.MOD_ID + ":" + this.name;
+    public @NotNull String getName() {
+        return DuelOfTheEndMod.MOD_ID + ":" + this.name;
     }
 
     @Override

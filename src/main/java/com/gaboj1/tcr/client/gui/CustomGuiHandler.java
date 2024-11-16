@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.client.gui;
 
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.archive.Task;
 import com.gaboj1.tcr.client.keymapping.KeyMappings;
 import com.gaboj1.tcr.archive.TCRArchiveManager;
@@ -27,10 +27,10 @@ public class CustomGuiHandler {
         int y = (int) (TCRConfig.TASK_Y.get() * window.getGuiScaledWidth());
         int interval = TCRConfig.INTERVAL.get();
         if(TCRArchiveManager.getWorldLevel() > 0){
-            Component currentLevel = TheCasketOfReveriesMod.getInfo("current_level", TCRArchiveManager.getWorldLevelName());
+            Component currentLevel = DuelOfTheEndMod.getInfo("current_level", TCRArchiveManager.getWorldLevelName());
             guiGraphics.drawString(font, currentLevel, x, y += interval, 0x00ff00, true);
         }
-        Component currentTasks = TheCasketOfReveriesMod.getInfo("current_tasks", KeyMappings.OPEN_PROGRESS.getKeyName());
+        Component currentTasks = DuelOfTheEndMod.getInfo("current_tasks", KeyMappings.OPEN_PROGRESS.getKeyName());
         guiGraphics.drawString(font, currentTasks, x, y += interval, 0x00ff00, true);
         for(Task task : TCRArchiveManager.TASK_SET){
 //            List<FormattedCharSequence> listName = Minecraft.getInstance().font.split(dialog.name(), Math.min(window.getGuiScaledWidth() - x, TCRConfig.TASK_SIZE.get().intValue()));

@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.mixin;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.block.entity.BetterStructureBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -55,7 +55,7 @@ public class ServerGamePacketListenerImplMixin {
                         this.player.displayClientMessage(Component.translatable("structure_block.save_failure", s), false);
                     }
                 } else if (packet.getUpdateType() == StructureBlockEntity.UpdateType.LOAD_AREA) {
-                    TheCasketOfReveriesMod.LOGGER.info("try to load custom structure block on server: {}", blockEntity.getStructureName());
+                    DuelOfTheEndMod.LOGGER.info("try to load custom structure block on server: {}", blockEntity.getStructureName());
                     if (!blockEntity.isStructureLoadable()) {
                         this.player.displayClientMessage(Component.translatable("structure_block.load_not_found", s), false);
                     } else if (blockEntity.loadStructure(this.player.serverLevel())) {
@@ -63,7 +63,7 @@ public class ServerGamePacketListenerImplMixin {
                     } else {
                         this.player.displayClientMessage(Component.translatable("structure_block.load_prepare", s), false);
                         blockEntity.loadStructure(this.player.serverLevel());
-                        TheCasketOfReveriesMod.LOGGER.info("try to load custom structure block AGAIN on server: {}", blockEntity.getStructureName());
+                        DuelOfTheEndMod.LOGGER.info("try to load custom structure block AGAIN on server: {}", blockEntity.getStructureName());
                     }
                 } else if (packet.getUpdateType() == StructureBlockEntity.UpdateType.SCAN_AREA) {
                     if (blockEntity.detectSize()) {

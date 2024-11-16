@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.worldgen.dimension;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.worldgen.biome.*;
 import com.gaboj1.tcr.worldgen.noise.TCRNoiseSettings;
 import net.minecraft.core.HolderGetter;
@@ -22,11 +22,11 @@ import java.util.OptionalLong;
 
 public class TCRDimension {
     public static final ResourceKey<LevelStem> P_SKY_ISLAND_KEY = ResourceKey.create(Registries.LEVEL_STEM,
-            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "realm_of_the_dream"));
+            new ResourceLocation(DuelOfTheEndMod.MOD_ID, "realm_of_the_dream"));
     public static final ResourceKey<Level> P_SKY_ISLAND_LEVEL_KEY = ResourceKey.create(Registries.DIMENSION,
-            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "realm_of_the_dream"));
+            new ResourceLocation(DuelOfTheEndMod.MOD_ID, "realm_of_the_dream"));
     public static final ResourceKey<DimensionType> P_SKY_ISLAND_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
-            new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "realm_of_the_dream_type"));
+            new ResourceLocation(DuelOfTheEndMod.MOD_ID, "realm_of_the_dream_type"));
 
 
     public static void bootstrapType(ResourceKey<DimensionType> typeResourceKey, BootstapContext<DimensionType> context){

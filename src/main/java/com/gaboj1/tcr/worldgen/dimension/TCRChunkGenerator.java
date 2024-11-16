@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.worldgen.dimension;
 
 import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import com.gaboj1.tcr.worldgen.structure.PositionPlacement;
@@ -52,137 +52,13 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
 
     //TODO 生成自己的地表
     @Override
-    public void buildSurface(WorldGenRegion pLevel, StructureManager pStructureManager, RandomState pRandom, ChunkAccess pChunk) {
+    public void buildSurface(@NotNull WorldGenRegion pLevel, @NotNull StructureManager pStructureManager, @NotNull RandomState pRandom, @NotNull ChunkAccess pChunk) {
         super.buildSurface(pLevel, pStructureManager, pRandom, pChunk);
-        buildMountain(pLevel);
-    }
 
-    private void buildMountain(WorldGenRegion primer){
-        BlockState grassTop = Blocks.GRASS_BLOCK.defaultBlockState();
-        BlockState dirt = Blocks.DIRT.defaultBlockState();
-        BlockState stone = Blocks.STONE.defaultBlockState();
-        BlockState snowBlock = Blocks.SNOW_BLOCK.defaultBlockState();
-        BlockState snow = Blocks.SNOW.defaultBlockState();
-        if(this.getBiomeSource() instanceof TCRBiomeProvider provider){
-
-            for (int z = 0; z < 16; z++) {
-                for (int x = 0; x < 16; x++) {
-
-                    //判断是否属于第二群系中心
-                    BlockPos pos = primer.getCenter().getWorldPosition().offset(x, 0, z);
-                    Optional<ResourceKey<Biome>> biome = primer.getBiome(pos).unwrapKey();
-                    if (!TCRBiomes.AZURE_SKIES.location().equals(biome.orElseThrow().location()))
-                        continue;
-
-                    //寻找和周围的方块的最大差值，防止石头露出
-                    int maxDiff = 0;
-                    int height = provider.getMountainHeight(pos);
-                    int eastH = provider.getMountainHeight(pos.east());
-                    int westH = provider.getMountainHeight(pos.west());
-                    int northH = provider.getMountainHeight(pos.north());
-                    int southH = provider.getMountainHeight(pos.south());
-                    if (height > eastH || height > westH || height > northH || height > southH) {
-                        maxDiff = Math.max(height - eastH, Math.max(height - westH, Math.max(height - northH, height - southH)));
-                    }
-
-                    // 寻找最顶的方块
-                    int gBase = 75;
-                    for (int y = 120; y > gBase; y--) {
-                        Block currentBlock = primer.getBlockState(pos.atY(y)).getBlock();
-                        if (currentBlock != Blocks.AIR) {
-                            gBase = y;
-                            break;
-                        }
-                    }
-
-                    //造山咯
-                    int snowLine = (int) (gBase + 60 + 30 * Math.sin(2 * Math.PI * pos.getX() / 500.0));
-                    int y  = 0;
-                    if(height < snowLine){
-                        while(y <= height - 3){
-                            primer.setBlock(pos.atY(gBase + y), stone, 3);
-                            y++;
-                        }
-                        while(y <= height){
-                            primer.setBlock(pos.atY(gBase + y), dirt, 3);
-                            y++;
-                        }
-                    } else {
-                        //防止石头露出雪来
-                        while(y <= height - maxDiff){
-                            primer.setBlock(pos.atY(gBase + y), stone, 3);
-                            y++;
-                        }
-                        while(y <= height){
-                            primer.setBlock(pos.atY(gBase + y), snowBlock, 3);
-                            y++;
-                        }
-                    }
-
-                    if(y < snowLine){
-                        primer.setBlock(pos.atY(gBase + y), grassTop, 3);
-                    } else {
-                        primer.setBlock(pos.atY(gBase + y - 1), snowBlock, 3);
-                        primer.setBlock(pos.atY(gBase + y), snow, 3);
-                    }
-                }
-            }
-        }
-
-    }
-
-    //填补原始地形。因为非平原的情况下地形一言难尽。。
-    private void fixPrimerSurface(WorldGenRegion primer){
-        Perlin perlin = new Perlin();
-
-        BlockState grassTop = Blocks.GRASS_BLOCK.defaultBlockState();
-        BlockState dirt = Blocks.DIRT.defaultBlockState();
-        BlockState air = Blocks.AIR.defaultBlockState();
-        for (int z = 0; z < 16; z++) {
-            for (int x = 0; x < 16; x++) {
-                BlockPos pos = primer.getCenter().getWorldPosition().offset(x, 0, z);
-                Optional<ResourceKey<Biome>> biome = primer.getBiome(pos).unwrapKey();
-                if (biome.isEmpty() ||
-                        TCRBiomes.AIR.location().equals(biome.get().location()) ||
-                            TCRBiomes.FINAL.location().equals(biome.get().location())) continue;
-                // 寻找最顶的方块
-                int gBase = 75;
-                for (int y = 80; y > gBase; y--) {
-                    Block currentBlock = primer.getBlockState(pos.atY(y)).getBlock();
-                    if (currentBlock != Blocks.AIR) {
-                        gBase = y;
-                        break;
-                    }
-                }
-
-                if(gBase == 75) {
-//                    if(TCRConfig.MORE_HOLE.get()){
-//                        continue;//不填坑
-//                    }
-                    gBase = 77;//TODO 填坑，但是数值有待调
-                }
-
-                //获取对应噪声值并填补地形
-                double scale = 0.01;
-                double perlinValue = perlin.get(pos.getX()*scale,0,pos.getZ()*scale);
-                int height;
-//                if(TCRBiomes.AZURE_SKIES.location().equals(biome.get().location())){
-//                    height = Math.max(0,(int)(perlinValue*10-10));
-//                }else {
-//                    height = perlinValue==1 ? 1 : (perlinValue > 1 ? 2 : 0);
-//                }
-                height = perlinValue==1 ? 1 : (perlinValue > 1 ? 2 : 0);
-                int i;
-                for(i = 0; i < height-1; i++){
-                    primer.setBlock(pos.atY(gBase+i), dirt, 3);
-                }
-                primer.setBlock(pos.atY(gBase+i), grassTop, 3);
-            }
-        }
     }
 
     @Override
-    protected Codec<? extends ChunkGenerator> codec() {
+    protected @NotNull Codec<? extends ChunkGenerator> codec() {
         return CODEC;
     }
 
@@ -207,7 +83,7 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
 
             //此处加一行判断即可，其他全是抄原版的
             if ((structurePlacement instanceof PositionPlacement positionPlacement && positionPlacement.isTCRPlacementChunk(this,pChunk,pos.x,pos.z)) || structurePlacement.isStructureChunk(pStructureState, pos.x, pos.z)) {
-                TheCasketOfReveriesMod.LOGGER.info("Ok"+pos+" "+sectionPos+structurePlacement);
+                DuelOfTheEndMod.LOGGER.info("Ok"+pos+" "+sectionPos+structurePlacement);
                 if (iterator.size() == 1) {
                     this.tryGenerateStructure(iterator.get(0), pStructureManager, pRegistryAccess, randomState, pStructureTemplateManager, pStructureState.getLevelSeed(), pChunk, pos, sectionPos);
              } else {
@@ -315,9 +191,9 @@ public class TCRChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
                         break;
                     }
                 }
-                int chunkX = provider.deCorrectValue(p.x)>>2;
-                int chunkZ = provider.deCorrectValue(p.y)>>2;
-                BlockPos pos1 = new BlockPos(chunkX<<4, pos.getY(),chunkZ<<4);
+                int chunkX = provider.deCorrectValue(p.x) >> 2;
+                int chunkZ = provider.deCorrectValue(p.y) >> 2;
+                BlockPos pos1 = new BlockPos(chunkX << 4, pos.getY(),chunkZ << 4);
                 for (Holder<Structure> targetStructure : targetStructures) {
                     if (landmarkPlacement.getValue().contains(targetStructure)) {
                         nearest = new Pair<>(pos1, targetStructure);

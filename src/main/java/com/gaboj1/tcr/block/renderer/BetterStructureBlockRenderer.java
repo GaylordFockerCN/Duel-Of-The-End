@@ -31,11 +31,11 @@ public class BetterStructureBlockRenderer extends StructureBlockRenderer {
      * 一直渲染，防止背对的时候没渲染
      */
     @Override
-    public boolean shouldRender(StructureBlockEntity pBlockEntity, Vec3 pCameraPos) {
+    public boolean shouldRender(@NotNull StructureBlockEntity pBlockEntity, @NotNull Vec3 pCameraPos) {
         return true;
     }
 
-    public void render(BetterStructureBlockEntity pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, int pPackedOverlay) {
+    public void render(StructureBlockEntity pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, int pPackedOverlay) {
         if (Minecraft.getInstance().player.canUseGameMasterBlocks() || Minecraft.getInstance().player.isSpectator()) {
             BlockPos $$6 = pBlockEntity.getStructurePos();
             Vec3i $$7 = pBlockEntity.getStructureSize();
@@ -108,7 +108,7 @@ public class BetterStructureBlockRenderer extends StructureBlockRenderer {
         }
     }
 
-    private void renderInvisibleBlocks(BetterStructureBlockEntity pBlockEntity, VertexConsumer pConsumer, BlockPos pPos, PoseStack pPoseStack) {
+    private void renderInvisibleBlocks(StructureBlockEntity pBlockEntity, VertexConsumer pConsumer, BlockPos pPos, PoseStack pPoseStack) {
         BlockGetter $$4 = pBlockEntity.getLevel();
         BlockPos $$5 = pBlockEntity.getBlockPos();
         BlockPos $$6 = $$5.offset(pPos);

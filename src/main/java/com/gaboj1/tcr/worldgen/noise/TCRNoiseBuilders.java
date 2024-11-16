@@ -1,6 +1,5 @@
 package com.gaboj1.tcr.worldgen.noise;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomes;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.HolderGetter;
@@ -40,16 +39,7 @@ public class TCRNoiseBuilders {
     }
 
     public static SurfaceRules.RuleSource pSurfaceRules() {
-
-        //让边界和最终群系
         SurfaceRules.RuleSource air = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.AIR), AIR));
-        SurfaceRules.RuleSource finalBiome = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.FINAL), WATER));
-
-        //海洋
-        SurfaceRules.RuleSource water = SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.biome4, TCRBiomes.biome4Center), SurfaceRules.sequence(SurfaceRules.ifTrue(surfaceNoiseAbove(-1.75), WATER)));
-
-        //沙漠
-        SurfaceRules.RuleSource desert = SurfaceRules.ifTrue(SurfaceRules.isBiome(TCRBiomes.biome3, TCRBiomes.biome3Center), SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.ON_CEILING, SANDSTONE), SAND));
 
         //普通
         SurfaceRules.RuleSource overworldLike = SurfaceRules.sequence(
@@ -82,10 +72,7 @@ public class TCRNoiseBuilders {
 
         ImmutableList.Builder<SurfaceRules.RuleSource> builder = ImmutableList.builder();
         builder
-                .add(finalBiome)
                 .add(air)
-                .add(water)
-                .add(desert)
                 .add(overworldLike)
                 .add(SurfaceRules.ifTrue(SurfaceRules.verticalGradient("stone", VerticalAnchor.absolute(0), VerticalAnchor.absolute(8)), STONE));
         ;
@@ -175,28 +162,6 @@ public class TCRNoiseBuilders {
         DensityFunction function =  DensityFunctions.add(DensityFunctions.yClampedGradient(-32, 256, 100, -100),function0);//缩放统一为平原
 
         return new NoiseRouter($$4, $$5, $$6, $$7, $$10, $$11, getFunction(densityFunctions, CONTINENTS), getFunction(densityFunctions, EROSION), $$13, getFunction(densityFunctions, RIDGES), slideOverworld(false, DensityFunctions.add($$14, DensityFunctions.constant(-0.703125)).clamp(-64.0, 64.0)), function, DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero());
-    }
-
-    /**
-     * 备用
-     */
-    protected static NoiseRouter overworld_BACK_UP(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noiseParameters, boolean large, boolean amplified) {
-        DensityFunction $$4 = DensityFunctions.noise(noiseParameters.getOrThrow(Noises.AQUIFER_BARRIER), 0.5);
-        DensityFunction $$5 = DensityFunctions.noise(noiseParameters.getOrThrow(Noises.AQUIFER_FLUID_LEVEL_FLOODEDNESS), 0.67);
-        DensityFunction $$6 = DensityFunctions.noise(noiseParameters.getOrThrow(Noises.AQUIFER_FLUID_LEVEL_SPREAD), 0.7142857142857143);
-        DensityFunction $$7 = DensityFunctions.noise(noiseParameters.getOrThrow(Noises.AQUIFER_LAVA));
-        DensityFunction $$8 = getFunction(densityFunctions, SHIFT_X);
-        DensityFunction $$9 = getFunction(densityFunctions, SHIFT_Z);
-        DensityFunction $$10 = DensityFunctions.shiftedNoise2d($$8, $$9, 0.25, noiseParameters.getOrThrow(large ? Noises.TEMPERATURE_LARGE : Noises.TEMPERATURE));
-        DensityFunction $$11 = DensityFunctions.shiftedNoise2d($$8, $$9, 0.25, noiseParameters.getOrThrow(large ? Noises.VEGETATION_LARGE : Noises.VEGETATION));
-        DensityFunction $$12 = getFunction(densityFunctions, large ? FACTOR_LARGE : (amplified ? FACTOR_AMPLIFIED : FACTOR));
-        DensityFunction $$13 = getFunction(densityFunctions, large ? DEPTH_LARGE : (amplified ? DEPTH_AMPLIFIED : DEPTH));
-        DensityFunction $$14 = noiseGradientDensity(DensityFunctions.cache2d($$12), $$13);
-        DensityFunction $$15 = getFunction(densityFunctions, large ? SLOPED_CHEESE_LARGE : (amplified ? SLOPED_CHEESE_AMPLIFIED : SLOPED_CHEESE));
-        DensityFunction $$16 = DensityFunctions.min($$15, DensityFunctions.mul(DensityFunctions.constant(5.0), getFunction(densityFunctions, ENTRANCES)));
-        DensityFunction $$18 = DensityFunctions.min(postProcess(slideOverworld(amplified, $$16)), getFunction(densityFunctions, NOODLE));
-        DensityFunction function = slide($$18, -32, 256, 128, 0, -0.2, 8, 40, -0.1);
-        return new NoiseRouter($$4, $$5, $$6, $$7, $$10, $$11, getFunction(densityFunctions, large ? CONTINENTS_LARGE : CONTINENTS), getFunction(densityFunctions, large ? EROSION_LARGE : EROSION), $$13, getFunction(densityFunctions, RIDGES), slideOverworld(amplified, DensityFunctions.add($$14, DensityFunctions.constant(-0.703125)).clamp(-64.0, 64.0)), function, DensityFunctions.zero(), DensityFunctions.zero(), DensityFunctions.zero());
     }
 
     private static DensityFunction slideOverworld(boolean amplified, DensityFunction densityFunction) {

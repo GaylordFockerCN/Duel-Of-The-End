@@ -1,7 +1,7 @@
 package com.gaboj1.tcr.event.listeners;
 
 import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.client.gui.BossBarHandler;
 import com.gaboj1.tcr.client.gui.CustomGuiHandler;
 import net.minecraft.client.gui.GuiGraphics;
@@ -11,7 +11,7 @@ import net.minecraftforge.client.event.RenderGuiEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = DuelOfTheEndMod.MOD_ID, value = Dist.CLIENT)
 public class ClientForgeEvents {
 
     @SubscribeEvent

@@ -15,30 +15,18 @@ public enum TCRStructuresEnum {
 
     //offset应为偏移的方块数量除以四。举例：FINAL偏移104格，应填26。
     FINAL(2, 26, 26),
-    CHURCH(2,0,0),
-    SWORD(2,0,12),
-    VILLAGE1(2,0,0),
-    VILLAGE2_0(2,0,0),
-    VILLAGE2_1(2,0,0),
-    VILLAGE2_2(2,0,0),
-    VILLAGE2_3(2,0,0),
-    VILLAGE2_4(2,0,0),
-    VILLAGE2_5(2,0,0),
-    FLOWER_ALTAR();
+    CHURCH1(2,0,0),
+    CHURCH2(2,0,12);
 
-    int size = 0;
-    int offsetX = 0;
-    int offsetZ = 0;
-
-    TCRStructuresEnum() {
-    }
+    final int size;
+    final int offsetX;
+    final int offsetZ;
     TCRStructuresEnum(int size, int offsetX, int offsetZ) {
         this.size = size;
         this.offsetX = offsetX;
         this.offsetZ = offsetZ;
     }
 
-    // 可选的getter方法
     public int getSize() {
         return size;
     }
@@ -53,17 +41,9 @@ public enum TCRStructuresEnum {
 
     public Point getPoint() {
         return switch (this) {
-            case FINAL -> BiomeMap.getInstance().getMainCenter();
-            case CHURCH -> BiomeMap.getInstance().getCenter1();
-            case SWORD -> BiomeMap.getInstance().getCenter2();
-            case VILLAGE1 -> BiomeMap.getInstance().getVillage1();
-            case VILLAGE2_0 -> BiomeMap.getInstance().getVillage2()[0];
-            case VILLAGE2_1 -> BiomeMap.getInstance().getVillage2()[1];
-            case VILLAGE2_2 -> BiomeMap.getInstance().getVillage2()[2];
-            case VILLAGE2_3 -> BiomeMap.getInstance().getVillage2()[3];
-            case VILLAGE2_4 -> BiomeMap.getInstance().getVillage2()[4];
-            case VILLAGE2_5 -> BiomeMap.getInstance().getVillage2()[5];
-            default -> new Point(0, 0);
+            case FINAL -> BiomeMap.getInstance().getCenter();
+            case CHURCH1 -> BiomeMap.getInstance().getCenter1();
+            case CHURCH2 -> BiomeMap.getInstance().getCenter2();
         };
     }
 

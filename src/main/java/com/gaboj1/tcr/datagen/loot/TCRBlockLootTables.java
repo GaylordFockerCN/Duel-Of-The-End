@@ -31,45 +31,6 @@ public class TCRBlockLootTables extends BlockLootSubProvider {
 
         //copy from VanillaBlockLoot (我真是天才~
         this.add(TCRBlocks.PORTAL_BED.get(), (block) -> this.createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD));
-        this.add(TCRBlocks.ORICHALCUM_ORE.get(), (block) -> this.createCopperLikeOreDrops(block, TCRItems.RAW_ORICHALCUM.get(), 1, 1));
-        this.dropSelf(TCRBlocks.ORICHALCUM_BLOCK.get());
-
-        this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get());
-        this.add(TCRBlocks.CATNIP.get(), (block) -> this.createCopperLikeOreDrops(block, TCRItems.CATNIP.get(), 1, 3));
-        this.add(TCRBlocks.BLUE_MUSHROOM.get(), (block) -> this.createCopperLikeOreDrops(block, TCRItems.BLUE_MUSHROOM.get(), 1, 3));
-        this.dropSelf(TCRBlocks.THIRST_BLOOD_ROSE.get());
-        this.dropSelf(TCRBlocks.LAZY_ROSE.get());
-        this.dropSelf(TCRBlocks.MELANCHOLIC_ROSE.get());
-        this.dropSelf(TCRBlocks.WITHERED_ROSE.get());
-        this.add(TCRBlocks.POTTED_DENSE_FOREST_SPIRIT_FLOWER.get(), createPotFlowerItemTable(TCRBlocks.DENSE_FOREST_SPIRIT_FLOWER.get()));
-        this.add(TCRBlocks.POTTED_CATNIP.get(), createPotFlowerItemTable(TCRItems.CATNIP.get()));
-        this.add(TCRBlocks.POTTED_BLUE_MUSHROOM.get(), createPotFlowerItemTable(TCRItems.BLUE_MUSHROOM.get()));
-        this.add(TCRBlocks.POTTED_THIRST_BLOOD_ROSE.get(), createPotFlowerItemTable(TCRBlocks.THIRST_BLOOD_ROSE.get()));
-        this.add(TCRBlocks.POTTED_LAZY_ROSE.get(), createPotFlowerItemTable(TCRBlocks.LAZY_ROSE.get()));
-        this.add(TCRBlocks.POTTED_MELANCHOLIC_ROSE.get(), createPotFlowerItemTable(TCRBlocks.MELANCHOLIC_ROSE.get()));
-        this.add(TCRBlocks.POTTED_WITHERED_ROSE.get(), createPotFlowerItemTable(TCRBlocks.WITHERED_ROSE.get()));
-
-
-        this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LOG.get());
-        this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_WOOD.get());
-        this.dropSelf(TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_LOG.get());
-        this.dropSelf(TCRBlocks.STRIPPED_DENSE_FOREST_SPIRIT_TREE_WOOD.get());
-        this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_PLANKS.get());
-
-        this.add(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_LEAVES.get(), block ->
-                createLeavesDrops(block, TCRBlocks.DENSE_FOREST_SPIRIT_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
-
-        this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_SAPLING.get());
-        this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_VINE.get());
-        this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_STAIRS.get());
-        this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE.get());
-        this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_FENCE_GATE.get());
-        this.dropSelf(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_TRAPDOOR.get());
-
-        this.add(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB.get(),
-                block -> createSlabItemTable(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_SLAB.get()));
-        this.add(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR.get(),
-                block -> createDoorTable(TCRBlocks.DENSE_FOREST_SPIRIT_TREE_DOOR.get()));
 
     }
 

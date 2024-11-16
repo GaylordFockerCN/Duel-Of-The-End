@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.util;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.datagen.lang.TCRLangGenerator;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.IntTag;
@@ -16,10 +16,6 @@ import net.minecraft.world.item.*;
  * @author LZY
  */
 public class BookManager {
-
-    public static Book BIOME1_ELDER_DIARY_3 = new Book("biome1_elder_diary3", 2);
-    public static Book BU_GAO = new Book("bu_gao", 1);
-    public static Book MIAO_YIN_MESSAGE = new Book("miao_yin_message", 1);
     public record Book(String name, int pageCount){
         public ItemStack get(){
             return getBook(name,pageCount);
@@ -32,17 +28,17 @@ public class BookManager {
      */
     public static ItemStack getBook(String key, int pageCount){
         ItemStack book = new ItemStack(Items.WRITTEN_BOOK);
-        book.getOrCreateTag().putBoolean(TheCasketOfReveriesMod.MOD_ID + ":book", true);
+        book.getOrCreateTag().putBoolean(DuelOfTheEndMod.MOD_ID + ":book", true);
         ListTag bookPages = new ListTag();
 
         for (int i = 1; i <= pageCount; i++)
-            bookPages.add(StringTag.valueOf(Component.Serializer.toJson(Component.translatable(TheCasketOfReveriesMod.MOD_ID + ".book." + key + "." + i))));
+            bookPages.add(StringTag.valueOf(Component.Serializer.toJson(Component.translatable(DuelOfTheEndMod.MOD_ID + ".book." + key + "." + i))));
 
         book.addTagElement("pages", bookPages);//页数
         book.addTagElement("generation", IntTag.valueOf(3));//破损度
         //不用I18n不知道为什么书会失效..... FIXME 感觉用了I18n的话放服务端会有bug
-        book.addTagElement("author", StringTag.valueOf(I18n.get(TheCasketOfReveriesMod.MOD_ID + ".book.author." + key)));
-        book.addTagElement("title", StringTag.valueOf(I18n.get(TheCasketOfReveriesMod.MOD_ID + ".book." + key)));
+        book.addTagElement("author", StringTag.valueOf(I18n.get(DuelOfTheEndMod.MOD_ID + ".book.author." + key)));
+        book.addTagElement("title", StringTag.valueOf(I18n.get(DuelOfTheEndMod.MOD_ID + ".book." + key)));
         return book;
     }
 

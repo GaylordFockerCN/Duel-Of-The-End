@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.MegaJungleTrunkPlacer;
-import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -25,11 +25,7 @@ public class DenseSpiritTreeTrunkPlacer extends MegaJungleTrunkPlacer {
         super(p_70193_, p_70194_, p_70195_);
     }
 
-//    protected TrunkPlacerType<?> type() {
-//        return TrunkPlacerType.MEGA_JUNGLE_TRUNK_PLACER;
-//    }
-
-    public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader p_226140_, BiConsumer<BlockPos, BlockState> p_226141_, RandomSource p_226142_, int p_226143_, BlockPos p_226144_, TreeConfiguration p_226145_) {
+    public @NotNull List<FoliagePlacer.FoliageAttachment> placeTrunk(@NotNull LevelSimulatedReader p_226140_, @NotNull BiConsumer<BlockPos, BlockState> p_226141_, @NotNull RandomSource p_226142_, int p_226143_, @NotNull BlockPos p_226144_, @NotNull TreeConfiguration p_226145_) {
         List<FoliagePlacer.FoliageAttachment> list = Lists.newArrayList();
         list.addAll(super.placeTrunk(p_226140_, p_226141_, p_226142_, p_226143_, p_226144_, p_226145_));
 

@@ -1,8 +1,7 @@
 package com.gaboj1.tcr.client.gui.screen;
 
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
-import com.gaboj1.tcr.entity.custom.villager.biome1.PastoralPlainVillagerElder;
 import com.gaboj1.tcr.client.gui.screen.component.DialogueAnswerComponent;
 import com.gaboj1.tcr.client.gui.screen.component.DialogueChoiceComponent;
 import com.gaboj1.tcr.network.PacketRelay;
@@ -31,7 +30,7 @@ import java.util.List;
  * 搬运了相关类
  */
 public class TCRDialogueScreen extends Screen {
-    public static final ResourceLocation MY_BACKGROUND_LOCATION = new ResourceLocation(TheCasketOfReveriesMod.MOD_ID,"textures/gui/background.png");
+    public static final ResourceLocation MY_BACKGROUND_LOCATION = new ResourceLocation(DuelOfTheEndMod.MOD_ID,"textures/gui/background.png");
     protected final DialogueAnswerComponent dialogueAnswer;
     protected final Entity entity;
     public final int typewriterInterval;
@@ -104,14 +103,13 @@ public class TCRDialogueScreen extends Screen {
     }
 
     /**
-     * Sends an NPC interaction to the server, which is sent through a packet to be handled in {@link PastoralPlainVillagerElder#handleNpcInteraction(Player, byte)}.
+     * Sends an NPC interaction to the server, which is sent through a packet to be handled in {@link com.gaboj1.tcr.entity.NpcDialogue#handleNpcInteraction(Player, byte)}.
      * @param interactionID A code for which interaction was performed on the client.<br>
      *                      0 - "What can you tell me about this place?"<br>
      *                      1 - "I wish to fight you!"<br>
      *                      2 - "On second thought, I'd rather not."<br>
      *                      3 - "Nevermind."<br>
      * @see NpcPlayerInteractPacket
-     * @see PastoralPlainVillagerElder#handleNpcInteraction(Player, byte)
      */
     protected void finishChat(byte interactionID) {
         PacketRelay.sendToServer(TCRPacketHandler.INSTANCE, new NpcPlayerInteractPacket(this.entity.getId(), interactionID));

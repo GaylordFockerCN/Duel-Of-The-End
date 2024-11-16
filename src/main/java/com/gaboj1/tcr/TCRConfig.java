@@ -77,21 +77,21 @@ public class TCRConfig {
 
     private static ForgeConfigSpec.BooleanValue createBool(ForgeConfigSpec.Builder builder, String key, boolean defaultValue, String... comment) {
         return builder
-                .translation("config."+TheCasketOfReveriesMod.MOD_ID+".common."+key)
+                .translation("config."+ DuelOfTheEndMod.MOD_ID+".common."+key)
                 .comment(comment)
                 .define(key, defaultValue);
     }
 
     private static ForgeConfigSpec.IntValue createInt(ForgeConfigSpec.Builder builder, String key, int defaultValue, int min, String... comment) {
         return builder
-                .translation("config."+TheCasketOfReveriesMod.MOD_ID+".common."+key)
+                .translation("config."+ DuelOfTheEndMod.MOD_ID+".common."+key)
                 .comment(comment)
                 .defineInRange(key, defaultValue, min, Integer.MAX_VALUE);
     }
 
     private static ForgeConfigSpec.DoubleValue createDouble(ForgeConfigSpec.Builder builder, String key, double defaultValue, double min, String... comment) {
         return builder
-                .translation("config."+TheCasketOfReveriesMod.MOD_ID+".common."+key)
+                .translation("config."+ DuelOfTheEndMod.MOD_ID+".common."+key)
                 .comment(comment)
                 .defineInRange(key, defaultValue, min, Double.MAX_VALUE);
     }

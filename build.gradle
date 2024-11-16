@@ -36,7 +36,7 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            arg "-mixin.config=the_casket_of_reveries.mixins.json"
+            arg "-mixin.config=duel_of_the_end.mixins.json"
             mods {
                 "${mod_id}" {
                     source sourceSets.main
@@ -46,7 +46,7 @@ minecraft {
 
         client {
             property 'forge.enabledGameTestNamespaces', mod_id
-            arg "-mixin.config=the_casket_of_reveries.mixins.json"
+            arg "-mixin.config=duel_of_the_end.mixins.json"
         }
 
         server {
@@ -92,8 +92,8 @@ dependencies {
 }
 
 mixin {
-    add sourceSets.main, 'the_casket_of_reveries.mixin-refmap.json'
-    config 'the_casket_of_reveries.mixins.json'
+    add sourceSets.main, 'duel_of_the_end.mixin-refmap.json'
+    config 'duel_of_the_end.mixins.json'
 }
 
 tasks.named('processResources', ProcessResources).configure {
@@ -121,7 +121,7 @@ tasks.named('jar', Jar).configure {
                 'Implementation-Version'  : project.jar.archiveVersion,
                 'Implementation-Vendor'   : mod_authors,
                 'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs": "the_casket_of_reveries.mixins.json"
+                "MixinConfigs": "duel_of_the_end.mixins.json"
         ])
     }
 

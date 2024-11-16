@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.event.listeners;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.archive.TCRArchiveManager;
 import com.gaboj1.tcr.worldgen.biome.TCRBiomeProvider;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 /**
  * 控制服务端SaveUtil的读写
  */
-@Mod.EventBusSubscriber(modid = TheCasketOfReveriesMod.MOD_ID)
+@Mod.EventBusSubscriber(modid = DuelOfTheEndMod.MOD_ID)
 public class ServerEvents {
 
     /**

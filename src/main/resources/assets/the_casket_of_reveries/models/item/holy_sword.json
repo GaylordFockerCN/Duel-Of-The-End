@@ -1,6 +1,0 @@
-{
-  "parent": "the_casket_of_reveries:displaysettings/holy_sword.item",
-  "textures": {
-    "layer0": "the_casket_of_reveries:item/holy_sword"
-  }
-}

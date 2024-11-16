@@ -1,15 +1,12 @@
 package com.gaboj1.tcr.network.packet.serverbound;
 
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.TCRConfig;
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
 import com.gaboj1.tcr.capability.TCRCapabilityProvider;
 import com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder;
 import com.gaboj1.tcr.datagen.TCRAdvancementData;
 import com.gaboj1.tcr.entity.TCRFakePlayer;
-import com.gaboj1.tcr.item.TCRItems;
 import com.gaboj1.tcr.network.packet.BasePacket;
-import com.gaboj1.tcr.util.DataManager;
-import com.gaboj1.tcr.util.ItemUtil;
 import com.gaboj1.tcr.archive.TCRArchiveManager;
 import com.gaboj1.tcr.worldgen.biome.BiomeMap;
 import com.gaboj1.tcr.worldgen.dimension.TCRDimension;
@@ -55,22 +52,9 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
             id += 4;
         }
         switch (id){
-            case 1: destination = BiomeMap.getInstance().getVillage1();height = 150;break;
-            case 2: destination = BiomeMap.getInstance().getVillage2()[0];height = 380;break;
-            case 3: destination = BiomeMap.getInstance().getVillage3();height = 150;break;
-            case 4: destination = BiomeMap.getInstance().getVillage4();height = 150;break;
             case 5: destination = BiomeMap.getInstance().getCenter1();height = 210;break;
             case 6: destination = BiomeMap.getInstance().getCenter2();height = 220;break;
-            case 7: destination = BiomeMap.getInstance().getCenter3();height = 230;break;
-            case 8: destination = BiomeMap.getInstance().getCenter4();height = 240;break;
-            default:destination = BiomeMap.getInstance().getMainCenter();unlocked = TCRArchiveManager.getWorldLevel() >= 1;height = 200;//完成某一个群系的事件后才解锁主城
-        }
-        if(id < 9){
-            if(!DataManager.isSecondEnter.get(playerEntity)){
-                unlocked = true;
-            } else {
-                unlocked = DataManager.portalPointUnlockData.get(id - 1).get(playerEntity);
-            }
+            default: destination = BiomeMap.getInstance().getCenter();height = 230;break;
         }
 
         if(unlocked || playerEntity.isCreative()){
@@ -87,22 +71,16 @@ public record PortalBlockTeleportPacket(byte interactionID, boolean isVillage, b
                     if(portalDimension != null){
                         playerEntity.changeDimension(portalDimension, new TCRTeleporter(new BlockPos(destination.x, 170, destination.y), true));
                         playerEntity.level().playSound(null,playerEntity.getX(),playerEntity.getY(),playerEntity.getZ(), SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS,1,1);
-                        if(!DataManager.isSecondEnter.get(serverPlayer)){
-                            TCRAdvancementData.getAdvancement(TheCasketOfReveriesMod.MOD_ID, serverPlayer);
-                            TCRAdvancementData.getAdvancement("enter_realm_of_the_dream", serverPlayer);
-                            //输出首次进入维度的提示
-                            DialogueComponentBuilder.displayClientMessages(serverPlayer, 6000, false, ()->{
-                                        ItemUtil.addItem(playerEntity, TCRItems.WALLET.get(), 1);
-//                                        ItemUtil.addItem(playerEntity, TCRItems.RECALL_SCROLL.get(), 1);
-                                    },
-                                    TheCasketOfReveriesMod.getInfo("first_enter1"),
-                                    TheCasketOfReveriesMod.getInfo("first_enter2"),
-                                    TheCasketOfReveriesMod.getInfo("first_enter3")
-                                    );
-                            DataManager.portalPointUnlockData.get(id - 1).put(playerEntity, true);//解锁传送点
-                            DataManager.isSecondEnter.put(serverPlayer, true);
-                            TCRArchiveManager.TASK_SET.add(TCRArchiveManager.Biome1ProgressData.TASK_FIND_ELDER1);
-                        }
+                        TCRAdvancementData.getAdvancement(DuelOfTheEndMod.MOD_ID, serverPlayer);
+                        TCRAdvancementData.getAdvancement("enter_realm_of_the_dream", serverPlayer);
+                        //输出首次进入维度的提示
+                        DialogueComponentBuilder.displayClientMessages(serverPlayer, 6000, false, ()->{
+
+                                },
+                                DuelOfTheEndMod.getInfo("first_enter1"),
+                                DuelOfTheEndMod.getInfo("first_enter2"),
+                                DuelOfTheEndMod.getInfo("first_enter3")
+                                );
                         //记录进入点
                         serverPlayer.getCapability(TCRCapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {
                             tcrPlayer.setBedPointBeforeEnter(bedPos);

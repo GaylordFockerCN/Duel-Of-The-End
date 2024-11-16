@@ -1,6 +1,6 @@
 package com.gaboj1.tcr.block.renderer;
 
-import com.gaboj1.tcr.TheCasketOfReveriesMod;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.block.entity.PortalBedEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -37,8 +37,8 @@ import net.minecraft.world.level.block.state.properties.BedPart;
 public class PortalBedRenderer implements BlockEntityRenderer<PortalBedEntity> {
     private final ModelPart headRoot;
     private final ModelPart footRoot;
-    public static final ModelLayerLocation HEAD = new ModelLayerLocation(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "head"), "main");
-    public static final ModelLayerLocation FOOT = new ModelLayerLocation(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "foot"), "main");
+    public static final ModelLayerLocation HEAD = new ModelLayerLocation(new ResourceLocation(DuelOfTheEndMod.MOD_ID, "head"), "main");
+    public static final ModelLayerLocation FOOT = new ModelLayerLocation(new ResourceLocation(DuelOfTheEndMod.MOD_ID, "foot"), "main");
 
     public PortalBedRenderer(BlockEntityRendererProvider.Context context) {
         this.headRoot = context.bakeLayer(HEAD);
@@ -84,7 +84,7 @@ public class PortalBedRenderer implements BlockEntityRenderer<PortalBedEntity> {
         stack.mulPose(Axis.ZP.rotationDegrees(180.0F + direction.toYRot()));
         stack.translate(-0.5F, -0.5F, -0.5F);
 
-        VertexConsumer vertexconsumer = bufferSource.getBuffer(RenderType.entityCutout(new ResourceLocation(TheCasketOfReveriesMod.MOD_ID, "textures/block/portal_bed.png")));
+        VertexConsumer vertexconsumer = bufferSource.getBuffer(RenderType.entityCutout(new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/block/portal_bed.png")));
         part.render(stack, vertexconsumer, p_173547_, p_173548_);
         stack.popPose();
     }
