@@ -14,7 +14,7 @@ public class HandleStructureBlockLoad {
     public static void load(StructureBlockEntity entity){
         if(Minecraft.getInstance().level != null && Minecraft.getInstance().player != null){
             Objects.requireNonNull(Minecraft.getInstance().getConnection()).send(new ServerboundSetStructureBlockPacket(entity.getBlockPos(), StructureBlockEntity.UpdateType.LOAD_AREA, entity.getMode(), entity.getStructureName(), entity.getStructurePos(), entity.getStructureSize(), entity.getMirror(), entity.getRotation(), entity.getMetaData(), entity.isIgnoreEntities(), entity.getShowAir(), entity.getShowBoundingBox(), entity.getIntegrity(), entity.getSeed()));
-            DuelOfTheEndMod.LOGGER.info("post load request : {} ",entity.getStructureName());
+            DuelOfTheEndMod.LOGGER.info("post load request : {} ", entity.getStructureName());
         }
     }
 }

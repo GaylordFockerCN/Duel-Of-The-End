@@ -14,11 +14,10 @@ import java.awt.Point;
  */
 public enum DOTEStructuresEnum {
 
-    //offset应为偏移的方块数量除以四。举例：FINAL偏移104格，应填26。
-    FINAL(2, 26, 26),
-//    CHURCH1(2,-50,-10),
-    CHURCH1(2,0,0),
-    CHURCH2(2,0,12);
+    //offset应为偏移的方块数量除以四。举例：FINAL偏移61格，应填15 。
+    FINAL(2, 15, 15),
+    CHURCH1(2,50,10),
+    CHURCH2(2,50,10);
 
     final int size;
     final int offsetX;

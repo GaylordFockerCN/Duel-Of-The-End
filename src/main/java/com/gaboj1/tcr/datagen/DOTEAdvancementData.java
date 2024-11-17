@@ -19,12 +19,12 @@ import java.util.function.Consumer;
 
 public class DOTEAdvancementData extends ForgeAdvancementProvider {
     public DOTEAdvancementData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, ExistingFileHelper helper) {
-        super(output, registries, helper, List.of(new TCRAdvancements()));
+        super(output, registries, helper, List.of(new DOTEAdvancements()));
     }
 
-    public static class TCRAdvancements implements AdvancementGenerator {
+    public static class DOTEAdvancements implements AdvancementGenerator {
 
-        public final String pre = "advancement."+ DuelOfTheEndMod.MOD_ID+".";
+        public final String pre = "advancement." + DuelOfTheEndMod.MOD_ID + ".";
         private Consumer<Advancement> consumer;
         private ExistingFileHelper helper;
         @SuppressWarnings("unused")

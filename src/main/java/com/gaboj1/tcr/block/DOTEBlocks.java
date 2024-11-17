@@ -2,9 +2,9 @@ package com.gaboj1.tcr.block;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.block.custom.*;
+import com.gaboj1.tcr.block.custom.spawner.SenbaiSpawnerBlock;
 import com.gaboj1.tcr.item.DOTEItems;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -14,7 +14,6 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
-
 public class DOTEBlocks {
     public static final DeferredRegister<Block> REGISTRY =
             DeferredRegister.create(ForgeRegistries.BLOCKS, DuelOfTheEndMod.MOD_ID);
@@ -22,8 +21,8 @@ public class DOTEBlocks {
     public static final RegistryObject<Block> BETTER_STRUCTURE_BLOCK = registerBlock("better_structure_block",
             ()-> new BetterStructureBlock(BlockBehaviour.Properties.copy(Blocks.STRUCTURE_BLOCK)));
 
-    public static final RegistryObject<Block> PORTAL_BED = registerBlock("portal_bed",
-            () -> new PortalBed(DyeColor.WHITE,BlockBehaviour.Properties.copy(Blocks.BLACK_BED)));
+    public static final RegistryObject<Block> SENBAI_SPAWNER = registerBlock("senbai_spawner",
+            ()-> new SenbaiSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){
         RegistryObject<T> toReturn = REGISTRY.register(name, block);

@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 @Mod.EventBusSubscriber(modid = DuelOfTheEndMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DOTECapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<DOTEPlayer> TCR_PLAYER = CapabilityManager.get(new CapabilityToken<>() {});
+    public static Capability<DOTEPlayer> DOTE_PLAYER = CapabilityManager.get(new CapabilityToken<>() {});
 
     private DOTEPlayer DOTEPlayer = null;
     
@@ -35,7 +35,7 @@ public class DOTECapabilityProvider implements ICapabilityProvider, INBTSerializ
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction direction) {
-        if(capability == TCR_PLAYER){
+        if(capability == DOTE_PLAYER){
             return optional.cast();
         }
 
@@ -59,7 +59,7 @@ public class DOTECapabilityProvider implements ICapabilityProvider, INBTSerializ
         @SubscribeEvent
         public static void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
             if (event.getObject() instanceof Player) {
-               if(!event.getObject().getCapability(DOTECapabilityProvider.TCR_PLAYER).isPresent()){
+               if(!event.getObject().getCapability(DOTECapabilityProvider.DOTE_PLAYER).isPresent()){
                    event.addCapability(new ResourceLocation(DuelOfTheEndMod.MOD_ID, "tcr_player"), new DOTECapabilityProvider());
                }
             }
@@ -69,8 +69,8 @@ public class DOTECapabilityProvider implements ICapabilityProvider, INBTSerializ
         public static void onPlayerCloned(PlayerEvent.Clone event) {
             event.getOriginal().reviveCaps();//。。。怎么之前没加这个也可以，现在没加不行
             if(event.isWasDeath()) {
-                event.getOriginal().getCapability(DOTECapabilityProvider.TCR_PLAYER).ifPresent(oldStore -> {
-                    event.getEntity().getCapability(DOTECapabilityProvider.TCR_PLAYER).ifPresent(newStore -> {
+                event.getOriginal().getCapability(DOTECapabilityProvider.DOTE_PLAYER).ifPresent(oldStore -> {
+                    event.getEntity().getCapability(DOTECapabilityProvider.DOTE_PLAYER).ifPresent(newStore -> {
                         newStore.copyFrom(oldStore);
                     });
                 });

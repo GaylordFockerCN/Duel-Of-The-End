@@ -1,66 +1,58 @@
 package com.gaboj1.tcr.entity.custom;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerPlayer;
+import com.gaboj1.tcr.client.DOTESounds;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 import yesman.epicfight.world.item.EpicFightItems;
 
 public class SenbaiDevil extends DOTEBoss {
+
     public SenbaiDevil(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         setItemInHand(InteractionHand.MAIN_HAND, EpicFightItems.UCHIGATANA.get().getDefaultInstance());
     }
+
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 755.0D)
-                .add(Attributes.ATTACK_DAMAGE, 2.0f)
+                .add(Attributes.MAX_HEALTH, 274.0f)
+                .add(Attributes.ATTACK_DAMAGE, 20.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
-                .add(EpicFightAttributes.ARMOR_NEGATION.get(), 0.4f)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 114514f)
+                .add(EpicFightAttributes.IMPACT.get(), 1.1f)
+                .add(EpicFightAttributes.ARMOR_NEGATION.get(), 10)
+                .add(EpicFightAttributes.MAX_STRIKES.get(), 3)
+                .add(EpicFightAttributes.MAX_STAMINA.get(), 80)
+                .add(EpicFightAttributes.WEIGHT.get(), 3)
                 .build();
     }
+
     @Override
-    protected void registerGoals() {
-        super.registerGoals();
-        this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, false));
-        this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new RandomStrollGoal(this, 1));
-        this.goalSelector.addGoal(2, new RandomLookAroundGoal(this));
+    public int getMaxNeutralizeCount() {
+        return 10;
     }
 
     @Override
-    public void openDialogueScreen(CompoundTag senderData) {
-
-    }
-
-    @Override
-    public void handleNpcInteraction(Player player, byte interactionID) {
-
-    }
-
-    @Override
-    protected void sendDialoguePacket(ServerPlayer serverPlayer) {
-
+    public void die(@NotNull DamageSource source) {
+        level().playSound(null , getX(), getY(), getZ(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.BLOCKS,1,1);
+        super.die(source);
     }
 
     @Override
     public @Nullable SoundEvent getFightMusic() {
-        return null;
+        return DOTESounds.SENBAI_BGM.get();
     }
+
 }

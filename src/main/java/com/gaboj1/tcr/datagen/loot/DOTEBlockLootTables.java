@@ -25,12 +25,8 @@ public class DOTEBlockLootTables extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-
         this.dropSelf(DOTEBlocks.BETTER_STRUCTURE_BLOCK.get());
-
-        //copy from VanillaBlockLoot (我真是天才~
-        this.add(DOTEBlocks.PORTAL_BED.get(), (block) -> this.createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD));
-
+        this.dropSelf(DOTEBlocks.SENBAI_SPAWNER.get());
     }
 
     protected LootTable.Builder createCopperLikeOreDrops(Block pBlock, Item item, float min, float max) {

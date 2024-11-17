@@ -33,7 +33,7 @@ public class PositionPlacement extends StructurePlacement {
         this.hasGenerated = false;
     }
 
-    public boolean isTCRPlacementChunk(DOTEChunkGenerator chunkGen, ChunkAccess pChunk, int chunkX, int chunkZ) {
+    public boolean isTCRPlacementChunk(DOTEChunkGenerator chunkGen, int chunkX, int chunkZ) {
 
         if(chunkGen.getBiomeSource() instanceof DOTEBiomeProvider provider){
             int correctX = provider.getCorrectValue(chunkX << 2);
@@ -65,6 +65,7 @@ public class PositionPlacement extends StructurePlacement {
             hasGenerated = true;//防止多次生成
             return true;
         }
+
         return false;
     }
 

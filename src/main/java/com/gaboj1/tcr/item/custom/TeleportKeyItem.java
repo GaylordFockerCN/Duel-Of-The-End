@@ -32,8 +32,15 @@ public class TeleportKeyItem extends SimpleDescriptionItem{
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         if(level instanceof ServerLevel serverLevel && player.isShiftKeyDown()){
-            player.changeDimension(Objects.requireNonNull(serverLevel.getServer().getLevel(DOTEDimension.P_SKY_ISLAND_LEVEL_KEY)),
-                    new DOTETeleporter(destination.get()));
+            boolean inDim = serverLevel.dimension() == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY;
+            if(inDim){
+                player.changeDimension(Objects.requireNonNull(serverLevel.getServer().overworld()),
+                        new DOTETeleporter(destination.get()));
+            } else {
+                player.changeDimension(Objects.requireNonNull(serverLevel.getServer().getLevel(DOTEDimension.P_SKY_ISLAND_LEVEL_KEY)),
+                        new DOTETeleporter(destination.get()));
+
+            }
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS,1,1);
 
         }

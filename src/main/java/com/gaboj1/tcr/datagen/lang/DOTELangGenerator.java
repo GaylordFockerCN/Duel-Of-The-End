@@ -1,6 +1,8 @@
 package com.gaboj1.tcr.datagen.lang;
 
+import com.gaboj1.tcr.entity.DOTEEntities;
 import com.gaboj1.tcr.item.DOTEItems;
+import com.gaboj1.tcr.worldgen.biome.DOTEBiomes;
 import net.minecraft.data.PackOutput;
 
 public class DOTELangGenerator extends DOTELangProvider {
@@ -15,7 +17,7 @@ public class DOTELangGenerator extends DOTELangProvider {
         add(DOTEItems.M_KEY.get(), "圣堂决斗钥匙");
         add(DOTEItems.U_KEY.get(), "终焉决斗钥匙");
         add(DOTEItems.ADGRAIN.get(), "冒险碎片");
-        addItemUsageInfo(DOTEItems.ADGRAIN.get(), "");
+        addItemUsageInfo(DOTEItems.ADGRAIN.get(), "似乎可以用来与他人交易...");
         add(DOTEItems.IMMORTALESSENCE.get(), "往生精华");
         addItemUsageInfo(DOTEItems.IMMORTALESSENCE.get(), "似乎蕴含着某种往生的力量...");
         addItemUsageInfo(DOTEItems.P_KEY.get(), "潜行时右键以传送到指定决斗场的位置");
@@ -43,7 +45,14 @@ public class DOTELangGenerator extends DOTELangProvider {
         addItemUsageInfo(DOTEItems.NETHERITEROT_BOOTS.get(), "套装效果：炎甲");
         add("item.duel_of_the_end.golden_dragon0", "");
 
+        add(DOTEEntities.DOTE_ZOMBIE.get(), "黑暗先遣");
+        add(DOTEEntities.DOTE_PIGLIN.get(), "猪灵");
+        add(DOTEEntities.STAR_CHASER.get(), "追星者");
+        add(DOTEEntities.SENBAI_DEVIL.get(), "森白影魔");
 
+        addBiome(DOTEBiomes.AIR, "虚空");
+        addBiome(DOTEBiomes.BIOME1, "圣堂");
+        addBiome(DOTEBiomes.BIOME2, "炼狱");
 
     }
 }

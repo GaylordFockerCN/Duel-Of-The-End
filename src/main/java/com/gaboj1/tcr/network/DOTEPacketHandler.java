@@ -26,13 +26,11 @@ public class DOTEPacketHandler {
         register(PersistentBoolDataSyncPacket.class, PersistentBoolDataSyncPacket::decode);
         register(PersistentDoubleDataSyncPacket.class, PersistentDoubleDataSyncPacket::decode);
         register(PersistentStringDataSyncPacket.class, PersistentStringDataSyncPacket::decode);
-        register(SyncFakePlayerPacket.class, SyncFakePlayerPacket::decode);
         register(SyncUuidPacket.class, SyncUuidPacket::decode);
         register(BroadcastMessagePacket.class, BroadcastMessagePacket::decode);
 
         // 发给服务端
         register(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);
-        register(PortalBlockTeleportPacket.class, PortalBlockTeleportPacket::decode);
         register(AddDialogPacket.class, AddDialogPacket::decode);
 
         //双端

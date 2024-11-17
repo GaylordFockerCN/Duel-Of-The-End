@@ -95,12 +95,12 @@ public class BiomeMap implements Serializable {
                     if (alpha < 50) {
                         map[i][j] = 0;  // 透明区域
                     } else {
-                        // 计算颜色的亮度，接近黑色为 1，接近白色为 2
+                        // 计算颜色的亮度，接近黑色为 2，接近白色为 1
                         int brightness = (red + green + blue) / 3;
                         if (brightness < 128) {
-                            map[i][j] = 1;  // 接近黑色
+                            map[i][j] = 2;  // 接近黑色
                         } else {
-                            map[i][j] = 2;  // 接近白色
+                            map[i][j] = 1;  // 接近白色
                         }
                     }
                 }

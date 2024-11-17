@@ -7,7 +7,6 @@ import com.gaboj1.tcr.network.DOTEPacketHandler;
 import com.gaboj1.tcr.network.packet.clientbound.PersistentBoolDataSyncPacket;
 import com.gaboj1.tcr.network.packet.clientbound.PersistentDoubleDataSyncPacket;
 import com.gaboj1.tcr.network.packet.clientbound.PersistentStringDataSyncPacket;
-import com.gaboj1.tcr.archive.DOTEArchiveManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
@@ -25,33 +24,33 @@ import net.minecraft.world.entity.player.Player;
  * @author LZY
  */
 public class DataManager {
-
+    public static BoolData keyGot =  new BoolData("key_got",false);
     public static void putData(Player player, String key, double value) {
-        getTCRPlayer(player).putDouble(key, value);
+        getDOTEPlayer(player).putDouble(key, value);
     }
 
     public static void putData(Player player, String key, String value) {
-        getTCRPlayer(player).putString(key, value);
+        getDOTEPlayer(player).putString(key, value);
     }
 
     public static void putData(Player player, String key, boolean value) {
-        getTCRPlayer(player).putBoolean(key, value);
+        getDOTEPlayer(player).putBoolean(key, value);
     }
 
     public static boolean getBool(Player player, String key) {
-        return getTCRPlayer(player).getBoolean(key);
+        return getDOTEPlayer(player).getBoolean(key);
     }
 
     public static double getDouble(Player player, String key) {
-        return getTCRPlayer(player).getDouble(key);
+        return getDOTEPlayer(player).getDouble(key);
     }
 
     public static String getString(Player player, String key) {
-        return getTCRPlayer(player).getString(key);
+        return getDOTEPlayer(player).getString(key);
     }
 
-    public static DOTEPlayer getTCRPlayer(Player player) {
-        return player.getCapability(DOTECapabilityProvider.TCR_PLAYER).orElseThrow(() -> new IllegalStateException("Player " + player.getName().getContents() + " has no TCR Player Capability!"));
+    public static DOTEPlayer getDOTEPlayer(Player player) {
+        return player.getCapability(DOTECapabilityProvider.DOTE_PLAYER).orElseThrow(() -> new IllegalStateException("Player " + player.getName().getContents() + " has no DOTE Player Capability!"));
     }
 
 
@@ -69,12 +68,12 @@ public class DataManager {
         }
 
         public void init(Player player){
-            isLocked = getTCRPlayer(player).getBoolean(key+"isLocked");
+            isLocked = getDOTEPlayer(player).getBoolean(key+"isLocked");
 
         }
 
         public boolean isLocked(Player player) {
-            return getTCRPlayer(player).getBoolean(key+"isLocked");
+            return getDOTEPlayer(player).getBoolean(key+"isLocked");
         }
 
         public boolean isLocked(CompoundTag playerData) {
@@ -82,12 +81,12 @@ public class DataManager {
         }
 
         public void lock(Player player) {
-            getTCRPlayer(player).putBoolean(key+"isLocked",true);
+            getDOTEPlayer(player).putBoolean(key+"isLocked",true);
             isLocked = true;
         }
 
         public void unLock(Player player) {
-            getTCRPlayer(player).putBoolean(key+"isLocked",false);
+            getDOTEPlayer(player).putBoolean(key+"isLocked",false);
             LocalPlayer localPlayer = Minecraft.getInstance().player;
             isLocked = false;
         }
@@ -115,7 +114,7 @@ public class DataManager {
         @Override
         public void put(Player player, String value) {
             if(!isLocked(player)){
-                getTCRPlayer(player).putString(key, value);
+                getDOTEPlayer(player).putString(key, value);
                 if(player instanceof ServerPlayer serverPlayer){
                     PacketRelay.sendToPlayer(DOTEPacketHandler.INSTANCE, new PersistentStringDataSyncPacket(key, isLocked, value),serverPlayer);
                 }
@@ -124,7 +123,7 @@ public class DataManager {
 
         @Override
         public String get(Player player){
-            return getTCRPlayer(player).getString(key);
+            return getDOTEPlayer(player).getString(key);
         }
 
         public String get(CompoundTag playerData){
@@ -142,14 +141,14 @@ public class DataManager {
         }
 
         public void init(Player player){
-            isLocked = getTCRPlayer(player).getBoolean(key+"isLocked");
+            isLocked = getDOTEPlayer(player).getBoolean(key+"isLocked");
             put(player, defaultValue);
         }
 
         @Override
         public void put(Player player, Double value) {
             if(!isLocked(player)){
-                getTCRPlayer(player).putDouble(key, value);
+                getDOTEPlayer(player).putDouble(key, value);
                 if(player instanceof ServerPlayer serverPlayer){
                     PacketRelay.sendToPlayer(DOTEPacketHandler.INSTANCE, new PersistentDoubleDataSyncPacket(key, isLocked, value),serverPlayer);
                 }
@@ -158,7 +157,7 @@ public class DataManager {
 
         @Override
         public Double get(Player player){
-            return getTCRPlayer(player).getDouble(key);
+            return getDOTEPlayer(player).getDouble(key);
         }
 
         public double get(CompoundTag playerData){
@@ -175,7 +174,7 @@ public class DataManager {
         }
 
         public void init(Player player){
-            isLocked = getTCRPlayer(player).getBoolean(key+"isLocked");
+            isLocked = getDOTEPlayer(player).getBoolean(key+"isLocked");
             put(player,defaultBool);
         }
 
@@ -184,7 +183,7 @@ public class DataManager {
             if(isLocked(player))
                 return;
 
-            getTCRPlayer(player).putBoolean(key, value);
+            getDOTEPlayer(player).putBoolean(key, value);
             if(player instanceof ServerPlayer serverPlayer){
                 PacketRelay.sendToPlayer(DOTEPacketHandler.INSTANCE, new PersistentBoolDataSyncPacket(key, isLocked, value),serverPlayer);
             }
@@ -192,7 +191,7 @@ public class DataManager {
 
         @Override
         public Boolean get(Player player){
-            return getTCRPlayer(player).getBoolean(key);
+            return getDOTEPlayer(player).getBoolean(key);
         }
 
         public boolean get(CompoundTag playerData){

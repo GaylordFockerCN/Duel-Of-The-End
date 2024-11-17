@@ -3,10 +3,11 @@ package com.gaboj1.tcr.event.listeners;
 import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.block.DOTEBlockEntities;
 import com.gaboj1.tcr.block.renderer.BetterStructureBlockRenderer;
-import com.gaboj1.tcr.block.renderer.PortalBedRenderer;
 import com.gaboj1.tcr.entity.DOTEEntities;
+import com.gaboj1.tcr.entity.client.DOTEPiglinRenderer;
+import com.gaboj1.tcr.entity.client.DOTEZombieRenderer;
 import com.gaboj1.tcr.entity.client.SenbaiRenderer;
-import com.gaboj1.tcr.entity.client.TCRFakePlayerRenderer;
+import com.gaboj1.tcr.entity.client.StarChaserRenderer;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -22,8 +23,11 @@ import yesman.epicfight.client.renderer.patched.entity.PHumanoidRenderer;
 public class ClientModEvents{
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event){
-        EntityRenderers.register(DOTEEntities.FAKE_PLAYER.get(), TCRFakePlayerRenderer::new);
         EntityRenderers.register(DOTEEntities.SENBAI_DEVIL.get(), SenbaiRenderer::new);
+        EntityRenderers.register(DOTEEntities.DOTE_PIGLIN.get(), DOTEPiglinRenderer::new);
+        EntityRenderers.register(DOTEEntities.DOTE_ZOMBIE.get(), DOTEZombieRenderer::new);
+        EntityRenderers.register(DOTEEntities.STAR_CHASER.get(), StarChaserRenderer::new);
+
     }
 
     @SubscribeEvent
@@ -33,8 +37,6 @@ public class ClientModEvents{
 
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(PortalBedRenderer.HEAD, PortalBedRenderer::createHeadLayer);
-        event.registerLayerDefinition(PortalBedRenderer.FOOT, PortalBedRenderer::createFootLayer);
     }
 
     @SubscribeEvent
@@ -42,6 +44,9 @@ public class ClientModEvents{
     public static void onRenderPatched(PatchedRenderersEvent.Add event) {
         EntityRendererProvider.Context context = event.getContext();
         event.addPatchedEntityRenderer(DOTEEntities.SENBAI_DEVIL.get(), (entityType) -> new PHumanoidRenderer<>(() -> Meshes.SKELETON, context, entityType).initLayerLast(context, entityType));
+        event.addPatchedEntityRenderer(DOTEEntities.DOTE_ZOMBIE.get(), (entityType) -> new PHumanoidRenderer<>(() -> Meshes.BIPED, context, entityType).initLayerLast(context, entityType));
+        event.addPatchedEntityRenderer(DOTEEntities.DOTE_PIGLIN.get(), (entityType) -> new PHumanoidRenderer<>(() -> Meshes.PIGLIN, context, entityType).initLayerLast(context, entityType));
+        event.addPatchedEntityRenderer(DOTEEntities.STAR_CHASER.get(), (entityType) -> new PHumanoidRenderer<>(() -> Meshes.BIPED, context, entityType).initLayerLast(context, entityType));
     }
 
 }

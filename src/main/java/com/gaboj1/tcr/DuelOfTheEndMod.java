@@ -5,8 +5,7 @@ import com.gaboj1.tcr.block.DOTEBlocks;
 import com.gaboj1.tcr.client.DOTESounds;
 import com.gaboj1.tcr.effect.DOTEEffects;
 import com.gaboj1.tcr.entity.DOTEEntities;
-import com.gaboj1.tcr.entity.TCRVillagers;
-import com.gaboj1.tcr.event.listeners.ClientModEvents;
+import com.gaboj1.tcr.entity.DOTEVillagers;
 import com.gaboj1.tcr.item.DOTEItemTabs;
 import com.gaboj1.tcr.item.DOTEItems;
 import com.gaboj1.tcr.network.DOTEPacketHandler;
@@ -52,7 +51,7 @@ public class DuelOfTheEndMod {
         DOTEItemTabs.REGISTRY.register(bus);
         DOTEEffects.REGISTRY.register(bus);
         DOTEStructurePlacementTypes.STRUCTURE_PLACEMENT_TYPES.register(bus);
-        TCRVillagers.register(bus);
+        DOTEVillagers.register(bus);
         bus.addListener(this::commonSetup);
         bus.addListener(this::registerExtraStuff);
 

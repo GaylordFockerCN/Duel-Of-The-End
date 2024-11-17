@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.item;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
+import com.gaboj1.tcr.block.DOTEBlocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -35,6 +36,7 @@ public class DOTEItemTabs {
 						tabData.accept(DOTEItems.GOLDEN_DRAGON_CHESTPLATE.get());
 						tabData.accept(DOTEItems.GOLDEN_DRAGON_LEGGINGS.get());
 						tabData.accept(DOTEItems.GOLDEN_DRAGON_BOOTS.get());
+						tabData.accept(DOTEBlocks.SENBAI_SPAWNER.get());
 					}).build());
 
 }

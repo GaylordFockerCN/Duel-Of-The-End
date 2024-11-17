@@ -14,55 +14,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class BossSpawnerBlockEntity<T extends Mob & ShadowableEntity> extends EntitySpawnerBlockEntity<T> {
+public abstract class BossSpawnerBlockEntity<T extends Mob> extends EntitySpawnerBlockEntity<T> {
 
 	protected BossSpawnerBlockEntity(BlockEntityType<?> type, EntityType<T> entityType, BlockPos pos, BlockState state) {
 		super(type, entityType, pos, state);
-	}
-
-    /**
-	 * 召唤历战版
-	 */
-	public void tryToSpawnShadow(ServerPlayer player){
-		if(!canSpawnShadow()){
-			player.displayClientMessage(Component.translatable("info.the_casket_of_reveries.cannot_spawn"), true);
-			return;
-		}
-		if(!isReady){
-			isReady = true;
-			player.displayClientMessage(Component.translatable("info.the_casket_of_reveries.sure_to_spawn"), true);
-			return;
-		}
-		isReady = !spawnMyShadowBoss(player.serverLevel());
-	}
-
-	/**
-	 * boss击败后才可以召唤历战
-	 */
-	public abstract boolean canSpawnShadow();
-
-	@Override
-	protected void saveAdditional(@NotNull CompoundTag tag) {
-		tag.putBoolean("spawned", spawned);
-		super.saveAdditional(tag);
-	}
-
-	@Override
-	public void load(@NotNull CompoundTag tag) {
-		spawned = tag.getBoolean("spawned");
-		super.load(tag);
-	}
-
-	protected boolean spawnMyShadowBoss(ServerLevelAccessor accessor) {
-		// create creature
-		T myCreature = this.makeMyCreature();
-		myCreature.setShadow();
-		BlockPos spawnPos = accessor.getBlockState(this.getBlockPos().above()).getCollisionShape(accessor, this.getBlockPos().above()).isEmpty() ? this.getBlockPos().above() : this.getBlockPos();
-		myCreature.moveTo(spawnPos, accessor.getLevel().getRandom().nextFloat() * 360F, 0.0F);
-		ForgeEventFactory.onFinalizeSpawn(myCreature, accessor, accessor.getCurrentDifficultyAt(spawnPos), MobSpawnType.SPAWNER, null, null);
-
-		// spawn it
-		return accessor.addFreshEntity(myCreature);
 	}
 
 }

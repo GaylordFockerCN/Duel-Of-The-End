@@ -6,7 +6,9 @@ import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.archive.DOTEArchiveManager;
 import com.gaboj1.tcr.item.custom.NetherRotArmorItem;
 import com.gaboj1.tcr.item.custom.TieStoneArmorItem;
+import com.gaboj1.tcr.worldgen.dimension.DOTEDimension;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -30,7 +32,15 @@ public class LivingEntityListener {
 
     @SubscribeEvent
     public static void onEntityDie(LivingDeathEvent event) {
-
+        //如果在维度里怪杀死了玩家则怪回满血
+        if(event.getEntity() instanceof ServerPlayer serverPlayer && serverPlayer.serverLevel().dimension() == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY){
+            if(event.getSource().getEntity() instanceof LivingEntity livingEntity){
+                livingEntity.setHealth(livingEntity.getMaxHealth());
+            }
+            if(event.getSource().getDirectEntity() instanceof LivingEntity livingEntity){
+                livingEntity.setHealth(livingEntity.getMaxHealth());
+            }
+        }
     }
 
     @SubscribeEvent

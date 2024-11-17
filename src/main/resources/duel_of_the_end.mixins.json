@@ -3,8 +3,8 @@
   "package": "com.gaboj1.tcr.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AttackAnimationMixin",
     "AttributesMixin",
-    "ItemMixin",
     "ServerGamePacketListenerImplMixin",
     "WorldOptionsMixin"
   ],

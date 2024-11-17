@@ -14,9 +14,6 @@ import java.util.function.Consumer;
  */
 public class DOTEPlayer {
     private CompoundTag data = new CompoundTag();
-    private UUID fakePlayerUuid;
-    private BlockPos bedPointBeforeEnter = BlockPos.ZERO;
-    private BlockPos lastPortalBlockPos = BlockPos.ZERO;
     public boolean getBoolean(String key){
         return data.getBoolean(key);
     }
@@ -43,67 +40,18 @@ public class DOTEPlayer {
         return data;
     }
 
-    public UUID getFakePlayerUuid() {
-        return fakePlayerUuid;
-    }
-
-    public void hasFakePlayerUuid(Consumer<UUID> consumer){
-        if(fakePlayerUuid != null){
-            consumer.accept(fakePlayerUuid);
-        } else {
-            DuelOfTheEndMod.LOGGER.error("fakePlayerUuid is null!");
-        }
-    }
-
-    public void setFakePlayerUuid(UUID fakePlayerUuid) {
-        this.fakePlayerUuid = fakePlayerUuid;
-    }
-
-    public void setBedPointBeforeEnter(BlockPos bedPointBeforeEnter) {
-        this.bedPointBeforeEnter = bedPointBeforeEnter;
-    }
-
-    public BlockPos getBedPointBeforeEnter() {
-        return bedPointBeforeEnter;
-    }
-
-    public void setLastPortalBlockPos(BlockPos lastPortalBlockPos) {
-        this.lastPortalBlockPos = lastPortalBlockPos;
-    }
-
-    public BlockPos getLastPortalBlockPos() {
-        return lastPortalBlockPos;
-    }
-
-
     public void saveNBTData(CompoundTag tag){
         tag.put("customDataManager", data);
 
-        tag.putUUID("fakePlayer", Objects.requireNonNullElseGet(fakePlayerUuid, UUID::randomUUID));
-
-        tag.putInt("bedPointBeforeEnterX", bedPointBeforeEnter.getX());
-        tag.putInt("bedPointBeforeEnterY", bedPointBeforeEnter.getY());
-        tag.putInt("bedPointBeforeEnterZ", bedPointBeforeEnter.getZ());
-
-        tag.putInt("lastPortalBlockPosX", lastPortalBlockPos.getX());
-        tag.putInt("lastPortalBlockPosY", lastPortalBlockPos.getY());
-        tag.putInt("lastPortalBlockPosZ", lastPortalBlockPos.getZ());
     }
 
     public void loadNBTData(CompoundTag tag){
         data = tag.getCompound("customDataManager");
 
-        fakePlayerUuid = tag.getUUID("fakePlayer");
-        bedPointBeforeEnter = new BlockPos(tag.getInt("bedPointBeforeEnterX"), tag.getInt("bedPointBeforeEnterY"), tag.getInt("bedPointBeforeEnterZ"));
-        lastPortalBlockPos = new BlockPos(tag.getInt("lastPortalBlockPosX"), tag.getInt("lastPortalBlockPosY"), tag.getInt("lastPortalBlockPosZ"));
-
     }
 
     public void copyFrom(DOTEPlayer old){
         data = old.data;
-        fakePlayerUuid = old.fakePlayerUuid;
-        bedPointBeforeEnter = old.bedPointBeforeEnter;
-        lastPortalBlockPos = old.lastPortalBlockPos;
 
     }
 

@@ -18,6 +18,9 @@ public class DOTENoiseBuilders {
     private static final SurfaceRules.RuleSource DIRT = SurfaceRules.state(Blocks.DIRT.defaultBlockState());
     private static final SurfaceRules.RuleSource AIR = SurfaceRules.state(Blocks.AIR.defaultBlockState());
     private static final SurfaceRules.RuleSource STONE = SurfaceRules.state(Blocks.STONE.defaultBlockState());
+    private static final SurfaceRules.RuleSource NETHERRACK = SurfaceRules.state(Blocks.NETHERRACK.defaultBlockState());
+    private static final SurfaceRules.RuleSource WARPED_NYLIUM = SurfaceRules.state(Blocks.WARPED_NYLIUM.defaultBlockState());
+    private static final SurfaceRules.RuleSource CRIMSON_NYLIUM = SurfaceRules.state(Blocks.CRIMSON_NYLIUM.defaultBlockState());
 
     public static NoiseGeneratorSettings plainNoiseSettings(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noise) {
         return new NoiseGeneratorSettings(
@@ -37,8 +40,15 @@ public class DOTENoiseBuilders {
 
     public static SurfaceRules.RuleSource pSurfaceRules() {
 
-        //让边界和最终群系
+        //边界
         SurfaceRules.RuleSource air = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(DOTEBiomes.AIR), AIR));
+        //炼狱群系
+        SurfaceRules.RuleSource pBiome = SurfaceRules.sequence(
+                SurfaceRules.ifTrue(SurfaceRules.isBiome(DOTEBiomes.BIOME2),
+                        SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.ifTrue(surfaceNoiseAbove(0.5), WARPED_NYLIUM))),
+                SurfaceRules.ifTrue(SurfaceRules.isBiome(DOTEBiomes.BIOME2),
+                        SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.ifTrue(SurfaceRules.not(surfaceNoiseAbove(0.5)), CRIMSON_NYLIUM))),
+                SurfaceRules.ifTrue(SurfaceRules.isBiome(DOTEBiomes.BIOME2), NETHERRACK));
 
         //普通
         SurfaceRules.RuleSource overworldLike = SurfaceRules.sequence(
@@ -72,6 +82,7 @@ public class DOTENoiseBuilders {
         ImmutableList.Builder<SurfaceRules.RuleSource> builder = ImmutableList.builder();
         builder
                 .add(air)
+                .add(pBiome)
                 .add(overworldLike)
                 .add(SurfaceRules.ifTrue(SurfaceRules.verticalGradient("stone", VerticalAnchor.absolute(0), VerticalAnchor.absolute(8)), STONE));
         ;

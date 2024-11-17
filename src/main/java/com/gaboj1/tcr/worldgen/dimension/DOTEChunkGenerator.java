@@ -76,7 +76,7 @@ public class DOTEChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
             }
 
             //此处加一行判断即可，其他全是抄原版的
-            if ((structurePlacement instanceof PositionPlacement positionPlacement && positionPlacement.isTCRPlacementChunk(this,pChunk,pos.x,pos.z)) || structurePlacement.isStructureChunk(pStructureState, pos.x, pos.z)) {
+            if ((structurePlacement instanceof PositionPlacement positionPlacement && positionPlacement.isTCRPlacementChunk(this, pos.x,pos.z)) || structurePlacement.isStructureChunk(pStructureState, pos.x, pos.z)) {
                 DuelOfTheEndMod.LOGGER.info("Ok"+pos+" "+sectionPos+structurePlacement);
                 if (iterator.size() == 1) {
                     this.tryGenerateStructure(iterator.get(0), pStructureManager, pRegistryAccess, randomState, pStructureTemplateManager, pStructureState.getLevelSeed(), pChunk, pos, sectionPos);

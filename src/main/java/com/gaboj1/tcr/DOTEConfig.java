@@ -5,9 +5,9 @@ import net.minecraftforge.common.ForgeConfigSpec;
 public class DOTEConfig {
     public static final ForgeConfigSpec.IntValue MIN_CHUNK_BETWEEN_STRUCTURE;
     public static final ForgeConfigSpec.BooleanValue NO_PLOT_MODE;
+    public static final ForgeConfigSpec.BooleanValue GIVE_M_KEY;
     public static final ForgeConfigSpec.BooleanValue BROADCAST_DIALOG;
     public static final ForgeConfigSpec.DoubleValue BROADCAST_DISTANCE;
-    public static final ForgeConfigSpec.BooleanValue ENABLE_BOSS_SPAWN_BLOCK_LOAD;
     public static final ForgeConfigSpec.BooleanValue ENABLE_BETTER_STRUCTURE_BLOCK_LOAD;
     public static final ForgeConfigSpec.DoubleValue MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP;
     public static final ForgeConfigSpec.DoubleValue ELITE_MOB_HEALTH_MULTIPLIER;
@@ -31,6 +31,7 @@ public class DOTEConfig {
 
         builder.push("Game Setting");
         MIN_CHUNK_BETWEEN_STRUCTURE = createInt(builder, "min_chunk_between_structure", 3, 0, "小建筑和主建筑的最小区块间距");
+        GIVE_M_KEY = createBool(builder, "give_m_key", true, "是否在进入游戏时直接给予玩家维度传送钥匙");
         NO_PLOT_MODE = createBool(builder, "no_plot_mode", false, "！！在此config下启动的存档将无法重新开启主线剧情！！", "无剧情模式：设为true后将简化流程，没有剧情及任务。但仍可获得任务奖励。");
         BROADCAST_DIALOG = createBool(builder, "broadcast_dialog", true, "是否全局广播剧情对话");
         BROADCAST_DISTANCE = createDouble(builder, "broadcast_distance", 50, 1, "广播范围");
@@ -52,7 +53,6 @@ public class DOTEConfig {
         TEST_Y = createDouble(builder, "test_y", 1.0, -Double.MIN_VALUE, "测试用y， 方便实时调某个数值");
         TEST_Z = createDouble(builder, "test_z", 1.0, -Double.MIN_VALUE, "测试用z， 方便实时调某个数值");
         ENABLE_BETTER_STRUCTURE_BLOCK_LOAD = createBool(builder, "enable_better_structure_block_load", true, "结构方块是否立即加载（开发人员用）");
-        ENABLE_BOSS_SPAWN_BLOCK_LOAD = createBool(builder, "enable_boss_spawn_block_load", true, "boss生成方块是否立即加载（开发人员用）");
         builder.pop();
         SPEC = builder.build();
 

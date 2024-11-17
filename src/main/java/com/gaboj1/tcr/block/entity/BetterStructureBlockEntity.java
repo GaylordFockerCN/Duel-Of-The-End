@@ -158,9 +158,7 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
                 loadStructure(((ServerLevel) level));
             }
             generated = true;
-            this.level.destroyBlock(getBlockPos(), false);
         }
-
     }
 
     @Override

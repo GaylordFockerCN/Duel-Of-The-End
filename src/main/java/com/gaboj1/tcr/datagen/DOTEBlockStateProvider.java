@@ -1,6 +1,7 @@
 package com.gaboj1.tcr.datagen;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
+import com.gaboj1.tcr.block.DOTEBlocks;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
@@ -17,7 +18,9 @@ public class DOTEBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-
+        saplingBlock(DOTEBlocks.BETTER_STRUCTURE_BLOCK);
+        simpleBlockWithItem(DOTEBlocks.SENBAI_SPAWNER.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/senbai_spawner")));
     }
 
     private void saplingBlock(RegistryObject<Block> blockRegistryObject) {

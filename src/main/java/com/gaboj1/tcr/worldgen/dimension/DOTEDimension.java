@@ -31,7 +31,6 @@ public class DOTEDimension {
 
     public static void bootstrapType(ResourceKey<DimensionType> typeResourceKey, BootstapContext<DimensionType> context){
         context.register(typeResourceKey, new DimensionType(
-//                OptionalLong.empty(),
                 OptionalLong.of(12000), // fixedTime
                 true, // hasSkylight
                 false, // hasCeiling
@@ -41,12 +40,12 @@ public class DOTEDimension {
                 true, // bedWorks
                 true, // respawnAnchorWorks
                 32, // minY
-                1024, // height
-                1024, // logicalHeight
-                BlockTags.INFINIBURN_OVERWORLD, // infiniburn
+                512, // height
+                512, // logicalHeight
+                BlockTags.INFINIBURN_NETHER, // infiniburn
                 BuiltinDimensionTypes.OVERWORLD_EFFECTS, // effectsLocation
                 0.0f, // ambientLight
-                new DimensionType.MonsterSettings(false, false, ConstantInt.of(0), 0)));
+                new DimensionType.MonsterSettings(true, false, ConstantInt.of(0), 0)));
     }
     public static void bootstrapType(BootstapContext<DimensionType> context) {
         bootstrapType(P_SKY_ISLAND_TYPE, context);

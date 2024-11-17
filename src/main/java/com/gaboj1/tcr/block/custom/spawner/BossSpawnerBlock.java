@@ -1,9 +1,13 @@
 package com.gaboj1.tcr.block.custom.spawner;
 
-import com.gaboj1.tcr.DOTEConfig;
 import com.gaboj1.tcr.block.entity.spawner.BossSpawnerBlockEntity;
+import com.gaboj1.tcr.client.DOTESounds;
+import com.gaboj1.tcr.item.DOTEItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -32,15 +36,26 @@ public abstract class BossSpawnerBlock extends BaseEntityBlock {
     @Override
     @SuppressWarnings("deprecation")
     public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
-        if(DOTEConfig.ENABLE_BOSS_SPAWN_BLOCK_LOAD.get()){
-            BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if(entity instanceof BossSpawnerBlockEntity<?> bossSpawnerBlockEntity && pPlayer instanceof ServerPlayer serverPlayer){
-                bossSpawnerBlockEntity.tryToSpawnShadow(serverPlayer);
+        BlockEntity entity = pLevel.getBlockEntity(pPos);
+        if(entity instanceof BossSpawnerBlockEntity<?> bossSpawnerBlockEntity && !bossSpawnerBlockEntity.isSpawned() && pPlayer.getItemInHand(pHand).is(DOTEItems.IMMORTALESSENCE.get())){
+            pPlayer.getItemInHand(pHand).shrink(1);
+            if(pLevel instanceof ServerLevel serverLevel){
+                bossSpawnerBlockEntity.spawnMyBoss(serverLevel);
+                serverLevel.playSound(null, pPos.getX(), pPos.getY(), pPos.getZ(), DOTESounds.LOTUSHEAL.get(), SoundSource.BLOCKS, 1, 1);
+            }
+            for(int i = 0; i < 10; i++){
+                double rx = pPos.getX() + pLevel.getRandom().nextFloat();
+                double ry = pPos.getY() + pLevel.getRandom().nextFloat();
+                double rz = pPos.getZ() + pLevel.getRandom().nextFloat();
+                pLevel.addParticle(ParticleTypes.SOUL, rx, ry + 1.2F, rz, 0.0D, 0.01D, 0.0D);
             }
         }
         return InteractionResult.sidedSuccess(pLevel.isClientSide);
     }
 
+    /**
+     * 重置可召唤状态用
+     */
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {

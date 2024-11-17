@@ -2,15 +2,17 @@ package com.gaboj1.tcr.event.listeners;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.DOTEConfig;
+import com.gaboj1.tcr.archive.DataManager;
 import com.gaboj1.tcr.capability.DOTECapabilityProvider;
 import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
-import com.gaboj1.tcr.entity.TCRFakePlayer;
 import com.gaboj1.tcr.entity.custom.DOTEBoss;
+import com.gaboj1.tcr.item.DOTEItems;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.DOTEPacketHandler;
 import com.gaboj1.tcr.network.packet.SyncSaveUtilPacket;
 import com.gaboj1.tcr.network.packet.clientbound.SyncUuidPacket;
 import com.gaboj1.tcr.archive.DOTEArchiveManager;
+import com.gaboj1.tcr.util.ItemUtil;
 import com.gaboj1.tcr.worldgen.dimension.DOTEDimension;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -32,7 +34,11 @@ public class PlayerEventListener {
     @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if(event.getEntity() instanceof ServerPlayer serverPlayer){
-
+            //人手送一个
+            if(DOTEConfig.GIVE_M_KEY.get() && !DataManager.keyGot.get(serverPlayer)){
+                ItemUtil.addItem(serverPlayer, DOTEItems.M_KEY.get(), 1);
+                DataManager.keyGot.put(serverPlayer, true);
+            }
             //动态调整怪物血量
             if(DOTEConfig.BOSS_HEALTH_AND_LOOT_MULTIPLE.get()){
                 for(Entity entity : serverPlayer.serverLevel().getEntities().getAll()){
@@ -52,39 +58,11 @@ public class PlayerEventListener {
             }
         }
 
-        //主世界没假身就召唤假身，注意主世界和维度的区别
-        Player player = event.getEntity();
-        if(player instanceof ServerPlayer serverPlayer && serverPlayer.serverLevel().dimension() == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY && serverPlayer.getServer() != null){
-            serverPlayer.getCapability(DOTECapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {
-                ServerLevel overworld = serverPlayer.getServer().overworld();
-                if(tcrPlayer.getFakePlayerUuid() == null || !(overworld.getEntity(tcrPlayer.getFakePlayerUuid()) instanceof TCRFakePlayer)){
-                    //召唤假人
-                    BlockPos bedBlockPos = tcrPlayer.getBedPointBeforeEnter();
-                    TCRFakePlayer fakePlayer = new TCRFakePlayer(serverPlayer, overworld, bedBlockPos);
-                    overworld.addFreshEntity(fakePlayer);
-                    fakePlayer.setSleepingPos(bedBlockPos);
-                }
-            }));
-        }
     }
 
-    /**
-     * 玩家退出事件
-     * 玩家退出假人跟着退出，防bug
-     */
     @SubscribeEvent
     public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event){
-        //主世界没假身就召唤假身，注意主世界和维度的区别
-        Player player = event.getEntity();
-        if(player instanceof ServerPlayer serverPlayer && serverPlayer.serverLevel().dimension() == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY && serverPlayer.getServer() != null){
-            serverPlayer.getCapability(DOTECapabilityProvider.TCR_PLAYER).ifPresent((tcrPlayer -> {
-                ServerLevel overworld = serverPlayer.getServer().overworld();
-                if(overworld.getEntity(tcrPlayer.getFakePlayerUuid()) instanceof TCRFakePlayer fakePlayer){
-                    //召唤假人
-                    fakePlayer.discard();
-                }
-            }));
-        }
+
     }
 
     /**

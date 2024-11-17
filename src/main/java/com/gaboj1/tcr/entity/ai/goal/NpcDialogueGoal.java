@@ -5,11 +5,12 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.trading.Merchant;
 
 import java.util.EnumSet;
 
 /**
- * This goal makes an NPC stop in place when talking with a player.
+ * This goal makes an NPC stop in place when talking with a player.或交易时
  */
 public class NpcDialogueGoal<T extends Mob & NpcDialogue> extends LookAtPlayerGoal {
     private final T npc;
@@ -22,6 +23,10 @@ public class NpcDialogueGoal<T extends Mob & NpcDialogue> extends LookAtPlayerGo
 
     @Override
     public boolean canUse() {
+        if(this.npc instanceof Merchant merchant && merchant.getTradingPlayer() != null){
+            this.lookAt = merchant.getTradingPlayer();
+            return true;
+        }
         if (this.npc.getConversingPlayer() != null && this.npc.getConversingPlayer().isAlive() && !this.npc.hurtMarked && this.npc.distanceToSqr(this.npc.getConversingPlayer()) <= 64.0F) {
             this.lookAt = this.npc.getConversingPlayer();
             return true;

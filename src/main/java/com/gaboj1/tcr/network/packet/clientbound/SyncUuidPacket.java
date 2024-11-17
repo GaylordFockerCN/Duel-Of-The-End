@@ -1,18 +1,11 @@
 package com.gaboj1.tcr.network.packet.clientbound;
 
 import com.gaboj1.tcr.client.gui.BossBarHandler;
-import com.gaboj1.tcr.entity.TCRFakePlayer;
 import com.gaboj1.tcr.network.packet.BasePacket;
-import com.gaboj1.tcr.util.ClientHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
 
 import javax.annotation.Nullable;
-import java.util.Objects;
 import java.util.UUID;
 
 /**

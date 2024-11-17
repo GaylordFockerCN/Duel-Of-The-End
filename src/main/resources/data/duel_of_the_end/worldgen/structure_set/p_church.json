@@ -1,0 +1,13 @@
+{
+  "structures": [
+    {
+      "structure": "duel_of_the_end:p_church",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "duel_of_the_end:specific_location",
+    "structure": 2,
+    "hasGenerated": false
+  }
+}
