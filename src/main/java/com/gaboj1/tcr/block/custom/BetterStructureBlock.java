@@ -27,7 +27,7 @@ public class BetterStructureBlock extends StructureBlock {
 
     @Override
     public void appendHoverText(@NotNull ItemStack p_49816_, @Nullable BlockGetter p_49817_, List<Component> components, @NotNull TooltipFlag p_49819_) {
-        components.add(Component.literal("没错这玩意儿的独立mod的作者也是我（感觉...不如Mixin）"));
+        components.add(Component.literal("（感觉...不如Mixin）"));
         super.appendHoverText(p_49816_, p_49817_, components, p_49819_);
     }
 }

@@ -47,6 +47,7 @@ public class DOTEZombiePatch extends HumanoidMobPatch<DOTEMonster> {
             }
             if(getOriginal().getNeutralizeCount() <= 0){
                 source.setStunType(StunType.NEUTRALIZE);
+                applyStun(StunType.NEUTRALIZE, 5);
                 getOriginal().setNeutralizeCount(getOriginal().getMaxNeutralizeCount());
                 return super.tryHurt(damageSource, amount);
             }

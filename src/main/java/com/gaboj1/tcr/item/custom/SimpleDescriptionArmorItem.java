@@ -10,8 +10,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.UUID;
 
 public class SimpleDescriptionArmorItem extends ArmorItem {
+    protected static final UUID MAX_STAMINA_UUID = UUID.fromString("CC888E1C-4180-4820-B01B-BCCE1234ACA9");
     public SimpleDescriptionArmorItem(ArmorMaterial armorMaterial, Type type, Properties properties) {
         super(armorMaterial, type, properties);
     }

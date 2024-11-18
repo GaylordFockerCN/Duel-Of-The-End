@@ -34,7 +34,7 @@ public class DOTEPiglin extends DOTEMonster {
 
     @Override
     public int getMaxNeutralizeCount() {
-        return 4;
+        return 6;
     }
 
     @Nullable
@@ -58,7 +58,7 @@ public class DOTEPiglin extends DOTEMonster {
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 50.0f)
-                .add(Attributes.ATTACK_DAMAGE, 20.0f)
+                .add(Attributes.ATTACK_DAMAGE, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 114514f)
                 .add(EpicFightAttributes.MAX_STRIKES.get(), 3)

@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.datagen.lang;
 
+import com.gaboj1.tcr.block.DOTEBlocks;
 import com.gaboj1.tcr.entity.DOTEEntities;
 import com.gaboj1.tcr.item.DOTEItems;
 import com.gaboj1.tcr.worldgen.biome.DOTEBiomes;
@@ -44,6 +45,8 @@ public class DOTELangGenerator extends DOTELangProvider {
         add(DOTEItems.NETHERITEROT_BOOTS.get(), "腐金靴子");
         addItemUsageInfo(DOTEItems.NETHERITEROT_BOOTS.get(), "套装效果：炎甲");
         add("item.duel_of_the_end.golden_dragon0", "");
+
+        add(DOTEBlocks.SENBAI_SPAWNER.get(), "森白影魔召唤祭坛");
 
         add(DOTEEntities.DOTE_ZOMBIE.get(), "黑暗先遣");
         add(DOTEEntities.DOTE_PIGLIN.get(), "猪灵");

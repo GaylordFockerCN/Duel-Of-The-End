@@ -4,18 +4,40 @@ import com.gaboj1.tcr.item.DOTEArmorMaterials;
 import com.gaboj1.tcr.item.DOTEItems;
 import com.gaboj1.tcr.item.DOTERarities;
 import com.gaboj1.tcr.util.ItemUtil;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Item;
+import org.jetbrains.annotations.NotNull;
+import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
+
+import java.util.UUID;
 
 public class TieStoneArmorItem extends SimpleDescriptionArmorItem {
     public TieStoneArmorItem(Type type) {
         super(DOTEArmorMaterials.TIESTONE, type,  new Item.Properties().rarity(DOTERarities.LIANG_PIN));
+    }
+
+    @Override
+    public @NotNull Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(@NotNull EquipmentSlot equipmentSlot) {
+        if ((equipmentSlot == EquipmentSlot.HEAD && this.type.equals(Type.HELMET))
+                || (equipmentSlot == EquipmentSlot.CHEST && this.type.equals(Type.CHESTPLATE))
+                    || (equipmentSlot == EquipmentSlot.LEGS&& this.type.equals(Type.LEGGINGS))
+                        || (equipmentSlot == EquipmentSlot.FEET&& this.type.equals(Type.BOOTS))) {
+            ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+            builder.putAll(super.getDefaultAttributeModifiers(equipmentSlot));
+            builder.put(EpicFightAttributes.MAX_STAMINA.get(), new AttributeModifier(MAX_STAMINA_UUID, "Item modifier", 5, AttributeModifier.Operation.ADDITION));
+            return builder.build();
+        }
+        return super.getDefaultAttributeModifiers(equipmentSlot);
     }
 
     public static void onFullSet(LivingEntity livingEntity){

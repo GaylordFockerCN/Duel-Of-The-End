@@ -21,6 +21,7 @@ public abstract class DOTEMonster extends PathfinderMob {
 
     protected DOTEMonster(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
+        setNeutralizeCount(getMaxNeutralizeCount());
     }
 
     @Override

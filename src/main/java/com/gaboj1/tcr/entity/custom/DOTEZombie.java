@@ -61,7 +61,7 @@ public class DOTEZombie extends DOTEMonster {
 
     @Override
     public int getMaxNeutralizeCount() {
-        return 3;
+        return 3 + getSkinId();
     }
     @Nullable
     @Override
@@ -83,7 +83,7 @@ public class DOTEZombie extends DOTEMonster {
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 30.0f)
-                .add(Attributes.ATTACK_DAMAGE, 20.0f)
+                .add(Attributes.ATTACK_DAMAGE, 2.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 114514f)

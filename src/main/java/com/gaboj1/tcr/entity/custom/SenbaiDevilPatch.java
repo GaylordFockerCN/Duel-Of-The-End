@@ -68,6 +68,7 @@ public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> {
             }
             if(getOriginal().getNeutralizeCount() == 0){
                 source.setStunType(StunType.NEUTRALIZE);
+                applyStun(StunType.NEUTRALIZE, 5);
                 getOriginal().setNeutralizeCount(getOriginal().getMaxNeutralizeCount());
             }
         }
