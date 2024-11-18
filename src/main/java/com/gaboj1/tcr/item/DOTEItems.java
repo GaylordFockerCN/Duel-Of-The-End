@@ -20,7 +20,8 @@ public class DOTEItems {
 	public static final RegistryObject<Item> M_KEY = REGISTRY.register("mkey", () -> new TeleportKeyItem(() -> BiomeMap.getInstance().getBlockPos(BiomeMap.getInstance().getCenter1(), 225)));//圣堂
 	public static final RegistryObject<Item> P_KEY = REGISTRY.register("pkey", () -> new TeleportKeyItem(() -> BiomeMap.getInstance().getBlockPos(BiomeMap.getInstance().getCenter2(), 225)));//炼狱
 	public static final RegistryObject<Item> U_KEY = REGISTRY.register("ukey", () -> new TeleportKeyItem(() -> BiomeMap.getInstance().getBlockPos(BiomeMap.getInstance().getCenter(), 225)));//终焉
-	public static final RegistryObject<Item> ADGRAIN = REGISTRY.register("adgrain", () -> new SimpleDescriptionFoilItem(new Item.Properties().fireResistant().rarity(DOTERarities.SHANG_PIN)));
+	public static final RegistryObject<Item> ADGRAIN = REGISTRY.register("adgrain", () -> new SimpleDescriptionFoilItem(new Item.Properties().fireResistant().rarity(DOTERarities.LIANG_PIN)));
+	public static final RegistryObject<Item> ADVENTURESPAR = REGISTRY.register("adventurespar", () -> new SimpleDescriptionFoilItem(new Item.Properties().fireResistant().rarity(DOTERarities.SHANG_PIN)));
 	public static final RegistryObject<Item> IMMORTALESSENCE = REGISTRY.register("immortalessence", () -> new SimpleDescriptionFoilItem(new Item.Properties().fireResistant().rarity(DOTERarities.SHANG_PIN)));
 	public static final RegistryObject<Item> TIESTONEH = REGISTRY.register("tiestoneh",
 			() -> new TieStoneArmorItem(ArmorItem.Type.HELMET));
@@ -40,6 +41,8 @@ public class DOTEItems {
 			() -> new NetherRotArmorItem(ArmorItem.Type.LEGGINGS));
 	public static final RegistryObject<Item> NETHERITEROT_BOOTS = REGISTRY.register("netheriterot_boots",
 			() -> new NetherRotArmorItem(ArmorItem.Type.BOOTS));
+	public static final RegistryObject<Item> BALMUNG = REGISTRY.register("balmung", ()-> new BalmungItem(Tiers.NETHERITE, 2, -2.4F,(new Item.Properties()).defaultDurability(2777).rarity(DOTERarities.SHEN_ZHEN)));
+	public static final RegistryObject<Item> WITHERC = REGISTRY.register("witherc", () -> new SimpleDescriptionFoilItem(new Item.Properties().fireResistant().rarity(DOTERarities.XIAN_PIN)));
 	public static final RegistryObject<Item> GOLDEN_DRAGON_HELMET = REGISTRY.register("goldendragon_helmet", () -> new GoldenDragonItem(ArmorItem.Type.HELMET));
 	public static final RegistryObject<Item> GOLDEN_DRAGON_CHESTPLATE = REGISTRY.register("goldendragon_chestplate", () -> new GoldenDragonItem(ArmorItem.Type.CHESTPLATE));
 	public static final RegistryObject<Item> GOLDEN_DRAGON_LEGGINGS = REGISTRY.register("goldendragon_leggings", () -> new GoldenDragonItem(ArmorItem.Type.LEGGINGS));

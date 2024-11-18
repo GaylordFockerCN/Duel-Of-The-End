@@ -29,8 +29,8 @@ public class DOTEBiomeProvider extends BiomeSource {
 
     public static final Codec<DOTEBiomeProvider> TCR_CODEC = RecordCodecBuilder.create((instance) -> instance.group(
             RegistryOps.retrieveElement(DOTEBiomes.AIR),
-            RegistryOps.retrieveElement(DOTEBiomes.BIOME1),
-            RegistryOps.retrieveElement(DOTEBiomes.BIOME2)
+            RegistryOps.retrieveElement(DOTEBiomes.M_BIOME),
+            RegistryOps.retrieveElement(DOTEBiomes.P_BIOME)
     ).apply(instance, instance.stable(DOTEBiomeProvider::new)));
 
     public static final Logger LOGGER = LogUtils.getLogger();
@@ -53,8 +53,8 @@ public class DOTEBiomeProvider extends BiomeSource {
 
         return new DOTEBiomeProvider(
                 pBiomeGetter.getOrThrow(DOTEBiomes.AIR),
-                pBiomeGetter.getOrThrow(DOTEBiomes.BIOME1),
-                pBiomeGetter.getOrThrow(DOTEBiomes.BIOME2)
+                pBiomeGetter.getOrThrow(DOTEBiomes.M_BIOME),
+                pBiomeGetter.getOrThrow(DOTEBiomes.P_BIOME)
                 );
     }
 

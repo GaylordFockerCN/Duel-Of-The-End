@@ -2,6 +2,7 @@ package com.gaboj1.tcr.block;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.block.entity.BetterStructureBlockEntity;
+import com.gaboj1.tcr.block.entity.spawner.GoldenFlameSpawnerBlockEntity;
 import com.gaboj1.tcr.block.entity.spawner.SenbaiSpawnerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -21,5 +22,10 @@ public class DOTEBlockEntities {
             REGISTRY.register("senbai_spawner_block_entity", () ->
                     BlockEntityType.Builder.of(SenbaiSpawnerBlockEntity::new,
                             DOTEBlocks.SENBAI_SPAWNER.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<GoldenFlameSpawnerBlockEntity>> GOLDEN_FLAME_SPAWNER_BLOCK_ENTITY =
+            REGISTRY.register("golden_flame_spawner_block_entity", () ->
+                    BlockEntityType.Builder.of(GoldenFlameSpawnerBlockEntity::new,
+                            DOTEBlocks.GOLDEN_FLAME_SPAWNER.get()).build(null));
 
 }

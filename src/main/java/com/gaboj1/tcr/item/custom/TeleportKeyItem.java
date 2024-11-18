@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public class TeleportKeyItem extends SimpleDescriptionItem{
+public class TeleportKeyItem extends SimpleDescriptionFoilItem{
     private final Supplier<BlockPos> destination;
     public TeleportKeyItem(Supplier<BlockPos> destination){
         super(new Item.Properties().setNoRepair().fireResistant().stacksTo(1).rarity(DOTERarities.TE_PIN));
@@ -52,9 +52,4 @@ public class TeleportKeyItem extends SimpleDescriptionItem{
         return UseAnim.BOW;
     }
 
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public boolean isFoil(@NotNull ItemStack itemStack) {
-        return true;
-    }
 }

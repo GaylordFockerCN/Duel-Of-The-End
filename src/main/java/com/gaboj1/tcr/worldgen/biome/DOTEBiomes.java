@@ -7,16 +7,13 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.Carvers;
-import net.minecraft.data.worldgen.biome.OverworldBiomes;
 import net.minecraft.data.worldgen.placement.NetherPlacements;
 import net.minecraft.data.worldgen.placement.OrePlacements;
 import net.minecraft.data.worldgen.placement.TreePlacements;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.Musics;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
@@ -24,8 +21,8 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 
 public class DOTEBiomes {
     public static final ResourceKey<Biome> AIR = createBiomeKey("air");
-    public static final ResourceKey<Biome> BIOME1 = createBiomeKey("biome1");
-    public static final ResourceKey<Biome> BIOME2 = createBiomeKey("biome2");
+    public static final ResourceKey<Biome> M_BIOME = createBiomeKey("m_biome");
+    public static final ResourceKey<Biome> P_BIOME = createBiomeKey("p_biome");
 
     public static ResourceKey<Biome> createBiomeKey(String name){
         return ResourceKey.create(Registries.BIOME,
@@ -34,8 +31,8 @@ public class DOTEBiomes {
 
     public static void boostrap(BootstapContext<Biome> context) {
         context.register(AIR, createAirBiome(context));
-        context.register(BIOME1, createMBiome(context));
-        context.register(BIOME2, createPBiome(context));
+        context.register(M_BIOME, createMBiome(context));
+        context.register(P_BIOME, createPBiome(context));
     }
 
     public static Biome createAirBiome(BootstapContext<Biome> context) {
@@ -64,10 +61,8 @@ public class DOTEBiomes {
 
     public static Biome createMBiome(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
-        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(DOTEEntities.DOTE_ZOMBIE.get(), 70, 1, 1));
-        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.ZOMBIE, 50, 1, 1));
-        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.SKELETON, 50, 1, 1));
-        spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(DOTEEntities.STAR_CHASER.get(), 50, 1, 1));
+        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(DOTEEntities.DOTE_ZOMBIE.get(), 90, 1, 1));
+        spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(DOTEEntities.STAR_CHASER.get(), 10, 1, 1));
 
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
@@ -102,10 +97,8 @@ public class DOTEBiomes {
      */
     public static Biome createPBiome(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
-        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(DOTEEntities.DOTE_PIGLIN.get(), 70, 1, 1));
-        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(DOTEEntities.DOTE_ZOMBIE.get(), 50, 1, 1));
-        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(EntityType.SKELETON, 50, 1, 1));
-        spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(DOTEEntities.STAR_CHASER.get(), 50, 1, 1));
+        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(DOTEEntities.DOTE_PIGLIN.get(), 90, 1, 1));
+        spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(DOTEEntities.STAR_CHASER.get(), 10, 1, 1));
 
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));

@@ -15,7 +15,6 @@ import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class BossSpawnerBlockEntity<T extends Mob> extends EntitySpawnerBlockEntity<T> {
-
 	protected BossSpawnerBlockEntity(BlockEntityType<?> type, EntityType<T> entityType, BlockPos pos, BlockState state) {
 		super(type, entityType, pos, state);
 	}

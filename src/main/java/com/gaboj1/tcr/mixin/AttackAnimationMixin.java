@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.mixin;
 
+import com.gaboj1.tcr.entity.ModifyAttackSpeedEntity;
 import com.gaboj1.tcr.entity.custom.DOTEBoss;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,8 +14,8 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 public class AttackAnimationMixin {
     @Inject(method = "getPlaySpeed", at = @At("RETURN"), cancellable = true, remap = false)
     private void onGetPlaySpeed(LivingEntityPatch<?> entityPatch, DynamicAnimation animation, CallbackInfoReturnable<Float> cir) {
-        if(entityPatch.getOriginal() instanceof DOTEBoss doteBoss){
-            cir.setReturnValue(doteBoss.getAttackSpeed());
+        if(entityPatch.getOriginal() instanceof ModifyAttackSpeedEntity entity){
+            cir.setReturnValue(entity.getAttackSpeed());
         }
     }
 }

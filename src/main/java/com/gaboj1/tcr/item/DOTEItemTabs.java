@@ -22,6 +22,7 @@ public class DOTEItemTabs {
 						tabData.accept(DOTEItems.M_KEY.get());
 						tabData.accept(DOTEItems.U_KEY.get());
 						tabData.accept(DOTEItems.ADGRAIN.get());
+						tabData.accept(DOTEItems.ADVENTURESPAR.get());
 						tabData.accept(DOTEItems.IMMORTALESSENCE.get());
 						tabData.accept(DOTEItems.TIESTONEH.get());
 						tabData.accept(DOTEItems.TIESTONEC.get());
@@ -32,11 +33,14 @@ public class DOTEItemTabs {
 						tabData.accept(DOTEItems.NETHERITEROT_CHESTPLATE.get());
 						tabData.accept(DOTEItems.NETHERITEROT_LEGGINGS.get());
 						tabData.accept(DOTEItems.NETHERITEROT_BOOTS.get());
+						tabData.accept(DOTEItems.BALMUNG.get());
+						tabData.accept(DOTEItems.WITHERC.get());
 						tabData.accept(DOTEItems.GOLDEN_DRAGON_HELMET.get());
 						tabData.accept(DOTEItems.GOLDEN_DRAGON_CHESTPLATE.get());
 						tabData.accept(DOTEItems.GOLDEN_DRAGON_LEGGINGS.get());
 						tabData.accept(DOTEItems.GOLDEN_DRAGON_BOOTS.get());
 						tabData.accept(DOTEBlocks.SENBAI_SPAWNER.get());
+						tabData.accept(DOTEBlocks.GOLDEN_FLAME_SPAWNER.get());
 					}).build());
 
 }

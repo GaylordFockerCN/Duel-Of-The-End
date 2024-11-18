@@ -16,9 +16,9 @@ public class ClientForgeEvents {
 
     @SubscribeEvent
     public static void onRenderBossBar(CustomizeGuiOverlayEvent.BossEventProgress event) {
-//        if(BossBarHandler.renderBossBar(event.getGuiGraphics(), event.getBossEvent(), event.getX(), event.getY())){
-//            event.setCanceled(true);
-//        }
+        if(BossBarHandler.renderBossBar(event.getGuiGraphics(), event.getBossEvent(), event.getX(), event.getY())){
+            event.setCanceled(true);
+        }
     }
 
     /**

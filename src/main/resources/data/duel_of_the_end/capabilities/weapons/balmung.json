@@ -1,0 +1,16 @@
+{
+	"type": "wom:solar", "attributes": {
+		"common":
+		{
+			"armor_negation": 45.0,
+			"impact":3.7,
+			"max_strikes":5,
+			"damage_bonus":10,
+			"speed_bonus":-0.4
+		}
+	}
+}
+
+
+
+

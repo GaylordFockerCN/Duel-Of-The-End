@@ -1,7 +1,10 @@
 package com.gaboj1.tcr.client.gui;
 
 import com.gaboj1.tcr.DOTEConfig;
+import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.entity.custom.DOTEBoss;
+import com.gaboj1.tcr.entity.custom.GoldenFlame;
+import com.gaboj1.tcr.entity.custom.SenbaiDevil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.LerpingBossEvent;
@@ -16,7 +19,7 @@ public class BossBarHandler {
     public static final Map<UUID, Integer> BOSSES = new HashMap<>();//一个BossBar对应一个实体的id，在实体构建的时候发包来设置
 
     public static boolean renderBossBar(GuiGraphics guiGraphics, LerpingBossEvent bossEvent, int x, int y){
-        ResourceLocation barLocation = new ResourceLocation("");
+        ResourceLocation barLocation;
         Entity boss = null;
         if (BOSSES.isEmpty()) {
             return false;
@@ -24,13 +27,13 @@ public class BossBarHandler {
         if(BOSSES.containsKey(bossEvent.getId()) && Minecraft.getInstance().level != null){
             boss = Minecraft.getInstance().level.getEntity(BOSSES.get(bossEvent.getId()));
         }
-//        if(boss instanceof YggdrasilEntity){
-//            barLocation = new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/gui/bossbar/first_boss_bar.png");
-//        } else if(boss instanceof SecondBossEntity){
-//            barLocation = new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/gui/bossbar/second_boss_bar.png");
-//        } else {
-//            return false;
-//        }
+        if(boss instanceof SenbaiDevil){
+            barLocation = new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/gui/bossbar/senbai_devil.png");
+        } else if(boss instanceof GoldenFlame){
+            barLocation = new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/gui/bossbar/golden_flame.png");
+        } else {
+            return false;
+        }
         drawBar(guiGraphics, x, y, bossEvent, barLocation);
         //画名字
         Component component = bossEvent.getName();

@@ -44,11 +44,11 @@ public class DOTENoiseBuilders {
         SurfaceRules.RuleSource air = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(DOTEBiomes.AIR), AIR));
         //炼狱群系
         SurfaceRules.RuleSource pBiome = SurfaceRules.sequence(
-                SurfaceRules.ifTrue(SurfaceRules.isBiome(DOTEBiomes.BIOME2),
+                SurfaceRules.ifTrue(SurfaceRules.isBiome(DOTEBiomes.P_BIOME),
                         SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.ifTrue(surfaceNoiseAbove(0.5), WARPED_NYLIUM))),
-                SurfaceRules.ifTrue(SurfaceRules.isBiome(DOTEBiomes.BIOME2),
+                SurfaceRules.ifTrue(SurfaceRules.isBiome(DOTEBiomes.P_BIOME),
                         SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.ifTrue(SurfaceRules.not(surfaceNoiseAbove(0.5)), CRIMSON_NYLIUM))),
-                SurfaceRules.ifTrue(SurfaceRules.isBiome(DOTEBiomes.BIOME2), NETHERRACK));
+                SurfaceRules.ifTrue(SurfaceRules.isBiome(DOTEBiomes.P_BIOME), NETHERRACK));
 
         //普通
         SurfaceRules.RuleSource overworldLike = SurfaceRules.sequence(

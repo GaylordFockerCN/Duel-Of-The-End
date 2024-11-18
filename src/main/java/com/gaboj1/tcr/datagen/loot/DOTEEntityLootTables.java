@@ -31,6 +31,10 @@ public class DOTEEntityLootTables extends EntityLootSubProvider {
                 .withPool(LootPool.lootPool()
                         .setRolls(UniformGenerator.between(1, 3))
                         .add(LootItem.lootTableItem(DOTEItems.NETHERITESS.get()))));
+        add(DOTEEntities.GOLDEN_FLAME.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .setRolls(UniformGenerator.between(1, 3))
+                        .add(LootItem.lootTableItem(DOTEItems.WITHERC.get()))));
         add(DOTEEntities.STAR_CHASER.get(), emptyLootTable());
         add(DOTEEntities.DOTE_PIGLIN.get(),
             LootTable.lootTable()

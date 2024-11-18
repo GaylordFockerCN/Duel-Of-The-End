@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.entity.custom;
 
+import com.gaboj1.tcr.entity.ModifyAttackSpeedEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -15,7 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class DOTEMonster extends PathfinderMob {
+public abstract class DOTEMonster extends PathfinderMob implements ModifyAttackSpeedEntity {
     protected static final EntityDataAccessor<Integer> BLOCK_COUNT = SynchedEntityData.defineId(DOTEMonster.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Integer> NEUTRALIZE_COUNT = SynchedEntityData.defineId(DOTEMonster.class, EntityDataSerializers.INT);
 

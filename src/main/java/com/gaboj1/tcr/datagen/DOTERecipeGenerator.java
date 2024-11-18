@@ -14,6 +14,25 @@ public class DOTERecipeGenerator extends DOTERecipeProvider implements IConditio
     }
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, DOTEItems.ADGRAIN.get(), 4)
+                .requires(DOTEItems.ADVENTURESPAR.get())
+                .unlockedBy(getHasName(DOTEItems.ADVENTURESPAR.get()), has(DOTEItems.ADVENTURESPAR.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DOTEItems.ADVENTURESPAR.get())
+                .pattern("AA ")
+                .pattern("AA ")
+                .pattern("   ")
+                .define('A', DOTEItems.ADGRAIN.get())
+                .unlockedBy(getHasName(DOTEItems.ADGRAIN.get()), has(DOTEItems.ADGRAIN.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DOTEItems.U_KEY.get())
+                .pattern(" A ")
+                .pattern("ABA")
+                .pattern(" A ")
+                .define('A', DOTEItems.ADVENTURESPAR.get())
+                .define('B', DOTEItems.WITHERC.get())
+                .unlockedBy(getHasName(DOTEItems.WITHERC.get()), has(DOTEItems.WITHERC.get()))
+                .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DOTEItems.M_KEY.get())
                 .pattern(" A ")
                 .pattern("ABA")
@@ -26,7 +45,7 @@ public class DOTERecipeGenerator extends DOTERecipeProvider implements IConditio
                 .pattern(" A ")
                 .pattern("ABA")
                 .pattern(" A ")
-                .define('A', DOTEItems.ADGRAIN.get())
+                .define('A', DOTEItems.ADVENTURESPAR.get())
                 .define('B', DOTEItems.NETHERITESS.get())
                 .unlockedBy(getHasName(DOTEItems.ADGRAIN.get()), has(DOTEItems.ADGRAIN.get()))
                 .save(consumer);
@@ -47,12 +66,13 @@ public class DOTERecipeGenerator extends DOTERecipeProvider implements IConditio
                 .unlockedBy(getHasName(DOTEItems.NETHERITESS.get()), has(DOTEItems.NETHERITESS.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.NETHERITE_SCRAP)
-                .pattern(" A ")
+                .pattern("CAC")
                 .pattern("ABA")
-                .pattern(" A ")
-                .define('A', DOTEItems.IMMORTALESSENCE.get())
-                .define('B', DOTEItems.NETHERITESS.get())
-                .unlockedBy(getHasName(DOTEItems.NETHERITESS.get()), has(DOTEItems.NETHERITESS.get()))
+                .pattern("CAC")
+                .define('A', Items.DIAMOND)
+                .define('B', DOTEItems.ADGRAIN.get())
+                .define('C', Items.GOLD_INGOT)
+                .unlockedBy(getHasName(DOTEItems.ADGRAIN.get()), has(DOTEItems.ADGRAIN.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, DOTEItems.TIESTONEH.get())
                 .pattern("   ")

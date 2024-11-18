@@ -23,9 +23,13 @@ public class LinkListStreamDialogueScreenBuilder {
     private TreeNode answerRoot;
     private TreeNode answerNode;
     private final EntityType<?> entityType;
-
+    public LinkListStreamDialogueScreenBuilder(Entity entity) {
+        screen = new TCRDialogueScreen(entity, entity.getType());
+        this.entityType = entity.getType();
+        init();
+    }
     public LinkListStreamDialogueScreenBuilder(Entity entity, EntityType<?> entityType) {
-        screen = new TCRDialogueScreen(entity,entityType);
+        screen = new TCRDialogueScreen(entity, entityType);
         this.entityType = entityType;
         init();
     }

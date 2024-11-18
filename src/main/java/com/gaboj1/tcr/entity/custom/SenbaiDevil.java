@@ -1,5 +1,6 @@
 package com.gaboj1.tcr.entity.custom;
 
+import com.gaboj1.tcr.capability.DOTECapabilityProvider;
 import com.gaboj1.tcr.client.DOTESounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,6 +24,11 @@ public class SenbaiDevil extends DOTEBoss {
     public SenbaiDevil(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         setItemInHand(InteractionHand.MAIN_HAND, EpicFightItems.UCHIGATANA.get().getDefaultInstance());
+    }
+
+    @Override
+    public float getAttackSpeed() {
+        return 0.9F;
     }
 
     public static AttributeSupplier setAttributes() {
@@ -44,9 +51,15 @@ public class SenbaiDevil extends DOTEBoss {
         return 10;
     }
 
+    /**
+     * 播放音效，解锁玩家进入维度的权限
+     */
     @Override
     public void die(@NotNull DamageSource source) {
         level().playSound(null , getX(), getY(), getZ(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.BLOCKS,1,1);
+        if(source.getEntity() instanceof Player player){
+            player.getCapability(DOTECapabilityProvider.DOTE_PLAYER).ifPresent(dotePlayer -> dotePlayer.setCanEnterPBiome(true));
+        }
         super.die(source);
     }
 

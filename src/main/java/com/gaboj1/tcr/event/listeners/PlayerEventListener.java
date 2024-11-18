@@ -13,11 +13,12 @@ import com.gaboj1.tcr.network.packet.SyncSaveUtilPacket;
 import com.gaboj1.tcr.network.packet.clientbound.SyncUuidPacket;
 import com.gaboj1.tcr.archive.DOTEArchiveManager;
 import com.gaboj1.tcr.util.ItemUtil;
-import com.gaboj1.tcr.worldgen.dimension.DOTEDimension;
-import net.minecraft.core.BlockPos;
+import com.gaboj1.tcr.worldgen.biome.DOTEBiomes;
 import net.minecraft.core.Holder;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -73,10 +74,16 @@ public class PlayerEventListener {
         Player player = event.player;
 
         //禁止进入群系
-        if(!player.isCreative()){
+        if(!player.isCreative() && !player.level().isClientSide){
             Level level = player.level();
             Holder<Biome> currentBiome = level.getBiome(player.getOnPos());
-
+            player.getCapability(DOTECapabilityProvider.DOTE_PLAYER).ifPresent(dotePlayer -> {
+                if(!player.isCreative() && !dotePlayer.canEnterPBiome() && currentBiome.is(DOTEBiomes.P_BIOME)){
+                    player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100));
+                    player.addEffect(new MobEffectInstance(MobEffects.HARM, 100));
+                    player.displayClientMessage(DuelOfTheEndMod.getInfo("tip2"), true);
+                }
+            });
         }
 
     }

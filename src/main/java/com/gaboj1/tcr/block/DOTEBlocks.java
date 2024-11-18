@@ -2,6 +2,7 @@ package com.gaboj1.tcr.block;
 
 import com.gaboj1.tcr.DuelOfTheEndMod;
 import com.gaboj1.tcr.block.custom.*;
+import com.gaboj1.tcr.block.custom.spawner.GoldenFlameSpawnerBlock;
 import com.gaboj1.tcr.block.custom.spawner.SenbaiSpawnerBlock;
 import com.gaboj1.tcr.item.DOTEItems;
 import net.minecraft.world.item.BlockItem;
@@ -23,6 +24,9 @@ public class DOTEBlocks {
 
     public static final RegistryObject<Block> SENBAI_SPAWNER = registerBlock("senbai_spawner",
             ()-> new SenbaiSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
+
+    public static final RegistryObject<Block> GOLDEN_FLAME_SPAWNER = registerBlock("golden_flame_spawner",
+            ()-> new GoldenFlameSpawnerBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK)));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){
         RegistryObject<T> toReturn = REGISTRY.register(name, block);

@@ -1,18 +1,28 @@
 package com.gaboj1.tcr.entity.custom;
 
+import com.gaboj1.tcr.client.gui.screen.DialogueComponentBuilder;
+import com.gaboj1.tcr.client.gui.screen.LinkListStreamDialogueScreenBuilder;
+import com.gaboj1.tcr.client.gui.screen.TreeNode;
 import com.gaboj1.tcr.entity.NpcDialogue;
 import com.gaboj1.tcr.entity.ai.goal.NpcDialogueGoal;
 import com.gaboj1.tcr.item.DOTEItems;
+import com.gaboj1.tcr.network.DOTEPacketHandler;
+import com.gaboj1.tcr.network.PacketRelay;
+import com.gaboj1.tcr.network.packet.clientbound.NPCDialoguePacket;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -44,11 +54,13 @@ import java.util.List;
  */
 public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
     public static final List<Item> WEAPONS = new ArrayList<>();
+    private final DialogueComponentBuilder BUILDER;
     @Nullable
     private Player conversingPlayer;
     private Player tradingPlayer;
+    private MerchantOffers currentOffers = new MerchantOffers();
     protected static final EntityDataAccessor<Integer> SKIN_ID = SynchedEntityData.defineId(StarChaser.class, EntityDataSerializers.INT);
-    private static final int MAX_SKIN_ID = 1;
+    private static final int MAX_SKIN_ID = 5;//总人数
     public StarChaser(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
         WEAPONS.add(Items.IRON_AXE);
@@ -58,12 +70,13 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
         WEAPONS.add(EpicFightItems.IRON_TACHI.get());
         WEAPONS.add(EpicFightItems.UCHIGATANA.get());
         setItemInHand(InteractionHand.MAIN_HAND, WEAPONS.get(getRandom().nextInt(WEAPONS.size())).getDefaultInstance());
+        BUILDER = new DialogueComponentBuilder(getType());
     }
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 100.0f)
-                .add(Attributes.ATTACK_DAMAGE, 20.0f)
+                .add(Attributes.ATTACK_DAMAGE, 8.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 114514f)
                 .add(EpicFightAttributes.MAX_STRIKES.get(), 3)
@@ -106,20 +119,77 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
     }
 
     @Override
+    public boolean hurt(@NotNull DamageSource source, float p_21017_) {
+        if(getConversingPlayer() != null || getTradingPlayer() != null){
+            return false;
+        }
+        if(source.getEntity() instanceof DOTEBoss){
+            return super.hurt(source, p_21017_ * 10);
+        }
+        return super.hurt(source, p_21017_);
+    }
+
+    @Nullable
+    @Override
+    public LivingEntity getTarget() {
+        if(getTradingPlayer() != null || getConversingPlayer() != null){
+            return null;
+        }
+        return super.getTarget();
+    }
+
+    @Override
     protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
-        setTradingPlayer(player);
-        openTradingScreen(player, Component.empty(), 1);
+        //shift右键换皮
+        if(player.isCreative() && player.isShiftKeyDown()){
+            getEntityData().set(SKIN_ID, (getSkinId() + 1) % MAX_SKIN_ID);
+            return InteractionResult.sidedSuccess(isClientSide());
+        }
+        //打架的时候不能对话
+        if(getTarget() != null){
+            return InteractionResult.sidedSuccess(isClientSide());
+        }
+        if (player instanceof ServerPlayer serverPlayer) {
+            this.lookAt(player, 180.0F, 180.0F);
+            if (this.getConversingPlayer() == null) {
+                PacketRelay.sendToPlayer(DOTEPacketHandler.INSTANCE, new NPCDialoguePacket(this.getId(), new CompoundTag()), serverPlayer);
+                this.setConversingPlayer(serverPlayer);
+            }
+        }
         return InteractionResult.sidedSuccess(isClientSide());
     }
 
     @Override
     public void openDialogueScreen(CompoundTag senderData) {
-
+        LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this);
+        Component greeting = BUILDER.buildDialogueAnswer(getRandom().nextInt(4));//0 1 2 3随机选一句问候
+        Component answer = BUILDER.buildDialogueAnswer(4 + getRandom().nextInt(6));//4 ~ 9随机选一句回答
+        //初次对话
+        builder.setAnswerRoot(new TreeNode(greeting)
+                .addLeaf(BUILDER.buildDialogueOption(0), (byte) 1)//交易技能书
+                .addLeaf(BUILDER.buildDialogueOption(1), (byte) 2)//交易物品
+                .addChild(new TreeNode(answer, BUILDER.buildDialogueOption(2))//询问
+                        .addLeaf(BUILDER.buildDialogueOption(3), (byte) 3)));
+        if(!builder.isEmpty()){
+            Minecraft.getInstance().setScreen(builder.build());
+        }
     }
 
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
-
+        switch (interactionID){
+            case 1:
+                currentOffers = getSkillBookOffers();
+                setTradingPlayer(player);
+                openTradingScreen(player, Component.empty(), 1);
+                break;
+            case 2:
+                currentOffers = getCustomMerchantOffers();
+                setTradingPlayer(player);
+                openTradingScreen(player, Component.empty(), 1);
+                break;
+        }
+        setConversingPlayer(null);
     }
 
     @Override
@@ -145,8 +215,6 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
     }
 
     public MerchantOffers getSkillBookOffers(){
-        ItemStack knockdownWakeup = new ItemStack(EpicFightItems.SKILLBOOK.get());
-        knockdownWakeup.getOrCreateTag().putString("skill", EpicFightSkills.KNOCKDOWN_WAKEUP.toString());
 
         ItemStack roll = new ItemStack(EpicFightItems.SKILLBOOK.get());
         roll.getOrCreateTag().putString("skill", EpicFightSkills.ROLL.toString());
@@ -190,20 +258,8 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
         ItemStack technician = new ItemStack(EpicFightItems.SKILLBOOK.get());
         technician.getOrCreateTag().putString("skill", EpicFightSkills.TECHNICIAN.toString());
 
-        ItemStack catharsis = new ItemStack(EpicFightItems.SKILLBOOK.get());
-        catharsis.getOrCreateTag().putString("skill", EpicFightSkills.CATHARSIS.toString());
-
-        ItemStack avengersPatience = new ItemStack(EpicFightItems.SKILLBOOK.get());
-        avengersPatience.getOrCreateTag().putString("skill", EpicFightSkills.AVENGERS_PATIENCE.toString());
-
-        ItemStack adaptiveSkin = new ItemStack(EpicFightItems.SKILLBOOK.get());
-        adaptiveSkin.getOrCreateTag().putString("skill", EpicFightSkills.ADAPTIVE_SKIN.toString());
-
         ItemStack meteorStrike = new ItemStack(EpicFightItems.SKILLBOOK.get());
         meteorStrike.getOrCreateTag().putString("skill", EpicFightSkills.METEOR_STRIKE.toString());
-
-        ItemStack revelation = new ItemStack(EpicFightItems.SKILLBOOK.get());
-        revelation.getOrCreateTag().putString("skill", EpicFightSkills.REVELATION.toString());
 
         ItemStack demolitionLeap = new ItemStack(EpicFightItems.SKILLBOOK.get());
         demolitionLeap.getOrCreateTag().putString("skill", EpicFightSkills.DEMOLITION_LEAP.toString());
@@ -212,11 +268,6 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
         phantomAscent.getOrCreateTag().putString("skill", EpicFightSkills.PHANTOM_ASCENT.toString());
 
         MerchantOffers skillBooks = new MerchantOffers();
-
-        skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 5),
-                knockdownWakeup,
-                142857, 0, 0.02f));
 
         skillBooks.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADGRAIN.get(), 5),
@@ -234,98 +285,78 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
                 142857, 0, 0.02f));
 
         skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 15),
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 15),
                 parrying,
                 142857, 0, 0.02f));
 
         skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 15),
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 15),
                 impactGuard,
                 142857, 0, 0.02f));
 
         skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 15),
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 15),
                 berserker,
                 142857, 0, 0.02f));
 
         skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 15),
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 15),
                 deathHarvest,
                 142857, 0, 0.02f));
 
         skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 15),
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 15),
                 emergencyEscape,
                 142857, 0, 0.02f));
 
         skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 15),
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 15),
                 endurance,
                 142857, 0, 0.02f));
 
         skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 15),
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 15),
                 forbiddenStrength,
                 142857, 0, 0.02f));
 
         skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 15),
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 15),
                 hypervitality,
                 142857, 0, 0.02f));
 
         skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 15),
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 15),
                 staminaPillager,
                 142857, 0, 0.02f));
 
         skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 15),
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 15),
                 swordMaster,
                 142857, 0, 0.02f));
 
         skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 15),
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 15),
                 technician,
                 142857, 0, 0.02f));
 
         skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 15),
-                catharsis,
-                142857, 0, 0.02f));
-
-        skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 15),
-                avengersPatience,
-                142857, 0, 0.02f));
-
-        skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 15),
-                adaptiveSkin,
-                142857, 0, 0.02f));
-        skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 25),
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 25),
                 meteorStrike,
                 142857, 0, 0.02f));
 
         skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 15),
-                revelation,
-                142857, 0, 0.02f));
-
-        skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 25),
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 25),
                 demolitionLeap,
                 142857, 0, 0.02f));
 
         skillBooks.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 15),
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 15),
                 phantomAscent,
                 142857, 0, 0.02f));
         return skillBooks;
     }
 
-    @Override
-    public @NotNull MerchantOffers getOffers() {
+    public MerchantOffers getCustomMerchantOffers() {
         MerchantOffers merchantOffers = new MerchantOffers();
         merchantOffers.add(new MerchantOffer(
                 new ItemStack(Items.ROTTEN_FLESH, 5),
@@ -373,6 +404,11 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
                 new ItemStack(EpicFightItems.UCHIGATANA.get(), 1),
                 142857, 0, 0.02f));
         return merchantOffers;
+    }
+
+    @Override
+    public @NotNull MerchantOffers getOffers() {
+        return currentOffers;
     }
 
     @Override

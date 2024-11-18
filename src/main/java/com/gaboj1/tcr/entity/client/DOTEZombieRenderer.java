@@ -23,6 +23,7 @@ public class DOTEZombieRenderer extends HumanoidMobRenderer<DOTEZombie, Humanoid
         return switch (skinId){
             case 0 -> new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/entity/dark_advance.png");
             case 1 -> new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/entity/ashes.png");
+            case 2 -> new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/entity/slaughter_general.png");
             default -> new ResourceLocation("textures/entity/zombie/zombie.png");
         };
     }

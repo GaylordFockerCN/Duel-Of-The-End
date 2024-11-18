@@ -19,11 +19,11 @@ public class DOTEBiomeTagGenerator extends BiomeTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
-        tag(DOTEBiomeTags.IN_DOTE).add(DOTEBiomes.BIOME1, DOTEBiomes.BIOME2, DOTEBiomes.AIR);
+        tag(DOTEBiomeTags.IN_DOTE).add(DOTEBiomes.M_BIOME, DOTEBiomes.P_BIOME, DOTEBiomes.AIR);
     }
 
     @Override
     public @NotNull String getName() {
-        return "Duel Of The End Tags";
+        return "Duel Of The End Biome Tags";
     }
 }

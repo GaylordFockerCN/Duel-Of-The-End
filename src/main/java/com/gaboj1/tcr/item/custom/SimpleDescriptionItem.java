@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
- * 没用的掉落物，带有物品说明
+ * 带有物品说明
  */
 public class SimpleDescriptionItem extends Item {
 

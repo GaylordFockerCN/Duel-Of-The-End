@@ -3,6 +3,7 @@ package com.gaboj1.tcr.entity.custom;
 import com.gaboj1.tcr.archive.DOTEArchiveManager;
 import com.gaboj1.tcr.client.BossMusicPlayer;
 import com.gaboj1.tcr.entity.LevelableEntity;
+import com.gaboj1.tcr.entity.ModifyAttackSpeedEntity;
 import com.gaboj1.tcr.entity.MultiPlayerBoostEntity;
 import com.gaboj1.tcr.network.PacketRelay;
 import com.gaboj1.tcr.network.DOTEPacketHandler;

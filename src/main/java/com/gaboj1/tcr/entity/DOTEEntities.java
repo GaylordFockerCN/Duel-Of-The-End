@@ -28,6 +28,8 @@ public class DOTEEntities {
 			EntityType.Builder.of(StarChaser::new, MobCategory.CREATURE).sized(0.6f, 1.8f));
 	public static final RegistryObject<EntityType<SenbaiDevil>> SENBAI_DEVIL = register("senbai_devil",
 			EntityType.Builder.of(SenbaiDevil::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
+	public static final RegistryObject<EntityType<GoldenFlame>> GOLDEN_FLAME = register("golden_flame",
+			EntityType.Builder.of(GoldenFlame::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String name, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(name, () -> entityTypeBuilder.build(new ResourceLocation(DuelOfTheEndMod.MOD_ID, name).toString()));
@@ -36,6 +38,7 @@ public class DOTEEntities {
 	@SubscribeEvent
 	public static void setPatch(EntityPatchRegistryEvent event) {
 		event.getTypeEntry().put(SENBAI_DEVIL.get(), (entity) -> SenbaiDevilPatch::new);
+		event.getTypeEntry().put(GOLDEN_FLAME.get(), (entity) -> GoldenFlamePatch::new);
 		event.getTypeEntry().put(DOTE_ZOMBIE.get(), (entity) -> DOTEZombiePatch::new);
 		event.getTypeEntry().put(DOTE_PIGLIN.get(), (entity) -> DOTEZombiePatch::new);
 		event.getTypeEntry().put(STAR_CHASER.get(), (entity) -> StarChaserPatch::new);
@@ -44,6 +47,7 @@ public class DOTEEntities {
 	@SubscribeEvent
 	public static void setArmature(ModelBuildEvent.ArmatureBuild event) {
 		Armatures.registerEntityTypeArmature(SENBAI_DEVIL.get(), Armatures.SKELETON);
+		Armatures.registerEntityTypeArmature(GOLDEN_FLAME.get(), Armatures.SKELETON);
 		Armatures.registerEntityTypeArmature(DOTE_ZOMBIE.get(), Armatures.BIPED);
 		Armatures.registerEntityTypeArmature(DOTE_PIGLIN.get(), Armatures.PIGLIN);
 		Armatures.registerEntityTypeArmature(STAR_CHASER.get(), Armatures.BIPED);
@@ -52,6 +56,7 @@ public class DOTEEntities {
 	@SubscribeEvent
 	public static void entityAttributeEvent(EntityAttributeCreationEvent event) {
 		event.put(SENBAI_DEVIL.get(), SenbaiDevil.setAttributes());
+		event.put(GOLDEN_FLAME.get(), GoldenFlame.setAttributes());
 		event.put(DOTE_ZOMBIE.get(), DOTEZombie.setAttributes());
 		event.put(DOTE_PIGLIN.get(), DOTEPiglin.setAttributes());
 		event.put(STAR_CHASER.get(), StarChaser.setAttributes());

@@ -31,9 +31,11 @@ public class DOTEItemModelProvider extends ItemModelProvider {
         simpleItem(DOTEItems.P_KEY);
         simpleItem(DOTEItems.U_KEY);
         simpleItem(DOTEItems.ADGRAIN);
+        simpleItem(DOTEItems.ADVENTURESPAR);
         simpleItem(DOTEItems.IMMORTALESSENCE);
         simpleItem(DOTEItems.NETHERROT_INGOT);
         simpleItem(DOTEItems.NETHERITESS);
+        simpleItem(DOTEItems.WITHERC);
         simpleItem(DOTEItems.NETHERITEROT_BOOTS);
         simpleItem(DOTEItems.NETHERITEROT_CHESTPLATE);
         simpleItem(DOTEItems.NETHERITEROT_HELMET);

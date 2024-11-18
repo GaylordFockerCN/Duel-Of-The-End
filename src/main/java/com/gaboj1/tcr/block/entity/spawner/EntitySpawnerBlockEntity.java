@@ -26,6 +26,10 @@ public abstract class EntitySpawnerBlockEntity<T extends Mob> extends BlockEntit
 		return spawned;
 	}
 
+	public EntityType<T> getEntityType() {
+		return entityType;
+	}
+
 	protected EntitySpawnerBlockEntity(BlockEntityType<?> type, EntityType<T> entityType, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 		this.entityType = entityType;

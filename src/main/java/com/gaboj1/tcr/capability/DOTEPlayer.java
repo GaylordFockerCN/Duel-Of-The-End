@@ -1,11 +1,7 @@
 package com.gaboj1.tcr.capability;
 
-import com.gaboj1.tcr.DuelOfTheEndMod;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 
-import java.util.Objects;
-import java.util.UUID;
 import java.util.function.Consumer;
 
 /**
@@ -13,6 +9,16 @@ import java.util.function.Consumer;
  * 懒得换成DataKey了呜呜将就一下吧
  */
 public class DOTEPlayer {
+    private boolean canEnterPBiome;
+
+    public boolean canEnterPBiome() {
+        return canEnterPBiome;
+    }
+
+    public void setCanEnterPBiome(boolean canEnterPBiome) {
+        this.canEnterPBiome = canEnterPBiome;
+    }
+
     private CompoundTag data = new CompoundTag();
     public boolean getBoolean(String key){
         return data.getBoolean(key);
@@ -42,17 +48,17 @@ public class DOTEPlayer {
 
     public void saveNBTData(CompoundTag tag){
         tag.put("customDataManager", data);
-
+        tag.putBoolean("canEnterBiome", canEnterPBiome);
     }
 
     public void loadNBTData(CompoundTag tag){
         data = tag.getCompound("customDataManager");
-
+        canEnterPBiome = tag.getBoolean("canEnterBiome");
     }
 
     public void copyFrom(DOTEPlayer old){
         data = old.data;
-
+        canEnterPBiome = old.canEnterPBiome;
     }
 
 }
