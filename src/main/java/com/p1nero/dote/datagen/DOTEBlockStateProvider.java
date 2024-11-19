@@ -18,11 +18,17 @@ public class DOTEBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        saplingBlock(DOTEBlocks.BETTER_STRUCTURE_BLOCK);
+        leavesBlock(DOTEBlocks.BETTER_STRUCTURE_BLOCK);
         simpleBlockWithItem(DOTEBlocks.SENBAI_SPAWNER.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/senbai_spawner")));
         simpleBlockWithItem(DOTEBlocks.GOLDEN_FLAME_SPAWNER.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/golden_flame_spawner")));
+        simpleBlockWithItem(DOTEBlocks.TAR_SPAWNER.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/senbai_spawner")));
+        simpleBlockWithItem(DOTEBlocks.TPP_SPAWNER.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/senbai_spawner")));
+        simpleBlockWithItem(DOTEBlocks.TSE_SPAWNER.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/senbai_spawner")));
     }
 
     private void saplingBlock(RegistryObject<Block> blockRegistryObject) {

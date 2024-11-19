@@ -31,9 +31,9 @@ public class DOTELangGenerator extends DOTELangProvider {
         addItemUsageInfo(DOTEItems.ADVENTURESPAR.get(), "");
         add(DOTEItems.IMMORTALESSENCE.get(), "往生精华");
         addItemUsageInfo(DOTEItems.IMMORTALESSENCE.get(), "似乎蕴含着某种往生的力量...");
-        addItemUsageInfo(DOTEItems.P_KEY.get(), "潜行时右键以传送到指定决斗场的位置，前行时再次按下以返回主世界。");
-        addItemUsageInfo(DOTEItems.M_KEY.get(), "潜行时右键以传送到指定决斗场的位置，前行时再次按下以返回主世界。");
-        addItemUsageInfo(DOTEItems.U_KEY.get(), "§6感谢游玩！终焉大陆维度内容到此结束，请移步至本体游玩完整内容！（b站搜凝星制作组）");
+        addItemUsageInfo(DOTEItems.P_KEY.get(), "牧师赠与的钥匙。你...做好准备了吗？");
+        addItemUsageInfo(DOTEItems.M_KEY.get(), "所谓的终焉也并非遥不可及...");
+        addItemUsageInfo(DOTEItems.U_KEY.get(), "§6准备好面对“祂”了吗...");
         add(DOTEItems.NETHERROT_INGOT.get(), "腐金锭");
         addItemUsageInfo(DOTEItems.NETHERROT_INGOT.get(), "");
         add(DOTEItems.NETHERITESS.get(), "合金残片");
@@ -69,6 +69,9 @@ public class DOTELangGenerator extends DOTELangProvider {
 
         add(DOTEBlocks.SENBAI_SPAWNER.get(), "森白影魔召唤祭坛");
         add(DOTEBlocks.GOLDEN_FLAME_SPAWNER.get(), "金焰神王召唤祭坛");
+        add(DOTEBlocks.TAR_SPAWNER.get(), "圣辉裁决者召唤祭坛");
+        add(DOTEBlocks.TPP_SPAWNER.get(), "炼狱炎魔召唤祭坛");
+        add(DOTEBlocks.TSE_SPAWNER.get(), "终末之影召唤祭坛");
 
         add(DOTEEntities.DOTE_ZOMBIE.get(), "黑暗先遣");
         add(DOTEEntities.DOTE_ZOMBIE_2.get(), "黑暗先遣");

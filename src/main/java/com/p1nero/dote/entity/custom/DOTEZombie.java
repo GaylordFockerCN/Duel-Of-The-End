@@ -1,14 +1,18 @@
 package com.p1nero.dote.entity.custom;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -16,6 +20,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
@@ -35,6 +40,13 @@ public class DOTEZombie extends DOTEMonster {
         WEAPONS.add(EpicFightItems.STONE_GREATSWORD.get());
         WEAPONS.add(EpicFightItems.STONE_SPEAR.get());
         setItemInHand(InteractionHand.MAIN_HAND, WEAPONS.get(getRandom().nextInt(WEAPONS.size())).getDefaultInstance());
+    }
+
+    /**
+     * 调节概率
+     */
+    public static boolean checkMobSpawnRules(@NotNull EntityType<? extends Mob> entityType, @NotNull LevelAccessor levelAccessor, MobSpawnType mobSpawnType, BlockPos pos, RandomSource randomSource) {
+        return Mob.checkMobSpawnRules(entityType, levelAccessor, mobSpawnType, pos, randomSource) && randomSource.nextInt(10) == 0;
     }
 
     @Override

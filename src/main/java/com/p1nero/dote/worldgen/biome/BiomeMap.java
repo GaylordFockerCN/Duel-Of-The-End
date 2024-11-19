@@ -38,6 +38,12 @@ public class BiomeMap implements Serializable {
     public Point getCenter2() {
         return new Point(map.length / 2, map.length * 5 / 6);
     }
+    public Point getAltar1() {
+        return new Point(map.length / 6, map.length / 2);
+    }
+    public Point getAltar2() {
+        return new Point(map.length * 5 / 6, map.length / 2);
+    }
 
     public Point getCenter() {
         return new Point(map.length / 2, map.length / 2);
@@ -143,12 +149,18 @@ public class BiomeMap implements Serializable {
         }
         BlockPos biome1Center = INSTANCE.getBlockPos(INSTANCE.getCenter1(), 0);
         BlockPos biome2Center = INSTANCE.getBlockPos(INSTANCE.getCenter2(), 0);
+        BlockPos altar1 = INSTANCE.getBlockPos(INSTANCE.getAltar1(), 0);
+        BlockPos altar2 = INSTANCE.getBlockPos(INSTANCE.getAltar2(), 0);
         BlockPos biomeCenter = INSTANCE.getBlockPos(INSTANCE.getCenter(), 0);
         String center1 = "(" + biome1Center.getX()+", " + biome1Center.getZ() + ")";
         String center2 = "(" + biome2Center.getX()+", " + biome2Center.getZ() + ")";
+        String altar1pos = "(" + altar1.getX()+", " + altar1.getZ() + ")";
+        String altar2pos = "(" + altar2.getX()+", " + altar2.getZ() + ")";
         String center = "(" + biomeCenter.getX()+", " + biomeCenter.getZ() + ")";
         tag.putString("center1", center1);
         tag.putString("center2", center2);
+        tag.putString("altar1pos", altar1pos);
+        tag.putString("altar2pos", altar2pos);
         tag.putString("center", center);
         return tag;
     }

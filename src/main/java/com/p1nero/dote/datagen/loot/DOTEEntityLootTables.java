@@ -49,6 +49,10 @@ public class DOTEEntityLootTables extends EntityLootSubProvider {
                 .withPool(LootPool.lootPool()
                         .setRolls(UniformGenerator.between(1, 2))
                         .add(LootItem.lootTableItem(DOTEItems.ADGRAIN.get()))));
+        add(DOTEEntities.DOTE_ZOMBIE_2.get(), fromEntityLootTable(DOTEEntities.DOTE_ZOMBIE.get()));
+        add(DOTEEntities.THE_ARBITER_OF_RADIANCE.get(), emptyLootTable());
+        add(DOTEEntities.THE_PYROCLAS_OF_PURGATORY.get(), emptyLootTable());
+        add(DOTEEntities.THE_SHADOW_OF_THE_END.get(), emptyLootTable());
     }
 
     public LootTable.Builder emptyLootTable() {

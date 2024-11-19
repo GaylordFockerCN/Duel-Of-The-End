@@ -26,6 +26,9 @@ public class DOTEBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(DOTEBlocks.BETTER_STRUCTURE_BLOCK.get());
         this.dropSelf(DOTEBlocks.SENBAI_SPAWNER.get());
         this.dropSelf(DOTEBlocks.GOLDEN_FLAME_SPAWNER.get());
+        this.dropSelf(DOTEBlocks.TAR_SPAWNER.get());
+        this.dropSelf(DOTEBlocks.TPP_SPAWNER.get());
+        this.dropSelf(DOTEBlocks.TSE_SPAWNER.get());
     }
 
     protected LootTable.Builder createCopperLikeOreDrops(Block pBlock, Item item, float min, float max) {

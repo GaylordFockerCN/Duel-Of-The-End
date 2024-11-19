@@ -40,6 +40,9 @@ public class DOTEItemTabs {
 						tabData.accept(DOTEItems.GOLDEN_DRAGON_BOOTS.get());
 						tabData.accept(DOTEBlocks.SENBAI_SPAWNER.get());
 						tabData.accept(DOTEBlocks.GOLDEN_FLAME_SPAWNER.get());
+						tabData.accept(DOTEBlocks.TAR_SPAWNER.get());
+						tabData.accept(DOTEBlocks.TPP_SPAWNER.get());
+						tabData.accept(DOTEBlocks.TSE_SPAWNER.get());
 					}).build());
 
 }

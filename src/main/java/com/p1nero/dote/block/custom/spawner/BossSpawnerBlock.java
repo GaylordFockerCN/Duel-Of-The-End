@@ -41,7 +41,7 @@ public abstract class BossSpawnerBlock extends BaseEntityBlock {
         BlockEntity entity = pLevel.getBlockEntity(pPos);
         if(entity instanceof BossSpawnerBlockEntity<?> bossSpawnerBlockEntity){
             //防止小怪打扰
-            if(pLevel.getEntitiesOfClass(DOTEMonster.class, new AABB(pPos.offset(-10, -10, -10), pPos.offset(10, 10, 10))).isEmpty()){
+            if(pLevel.getEntitiesOfClass(DOTEMonster.class, new AABB(pPos.offset(-15, -15, -15), pPos.offset(15, 15, 15))).isEmpty()){
                 if(!bossSpawnerBlockEntity.isSpawned() && pPlayer.getItemInHand(pHand).is(DOTEItems.IMMORTALESSENCE.get())){
                     pPlayer.getItemInHand(pHand).shrink(1);
                     if(pLevel instanceof ServerLevel serverLevel){
@@ -52,7 +52,7 @@ public abstract class BossSpawnerBlock extends BaseEntityBlock {
                         double rx = pPos.getX() + pLevel.getRandom().nextFloat();
                         double ry = pPos.getY() + pLevel.getRandom().nextFloat();
                         double rz = pPos.getZ() + pLevel.getRandom().nextFloat();
-                        pLevel.addParticle(ParticleTypes.SOUL, rx, ry + 1.2F, rz, 0.0D, 0.01D, 0.0D);
+                        pLevel.addParticle(ParticleTypes.SOUL, rx, ry + 2.0F, rz, 0.0D, 0.01D, 0.0D);
                     }
                 } else {
                     pPlayer.displayClientMessage(DuelOfTheEndMod.getInfo("tip1").append(bossSpawnerBlockEntity.getEntityType().getDescription()), true);

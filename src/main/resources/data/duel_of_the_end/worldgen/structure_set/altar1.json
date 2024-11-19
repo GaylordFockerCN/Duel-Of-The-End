@@ -1,0 +1,13 @@
+{
+  "structures": [
+    {
+      "structure": "duel_of_the_end:altar1",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "duel_of_the_end:specific_location",
+    "structure": 3,
+    "hasGenerated": false
+  }
+}

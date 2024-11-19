@@ -1,6 +1,8 @@
 package com.p1nero.dote.block.entity.spawner;
 
 import com.p1nero.dote.entity.custom.DOTEMonster;
+import com.p1nero.dote.entity.custom.DOTEPiglin;
+import com.p1nero.dote.entity.custom.DOTEZombie;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
@@ -37,18 +39,26 @@ public abstract class EntitySpawnerBlockEntity<T extends Mob> extends BlockEntit
 		this.entityType = entityType;
 	}
 
-	public static void tick(Level level, BlockPos pos,  BlockState state, EntitySpawnerBlockEntity<?> blockEntity) {
-		if (level.isClientSide) {
+	public static void tick(Level pLevel, BlockPos pPos,  BlockState state, EntitySpawnerBlockEntity<?> blockEntity) {
+		if (pLevel.isClientSide) {
 			if(blockEntity.getSpawnerParticle() != null){
-				double rx = pos.getX() + level.getRandom().nextFloat();
-				double ry = pos.getY() + level.getRandom().nextFloat();
-				double rz = pos.getZ() + level.getRandom().nextFloat();
-				level.addParticle(blockEntity.getSpawnerParticle(), rx, ry, rz, 0.0D, 0.0D, 0.0D);
+				double rx = pPos.getX() + pLevel.getRandom().nextFloat();
+				double ry = pPos.getY() + pLevel.getRandom().nextFloat();
+				double rz = pPos.getZ() + pLevel.getRandom().nextFloat();
+				pLevel.addParticle(blockEntity.getSpawnerParticle(), rx, ry, rz, 0.0D, 0.0D, 0.0D);
 			}
 		}
-		if(!level.isClientSide){
+		if(!pLevel.isClientSide){
 			if(blockEntity.spawned && (blockEntity.myBoss == null || blockEntity.myBoss.isDeadOrDying())){
 				blockEntity.spawned = false;
+			}
+
+			//弹开怪物
+			for(DOTEPiglin monster : pLevel.getEntitiesOfClass(DOTEPiglin.class, new AABB(pPos.offset(-15, -15, -15), pPos.offset(15, 15, 15)))){
+				monster.setPos(monster.position().add(15, 0, 15));
+			}
+			for(DOTEZombie monster : pLevel.getEntitiesOfClass(DOTEZombie.class, new AABB(pPos.offset(-15, -15, -15), pPos.offset(15, 15, 15)))){
+				monster.setPos(monster.position().add(15, 0, 15));
 			}
 		}
 

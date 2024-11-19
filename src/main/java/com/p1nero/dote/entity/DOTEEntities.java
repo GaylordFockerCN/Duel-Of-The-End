@@ -85,7 +85,7 @@ public class DOTEEntities {
 		event.register(DOTE_ZOMBIE_2.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				DOTEZombie::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(DOTE_PIGLIN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				DOTEPiglin::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+				DOTEZombie::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(STAR_CHASER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				StarChaser::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 	}

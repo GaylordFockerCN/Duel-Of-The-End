@@ -2,8 +2,7 @@ package com.p1nero.dote.block;
 
 import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.block.entity.BetterStructureBlockEntity;
-import com.p1nero.dote.block.entity.spawner.GoldenFlameSpawnerBlockEntity;
-import com.p1nero.dote.block.entity.spawner.SenbaiSpawnerBlockEntity;
+import com.p1nero.dote.block.entity.spawner.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -27,5 +26,19 @@ public class DOTEBlockEntities {
             REGISTRY.register("golden_flame_spawner_block_entity", () ->
                     BlockEntityType.Builder.of(GoldenFlameSpawnerBlockEntity::new,
                             DOTEBlocks.GOLDEN_FLAME_SPAWNER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<TARSpawnerBlockEntity>> TAR_SPAWNER_BLOCK_ENTITY =
+            REGISTRY.register("tar_spawner_block_entity", () ->
+                    BlockEntityType.Builder.of(TARSpawnerBlockEntity::new,
+                            DOTEBlocks.TAR_SPAWNER.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<TPPSpawnerBlockEntity>> TPP_SPAWNER_BLOCK_ENTITY =
+            REGISTRY.register("tpp_spawner_block_entity", () ->
+                    BlockEntityType.Builder.of(TPPSpawnerBlockEntity::new,
+                            DOTEBlocks.TPP_SPAWNER.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<TSESpawnerBlockEntity>> TSE_SPAWNER_BLOCK_ENTITY =
+            REGISTRY.register("tse_spawner_block_entity", () ->
+                    BlockEntityType.Builder.of(TSESpawnerBlockEntity::new,
+                            DOTEBlocks.TSE_SPAWNER.get()).build(null));
 
 }

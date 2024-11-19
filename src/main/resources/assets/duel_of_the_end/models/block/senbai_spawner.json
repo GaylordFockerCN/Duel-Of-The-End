@@ -1,7 +1,7 @@
 {
 	"parent": "duel_of_the_end:block/spawner",
 	"textures": {
-		"0": "duel_of_the_end:block/senbai_spawner",
-		"particle": "duel_of_the_end:block/senbai_spawner"
+		"0": "duel_of_the_end:block/altar",
+		"particle": "duel_of_the_end:block/altar"
 	}
 }

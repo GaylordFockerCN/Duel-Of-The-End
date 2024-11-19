@@ -75,7 +75,7 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 100.0f)
+                .add(Attributes.MAX_HEALTH, 70.0f)
                 .add(Attributes.ATTACK_DAMAGE, 8.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 114514f)
