@@ -52,17 +52,26 @@ public class DOTEZombiePatch extends HumanoidMobPatch<DOTEMonster> {
                 return super.tryHurt(damageSource, amount);
             }
         }
-        //小概率格挡
-        if(damageSource.getEntity() != null && !this.getEntityState().attacking() && this.getOriginal().getBlockCount() == 0 && this.getOriginal().getRandom().nextInt(4) == 1){
-            this.getOriginal().setBlockCount(this.getOriginal().getRandom().nextInt(3));
+
+        AttackResult result = super.tryHurt(damageSource, amount);
+        if(result.resultType.equals(AttackResult.ResultType.SUCCESS)) {
+            //小概率格挡
+            //判断DamageSource是防止卡墙
+            if (damageSource.getEntity() != null && !this.getEntityState().attacking() && this.getOriginal().getBlockCount() == 0 && this.getOriginal().getRandom().nextInt(4) == 1) {
+                this.getOriginal().setBlockCount(this.getOriginal().getRandom().nextInt(3));
+            }
+            if (damageSource.getEntity() != null && !this.getEntityState().attacking() && this.getOriginal().getBlockCount() > 0) {
+                this.playAnimationSynchronized(guardAnim.get(this.getOriginal().getRandom().nextInt(guardAnim.size())), 0.0F);
+                this.playSound(EpicFightSounds.CLASH.get(), -0.05F, 0.1F);
+                this.getOriginal().setBlockCount(this.getOriginal().getBlockCount() - 1);
+                if (this.getOriginal().getBlockCount() == 0) {
+                    this.playAnimationSynchronized(Animations.LONGSWORD_AUTO1, 0.25F);
+                    return super.tryHurt(damageSource, amount);
+                }
+                return AttackResult.blocked(0);
+            }
         }
-        if(damageSource.getEntity() != null && !this.getEntityState().attacking() && this.getOriginal().getBlockCount() > 0){
-            this.playAnimationSynchronized(guardAnim.get(this.getOriginal().getRandom().nextInt(guardAnim.size())), 0.0F);
-            this.playSound(EpicFightSounds.CLASH.get(), -0.05F, 0.1F);
-            this.getOriginal().setBlockCount(this.getOriginal().getBlockCount() - 1);
-            return AttackResult.blocked(0);
-        }
-        return super.tryHurt(damageSource, amount);
+        return result;
     }
 
     @Override

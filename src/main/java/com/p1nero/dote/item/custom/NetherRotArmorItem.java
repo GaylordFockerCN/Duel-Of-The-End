@@ -32,7 +32,7 @@ public class NetherRotArmorItem extends SimpleDescriptionArmorItem {
                 || (equipmentSlot == EquipmentSlot.FEET&& this.type.equals(Type.BOOTS))) {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
             builder.putAll(super.getDefaultAttributeModifiers(equipmentSlot));
-            builder.put(EpicFightAttributes.MAX_STAMINA.get(), new AttributeModifier(MAX_STAMINA_UUID, "Item modifier", 10, AttributeModifier.Operation.ADDITION));//FIXME 掉耐力？？
+            builder.put(EpicFightAttributes.MAX_STAMINA.get(), new AttributeModifier(MAX_STAMINA_UUID, "Item modifier", 30, AttributeModifier.Operation.ADDITION));//FIXME 掉耐力？？
             return builder.build();
         }
         return super.getDefaultAttributeModifiers(equipmentSlot);

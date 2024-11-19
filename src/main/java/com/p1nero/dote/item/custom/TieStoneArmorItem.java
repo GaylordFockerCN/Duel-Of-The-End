@@ -32,7 +32,7 @@ public class TieStoneArmorItem extends SimpleDescriptionArmorItem {
                         || (equipmentSlot == EquipmentSlot.FEET&& this.type.equals(Type.BOOTS))) {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
             builder.putAll(super.getDefaultAttributeModifiers(equipmentSlot));
-            builder.put(EpicFightAttributes.MAX_STAMINA.get(), new AttributeModifier(MAX_STAMINA_UUID, "Item modifier", 5, AttributeModifier.Operation.ADDITION));
+            builder.put(EpicFightAttributes.MAX_STAMINA.get(), new AttributeModifier(MAX_STAMINA_UUID, "Item modifier", 20, AttributeModifier.Operation.ADDITION));
             return builder.build();
         }
         return super.getDefaultAttributeModifiers(equipmentSlot);

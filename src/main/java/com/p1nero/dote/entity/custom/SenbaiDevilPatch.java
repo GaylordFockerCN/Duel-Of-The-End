@@ -72,17 +72,23 @@ public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> {
                 getOriginal().setNeutralizeCount(getOriginal().getMaxNeutralizeCount());
             }
         }
-        //小概率格挡
-        if(!this.getEntityState().attacking() && this.getOriginal().getBlockCount() == 0 && this.getOriginal().getRandom().nextInt(4) == 1){
-            this.getOriginal().setBlockCount(this.getOriginal().getRandom().nextInt(3));
+        AttackResult result = super.tryHurt(damageSource, amount);
+        if(result.resultType.equals(AttackResult.ResultType.SUCCESS)){
+            //小概率格挡
+            if(!this.getEntityState().attacking() && this.getOriginal().getBlockCount() == 0 && this.getOriginal().getRandom().nextInt(4) == 1){
+                this.getOriginal().setBlockCount(this.getOriginal().getRandom().nextInt(3));
+            }
+            if(!this.getEntityState().attacking() && this.getOriginal().getBlockCount() > 0){
+                this.playAnimationSynchronized(guardAnim.get(this.getOriginal().getRandom().nextInt(guardAnim.size())), 0.0F);
+                this.playSound(EpicFightSounds.CLASH.get(), -0.05F, 0.1F);
+                this.getOriginal().setBlockCount(this.getOriginal().getBlockCount() - 1);
+                if(this.getOriginal().getBlockCount() == 0){
+                    this.reserveAnimation(Animations.BIPED_ROLL_BACKWARD);
+                }
+                return AttackResult.blocked(0);
+            }
         }
-        if(!this.getEntityState().attacking() && this.getOriginal().getBlockCount() > 0){
-            this.playAnimationSynchronized(guardAnim.get(this.getOriginal().getRandom().nextInt(guardAnim.size())), 0.0F);
-            this.playSound(EpicFightSounds.CLASH.get(), -0.05F, 0.1F);
-            this.getOriginal().setBlockCount(this.getOriginal().getBlockCount() - 1);
-            return AttackResult.blocked(0);
-        }
-        return super.tryHurt(damageSource, amount);
+        return result;
     }
 
     @Override

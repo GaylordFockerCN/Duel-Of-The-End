@@ -28,7 +28,7 @@ public class SenbaiDevil extends DOTEBoss {
 
     @Override
     public float getAttackSpeed() {
-        return 0.9F;
+        return 0.7F;
     }
 
     public static AttributeSupplier setAttributes() {
@@ -48,7 +48,7 @@ public class SenbaiDevil extends DOTEBoss {
 
     @Override
     public int getMaxNeutralizeCount() {
-        return 10;
+        return 12;
     }
 
     /**

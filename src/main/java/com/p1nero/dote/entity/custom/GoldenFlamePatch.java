@@ -47,10 +47,6 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> {
             this.playAnimationSynchronized(Animations.BIPED_STEP_BACKWARD, 0.0F);
             return AttackResult.missed(0);
         }
-//        //免疫硬直
-        if(damageSource instanceof EpicFightDamageSource source){
-            source.setStunType(StunType.NONE);
-        }
         return super.tryHurt(damageSource, amount);
     }
 
@@ -75,4 +71,11 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> {
         super.commonAggressiveMobUpdateMotion(b);
     }
 
+    /**
+     * 免疫硬直
+     */
+    @Override
+    public boolean applyStun(StunType stunType, float stunTime) {
+        return false;
+    }
 }

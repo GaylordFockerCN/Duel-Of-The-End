@@ -24,7 +24,7 @@ import java.util.UUID;
 /**
  * 方便统一调难度
  */
-public abstract class DOTEBoss extends DOTEMonster implements LevelableEntity, MultiPlayerBoostEntity {
+public abstract class DOTEBoss extends DOTEMonster implements MultiPlayerBoostEntity {
     public static final Map<UUID, Integer> SERVER_BOSSES = new HashMap<>();//用于客户端渲染bossBar
     protected final ServerBossEvent bossInfo;
     protected DOTEBoss(EntityType<? extends PathfinderMob> type, Level level) {
@@ -33,7 +33,6 @@ public abstract class DOTEBoss extends DOTEMonster implements LevelableEntity, M
 
     protected DOTEBoss(EntityType<? extends PathfinderMob> type, Level level, BossEvent.BossBarColor color) {
         super(type, level);
-        levelUp(DOTEArchiveManager.getWorldLevel());
         bossInfo = new ServerBossEvent(this.getDisplayName(), color, BossEvent.BossBarOverlay.PROGRESS);
         if(!level.isClientSide){
             PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new SyncUuidPacket(bossInfo.getId(), getId()));

@@ -129,6 +129,11 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
         return super.hurt(source, p_21017_);
     }
 
+    @Override
+    public boolean removeWhenFarAway(double p_21542_) {
+        return false;
+    }
+
     @Nullable
     @Override
     public LivingEntity getTarget() {
@@ -365,6 +370,10 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
         merchantOffers.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADGRAIN.get(), 1),
                 new ItemStack(Items.ROTTEN_FLESH, 5),
+                142857, 0, 0.02f));
+        merchantOffers.add(new MerchantOffer(
+                new ItemStack(DOTEItems.ADGRAIN.get(), 1),
+                new ItemStack(Items.APPLE, 1),
                 142857, 0, 0.02f));
         merchantOffers.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADGRAIN.get(), 5),
