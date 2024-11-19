@@ -1,0 +1,6 @@
+{
+  "parent": "epicfight:item/spear",
+  "textures": {
+    "layer0": "epicfight:item/golden_spear"
+  }
+}

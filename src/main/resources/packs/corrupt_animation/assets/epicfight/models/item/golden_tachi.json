@@ -1,0 +1,6 @@
+{
+  "parent": "epicfight:item/tachi",
+  "textures": {
+    "layer0": "epicfight:item/golden_tachi"
+  }
+}
