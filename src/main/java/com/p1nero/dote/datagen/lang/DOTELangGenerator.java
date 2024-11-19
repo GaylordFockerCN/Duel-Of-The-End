@@ -15,6 +15,7 @@ public class DOTELangGenerator extends DOTELangProvider {
     protected void addTranslations() {
         this.addInfo("tip1", "使用往生精华右键祭坛以召唤：");
         this.addInfo("tip2", "似乎有种神秘力量阻止你访问此地...");
+        this.addInfo("tip3", "你现在不能召唤，周围有怪物在游荡...");
 
         addBiome(DOTEBiomes.AIR, "虚空");
         addBiome(DOTEBiomes.M_BIOME, "圣堂");
@@ -70,10 +71,14 @@ public class DOTELangGenerator extends DOTELangProvider {
         add(DOTEBlocks.GOLDEN_FLAME_SPAWNER.get(), "金焰神王召唤祭坛");
 
         add(DOTEEntities.DOTE_ZOMBIE.get(), "黑暗先遣");
+        add(DOTEEntities.DOTE_ZOMBIE_2.get(), "黑暗先遣");
         add(DOTEEntities.DOTE_PIGLIN.get(), "猪灵");
         add(DOTEEntities.STAR_CHASER.get(), "追星者");
         add(DOTEEntities.SENBAI_DEVIL.get(), "森白影魔");
         add(DOTEEntities.GOLDEN_FLAME.get(), "金焰神王");
+        add(DOTEEntities.THE_ARBITER_OF_RADIANCE.get(), "圣辉裁决者");
+        add(DOTEEntities.THE_PYROCLAS_OF_PURGATORY.get(), "炼狱炎魔");
+        add(DOTEEntities.THE_SHADOW_OF_THE_END.get(), "终末之影");
 
 
         this.addDialog(DOTEEntities.STAR_CHASER, 0, "哦？一位幸存者，我对你有印象。你在那场战斗之中的表现还远远不够。和那位耀眼的剑客相比，风沙就足以将你轻易掩埋。");

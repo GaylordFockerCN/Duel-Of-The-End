@@ -1,5 +1,6 @@
-package com.p1nero.dote.entity.custom;
+package com.p1nero.dote.entity.custom.efpatch;
 
+import com.p1nero.dote.entity.custom.SenbaiDevil;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import yesman.epicfight.api.animation.Animator;

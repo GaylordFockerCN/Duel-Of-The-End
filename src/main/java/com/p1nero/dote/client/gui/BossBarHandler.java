@@ -27,6 +27,11 @@ public class BossBarHandler {
         if(BOSSES.containsKey(bossEvent.getId()) && Minecraft.getInstance().level != null){
             boss = Minecraft.getInstance().level.getEntity(BOSSES.get(bossEvent.getId()));
         }
+        if(boss instanceof DOTEBoss doteBoss){
+            if(!doteBoss.shouldRenderBossBar()){
+                return false;
+            }
+        }
         if(boss instanceof SenbaiDevil){
             barLocation = new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/gui/bossbar/senbai_devil.png");
         } else if(boss instanceof GoldenFlame){

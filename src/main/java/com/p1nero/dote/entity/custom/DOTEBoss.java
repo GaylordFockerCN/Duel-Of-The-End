@@ -10,7 +10,10 @@ import com.p1nero.dote.network.packet.clientbound.SyncUuidPacket;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.level.Level;
@@ -37,6 +40,10 @@ public abstract class DOTEBoss extends DOTEMonster implements MultiPlayerBoostEn
         if(!level.isClientSide){
             PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new SyncUuidPacket(bossInfo.getId(), getId()));
         }
+    }
+
+    public boolean shouldRenderBossBar(){
+        return true;
     }
 
     @Override
@@ -68,6 +75,12 @@ public abstract class DOTEBoss extends DOTEMonster implements MultiPlayerBoostEn
             BossMusicPlayer.playBossMusic(this, getFightMusic(), 32);
         }
 
+    }
+
+    @Override
+    public void die(@NotNull DamageSource source) {
+        level().playSound(null , getX(), getY(), getZ(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.BLOCKS,1,1);
+        super.die(source);
     }
 
     @Nullable

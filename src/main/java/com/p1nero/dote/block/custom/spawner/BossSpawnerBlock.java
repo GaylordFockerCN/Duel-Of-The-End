@@ -3,6 +3,7 @@ package com.p1nero.dote.block.custom.spawner;
 import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.block.entity.spawner.BossSpawnerBlockEntity;
 import com.p1nero.dote.client.DOTESounds;
+import com.p1nero.dote.entity.custom.DOTEMonster;
 import com.p1nero.dote.item.DOTEItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -38,21 +40,27 @@ public abstract class BossSpawnerBlock extends BaseEntityBlock {
     public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
         BlockEntity entity = pLevel.getBlockEntity(pPos);
         if(entity instanceof BossSpawnerBlockEntity<?> bossSpawnerBlockEntity){
-            if(!bossSpawnerBlockEntity.isSpawned() && pPlayer.getItemInHand(pHand).is(DOTEItems.IMMORTALESSENCE.get())){
-                pPlayer.getItemInHand(pHand).shrink(1);
-                if(pLevel instanceof ServerLevel serverLevel){
-                    bossSpawnerBlockEntity.spawnMyBoss(serverLevel);
-                    serverLevel.playSound(null, pPos.getX(), pPos.getY(), pPos.getZ(), DOTESounds.LOTUSHEAL.get(), SoundSource.BLOCKS, 1, 1);
-                }
-                for(int i = 0; i < 10; i++){
-                    double rx = pPos.getX() + pLevel.getRandom().nextFloat();
-                    double ry = pPos.getY() + pLevel.getRandom().nextFloat();
-                    double rz = pPos.getZ() + pLevel.getRandom().nextFloat();
-                    pLevel.addParticle(ParticleTypes.SOUL, rx, ry + 1.2F, rz, 0.0D, 0.01D, 0.0D);
+            //防止小怪打扰
+            if(pLevel.getEntitiesOfClass(DOTEMonster.class, new AABB(pPos.offset(-10, -10, -10), pPos.offset(10, 10, 10))).isEmpty()){
+                if(!bossSpawnerBlockEntity.isSpawned() && pPlayer.getItemInHand(pHand).is(DOTEItems.IMMORTALESSENCE.get())){
+                    pPlayer.getItemInHand(pHand).shrink(1);
+                    if(pLevel instanceof ServerLevel serverLevel){
+                        bossSpawnerBlockEntity.spawnMyBoss(serverLevel);
+                        serverLevel.playSound(null, pPos.getX(), pPos.getY(), pPos.getZ(), DOTESounds.LOTUSHEAL.get(), SoundSource.BLOCKS, 1, 1);
+                    }
+                    for(int i = 0; i < 10; i++){
+                        double rx = pPos.getX() + pLevel.getRandom().nextFloat();
+                        double ry = pPos.getY() + pLevel.getRandom().nextFloat();
+                        double rz = pPos.getZ() + pLevel.getRandom().nextFloat();
+                        pLevel.addParticle(ParticleTypes.SOUL, rx, ry + 1.2F, rz, 0.0D, 0.01D, 0.0D);
+                    }
+                } else {
+                    pPlayer.displayClientMessage(DuelOfTheEndMod.getInfo("tip1").append(bossSpawnerBlockEntity.getEntityType().getDescription()), true);
                 }
             } else {
-                pPlayer.displayClientMessage(DuelOfTheEndMod.getInfo("tip1").append(bossSpawnerBlockEntity.getEntityType().getDescription()), true);
+                pPlayer.displayClientMessage(DuelOfTheEndMod.getInfo("tip3"), true);
             }
+
         }
         return InteractionResult.sidedSuccess(pLevel.isClientSide);
     }

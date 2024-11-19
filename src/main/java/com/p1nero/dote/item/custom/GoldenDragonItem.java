@@ -1,4 +1,6 @@
 package com.p1nero.dote.item.custom;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.item.DOTEArmorMaterials;
 import com.p1nero.dote.item.DOTERarities;
@@ -11,19 +13,40 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Consumer;
+
+import static com.p1nero.dote.item.custom.SimpleDescriptionArmorItem.STAMINA_REGEN_UUID;
 
 public class GoldenDragonItem extends ArmorItem {
 
     public GoldenDragonItem(Type type) {
         super(DOTEArmorMaterials.GOLDEN_DRAGON, type, new Properties().fireResistant().rarity(DOTERarities.SHEN_ZHEN));
+    }
+
+    @Override
+    public @NotNull Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(@NotNull EquipmentSlot equipmentSlot) {
+        if ((equipmentSlot == EquipmentSlot.HEAD && this.type.equals(Type.HELMET))
+                || (equipmentSlot == EquipmentSlot.CHEST && this.type.equals(Type.CHESTPLATE))
+                || (equipmentSlot == EquipmentSlot.LEGS&& this.type.equals(Type.LEGGINGS))
+                || (equipmentSlot == EquipmentSlot.FEET&& this.type.equals(Type.BOOTS))) {
+            ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+            builder.putAll(super.getDefaultAttributeModifiers(equipmentSlot));
+            builder.put(EpicFightAttributes.MAX_STAMINA.get(), new AttributeModifier(UUID.fromString("CC111E1C-4180-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", 5, AttributeModifier.Operation.ADDITION));
+            builder.put(EpicFightAttributes.STAMINA_REGEN.get(), new AttributeModifier(STAMINA_REGEN_UUID, "Item modifier", 2, AttributeModifier.Operation.ADDITION));
+            return builder.build();
+        }
+        return super.getDefaultAttributeModifiers(equipmentSlot);
     }
 
     @Override

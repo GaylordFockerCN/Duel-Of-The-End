@@ -19,6 +19,8 @@ import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
+import java.util.UUID;
+
 public class TieStoneArmorItem extends SimpleDescriptionArmorItem {
     public TieStoneArmorItem(Type type) {
         super(DOTEArmorMaterials.TIESTONE, type,  new Item.Properties().rarity(DOTERarities.LIANG_PIN));
@@ -32,7 +34,8 @@ public class TieStoneArmorItem extends SimpleDescriptionArmorItem {
                         || (equipmentSlot == EquipmentSlot.FEET&& this.type.equals(Type.BOOTS))) {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
             builder.putAll(super.getDefaultAttributeModifiers(equipmentSlot));
-            builder.put(EpicFightAttributes.MAX_STAMINA.get(), new AttributeModifier(MAX_STAMINA_UUID, "Item modifier", 20, AttributeModifier.Operation.ADDITION));
+            builder.put(EpicFightAttributes.MAX_STAMINA.get(), new AttributeModifier(UUID.fromString("CC111E1C-4180-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", 3, AttributeModifier.Operation.ADDITION));
+            builder.put(EpicFightAttributes.STAMINA_REGEN.get(), new AttributeModifier(STAMINA_REGEN_UUID, "Item modifier", 0.5, AttributeModifier.Operation.ADDITION));
             return builder.build();
         }
         return super.getDefaultAttributeModifiers(equipmentSlot);

@@ -19,6 +19,8 @@ import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
+import java.util.UUID;
+
 public class NetherRotArmorItem extends SimpleDescriptionArmorItem {
     public NetherRotArmorItem(Type type) {
         super(DOTEArmorMaterials.NETHERITEROT, type, new Item.Properties().fireResistant().rarity(DOTERarities.TE_PIN));
@@ -28,15 +30,17 @@ public class NetherRotArmorItem extends SimpleDescriptionArmorItem {
     public @NotNull Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(@NotNull EquipmentSlot equipmentSlot) {
         if ((equipmentSlot == EquipmentSlot.HEAD && this.type.equals(Type.HELMET))
                 || (equipmentSlot == EquipmentSlot.CHEST && this.type.equals(Type.CHESTPLATE))
-                || (equipmentSlot == EquipmentSlot.LEGS&& this.type.equals(Type.LEGGINGS))
-                || (equipmentSlot == EquipmentSlot.FEET&& this.type.equals(Type.BOOTS))) {
+                    || (equipmentSlot == EquipmentSlot.LEGS&& this.type.equals(Type.LEGGINGS))
+                        || (equipmentSlot == EquipmentSlot.FEET&& this.type.equals(Type.BOOTS))) {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
             builder.putAll(super.getDefaultAttributeModifiers(equipmentSlot));
-            builder.put(EpicFightAttributes.MAX_STAMINA.get(), new AttributeModifier(MAX_STAMINA_UUID, "Item modifier", 30, AttributeModifier.Operation.ADDITION));//FIXME 掉耐力？？
+            builder.put(EpicFightAttributes.MAX_STAMINA.get(), new AttributeModifier(UUID.fromString("CC111E1C-4180-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", 4, AttributeModifier.Operation.ADDITION));
+            builder.put(EpicFightAttributes.STAMINA_REGEN.get(), new AttributeModifier(STAMINA_REGEN_UUID, "Item modifier", 1, AttributeModifier.Operation.ADDITION));
             return builder.build();
         }
         return super.getDefaultAttributeModifiers(equipmentSlot);
     }
+
     public static void onFullSet(LivingEntity livingEntity){
         if(!isFullSet(livingEntity)){
             return;

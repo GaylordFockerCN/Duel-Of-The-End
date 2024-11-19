@@ -1,9 +1,10 @@
-package com.p1nero.dote.entity.custom;
+package com.p1nero.dote.entity.custom.efpatch;
 
 import com.p1nero.dote.entity.ai.DOTECombatBehaviors;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
+import com.p1nero.dote.entity.custom.GoldenFlame;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import reascer.wom.gameasset.WOMAnimations;
@@ -30,12 +31,15 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> {
         if(epicFightDamageSource.getAnimation() == WOMAnimations.TORMENT_BERSERK_AUTO_2 && getOriginal().getHealth() < getOriginal().getMaxHealth() / 2){
             this.reserveAnimation(WOMAnimations.SOLAR_AUTO_4_POLVORA);
         }
+        //防止奇迹武器技能太超模
+        if(epicFightDamageSource.getStunType() != StunType.NONE){
+            epicFightDamageSource.setStunType(StunType.SHORT);
+        }
         AttackResult attackResult = super.tryHarm(target, epicFightDamageSource, amount);
         //击中吸血+火焰附加
         if(attackResult.resultType.equals(AttackResult.ResultType.SUCCESS)){
             this.getOriginal().setHealth(this.getOriginal().getHealth() + 58);
             target.setRemainingFireTicks(100);
-            System.out.println("1111");
         }
         return attackResult;
     }

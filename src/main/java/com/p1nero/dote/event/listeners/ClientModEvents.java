@@ -25,7 +25,11 @@ public class ClientModEvents{
         EntityRenderers.register(DOTEEntities.GOLDEN_FLAME.get(), GoldenFlameRenderer::new);
         EntityRenderers.register(DOTEEntities.DOTE_PIGLIN.get(), DOTEPiglinRenderer::new);
         EntityRenderers.register(DOTEEntities.DOTE_ZOMBIE.get(), DOTEZombieRenderer::new);
+        EntityRenderers.register(DOTEEntities.DOTE_ZOMBIE_2.get(), DOTEZombieRenderer::new);
         EntityRenderers.register(DOTEEntities.STAR_CHASER.get(), StarChaserRenderer::new);
+        EntityRenderers.register(DOTEEntities.THE_SHADOW_OF_THE_END.get(), TSERenderer::new);
+        EntityRenderers.register(DOTEEntities.THE_PYROCLAS_OF_PURGATORY.get(), TPPRenderer::new);
+        EntityRenderers.register(DOTEEntities.THE_SHADOW_OF_THE_END.get(), TSERenderer::new);
 
     }
 

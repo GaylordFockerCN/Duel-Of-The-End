@@ -2,6 +2,10 @@ package com.p1nero.dote.entity;
 
 import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.entity.custom.*;
+import com.p1nero.dote.entity.custom.efpatch.DOTEZombiePatch;
+import com.p1nero.dote.entity.custom.efpatch.GoldenFlamePatch;
+import com.p1nero.dote.entity.custom.efpatch.SenbaiDevilPatch;
+import com.p1nero.dote.entity.custom.efpatch.StarChaserPatch;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -22,6 +26,8 @@ public class DOTEEntities {
 	public static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, DuelOfTheEndMod.MOD_ID);
 	public static final RegistryObject<EntityType<DOTEZombie>> DOTE_ZOMBIE = register("zombie",
 			EntityType.Builder.of(DOTEZombie::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
+	public static final RegistryObject<EntityType<DOTEZombie>> DOTE_ZOMBIE_2 = register("zombie_2",
+			EntityType.Builder.of(DOTEZombie::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
 	public static final RegistryObject<EntityType<DOTEPiglin>> DOTE_PIGLIN = register("piglin",
 			EntityType.Builder.of(DOTEPiglin::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
 	public static final RegistryObject<EntityType<StarChaser>> STAR_CHASER = register("star_chaser",
@@ -30,6 +36,12 @@ public class DOTEEntities {
 			EntityType.Builder.of(SenbaiDevil::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
 	public static final RegistryObject<EntityType<GoldenFlame>> GOLDEN_FLAME = register("golden_flame",
 			EntityType.Builder.of(GoldenFlame::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
+	public static final RegistryObject<EntityType<TheArbiterOfRadiance>> THE_ARBITER_OF_RADIANCE = register("the_arbiter_of_radiance",
+			EntityType.Builder.of(TheArbiterOfRadiance::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
+	public static final RegistryObject<EntityType<ThePyroclasOfPurgatory>> THE_PYROCLAS_OF_PURGATORY = register("the_pyroclas_of_purgatory",
+			EntityType.Builder.of(ThePyroclasOfPurgatory::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
+	public static final RegistryObject<EntityType<TheShadowOfTheEnd>> THE_SHADOW_OF_THE_END = register("the_shadow_of_the_end",
+			EntityType.Builder.of(TheShadowOfTheEnd::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String name, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(name, () -> entityTypeBuilder.build(new ResourceLocation(DuelOfTheEndMod.MOD_ID, name).toString()));
@@ -58,13 +70,19 @@ public class DOTEEntities {
 		event.put(SENBAI_DEVIL.get(), SenbaiDevil.setAttributes());
 		event.put(GOLDEN_FLAME.get(), GoldenFlame.setAttributes());
 		event.put(DOTE_ZOMBIE.get(), DOTEZombie.setAttributes());
+		event.put(DOTE_ZOMBIE_2.get(), DOTEZombie.setAttributes());
 		event.put(DOTE_PIGLIN.get(), DOTEPiglin.setAttributes());
 		event.put(STAR_CHASER.get(), StarChaser.setAttributes());
+		event.put(THE_ARBITER_OF_RADIANCE.get(), TheArbiterOfRadiance.setAttributes());
+		event.put(THE_PYROCLAS_OF_PURGATORY.get(), ThePyroclasOfPurgatory.setAttributes());
+		event.put(THE_SHADOW_OF_THE_END.get(), TheShadowOfTheEnd.setAttributes());
 	}
 
 	@SubscribeEvent
 	public static void entitySpawnRestriction(SpawnPlacementRegisterEvent event) {
 		event.register(DOTE_ZOMBIE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				DOTEZombie::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(DOTE_ZOMBIE_2.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				DOTEZombie::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(DOTE_PIGLIN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				DOTEPiglin::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);

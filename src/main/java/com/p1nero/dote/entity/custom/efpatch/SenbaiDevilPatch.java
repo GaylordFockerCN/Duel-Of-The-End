@@ -1,8 +1,9 @@
-package com.p1nero.dote.entity.custom;
+package com.p1nero.dote.entity.custom.efpatch;
 
 import com.p1nero.dote.entity.ai.DOTECombatBehaviors;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.p1nero.dote.entity.custom.SenbaiDevil;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import reascer.wom.gameasset.WOMAnimations;
@@ -83,7 +84,7 @@ public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> {
                 this.playSound(EpicFightSounds.CLASH.get(), -0.05F, 0.1F);
                 this.getOriginal().setBlockCount(this.getOriginal().getBlockCount() - 1);
                 if(this.getOriginal().getBlockCount() == 0){
-                    this.reserveAnimation(Animations.BIPED_ROLL_BACKWARD);
+                    this.reserveAnimation(Animations.LONGSWORD_AUTO1);
                 }
                 return AttackResult.blocked(0);
             }

@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class SimpleDescriptionArmorItem extends ArmorItem {
-    protected static final UUID MAX_STAMINA_UUID = UUID.fromString("CC888E1C-4180-4820-B01B-BCCE1234ACA9");
+    protected static final UUID MAX_STAMINA_UUID = UUID.fromString("CC111E1C-4180-4820-B01B-BCCE1234ACA9");
+    protected static final UUID STAMINA_REGEN_UUID = UUID.fromString("CC222E1C-4180-4820-B01B-BCCE1234ACA9");
     public SimpleDescriptionArmorItem(ArmorMaterial armorMaterial, Type type, Properties properties) {
         super(armorMaterial, type, properties);
     }
