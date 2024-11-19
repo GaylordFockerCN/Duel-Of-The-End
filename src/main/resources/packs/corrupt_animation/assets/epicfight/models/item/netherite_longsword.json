@@ -1,0 +1,6 @@
+{
+  "parent": "epicfight:item/longsword",
+  "textures": {
+    "layer0": "epicfight:item/netherite_longsword"
+  }
+}

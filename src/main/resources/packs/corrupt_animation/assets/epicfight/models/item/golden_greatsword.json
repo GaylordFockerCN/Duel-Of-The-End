@@ -1,0 +1,6 @@
+{
+  "parent": "epicfight:item/greatsword",
+  "textures": {
+    "layer0": "epicfight:item/golden_greatsword"
+  }
+}

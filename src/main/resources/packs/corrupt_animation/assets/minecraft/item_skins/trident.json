@@ -1,0 +1,11 @@
+{
+    "trail": {
+    	"color": [180, 225, 255],
+    	"begin_pos": [0.0, 0.0, -0.50],
+    	"end_pos": [0.0, 0.24, -1.25],
+    	"lifetime": 6,
+		"interpolations": 4,
+    	"texture_path": "epicfight:textures/particle/corruptdog/swing_trail.png",
+    	"particle_type": "epicfight:swing_trail"
+    }
+}
