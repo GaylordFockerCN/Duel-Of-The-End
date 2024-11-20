@@ -120,16 +120,19 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity {
             BossMusicPlayer.playBossMusic(this, getFightMusic(), 32);
         } else {
             if(level().getBlockEntity(getHomePos()) instanceof BossSpawnerBlockEntity<?> bossSpawnerBlockEntity){
-                if(bossSpawnerBlockEntity.getMyBoss() == null){
-                    level().explode(this, this.damageSources().explosion(this, this), null, position(), 3F, false, Level.ExplosionInteraction.NONE);
-                    discard();
+                if(bossSpawnerBlockEntity.getMyBoss() == null || !bossSpawnerBlockEntity.getMyBoss().getType().equals(this.getType())){
+                    explodeAndDiscard();
                 }
             } else {
-                level().explode(this, this.damageSources().explosion(this, this), null, position(), 3F, false, Level.ExplosionInteraction.NONE);
-                discard();
+                explodeAndDiscard();
             }
         }
 
+    }
+
+    public void explodeAndDiscard(){
+        level().explode(this, this.damageSources().explosion(this, this), null, position(), 3F, false, Level.ExplosionInteraction.NONE);
+        discard();
     }
 
     @Override

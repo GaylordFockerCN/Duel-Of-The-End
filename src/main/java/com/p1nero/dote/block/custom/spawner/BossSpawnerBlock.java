@@ -1,29 +1,38 @@
 package com.p1nero.dote.block.custom.spawner;
 
+import com.google.common.collect.ImmutableMap;
 import com.p1nero.dote.DOTEConfig;
 import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.block.entity.spawner.BossSpawnerBlockEntity;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.entity.custom.DOTEMonster;
 import com.p1nero.dote.item.DOTEItems;
+import it.unimi.dsi.fastutil.doubles.DoubleList;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public abstract class BossSpawnerBlock extends BaseEntityBlock {
@@ -31,6 +40,11 @@ public abstract class BossSpawnerBlock extends BaseEntityBlock {
     protected BossSpawnerBlock(Properties pProperties, Supplier<BlockEntityType<? extends BossSpawnerBlockEntity<?>>> blockEntityType) {
         super(pProperties);
         this.blockEntityType = blockEntityType;
+    }
+
+    @Override
+    public VoxelShape getShape(@NotNull BlockState p_60555_, @NotNull BlockGetter p_60556_, @NotNull BlockPos p_60557_, @NotNull CollisionContext p_60558_) {
+        return Block.box(0.0, 0.0, 0.0, 16.0, 26.0, 16.0);
     }
 
     /**
@@ -41,7 +55,7 @@ public abstract class BossSpawnerBlock extends BaseEntityBlock {
     public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
         BlockEntity entity = pLevel.getBlockEntity(pPos);
         if(entity instanceof BossSpawnerBlockEntity<?> bossSpawnerBlockEntity && !pLevel.isClientSide){
-            int r = DOTEConfig.SPAWNER_BLOCK_PROTECT_RADIUS.get();
+            int r = DOTEConfig.SPAWNER_BLOCK_PROTECT_RADIUS.get() - 5;
             //防止小怪打扰
             if(!pLevel.getEntitiesOfClass(DOTEMonster.class, new AABB(pPos.offset(-r, -r, -r), pPos.offset(r, r, r))).isEmpty()){
                 pPlayer.displayClientMessage(DuelOfTheEndMod.getInfo("tip3"), true);
@@ -79,7 +93,7 @@ public abstract class BossSpawnerBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
-        return createTickerHelper(type, blockEntityType.get(), BossSpawnerBlockEntity::tick);
+        return BossSpawnerBlockEntity::tick;
     }
 
 }

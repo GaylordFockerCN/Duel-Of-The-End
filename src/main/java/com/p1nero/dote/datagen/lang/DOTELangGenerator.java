@@ -20,6 +20,7 @@ public class DOTELangGenerator extends DOTELangProvider {
         this.addInfo("tip5", "看准时机闪避或招架，做好准备再来吧…");
         this.addInfo("tip6", "锻造维度专属强力盔甲以提高生存能力，做好准备再来吧…");
         this.addInfo("tip7", "寻找“追星者”学习强力技能以提升战斗能力，做好准备再来吧…");
+        this.addInfo("tip9", "你无法逃避来自终焉的决斗...");
 
         addBiome(DOTEBiomes.AIR, "虚空");
         addBiome(DOTEBiomes.M_BIOME, "圣堂");
@@ -30,18 +31,30 @@ public class DOTELangGenerator extends DOTELangProvider {
         add(DOTEItems.M_KEY.get(), "圣堂决斗钥匙");
         add(DOTEItems.U_KEY.get(), "终焉决斗钥匙");
         add(DOTEItems.ADGRAIN.get(), "冒险碎片");
+        addItemUsageInfo(DOTEItems.P_KEY.get(), "牧师赠与的钥匙。你...做好准备了吗？");
+        addItemUsageInfo(DOTEItems.M_KEY.get(), "所谓的终焉也并非遥不可及...");
+        addItemUsageInfo(DOTEItems.U_KEY.get(), "§6准备好面对“祂”了吗...");
         addItemUsageInfo(DOTEItems.ADGRAIN.get(), "似乎可以用来与他人交易...");
         add(DOTEItems.ADVENTURESPAR.get(), "冒险晶石");
         addItemUsageInfo(DOTEItems.ADVENTURESPAR.get(), "");
         add(DOTEItems.IMMORTALESSENCE.get(), "往生精华");
         addItemUsageInfo(DOTEItems.IMMORTALESSENCE.get(), "似乎蕴含着某种往生的力量...");
-        addItemUsageInfo(DOTEItems.P_KEY.get(), "牧师赠与的钥匙。你...做好准备了吗？");
-        addItemUsageInfo(DOTEItems.M_KEY.get(), "所谓的终焉也并非遥不可及...");
-        addItemUsageInfo(DOTEItems.U_KEY.get(), "§6准备好面对“祂”了吗...");
-        add(DOTEItems.NETHERROT_INGOT.get(), "腐金锭");
-        addItemUsageInfo(DOTEItems.NETHERROT_INGOT.get(), "");
         add(DOTEItems.NETHERITESS.get(), "合金残片");
         addItemUsageInfo(DOTEItems.NETHERITESS.get(), "森白影魔掉落物");
+        add(DOTEItems.WITHERC.get(), "凋零残片");
+        addItemUsageInfo(DOTEItems.WITHERC.get(), "金焰神王掉落物");
+        add(DOTEItems.HOLY_RADIANCE_SEED.get(), "圣辉之种");
+        addItemUsageInfo(DOTEItems.HOLY_RADIANCE_SEED.get(), "圣辉裁决者掉落物");
+        add(DOTEItems.CORE_OF_HELL.get(), "炼狱核心");
+        addItemUsageInfo(DOTEItems.CORE_OF_HELL.get(), "炼狱炎魔掉落物");
+        add(DOTEItems.BOOK_OF_ENDING.get(), "终焉之诗");
+        addItemUsageInfo(DOTEItems.BOOK_OF_ENDING.get(), "终焉之影掉落物");
+        add(DOTEItems.NETHERROT_INGOT.get(), "腐金锭");
+        addItemUsageInfo(DOTEItems.NETHERROT_INGOT.get(), "");
+        add(DOTEItems.WKNIGHT_INGOT.get(), "白泣锭");
+        addItemUsageInfo(DOTEItems.WKNIGHT_INGOT.get(), "");
+        add(DOTEItems.DRAGONSTEEL_INGOT.get(), "龙钢锭");
+        addItemUsageInfo(DOTEItems.BOOK_OF_ENDING.get(), "");
         add(DOTEItems.TIESTONEH.get(), "绑石头盔");
         addItemUsageInfo(DOTEItems.TIESTONEH.get(), "套装效果：§6石");
         add(DOTEItems.TIESTONEC.get(), "绑石胸甲");
@@ -50,6 +63,14 @@ public class DOTELangGenerator extends DOTELangProvider {
         addItemUsageInfo(DOTEItems.TIESTONEL.get(), "套装效果：§6石");
         add(DOTEItems.TIESTONES.get(), "绑石靴子");
         addItemUsageInfo(DOTEItems.TIESTONES.get(), "套装效果：§6石");
+        add(DOTEItems.WKNIGHT_HELMET.get(), "白泣头盔");
+        addItemUsageInfo(DOTEItems.WKNIGHT_HELMET.get(), "套装效果：§f白泣");
+        add(DOTEItems.WKNIGHT_CHESTPLATE.get(), "白泣胸甲");
+        addItemUsageInfo(DOTEItems.WKNIGHT_CHESTPLATE.get(), "套装效果：§f白泣");
+        add(DOTEItems.WKNIGHT_LEGGINGS.get(), "白泣护腿");
+        addItemUsageInfo(DOTEItems.WKNIGHT_LEGGINGS.get(), "套装效果：§f白泣");
+        add(DOTEItems.WKNIGHT_BOOTS.get(), "白泣靴子");
+        addItemUsageInfo(DOTEItems.WKNIGHT_BOOTS.get(), "套装效果：§f白泣");
         add(DOTEItems.NETHERITEROT_HELMET.get(), "腐金头盔");
         addItemUsageInfo(DOTEItems.NETHERITEROT_HELMET.get(), "套装效果：§4炎甲");
         add(DOTEItems.NETHERITEROT_CHESTPLATE.get(), "腐金胸甲");
@@ -60,8 +81,6 @@ public class DOTELangGenerator extends DOTELangProvider {
         addItemUsageInfo(DOTEItems.NETHERITEROT_BOOTS.get(), "套装效果：§4炎甲");
         add(DOTEItems.BALMUNG.get(), "幻想大剑：天魔失坠");
         addItemUsageInfo(DOTEItems.BALMUNG.get(), "赞助者：§2<xyz>");
-        add(DOTEItems.WITHERC.get(), "凋零残片");
-        addItemUsageInfo(DOTEItems.WITHERC.get(), "金焰神王掉落物");
         add(DOTEItems.GOLDEN_DRAGON_HELMET.get(), "赤焰金龙战盔");
         addItemUsageInfo(DOTEItems.GOLDEN_DRAGON_HELMET.get(), "赞助者：§2<雨落风情>");
         add(DOTEItems.GOLDEN_DRAGON_CHESTPLATE.get(), "赤焰金龙战甲");
@@ -85,7 +104,7 @@ public class DOTELangGenerator extends DOTELangProvider {
         add(DOTEEntities.GOLDEN_FLAME.get(), "金焰神王");
         add(DOTEEntities.THE_ARBITER_OF_RADIANCE.get(), "圣辉裁决者：Oblivionis");
         add(DOTEEntities.THE_PYROCLAS_OF_PURGATORY.get(), "炼狱炎魔：Mortis");
-        add(DOTEEntities.THE_SHADOW_OF_THE_END.get(), "终末之影：Timoris");
+        add(DOTEEntities.THE_SHADOW_OF_THE_END.get(), "终焉之影：Timoris");
 
 
         this.addDialog(DOTEEntities.STAR_CHASER, 0, "哦？一位幸存者，我对你有印象。你在那场战斗之中的表现还远远不够。和那位耀眼的剑客相比，风沙就足以将你轻易掩埋。");

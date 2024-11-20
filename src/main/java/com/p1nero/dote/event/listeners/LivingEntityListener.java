@@ -8,8 +8,10 @@ import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.item.custom.NetherRotArmorItem;
 import com.p1nero.dote.item.custom.TieStoneArmorItem;
+import com.p1nero.dote.item.custom.WKnightArmorItem;
 import com.p1nero.dote.util.ItemUtil;
 import com.p1nero.dote.worldgen.dimension.DOTEDimension;
+import net.minecraft.ChatFormatting;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,6 +37,7 @@ public class LivingEntityListener {
     public static void onEntityUpdate(LivingEvent.LivingTickEvent event) {
         LivingEntity livingEntity = event.getEntity();
         NetherRotArmorItem.onFullSet(livingEntity);
+        WKnightArmorItem.onFullSet(livingEntity);
         TieStoneArmorItem.onFullSet(livingEntity);
     }
 
@@ -46,7 +49,7 @@ public class LivingEntityListener {
                 dotePlayer.setDeathCount(dotePlayer.getDeathCount() + 1);
                 //死五次播报一次提示
                 if(dotePlayer.getDeathCount() % 5 == 1){
-                    player.displayClientMessage(DuelOfTheEndMod.getInfo("tip" + (5 + player.getRandom().nextInt(3))), false);
+                    player.displayClientMessage(DuelOfTheEndMod.getInfo("tip" + (5 + player.getRandom().nextInt(3))).withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD), false);
                     ItemStack potion = new ItemStack(Items.POTION);
                     PotionUtils.setPotion(potion, Potions.TURTLE_MASTER);
                     ItemUtil.addItem(player, DOTEItems.TIESTONEH.get(), 1);

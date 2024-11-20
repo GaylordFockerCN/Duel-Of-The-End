@@ -409,8 +409,18 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
                 new ItemStack(Items.NETHERITE_SCRAP, 2),
                 142857, 0, 0.02f));
         merchantOffers.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 64),
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 20),
                 new ItemStack(EpicFightItems.UCHIGATANA.get(), 1),
+                142857, 0, 0.02f));
+        merchantOffers.add(new MerchantOffer(
+                new ItemStack(DOTEItems.NETHERITESS.get(), 1),
+                new ItemStack(Items.COPPER_BLOCK, 4),
+                new ItemStack(DOTEItems.NETHERROT_INGOT.get(), 1),
+                142857, 0, 0.02f));
+        merchantOffers.add(new MerchantOffer(
+                new ItemStack(DOTEItems.WITHERC.get(), 1),
+                new ItemStack(Items.OBSIDIAN, 4),
+                new ItemStack(DOTEItems.DRAGONSTEEL_INGOT.get(), 1),
                 142857, 0, 0.02f));
         return merchantOffers;
     }
