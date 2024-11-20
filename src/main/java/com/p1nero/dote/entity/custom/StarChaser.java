@@ -168,7 +168,7 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
     public void openDialogueScreen(CompoundTag senderData) {
         LinkListStreamDialogueScreenBuilder builder =  new LinkListStreamDialogueScreenBuilder(this);
         Component greeting = BUILDER.buildDialogueAnswer(getRandom().nextInt(4));//0 1 2 3随机选一句问候
-        Component answer = BUILDER.buildDialogueAnswer(4 + getRandom().nextInt(6));//4 ~ 9随机选一句回答
+        Component answer = BUILDER.buildDialogueAnswer(4 + getRandom().nextInt(7));//4 ~ 10随机选一句回答
         //初次对话
         builder.setAnswerRoot(new TreeNode(greeting)
                 .addLeaf(BUILDER.buildDialogueOption(0), (byte) 1)//交易技能书

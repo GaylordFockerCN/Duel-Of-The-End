@@ -53,7 +53,7 @@ public class BossMusicPlayer {
         public final SoundEvent soundEvent;
 
         public BossMusic(SoundEvent bgm, LivingEntity boss, RandomSource random) {
-            super(bgm, SoundSource.MUSIC, random);
+            super(bgm, SoundSource.RECORDS, random);
             this.boss = boss;
             this.soundEvent = bgm;
             this.attenuation = Attenuation.NONE;

@@ -14,6 +14,7 @@ public class DOTEConfig {
     public static final ForgeConfigSpec.DoubleValue ELITE_MOB_DAMAGE_MULTIPLIER;
     public static final ForgeConfigSpec.BooleanValue BOSS_HEALTH_AND_LOOT_MULTIPLE;
     public static final ForgeConfigSpec.IntValue BOSS_HEALTH_AND_LOOT_MULTIPLE_MAX;
+    public static final ForgeConfigSpec.IntValue SPAWNER_BLOCK_PROTECT_RADIUS;
     public static final ForgeConfigSpec.DoubleValue TEST_X, TEST_Y, TEST_Z;
     public static final ForgeConfigSpec SPEC;
 
@@ -46,6 +47,7 @@ public class DOTEConfig {
         ELITE_MOB_DAMAGE_MULTIPLIER = createDouble(builder, "elite_mob_damage_multiplier", 1.5, 1.0, "精英怪的伤害加倍");
         BOSS_HEALTH_AND_LOOT_MULTIPLE = createBool(builder, "boss_health_and_loot_multiple", true, "是否在多人模式下boss血量增加");
         BOSS_HEALTH_AND_LOOT_MULTIPLE_MAX = createInt(builder, "boss_health_and_loot_multiple_max", 5, 1, "多人模式下boss血量增加的最大倍数");
+        SPAWNER_BLOCK_PROTECT_RADIUS = createInt(builder, "spawner_block_protect_radius", 15, 1, "boss生成方块的保护范围，boss将在范围内移动");
         builder.pop();
 
         builder.push("Test");

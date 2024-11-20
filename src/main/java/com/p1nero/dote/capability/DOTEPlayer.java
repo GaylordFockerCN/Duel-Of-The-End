@@ -10,6 +10,7 @@ import java.util.function.Consumer;
  */
 public class DOTEPlayer {
     private boolean canEnterPBiome;
+    private int deathCount;
 
     public boolean canEnterPBiome() {
         return canEnterPBiome;
@@ -17,6 +18,14 @@ public class DOTEPlayer {
 
     public void setCanEnterPBiome(boolean canEnterPBiome) {
         this.canEnterPBiome = canEnterPBiome;
+    }
+
+    public void setDeathCount(int deathCount) {
+        this.deathCount = deathCount;
+    }
+
+    public int getDeathCount() {
+        return deathCount;
     }
 
     private CompoundTag data = new CompoundTag();
@@ -49,16 +58,19 @@ public class DOTEPlayer {
     public void saveNBTData(CompoundTag tag){
         tag.put("customDataManager", data);
         tag.putBoolean("canEnterBiome", canEnterPBiome);
+        tag.putInt("deathCount", deathCount);
     }
 
     public void loadNBTData(CompoundTag tag){
         data = tag.getCompound("customDataManager");
         canEnterPBiome = tag.getBoolean("canEnterBiome");
+        deathCount = tag.getInt("deathCount");
     }
 
     public void copyFrom(DOTEPlayer old){
         data = old.data;
         canEnterPBiome = old.canEnterPBiome;
+        deathCount = old.deathCount;
     }
 
 }

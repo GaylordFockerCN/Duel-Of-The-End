@@ -66,7 +66,7 @@ public class DOTEZombiePatch extends HumanoidMobPatch<DOTEMonster> {
                 this.playSound(EpicFightSounds.CLASH.get(), -0.05F, 0.1F);
                 this.getOriginal().setBlockCount(this.getOriginal().getBlockCount() - 1);
                 if (this.getOriginal().getBlockCount() == 0) {
-                    this.playAnimationSynchronized(Animations.LONGSWORD_AUTO1, 0.25F);
+                    this.reserveAnimation(Animations.BIPED_ROLL_BACKWARD);
                     return super.tryHurt(damageSource, amount);
                 }
                 return AttackResult.blocked(0);

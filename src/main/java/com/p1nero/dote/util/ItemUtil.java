@@ -56,6 +56,12 @@ public class ItemUtil {
         }
     }
 
+    public static void addItem(Player player, ItemStack item){
+        if(!player.addItem(item)){
+            addItemEntity(player, item);
+        }
+    }
+
     /**
      * 是否是需要加倍翻倍的奖励
      */
@@ -67,6 +73,11 @@ public class ItemUtil {
 
     public static void addItemEntity(Entity spawnOn, Item item, int count){
         ItemEntity itemEntity = new ItemEntity(spawnOn.level(), spawnOn.getX(), spawnOn.getY(), spawnOn.getZ(), item.getDefaultInstance().copyWithCount(count));
+        spawnOn.level().addFreshEntity(itemEntity);
+    }
+
+    public static void addItemEntity(Entity spawnOn, ItemStack item){
+        ItemEntity itemEntity = new ItemEntity(spawnOn.level(), spawnOn.getX(), spawnOn.getY(), spawnOn.getZ(), item);
         spawnOn.level().addFreshEntity(itemEntity);
     }
 

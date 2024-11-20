@@ -13,9 +13,13 @@ public class DOTELangGenerator extends DOTELangProvider {
 
     @Override
     protected void addTranslations() {
-        this.addInfo("tip1", "使用往生精华右键祭坛以召唤：");
+        this.addInfo("tip1", "使用往生精华右键祭坛以召唤 ");
         this.addInfo("tip2", "似乎有种神秘力量阻止你访问此地...");
         this.addInfo("tip3", "你现在不能召唤，周围有怪物在游荡...");
+        this.addInfo("tip4", "其他玩家的力量干扰了祭坛的运作...");
+        this.addInfo("tip5", "看准时机闪避或招架，做好准备再来吧…");
+        this.addInfo("tip6", "锻造维度专属强力盔甲以提高生存能力，做好准备再来吧…");
+        this.addInfo("tip7", "寻找“追星者”学习强力技能以提升战斗能力，做好准备再来吧…");
 
         addBiome(DOTEBiomes.AIR, "虚空");
         addBiome(DOTEBiomes.M_BIOME, "圣堂");
@@ -79,9 +83,9 @@ public class DOTELangGenerator extends DOTELangProvider {
         add(DOTEEntities.STAR_CHASER.get(), "追星者");
         add(DOTEEntities.SENBAI_DEVIL.get(), "森白影魔");
         add(DOTEEntities.GOLDEN_FLAME.get(), "金焰神王");
-        add(DOTEEntities.THE_ARBITER_OF_RADIANCE.get(), "圣辉裁决者");
-        add(DOTEEntities.THE_PYROCLAS_OF_PURGATORY.get(), "炼狱炎魔");
-        add(DOTEEntities.THE_SHADOW_OF_THE_END.get(), "终末之影");
+        add(DOTEEntities.THE_ARBITER_OF_RADIANCE.get(), "圣辉裁决者：Oblivionis");
+        add(DOTEEntities.THE_PYROCLAS_OF_PURGATORY.get(), "炼狱炎魔：Mortis");
+        add(DOTEEntities.THE_SHADOW_OF_THE_END.get(), "终末之影：Timoris");
 
 
         this.addDialog(DOTEEntities.STAR_CHASER, 0, "哦？一位幸存者，我对你有印象。你在那场战斗之中的表现还远远不够。和那位耀眼的剑客相比，风沙就足以将你轻易掩埋。");
@@ -94,7 +98,7 @@ public class DOTELangGenerator extends DOTELangProvider {
         this.addDialog(DOTEEntities.STAR_CHASER, 7, "最后的观星者们啊！终焉带来了毁灭，却带不走他们——人类“希望”的体现！");
         this.addDialog(DOTEEntities.STAR_CHASER, 8, "我们成功了！通过将钻石与黄金不断的熔炼与敲打，再加入其他稀有的金属以及我在四处探索时得到的一些晶石碎片，一块漆黑的合金锭在高炉里诞生了！经过商议，我们决定将这种熔炼出来的完美的金属命名为“下界合金”。");
         this.addDialog(DOTEEntities.STAR_CHASER, 9, "根据我的初步调查，这个世界和我们之间的距离比我想象的要近得多，也许这里顶层之外的无限虚空之上就是我们世界的最底部。但不论这里是否是我们灵魂的最终归宿地，这里仍然是一片足以刷新我们认知的世界。也许，这里也有着“祂”的一丝线索。");
-        this.addDialog(DOTEEntities.STAR_CHASER, 10, "研究发现，怪物们");
+        this.addDialog(DOTEEntities.STAR_CHASER, 10, "你知道吗？这个世界的地底下竟然也分布着矿脉！");
         this.addDialogChoice(DOTEEntities.STAR_CHASER, 0, "交易技能书");
         this.addDialogChoice(DOTEEntities.STAR_CHASER, 1, "交易补给");
         this.addDialogChoice(DOTEEntities.STAR_CHASER, 2, "闲聊");
