@@ -94,7 +94,7 @@ public class DOTEZombie extends DOTEMonster {
     }
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 30.0f)
+                .add(Attributes.MAX_HEALTH, 20.0f)
                 .add(Attributes.ATTACK_DAMAGE, 2.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)

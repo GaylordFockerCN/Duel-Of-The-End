@@ -1,20 +1,15 @@
 package com.p1nero.dote.block.custom.spawner;
 
-import com.google.common.collect.ImmutableMap;
 import com.p1nero.dote.DOTEConfig;
 import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.block.entity.spawner.BossSpawnerBlockEntity;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.entity.custom.DOTEMonster;
 import com.p1nero.dote.item.DOTEItems;
-import it.unimi.dsi.fastutil.doubles.DoubleList;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -32,7 +27,6 @@ import net.minecraft.world.phys.shapes.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public abstract class BossSpawnerBlock extends BaseEntityBlock {

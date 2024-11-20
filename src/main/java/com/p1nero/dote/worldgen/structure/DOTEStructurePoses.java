@@ -12,19 +12,19 @@ import java.awt.Point;
  * @see PositionPlacement
  * @see DOTEChunkGenerator
  */
-public enum DOTEStructuresEnum {
+public enum DOTEStructurePoses {
 
     //offset应为偏移的方块数量除以四。举例：FINAL偏移61格，应填15 。
     FINAL(2, 15, 15),
     CHURCH1(2,50,10),
     CHURCH2(2,50,10),
-    ALTAR1(2,2,2),
-    ALTAR2(2,2,2);
+    ALTAR1(2,0,0),
+    ALTAR2(2,0,0);
 
     final int size;
     final int offsetX;
     final int offsetZ;
-    DOTEStructuresEnum(int size, int offsetX, int offsetZ) {
+    DOTEStructurePoses(int size, int offsetX, int offsetZ) {
         this.size = size;
         this.offsetX = offsetX;
         this.offsetZ = offsetZ;

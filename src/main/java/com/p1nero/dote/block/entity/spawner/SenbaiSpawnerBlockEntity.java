@@ -5,6 +5,7 @@ import com.p1nero.dote.entity.DOTEEntities;
 import com.p1nero.dote.entity.custom.SenbaiDevil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class SenbaiSpawnerBlockEntity extends BossSpawnerBlockEntity<SenbaiDevil>{
@@ -14,6 +15,7 @@ public class SenbaiSpawnerBlockEntity extends BossSpawnerBlockEntity<SenbaiDevil
 
     @Override
     public ParticleOptions getSpawnerParticle() {
-        return null;
+        return ParticleTypes.SOUL_FIRE_FLAME;
     }
+
 }

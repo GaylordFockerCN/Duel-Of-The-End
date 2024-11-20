@@ -27,13 +27,13 @@ public class DOTELangGenerator extends DOTELangProvider {
         addBiome(DOTEBiomes.P_BIOME, "炼狱");
         
         add("item_group.duel_of_the_end.all", "终焉决斗");
-        add(DOTEItems.P_KEY.get(), "炼狱决斗钥匙");
         add(DOTEItems.M_KEY.get(), "圣堂决斗钥匙");
+        addItemUsageInfo(DOTEItems.M_KEY.get(), "牧师赠与的钥匙。你...做好准备了吗？");
+        add(DOTEItems.P_KEY.get(), "炼狱决斗钥匙");
+        addItemUsageInfo(DOTEItems.P_KEY.get(), "所谓的终焉也并非遥不可及...");
         add(DOTEItems.U_KEY.get(), "终焉决斗钥匙");
-        add(DOTEItems.ADGRAIN.get(), "冒险碎片");
-        addItemUsageInfo(DOTEItems.P_KEY.get(), "牧师赠与的钥匙。你...做好准备了吗？");
-        addItemUsageInfo(DOTEItems.M_KEY.get(), "所谓的终焉也并非遥不可及...");
         addItemUsageInfo(DOTEItems.U_KEY.get(), "§6准备好面对“祂”了吗...");
+        add(DOTEItems.ADGRAIN.get(), "冒险碎片");
         addItemUsageInfo(DOTEItems.ADGRAIN.get(), "似乎可以用来与他人交易...");
         add(DOTEItems.ADVENTURESPAR.get(), "冒险晶石");
         addItemUsageInfo(DOTEItems.ADVENTURESPAR.get(), "");

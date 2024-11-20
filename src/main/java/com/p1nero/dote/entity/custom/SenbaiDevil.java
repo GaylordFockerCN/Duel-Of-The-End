@@ -27,6 +27,11 @@ public class SenbaiDevil extends DOTEBoss {
     }
 
     @Override
+    public float getHomeRadius() {
+        return 39;
+    }
+
+    @Override
     public float getAttackSpeed() {
         return 0.7F;
     }

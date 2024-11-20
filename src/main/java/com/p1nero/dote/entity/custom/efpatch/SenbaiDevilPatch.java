@@ -80,12 +80,13 @@ public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> {
                 this.getOriginal().setBlockCount(this.getOriginal().getRandom().nextInt(3));
             }
             if(!this.getEntityState().attacking() && this.getOriginal().getBlockCount() > 0){
-                this.playAnimationSynchronized(guardAnim.get(this.getOriginal().getRandom().nextInt(guardAnim.size())), 0.0F);
-                this.playSound(EpicFightSounds.CLASH.get(), -0.05F, 0.1F);
                 this.getOriginal().setBlockCount(this.getOriginal().getBlockCount() - 1);
                 if(this.getOriginal().getBlockCount() == 0){
                     this.playAnimationSynchronized(Animations.LONGSWORD_AUTO1, 0.25F);
+                    return super.tryHurt(damageSource, amount);
                 }
+                this.playAnimationSynchronized(guardAnim.get(this.getOriginal().getRandom().nextInt(guardAnim.size())), 0.0F);
+                this.playSound(EpicFightSounds.CLASH.get(), -0.05F, 0.1F);
                 return AttackResult.blocked(0);
             }
         }

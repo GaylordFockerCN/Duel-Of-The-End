@@ -4,7 +4,7 @@ import com.p1nero.dote.DOTEConfig;
 import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.worldgen.biome.DOTEBiomeProvider;
 import com.p1nero.dote.worldgen.structure.PositionPlacement;
-import com.p1nero.dote.worldgen.structure.DOTEStructuresEnum;
+import com.p1nero.dote.worldgen.structure.DOTEStructurePoses;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -136,7 +136,7 @@ public class DOTEChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
      */
     private boolean tryGenerateOtherStructure(StructureSet.StructureSelectionEntry pStructureSelectionEntry, StructureManager pStructureManager, RegistryAccess pRegistryAccess, RandomState pRandom, StructureTemplateManager pStructureTemplateManager, long pSeed, ChunkAccess pChunk, ChunkPos pChunkPos, SectionPos pSectionPos) {
         if(getBiomeSource() instanceof DOTEBiomeProvider provider){
-            for(DOTEStructuresEnum structure : DOTEStructuresEnum.values()){
+            for(DOTEStructurePoses structure : DOTEStructurePoses.values()){
                 Point p = structure.getPoint();
                 int chunkX = provider.deCorrectValue(p.x)>>2;
                 int chunkZ = provider.deCorrectValue(p.y)>>2;
@@ -179,7 +179,7 @@ public class DOTEChunkGenerator extends NoiseBasedChunkGeneratorWrapper {
                 PositionPlacement placement = landmarkPlacement.getKey();
                 Point p = new Point(0,0);
                 //在这里判断结构是什么，并且返回对应的点
-                for(DOTEStructuresEnum structure : DOTEStructuresEnum.values()){
+                for(DOTEStructurePoses structure : DOTEStructurePoses.values()){
                     if(structure.ordinal() == placement.structure){
                         p = structure.getPoint();
                         break;

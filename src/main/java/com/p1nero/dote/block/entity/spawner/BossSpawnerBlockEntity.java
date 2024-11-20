@@ -24,7 +24,7 @@ public abstract class BossSpawnerBlockEntity<T extends Mob & HomePointEntity> ex
 			if(pLevel instanceof ServerLevel serverLevel){
 				if(spawnerBlockEntity.getSpawnerParticle() != null){
 					double rx = pPos.getX() + pLevel.getRandom().nextFloat();
-					double ry = pPos.getY() + pLevel.getRandom().nextFloat();
+					double ry = pPos.getY() + 1 + pLevel.getRandom().nextFloat();
 					double rz = pPos.getZ() + pLevel.getRandom().nextFloat();
 					serverLevel.sendParticles(spawnerBlockEntity.getSpawnerParticle(), rx, ry, rz ,1, 0.0D, 0.0D, 0.0D, 0);
 				}
@@ -43,7 +43,7 @@ public abstract class BossSpawnerBlockEntity<T extends Mob & HomePointEntity> ex
 					return;
 				}
 
-				int r = DOTEConfig.SPAWNER_BLOCK_PROTECT_RADIUS.get() + 3;//要比实际的大一点点，防止在边缘偷刀
+				int r = (int) (spawnerBlockEntity.myBoss.getHomeRadius() + 3);//要比实际的大一点点，防止在边缘偷刀
 				//弹开怪物和多余玩家
 				for(LivingEntity livingEntity : pLevel.getEntitiesOfClass(LivingEntity.class, new AABB(pPos.offset(-r, -r, -r), pPos.offset(r, r, r)))){
                     if(spawnerBlockEntity.currentPlayer != null && livingEntity.getUUID().equals(spawnerBlockEntity.currentPlayer.getUUID()) || (spawnerBlockEntity.entityType.equals(livingEntity.getType()))){
@@ -58,7 +58,7 @@ public abstract class BossSpawnerBlockEntity<T extends Mob & HomePointEntity> ex
 					spawnerBlockEntity.myBoss = null;
 				} else if(spawnerBlockEntity.getCurrentPlayer().position().distanceTo(pPos.getCenter()) > spawnerBlockEntity.myBoss.getHomeRadius()
 				 			&& spawnerBlockEntity.getCurrentPlayer().position().distanceTo(pPos.getCenter()) < spawnerBlockEntity.myBoss.getHomeRadius() + 3){
-					spawnerBlockEntity.getCurrentPlayer().hurt(spawnerBlockEntity.myBoss.damageSources().magic(), 5);
+					spawnerBlockEntity.getCurrentPlayer().hurt(spawnerBlockEntity.myBoss.damageSources().magic(), 1);
 					spawnerBlockEntity.getCurrentPlayer().displayClientMessage(DuelOfTheEndMod.getInfo("tip9"), true);
 				}
 			}

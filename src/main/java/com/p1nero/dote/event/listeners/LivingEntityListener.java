@@ -26,6 +26,8 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import yesman.epicfight.gameasset.EpicFightSkills;
+import yesman.epicfight.world.item.EpicFightItems;
 
 @Mod.EventBusSubscriber(modid = DuelOfTheEndMod.MOD_ID)
 public class LivingEntityListener {
@@ -47,6 +49,15 @@ public class LivingEntityListener {
         if(event.getEntity() instanceof Player player && player.level().dimension() == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY){
             player.getCapability(DOTECapabilityProvider.DOTE_PLAYER).ifPresent(dotePlayer -> {
                 dotePlayer.setDeathCount(dotePlayer.getDeathCount() + 1);
+                if(dotePlayer.getDeathCount() == 5){
+                    player.displayClientMessage(DuelOfTheEndMod.getInfo("tip5").withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD), false);
+                    ItemStack parrying = new ItemStack(EpicFightItems.SKILLBOOK.get());
+                    parrying.getOrCreateTag().putString("skill", EpicFightSkills.PARRYING.toString());
+                    ItemStack technician = new ItemStack(EpicFightItems.SKILLBOOK.get());
+                    technician.getOrCreateTag().putString("skill", EpicFightSkills.TECHNICIAN.toString());
+                    ItemUtil.addItem(player, parrying);
+                    ItemUtil.addItem(player, technician);
+                }
                 //死五次播报一次提示
                 if(dotePlayer.getDeathCount() % 5 == 1){
                     player.displayClientMessage(DuelOfTheEndMod.getInfo("tip" + (5 + player.getRandom().nextInt(3))).withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD), false);
@@ -55,6 +66,7 @@ public class LivingEntityListener {
                     ItemUtil.addItem(player, DOTEItems.TIESTONEH.get(), 1);
                     ItemUtil.addItem(player, potion);
                 }
+
             });
         }
         //如果在维度里怪杀死了玩家则怪回满血

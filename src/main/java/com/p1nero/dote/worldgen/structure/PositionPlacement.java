@@ -38,7 +38,7 @@ public class PositionPlacement extends StructurePlacement {
             int correctX = provider.getCorrectValue(chunkX << 2);
             int correctZ = provider.getCorrectValue(chunkZ << 2);
 
-            for(DOTEStructuresEnum structure : DOTEStructuresEnum.values()){
+            for(DOTEStructurePoses structure : DOTEStructurePoses.values()){
                 if(checkStructure(structure, structure.getPoint(), correctX, correctZ))
                     return true;
             }
@@ -51,7 +51,7 @@ public class PositionPlacement extends StructurePlacement {
     /**
      * 判断该区块是否复合map所指定的结构的位置
      */
-    private boolean checkStructure(DOTEStructuresEnum structure, Point point, int correctX, int correctZ){
+    private boolean checkStructure(DOTEStructurePoses structure, Point point, int correctX, int correctZ){
 
         int deOffsetX = point.x - structure.getOffsetX();
         int deOffsetZ = point.y - structure.getOffsetZ();

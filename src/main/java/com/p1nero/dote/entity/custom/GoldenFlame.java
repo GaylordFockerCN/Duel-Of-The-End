@@ -39,6 +39,11 @@ public class GoldenFlame extends DOTEBoss {
     }
 
     @Override
+    public float getHomeRadius() {
+        return 39;
+    }
+
+    @Override
     public float getAttackSpeed() {
         return 0.5F;
     }

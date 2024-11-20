@@ -5,6 +5,7 @@ import com.p1nero.dote.entity.DOTEEntities;
 import com.p1nero.dote.entity.custom.GoldenFlame;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class GoldenFlameSpawnerBlockEntity extends BossSpawnerBlockEntity<GoldenFlame>{
@@ -14,6 +15,6 @@ public class GoldenFlameSpawnerBlockEntity extends BossSpawnerBlockEntity<Golden
 
     @Override
     public ParticleOptions getSpawnerParticle() {
-        return null;
+        return ParticleTypes.FLAME;
     }
 }
