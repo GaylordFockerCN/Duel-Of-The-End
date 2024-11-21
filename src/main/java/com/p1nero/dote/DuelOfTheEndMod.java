@@ -6,7 +6,7 @@ import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.effect.DOTEEffects;
 import com.p1nero.dote.entity.DOTEEntities;
 import com.p1nero.dote.entity.DOTEVillagers;
-import com.p1nero.dote.gameasset.DOFAnimations;
+import com.p1nero.dote.gameasset.DOTEAnimations;
 import com.p1nero.dote.item.DOTEItemTabs;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.network.DOTEPacketHandler;
@@ -51,8 +51,7 @@ public class DuelOfTheEndMod {
     public DuelOfTheEndMod(){
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-//        DOFSound.SOUNDS.register(bus);
-        bus.addListener(DOFAnimations::registerAnimations);
+        bus.addListener(DOTEAnimations::registerAnimations);
         DOTESounds.REGISTRY.register(bus);
         DOTEItems.REGISTRY.register(bus);
         DOTEBlocks.REGISTRY.register(bus);
