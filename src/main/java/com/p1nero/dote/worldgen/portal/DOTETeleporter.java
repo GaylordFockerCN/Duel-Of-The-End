@@ -43,7 +43,7 @@ public class DOTETeleporter implements ITeleporter {
         }
         thisPos = thisPos.offset(0,70,0);
         if(entity instanceof ServerPlayer player){
-            player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 520, 1, false, true));
+            player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 200, 1, false, true));
         }
         pos = new PortalInfo(thisPos.getCenter(), Vec3.ZERO, entity.getYRot(), entity.getXRot());
         return pos;

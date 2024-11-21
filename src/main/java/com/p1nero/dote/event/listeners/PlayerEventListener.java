@@ -14,6 +14,8 @@ import com.p1nero.dote.network.packet.clientbound.SyncUuidPacket;
 import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.util.ItemUtil;
 import com.p1nero.dote.worldgen.biome.DOTEBiomes;
+import com.p1nero.dote.worldgen.dimension.DOTEDimension;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -27,6 +29,9 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import yesman.epicfight.client.world.capabilites.entitypatch.player.LocalPlayerPatch;
+import yesman.epicfight.world.capabilities.EpicFightCapabilities;
+import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 
 @Mod.EventBusSubscriber(modid = DuelOfTheEndMod.MOD_ID)
 public class PlayerEventListener {
@@ -71,19 +76,33 @@ public class PlayerEventListener {
     @SubscribeEvent
     public static void enterBiome(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
+        Level level = player.level();
+        //维度内处理
+        if(!player.isCreative() && level.dimension() == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY && player.isAlive()){
+            PlayerPatch<?> playerPatch = EpicFightCapabilities.getEntityPatch(player, PlayerPatch.class);
+            if(!playerPatch.hasStamina(1)){
+                playerPatch.getOriginal().setSprinting(false);
+            }
+            if(!player.level().isClientSide){
+                //禁止进入群系
+                Holder<Biome> currentBiome = level.getBiome(player.getOnPos());
+                player.getCapability(DOTECapabilityProvider.DOTE_PLAYER).ifPresent(dotePlayer -> {
+                    if(!player.isCreative() && !dotePlayer.canEnterPBiome() && currentBiome.is(DOTEBiomes.P_BIOME)){
+                        player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100));
+                        player.addEffect(new MobEffectInstance(MobEffects.HARM, 100));
+                        player.displayClientMessage(DuelOfTheEndMod.getInfo("tip2"), true);
+                    }
+                });
 
-        //禁止进入群系
-        if(!player.isCreative() && !player.level().isClientSide){
-            Level level = player.level();
-            Holder<Biome> currentBiome = level.getBiome(player.getOnPos());
-            player.getCapability(DOTECapabilityProvider.DOTE_PLAYER).ifPresent(dotePlayer -> {
-                if(!player.isCreative() && !dotePlayer.canEnterPBiome() && currentBiome.is(DOTEBiomes.P_BIOME)){
-                    player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100));
-                    player.addEffect(new MobEffectInstance(MobEffects.HARM, 100));
-                    player.displayClientMessage(DuelOfTheEndMod.getInfo("tip2"), true);
+                //疾跑消耗耐力
+                if(player.isSprinting()){
+                    playerPatch.setStamina(playerPatch.getStamina() - 0.025F);
+                    playerPatch.resetActionTick();
+
                 }
-            });
+            }
         }
+
 
     }
 

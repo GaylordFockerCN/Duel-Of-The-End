@@ -60,7 +60,7 @@ public abstract class BossSpawnerBlock extends BaseEntityBlock {
                 pPlayer.displayClientMessage(DuelOfTheEndMod.getInfo("tip4"), true);
                 return InteractionResult.sidedSuccess(false);
             }
-            if(bossSpawnerBlockEntity.getMyBoss() == null && pPlayer.getItemInHand(pHand).is(DOTEItems.IMMORTALESSENCE.get())){
+            if(bossSpawnerBlockEntity.getMyEntity() == null && pPlayer.getItemInHand(pHand).is(DOTEItems.IMMORTALESSENCE.get())){
                 pPlayer.getItemInHand(pHand).shrink(1);
                 if(pLevel instanceof ServerLevel serverLevel) {
                     bossSpawnerBlockEntity.spawnMyBoss(serverLevel);

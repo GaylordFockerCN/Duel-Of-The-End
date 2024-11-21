@@ -97,7 +97,8 @@ public class DOTEBiomes {
      */
     public static Biome createPBiome(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
-        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(DOTEEntities.DOTE_PIGLIN.get(), 90, 1, 1));
+        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(DOTEEntities.DOTE_PIGLIN.get(), 60, 1, 1));
+        spawnBuilder.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(DOTEEntities.DOTE_ZOMBIE_2.get(), 30, 1, 1));
         spawnBuilder.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(DOTEEntities.STAR_CHASER.get(), 10, 1, 1));
 
         BiomeGenerationSettings.Builder biomeBuilder =

@@ -4,6 +4,7 @@ import com.p1nero.dote.entity.HomePointEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
@@ -18,17 +19,16 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public abstract class EntitySpawnerBlockEntity<T extends Mob & HomePointEntity> extends BlockEntity {
+public abstract class EntitySpawnerBlockEntity<T extends Entity> extends BlockEntity {
 	protected final EntityType<T> entityType;
-	@Nullable
-	protected T myBoss;
+	protected Entity myEntity;
 	@Nullable
 	protected Player currentPlayer;//限制仅能一个人挑战
 	public EntityType<T> getEntityType() {
 		return entityType;
 	}
-	public @Nullable T getMyBoss() {
-		return myBoss;
+	public @Nullable Entity getMyEntity() {
+		return myEntity;
 	}
 
 	public void setCurrentPlayer(@Nullable Player currentPlayer) {
@@ -45,12 +45,16 @@ public abstract class EntitySpawnerBlockEntity<T extends Mob & HomePointEntity> 
 	}
 
 	public void spawnMyBoss(ServerLevelAccessor accessor) {
-		myBoss = this.makeMyCreature();
-		myBoss.setHomePos(getBlockPos());
+		myEntity = this.makeMyCreature();
+		if(myEntity instanceof HomePointEntity homePointEntity){
+			homePointEntity.setHomePos(getBlockPos());
+		}
 		BlockPos spawnPos = accessor.getBlockState(this.getBlockPos().above()).getCollisionShape(accessor, this.getBlockPos().above()).isEmpty() ? this.getBlockPos().above() : this.getBlockPos();
-		myBoss.moveTo(spawnPos, accessor.getLevel().getRandom().nextFloat() * 360F, 0.0F);
-		ForgeEventFactory.onFinalizeSpawn(myBoss, accessor, accessor.getCurrentDifficultyAt(spawnPos), MobSpawnType.SPAWNER, null, null);
-		accessor.addFreshEntity(myBoss);
+		myEntity.moveTo(spawnPos, accessor.getLevel().getRandom().nextFloat() * 360F, 0.0F);
+		if(myEntity instanceof Mob mob){
+			ForgeEventFactory.onFinalizeSpawn(mob, accessor, accessor.getCurrentDifficultyAt(spawnPos), MobSpawnType.SPAWNER, null, null);
+		}
+		accessor.addFreshEntity(myEntity);
 	}
 
 	public abstract ParticleOptions getSpawnerParticle();

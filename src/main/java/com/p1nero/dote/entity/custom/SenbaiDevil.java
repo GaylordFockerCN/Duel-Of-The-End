@@ -38,7 +38,7 @@ public class SenbaiDevil extends DOTEBoss {
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 274.0f)
+                .add(Attributes.MAX_HEALTH, 1125.03f)
                 .add(Attributes.ATTACK_DAMAGE, 2.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
@@ -53,7 +53,7 @@ public class SenbaiDevil extends DOTEBoss {
 
     @Override
     public int getMaxNeutralizeCount() {
-        return 12;
+        return 25;
     }
 
     /**

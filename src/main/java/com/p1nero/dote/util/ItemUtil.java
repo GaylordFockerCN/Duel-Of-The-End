@@ -81,6 +81,11 @@ public class ItemUtil {
         spawnOn.level().addFreshEntity(itemEntity);
     }
 
+    public static void addItemEntity(ServerLevel level, double x, double y, double z, ItemStack item){
+        ItemEntity itemEntity = new ItemEntity(level, x, y, z, item);
+        level.addFreshEntity(itemEntity);
+    }
+
     /**
      * 递归搜索并消耗物品栏物品
      * @param need 需要消耗的个数

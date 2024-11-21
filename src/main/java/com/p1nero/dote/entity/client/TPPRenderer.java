@@ -18,6 +18,6 @@ public class TPPRenderer extends HumanoidMobRenderer<ThePyroclasOfPurgatory, Hum
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull ThePyroclasOfPurgatory entity) {
-        return new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/entity/kindom.png");
+        return new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/entity/kindom1.png");
     }
 }

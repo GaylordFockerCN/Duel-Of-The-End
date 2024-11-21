@@ -32,7 +32,7 @@ import java.util.List;
 public class DOTEZombie extends DOTEMonster {
     public static final List<Item> WEAPONS = new ArrayList<>();
     protected static final EntityDataAccessor<Integer> SKIN_ID = SynchedEntityData.defineId(DOTEZombie.class, EntityDataSerializers.INT);
-    private static final int MAX_SKIN_ID = 4;
+    private static final int MAX_SKIN_ID = 5;
     public DOTEZombie(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         WEAPONS.add(Items.IRON_AXE);

@@ -69,6 +69,7 @@ public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> {
             }
             if(getOriginal().getNeutralizeCount() == 0){
                 source.setStunType(StunType.NEUTRALIZE);
+                getOriginal().setHealth(getOriginal().getHealth() - getOriginal().getMaxHealth() / 12);
                 applyStun(StunType.NEUTRALIZE, 5);
                 getOriginal().setNeutralizeCount(getOriginal().getMaxNeutralizeCount());
             }
@@ -77,7 +78,7 @@ public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> {
         if(result.resultType.equals(AttackResult.ResultType.SUCCESS)){
             //小概率格挡
             if(!this.getEntityState().attacking() && this.getOriginal().getBlockCount() == 0 && this.getOriginal().getRandom().nextInt(4) == 1){
-                this.getOriginal().setBlockCount(this.getOriginal().getRandom().nextInt(3));
+                this.getOriginal().setBlockCount(2 + this.getOriginal().getRandom().nextInt(3));
             }
             if(!this.getEntityState().attacking() && this.getOriginal().getBlockCount() > 0){
                 this.getOriginal().setBlockCount(this.getOriginal().getBlockCount() - 1);

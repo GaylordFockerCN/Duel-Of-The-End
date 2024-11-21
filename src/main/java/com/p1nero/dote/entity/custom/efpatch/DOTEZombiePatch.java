@@ -59,7 +59,7 @@ public class DOTEZombiePatch extends HumanoidMobPatch<DOTEMonster> {
             //小概率格挡
             //判断DamageSource是防止卡墙
             if (damageSource.getEntity() != null && !this.getEntityState().attacking() && this.getOriginal().getBlockCount() == 0 && this.getOriginal().getRandom().nextInt(4) == 1) {
-                this.getOriginal().setBlockCount(this.getOriginal().getRandom().nextInt(3));
+                this.getOriginal().setBlockCount(2 + this.getOriginal().getRandom().nextInt(3));
             }
             if (damageSource.getEntity() != null && !this.getEntityState().attacking() && this.getOriginal().getBlockCount() > 0) {
                 this.getOriginal().setBlockCount(this.getOriginal().getBlockCount() - 1);

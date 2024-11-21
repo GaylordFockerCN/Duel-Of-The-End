@@ -18,6 +18,6 @@ public class TARRenderer extends HumanoidMobRenderer<TheArbiterOfRadiance, Human
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull TheArbiterOfRadiance entity) {
-        return new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/entity/kindom.png");
+        return new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/entity/kindom0.png");
     }
 }

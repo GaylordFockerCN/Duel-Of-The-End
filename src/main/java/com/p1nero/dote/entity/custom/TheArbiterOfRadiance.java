@@ -14,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import reascer.wom.world.item.WOMItems;
 import yesman.epicfight.world.item.EpicFightItems;
 
 /**
@@ -23,7 +24,7 @@ public class TheArbiterOfRadiance extends DOTEBoss {
 
     public TheArbiterOfRadiance(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
-        setItemInHand(InteractionHand.MAIN_HAND, EpicFightItems.UCHIGATANA.get().getDefaultInstance());
+        setItemInHand(InteractionHand.MAIN_HAND, EpicFightItems.IRON_TACHI.get().getDefaultInstance());
     }
 
     @Override
@@ -33,7 +34,7 @@ public class TheArbiterOfRadiance extends DOTEBoss {
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 274.0f)
+                .add(Attributes.MAX_HEALTH, 114.514f)
                 .add(Attributes.ATTACK_DAMAGE, 2.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
@@ -41,8 +42,8 @@ public class TheArbiterOfRadiance extends DOTEBoss {
     }
 
     @Override
-    public int getMaxNeutralizeCount() {
-        return 12;
+    public float getAttackSpeed() {
+        return 0.65F;
     }
 
     /**
@@ -58,7 +59,7 @@ public class TheArbiterOfRadiance extends DOTEBoss {
 
     @Override
     public @Nullable SoundEvent getFightMusic() {
-        return DOTESounds.SENBAI_BGM.get();
+        return getHealth() <= getMaxHealth() / 2 ? DOTESounds.TARBITER2.get() : DOTESounds.TARBITER1.get();
     }
 
 }

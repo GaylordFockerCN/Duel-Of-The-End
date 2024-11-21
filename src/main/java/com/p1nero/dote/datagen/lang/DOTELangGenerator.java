@@ -13,11 +13,12 @@ public class DOTELangGenerator extends DOTELangProvider {
 
     @Override
     protected void addTranslations() {
+        this.addInfo("tip0", "§4警告！永远记住：进出维度将移除身上除特殊物品外的所有物品！");
         this.addInfo("tip1", "使用往生精华右键祭坛以召唤 ");
         this.addInfo("tip2", "似乎有种神秘力量阻止你访问此地...");
         this.addInfo("tip3", "你现在不能召唤，周围有怪物在游荡...");
         this.addInfo("tip4", "其他玩家的力量干扰了祭坛的运作...");
-        this.addInfo("tip5", "看准时机闪避或招架，做好准备再来吧…");
+        this.addInfo("tip5", "不要贪刀，看准时机闪避或招架，做好准备再来吧…");
         this.addInfo("tip6", "锻造维度专属强力盔甲以提高生存能力，做好准备再来吧…");
         this.addInfo("tip7", "寻找“追星者”学习强力技能以提升战斗能力，做好准备再来吧…");
         this.addInfo("tip9", "你无法逃避来自终焉的决斗...");
@@ -54,7 +55,7 @@ public class DOTELangGenerator extends DOTELangProvider {
         add(DOTEItems.WKNIGHT_INGOT.get(), "白泣锭");
         addItemUsageInfo(DOTEItems.WKNIGHT_INGOT.get(), "");
         add(DOTEItems.DRAGONSTEEL_INGOT.get(), "龙钢锭");
-        addItemUsageInfo(DOTEItems.BOOK_OF_ENDING.get(), "");
+        addItemUsageInfo(DOTEItems.DRAGONSTEEL_INGOT.get(), "");
         add(DOTEItems.TIESTONEH.get(), "绑石头盔");
         addItemUsageInfo(DOTEItems.TIESTONEH.get(), "套装效果：§6石");
         add(DOTEItems.TIESTONEC.get(), "绑石胸甲");

@@ -50,6 +50,10 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity {
     }
 
     @Override
+    public void setRemainingFireTicks(int p_20269_) {
+    }
+
+    @Override
     public void setHomePos(BlockPos homePos) {
         getEntityData().set(HOME_POS, homePos);
     }
@@ -70,7 +74,9 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity {
         getEntityData().define(HOME_POS, getOnPos());
     }
 
-    public abstract int getMaxNeutralizeCount();
+    public int getMaxNeutralizeCount(){
+        return 12;
+    };
 
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
@@ -120,7 +126,7 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity {
             BossMusicPlayer.playBossMusic(this, getFightMusic(), 32);
         } else {
             if(level().getBlockEntity(getHomePos()) instanceof BossSpawnerBlockEntity<?> bossSpawnerBlockEntity){
-                if(bossSpawnerBlockEntity.getMyBoss() == null || !bossSpawnerBlockEntity.getMyBoss().getType().equals(this.getType())){
+                if(bossSpawnerBlockEntity.getMyEntity() == null || !bossSpawnerBlockEntity.getMyEntity().getType().equals(this.getType())){
                     explodeAndDiscard();
                 }
             } else {
