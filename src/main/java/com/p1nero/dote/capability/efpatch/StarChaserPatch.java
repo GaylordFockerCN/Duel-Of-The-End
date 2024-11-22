@@ -1,4 +1,4 @@
-package com.p1nero.dote.entity.custom.efpatch;
+package com.p1nero.dote.capability.efpatch;
 
 import com.p1nero.dote.entity.custom.DOTEBoss;
 import com.p1nero.dote.entity.custom.StarChaser;

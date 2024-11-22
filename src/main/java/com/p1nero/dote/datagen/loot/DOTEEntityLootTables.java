@@ -50,9 +50,21 @@ public class DOTEEntityLootTables extends EntityLootSubProvider {
                         .setRolls(UniformGenerator.between(1, 2))
                         .add(LootItem.lootTableItem(DOTEItems.ADGRAIN.get()))));
         add(DOTEEntities.DOTE_ZOMBIE_2.get(), fromEntityLootTable(DOTEEntities.DOTE_ZOMBIE.get()));
-        add(DOTEEntities.THE_ARBITER_OF_RADIANCE.get(), emptyLootTable());
-        add(DOTEEntities.THE_PYROCLAS_OF_PURGATORY.get(), emptyLootTable());
-        add(DOTEEntities.THE_SHADOW_OF_THE_END.get(), emptyLootTable());
+        add(DOTEEntities.THE_ARBITER_OF_RADIANCE.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1))
+                        .add(LootItem.lootTableItem(DOTEItems.HOLY_RADIANCE_SEED.get()))));
+        add(DOTEEntities.THE_PYROCLAS_OF_PURGATORY.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1))
+                        .add(LootItem.lootTableItem(DOTEItems.CORE_OF_HELL.get()))));
+        add(DOTEEntities.THE_SHADOW_OF_THE_END.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1))
+                        .add(LootItem.lootTableItem(DOTEItems.BOOK_OF_ENDING.get()))));
+        add(DOTEEntities.GUIDE_NPC.get(), emptyLootTable());
+        add(DOTEEntities.KNIGHT_COMMANDER.get(), emptyLootTable());
+        add(DOTEEntities.SCARLET_HIGH_PRIEST.get(), emptyLootTable());
     }
 
     public LootTable.Builder emptyLootTable() {

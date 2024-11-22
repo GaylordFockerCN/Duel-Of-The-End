@@ -1,6 +1,9 @@
 package com.p1nero.dote.item.custom;
 
 import com.p1nero.dote.DuelOfTheEndMod;
+import com.p1nero.dote.archive.DOTEArchiveManager;
+import com.p1nero.dote.entity.DOTEEntities;
+import com.p1nero.dote.entity.custom.npc.GuideNpc;
 import com.p1nero.dote.item.DOTERarities;
 import com.p1nero.dote.util.ItemUtil;
 import com.p1nero.dote.worldgen.dimension.DOTEDimension;
@@ -36,6 +39,10 @@ public class TeleportKeyItem extends SimpleDescriptionFoilItem implements DOTEKe
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         if(level instanceof ServerLevel serverLevel && player.isShiftKeyDown()){
+            if(DOTEArchiveManager.getWorldLevel() == 2){
+                player.displayClientMessage(DuelOfTheEndMod.getInfo("tip10"), true);
+                return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide);
+            }
             //清空物品栏
             if(!player.isCreative()){
                 for(ItemStack stack : player.getInventory().items){
@@ -58,7 +65,16 @@ public class TeleportKeyItem extends SimpleDescriptionFoilItem implements DOTEKe
             } else {
                 player.changeDimension(Objects.requireNonNull(serverLevel.getServer().getLevel(DOTEDimension.P_SKY_ISLAND_LEVEL_KEY)),
                         new DOTETeleporter(destination.get()));
-
+                //生成向导
+                if(!DOTEArchiveManager.BIOME_PROGRESS_DATA.isGuideSummoned()){
+                    GuideNpc npc = DOTEEntities.GUIDE_NPC.get().create(level);
+                    if(npc != null){
+                        npc.setPos(player.position());
+                        npc.setHomePos(player.getOnPos());
+                        level.addFreshEntity(npc);
+                        DOTEArchiveManager.BIOME_PROGRESS_DATA.setGuideSummoned(true);
+                    }
+                }
             }
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS,1,1);
 

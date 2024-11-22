@@ -15,9 +15,9 @@ public enum DOTEArmorMaterials implements ArmorMaterial {
     TIESTONE("tiestone", 15, new int[]{ 2, 4, 4, 3}, 10,
             SoundEvents.ARMOR_EQUIP_CHAIN, 1f, 0.3f, () -> Ingredient.of(Blocks.COBBLESTONE)),
     WHITEKNIGHT("whiteknight", 37, new int[]{ 3, 6, 8, 3}, 15,
-            SoundEvents.ARMOR_EQUIP_DIAMOND, 1f, 0.3f, () -> Ingredient.of(DOTEItems.WKNIGHT_INGOT.get())),
-    NETHERITEROT("netheriterot", 37, new int[]{ 3, 6, 8, 3}, 15,
-        SoundEvents.ARMOR_EQUIP_NETHERITE, 3f, 0.3f, () -> Ingredient.of(DOTEItems.NETHERROT_INGOT.get())),
+            SoundEvents.ARMOR_EQUIP_DIAMOND, 3.0f, 0.3f, () -> Ingredient.of(DOTEItems.WKNIGHT_INGOT.get())),
+    NETHERITEROT("netheriterot", 54, new int[]{ 3, 6, 8, 3}, 15,
+        SoundEvents.ARMOR_EQUIP_NETHERITE, 4.0f, 0.3f, () -> Ingredient.of(DOTEItems.NETHERROT_INGOT.get())),
     GOLDEN_DRAGON("golden_dragon", 168, new int[]{ 4, 7, 9, 6}, 22,
             SoundEvents.ARMOR_EQUIP_NETHERITE, 4f, 0.3f, () -> Ingredient.EMPTY);
 

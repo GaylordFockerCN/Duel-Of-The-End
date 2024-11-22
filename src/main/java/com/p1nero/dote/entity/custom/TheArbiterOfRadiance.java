@@ -1,7 +1,12 @@
 package com.p1nero.dote.entity.custom;
 
+import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.capability.DOTECapabilityProvider;
 import com.p1nero.dote.client.DOTESounds;
+import com.p1nero.dote.client.gui.screen.DialogueComponentBuilder;
+import com.p1nero.dote.datagen.DOTEAdvancementData;
+import net.minecraft.client.Minecraft;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -12,9 +17,10 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import reascer.wom.world.item.WOMItems;
 import yesman.epicfight.world.item.EpicFightItems;
 
 /**
@@ -51,10 +57,47 @@ public class TheArbiterOfRadiance extends DOTEBoss {
      */
     @Override
     public void die(@NotNull DamageSource source) {
-        if(source.getEntity() instanceof Player player){
+        if(source.getEntity() instanceof ServerPlayer player){
+            //解锁第二群系权限
             player.getCapability(DOTECapabilityProvider.DOTE_PLAYER).ifPresent(dotePlayer -> dotePlayer.setCanEnterPBiome(true));
+            DialogueComponentBuilder builder = new DialogueComponentBuilder(this);
+            switch (DOTEArchiveManager.getWorldLevel()){
+                case 0:
+                    player.displayClientMessage(builder.buildDialogue(this, builder.buildDialogueAnswer(3)), false);
+                    break;
+                case 1:
+                    player.displayClientMessage(builder.buildDialogue(this, builder.buildDialogueAnswer(4)), false);
+                    break;
+                default:
+                    player.displayClientMessage(builder.buildDialogue(this, builder.buildDialogueAnswer(5)), false);
+            }
+            DOTEAdvancementData.getAdvancement("seed", player);
         }
+        DOTEArchiveManager.BIOME_PROGRESS_DATA.setBoss1fought(true);
         super.die(source);
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void onAddedToWorld() {
+        super.onAddedToWorld();
+        if(level().isClientSide){
+            DialogueComponentBuilder builder = new DialogueComponentBuilder(this);
+            if(Minecraft.getInstance().player == null){
+                return;
+            }
+            switch (DOTEArchiveManager.getWorldLevel()){
+                case 0:
+                    Minecraft.getInstance().player.displayClientMessage(builder.buildDialogue(this, builder.buildDialogueAnswer(0)), false);
+                    break;
+                case 1:
+                    Minecraft.getInstance().player.displayClientMessage(builder.buildDialogue(this, builder.buildDialogueAnswer(1)), false);
+                    break;
+                default:
+                    Minecraft.getInstance().player.displayClientMessage(builder.buildDialogue(this, builder.buildDialogueAnswer(2)), false);
+            }
+        }
+
     }
 
     @Override

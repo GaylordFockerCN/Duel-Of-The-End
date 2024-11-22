@@ -2,10 +2,13 @@ package com.p1nero.dote.entity;
 
 import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.entity.custom.*;
-import com.p1nero.dote.entity.custom.efpatch.DOTEZombiePatch;
-import com.p1nero.dote.entity.custom.efpatch.GoldenFlamePatch;
-import com.p1nero.dote.entity.custom.efpatch.SenbaiDevilPatch;
-import com.p1nero.dote.entity.custom.efpatch.StarChaserPatch;
+import com.p1nero.dote.capability.efpatch.DOTEZombiePatch;
+import com.p1nero.dote.capability.efpatch.GoldenFlamePatch;
+import com.p1nero.dote.capability.efpatch.SenbaiDevilPatch;
+import com.p1nero.dote.capability.efpatch.StarChaserPatch;
+import com.p1nero.dote.entity.custom.npc.GuideNpc;
+import com.p1nero.dote.entity.custom.npc.KnightCommander;
+import com.p1nero.dote.entity.custom.npc.ScarletHighPriest;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -42,6 +45,12 @@ public class DOTEEntities {
 			EntityType.Builder.of(ThePyroclasOfPurgatory::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
 	public static final RegistryObject<EntityType<TheShadowOfTheEnd>> THE_SHADOW_OF_THE_END = register("the_shadow_of_the_end",
 			EntityType.Builder.of(TheShadowOfTheEnd::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
+	public static final RegistryObject<EntityType<GuideNpc>> GUIDE_NPC = register("guide_npc",
+			EntityType.Builder.of(GuideNpc::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
+	public static final RegistryObject<EntityType<KnightCommander>> KNIGHT_COMMANDER = register("knight_commander",
+			EntityType.Builder.of(KnightCommander::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
+	public static final RegistryObject<EntityType<ScarletHighPriest>> SCARLET_HIGH_PRIEST = register("scarlet_high_priest",
+			EntityType.Builder.of(ScarletHighPriest::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String name, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(name, () -> entityTypeBuilder.build(new ResourceLocation(DuelOfTheEndMod.MOD_ID, name).toString()));
@@ -76,6 +85,9 @@ public class DOTEEntities {
 		event.put(THE_ARBITER_OF_RADIANCE.get(), TheArbiterOfRadiance.setAttributes());
 		event.put(THE_PYROCLAS_OF_PURGATORY.get(), ThePyroclasOfPurgatory.setAttributes());
 		event.put(THE_SHADOW_OF_THE_END.get(), TheShadowOfTheEnd.setAttributes());
+		event.put(GUIDE_NPC.get(), GuideNpc.setAttributes());
+		event.put(KNIGHT_COMMANDER.get(), KnightCommander.setAttributes());
+		event.put(SCARLET_HIGH_PRIEST.get(), ScarletHighPriest.setAttributes());
 	}
 
 	@SubscribeEvent
@@ -88,6 +100,8 @@ public class DOTEEntities {
 				DOTEZombie::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 		event.register(STAR_CHASER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				StarChaser::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+		event.register(GUIDE_NPC.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				GuideNpc::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 	}
 
 }

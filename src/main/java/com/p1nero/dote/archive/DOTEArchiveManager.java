@@ -36,6 +36,7 @@ public class DOTEArchiveManager {
     }
 
     private static int worldLevel = 0;
+    public static final BiomeProgressData BIOME_PROGRESS_DATA = new BiomeProgressData();
     private static boolean noPlotMode = false;
 
     public static void setNoPlotMode() {
@@ -49,6 +50,15 @@ public class DOTEArchiveManager {
     public static int getWorldLevel(){
         return worldLevel;
     }
+
+    public static void setWorldLevel(int worldLevel) {
+        if(worldLevel >= 0 && worldLevel <= 2){
+            DOTEArchiveManager.worldLevel = worldLevel;
+        } else {
+            DuelOfTheEndMod.LOGGER.info("failed to set world level. world level should be [0, 2]");
+        }
+    }
+
     public static String getWorldLevelName(){
         return switch (worldLevel){
             case 0 -> "N";
@@ -69,8 +79,6 @@ public class DOTEArchiveManager {
     public static void finishTask(Task task){
         TASK_SET.remove(task);
     }
-
-    public static int firstChoiceBiome = 0;//0 means null
 
     /**
      * 把对话添加到列表里
@@ -123,87 +131,171 @@ public class DOTEArchiveManager {
         }
     }
 
+    /**
+     * 完成轮回时调用, 提升怪物等级并记录选择
+     */
+    public static void worldLevelUp(ServerLevel level, boolean chooseKnight){
+        if(level.dimension() != DOTEDimension.P_SKY_ISLAND_LEVEL_KEY){
+            return;
+        }
+        worldLevel++;
+        BIOME_PROGRESS_DATA.clearData();
+        switch (worldLevel){
+            case 1:
+                BIOME_PROGRESS_DATA.setChoice1(chooseKnight);
+                break;
+            case 2:
+                BIOME_PROGRESS_DATA.setChoice2(chooseKnight);
+                break;
+            case 3:
+                BIOME_PROGRESS_DATA.setChoice3(chooseKnight);
+        }
+        for(Entity entity : level.getAllEntities()){
+            if(entity instanceof LevelableEntity levelableEntity){
+                levelableEntity.levelUp(worldLevel);
+            }
+        }
+
+        for(ServerPlayer player : level.getPlayers((serverPlayer -> true))){
+
+        }
+        //全局广播
+        Component message = DuelOfTheEndMod.getInfo("level_up", getWorldLevelName());
+        PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new BroadcastMessagePacket(message, false));
+        PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new SyncSaveUtilPacket(DOTEArchiveManager.toNbt()));
+
+    }
+
     public static class BiomeProgressData {
+
+        private boolean guideSummoned;
+        private boolean boss1fought;
+        private boolean boss2fought;
+        private boolean boss3fought;
+        private boolean senbaiFought;
+        private boolean goldenFlameFought;
+
+        private boolean choice1, choice2, choice3;
+
+        public boolean isGuideSummoned() {
+            return guideSummoned;
+        }
+
+        public boolean isBoss1fought() {
+            return boss1fought;
+        }
+
+        public boolean isBoss2fought() {
+            return boss2fought;
+        }
+
+        public boolean isSenbaiFought() {
+            return senbaiFought;
+        }
+
+        public boolean isGoldenFlameFought() {
+            return goldenFlameFought;
+        }
+
+        public void setGuideSummoned(boolean guideSummoned) {
+            this.guideSummoned = guideSummoned;
+        }
+
+        public void setBoss1fought(boolean boss1fought) {
+            this.boss1fought = boss1fought;
+        }
+
+        public void setBoss2fought(boolean boss2fought) {
+            this.boss2fought = boss2fought;
+        }
+        public void setBoss3fought(boolean boss2fought) {
+            this.boss3fought = boss2fought;
+        }
+
+        public void setSenbaiFought(boolean senbaiFought) {
+            this.senbaiFought = senbaiFought;
+        }
+
+        public void setGoldenFlameFought(boolean goldenFlameFought) {
+            this.goldenFlameFought = goldenFlameFought;
+        }
+
+        /**
+         * 结局1： 忠诚
+         */
+        public boolean isEnd1(){
+            return worldLevel == 2 && choice1 && choice2 && choice3;
+        }
+
+        /**
+         * 结局3：碎星者
+         */
+        public boolean isEnd3(){
+            return worldLevel == 2 && !choice1 && !choice2 && !choice3;
+        }
+
+        public boolean isChoice1() {
+            return choice1;
+        }
+
+        public void setChoice1(boolean choice1) {
+            this.choice1 = choice1;
+        }
+
+        public boolean isChoice2() {
+            return choice2;
+        }
+
+        public void setChoice2(boolean choice2) {
+            this.choice2 = choice2;
+        }
+
+        public boolean isChoice3() {
+            return choice3;
+        }
+
+        public void setChoice3(boolean choice3) {
+            this.choice3 = choice3;
+        }
 
         public BiomeProgressData(){
 
         }
 
-        public BiomeProgressData(int choice, boolean isBossDie, boolean isBossTalked, boolean isBossFought, boolean isElderDie, boolean isElderTalked) {
-            this.choice = choice;
-            this.isBossDie = isBossDie;
-            this.isBossTalked = isBossTalked;
-            this.isBossFought = isBossFought;
-            this.isElderDie = isElderDie;
-            this.isElderTalked = isElderTalked;
+        /**
+         * 轮回的时候用
+         */
+        public void clearData(){
+            boss1fought = false;
+            boss2fought = false;
+            boss3fought = false;
+            senbaiFought = false;
+            goldenFlameFought = false;
         }
 
-        public static int BOSS = 1;
-        public static int VILLAGER = 2;
-
-        public int choice = 0;//0:no sure 1:boss 2:villager
-        protected int biome = 0;
-        public boolean isBossDie = false;//boss是否死亡
-        public boolean isBossTalked = false;//好像没用
-        public boolean isBossFought = false;//是否和boss战斗过
-        public boolean isElderDie = false;
-        public boolean isElderTalked = false;
-
-        public CompoundTag toNbt() {
-            CompoundTag tag = new CompoundTag();
-            tag.putInt("choice", choice);
-            tag.putBoolean("isBossDie", isBossDie);
-            tag.putBoolean("isBossTalked", isBossTalked);
-            tag.putBoolean("isBossFought", isBossFought);
-            tag.putBoolean("isElderDie", isElderDie);
-            tag.putBoolean("isElderTalked", isElderTalked);
+        public CompoundTag toNbt(CompoundTag tag) {
+            tag.putBoolean("guideSummoned", guideSummoned);
+            tag.putBoolean("boss1fought", boss1fought);
+            tag.putBoolean("boss2fought", boss2fought);
+            tag.putBoolean("boss3fought", boss3fought);
+            tag.putBoolean("senbaiFought", senbaiFought);
+            tag.putBoolean("goldenFlameFought", goldenFlameFought);
+            tag.putBoolean("choice1", choice1);
+            tag.putBoolean("choice2", choice2);
+            tag.putBoolean("choice3", choice3);
             return tag;
         }
 
         public void fromNbt(CompoundTag serverData){
-            choice = serverData.getInt("choice");
-            isBossDie = serverData.getBoolean("isBossDie");
-            isBossTalked = serverData.getBoolean("isBossTalked");
-            isBossFought = serverData.getBoolean("isBossFought");
-            isElderDie = serverData.getBoolean("isElderDie");
-            isElderTalked = serverData.getBoolean("isElderTalked");
-
-        }
-
-        /**
-         * 群系事件完成，升级世界等级，而且只能进行一次
-         */
-        public void finish(int choice, ServerLevel level){
-            if(level.dimension() != DOTEDimension.P_SKY_ISLAND_LEVEL_KEY){
-                return;
-            }
-            if(this.choice == 0){
-                this.choice = choice;
-            } else {
-                return;//防止重复提升
-            }
-            if(firstChoiceBiome == 0){
-                firstChoiceBiome = biome;
-            }
-            worldLevel++;
-            for(Entity entity : level.getAllEntities()){
-                if(entity instanceof LevelableEntity levelableEntity){
-                    levelableEntity.levelUp(worldLevel);
-                }
-            }
-
-            for(ServerPlayer player : level.getPlayers((serverPlayer -> true))){
-
-            }
-            //全局广播
-            Component message = DuelOfTheEndMod.getInfo("level_up", getWorldLevelName());
-            PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new BroadcastMessagePacket(message, false));
-            PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new SyncSaveUtilPacket(DOTEArchiveManager.toNbt()));
-
-        }
-
-        public boolean isFinished(){
-            return choice != 0;
+            guideSummoned = serverData.getBoolean("guideSummoned");
+            boss1fought = serverData.getBoolean("boss1fought");
+            boss2fought = serverData.getBoolean("boss2fought");
+            boss3fought = serverData.getBoolean("boss3fought");
+            senbaiFought =  serverData.getBoolean("senbaiFought");
+            goldenFlameFought = serverData.getBoolean("goldenFlameFought");
+            choice1 = serverData.getBoolean("choice1");
+            choice2 = serverData.getBoolean("choice2");
+            choice3 = serverData.getBoolean("choice3");
         }
 
     }
@@ -282,7 +374,7 @@ public class DOTEArchiveManager {
         serverData.put("dialogList", getDialogListNbt());
         serverData.putInt("taskLength", TASK_SET.size());
         serverData.put("taskList", getTaskListNbt());
-        serverData.putInt("firstChoiceBiome", firstChoiceBiome);
+        serverData.put("biome_progress_data", BIOME_PROGRESS_DATA.toNbt(new CompoundTag()));
         return serverData;
     }
 
@@ -297,7 +389,7 @@ public class DOTEArchiveManager {
         noPlotMode = serverData.getBoolean("noPlotMode");
         setDialogListFromNbt(serverData.getCompound("dialogList"), serverData.getInt("dialogLength"));
         setTaskListFromNbt(serverData.getCompound("taskList"), serverData.getInt("taskLength"));
-        firstChoiceBiome = serverData.getInt("firstChoiceBiome");
+        BIOME_PROGRESS_DATA.fromNbt(serverData.getCompound("biome_progress_data"));
     }
 
 }

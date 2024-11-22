@@ -5,6 +5,9 @@ import com.p1nero.dote.block.DOTEBlockEntities;
 import com.p1nero.dote.block.renderer.BetterStructureBlockRenderer;
 import com.p1nero.dote.entity.DOTEEntities;
 import com.p1nero.dote.entity.client.*;
+import com.p1nero.dote.entity.custom.npc.GuideNpc;
+import com.p1nero.dote.entity.custom.npc.KnightCommander;
+import com.p1nero.dote.entity.custom.npc.ScarletHighPriest;
 import com.p1nero.dote.item.model.GoldenDragonArmorModel;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraftforge.api.distmarker.Dist;
@@ -30,6 +33,9 @@ public class ClientModEvents{
         EntityRenderers.register(DOTEEntities.THE_ARBITER_OF_RADIANCE.get(), TARRenderer::new);
         EntityRenderers.register(DOTEEntities.THE_PYROCLAS_OF_PURGATORY.get(), TPPRenderer::new);
         EntityRenderers.register(DOTEEntities.THE_SHADOW_OF_THE_END.get(), TSERenderer::new);
+        EntityRenderers.register(DOTEEntities.GUIDE_NPC.get(), GuideNpcRenderer::new);
+        EntityRenderers.register(DOTEEntities.KNIGHT_COMMANDER.get(), KnightCommanderRenderer::new);
+        EntityRenderers.register(DOTEEntities.SCARLET_HIGH_PRIEST.get(), ScarletHighPriestRenderer::new);
 
     }
 

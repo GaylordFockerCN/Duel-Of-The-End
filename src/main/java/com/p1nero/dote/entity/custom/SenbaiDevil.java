@@ -1,7 +1,11 @@
 package com.p1nero.dote.entity.custom;
 
+import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.capability.DOTECapabilityProvider;
 import com.p1nero.dote.client.DOTESounds;
+import com.p1nero.dote.client.gui.screen.DialogueComponentBuilder;
+import com.p1nero.dote.datagen.DOTEAdvancementData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -62,8 +66,23 @@ public class SenbaiDevil extends DOTEBoss {
     @Override
     public void die(@NotNull DamageSource source) {
         level().playSound(null , getX(), getY(), getZ(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.BLOCKS,1,1);
-        if(source.getEntity() instanceof Player player){
+        if(source.getEntity() instanceof ServerPlayer player){
             player.getCapability(DOTECapabilityProvider.DOTE_PLAYER).ifPresent(dotePlayer -> dotePlayer.setCanEnterPBiome(true));
+            DialogueComponentBuilder builder = new DialogueComponentBuilder(this);
+            switch (DOTEArchiveManager.getWorldLevel()){
+                case 0:
+                    player.displayClientMessage(builder.buildDialogue(this, builder.buildDialogueAnswer(0)), false);
+                    break;
+                case 1:
+                    player.displayClientMessage(builder.buildDialogue(this, builder.buildDialogueAnswer(1)), false);
+                    break;
+                default:
+                    player.displayClientMessage(builder.buildDialogue(this, builder.buildDialogueAnswer(2)), false);
+            }
+            DOTEArchiveManager.BIOME_PROGRESS_DATA.setSenbaiFought(true);
+            if(DOTEArchiveManager.BIOME_PROGRESS_DATA.isGoldenFlameFought()){
+                DOTEAdvancementData.getAdvancement("golden_flame", player);
+            }
         }
         super.die(source);
     }

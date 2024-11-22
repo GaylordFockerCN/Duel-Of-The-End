@@ -6,7 +6,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-//为什么就没有现成的库呢因为太简单了吗
+/**
+ * 为什么就没有现成的库呢因为太简单了吗
+ */
 public class TreeNode {
 
     protected Component answer;

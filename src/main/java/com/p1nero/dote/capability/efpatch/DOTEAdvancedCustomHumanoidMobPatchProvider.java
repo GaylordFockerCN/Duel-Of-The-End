@@ -1,4 +1,4 @@
-package com.p1nero.dote.entity.custom.efpatch;
+package com.p1nero.dote.capability.efpatch;
 
 import com.mojang.datafixers.util.Pair;
 import com.nameless.indestructible.api.animation.types.CommandEvent;

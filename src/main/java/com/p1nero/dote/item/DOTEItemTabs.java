@@ -17,8 +17,8 @@ public class DOTEItemTabs {
 					.title(Component.translatable("item_group.duel_of_the_end.all"))
 					.icon(() -> new ItemStack(DOTEItems.IMMORTALESSENCE.get()))
 					.displayItems((parameters, tabData) -> {
-						tabData.accept(DOTEItems.P_KEY.get());
 						tabData.accept(DOTEItems.M_KEY.get());
+						tabData.accept(DOTEItems.P_KEY.get());
 						tabData.accept(DOTEItems.U_KEY.get());
 						tabData.accept(DOTEItems.ADGRAIN.get());
 						tabData.accept(DOTEItems.ADVENTURESPAR.get());

@@ -29,7 +29,7 @@ import java.util.List;
  * 改编自theAether 的 ValkyrieQueenDialogueScreen
  * 搬运了相关类
  */
-public class TCRDialogueScreen extends Screen {
+public class DOTEDialogueScreen extends Screen {
     public static final ResourceLocation MY_BACKGROUND_LOCATION = new ResourceLocation(DuelOfTheEndMod.MOD_ID,"textures/gui/background.png");
     protected final DialogueAnswerComponent dialogueAnswer;
     protected final Entity entity;
@@ -37,7 +37,7 @@ public class TCRDialogueScreen extends Screen {
     private int typewriterTimer = 0;
     EntityType<?> entityType;
 
-    public TCRDialogueScreen(Entity entity, EntityType<?> entityType) {
+    public DOTEDialogueScreen(Entity entity, EntityType<?> entityType) {
         super(entity.getDisplayName());
         typewriterInterval = DOTEConfig.TYPEWRITER_EFFECT_INTERVAL.get();
         this.dialogueAnswer = new DialogueAnswerComponent(this.buildDialogueAnswerName(entity.getDisplayName().copy().withStyle(ChatFormatting.YELLOW)).append(": "));

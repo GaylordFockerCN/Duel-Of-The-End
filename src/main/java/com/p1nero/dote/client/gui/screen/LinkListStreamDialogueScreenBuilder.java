@@ -19,17 +19,17 @@ import java.util.List;
  */
 public class LinkListStreamDialogueScreenBuilder {
 
-    protected TCRDialogueScreen screen;//封装一下防止出现一堆杂七杂八的方法
+    protected DOTEDialogueScreen screen;//封装一下防止出现一堆杂七杂八的方法
     private TreeNode answerRoot;
     private TreeNode answerNode;
     private final EntityType<?> entityType;
     public LinkListStreamDialogueScreenBuilder(Entity entity) {
-        screen = new TCRDialogueScreen(entity, entity.getType());
+        screen = new DOTEDialogueScreen(entity, entity.getType());
         this.entityType = entity.getType();
         init();
     }
     public LinkListStreamDialogueScreenBuilder(Entity entity, EntityType<?> entityType) {
-        screen = new TCRDialogueScreen(entity, entityType);
+        screen = new DOTEDialogueScreen(entity, entityType);
         this.entityType = entityType;
         init();
     }
@@ -137,7 +137,7 @@ public class LinkListStreamDialogueScreenBuilder {
     /**
      * 根据树来建立套娃按钮
      */
-    public TCRDialogueScreen build(){
+    public DOTEDialogueScreen build(){
         if(answerRoot == null)
             return screen;
         screen.setDialogueAnswer(answerRoot.getAnswer());

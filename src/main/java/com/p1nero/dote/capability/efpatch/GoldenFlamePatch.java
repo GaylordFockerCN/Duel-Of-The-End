@@ -1,4 +1,4 @@
-package com.p1nero.dote.entity.custom.efpatch;
+package com.p1nero.dote.capability.efpatch;
 
 import com.p1nero.dote.entity.ai.DOTECombatBehaviors;
 import com.google.common.collect.ImmutableMap;

@@ -18,7 +18,7 @@ public class DOTEItems {
 	public static final RegistryObject<Item> IMMORTALESSENCE = REGISTRY.register("immortalessence", () -> new SimpleDescriptionFoilItem(new Item.Properties().fireResistant().rarity(DOTERarities.SHANG_PIN)));
 	public static final RegistryObject<Item> HOLY_RADIANCE_SEED = REGISTRY.register("holy_radiance_seed", () -> new SimpleDescriptionFoilItem(new Item.Properties().fireResistant().rarity(DOTERarities.SHANG_PIN)));
 	public static final RegistryObject<Item> CORE_OF_HELL = REGISTRY.register("core_of_hell", () -> new SimpleDescriptionFoilItem(new Item.Properties().fireResistant().rarity(DOTERarities.TE_PIN)));
-	public static final RegistryObject<Item> BOOK_OF_ENDING = REGISTRY.register("book_of_ending", () -> new SimpleDescriptionFoilItem(new Item.Properties().fireResistant().rarity(DOTERarities.XIAN_PIN)));
+	public static final RegistryObject<Item> BOOK_OF_ENDING = REGISTRY.register("book_of_ending", () -> new BookOfEndingItem(new Item.Properties().fireResistant().rarity(DOTERarities.XIAN_PIN)));
 	public static final RegistryObject<Item> TIESTONEH = REGISTRY.register("tiestoneh",
 			() -> new TieStoneArmorItem(ArmorItem.Type.HELMET));
 	public static final RegistryObject<Item> TIESTONEC = REGISTRY.register("tiestonec",

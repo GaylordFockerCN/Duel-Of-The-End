@@ -43,10 +43,12 @@ public class DOTERecipeGenerator extends DOTERecipeProvider implements IConditio
                 .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DOTEItems.U_KEY.get())
                 .pattern(" A ")
-                .pattern("ABA")
-                .pattern(" A ")
-                .define('A', DOTEItems.ADVENTURESPAR.get())
-                .define('B', DOTEItems.CORE_OF_HELL.get())
+                .pattern("B C")
+                .pattern(" D ")
+                .define('A', DOTEItems.HOLY_RADIANCE_SEED.get())
+                .define('B', DOTEItems.NETHERITESS.get())
+                .define('C', DOTEItems.WITHERC.get())
+                .define('D', DOTEItems.CORE_OF_HELL.get())
                 .unlockedBy(getHasName(DOTEItems.CORE_OF_HELL.get()), has(DOTEItems.CORE_OF_HELL.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DOTEItems.IMMORTALESSENCE.get())

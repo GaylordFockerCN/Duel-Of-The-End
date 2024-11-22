@@ -1,0 +1,162 @@
+package com.p1nero.dote.entity.custom.npc;
+
+import com.p1nero.dote.archive.DOTEArchiveManager;
+import com.p1nero.dote.client.gui.screen.DialogueComponentBuilder;
+import com.p1nero.dote.client.gui.screen.LinkListStreamDialogueScreenBuilder;
+import com.p1nero.dote.client.gui.screen.TreeNode;
+import com.p1nero.dote.datagen.DOTEAdvancementData;
+import com.p1nero.dote.item.DOTEItems;
+import com.p1nero.dote.worldgen.biome.BiomeMap;
+import com.p1nero.dote.worldgen.portal.DOTETeleporter;
+import net.minecraft.client.Minecraft;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.item.trading.MerchantOffers;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+
+/**
+ * 圣殿骑士长
+ */
+public class KnightCommander extends DOTENpc {
+    public KnightCommander(EntityType<? extends PathfinderMob> entityType, Level level) {
+        super(entityType, level);
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void openDialogueScreen(CompoundTag senderData) {
+        LinkListStreamDialogueScreenBuilder builder = new LinkListStreamDialogueScreenBuilder(this);
+        if(!senderData.getBoolean("boss2fought")){
+
+            //交易
+            if(senderData.getBoolean("boss1fought")) {
+                builder.start(12)
+                        .addFinalChoice(-2, (byte) 2);
+            } else {
+                //击败boss前
+                switch (DOTEArchiveManager.getWorldLevel()){
+                    case 0:
+                        builder.start(0)
+                                .addChoice(0, 1)
+                                .addChoice(1, 2)
+                                .addChoice(2, 3)
+                                .addFinalChoice(-1, (byte) 3);
+                        break;
+                    case 1:
+                        builder.start(4)
+                                .addChoice(3, 5)
+                                .addChoice(4, 6)
+                                .addFinalChoice(-1, (byte) 3);
+                        break;
+                    default:
+                        builder.start(7)
+                                .addChoice(5, 8)
+                                .addFinalChoice(-1, (byte) 3);
+                        break;
+                }
+            }
+        } else {
+            DialogueComponentBuilder dBuilder = new DialogueComponentBuilder(this);
+            //击败boss2后
+            switch (DOTEArchiveManager.getWorldLevel()){
+                case 0:
+                    builder.setAnswerRoot(new TreeNode(dBuilder.buildDialogueAnswer(0))
+                            .addChild(new TreeNode(dBuilder.buildDialogueAnswer(9), dBuilder.buildDialogueOption(6))
+                                    .addLeaf(dBuilder.buildDialogueOption(7), (byte) 1)//返回 且 完成轮回1
+                                    .addLeaf(dBuilder.buildDialogueOption(8), (byte) 2)));//再等等
+                    break;
+                case 1:
+                    builder.setAnswerRoot(new TreeNode(dBuilder.buildDialogueAnswer(0))
+                            .addChild(new TreeNode(dBuilder.buildDialogueAnswer(10), dBuilder.buildDialogueOption(6))
+                                    .addLeaf(dBuilder.buildDialogueOption(7), (byte) 1)//返回 且 完成轮回1
+                                    .addLeaf(dBuilder.buildDialogueOption(8), (byte) 2)));//再等等
+                    break;
+                default:
+                    builder.start(0)
+                            .addChoice(9, 11)
+                            .addFinalChoice(-1, (byte) 1);//强制遣返
+                    break;
+            }
+        }
+        if(!builder.isEmpty()){
+            Minecraft.getInstance().setScreen(builder.build());
+        }
+    }
+
+    @Override
+    public void handleNpcInteraction(Player player, byte interactionID) {
+        //传送回去
+        if(interactionID == 1){
+            if(player instanceof ServerPlayer serverPlayer){
+                ServerLevel serverLevel = serverPlayer.serverLevel();
+                player.changeDimension(Objects.requireNonNull(serverLevel.getServer().overworld()),
+                        new DOTETeleporter(BiomeMap.getInstance().getBlockPos(BiomeMap.getInstance().getCenter1(), 100).offset(0, 0, 400)));
+                DOTEArchiveManager.worldLevelUp(serverLevel, true);
+                DOTEAdvancementData.getAdvancement("seed", serverPlayer);
+                if(DOTEArchiveManager.getWorldLevel() == 2){
+                    if(DOTEArchiveManager.BIOME_PROGRESS_DATA.isEnd1()){
+                        DOTEAdvancementData.getAdvancement("loyal", serverPlayer);
+                    } else {
+                        DOTEAdvancementData.getAdvancement("unfinished", serverPlayer);
+                    }
+                }
+            }
+        }
+        //锻造请求
+        if(interactionID == 2){
+            if(player instanceof ServerPlayer serverPlayer){
+                startTrade(serverPlayer);
+            }
+        }
+        super.handleNpcInteraction(player, interactionID);
+    }
+
+    @Override
+    public @NotNull MerchantOffers getOffers() {
+        MerchantOffers offers = new MerchantOffers();
+
+        offers.add(new MerchantOffer(
+                new ItemStack(DOTEItems.ADGRAIN.get(), 5),
+                new ItemStack(DOTEItems.P_KEY.get(), 1),
+                142857, 0, 0.02f));
+        offers.add(new MerchantOffer(
+                new ItemStack(DOTEItems.ADGRAIN.get(), 24),
+                new ItemStack(DOTEItems.WKNIGHT_INGOT.get(), 1),
+                142857, 0, 0.02f));
+        offers.add(new MerchantOffer(
+                new ItemStack(DOTEItems.WKNIGHT_INGOT.get(), 1),
+                new ItemStack(Items.DIAMOND_HELMET, 1),
+                new ItemStack(DOTEItems.WKNIGHT_HELMET.get(), 1),
+                142857, 0, 0.02f));
+        offers.add(new MerchantOffer(
+                new ItemStack(DOTEItems.WKNIGHT_INGOT.get(), 1),
+                new ItemStack(Items.DIAMOND_CHESTPLATE, 1),
+                new ItemStack(DOTEItems.WKNIGHT_CHESTPLATE.get(), 1),
+                142857, 0, 0.02f));
+        offers.add(new MerchantOffer(
+                new ItemStack(DOTEItems.WKNIGHT_INGOT.get(), 1),
+                new ItemStack(Items.DIAMOND_LEGGINGS, 1),
+                new ItemStack(DOTEItems.WKNIGHT_LEGGINGS.get(), 1),
+                142857, 0, 0.02f));
+        offers.add(new MerchantOffer(
+                new ItemStack(DOTEItems.WKNIGHT_INGOT.get(), 1),
+                new ItemStack(Items.DIAMOND_BOOTS, 1),
+                new ItemStack(DOTEItems.WKNIGHT_BOOTS.get(), 1),
+                142857, 0, 0.02f));
+
+        return offers;
+    }
+
+}

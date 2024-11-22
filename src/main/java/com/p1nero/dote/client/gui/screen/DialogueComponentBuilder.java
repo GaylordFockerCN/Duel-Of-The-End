@@ -19,6 +19,9 @@ public class DialogueComponentBuilder {
     public static final DialogueComponentBuilder BUILDER = new DialogueComponentBuilder();
     private final EntityType<?> entityType;
 
+    public DialogueComponentBuilder(Entity entity){
+        this.entityType = entity.getType();
+    }
     public DialogueComponentBuilder(EntityType<?> entityType){
         this.entityType = entityType;
     }
@@ -51,7 +54,7 @@ public class DialogueComponentBuilder {
         return Component.literal("[").append(entity.getDescription().copy().withStyle(ChatFormatting.YELLOW)).append("]").append(content);
     }
 
-    public MutableComponent buildDialogue(Entity entity, Component content ,ChatFormatting... nameChatFormatting){
+    public MutableComponent buildDialogue(Entity entity, Component content, ChatFormatting... nameChatFormatting){
         return Component.literal("[").append(entity.getDisplayName().copy().withStyle(nameChatFormatting)).append("]").append(content).withStyle();
     }
 

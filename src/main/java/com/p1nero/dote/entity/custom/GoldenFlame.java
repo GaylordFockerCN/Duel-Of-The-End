@@ -1,10 +1,14 @@
 package com.p1nero.dote.entity.custom;
 
+import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.client.DOTESounds;
+import com.p1nero.dote.client.gui.screen.DialogueComponentBuilder;
+import com.p1nero.dote.datagen.DOTEAdvancementData;
 import com.p1nero.dote.item.DOTEItems;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -127,6 +131,23 @@ public class GoldenFlame extends DOTEBoss {
     @Override
     public void die(@NotNull DamageSource source) {
         level().playSound(null , getX(), getY(), getZ(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.BLOCKS,1,1);
+        if(source.getEntity() instanceof ServerPlayer player){
+            DialogueComponentBuilder builder = new DialogueComponentBuilder(this);
+            switch (DOTEArchiveManager.getWorldLevel()){
+                case 0:
+                    player.displayClientMessage(builder.buildDialogue(this, builder.buildDialogueAnswer(0)), false);
+                    break;
+                case 1:
+                    player.displayClientMessage(builder.buildDialogue(this, builder.buildDialogueAnswer(1)), false);
+                    break;
+                default:
+                    player.displayClientMessage(builder.buildDialogue(this, builder.buildDialogueAnswer(2)), false);
+            }
+            DOTEArchiveManager.BIOME_PROGRESS_DATA.setGoldenFlameFought(true);
+            if(DOTEArchiveManager.BIOME_PROGRESS_DATA.isSenbaiFought()){
+                DOTEAdvancementData.getAdvancement("golden_flame", player);
+            }
+        }
         super.die(source);
     }
 
