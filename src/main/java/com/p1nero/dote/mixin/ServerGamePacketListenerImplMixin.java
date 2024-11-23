@@ -71,7 +71,7 @@ public abstract class ServerGamePacketListenerImplMixin {
                         CommandSourceStack css = getPlayer().createCommandSourceStack().withPermission(2).withSuppressedOutput();
                         Objects.requireNonNull(server.getServer()).getCommands().performPrefixedCommand(css, "kill @e[type=item]");//清理物品
                     } else {
-                        this.player.displayClientMessage(Component.translatable("structure_block.load_prepare", s), false);
+//                        this.player.displayClientMessage(Component.translatable("structure_block.load_prepare", s), false);//取消输出信息
                         blockEntity.loadStructure(this.player.serverLevel());
                         DuelOfTheEndMod.LOGGER.info("try to load custom structure block AGAIN on server: {}", blockEntity.getStructureName());
                     }

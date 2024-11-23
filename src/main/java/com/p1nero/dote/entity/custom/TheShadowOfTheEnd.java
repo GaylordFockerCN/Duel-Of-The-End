@@ -1,33 +1,39 @@
 package com.p1nero.dote.entity.custom;
 
 import com.p1nero.dote.archive.DOTEArchiveManager;
-import com.p1nero.dote.capability.DOTECapabilityProvider;
 import com.p1nero.dote.client.DOTESounds;
-import com.p1nero.dote.client.gui.screen.DialogueComponentBuilder;
+import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
-import com.p1nero.dote.util.BookManager;
+import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.util.ItemUtil;
 import com.p1nero.dote.worldgen.biome.BiomeMap;
 import com.p1nero.dote.worldgen.portal.DOTETeleporter;
 import net.minecraft.client.Minecraft;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import reascer.wom.world.item.WOMItems;
-import yesman.epicfight.world.item.EpicFightItems;
 
 import java.util.Objects;
 
@@ -35,7 +41,7 @@ import java.util.Objects;
  * 终末之影
  */
 public class TheShadowOfTheEnd extends DOTEBoss {
-
+    private int deathTick;
     public TheShadowOfTheEnd(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SATSUJIN.get().getDefaultInstance());
@@ -48,7 +54,8 @@ public class TheShadowOfTheEnd extends DOTEBoss {
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 1422.0f)
+//                .add(Attributes.MAX_HEALTH, 1422.0f)
+                .add(Attributes.MAX_HEALTH, 542.79f)
                 .add(Attributes.ATTACK_DAMAGE, 2.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
@@ -56,8 +63,37 @@ public class TheShadowOfTheEnd extends DOTEBoss {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        if(deathTick > 0){
+            setTarget(null);
+            deathTick++;
+            this.move(MoverType.SELF, new Vec3(0.0, 0.10000000149011612, 0.0));
+            if (this.deathTick >= 180 && this.deathTick <= 200) {
+                float f = (this.random.nextFloat() - 0.5F) * 8.0F;
+                float f1 = (this.random.nextFloat() - 0.5F) * 4.0F;
+                float f2 = (this.random.nextFloat() - 0.5F) * 8.0F;
+                this.level().addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getX() + (double)f, this.getY() + 2.0 + (double)f1, this.getZ() + (double)f2, 0.0, 0.0, 0.0);
+            }
+            if(this.deathTick == 200 && getLastAttacker() instanceof ServerPlayer player){
+                DOTEAdvancementData.getAdvancement("book", player);
+                DOTEArchiveManager.worldLevelUp(player.serverLevel(), false);
+                this.remove(RemovalReason.KILLED);
+                this.gameEvent(GameEvent.ENTITY_DIE);
+            }
+        }
+    }
+
+    @Override
     public void die(@NotNull DamageSource source) {
+        if(deathTick == 0){
+            deathTick = 1;
+        } else {
+            return;
+        }
+        //保险
         if(source.getEntity() instanceof ServerPlayer player){
+            setLastHurtByMob(player);
             DialogueComponentBuilder builder = new DialogueComponentBuilder(this);
             switch (DOTEArchiveManager.getWorldLevel()){
                 case 0:
@@ -69,20 +105,7 @@ public class TheShadowOfTheEnd extends DOTEBoss {
                 default:
                     player.displayClientMessage(builder.buildDialogue(this, builder.buildDialogueAnswer(5)), false);
             }
-            player.changeDimension(Objects.requireNonNull(player.serverLevel().getServer().overworld()),
-                    new DOTETeleporter(BiomeMap.getInstance().getBlockPos(BiomeMap.getInstance().getCenter1(), 100).offset(0, 0, 400)));
-            DOTEArchiveManager.worldLevelUp(player.serverLevel(), false);
-            //结局判断
-            if(DOTEArchiveManager.getWorldLevel() == 2){
-                if(DOTEArchiveManager.BIOME_PROGRESS_DATA.isEnd3()){
-                    DOTEAdvancementData.getAdvancement("star", player);
-                } else {
-                    DOTEAdvancementData.getAdvancement("unfinished", player);
-                }
-            }
-            DOTEAdvancementData.getAdvancement("book", player);
         }
-        super.die(source);
     }
 
     @Override

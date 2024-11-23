@@ -37,7 +37,8 @@ public abstract class BossSpawnerBlock extends BaseEntityBlock {
     }
 
     @Override
-    public VoxelShape getShape(@NotNull BlockState p_60555_, @NotNull BlockGetter p_60556_, @NotNull BlockPos p_60557_, @NotNull CollisionContext p_60558_) {
+    @SuppressWarnings("deprecation")
+    public @NotNull VoxelShape getShape(@NotNull BlockState p_60555_, @NotNull BlockGetter p_60556_, @NotNull BlockPos p_60557_, @NotNull CollisionContext p_60558_) {
         return Block.box(0.0, 0.0, 0.0, 16.0, 26.0, 16.0);
     }
 

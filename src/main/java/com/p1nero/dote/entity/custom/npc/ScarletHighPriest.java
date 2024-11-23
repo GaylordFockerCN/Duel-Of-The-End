@@ -1,11 +1,12 @@
 package com.p1nero.dote.entity.custom.npc;
 
 import com.p1nero.dote.archive.DOTEArchiveManager;
-import com.p1nero.dote.client.gui.screen.DialogueComponentBuilder;
+import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.client.gui.screen.LinkListStreamDialogueScreenBuilder;
-import com.p1nero.dote.client.gui.screen.TreeNode;
+import com.p1nero.dote.client.gui.TreeNode;
 import com.p1nero.dote.entity.DOTEEntities;
 import com.p1nero.dote.item.DOTEItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
@@ -54,11 +55,14 @@ public class ScarletHighPriest extends DOTENpc{
                         .addLeaf(D_BUILDER.buildDialogueOption(-1), (byte) 1));//骸骨交易
                 break;
         }
+        if(!builder.isEmpty()){
+            Minecraft.getInstance().setScreen(builder.build());
+        }
     }
 
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
-        if(interactionID == 2){
+        if(interactionID == 1){
             if(player instanceof ServerPlayer serverPlayer){
                 if(DOTEArchiveManager.BIOME_PROGRESS_DATA.isBoss2fought()){
                     startTrade(serverPlayer);

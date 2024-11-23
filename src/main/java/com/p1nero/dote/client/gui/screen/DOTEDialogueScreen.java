@@ -172,6 +172,8 @@ public class DOTEDialogueScreen extends Screen {
     }
 
     @Override
-    public void onClose() {this.finishChat((byte) 0);}
+    public void onClose() {
+        this.finishChat((byte) 0);
+    }
 
 }

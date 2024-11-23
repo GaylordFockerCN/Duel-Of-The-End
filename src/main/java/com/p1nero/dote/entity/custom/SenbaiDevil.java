@@ -3,7 +3,7 @@ package com.p1nero.dote.entity.custom;
 import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.capability.DOTECapabilityProvider;
 import com.p1nero.dote.client.DOTESounds;
-import com.p1nero.dote.client.gui.screen.DialogueComponentBuilder;
+import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -16,7 +16,6 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -57,7 +56,7 @@ public class SenbaiDevil extends DOTEBoss {
 
     @Override
     public int getMaxNeutralizeCount() {
-        return 25;
+        return 16;
     }
 
     /**

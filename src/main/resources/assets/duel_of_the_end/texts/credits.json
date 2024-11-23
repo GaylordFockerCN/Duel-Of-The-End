@@ -1,0 +1,100 @@
+[
+  {
+    "section": "Duel of the End dimension DLC",
+    "disciplines": [
+      {
+        "discipline": "Textures & Model",
+        "titles": [
+          {
+            "title": "Main",
+            "names": [
+              "凝星制作组"
+            ]
+          },
+          {
+            "title": "dimension DLC",
+            "names": [
+              "NHblock (白露)"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "Programming",
+        "titles": [
+          {
+            "title": "Main",
+            "names": [
+              "P1nero"
+            ]
+          },
+          {
+            "title": "Boss",
+            "names": [
+              "Corrupt_Dog (腐犬)"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "Narrative Designer",
+        "titles": [
+          {
+            "title": "Main",
+            "names": [
+              "NHblock (白露)"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "Environment Artist",
+        "titles": [
+          {
+            "title": "Church",
+            "names": [
+              "El_mal"
+            ]
+          },
+          {
+            "title": "Final Arena",
+            "names": [
+              "RSGed"
+            ]
+          }
+        ]
+      },
+      {
+        "discipline": "Animator",
+        "titles": [
+          {
+            "title": "",
+            "names": [
+              "Asanginxst",
+              "Corrupt_Dog (腐犬)"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "section": "Special Thanks",
+    "disciplines": [
+      {
+        "discipline": "",
+        "titles": [
+          {
+            "title": "",
+            "names": [
+              "Epic Fight",
+              "Weapons of Miracles",
+              "Epic Fight - Indestructible",
+              "Minecraft Forge"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

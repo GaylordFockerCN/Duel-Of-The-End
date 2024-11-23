@@ -12,12 +12,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class ScarletHighPriestRenderer extends HumanoidMobRenderer<ScarletHighPriest, HumanoidModel<ScarletHighPriest>> {
     public ScarletHighPriestRenderer(EntityRendererProvider.Context context) {
-        super(context, new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER)), 0.5f);
-        this.addLayer(new HumanoidArmorLayer<>(this, new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)), new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR)), context.getModelManager()));
+        super(context, new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_SLIM)), 0.5f);
+        this.addLayer(new HumanoidArmorLayer<>(this, new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_SLIM_INNER_ARMOR)), new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_SLIM_OUTER_ARMOR)), context.getModelManager()));
     }
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull ScarletHighPriest entity) {
-        return new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/entity/scarlet_high_priest.png");
+        return new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/entity/sincer_warrior.png");
     }
 }

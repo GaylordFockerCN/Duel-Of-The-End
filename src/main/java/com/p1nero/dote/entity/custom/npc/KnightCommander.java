@@ -1,9 +1,9 @@
 package com.p1nero.dote.entity.custom.npc;
 
 import com.p1nero.dote.archive.DOTEArchiveManager;
-import com.p1nero.dote.client.gui.screen.DialogueComponentBuilder;
+import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.client.gui.screen.LinkListStreamDialogueScreenBuilder;
-import com.p1nero.dote.client.gui.screen.TreeNode;
+import com.p1nero.dote.client.gui.TreeNode;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.worldgen.biome.BiomeMap;
@@ -42,7 +42,7 @@ public class KnightCommander extends DOTENpc {
 
             //交易
             if(senderData.getBoolean("boss1fought")) {
-                builder.start(12)
+                builder.start(0)
                         .addFinalChoice(-2, (byte) 2);
             } else {
                 //击败boss前
@@ -105,13 +105,6 @@ public class KnightCommander extends DOTENpc {
                         new DOTETeleporter(BiomeMap.getInstance().getBlockPos(BiomeMap.getInstance().getCenter1(), 100).offset(0, 0, 400)));
                 DOTEArchiveManager.worldLevelUp(serverLevel, true);
                 DOTEAdvancementData.getAdvancement("seed", serverPlayer);
-                if(DOTEArchiveManager.getWorldLevel() == 2){
-                    if(DOTEArchiveManager.BIOME_PROGRESS_DATA.isEnd1()){
-                        DOTEAdvancementData.getAdvancement("loyal", serverPlayer);
-                    } else {
-                        DOTEAdvancementData.getAdvancement("unfinished", serverPlayer);
-                    }
-                }
             }
         }
         //锻造请求

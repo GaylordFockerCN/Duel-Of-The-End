@@ -1,8 +1,8 @@
 package com.p1nero.dote.entity.custom;
 
-import com.p1nero.dote.client.gui.screen.DialogueComponentBuilder;
+import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.client.gui.screen.LinkListStreamDialogueScreenBuilder;
-import com.p1nero.dote.client.gui.screen.TreeNode;
+import com.p1nero.dote.client.gui.TreeNode;
 import com.p1nero.dote.entity.NpcDialogue;
 import com.p1nero.dote.entity.ai.goal.NpcDialogueGoal;
 import com.p1nero.dote.item.DOTEItems;
@@ -62,7 +62,7 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
     private Player tradingPlayer;
     private MerchantOffers currentOffers = new MerchantOffers();
     protected static final EntityDataAccessor<Integer> SKIN_ID = SynchedEntityData.defineId(StarChaser.class, EntityDataSerializers.INT);
-    private static final int MAX_SKIN_ID = 5;//总人数
+    private static final int MAX_SKIN_ID = 8;//总人数
     public StarChaser(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
         WEAPONS.add(Items.IRON_AXE);

@@ -21,7 +21,7 @@ import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
 import java.util.UUID;
 
-public class NetherRotArmorItem extends SimpleDescriptionArmorItem {
+public class NetherRotArmorItem extends SimpleDescriptionArmorItem implements DOTEKeepableItem{
     public NetherRotArmorItem(Type type) {
         super(DOTEArmorMaterials.NETHERITEROT, type, new Item.Properties().fireResistant().rarity(DOTERarities.TE_PIN));
     }

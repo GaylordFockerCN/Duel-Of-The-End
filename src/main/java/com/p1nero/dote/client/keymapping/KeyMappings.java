@@ -38,9 +38,9 @@ public class KeyMappings {
 //					}
 //				}
 //			}
-			if(OPEN_PROGRESS.isRelease()){
-				DOTEConfig.RENDER_CUSTOM_GUI.set(!DOTEConfig.RENDER_CUSTOM_GUI.get());
-			}
+//			if(OPEN_PROGRESS.isRelease()){
+//				DOTEConfig.RENDER_CUSTOM_GUI.set(!DOTEConfig.RENDER_CUSTOM_GUI.get());
+//			}
 		}
 	}
 

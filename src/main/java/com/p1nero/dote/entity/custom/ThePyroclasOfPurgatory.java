@@ -1,9 +1,8 @@
 package com.p1nero.dote.entity.custom;
 
 import com.p1nero.dote.archive.DOTEArchiveManager;
-import com.p1nero.dote.capability.DOTECapabilityProvider;
 import com.p1nero.dote.client.DOTESounds;
-import com.p1nero.dote.client.gui.screen.DialogueComponentBuilder;
+import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,7 +14,6 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -40,7 +38,8 @@ public class ThePyroclasOfPurgatory extends DOTEBoss {
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 542.79f)
+//                .add(Attributes.MAX_HEALTH, 542.79f)
+                .add(Attributes.MAX_HEALTH, 273.79f)
                 .add(Attributes.ATTACK_DAMAGE, 2.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)

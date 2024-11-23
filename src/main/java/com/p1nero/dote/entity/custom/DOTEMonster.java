@@ -1,5 +1,6 @@
 package com.p1nero.dote.entity.custom;
 
+import com.p1nero.dote.entity.LevelableEntity;
 import com.p1nero.dote.entity.ModifyAttackSpeedEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -16,7 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class DOTEMonster extends PathfinderMob implements ModifyAttackSpeedEntity {
+public abstract class DOTEMonster extends PathfinderMob implements ModifyAttackSpeedEntity, LevelableEntity {
     protected static final EntityDataAccessor<Integer> BLOCK_COUNT = SynchedEntityData.defineId(DOTEMonster.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Integer> NEUTRALIZE_COUNT = SynchedEntityData.defineId(DOTEMonster.class, EntityDataSerializers.INT);
 

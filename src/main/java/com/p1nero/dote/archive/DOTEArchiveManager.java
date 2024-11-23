@@ -1,18 +1,26 @@
 package com.p1nero.dote.archive;
 
 import com.p1nero.dote.DuelOfTheEndMod;
+import com.p1nero.dote.capability.DOTECapabilityProvider;
+import com.p1nero.dote.datagen.DOTEAdvancementData;
 import com.p1nero.dote.entity.LevelableEntity;
+import com.p1nero.dote.item.custom.DOTEKeepableItem;
 import com.p1nero.dote.network.PacketRelay;
 import com.p1nero.dote.network.DOTEPacketHandler;
 import com.p1nero.dote.network.packet.SyncSaveUtilPacket;
 import com.p1nero.dote.network.packet.clientbound.BroadcastMessagePacket;
+import com.p1nero.dote.network.packet.clientbound.OpenEndScreenPacket;
+import com.p1nero.dote.util.ItemUtil;
+import com.p1nero.dote.worldgen.biome.BiomeMap;
 import com.p1nero.dote.worldgen.dimension.DOTEDimension;
+import com.p1nero.dote.worldgen.portal.DOTETeleporter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
 
 import java.io.*;
 import java.util.*;
@@ -136,6 +144,9 @@ public class DOTEArchiveManager {
      */
     public static void worldLevelUp(ServerLevel level, boolean chooseKnight){
         if(level.dimension() != DOTEDimension.P_SKY_ISLAND_LEVEL_KEY){
+            level = level.getServer().getLevel(DOTEDimension.P_SKY_ISLAND_LEVEL_KEY);
+        }
+        if(level == null){
             return;
         }
         worldLevel++;
@@ -150,18 +161,49 @@ public class DOTEArchiveManager {
             case 3:
                 BIOME_PROGRESS_DATA.setChoice3(chooseKnight);
         }
+
         for(Entity entity : level.getAllEntities()){
             if(entity instanceof LevelableEntity levelableEntity){
                 levelableEntity.levelUp(worldLevel);
             }
         }
 
-        for(ServerPlayer player : level.getPlayers((serverPlayer -> true))){
-
+        //完成一次轮回
+        for(ServerPlayer player : level.getServer().getPlayerList().getPlayers()){
+            //全部遣返，重置状态
+            if(player.serverLevel().dimension() == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY){
+                player.changeDimension(Objects.requireNonNull(player.serverLevel().getServer().overworld()),
+                        new DOTETeleporter(player.getRespawnPosition()));
+                player.getCapability(DOTECapabilityProvider.DOTE_PLAYER).ifPresent(dotePlayer -> dotePlayer.setCanEnterPBiome(false));
+                //清空物品栏
+                if(!player.isCreative()){
+                    for(ItemStack stack : player.getInventory().items){
+                        if(!(stack.getItem() instanceof DOTEKeepableItem)){
+                            stack.setCount(0);
+                        }
+                    }
+                    for(ItemStack stack : player.getInventory().armor){
+                        if(!(stack.getItem() instanceof DOTEKeepableItem)){
+                            stack.setCount(0);
+                        }
+                    }
+                }
+            }
+            if(DOTEArchiveManager.getWorldLevel() == 2){
+                if(BIOME_PROGRESS_DATA.isEnd1()){
+                    DOTEAdvancementData.getAdvancement("loyal", player);
+                } else if(BIOME_PROGRESS_DATA.isEnd3()){
+                    DOTEAdvancementData.getAdvancement("star", player);
+                    PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new OpenEndScreenPacket());//播终末之诗
+                } else {
+                    DOTEAdvancementData.getAdvancement("unfinished", player);
+                }
+            }
         }
         //全局广播
-        Component message = DuelOfTheEndMod.getInfo("level_up", getWorldLevelName());
-        PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new BroadcastMessagePacket(message, false));
+//        Component message = DuelOfTheEndMod.getInfo("level_up", getWorldLevelName());
+//        PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new BroadcastMessagePacket(message, false));
+        //同步客户端数据
         PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new SyncSaveUtilPacket(DOTEArchiveManager.toNbt()));
 
     }

@@ -12,12 +12,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class KnightCommanderRenderer extends HumanoidMobRenderer<KnightCommander, HumanoidModel<KnightCommander>> {
     public KnightCommanderRenderer(EntityRendererProvider.Context context) {
-        super(context, new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER)), 0.5f);
-        this.addLayer(new HumanoidArmorLayer<>(this, new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)), new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR)), context.getModelManager()));
+        super(context, new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_SLIM)), 0.5f);
+        this.addLayer(new HumanoidArmorLayer<>(this, new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_SLIM_INNER_ARMOR)), new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_SLIM_OUTER_ARMOR)), context.getModelManager()));
     }
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull KnightCommander entity) {
-        return new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/entity/knight_commander.png");
+        return new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/entity/sage.png");
     }
 }

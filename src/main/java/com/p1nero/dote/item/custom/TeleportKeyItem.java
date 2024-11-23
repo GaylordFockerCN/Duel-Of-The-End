@@ -2,20 +2,28 @@ package com.p1nero.dote.item.custom;
 
 import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.archive.DOTEArchiveManager;
+import com.p1nero.dote.client.gui.screen.EndScreen;
 import com.p1nero.dote.entity.DOTEEntities;
 import com.p1nero.dote.entity.custom.npc.GuideNpc;
 import com.p1nero.dote.item.DOTERarities;
+import com.p1nero.dote.network.DOTEPacketHandler;
+import com.p1nero.dote.network.PacketRelay;
+import com.p1nero.dote.network.packet.clientbound.OpenEndScreenPacket;
 import com.p1nero.dote.util.ItemUtil;
 import com.p1nero.dote.worldgen.dimension.DOTEDimension;
 import com.p1nero.dote.worldgen.portal.DOTETeleporter;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -29,7 +37,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public class TeleportKeyItem extends SimpleDescriptionFoilItem implements DOTEKeepableItem{
+public class TeleportKeyItem extends SimpleDescriptionFoilItem{
     private final Supplier<BlockPos> destination;
     public TeleportKeyItem(Supplier<BlockPos> destination){
         super(new Item.Properties().setNoRepair().fireResistant().stacksTo(1).rarity(DOTERarities.TE_PIN));
@@ -58,16 +66,15 @@ public class TeleportKeyItem extends SimpleDescriptionFoilItem implements DOTEKe
                     }
                 }
             }
-            boolean inDim = serverLevel.dimension() == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY;
-            if(inDim){
-                player.changeDimension(Objects.requireNonNull(serverLevel.getServer().overworld()),
-                        new DOTETeleporter(destination.get()));
-            } else {
-                player.changeDimension(Objects.requireNonNull(serverLevel.getServer().getLevel(DOTEDimension.P_SKY_ISLAND_LEVEL_KEY)),
-                        new DOTETeleporter(destination.get()));
-                //生成向导
-                if(!DOTEArchiveManager.BIOME_PROGRESS_DATA.isGuideSummoned()){
-                    GuideNpc npc = DOTEEntities.GUIDE_NPC.get().create(level);
+            player.changeDimension(Objects.requireNonNull(serverLevel.getServer().getLevel(DOTEDimension.P_SKY_ISLAND_LEVEL_KEY)),
+                    new DOTETeleporter(destination.get()));
+            player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS,1,1);
+
+            //生成向导
+            if(!DOTEArchiveManager.BIOME_PROGRESS_DATA.isGuideSummoned()){
+                ServerLevel dim = serverLevel.getServer().getLevel(DOTEDimension.P_SKY_ISLAND_LEVEL_KEY);
+                if(dim != null){
+                    GuideNpc npc = DOTEEntities.GUIDE_NPC.get().spawn(dim, player.getOnPos(), MobSpawnType.SPAWNER);
                     if(npc != null){
                         npc.setPos(player.position());
                         npc.setHomePos(player.getOnPos());
@@ -76,7 +83,6 @@ public class TeleportKeyItem extends SimpleDescriptionFoilItem implements DOTEKe
                     }
                 }
             }
-            player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS,1,1);
 
         }
         return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide);

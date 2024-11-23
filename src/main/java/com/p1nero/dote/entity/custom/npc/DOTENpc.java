@@ -4,6 +4,7 @@ import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.entity.HomePointEntity;
 import com.p1nero.dote.entity.NpcDialogue;
 import com.p1nero.dote.entity.ai.goal.AttemptToGoHomeGoal;
+import com.p1nero.dote.entity.ai.goal.NpcDialogueGoal;
 import com.p1nero.dote.network.DOTEPacketHandler;
 import com.p1nero.dote.network.PacketRelay;
 import com.p1nero.dote.network.packet.clientbound.NPCDialoguePacket;
@@ -38,6 +39,8 @@ import org.jetbrains.annotations.Nullable;
 public abstract class DOTENpc extends PathfinderMob implements HomePointEntity, NpcDialogue, Merchant {
     @Nullable
     private Player conversingPlayer;
+    @Nullable
+    private Player tradingPlayer;
     protected static final EntityDataAccessor<BlockPos> HOME_POS = SynchedEntityData.defineId(DOTENpc.class, EntityDataSerializers.BLOCK_POS);
     public DOTENpc(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
@@ -97,6 +100,11 @@ public abstract class DOTENpc extends PathfinderMob implements HomePointEntity, 
     }
 
     @Override
+    public boolean shouldShowName() {
+        return true;
+    }
+
+    @Override
     public boolean hurt(@NotNull DamageSource source, float p_21017_) {
         return false;
     }
@@ -104,6 +112,7 @@ public abstract class DOTENpc extends PathfinderMob implements HomePointEntity, 
     @Override
     protected void registerGoals() {
 //        this.goalSelector.addGoal(0, new AttemptToGoHomeGoal<>(this, 1.0));
+        this.goalSelector.addGoal(0, new NpcDialogueGoal<>(this));
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, new RandomLookAroundGoal(this));
     }
@@ -142,13 +151,13 @@ public abstract class DOTENpc extends PathfinderMob implements HomePointEntity, 
 
     @Override
     public void setTradingPlayer(@Nullable Player player) {
-        conversingPlayer = player;
+        tradingPlayer = player;
     }
 
     @Nullable
     @Override
     public Player getTradingPlayer() {
-        return conversingPlayer;
+        return tradingPlayer;
     }
 
     @Override
@@ -194,5 +203,10 @@ public abstract class DOTENpc extends PathfinderMob implements HomePointEntity, 
     @Override
     public boolean isClientSide() {
         return level().isClientSide;
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double p_21542_) {
+        return false;
     }
 }

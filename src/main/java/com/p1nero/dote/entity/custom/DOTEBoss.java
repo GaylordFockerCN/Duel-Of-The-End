@@ -3,17 +3,20 @@ package com.p1nero.dote.entity.custom;
 import com.p1nero.dote.DOTEConfig;
 import com.p1nero.dote.block.entity.spawner.BossSpawnerBlockEntity;
 import com.p1nero.dote.client.BossMusicPlayer;
+import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.entity.HomePointEntity;
 import com.p1nero.dote.entity.ai.goal.AttemptToGoHomeGoal;
 import com.p1nero.dote.network.PacketRelay;
 import com.p1nero.dote.network.DOTEPacketHandler;
 import com.p1nero.dote.network.packet.clientbound.SyncUuidPacket;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -22,6 +25,7 @@ import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -136,9 +140,26 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity {
 
     }
 
+    /**
+     * 演出效果而已不能炸死玩家qwq
+     */
     public void explodeAndDiscard(){
-        level().explode(this, this.damageSources().explosion(this, this), null, position(), 3F, false, Level.ExplosionInteraction.NONE);
+        if(level() instanceof ServerLevel serverLevel){
+            serverLevel.sendParticles(ParticleTypes.EXPLOSION, getX(), getY(), getZ(), 10, 0.0D, 0.1D, 0.0D, 0.01);
+            serverLevel.playSound(null, getX(), getY(), getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 1, 1);
+        }
         discard();
+    }
+
+    /**
+     * 免疫远程且仅能被玩家攻击
+     */
+    @Override
+    public boolean hurt(@NotNull DamageSource source, float p_21017_) {
+        if(!(source.getEntity() instanceof Player) || source.isIndirect()){
+            return false;
+        }
+        return super.hurt(source, p_21017_);
     }
 
     @Override

@@ -58,10 +58,7 @@ public class DOTEEntityLootTables extends EntityLootSubProvider {
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(DOTEItems.CORE_OF_HELL.get()))));
-        add(DOTEEntities.THE_SHADOW_OF_THE_END.get(), LootTable.lootTable()
-                .withPool(LootPool.lootPool()
-                        .setRolls(ConstantValue.exactly(1))
-                        .add(LootItem.lootTableItem(DOTEItems.BOOK_OF_ENDING.get()))));
+        add(DOTEEntities.THE_SHADOW_OF_THE_END.get(), emptyLootTable());
         add(DOTEEntities.GUIDE_NPC.get(), emptyLootTable());
         add(DOTEEntities.KNIGHT_COMMANDER.get(), emptyLootTable());
         add(DOTEEntities.SCARLET_HIGH_PRIEST.get(), emptyLootTable());

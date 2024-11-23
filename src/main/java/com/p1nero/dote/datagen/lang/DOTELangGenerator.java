@@ -30,8 +30,8 @@ public class DOTELangGenerator extends DOTELangProvider {
         this.addAdvancement("seed", "圣辉之种", "完成圣辉试炼");
         this.addAdvancement("core", "炼狱之核", "完成炎魔试炼");
         this.addAdvancement("golden_flame", "冥冥之中", "击败森白影魔与金焰神王");
-        this.addAdvancement("book", "终末之诗", "将圣辉之种和炼狱之核交给骑士长巴伦");
-        this.addAdvancement("knight", "朝圣者", "踏足终末岛屿，并击败终末之影");
+        this.addAdvancement("book", "终末之诗", "踏足终末岛屿，并击败终末之影");
+        this.addAdvancement("knight", "朝圣者", "将圣辉之种和炼狱之核交给骑士长巴伦");
         this.addAdvancement("loyal", "忠诚的群星", "三次轮回都将圣辉之种和炼狱之核交给骑士长巴伦");
         this.addAdvancement("unfinished", "未竟之志", "三次轮回中至少有一次将圣辉之种和炼狱之核交给骑士长巴伦");
         this.addAdvancement("star", "碎星者", "三次轮回中皆选择终末之影");
@@ -118,8 +118,8 @@ public class DOTELangGenerator extends DOTELangProvider {
         add(DOTEEntities.DOTE_ZOMBIE_2.get(), "黑暗先遣");
         add(DOTEEntities.DOTE_PIGLIN.get(), "猪灵");
         add(DOTEEntities.STAR_CHASER.get(), "追星者");
-        add(DOTEEntities.SENBAI_DEVIL.get(), "森白影魔");
-        add(DOTEEntities.GOLDEN_FLAME.get(), "金焰神王");
+        add(DOTEEntities.SENBAI_DEVIL.get(), "森白影魔（？）");
+        add(DOTEEntities.GOLDEN_FLAME.get(), "金焰神王（？）");
         add(DOTEEntities.THE_ARBITER_OF_RADIANCE.get(), "圣辉裁决者：Oblivionis");
         add(DOTEEntities.THE_PYROCLAS_OF_PURGATORY.get(), "炼狱炎魔：Mortis");
         add(DOTEEntities.THE_SHADOW_OF_THE_END.get(), "终焉之影：Timoris");
@@ -151,13 +151,13 @@ public class DOTELangGenerator extends DOTELangProvider {
         this.addDialogChoice(DOTEEntities.GUIDE_NPC, 2, "我现在要做什么？");
         this.addDialog(DOTEEntities.GUIDE_NPC, 3, "您是被圣殿选中对抗猩红入侵的伟大战士！鄙人行动受缚无法为您接风洗尘，请您继续沿道路向前，穿过树林就能看到那座雄伟的神圣的大殿。");
 
-        this.addDialog(DOTEEntities.GUIDE_NPC, 4, "噢，§https://www.bilibili.com/video/BV1v14y1z7MV§r来了一位骁勇善战的战士！想必您舟车劳顿至此一定怀揣着崇高的信念与理想。【乱码】就在前方，我们伟大的【乱码】早已在那里恭候多时了！");
+        this.addDialog(DOTEEntities.GUIDE_NPC, 4, "噢，§kBV1v14y1z7MV§r来了一位骁勇善战的战士！想必您舟车劳顿至此一定怀揣着崇高的信念与理想。 【§k???§r】 就在前方，我们伟大的 【§k???§r】 早已在那里恭候多时了！");
         this.addDialogChoice(DOTEEntities.GUIDE_NPC, 3, "我们之前不是见过面吗？你不记得了？");
-        this.addDialog(DOTEEntities.GUIDE_NPC, 5, "啊？怎么可能呢骑士大人？我可是第一次【乱码】...快快前往圣殿吧，骑士长在那里候你多时了！");
+        this.addDialog(DOTEEntities.GUIDE_NPC, 5, "啊？怎么可能呢骑士大人？我可是第一次 【§k???§r】 ...快快前往圣殿吧，骑士长在那里候你多时了！");
         this.addDialogChoice(DOTEEntities.GUIDE_NPC, 4, "你的名字到底是什么？");
-        this.addDialog(DOTEEntities.GUIDE_NPC, 6, "我就是您这种被圣光感召的战士前往圣殿的向...名字？名字...我为什么【乱码】");
+        this.addDialog(DOTEEntities.GUIDE_NPC, 6, "我就是您这种被圣光感召的战士前往圣殿的向...名字？名字...我为什么 【§k???§r】 ");
         this.addDialogChoice(DOTEEntities.GUIDE_NPC, 5, "你为什么被束缚在这里？");
-        this.addDialog(DOTEEntities.GUIDE_NPC, 7, "被束缚？我只是...【乱码】我不想...【乱码】");
+        this.addDialog(DOTEEntities.GUIDE_NPC, 7, "被束缚？我只是... 【§k???§r】 我不想... 【§k???§r】 ");
 
         this.addDialog(DOTEEntities.GUIDE_NPC, 8, "又来一个....我是到底是谁？我在这里...多久了...");
         this.addDialogChoice(DOTEEntities.GUIDE_NPC, 6, "前往...圣殿？");
@@ -175,20 +175,20 @@ public class DOTELangGenerator extends DOTELangProvider {
         this.addDialogChoice(DOTEEntities.KNIGHT_COMMANDER, 2, "我该如何武装自己？");
         this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 3, "想必你在到达圣殿之前的路上已经碰到了那些麻烦的不死者。收集他们掉落的冒险碎片，我将为你打造远超凡人铁匠能制造的强大武备！");
 
-        this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 4, "你好，英勇的战士！看来我们的圣殿骑士团又要多出一名沐浴神圣之力的【乱码】了。愿【乱码】永远照耀在我们祖辈挥洒鲜血的神圣土壤上！");
+        this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 4, "你好，英勇的战士！看来我们的圣殿骑士团又要多出一名沐浴神圣之力的 【§k???§r】 了。愿 【§k???§r】 永远照耀在我们祖辈挥洒鲜血的神圣土壤上！");
         this.addDialogChoice(DOTEEntities.KNIGHT_COMMANDER, 3, "巴伦，我到底是第几个到达这里的“战士”？");
-        this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 5, "当然是第【乱码】个...等等，你怎么知道我叫巴伦？");
+        this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 5, "当然是第 【§k???§r】 个...等等，你怎么知道我叫巴伦？");
         this.addDialogChoice(DOTEEntities.KNIGHT_COMMANDER, 4, "圣辉之种到底是什么？你为何要引导我将其制成那些装备？");
         this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 6, "圣辉之种是神圣之主降下伟力的缩影，就是为了制成强大的白泣装甲保护我们忠诚的战士...不对，你为何知道圣辉之种的存在？");
 
-        this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 7, "你好，【乱码】！看来我们的【乱码】又要多出一名沐浴神圣之力的【乱码】了。愿【乱码】永远照耀在【乱码】上！");
+        this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 7, "你好， 【§k???§r】 ！看来我们的 【§k???§r】 又要多出一名沐浴神圣之力的 【§k???§r】 了。愿 【§k???§r】 永远照耀在 【§k???§r】 上！");
         this.addDialogChoice(DOTEEntities.KNIGHT_COMMANDER, 5, "圣殿只是需要棋子。我只是殉道者，对吗？");
-        this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 8, "【乱码】【乱码】【乱码】！！！");
+        this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 8, " 【§k???§r】   【§k???§r】   【§k???§r】 ！！！");
 
         this.addDialogChoice(DOTEEntities.KNIGHT_COMMANDER, 6, "我已经击败了猩红之地的统领，拿到了下界之核！");
         this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 9, "我就知道被圣光之主亲自感召之人并非有名无实！这片土地将再次归于安定祥和。如果你准备好了，我便把你送回初始之地！");
-        this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 10, "你看，只要听从圣光指引，这片土地将再次归于安定祥和。如果你准备好了，我便把你送回【乱码】！");
-        this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 11, "你看，只要乖乖听从【乱码】，这片【乱码】将再次归于【乱码】。再见，【乱码】！！");
+        this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 10, "你看，只要听从圣光指引，这片土地将再次归于安定祥和。如果你准备好了，我便把你送回 【§k???§r】 ！");
+        this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 11, "你看，只要乖乖听从 【§k???§r】 ，这片 【§k???§r】 将再次归于 【§k???§r】 。再见， 【§k???§r】 ！！");
         this.addDialogChoice(DOTEEntities.KNIGHT_COMMANDER, 7, "我准备好了");
         this.addDialogChoice(DOTEEntities.KNIGHT_COMMANDER, 8, "再等等吧");
 
@@ -205,9 +205,9 @@ public class DOTELangGenerator extends DOTELangProvider {
 
         this.addDialog(DOTEEntities.SCARLET_HIGH_PRIEST, 4, "又来一个不知好歹的蠢货...我懒得与你多说，炎魔大人下令要亲自会会你这头无药可救的蠢猪。");
         this.addDialogChoice(DOTEEntities.SCARLET_HIGH_PRIEST, 3, "你的意思是，你们只是为了抵抗圣辉骑士团对你们的赶尽杀绝？");
-        this.addDialog(DOTEEntities.SCARLET_HIGH_PRIEST, 5, "这里是我们伟大炼狱之主亲赐我们坚守地狱入口的门户，孕育着强大无畏的下界战士！你们这些道貌岸然的神圣走狗，只是借着看似正义的接口抢夺炎魔大人掌握的【乱码】！");
+        this.addDialog(DOTEEntities.SCARLET_HIGH_PRIEST, 5, "这里是我们伟大炼狱之主亲赐我们坚守地狱入口的门户，孕育着强大无畏的下界战士！你们这些道貌岸然的神圣走狗，只是借着看似正义的接口抢夺炎魔大人掌握的 【§k???§r】 ！");
         this.addDialogChoice(DOTEEntities.SCARLET_HIGH_PRIEST, 4, "终焉之地中心悬浮的紫色岛屿到底是什么存在？");
-        this.addDialog(DOTEEntities.SCARLET_HIGH_PRIEST, 6, "岛屿...岛屿在哪？终焉战场从来只有你们圣辉大陆和我们炼狱大陆...哪来的什么其他岛屿？终焉战场的中心除了毁灭什么都没有，什么都【乱码】！");
+        this.addDialog(DOTEEntities.SCARLET_HIGH_PRIEST, 6, "岛屿...岛屿在哪？终焉战场从来只有你们圣辉大陆和我们炼狱大陆...哪来的什么其他岛屿？终焉战场的中心除了毁灭什么都没有，什么都 【§k???§r】 ！");
 
         this.addDialog(DOTEEntities.SCARLET_HIGH_PRIEST, 7, "过去吧，炎魔大人在等着你。");
         this.addDialogChoice(DOTEEntities.SCARLET_HIGH_PRIEST, 5, "你记得我？");
@@ -215,19 +215,19 @@ public class DOTELangGenerator extends DOTELangProvider {
 
 
         this.addDialog(DOTEEntities.THE_ARBITER_OF_RADIANCE, 0, "来吧朝圣者，让我试试你的意志与决心！");
-        this.addDialog(DOTEEntities.THE_ARBITER_OF_RADIANCE, 1, "来吧【乱码】的灵魂，让我试试你的意志与决心！");
+        this.addDialog(DOTEEntities.THE_ARBITER_OF_RADIANCE, 1, "来吧 【§k???§r】 的灵魂，让我试试你的意志与决心！");
         this.addDialog(DOTEEntities.THE_ARBITER_OF_RADIANCE, 2, "...光与暗...终将合二为一....");
 
         this.addDialog(DOTEEntities.THE_ARBITER_OF_RADIANCE, 3, "看起来我们又多了一位虔诚英勇的骑士！拿着这颗种子继续前进吧，它是圣光之主力量的化身，将为你扫清前路的黑暗并在关键之时爆发出璀璨夺目的力量！");
-        this.addDialog(DOTEEntities.THE_ARBITER_OF_RADIANCE, 4, "看起来我们又多了一位【乱码】的骑士！拿着这颗种子继续前进吧，它是圣光之主力量的化身，将为你扫清前路的黑暗并在关键之时【乱码】！");
-        this.addDialog(DOTEEntities.THE_ARBITER_OF_RADIANCE, 5, "看起来我们又多了一位【乱码】的【乱码】！拿着这把【乱码】继续前进吧，它是【乱码】的化身，将为你【乱码】关键之时【乱码】！");
+        this.addDialog(DOTEEntities.THE_ARBITER_OF_RADIANCE, 4, "看起来我们又多了一位 【§k???§r】 的骑士！拿着这颗种子继续前进吧，它是圣光之主力量的化身，将为你扫清前路的黑暗并在关键之时 【§k???§r】 ！");
+        this.addDialog(DOTEEntities.THE_ARBITER_OF_RADIANCE, 5, "看起来我们又多了一位 【§k???§r】 的 【§k???§r】 ！拿着这把 【§k???§r】 继续前进吧，它是 【§k???§r】 的化身，将为你 【§k???§r】 关键之时 【§k???§r】 ！");
 
         this.addDialog(DOTEEntities.THE_PYROCLAS_OF_PURGATORY, 0, "有直面我的勇气，看来你与那些失去神圣加护的懦夫便绝望无神的行尸走肉有着天壤之别。让我试试团灭我下界军团的你到底是愚忠至极还是确有其实！");
         this.addDialog(DOTEEntities.THE_PYROCLAS_OF_PURGATORY, 1, "熟悉的味道。我明明没有见过你，但为何会觉得你有别于那些失去神圣加护的懦夫便绝望无神的行尸走肉？有趣，甚是有趣！");
         this.addDialog(DOTEEntities.THE_PYROCLAS_OF_PURGATORY, 2, "...岛上的那位跟你说，我们还要再循环几次？这个世界还要支离破碎几次？！");
 
         this.addDialog(DOTEEntities.THE_PYROCLAS_OF_PURGATORY, 3, "那么多圣甲堆成的尸山血河，不就是为了这颗承载炼狱力量的下界之核吗？哈哈哈哈哈哈，被那神圣光辉蛊惑的小辈，我们有缘再见...");
-        this.addDialog(DOTEEntities.THE_PYROCLAS_OF_PURGATORY, 4, "看来你和那些被圣光蛊惑的小辈确有不同...希望你还留着那所谓的圣光之种（拿出炼狱之核）...这两种【乱码】【乱码】【乱码】【乱码】");
+        this.addDialog(DOTEEntities.THE_PYROCLAS_OF_PURGATORY, 4, "看来你和那些被圣光蛊惑的小辈确有不同...希望你还留着那所谓的圣光之种（拿出炼狱之核）...这两种 【§k???§r】  【§k???§r】  【§k???§r】  【§k???§r】 ");
         this.addDialog(DOTEEntities.THE_PYROCLAS_OF_PURGATORY, 5, "终焉已经发现了这里...快去吧，它在等着你...");
 
         this.addDialog(DOTEEntities.SENBAI_DEVIL, 0, "巴伦...谎言...不要轻信...");

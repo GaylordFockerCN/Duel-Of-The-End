@@ -2,7 +2,7 @@ package com.p1nero.dote.entity.custom;
 
 import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.client.DOTESounds;
-import com.p1nero.dote.client.gui.screen.DialogueComponentBuilder;
+import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
 import com.p1nero.dote.item.DOTEItems;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -49,7 +49,7 @@ public class GoldenFlame extends DOTEBoss {
 
     @Override
     public float getAttackSpeed() {
-        return 0.5F;
+        return 0.35F;
     }
 
     @Override
@@ -105,17 +105,9 @@ public class GoldenFlame extends DOTEBoss {
                 .add(Attributes.ATTACK_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 114514f)
-                .add(EpicFightAttributes.IMPACT.get(), 2.0f)
-                .add(EpicFightAttributes.ARMOR_NEGATION.get(), 20)
                 .add(EpicFightAttributes.MAX_STRIKES.get(), 3)
-                .add(EpicFightAttributes.MAX_STAMINA.get(), 120)
                 .add(EpicFightAttributes.WEIGHT.get(), 3)
                 .build();
-    }
-
-    @Override
-    public int getMaxNeutralizeCount() {
-        return 10;
     }
 
     @Override

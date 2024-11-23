@@ -41,7 +41,6 @@ public class DOTETeleporter implements ITeleporter {
         while (!destinationLevel.getBlockState(thisPos).is(Blocks.AIR)){
             thisPos = thisPos.above();
         }
-        thisPos = thisPos.offset(0,70,0);
         if(entity instanceof ServerPlayer player){
             player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 200, 1, false, true));
         }

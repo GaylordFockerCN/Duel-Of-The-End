@@ -1,5 +1,7 @@
 package com.p1nero.dote.client.gui.screen;
 
+import com.p1nero.dote.client.gui.DialogueComponentBuilder;
+import com.p1nero.dote.client.gui.TreeNode;
 import com.p1nero.dote.client.gui.screen.component.DialogueChoiceComponent;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;

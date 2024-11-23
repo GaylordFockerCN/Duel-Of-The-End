@@ -18,6 +18,6 @@ public class GuideNpcRenderer extends HumanoidMobRenderer<GuideNpc, HumanoidMode
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull GuideNpc entity) {
-        return new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/entity/guide_npc.png");
+        return new ResourceLocation(DuelOfTheEndMod.MOD_ID, "textures/entity/ms_abyss.png");
     }
 }
