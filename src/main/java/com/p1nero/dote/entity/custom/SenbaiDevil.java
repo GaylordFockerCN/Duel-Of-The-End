@@ -41,8 +41,8 @@ public class SenbaiDevil extends DOTEBoss {
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 10.0f)//测试用
-//                .add(Attributes.MAX_HEALTH, 1125.03f)
+//                .add(Attributes.MAX_HEALTH, 10.0f)//测试用
+                .add(Attributes.MAX_HEALTH, 1125.03f)
                 .add(Attributes.ATTACK_DAMAGE, 2.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
