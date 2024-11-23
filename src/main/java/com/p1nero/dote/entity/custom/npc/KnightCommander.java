@@ -6,8 +6,6 @@ import com.p1nero.dote.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.p1nero.dote.client.gui.TreeNode;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
 import com.p1nero.dote.item.DOTEItems;
-import com.p1nero.dote.worldgen.biome.BiomeMap;
-import com.p1nero.dote.worldgen.portal.DOTETeleporter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -23,8 +21,6 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 /**
  * 圣殿骑士长
@@ -75,17 +71,17 @@ public class KnightCommander extends DOTENpc {
                     builder.setAnswerRoot(new TreeNode(dBuilder.buildDialogueAnswer(0))
                             .addChild(new TreeNode(dBuilder.buildDialogueAnswer(9), dBuilder.buildDialogueOption(6))
                                     .addLeaf(dBuilder.buildDialogueOption(7), (byte) 1)//返回 且 完成轮回1
-                                    .addLeaf(dBuilder.buildDialogueOption(8), (byte) 2)));//再等等
+                                    .addLeaf(dBuilder.buildDialogueOption(8), (byte) 3)));//再等等
                     break;
                 case 1:
                     builder.setAnswerRoot(new TreeNode(dBuilder.buildDialogueAnswer(0))
                             .addChild(new TreeNode(dBuilder.buildDialogueAnswer(10), dBuilder.buildDialogueOption(6))
                                     .addLeaf(dBuilder.buildDialogueOption(7), (byte) 1)//返回 且 完成轮回1
-                                    .addLeaf(dBuilder.buildDialogueOption(8), (byte) 2)));//再等等
+                                    .addLeaf(dBuilder.buildDialogueOption(8), (byte) 3)));//再等等
                     break;
                 default:
                     builder.start(0)
-                            .addChoice(9, 11)
+                            .addChoice(6, 11)
                             .addFinalChoice(-1, (byte) 1);//强制遣返
                     break;
             }
@@ -101,10 +97,8 @@ public class KnightCommander extends DOTENpc {
         if(interactionID == 1){
             if(player instanceof ServerPlayer serverPlayer){
                 ServerLevel serverLevel = serverPlayer.serverLevel();
-                player.changeDimension(Objects.requireNonNull(serverLevel.getServer().overworld()),
-                        new DOTETeleporter(BiomeMap.getInstance().getBlockPos(BiomeMap.getInstance().getCenter1(), 100).offset(0, 0, 400)));
-                DOTEArchiveManager.worldLevelUp(serverLevel, true);
                 DOTEAdvancementData.getAdvancement("seed", serverPlayer);
+                DOTEArchiveManager.worldLevelUp(serverLevel, true);
             }
         }
         //锻造请求

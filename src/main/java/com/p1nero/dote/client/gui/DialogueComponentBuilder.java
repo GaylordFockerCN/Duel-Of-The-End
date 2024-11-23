@@ -47,15 +47,15 @@ public class DialogueComponentBuilder {
     }
 
     public MutableComponent buildDialogue(Entity entity, Component content){
-        return Component.literal("[").append(entity.getDisplayName().copy().withStyle(ChatFormatting.YELLOW)).append("]").append(content);
+        return Component.literal("[").append(entity.getDisplayName().copy().withStyle(ChatFormatting.YELLOW)).append("]:").append(content);
     }
 
     public MutableComponent buildDialogue(EntityType<?> entity, Component content){
-        return Component.literal("[").append(entity.getDescription().copy().withStyle(ChatFormatting.YELLOW)).append("]").append(content);
+        return Component.literal("[").append(entity.getDescription().copy().withStyle(ChatFormatting.YELLOW)).append("]:").append(content);
     }
 
     public MutableComponent buildDialogue(Entity entity, Component content, ChatFormatting... nameChatFormatting){
-        return Component.literal("[").append(entity.getDisplayName().copy().withStyle(nameChatFormatting)).append("]").append(content).withStyle();
+        return Component.literal("[").append(entity.getDisplayName().copy().withStyle(nameChatFormatting)).append("]:").append(content).withStyle();
     }
 
     public MutableComponent buildDialogueOption(EntityType<?> entityType, String key) {

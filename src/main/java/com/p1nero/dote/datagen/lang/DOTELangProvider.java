@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 
 public abstract class DOTELangProvider extends LanguageProvider {
     public DOTELangProvider(PackOutput output) {
-        super(output, DuelOfTheEndMod.MOD_ID, "en_us");
+        super(output, DuelOfTheEndMod.MOD_ID, "zh_cn");
     }
 
     public void addKeyMapping(KeyMapping key, String name){

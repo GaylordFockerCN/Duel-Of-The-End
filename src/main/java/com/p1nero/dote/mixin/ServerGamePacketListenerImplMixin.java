@@ -66,8 +66,8 @@ public abstract class ServerGamePacketListenerImplMixin {
                         this.player.displayClientMessage(Component.translatable("structure_block.load_not_found", s), false);
                     } else if (blockEntity.loadStructure(this.player.serverLevel())) {
 //                        this.player.displayClientMessage(Component.translatable("structure_block.load_success", s), false);//取消输出信息
-                        Objects.requireNonNull(blockEntity.getLevel()).destroyBlock(blockpos, false);//自毁
                         Level server = blockEntity.getLevel();
+                        Objects.requireNonNull(server).destroyBlock(blockpos, false);//自毁
                         CommandSourceStack css = getPlayer().createCommandSourceStack().withPermission(2).withSuppressedOutput();
                         Objects.requireNonNull(server.getServer()).getCommands().performPrefixedCommand(css, "kill @e[type=item]");//清理物品
                     } else {

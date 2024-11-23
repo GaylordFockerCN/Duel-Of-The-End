@@ -23,14 +23,9 @@
         "discipline": "Programming",
         "titles": [
           {
-            "title": "Main",
+            "title": "",
             "names": [
-              "P1nero"
-            ]
-          },
-          {
-            "title": "Boss",
-            "names": [
+              "P1nero",
               "Corrupt_Dog (腐犬)"
             ]
           }
@@ -40,7 +35,7 @@
         "discipline": "Narrative Designer",
         "titles": [
           {
-            "title": "Main",
+            "title": "",
             "names": [
               "NHblock (白露)"
             ]

@@ -124,7 +124,6 @@ public class EndScreen extends Screen {
 
     private void respawn() {
         this.onFinished.run();
-//        super.onClose();//原版ESC退出放在run里面了
     }
 
     protected void init() {
@@ -132,7 +131,12 @@ public class EndScreen extends Screen {
             this.lines = Lists.newArrayList();
             this.centeredLines = new IntOpenHashSet();
             if (this.poem && this.minecraft != null) {
-                this.wrapCreditsIO(DuelOfTheEndMod.MOD_ID + ":texts/end_" + this.minecraft.getLanguageManager().getSelected() + ".txt", this::addPoemFile);
+                String currentLang = this.minecraft.getLanguageManager().getSelected();
+                if(currentLang.equals("zh_cn")){
+                    this.wrapCreditsIO(DuelOfTheEndMod.MOD_ID + ":texts/end_" + this.minecraft.getLanguageManager().getSelected() + ".txt", this::addPoemFile);
+                } else {
+                    this.wrapCreditsIO(DuelOfTheEndMod.MOD_ID + ":texts/end_en_us.txt", this::addPoemFile);
+                }
             }
 
             this.wrapCreditsIO(DuelOfTheEndMod.MOD_ID + ":texts/credits.json", this::addCreditsFile);

@@ -60,7 +60,7 @@ public class DOTEArchiveManager {
     }
 
     public static void setWorldLevel(int worldLevel) {
-        if(worldLevel >= 0 && worldLevel <= 2){
+        if(worldLevel >= 0 && worldLevel <= 3){
             DOTEArchiveManager.worldLevel = worldLevel;
         } else {
             DuelOfTheEndMod.LOGGER.info("failed to set world level. world level should be [0, 2]");
@@ -76,6 +76,10 @@ public class DOTEArchiveManager {
             case 4 -> "Ⅳ";
             default -> throw new IllegalStateException("Unexpected worldLevel value: " + worldLevel);
         };
+    }
+
+    public static boolean isFinished(){
+        return worldLevel >= 3;
     }
 
     public static final List<Task> DIALOG_LIST = new ArrayList<>();
@@ -189,7 +193,7 @@ public class DOTEArchiveManager {
                     }
                 }
             }
-            if(DOTEArchiveManager.getWorldLevel() >= 2){
+            if(isFinished()){
                 if(BIOME_PROGRESS_DATA.isEnd1()){
                     DOTEAdvancementData.getAdvancement("loyal", player);
                 } else if(BIOME_PROGRESS_DATA.isEnd3()){
@@ -266,14 +270,14 @@ public class DOTEArchiveManager {
          * 结局1： 忠诚
          */
         public boolean isEnd1(){
-            return worldLevel >= 2 && choice1 && choice2 && choice3;
+            return isFinished() && choice1 && choice2 && choice3;
         }
 
         /**
          * 结局3：碎星者
          */
         public boolean isEnd3(){
-            return worldLevel >= 2 && !choice1 && !choice2 && !choice3;
+            return isFinished() && !choice1 && !choice2 && !choice3;
         }
 
         public boolean isChoice1() {

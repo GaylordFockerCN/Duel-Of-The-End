@@ -14,8 +14,11 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -73,14 +76,16 @@ public class TheShadowOfTheEnd extends DOTEBoss {
             setTarget(null);
             deathTick++;
             this.move(MoverType.SELF, new Vec3(0.0, 0.10000000149011612, 0.0));
-            if (this.deathTick >= 80 && this.deathTick <= 100) {
+            if (this.deathTick >= 70 && this.deathTick <= 100) {
                 float f = (this.random.nextFloat() - 0.5F) * 8.0F;
                 float f1 = (this.random.nextFloat() - 0.5F) * 4.0F;
                 float f2 = (this.random.nextFloat() - 0.5F) * 8.0F;
-                this.level().addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getX() + (double)f, this.getY() + 2.0 + (double)f1, this.getZ() + (double)f2, 0.0, 0.0, 0.0);
+                if(level() instanceof ServerLevel serverLevel){
+                    serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, this.getX() + (double)f, this.getY() + 2.0 + (double)f1, this.getZ() + (double)f2, 1, 0.0, 0.0, 0.0, 0.01);
+                    serverLevel.playSound(null, getX(), getY(), getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 1, 1);
+                }
             }
             if(this.deathTick == 100 && getLastAttacker() instanceof ServerPlayer player){
-                System.out.println("do it");
                 DOTEAdvancementData.getAdvancement("book", player);
                 DOTEArchiveManager.worldLevelUp(player.serverLevel(), false);
                 setHealth(0);

@@ -44,10 +44,18 @@ public class TeleportKeyItem extends SimpleDescriptionFoilItem{
         this.destination = destination;
     }
 
+    /**
+     * 事件完成了就失去光泽很合理
+     */
+    @Override
+    public boolean isFoil(@NotNull ItemStack itemStack) {
+        return !DOTEArchiveManager.isFinished();
+    }
+
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         if(level instanceof ServerLevel serverLevel && player.isShiftKeyDown()){
-            if(DOTEArchiveManager.getWorldLevel() == 2 && level.dimension() == level.getServer().overworld().dimension()){
+            if(DOTEArchiveManager.isFinished() && level.dimension() == level.getServer().overworld().dimension()){
                 player.displayClientMessage(DuelOfTheEndMod.getInfo("tip10"), true);
                 return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide);
             }
@@ -74,7 +82,12 @@ public class TeleportKeyItem extends SimpleDescriptionFoilItem{
             if(!DOTEArchiveManager.BIOME_PROGRESS_DATA.isGuideSummoned()){
                 ServerLevel dim = serverLevel.getServer().getLevel(DOTEDimension.P_SKY_ISLAND_LEVEL_KEY);
                 if(dim != null){
-                    GuideNpc npc = DOTEEntities.GUIDE_NPC.get().spawn(dim, player.getOnPos(), MobSpawnType.SPAWNER);
+                    BlockPos pos = player.getOnPos();
+                    //在地上生成
+                    while (!level.getBlockState(pos).isAir()){
+                        pos = pos.below();
+                    }
+                    GuideNpc npc = DOTEEntities.GUIDE_NPC.get().spawn(dim, pos.above(3), MobSpawnType.SPAWNER);
                     if(npc != null){
                         npc.setPos(player.position());
                         npc.setHomePos(player.getOnPos());
