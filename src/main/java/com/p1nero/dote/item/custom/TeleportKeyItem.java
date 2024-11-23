@@ -47,7 +47,7 @@ public class TeleportKeyItem extends SimpleDescriptionFoilItem{
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         if(level instanceof ServerLevel serverLevel && player.isShiftKeyDown()){
-            if(DOTEArchiveManager.getWorldLevel() == 2){
+            if(DOTEArchiveManager.getWorldLevel() == 2 && level.dimension() == level.getServer().overworld().dimension()){
                 player.displayClientMessage(DuelOfTheEndMod.getInfo("tip10"), true);
                 return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide);
             }

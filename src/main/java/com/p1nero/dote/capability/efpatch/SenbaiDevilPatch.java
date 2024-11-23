@@ -69,7 +69,7 @@ public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> {
             }
             if(getOriginal().getNeutralizeCount() == 0){
                 source.setStunType(StunType.NEUTRALIZE);
-                getOriginal().setHealth(getOriginal().getHealth() - getOriginal().getMaxHealth() / 12);
+                getOriginal().setHealth(Math.max(getOriginal().getHealth() - getOriginal().getMaxHealth() / 8, 1));
                 applyStun(StunType.NEUTRALIZE, 5);
                 getOriginal().setNeutralizeCount(getOriginal().getMaxNeutralizeCount());
             }

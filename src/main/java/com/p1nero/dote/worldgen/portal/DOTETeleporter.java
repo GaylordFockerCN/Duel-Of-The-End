@@ -10,13 +10,15 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.ITeleporter;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
 public class DOTETeleporter implements ITeleporter {
+    @NotNull
     public BlockPos thisPos;
 
-    public DOTETeleporter(BlockPos pos) {
+    public DOTETeleporter(@NotNull BlockPos pos) {
         thisPos = pos;
     }
 

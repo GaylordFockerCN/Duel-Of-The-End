@@ -173,7 +173,7 @@ public class DOTEArchiveManager {
             //全部遣返，重置状态
             if(player.serverLevel().dimension() == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY){
                 player.changeDimension(Objects.requireNonNull(player.serverLevel().getServer().overworld()),
-                        new DOTETeleporter(player.getRespawnPosition()));
+                        new DOTETeleporter(level.getSharedSpawnPos()));
                 player.getCapability(DOTECapabilityProvider.DOTE_PLAYER).ifPresent(dotePlayer -> dotePlayer.setCanEnterPBiome(false));
                 //清空物品栏
                 if(!player.isCreative()){
@@ -189,7 +189,7 @@ public class DOTEArchiveManager {
                     }
                 }
             }
-            if(DOTEArchiveManager.getWorldLevel() == 2){
+            if(DOTEArchiveManager.getWorldLevel() >= 2){
                 if(BIOME_PROGRESS_DATA.isEnd1()){
                     DOTEAdvancementData.getAdvancement("loyal", player);
                 } else if(BIOME_PROGRESS_DATA.isEnd3()){
@@ -266,14 +266,14 @@ public class DOTEArchiveManager {
          * 结局1： 忠诚
          */
         public boolean isEnd1(){
-            return worldLevel == 2 && choice1 && choice2 && choice3;
+            return worldLevel >= 2 && choice1 && choice2 && choice3;
         }
 
         /**
          * 结局3：碎星者
          */
         public boolean isEnd3(){
-            return worldLevel == 2 && !choice1 && !choice2 && !choice3;
+            return worldLevel >= 2 && !choice1 && !choice2 && !choice3;
         }
 
         public boolean isChoice1() {

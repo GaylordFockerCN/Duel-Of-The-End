@@ -100,6 +100,7 @@ public class GoldenFlame extends DOTEBoss {
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
+//                .add(Attributes.MAX_HEALTH, 10.0f)//测试用
                 .add(Attributes.MAX_HEALTH, 752.0f)
                 .add(Attributes.ATTACK_DAMAGE, 1.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)

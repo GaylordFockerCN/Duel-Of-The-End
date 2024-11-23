@@ -54,12 +54,16 @@ public class TheShadowOfTheEnd extends DOTEBoss {
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-//                .add(Attributes.MAX_HEALTH, 1422.0f)
+//                .add(Attributes.MAX_HEALTH, 10.0f)//测试用
                 .add(Attributes.MAX_HEALTH, 542.79f)
                 .add(Attributes.ATTACK_DAMAGE, 2.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
                 .build();
+    }
+
+    public int getDeathTick() {
+        return deathTick;
     }
 
     @Override
@@ -69,15 +73,17 @@ public class TheShadowOfTheEnd extends DOTEBoss {
             setTarget(null);
             deathTick++;
             this.move(MoverType.SELF, new Vec3(0.0, 0.10000000149011612, 0.0));
-            if (this.deathTick >= 180 && this.deathTick <= 200) {
+            if (this.deathTick >= 80 && this.deathTick <= 100) {
                 float f = (this.random.nextFloat() - 0.5F) * 8.0F;
                 float f1 = (this.random.nextFloat() - 0.5F) * 4.0F;
                 float f2 = (this.random.nextFloat() - 0.5F) * 8.0F;
                 this.level().addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getX() + (double)f, this.getY() + 2.0 + (double)f1, this.getZ() + (double)f2, 0.0, 0.0, 0.0);
             }
-            if(this.deathTick == 200 && getLastAttacker() instanceof ServerPlayer player){
+            if(this.deathTick == 100 && getLastAttacker() instanceof ServerPlayer player){
+                System.out.println("do it");
                 DOTEAdvancementData.getAdvancement("book", player);
                 DOTEArchiveManager.worldLevelUp(player.serverLevel(), false);
+                setHealth(0);
                 this.remove(RemovalReason.KILLED);
                 this.gameEvent(GameEvent.ENTITY_DIE);
             }
@@ -85,12 +91,25 @@ public class TheShadowOfTheEnd extends DOTEBoss {
     }
 
     @Override
+    public boolean hurt(@NotNull DamageSource source, float p_21017_) {
+        if(deathTick > 0){
+            return false;
+        }
+        return super.hurt(source, p_21017_);
+    }
+
+    @Override
     public void die(@NotNull DamageSource source) {
-        if(deathTick == 0){
-            deathTick = 1;
-        } else {
+        if(deathTick >= 200){
+            super.die(source);
             return;
         }
+        if(deathTick != 0){
+            return;
+        }
+        setHealth(1);
+        setNoGravity(true);
+        deathTick = 1;
         //保险
         if(source.getEntity() instanceof ServerPlayer player){
             setLastHurtByMob(player);
