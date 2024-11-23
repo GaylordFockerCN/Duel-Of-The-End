@@ -87,11 +87,11 @@ public class TeleportKeyItem extends SimpleDescriptionFoilItem{
 //                    npc.setPos(player.position());
 //                    ForgeEventFactory.onFinalizeSpawn(npc, serverLevel, serverLevel.getCurrentDifficultyAt(player.getOnPos()), MobSpawnType.MOB_SUMMONED, null, null);
 //                    serverLevel.addFreshEntity(npc);
-//                    DOTEArchiveManager.BIOME_PROGRESS_DATA.setGuideSummoned(true);
 //                }
                 //生成npc，用上面的办法有bug，不知道为啥进去AI会卡死妈的
                 CommandSourceStack commandSourceStack = player.createCommandSourceStack().withPermission(2).withSuppressedOutput();
                 Objects.requireNonNull(serverLevel.getServer()).getCommands().performPrefixedCommand(commandSourceStack, "summon " + DuelOfTheEndMod.MOD_ID + ":guide_npc");
+                DOTEArchiveManager.BIOME_PROGRESS_DATA.setGuideSummoned(true);
             }
 
         }
