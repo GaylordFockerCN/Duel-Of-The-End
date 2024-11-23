@@ -23,12 +23,17 @@ public class GuideNpc extends DOTENpc{
     }
 
     @Override
+    public boolean inHome() {
+        return true;
+    }
+
+    @Override
     public void tick() {
         super.tick();
-        if(!this.hasEffect(MobEffects.GLOWING)){
+        if(!level().isClientSide && !this.hasEffect(MobEffects.GLOWING)){
             this.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100));
         }
-        if(!level().isClientSide && level().dimension().equals(Objects.requireNonNull(level().getServer()).overworld().dimension())){
+        if(!level().isClientSide && level().dimension() == Level.OVERWORLD){
             this.discard();
         }
     }

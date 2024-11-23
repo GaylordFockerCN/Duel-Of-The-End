@@ -21,6 +21,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 import java.io.*;
 import java.util.*;
@@ -176,8 +177,13 @@ public class DOTEArchiveManager {
         for(ServerPlayer player : level.getServer().getPlayerList().getPlayers()){
             //全部遣返，重置状态
             if(player.serverLevel().dimension() == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY){
-                player.changeDimension(Objects.requireNonNull(player.serverLevel().getServer().overworld()),
-                        new DOTETeleporter(level.getSharedSpawnPos()));
+                ServerLevel overworld = level.getServer().overworld();
+                player.changeDimension(overworld, new DOTETeleporter(level.getSharedSpawnPos()));
+                //重置重生点
+                if(player.getRespawnDimension() == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY){
+                    player.setRespawnPosition(Level.OVERWORLD, overworld.getSharedSpawnPos(), 0.0F, false, true);
+                }
+                //重置能否进炼狱群系
                 player.getCapability(DOTECapabilityProvider.DOTE_PLAYER).ifPresent(dotePlayer -> dotePlayer.setCanEnterPBiome(false));
                 //清空物品栏
                 if(!player.isCreative()){

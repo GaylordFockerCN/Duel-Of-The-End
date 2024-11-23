@@ -14,6 +14,7 @@ import com.p1nero.dote.worldgen.dimension.DOTEDimension;
 import com.p1nero.dote.worldgen.portal.DOTETeleporter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -30,6 +31,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -55,7 +57,7 @@ public class TeleportKeyItem extends SimpleDescriptionFoilItem{
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         if(level instanceof ServerLevel serverLevel && player.isShiftKeyDown()){
-            if(DOTEArchiveManager.isFinished() && level.dimension() == level.getServer().overworld().dimension()){
+            if(DOTEArchiveManager.isFinished() && level.dimension() == Level.OVERWORLD){
                 player.displayClientMessage(DuelOfTheEndMod.getInfo("tip10"), true);
                 return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide);
             }
@@ -74,27 +76,22 @@ public class TeleportKeyItem extends SimpleDescriptionFoilItem{
                     }
                 }
             }
-            player.changeDimension(Objects.requireNonNull(serverLevel.getServer().getLevel(DOTEDimension.P_SKY_ISLAND_LEVEL_KEY)),
-                    new DOTETeleporter(destination.get()));
+            ServerLevel dim = Objects.requireNonNull(serverLevel.getServer().getLevel(DOTEDimension.P_SKY_ISLAND_LEVEL_KEY));
+            player.changeDimension(dim, new DOTETeleporter(destination.get()));
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS,1,1);
 
             //生成向导
             if(!DOTEArchiveManager.BIOME_PROGRESS_DATA.isGuideSummoned()){
-                ServerLevel dim = serverLevel.getServer().getLevel(DOTEDimension.P_SKY_ISLAND_LEVEL_KEY);
-                if(dim != null){
-                    BlockPos pos = player.getOnPos();
-                    //在地上生成
-                    while (!level.getBlockState(pos).isAir()){
-                        pos = pos.below();
-                    }
-                    GuideNpc npc = DOTEEntities.GUIDE_NPC.get().spawn(dim, pos.above(3), MobSpawnType.SPAWNER);
-                    if(npc != null){
-                        npc.setPos(player.position());
-                        npc.setHomePos(player.getOnPos());
-                        level.addFreshEntity(npc);
-                        DOTEArchiveManager.BIOME_PROGRESS_DATA.setGuideSummoned(true);
-                    }
-                }
+//                GuideNpc npc = DOTEEntities.GUIDE_NPC.get().spawn(dim, player.getOnPos(), MobSpawnType.MOB_SUMMONED);
+//                if(npc != null){
+//                    npc.setPos(player.position());
+//                    ForgeEventFactory.onFinalizeSpawn(npc, serverLevel, serverLevel.getCurrentDifficultyAt(player.getOnPos()), MobSpawnType.MOB_SUMMONED, null, null);
+//                    serverLevel.addFreshEntity(npc);
+//                    DOTEArchiveManager.BIOME_PROGRESS_DATA.setGuideSummoned(true);
+//                }
+                //生成npc，用上面的办法有bug，不知道为啥进去AI会卡死妈的
+                CommandSourceStack commandSourceStack = player.createCommandSourceStack().withPermission(2).withSuppressedOutput();
+                Objects.requireNonNull(serverLevel.getServer()).getCommands().performPrefixedCommand(commandSourceStack, "summon " + DuelOfTheEndMod.MOD_ID + ":guide_npc");
             }
 
         }
