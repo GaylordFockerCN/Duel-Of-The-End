@@ -6,7 +6,7 @@
 			"end_time": 0.3,
 			"joint": "Tool_R",
 			"item_skin_hand": "main_hand",
-			"texture_path": "cdmoveset:textures/particle/corruptdog/swing_trail.png"
+			"texture_path": "duel_of_the_end:textures/particle/corruptdog/swing_trail.png"
 		}
 	]
 }

@@ -72,14 +72,14 @@ public class DuelOfTheEndMod {
 
     public static void addPackFindersEvent(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
-            Path resourcePath = ModList.get().getModFileById(DuelOfTheEndMod.MOD_ID).getFile().findResource("packs/corrupt_animation");
+            Path resourcePath = ModList.get().getModFileById(DuelOfTheEndMod.MOD_ID).getFile().findResource("packs/animation");
             PathPackResources pack = new PathPackResources(ModList.get().getModFileById(DuelOfTheEndMod.MOD_ID).getFile().getFileName() + ":" + resourcePath, resourcePath, false);
             Pack.ResourcesSupplier resourcesSupplier = (string) -> pack;
-            Pack.Info info = Pack.readPackInfo("corrupt_animation", resourcesSupplier);
+            Pack.Info info = Pack.readPackInfo("animation", resourcesSupplier);
 
             if (info != null) {
                 event.addRepositorySource((source) ->
-                        source.accept(Pack.create("corrupt_animation", Component.translatable("pack.corrupt_animation.title"), false, resourcesSupplier, info, PackType.CLIENT_RESOURCES, Pack.Position.TOP, false, PackSource.BUILT_IN)));
+                        source.accept(Pack.create("animation", Component.translatable("pack.animation.title"), false, resourcesSupplier, info, PackType.CLIENT_RESOURCES, Pack.Position.TOP, false, PackSource.BUILT_IN)));
             }
         }
     }

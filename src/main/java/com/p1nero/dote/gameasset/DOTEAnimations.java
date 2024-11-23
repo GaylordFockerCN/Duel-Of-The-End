@@ -95,21 +95,8 @@ public class DOTEAnimations {
     public static StaticAnimation SWORD_ONEHAND_DASH;
     public static StaticAnimation SWORD_SLASH;
 
-
     public static StaticAnimation KATANA_SKILL2;
     public static StaticAnimation KATANA_SKILL3;
-    public static StaticAnimation GUARD;
-    public static StaticAnimation RECOUNTER;
-
-
-    public static StaticAnimation DAGGER_DUAL_AUTO1;
-    public static StaticAnimation DAGGER_DUAL_AUTO2;
-    public static StaticAnimation DAGGER_DUAL_AUTO3;
-    public static StaticAnimation DAGGER_DUAL_AUTO4;
-    public static StaticAnimation BLADE_RUSH1;
-    public static StaticAnimation BLADE_RUSH2;
-    public static StaticAnimation BLADE_RUSH3;
-    public static StaticAnimation BLADE_RUSH4;
 
 
     @SubscribeEvent

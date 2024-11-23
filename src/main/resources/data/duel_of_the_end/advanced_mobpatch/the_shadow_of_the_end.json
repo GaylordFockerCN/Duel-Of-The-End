@@ -3,6 +3,8 @@
     "armature": "epicfight:entity/biped",
     "renderer": "minecraft:zombie",
     "isHumanoid": true,
+	"boss_bar": true,
+	"custom_texture": "duel_of_the_end:textures/gui/bossbar/the_shadow_of_the_end.png",
     "faction": "undead",
     "attributes": {
 		"impact": 0.5,              

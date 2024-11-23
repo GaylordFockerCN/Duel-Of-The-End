@@ -1,6 +1,0 @@
-{
-  "parent": "epicfight:item/spear",
-  "textures": {
-    "layer0": "epicfight:item/netherite_spear"
-  }
-}
