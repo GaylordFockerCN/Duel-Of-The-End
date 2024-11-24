@@ -25,6 +25,8 @@ public class DOTELangGenerator extends DOTELangProvider {
         this.addInfo("tip7", "寻找“追星者”学习强力技能以提升战斗能力，做好准备再来吧…");
         this.addInfo("tip9", "你无法逃避来自终焉的决斗...");
         this.addInfo("tip10", "没有任何回应...");
+        this.addInfo("tip11", "是时候回去找巴伦了...");
+        this.addInfo("tip12", "终焉维度数据已清空");
 
         this.addAdvancement(DuelOfTheEndMod.MOD_ID, "光与暗与终末", "进入光与暗与终末的维度");
         this.addAdvancement("seed", "圣辉之种", "完成圣辉试炼");
@@ -37,8 +39,12 @@ public class DOTELangGenerator extends DOTELangProvider {
         this.addAdvancement("star", "碎星者", "三次轮回中皆选择终末之影");
 
         this.addSubtitle(DOTESounds.LOTUSHEAL, "祭坛召唤音效");
+        this.addSubtitle(DOTESounds.DODGE, "闪避音效");
         this.addSubtitle(DOTESounds.SENBAI_BGM, "森白影魔战斗bgm");
         this.addSubtitle(DOTESounds.GOLDEN_FLAME_BGM, "金焰神王战斗bgm");
+        this.addSubtitle(DOTESounds.BIOME_BGM, "圣堂群系bgm");
+        this.addSubtitle(DOTESounds.BOSS_FIGHT1, "最终boss战一阶段bgm");
+        this.addSubtitle(DOTESounds.BOSS_FIGHT2, "最终boss战二阶段bgm");
 
         addBiome(DOTEBiomes.AIR, "虚空");
         addBiome(DOTEBiomes.M_BIOME, "圣堂");
@@ -57,6 +63,8 @@ public class DOTELangGenerator extends DOTELangProvider {
         addItemUsageInfo(DOTEItems.ADVENTURESPAR.get(), "");
         add(DOTEItems.IMMORTALESSENCE.get(), "往生精华");
         addItemUsageInfo(DOTEItems.IMMORTALESSENCE.get(), "似乎蕴含着某种往生的力量...");
+        add(DOTEItems.STAR_CORE.get(), "星辰核心");
+        addItemUsageInfo(DOTEItems.STAR_CORE.get(), "似乎蕴含着重启世界的力量...§6你确定要重置数据吗？");
         add(DOTEItems.NETHERITESS.get(), "合金残片");
         addItemUsageInfo(DOTEItems.NETHERITESS.get(), "森白影魔掉落物");
         add(DOTEItems.WITHERC.get(), "凋零残片");
@@ -147,7 +155,7 @@ public class DOTELangGenerator extends DOTELangProvider {
         this.addDialogChoice(DOTEEntities.GUIDE_NPC, 0, "这是哪，我为什么会出现在这里？");
         this.addDialog(DOTEEntities.GUIDE_NPC, 1, "这里就是终焉前线啊骑士大人，是我们对抗猩红入侵的坚实防线，您一定是受到了圣辉之光的感召最终抵达了这里！");
         this.addDialogChoice(DOTEEntities.GUIDE_NPC, 1, "圣殿是什么，骑士长又是谁？");
-        this.addDialog(DOTEEntities.GUIDE_NPC, 2, "圣殿是专门为奔赴前线的勇士提供试炼的最终关卡。骑士长大人是所有战士的管理者和引路人，负责所有跃跃欲试参与圣辉试炼的战士的统筹工作。");
+        this.addDialog(DOTEEntities.GUIDE_NPC, 2, "圣殿是专门为奔赴前线的勇士提供试炼的最终关卡。骑士长大人是所有战士的管理者和引路人，负责所有跃跃欲试参与圣辉试炼的战士的统筹工作，他就在圣殿的讲台上。");
         this.addDialogChoice(DOTEEntities.GUIDE_NPC, 2, "我现在要做什么？");
         this.addDialog(DOTEEntities.GUIDE_NPC, 3, "您是被圣殿选中对抗猩红入侵的伟大战士！鄙人行动受缚无法为您接风洗尘，请您继续沿道路向前，穿过树林就能看到那座雄伟的神圣的大殿。");
 

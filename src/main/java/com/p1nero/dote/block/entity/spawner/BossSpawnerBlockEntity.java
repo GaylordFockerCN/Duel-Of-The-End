@@ -8,6 +8,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -41,7 +42,7 @@ public abstract class BossSpawnerBlockEntity<T extends DOTEBoss> extends EntityS
 					int r = (int) (homePointEntity.getHomeRadius() + 3);//要比实际的大一点点，防止在边缘偷刀
 					//弹开怪物和多余玩家
 					for(LivingEntity livingEntity : pLevel.getEntitiesOfClass(LivingEntity.class, new AABB(pPos.offset(-r, -r, -r), pPos.offset(r, r, r)))){
-						if(spawnerBlockEntity.currentPlayer != null && livingEntity.getUUID().equals(spawnerBlockEntity.currentPlayer.getUUID())){
+						if(spawnerBlockEntity.currentPlayer != null && livingEntity.getUUID().equals(spawnerBlockEntity.currentPlayer)){
 							continue;
 						}
 						//同步boss，以防死后boss对象丢失
@@ -50,16 +51,24 @@ public abstract class BossSpawnerBlockEntity<T extends DOTEBoss> extends EntityS
 							continue;
 						}
 						livingEntity.setDeltaMovement(livingEntity.position().subtract(pPos.getCenter()).normalize());
+						if(livingEntity instanceof Player player){
+							player.setHealth(player.getHealth() - 0.25F);//setDeltaMovement对玩家无效、？
+							player.displayClientMessage(DuelOfTheEndMod.getInfo("tip9"), false);
+						}
 					}
-					//防止玩家逃跑
-					if(spawnerBlockEntity.getCurrentPlayer() == null){
+					//防止玩家丢失
+					if(spawnerBlockEntity.getCurrentPlayer() == null || serverLevel.getPlayerByUUID(spawnerBlockEntity.getCurrentPlayer()) == null){
 						serverLevel.sendParticles(ParticleTypes.EXPLOSION, spawnerBlockEntity.myEntity.getX(), spawnerBlockEntity.myEntity.getY(), spawnerBlockEntity.myEntity.getZ(), 1, 0.0D, 0.1D, 0.0D, 0.01);
 						spawnerBlockEntity.myEntity.discard();
 						spawnerBlockEntity.myEntity = null;
-					} else if(spawnerBlockEntity.getCurrentPlayer().position().distanceTo(pPos.getCenter()) > homePointEntity.getHomeRadius()
-							&& spawnerBlockEntity.getCurrentPlayer().position().distanceTo(pPos.getCenter()) < homePointEntity.getHomeRadius() + 3){
-						spawnerBlockEntity.getCurrentPlayer().hurt(spawnerBlockEntity.myEntity.damageSources().magic(), 1);
-						spawnerBlockEntity.getCurrentPlayer().displayClientMessage(DuelOfTheEndMod.getInfo("tip9"), true);
+					} else {
+						//玩家在圈上则扣血惩罚
+						Player player = serverLevel.getPlayerByUUID(spawnerBlockEntity.getCurrentPlayer());
+						if(player != null && player.position().distanceTo(pPos.getCenter()) > homePointEntity.getHomeRadius()
+								&& player.position().distanceTo(pPos.getCenter()) < homePointEntity.getHomeRadius() + 3){
+							player.hurt(spawnerBlockEntity.myEntity.damageSources().magic(), 1);
+							player.displayClientMessage(DuelOfTheEndMod.getInfo("tip9"), true);
+						}
 					}
 				}
 

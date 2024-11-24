@@ -5,6 +5,7 @@ import com.p1nero.dote.capability.DOTECapabilityProvider;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
+import com.p1nero.dote.entity.ModifyAttackSpeedEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -25,7 +26,7 @@ import yesman.epicfight.world.item.EpicFightItems;
 /**
  * 圣辉裁决者
  */
-public class TheArbiterOfRadiance extends DOTEBoss {
+public class TheArbiterOfRadiance extends DOTEBoss implements ModifyAttackSpeedEntity {
 
     public TheArbiterOfRadiance(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -102,7 +103,7 @@ public class TheArbiterOfRadiance extends DOTEBoss {
 
     @Override
     public @Nullable SoundEvent getFightMusic() {
-        return getHealth() <= getMaxHealth() / 2 ? DOTESounds.TARBITER2.get() : DOTESounds.TARBITER1.get();
+        return DOTESounds.SENBAI_BGM.get();
     }
 
 }

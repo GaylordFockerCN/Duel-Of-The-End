@@ -1,9 +1,12 @@
 package com.p1nero.dote.entity.custom;
 
+import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
+import com.p1nero.dote.entity.ModifyAttackSpeedEntity;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -39,7 +42,7 @@ public class ThePyroclasOfPurgatory extends DOTEBoss {
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
 //                .add(Attributes.MAX_HEALTH, 10.0f)//测试用
-                .add(Attributes.MAX_HEALTH, 273.79f)
+                .add(Attributes.MAX_HEALTH, 213.79f)
                 .add(Attributes.ATTACK_DAMAGE, 2.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
@@ -61,6 +64,7 @@ public class ThePyroclasOfPurgatory extends DOTEBoss {
                     player.displayClientMessage(builder.buildDialogue(this, builder.buildDialogueAnswer(5)), false);
             }
             DOTEAdvancementData.getAdvancement("core", player);
+            player.displayClientMessage(DuelOfTheEndMod.getInfo("tip11").withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD), false);
         }
         DOTEArchiveManager.BIOME_PROGRESS_DATA.setBoss2fought(true);
         super.die(source);
@@ -88,7 +92,7 @@ public class ThePyroclasOfPurgatory extends DOTEBoss {
 
     @Override
     public @Nullable SoundEvent getFightMusic() {
-        return DOTESounds.SENBAI_BGM.get();
+        return DOTESounds.GOLDEN_FLAME_BGM.get();
     }
 
 }

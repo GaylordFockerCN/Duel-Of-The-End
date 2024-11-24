@@ -65,7 +65,7 @@ public abstract class BossSpawnerBlock extends BaseEntityBlock {
                 pPlayer.getItemInHand(pHand).shrink(1);
                 if(pLevel instanceof ServerLevel serverLevel) {
                     bossSpawnerBlockEntity.spawnMyBoss(serverLevel);
-                    bossSpawnerBlockEntity.setCurrentPlayer(pPlayer);
+                    bossSpawnerBlockEntity.setCurrentPlayer(pPlayer.getUUID());
                     serverLevel.playSound(null, pPos.getX(), pPos.getY(), pPos.getZ(), DOTESounds.LOTUSHEAL.get(), SoundSource.BLOCKS, 1, 1);
                     for (int i = 0; i < 10; i++) {
                         double rx = pPos.getX() + pLevel.getRandom().nextFloat();

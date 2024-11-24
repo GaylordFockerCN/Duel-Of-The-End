@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 
 public class BetterStructureBlockEntity extends StructureBlockEntity {
 
-    public static final int MAX_SIZE = 256;
+    public static final int DETECT_SIZE = 80;
 
     //用于判断有没有加载过，否则会一直重复加载
     private boolean generated = false;
@@ -52,8 +52,8 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
             return false;
         } else {
             BlockPos blockpos = this.getBlockPos();
-            BlockPos blockPos1 = new BlockPos(blockpos.getX() - MAX_SIZE, 0, blockpos.getZ() - MAX_SIZE);
-            BlockPos blockPos2 = new BlockPos(blockpos.getX() + MAX_SIZE, MAX_SIZE-1, blockpos.getZ() + MAX_SIZE);
+            BlockPos blockPos1 = new BlockPos(blockpos.getX() - DETECT_SIZE, 0, blockpos.getZ() - DETECT_SIZE);
+            BlockPos blockPos2 = new BlockPos(blockpos.getX() + DETECT_SIZE, DETECT_SIZE -1, blockpos.getZ() + DETECT_SIZE);
             List<StructureBlockEntity> list = this.getRelatedCorners(blockPos1, blockPos2);
             List<StructureBlockEntity> list1 = this.filterRelatedCornerBlocks(list);
             if (list1.isEmpty()) {
@@ -127,9 +127,26 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
         return boundingBox;
     }
 
+    /**
+     * 自毁
+     */
+    @Override
+    public boolean loadStructure(@NotNull ServerLevel level, boolean p_59849_, @NotNull StructureTemplate template) {
+        if(generated){
+            return false;
+        }
+        boolean ret = super.loadStructure(level, p_59849_, template);
+        if(DOTEConfig.ENABLE_BETTER_STRUCTURE_BLOCK_LOAD.get()){
+            level.destroyBlock(this.getBlockPos(), false);
+        }
+        if(ret){
+            generated = true;
+        }
+        return ret;
+    }
 
     @Override
-    public void load(CompoundTag nbt) {
+    public void load(@NotNull CompoundTag nbt) {
         super.load(nbt);
         int i = nbt.getInt("posX");
         int j = nbt.getInt("posY");
@@ -142,22 +159,17 @@ public class BetterStructureBlockEntity extends StructureBlockEntity {
         this.updateBlockState();
 
         generated = nbt.getBoolean("generated");
-//        if(generated && this.level != null && !this.level.isClientSide){
-//            this.level.destroyBlock(this.getBlockPos(),false);
-//        }
-
 
         //当加载的时候强制加载一下区块，为了在结构内包含结构方块时以生成结构，省的调用红石。
-        //用button是因为StructureBlockEditScreen的sendToServer方法不知道怎么搞成public，比较复杂，不如按钮简单。
         if(this.level != null && !generated && DOTEConfig.ENABLE_BETTER_STRUCTURE_BLOCK_LOAD.get()){
             if(this.level.isClientSide){
                 HandleStructureBlockLoad.load(this);
+                generated = true;
             }else {
                 //不知道为毛没用？
                 DuelOfTheEndMod.LOGGER.info("try to load custom structure block on server: {}", getStructureName());
                 loadStructure(((ServerLevel) level));
             }
-            generated = true;
         }
     }
 

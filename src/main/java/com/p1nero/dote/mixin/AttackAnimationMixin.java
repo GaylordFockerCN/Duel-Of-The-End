@@ -13,7 +13,7 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 public class AttackAnimationMixin {
     @Inject(method = "getPlaySpeed", at = @At("HEAD"), cancellable = true, remap = false)
     private void onGetPlaySpeed(LivingEntityPatch<?> entityPatch, DynamicAnimation animation, CallbackInfoReturnable<Float> cir) {
-        if(entityPatch.getOriginal() instanceof ModifyAttackSpeedEntity entity && entity.shouldModify()){
+        if(entityPatch.getOriginal() instanceof ModifyAttackSpeedEntity entity){
             cir.setReturnValue(entity.getAttackSpeed());
         }
     }

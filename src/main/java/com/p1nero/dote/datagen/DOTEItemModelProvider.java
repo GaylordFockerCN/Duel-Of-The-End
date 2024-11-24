@@ -33,6 +33,7 @@ public class DOTEItemModelProvider extends ItemModelProvider {
         simpleItem(DOTEItems.ADGRAIN);
         simpleItem(DOTEItems.ADVENTURESPAR);
         simpleItem(DOTEItems.IMMORTALESSENCE);
+        simpleItem(DOTEItems.STAR_CORE);
         simpleItem(DOTEItems.TIESTONEH);
         simpleItem(DOTEItems.TIESTONEC);
         simpleItem(DOTEItems.TIESTONEL);

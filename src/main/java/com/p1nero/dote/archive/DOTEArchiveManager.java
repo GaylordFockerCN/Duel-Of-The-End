@@ -7,11 +7,8 @@ import com.p1nero.dote.entity.LevelableEntity;
 import com.p1nero.dote.item.custom.DOTEKeepableItem;
 import com.p1nero.dote.network.PacketRelay;
 import com.p1nero.dote.network.DOTEPacketHandler;
-import com.p1nero.dote.network.packet.SyncSaveUtilPacket;
-import com.p1nero.dote.network.packet.clientbound.BroadcastMessagePacket;
+import com.p1nero.dote.network.packet.SyncArchivePacket;
 import com.p1nero.dote.network.packet.clientbound.OpenEndScreenPacket;
-import com.p1nero.dote.util.ItemUtil;
-import com.p1nero.dote.worldgen.biome.BiomeMap;
 import com.p1nero.dote.worldgen.dimension.DOTEDimension;
 import com.p1nero.dote.worldgen.portal.DOTETeleporter;
 import net.minecraft.nbt.CompoundTag;
@@ -64,7 +61,7 @@ public class DOTEArchiveManager {
         if(worldLevel >= 0 && worldLevel <= 3){
             DOTEArchiveManager.worldLevel = worldLevel;
         } else {
-            DuelOfTheEndMod.LOGGER.info("failed to set world level. world level should be [0, 2]");
+            DuelOfTheEndMod.LOGGER.info("failed to set world level. world level should between [0, 2]");
         }
     }
 
@@ -188,12 +185,12 @@ public class DOTEArchiveManager {
                 //清空物品栏
                 if(!player.isCreative()){
                     for(ItemStack stack : player.getInventory().items){
-                        if(!(stack.getItem() instanceof DOTEKeepableItem)){
+                        if(!(stack.getItem() instanceof DOTEKeepableItem doteKeepableItem && doteKeepableItem.shouldKeep())){
                             stack.setCount(0);
                         }
                     }
                     for(ItemStack stack : player.getInventory().armor){
-                        if(!(stack.getItem() instanceof DOTEKeepableItem)){
+                        if(!(stack.getItem() instanceof DOTEKeepableItem doteKeepableItem && doteKeepableItem.shouldKeep())){
                             stack.setCount(0);
                         }
                     }
@@ -214,7 +211,7 @@ public class DOTEArchiveManager {
 //        Component message = DuelOfTheEndMod.getInfo("level_up", getWorldLevelName());
 //        PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new BroadcastMessagePacket(message, false));
         //同步客户端数据
-        PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new SyncSaveUtilPacket(DOTEArchiveManager.toNbt()));
+        syncToClient();
 
     }
 
@@ -226,7 +223,6 @@ public class DOTEArchiveManager {
         private boolean boss3fought;
         private boolean senbaiFought;
         private boolean goldenFlameFought;
-
         private boolean choice1, choice2, choice3;
 
         public boolean isGuideSummoned() {
@@ -412,6 +408,15 @@ public class DOTEArchiveManager {
     public static void clear(){
         fromNbt(new CompoundTag());
         alreadyInit = false;
+        syncToClient();
+    }
+
+    /**
+     * 同步数据
+     * 请在服务端使用
+     */
+    public static void syncToClient(){
+        PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new SyncArchivePacket(toNbt()));
     }
 
     /**

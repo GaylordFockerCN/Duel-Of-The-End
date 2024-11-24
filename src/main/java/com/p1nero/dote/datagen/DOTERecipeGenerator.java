@@ -14,6 +14,10 @@ public class DOTERecipeGenerator extends DOTERecipeProvider implements IConditio
     }
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, DOTEItems.STAR_CORE.get(), 1)
+                .requires(DOTEItems.BOOK_OF_ENDING.get())
+                .unlockedBy(getHasName(DOTEItems.BOOK_OF_ENDING.get()), has(DOTEItems.BOOK_OF_ENDING.get()))
+                .save(consumer);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, DOTEItems.ADGRAIN.get(), 4)
                 .requires(DOTEItems.ADVENTURESPAR.get())
                 .unlockedBy(getHasName(DOTEItems.ADVENTURESPAR.get()), has(DOTEItems.ADVENTURESPAR.get()))

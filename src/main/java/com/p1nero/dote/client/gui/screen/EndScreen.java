@@ -141,6 +141,15 @@ public class EndScreen extends Screen {
 
             this.wrapCreditsIO(DuelOfTheEndMod.MOD_ID + ":texts/credits.json", this::addCreditsFile);
 
+            if (this.poem && this.minecraft != null) {
+                String currentLang = this.minecraft.getLanguageManager().getSelected();
+                if(currentLang.equals("zh_cn")){
+                    this.wrapCreditsIO(DuelOfTheEndMod.MOD_ID + ":texts/postcredits_" + this.minecraft.getLanguageManager().getSelected() + ".txt", this::addPoemFile);
+                } else {
+                    this.wrapCreditsIO(DuelOfTheEndMod.MOD_ID + ":texts/postcredits_en_us.txt", this::addPoemFile);
+                }
+            }
+
             this.totalScrollLength = this.lines.size() * 12;
         }
     }

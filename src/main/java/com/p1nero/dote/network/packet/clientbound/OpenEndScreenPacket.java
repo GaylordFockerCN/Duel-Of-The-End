@@ -7,12 +7,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
  * 不带SkinID的Packet
  */
 public record OpenEndScreenPacket() implements BasePacket {
-        @Override
+    @Override
     public void encode(FriendlyByteBuf buf) {
     }
 
@@ -21,6 +23,7 @@ public record OpenEndScreenPacket() implements BasePacket {
     }
 
     @Override
+    @OnlyIn(Dist.CLIENT)
     public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             Minecraft.getInstance().setScreen(new EndScreen(true, () -> {

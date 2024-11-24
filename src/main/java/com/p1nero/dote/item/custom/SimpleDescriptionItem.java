@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * 带有物品说明
  */
-public class SimpleDescriptionItem extends Item {
+public class SimpleDescriptionItem extends Item implements DOTEKeepableItem{
 
     public SimpleDescriptionItem() {
         super(new Item.Properties().setNoRepair().rarity(Rarity.COMMON));
@@ -22,6 +22,11 @@ public class SimpleDescriptionItem extends Item {
 
     public SimpleDescriptionItem(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public boolean shouldKeep() {
+        return false;
     }
 
     @Override

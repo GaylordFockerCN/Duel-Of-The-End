@@ -18,12 +18,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public abstract class EntitySpawnerBlockEntity<T extends Entity> extends BlockEntity {
 	protected final EntityType<T> entityType;
 	protected Entity myEntity;
 	@Nullable
-	protected Player currentPlayer;//限制仅能一个人挑战
+	protected UUID currentPlayer;//限制仅能一个人挑战
 	public EntityType<T> getEntityType() {
 		return entityType;
 	}
@@ -31,11 +32,11 @@ public abstract class EntitySpawnerBlockEntity<T extends Entity> extends BlockEn
 		return myEntity;
 	}
 
-	public void setCurrentPlayer(@Nullable Player currentPlayer) {
+	public void setCurrentPlayer(@Nullable UUID currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
 
-	public @Nullable Player getCurrentPlayer() {
+	public @Nullable UUID getCurrentPlayer() {
 		return currentPlayer;
 	}
 

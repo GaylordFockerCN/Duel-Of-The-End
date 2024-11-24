@@ -3,7 +3,7 @@ package com.p1nero.dote.archive;
 import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.network.PacketRelay;
 import com.p1nero.dote.network.DOTEPacketHandler;
-import com.p1nero.dote.network.packet.SyncSaveUtilPacket;
+import com.p1nero.dote.network.packet.SyncArchivePacket;
 import com.p1nero.dote.network.packet.clientbound.BroadcastMessagePacket;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -25,7 +25,7 @@ public class TaskSet extends HashSet<Task> {
             return false;
         }
         if (super.add(task)) {
-            PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new SyncSaveUtilPacket(DOTEArchiveManager.toNbt()));
+            DOTEArchiveManager.syncToClient();
             return true;
         }
         return false;
@@ -49,7 +49,7 @@ public class TaskSet extends HashSet<Task> {
         if (super.remove(o)) {
             Component message = DuelOfTheEndMod.getInfo("task_finish0").append(((Task) o).getName().copy().withStyle(ChatFormatting.RED)).append(DuelOfTheEndMod.getInfo("task_finish1"));
             PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new BroadcastMessagePacket(message, false));
-            PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new SyncSaveUtilPacket(DOTEArchiveManager.toNbt()));
+            DOTEArchiveManager.syncToClient();
             return true;
         }
         return false;

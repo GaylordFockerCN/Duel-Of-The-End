@@ -40,7 +40,7 @@ public class DOTEEntityLootTables extends EntityLootSubProvider {
             LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(UniformGenerator.between(1, 3))
-                        .add(LootItem.lootTableItem(DOTEItems.ADGRAIN.get()))));
+                        .add(LootItem.lootTableItem(DOTEItems.ADVENTURESPAR.get()))));
         add(DOTEEntities.DOTE_ZOMBIE.get(),
             LootTable.lootTable()
                 .withPool(LootPool.lootPool()

@@ -17,6 +17,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -29,6 +31,7 @@ public class ScarletHighPriest extends DOTENpc{
     }
 
     @Override
+    @OnlyIn(Dist.CLIENT)
     public void openDialogueScreen(CompoundTag senderData) {
 
         LinkListStreamDialogueScreenBuilder builder = new LinkListStreamDialogueScreenBuilder(this);

@@ -4,7 +4,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public class DOTEConfig {
     public static final ForgeConfigSpec.IntValue MIN_CHUNK_BETWEEN_STRUCTURE;
-    public static final ForgeConfigSpec.BooleanValue NO_PLOT_MODE;
+//    public static final ForgeConfigSpec.BooleanValue NO_PLOT_MODE;
     public static final ForgeConfigSpec.BooleanValue GIVE_M_KEY;
     public static final ForgeConfigSpec.BooleanValue BROADCAST_DIALOG;
     public static final ForgeConfigSpec.DoubleValue BROADCAST_DISTANCE;
@@ -33,7 +33,7 @@ public class DOTEConfig {
         builder.push("Game Setting");
         MIN_CHUNK_BETWEEN_STRUCTURE = createInt(builder, "min_chunk_between_structure", 3, 0, "小建筑和主建筑的最小区块间距");
         GIVE_M_KEY = createBool(builder, "give_m_key", true, "是否在进入游戏时直接给予玩家维度传送钥匙");
-        NO_PLOT_MODE = createBool(builder, "no_plot_mode", false, "！！在此config下启动的存档将无法重新开启主线剧情！！", "无剧情模式：设为true后将简化流程，没有剧情及任务。但仍可获得任务奖励。");
+//        NO_PLOT_MODE = createBool(builder, "no_plot_mode", false, "！！在此config下启动的存档将无法重新开启主线剧情！！", "无剧情模式：设为true后将简化流程，没有剧情及任务。但仍可获得任务奖励。");
         BROADCAST_DIALOG = createBool(builder, "broadcast_dialog", true, "是否全局广播剧情对话");
         BROADCAST_DISTANCE = createDouble(builder, "broadcast_distance", 50, 1, "广播范围");
         builder.pop();
@@ -42,7 +42,7 @@ public class DOTEConfig {
 
         builder.pop();
         builder.push("Monster Setting");
-        MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP = createDouble(builder, "mob_multiplier_when_world_level_up", 1.2, 1.0, "世界等级提升时怪物的属性提升倍数");
+        MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP = createDouble(builder, "mob_multiplier_when_world_level_up", 1.414, 1.0, "世界等级提升时怪物的属性提升倍数");
         ELITE_MOB_HEALTH_MULTIPLIER = createDouble(builder, "elite_mob_health_multiplier", 3.0, 1.0, "精英怪的血量加倍");
         ELITE_MOB_DAMAGE_MULTIPLIER = createDouble(builder, "elite_mob_damage_multiplier", 1.5, 1.0, "精英怪的伤害加倍");
         BOSS_HEALTH_AND_LOOT_MULTIPLE = createBool(builder, "boss_health_and_loot_multiple", true, "是否在多人模式下boss血量增加");

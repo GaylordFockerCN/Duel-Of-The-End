@@ -5,6 +5,7 @@ import com.p1nero.dote.capability.DOTECapabilityProvider;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
+import com.p1nero.dote.entity.ModifyAttackSpeedEntity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -22,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 import yesman.epicfight.world.item.EpicFightItems;
 
-public class SenbaiDevil extends DOTEBoss {
+public class SenbaiDevil extends DOTEBoss implements ModifyAttackSpeedEntity {
 
     public SenbaiDevil(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);

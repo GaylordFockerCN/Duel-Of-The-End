@@ -10,15 +10,21 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class DOTEItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, DuelOfTheEndMod.MOD_ID);
-	public static final RegistryObject<Item> M_KEY = REGISTRY.register("mkey", () -> new MKeyItem(() -> BiomeMap.getInstance().getBlockPos(BiomeMap.getInstance().getCenter1(), 170).offset(0, 0, 400)));//圣堂
+	public static final RegistryObject<Item> M_KEY = REGISTRY.register("mkey", () -> new TeleportKeyItem(() -> BiomeMap.getInstance().getBlockPos(BiomeMap.getInstance().getCenter1(), 170).offset(0, 0, 400)){
+		@Override
+		public boolean shouldKeep() {
+			return true;
+		}
+	});//圣堂
 	public static final RegistryObject<Item> P_KEY = REGISTRY.register("pkey", () -> new TeleportKeyItem(() -> BiomeMap.getInstance().getBlockPos(BiomeMap.getInstance().getCenter2(), 170).offset(0, 0, -400)));//炼狱
 	public static final RegistryObject<Item> U_KEY = REGISTRY.register("ukey", () -> new TeleportKeyItem(() -> BiomeMap.getInstance().getBlockPos(BiomeMap.getInstance().getCenter(), 170)));//终焉
-	public static final RegistryObject<Item> ADGRAIN = REGISTRY.register("adgrain", () -> new SimpleDescriptionFoilItem(new Item.Properties().fireResistant().rarity(DOTERarities.LIANG_PIN)));
-	public static final RegistryObject<Item> ADVENTURESPAR = REGISTRY.register("adventurespar", () -> new SimpleDescriptionFoilItem(new Item.Properties().fireResistant().rarity(DOTERarities.SHANG_PIN)));
+	public static final RegistryObject<Item> ADGRAIN = REGISTRY.register("adgrain", () -> new SimpleKeepableFoilDescriptionItem(new Item.Properties().fireResistant().rarity(DOTERarities.LIANG_PIN)));
+	public static final RegistryObject<Item> ADVENTURESPAR = REGISTRY.register("adventurespar", () -> new SimpleKeepableFoilDescriptionItem(new Item.Properties().fireResistant().rarity(DOTERarities.SHANG_PIN)));
 	public static final RegistryObject<Item> IMMORTALESSENCE = REGISTRY.register("immortalessence", () -> new SimpleDescriptionFoilItem(new Item.Properties().fireResistant().rarity(DOTERarities.SHANG_PIN)));
-	public static final RegistryObject<Item> HOLY_RADIANCE_SEED = REGISTRY.register("holy_radiance_seed", () -> new SimpleDescriptionFoilItem(new Item.Properties().fireResistant().rarity(DOTERarities.SHANG_PIN)));
-	public static final RegistryObject<Item> CORE_OF_HELL = REGISTRY.register("core_of_hell", () -> new SimpleDescriptionFoilItem(new Item.Properties().fireResistant().rarity(DOTERarities.TE_PIN)));
-	public static final RegistryObject<Item> BOOK_OF_ENDING = REGISTRY.register("book_of_ending", () -> new BookOfEndingItem(new Item.Properties().fireResistant().rarity(DOTERarities.XIAN_PIN)));
+	public static final RegistryObject<Item> HOLY_RADIANCE_SEED = REGISTRY.register("holy_radiance_seed", () -> new SimpleKeepableFoilDescriptionItem(new Item.Properties().fireResistant().rarity(DOTERarities.SHANG_PIN)));
+	public static final RegistryObject<Item> CORE_OF_HELL = REGISTRY.register("core_of_hell", () -> new SimpleKeepableFoilDescriptionItem(new Item.Properties().fireResistant().rarity(DOTERarities.TE_PIN)));
+	public static final RegistryObject<Item> BOOK_OF_ENDING = REGISTRY.register("book_of_ending", () -> new SimpleKeepableFoilDescriptionItem(new Item.Properties().fireResistant().rarity(DOTERarities.XIAN_PIN)));
+	public static final RegistryObject<Item> STAR_CORE = REGISTRY.register("star_core", () -> new SimpleKeepableFoilDescriptionItem(new Item.Properties().fireResistant().rarity(DOTERarities.SHEN_ZHEN)));
 	public static final RegistryObject<Item> TIESTONEH = REGISTRY.register("tiestoneh",
 			() -> new TieStoneArmorItem(ArmorItem.Type.HELMET));
 	public static final RegistryObject<Item> TIESTONEC = REGISTRY.register("tiestonec",
@@ -47,7 +53,7 @@ public class DOTEItems {
 	public static final RegistryObject<Item> NETHERITEROT_BOOTS = REGISTRY.register("netheriterot_boots",
 			() -> new NetherRotArmorItem(ArmorItem.Type.BOOTS));
 	public static final RegistryObject<Item> BALMUNG = REGISTRY.register("balmung", ()-> new BalmungItem(Tiers.NETHERITE, -3, -2.4F,(new Item.Properties()).defaultDurability(2777).rarity(DOTERarities.SHEN_ZHEN)));
-	public static final RegistryObject<Item> WITHERC = REGISTRY.register("witherc", () -> new SimpleDescriptionFoilItem(new Item.Properties().fireResistant().rarity(DOTERarities.XIAN_PIN)));
+	public static final RegistryObject<Item> WITHERC = REGISTRY.register("witherc", () -> new SimpleKeepableFoilDescriptionItem(new Item.Properties().fireResistant().rarity(DOTERarities.XIAN_PIN)));
 	public static final RegistryObject<Item> DRAGONSTEEL_INGOT = REGISTRY.register("dragonsteel_ingot", () -> new SimpleDescriptionFoilItem(new Item.Properties().fireResistant().rarity(DOTERarities.SHEN_ZHEN)));
 	public static final RegistryObject<Item> GOLDEN_DRAGON_HELMET = REGISTRY.register("goldendragon_helmet", () -> new GoldenDragonItem(ArmorItem.Type.HELMET));
 	public static final RegistryObject<Item> GOLDEN_DRAGON_CHESTPLATE = REGISTRY.register("goldendragon_chestplate", () -> new GoldenDragonItem(ArmorItem.Type.CHESTPLATE));

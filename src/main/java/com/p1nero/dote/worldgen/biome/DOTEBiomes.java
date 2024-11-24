@@ -1,6 +1,7 @@
 package com.p1nero.dote.worldgen.biome;
 
 import com.p1nero.dote.DuelOfTheEndMod;
+import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.entity.DOTEEntities;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
@@ -13,6 +14,7 @@ import net.minecraft.data.worldgen.placement.TreePlacements;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.Music;
 import net.minecraft.sounds.Musics;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.MobCategory;
@@ -55,6 +57,7 @@ public class DOTEBiomes {
                         .fogColor(0x000000)
                         .skyColor(0x000000)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                        .backgroundMusic(Musics.createGameMusic(DOTESounds.BIOME_BGM.getHolder().orElseThrow()))
                         .build())
                 .build();
     }
@@ -87,7 +90,7 @@ public class DOTEBiomes {
                         .fogColor(0xffffff)
                         .skyColor(0xffffff)
                         .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-//                        .backgroundMusic(new Music(TCRSounds.BIOME1FOREST.getHolder().orElseThrow(), 12000, 24000, true))
+                        .backgroundMusic(Musics.createGameMusic(DOTESounds.BIOME_BGM.getHolder().orElseThrow()))
                         .build())
                 .build();
     }
@@ -140,7 +143,6 @@ public class DOTEBiomes {
                         .ambientMoodSound(new AmbientMoodSettings(SoundEvents.AMBIENT_WARPED_FOREST_MOOD, 6000, 8, 2.0))
                         .ambientAdditionsSound(new AmbientAdditionsSettings(SoundEvents.AMBIENT_WARPED_FOREST_ADDITIONS, 0.0111))
                         .backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_CRIMSON_FOREST))
-//                        .backgroundMusic(new Music(TCRSounds.BIOME1FOREST.getHolder().orElseThrow(), 12000, 24000, true))
                         .build())
                 .build();
     }

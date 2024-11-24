@@ -35,7 +35,7 @@ public class DOTEPacketHandler {
         register(AddDialogPacket.class, AddDialogPacket::decode);
 
         //双端
-        register(SyncSaveUtilPacket.class, SyncSaveUtilPacket::decode);
+        register(SyncArchivePacket.class, SyncArchivePacket::decode);
 
     }
 

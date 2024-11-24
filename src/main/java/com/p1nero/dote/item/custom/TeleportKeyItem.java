@@ -20,6 +20,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -62,9 +63,9 @@ public class TeleportKeyItem extends SimpleDescriptionFoilItem{
                 return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide);
             }
             //清空物品栏
-            if(!player.isCreative()){
+            if(!player.isCreative() && serverLevel.dimension() != DOTEDimension.P_SKY_ISLAND_LEVEL_KEY){
                 for(ItemStack stack : player.getInventory().items){
-                    if(!(stack.getItem() instanceof DOTEKeepableItem)){
+                    if(!(stack.getItem() instanceof DOTEKeepableItem doteKeepableItem && doteKeepableItem.shouldKeep())){
                         ItemUtil.addItemEntity(serverLevel, player.getX(), player.getY(), player.getZ(), stack);
                         stack.setCount(0);
                     }
@@ -79,7 +80,7 @@ public class TeleportKeyItem extends SimpleDescriptionFoilItem{
             ServerLevel dim = Objects.requireNonNull(serverLevel.getServer().getLevel(DOTEDimension.P_SKY_ISLAND_LEVEL_KEY));
             player.changeDimension(dim, new DOTETeleporter(destination.get()));
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS,1,1);
-
+            ((ServerPlayer)player).setRespawnPosition(DOTEDimension.P_SKY_ISLAND_LEVEL_KEY, destination.get(), 0.0F, true, true);
             //生成向导
             if(!DOTEArchiveManager.BIOME_PROGRESS_DATA.isGuideSummoned()){
 //                GuideNpc npc = DOTEEntities.GUIDE_NPC.get().spawn(dim, player.getOnPos(), MobSpawnType.MOB_SUMMONED);
@@ -93,6 +94,8 @@ public class TeleportKeyItem extends SimpleDescriptionFoilItem{
                 Objects.requireNonNull(serverLevel.getServer()).getCommands().performPrefixedCommand(commandSourceStack, "summon " + DuelOfTheEndMod.MOD_ID + ":guide_npc");
                 DOTEArchiveManager.BIOME_PROGRESS_DATA.setGuideSummoned(true);
             }
+            CommandSourceStack commandSourceStack = player.createCommandSourceStack().withPermission(2);
+            Objects.requireNonNull(serverLevel.getServer()).getCommands().performPrefixedCommand(commandSourceStack, "gamerule keepInventory true");
 
         }
         return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide);

@@ -4,6 +4,7 @@ import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
+import com.p1nero.dote.entity.ModifyAttackSpeedEntity;
 import com.p1nero.dote.item.DOTEItems;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -31,7 +32,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
-public class GoldenFlame extends DOTEBoss {
+public class GoldenFlame extends DOTEBoss implements ModifyAttackSpeedEntity {
     protected static final EntityDataAccessor<Integer> CHARGING_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
     public GoldenFlame(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -49,7 +50,7 @@ public class GoldenFlame extends DOTEBoss {
 
     @Override
     public float getAttackSpeed() {
-        return 0.35F;
+        return 0.4F;
     }
 
     @Override

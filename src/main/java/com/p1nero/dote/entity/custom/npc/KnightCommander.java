@@ -15,6 +15,8 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
@@ -113,10 +115,15 @@ public class KnightCommander extends DOTENpc {
     @Override
     public @NotNull MerchantOffers getOffers() {
         MerchantOffers offers = new MerchantOffers();
-
+        ItemStack potion = new ItemStack(Items.POTION);
+        PotionUtils.setPotion(potion, Potions.STRONG_HEALING);
         offers.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADGRAIN.get(), 5),
                 new ItemStack(DOTEItems.P_KEY.get(), 1),
+                142857, 0, 0.02f));
+        offers.add(new MerchantOffer(
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 10),
+                potion,
                 142857, 0, 0.02f));
         offers.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADGRAIN.get(), 24),

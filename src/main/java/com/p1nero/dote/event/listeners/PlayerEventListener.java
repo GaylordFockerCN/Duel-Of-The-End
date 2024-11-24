@@ -9,13 +9,12 @@ import com.p1nero.dote.entity.custom.DOTEBoss;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.network.PacketRelay;
 import com.p1nero.dote.network.DOTEPacketHandler;
-import com.p1nero.dote.network.packet.SyncSaveUtilPacket;
+import com.p1nero.dote.network.packet.SyncArchivePacket;
 import com.p1nero.dote.network.packet.clientbound.SyncUuidPacket;
 import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.util.ItemUtil;
 import com.p1nero.dote.worldgen.biome.DOTEBiomes;
 import com.p1nero.dote.worldgen.dimension.DOTEDimension;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -29,7 +28,6 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import yesman.epicfight.client.world.capabilites.entitypatch.player.LocalPlayerPatch;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 
@@ -53,13 +51,13 @@ public class PlayerEventListener {
                 }
             }
             //同步客户端数据
-            PacketRelay.sendToPlayer(DOTEPacketHandler.INSTANCE, new SyncSaveUtilPacket(DOTEArchiveManager.toNbt()), serverPlayer);
+            PacketRelay.sendToPlayer(DOTEPacketHandler.INSTANCE, new SyncArchivePacket(DOTEArchiveManager.toNbt()), serverPlayer);
             //防止重进后boss的uuid不同
             DOTEBoss.SERVER_BOSSES.forEach(((uuid, integer) -> PacketRelay.sendToPlayer(DOTEPacketHandler.INSTANCE, new SyncUuidPacket(uuid, integer), serverPlayer)));
         } else {
             //单机世界的同步数据
             if(DOTEArchiveManager.isAlreadyInit()){
-                PacketRelay.sendToServer(DOTEPacketHandler.INSTANCE, new SyncSaveUtilPacket(DOTEArchiveManager.toNbt()));
+                PacketRelay.sendToServer(DOTEPacketHandler.INSTANCE, new SyncArchivePacket(DOTEArchiveManager.toNbt()));
             }
         }
 

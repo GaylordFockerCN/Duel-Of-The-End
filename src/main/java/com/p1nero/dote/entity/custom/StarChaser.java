@@ -1,5 +1,6 @@
 package com.p1nero.dote.entity.custom;
 
+import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.p1nero.dote.client.gui.TreeNode;
@@ -134,6 +135,16 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
     @Override
     public boolean removeWhenFarAway(double p_21542_) {
         return false;
+    }
+
+    @Override
+    public boolean shouldShowName() {
+        return true;
+    }
+
+    @Override
+    public @NotNull Component getDisplayName() {
+        return DOTEArchiveManager.getWorldLevel() < 3 ? super.getDisplayName() : Component.literal("§k???");
     }
 
     @Nullable
@@ -387,10 +398,6 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
                 new ItemStack(Items.WHITE_WOOL, 1),
                 142857, 0, 0.02f));
         merchantOffers.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADGRAIN.get(), 1),
-                new ItemStack(Items.APPLE, 1),
-                142857, 0, 0.02f));
-        merchantOffers.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADGRAIN.get(), 5),
                 new ItemStack(Items.LEATHER, 5),
                 142857, 0, 0.02f));
@@ -409,6 +416,14 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
         merchantOffers.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADGRAIN.get(), 5),
                 new ItemStack(Items.COPPER_INGOT, 2),
+                142857, 0, 0.02f));
+        merchantOffers.add(new MerchantOffer(
+                new ItemStack(DOTEItems.ADGRAIN.get(), 1),
+                new ItemStack(Items.BREAD, 1),
+                142857, 0, 0.02f));
+        merchantOffers.add(new MerchantOffer(
+                new ItemStack(DOTEItems.ADGRAIN.get(), 1),
+                new ItemStack(Items.APPLE, 1),
                 142857, 0, 0.02f));
         merchantOffers.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADGRAIN.get(), 5),
