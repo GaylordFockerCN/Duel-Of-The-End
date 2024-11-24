@@ -32,15 +32,10 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> {
             this.reserveAnimation(WOMAnimations.SOLAR_AUTO_4_POLVORA);
         }
         //防止奇迹武器技能太超模
-        if(epicFightDamageSource.getStunType() != StunType.NONE){
-            epicFightDamageSource.setStunType(StunType.SHORT);
-        }
+        epicFightDamageSource.setStunType(StunType.NONE);
         AttackResult attackResult = super.tryHarm(target, epicFightDamageSource, amount);
-        //击中吸血+火焰附加
-        if(attackResult.resultType.equals(AttackResult.ResultType.SUCCESS)){
-            this.getOriginal().setHealth(this.getOriginal().getHealth() + 58);
-            target.setRemainingFireTicks(100);
-        }
+        //火焰附加
+        target.setRemainingFireTicks(100);
         return attackResult;
     }
 

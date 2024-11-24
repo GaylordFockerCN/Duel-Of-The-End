@@ -19,6 +19,9 @@ public class StarCoreItem extends SimpleKeepableFoilDescriptionItem{
         if(player.isShiftKeyDown() && !level.isClientSide){
             DOTEArchiveManager.clear();
             player.displayClientMessage(DuelOfTheEndMod.getInfo("tip12"), false);
+            if(!player.isCreative()){
+                player.getItemInHand(hand).shrink(1);
+            }
         }
         return super.use(level, player, hand);
     }

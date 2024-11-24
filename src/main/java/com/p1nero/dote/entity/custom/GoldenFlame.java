@@ -50,7 +50,7 @@ public class GoldenFlame extends DOTEBoss implements ModifyAttackSpeedEntity {
 
     @Override
     public float getAttackSpeed() {
-        return 0.4F;
+        return 0.5F;
     }
 
     @Override
@@ -104,7 +104,7 @@ public class GoldenFlame extends DOTEBoss implements ModifyAttackSpeedEntity {
 //                .add(Attributes.MAX_HEALTH, 10.0f)//测试用
                 .add(Attributes.MAX_HEALTH, 752.0f)
                 .add(Attributes.ATTACK_DAMAGE, 1.0f)
-                .add(Attributes.ATTACK_SPEED, 2.0f)
+                .add(Attributes.ATTACK_SPEED, 1.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 114514f)
                 .add(EpicFightAttributes.MAX_STRIKES.get(), 3)

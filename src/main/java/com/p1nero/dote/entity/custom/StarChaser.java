@@ -37,6 +37,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.trading.Merchant;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
@@ -377,6 +379,8 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
 
     public MerchantOffers getCustomMerchantOffers() {
         MerchantOffers merchantOffers = new MerchantOffers();
+        ItemStack potion = new ItemStack(Items.POTION);
+        PotionUtils.setPotion(potion, Potions.STRONG_HEALING);
         merchantOffers.add(new MerchantOffer(
                 new ItemStack(Items.ROTTEN_FLESH, 5),
                 new ItemStack(DOTEItems.ADGRAIN.get(), 1),
@@ -384,6 +388,10 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
         merchantOffers.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADGRAIN.get(), 1),
                 new ItemStack(Items.ROTTEN_FLESH, 5),
+                142857, 0, 0.02f));
+        merchantOffers.add(new MerchantOffer(
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 25),
+                potion,
                 142857, 0, 0.02f));
         merchantOffers.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADVENTURESPAR.get(), 5),

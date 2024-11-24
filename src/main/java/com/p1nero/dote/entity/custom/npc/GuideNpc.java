@@ -30,11 +30,13 @@ public class GuideNpc extends DOTENpc{
     @Override
     public void tick() {
         super.tick();
-        if(!level().isClientSide && !this.hasEffect(MobEffects.GLOWING)){
-            this.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100));
-        }
-        if(!level().isClientSide && level().dimension() == Level.OVERWORLD){
-            this.discard();
+        if(!level().isClientSide){
+            if(!this.hasEffect(MobEffects.GLOWING)){
+                this.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100));
+            }
+            if(level().dimension() == Level.OVERWORLD || !DOTEArchiveManager.BIOME_PROGRESS_DATA.isGuideSummoned()){
+                this.discard();
+            }
         }
     }
 

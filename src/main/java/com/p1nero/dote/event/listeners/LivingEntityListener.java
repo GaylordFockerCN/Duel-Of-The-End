@@ -1,10 +1,12 @@
 package com.p1nero.dote.event.listeners;
 
+import com.p1nero.dote.DOTEConfig;
 import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.capability.DOTECapabilityProvider;
 import com.p1nero.dote.entity.LevelableEntity;
 import com.p1nero.dote.entity.MultiPlayerBoostEntity;
 import com.p1nero.dote.archive.DOTEArchiveManager;
+import com.p1nero.dote.entity.custom.DOTEBoss;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.item.custom.NetherRotArmorItem;
 import com.p1nero.dote.item.custom.TieStoneArmorItem;
@@ -82,7 +84,10 @@ public class LivingEntityListener {
 
     @SubscribeEvent
     public static void onEntityHurt(LivingHurtEvent event) {
-
+        //开发者模式方便杀boss
+        if(event.getEntity() instanceof DOTEBoss && DOTEConfig.FAST_BOSS_FIGHT.get()){
+            event.setAmount(event.getAmount() * 100);
+        }
     }
 
     /**

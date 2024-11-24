@@ -16,6 +16,7 @@ public class DOTEConfig {
     public static final ForgeConfigSpec.IntValue BOSS_HEALTH_AND_LOOT_MULTIPLE_MAX;
     public static final ForgeConfigSpec.IntValue SPAWNER_BLOCK_PROTECT_RADIUS;
     public static final ForgeConfigSpec.DoubleValue TEST_X, TEST_Y, TEST_Z;
+    public static final ForgeConfigSpec.BooleanValue FAST_BOSS_FIGHT;
     public static final ForgeConfigSpec SPEC;
 
     public static final ForgeConfigSpec.BooleanValue ENABLE_TYPEWRITER_EFFECT;
@@ -55,6 +56,7 @@ public class DOTEConfig {
         TEST_Y = createDouble(builder, "test_y", 1.0, -Double.MIN_VALUE, "测试用y， 方便实时调某个数值");
         TEST_Z = createDouble(builder, "test_z", 1.0, -Double.MIN_VALUE, "测试用z， 方便实时调某个数值");
         ENABLE_BETTER_STRUCTURE_BLOCK_LOAD = createBool(builder, "enable_better_structure_block_load", true, "结构方块是否立即加载（开发人员用）");
+        FAST_BOSS_FIGHT = createBool(builder, "fast_boss_fight", false, "速杀boss模式（开发人员用）");
         builder.pop();
         SPEC = builder.build();
 

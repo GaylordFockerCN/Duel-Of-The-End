@@ -157,7 +157,7 @@ public class DOTELangGenerator extends DOTELangProvider {
         this.addDialogChoice(DOTEEntities.GUIDE_NPC, 1, "圣殿是什么，骑士长又是谁？");
         this.addDialog(DOTEEntities.GUIDE_NPC, 2, "圣殿是专门为奔赴前线的勇士提供试炼的最终关卡。骑士长大人是所有战士的管理者和引路人，负责所有跃跃欲试参与圣辉试炼的战士的统筹工作，他就在圣殿的讲台上。");
         this.addDialogChoice(DOTEEntities.GUIDE_NPC, 2, "我现在要做什么？");
-        this.addDialog(DOTEEntities.GUIDE_NPC, 3, "您是被圣殿选中对抗猩红入侵的伟大战士！鄙人行动受缚无法为您接风洗尘，请您继续沿道路向前，穿过树林就能看到那座雄伟的神圣的大殿。");
+        this.addDialog(DOTEEntities.GUIDE_NPC, 3, "您是被圣殿选中对抗猩红入侵的伟大战士！鄙人行动受缚无法为您接风洗尘，请您继续沿道路向前，§6往北§r穿过树林就能看到那座雄伟的神圣的大殿。");
 
         this.addDialog(DOTEEntities.GUIDE_NPC, 4, "噢，§kBV1v14y1z7MV§r来了一位骁勇善战的战士！想必您舟车劳顿至此一定怀揣着崇高的信念与理想。§k???§r就在前方，我们伟大的§k???§r早已在那里恭候多时了！");
         this.addDialogChoice(DOTEEntities.GUIDE_NPC, 3, "我们之前不是见过面吗？你不记得了？");

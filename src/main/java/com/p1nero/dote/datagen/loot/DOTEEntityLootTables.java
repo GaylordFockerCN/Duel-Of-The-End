@@ -39,7 +39,7 @@ public class DOTEEntityLootTables extends EntityLootSubProvider {
         add(DOTEEntities.DOTE_PIGLIN.get(),
             LootTable.lootTable()
                 .withPool(LootPool.lootPool()
-                        .setRolls(UniformGenerator.between(1, 3))
+                        .setRolls(UniformGenerator.between(2, 5))
                         .add(LootItem.lootTableItem(DOTEItems.ADVENTURESPAR.get()))));
         add(DOTEEntities.DOTE_ZOMBIE.get(),
             LootTable.lootTable()
@@ -49,7 +49,11 @@ public class DOTEEntityLootTables extends EntityLootSubProvider {
                 .withPool(LootPool.lootPool()
                         .setRolls(UniformGenerator.between(1, 2))
                         .add(LootItem.lootTableItem(DOTEItems.ADGRAIN.get()))));
-        add(DOTEEntities.DOTE_ZOMBIE_2.get(), fromEntityLootTable(DOTEEntities.DOTE_ZOMBIE.get()));
+        add(DOTEEntities.DOTE_ZOMBIE_2.get(),
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(1, 3))
+                                .add(LootItem.lootTableItem(DOTEItems.ADVENTURESPAR.get()))));
         add(DOTEEntities.THE_ARBITER_OF_RADIANCE.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1))
