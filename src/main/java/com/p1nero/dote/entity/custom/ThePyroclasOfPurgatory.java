@@ -27,7 +27,7 @@ import yesman.epicfight.world.item.EpicFightItems;
 /**
  * 炼狱炎魔
  */
-public class ThePyroclasOfPurgatory extends DOTEBoss {
+public class ThePyroclasOfPurgatory extends DOTEBoss implements ModifyAttackSpeedEntity{
 
     public ThePyroclasOfPurgatory(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -41,7 +41,7 @@ public class ThePyroclasOfPurgatory extends DOTEBoss {
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 213.79f)
+                .add(Attributes.MAX_HEALTH, 273.79f)
                 .add(Attributes.ATTACK_DAMAGE, 2.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
@@ -94,4 +94,8 @@ public class ThePyroclasOfPurgatory extends DOTEBoss {
         return DOTESounds.GOLDEN_FLAME_BGM.get();
     }
 
+    @Override
+    public float getAttackSpeed() {
+        return 0.7F;
+    }
 }

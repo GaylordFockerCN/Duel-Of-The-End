@@ -65,7 +65,7 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
     private Player tradingPlayer;
     private MerchantOffers currentOffers = new MerchantOffers();
     protected static final EntityDataAccessor<Integer> SKIN_ID = SynchedEntityData.defineId(StarChaser.class, EntityDataSerializers.INT);
-    private static final int MAX_SKIN_ID = 8;//总人数
+    private static final int MAX_SKIN_ID = 13;//总人数
     public StarChaser(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
         WEAPONS.add(Items.IRON_AXE);

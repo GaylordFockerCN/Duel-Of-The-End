@@ -28,7 +28,7 @@ public class TARSpawnerBlock extends BossSpawnerBlock{
     @Override
     public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
         if(!pLevel.isClientSide){
-            if(!pPlayer.isCreative() && DataManager.BarunTalked.get(pPlayer)){
+            if(pPlayer.isCreative() || DataManager.BarunTalked.get(pPlayer)){
                 return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
             } else {
                 pPlayer.displayClientMessage(DuelOfTheEndMod.getInfo("tip13"), true);
