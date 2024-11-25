@@ -36,6 +36,7 @@ import net.minecraftforge.fml.common.Mod;
 import yesman.epicfight.gameasset.EpicFightSkills;
 import yesman.epicfight.world.item.EpicFightItems;
 
+import java.util.List;
 import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = DuelOfTheEndMod.MOD_ID)
@@ -72,12 +73,12 @@ public class LivingEntityListener {
                     ItemUtil.addItem(player, parrying);
                     ItemUtil.addItem(player, technician);
                 }
-                //死五次播报一次提示
+                //死五次播报一次提示，随机送绑石套之一
                 if(dotePlayer.getDeathCount() % 5 == 1){
                     player.displayClientMessage(DuelOfTheEndMod.getInfo("tip" + (5 + player.getRandom().nextInt(3))).withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD), false);
                     ItemStack potion = new ItemStack(Items.POTION);
                     PotionUtils.setPotion(potion, Potions.TURTLE_MASTER);
-                    ItemUtil.addItem(player, DOTEItems.TIESTONEH.get(), 1);
+                    ItemUtil.addItem(player, List.of(DOTEItems.TIESTONEH.get(), DOTEItems.TIESTONEC.get(), DOTEItems.TIESTONEL.get(), DOTEItems.TIESTONES.get()).get(player.getRandom().nextInt(4)), 1);
                     ItemUtil.addItem(player, potion);
                 }
 

@@ -29,6 +29,7 @@ public class DOTELangGenerator extends DOTELangProvider {
         this.addInfo("tip10", "没有任何回应...");
         this.addInfo("tip11", "是时候回去找巴伦了...");
         this.addInfo("tip12", "终焉维度数据已清空");
+        this.addInfo("tip13", "我应该先找到巴伦...");
 
         this.addAdvancement(DuelOfTheEndMod.MOD_ID, "光与暗与终末", "进入光与暗与终末的维度");
         this.addAdvancement("seed", "圣辉之种", "完成圣辉试炼");
@@ -56,13 +57,13 @@ public class DOTELangGenerator extends DOTELangProvider {
         add(DOTEItems.M_KEY.get(), "圣堂决斗钥匙");
         addItemUsageInfo(DOTEItems.M_KEY.get(), "你...做好准备了吗？");
         add(DOTEItems.P_KEY.get(), "炼狱决斗钥匙");
-        addItemUsageInfo(DOTEItems.P_KEY.get(), "所谓的终焉也并非遥不可及...");
+        addItemUsageInfo(DOTEItems.P_KEY.get(), "所谓的终焉也并非遥不可及...§6（炼狱群系怪物掉率较高）§r");
         add(DOTEItems.U_KEY.get(), "终焉决斗钥匙");
         addItemUsageInfo(DOTEItems.U_KEY.get(), "§6准备好面对“§k祂§r§6”了吗...");
         add(DOTEItems.ADGRAIN.get(), "冒险碎片");
         addItemUsageInfo(DOTEItems.ADGRAIN.get(), "似乎可以用来与他人交易...");
         add(DOTEItems.ADVENTURESPAR.get(), "冒险晶石");
-        addItemUsageInfo(DOTEItems.ADVENTURESPAR.get(), "");
+        addItemUsageInfo(DOTEItems.ADVENTURESPAR.get(), "可由冒险碎片合成，也可分解成冒险碎片");
         add(DOTEItems.IMMORTALESSENCE.get(), "往生精华");
         addItemUsageInfo(DOTEItems.IMMORTALESSENCE.get(), "似乎蕴含着某种往生的力量...");
         add(DOTEItems.STAR_CORE.get(), "星辰核心");
@@ -144,7 +145,7 @@ public class DOTELangGenerator extends DOTELangProvider {
         this.addDialog(DOTEEntities.STAR_CHASER, 4, "“祂”并非不可战胜！人类的未来将会如同今夜天上的群星般闪烁！");
         this.addDialog(DOTEEntities.STAR_CHASER, 5, "这就是虚空的力量……多么强大，多么美丽！所谓的终焉也并非遥不可及！");
         this.addDialog(DOTEEntities.STAR_CHASER, 6, "观星者的职责是保护“终焉”之后所有幸存的人类聚落不被毁灭，这也是我们相聚于此的原因。");
-        this.addDialog(DOTEEntities.STAR_CHASER, 7, "最后的观星者们啊！终焉带来了毁灭，却带不走他们——人类“希望”的体现！");
+        this.addDialog(DOTEEntities.STAR_CHASER, 7, "圣堂里的骑士长巴伦，在§6得到认可后§r可以与他交易更珍贵的道具。");
         this.addDialog(DOTEEntities.STAR_CHASER, 8, "我们成功了！通过将钻石与黄金不断的熔炼与敲打，再加入其他稀有的金属以及我在四处探索时得到的一些晶石碎片，一块漆黑的合金锭在高炉里诞生了！经过商议，我们决定将这种熔炼出来的完美的金属命名为“下界合金”。");
         this.addDialog(DOTEEntities.STAR_CHASER, 9, "根据我的初步调查，这个世界和我们之间的距离比我想象的要近得多，也许这里顶层之外的无限虚空之上就是我们世界的最底部。但不论这里是否是我们灵魂的最终归宿地，这里仍然是一片足以刷新我们认知的世界。也许，这里也有着“祂”的一丝线索。");
         this.addDialog(DOTEEntities.STAR_CHASER, 10, "你知道吗？这个世界的地底下竟然也分布着矿脉！");
@@ -153,11 +154,11 @@ public class DOTELangGenerator extends DOTELangProvider {
         this.addDialogChoice(DOTEEntities.STAR_CHASER, 2, "闲聊");
         this.addDialogChoice(DOTEEntities.STAR_CHASER, 3, "结束对话");
 
-        this.addDialog(DOTEEntities.GUIDE_NPC, 0, "噢，又来了一位骁勇善战的战士！想必您舟车劳顿至此一定怀揣着崇高的信念与理想。圣殿就在前方，我们伟大的骑士长早已在那里恭候多时了！");
+        this.addDialog(DOTEEntities.GUIDE_NPC, 0, "噢，又来了一位骁勇善战的战士！想必您舟车劳顿至此一定怀揣着崇高的信念与理想。圣殿就在前方，我们伟大的§6骑士长巴伦§r早已在那里恭候多时了！");
         this.addDialogChoice(DOTEEntities.GUIDE_NPC, 0, "这是哪，我为什么会出现在这里？");
         this.addDialog(DOTEEntities.GUIDE_NPC, 1, "这里就是终焉前线啊骑士大人，是我们对抗猩红入侵的坚实防线，您一定是受到了圣辉之光的感召最终抵达了这里！");
         this.addDialogChoice(DOTEEntities.GUIDE_NPC, 1, "圣殿是什么，骑士长又是谁？");
-        this.addDialog(DOTEEntities.GUIDE_NPC, 2, "圣殿是专门为奔赴前线的勇士提供试炼的最终关卡。骑士长大人是所有战士的管理者和引路人，负责所有跃跃欲试参与圣辉试炼的战士的统筹工作，他就在圣殿的讲台上。");
+        this.addDialog(DOTEEntities.GUIDE_NPC, 2, "圣殿是专门为奔赴前线的勇士提供试炼的最终关卡。骑士长大人是所有战士的管理者和引路人，负责所有跃跃欲试参与圣辉试炼的战士的统筹工作，他就在§6圣殿的讲台§r上。");
         this.addDialogChoice(DOTEEntities.GUIDE_NPC, 2, "我现在要做什么？");
         this.addDialog(DOTEEntities.GUIDE_NPC, 3, "您是被圣殿选中对抗猩红入侵的伟大战士！鄙人行动受缚无法为您接风洗尘，请您继续沿道路向前，§6往北§r穿过树林就能看到那座雄伟的神圣的大殿。");
 

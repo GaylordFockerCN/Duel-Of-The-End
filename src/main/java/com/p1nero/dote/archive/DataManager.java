@@ -25,6 +25,8 @@ import net.minecraft.world.entity.player.Player;
  */
 public class DataManager {
     public static BoolData keyGot =  new BoolData("key_got",false);
+    public static BoolData lootGot =  new BoolData("loot_got",false);
+    public static BoolData BarunTalked =  new BoolData("barun_talked",false);
     public static void putData(Player player, String key, double value) {
         getDOTEPlayer(player).putDouble(key, value);
     }

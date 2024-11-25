@@ -48,6 +48,11 @@ public class TheArbiterOfRadiance extends DOTEBoss implements ModifyAttackSpeedE
     }
 
     @Override
+    public int getExperienceReward() {
+        return 500;
+    }
+
+    @Override
     public float getAttackSpeed() {
         return 0.65F;
     }

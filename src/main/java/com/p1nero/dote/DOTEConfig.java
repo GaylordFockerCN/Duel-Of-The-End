@@ -10,6 +10,7 @@ public class DOTEConfig {
     public static final ForgeConfigSpec.DoubleValue BROADCAST_DISTANCE;
     public static final ForgeConfigSpec.BooleanValue ENABLE_BETTER_STRUCTURE_BLOCK_LOAD;
     public static final ForgeConfigSpec.DoubleValue MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP;
+    public static final ForgeConfigSpec.DoubleValue MOB_SPAWN_DISTANCE;
     public static final ForgeConfigSpec.DoubleValue ELITE_MOB_HEALTH_MULTIPLIER;
     public static final ForgeConfigSpec.DoubleValue ELITE_MOB_DAMAGE_MULTIPLIER;
     public static final ForgeConfigSpec.BooleanValue BOSS_HEALTH_AND_LOOT_MULTIPLE;
@@ -44,11 +45,12 @@ public class DOTEConfig {
         builder.pop();
         builder.push("Monster Setting");
         MOB_MULTIPLIER_WHEN_WORLD_LEVEL_UP = createDouble(builder, "mob_multiplier_when_world_level_up", 1.414, 1.0, "世界等级提升时怪物的属性提升倍数");
+        MOB_SPAWN_DISTANCE = createDouble(builder, "mob_spawn_distance", 20, 1.0, "怪物生成间距");
         ELITE_MOB_HEALTH_MULTIPLIER = createDouble(builder, "elite_mob_health_multiplier", 3.0, 1.0, "精英怪的血量加倍");
         ELITE_MOB_DAMAGE_MULTIPLIER = createDouble(builder, "elite_mob_damage_multiplier", 1.5, 1.0, "精英怪的伤害加倍");
         BOSS_HEALTH_AND_LOOT_MULTIPLE = createBool(builder, "boss_health_and_loot_multiple", true, "是否在多人模式下boss血量增加");
         BOSS_HEALTH_AND_LOOT_MULTIPLE_MAX = createInt(builder, "boss_health_and_loot_multiple_max", 5, 1, "多人模式下boss血量增加的最大倍数");
-        SPAWNER_BLOCK_PROTECT_RADIUS = createInt(builder, "spawner_block_protect_radius", 20, 1, "决斗范围");
+        SPAWNER_BLOCK_PROTECT_RADIUS = createInt(builder, "spawner_block_protect_radius", 20, 1, "默认决斗范围");
         builder.pop();
 
         builder.push("Test");

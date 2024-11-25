@@ -1,8 +1,11 @@
 package com.p1nero.dote.item.custom;
 
+import com.p1nero.dote.DOTEConfig;
 import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.archive.DOTEArchiveManager;
+import com.p1nero.dote.archive.DataManager;
 import com.p1nero.dote.item.DOTERarities;
+import com.p1nero.dote.util.ItemUtil;
 import com.p1nero.dote.worldgen.dimension.DOTEDimension;
 import com.p1nero.dote.worldgen.portal.DOTETeleporter;
 import net.minecraft.commands.CommandSourceStack;
@@ -15,13 +18,12 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import yesman.epicfight.gameasset.EpicFightSkills;
+import yesman.epicfight.world.item.EpicFightItems;
 
 import java.util.List;
 import java.util.Objects;
@@ -74,6 +76,15 @@ public class TeleportKeyItem extends SimpleDescriptionFoilItem{
                 CommandSourceStack commandSourceStack = player.createCommandSourceStack().withPermission(2).withSuppressedOutput();
                 Objects.requireNonNull(serverLevel.getServer()).getCommands().performPrefixedCommand(commandSourceStack, "summon " + DuelOfTheEndMod.MOD_ID + ":guide_npc");
                 DOTEArchiveManager.BIOME_PROGRESS_DATA.setGuideSummoned(true);
+            }
+            if(DOTEConfig.GIVE_M_KEY.get() && !DataManager.lootGot.get(player)){
+                ItemStack guard = new ItemStack(EpicFightItems.SKILLBOOK.get());
+                guard.getOrCreateTag().putString("skill", EpicFightSkills.GUARD.toString());
+                ItemUtil.addItem(player, guard);
+                ItemStack sword = Items.IRON_SWORD.getDefaultInstance();
+                sword.setDamageValue(sword.getMaxDamage() - 40);
+                ItemUtil.addItem(player, sword);
+                DataManager.lootGot.put(player, true);
             }
             CommandSourceStack commandSourceStack = player.createCommandSourceStack().withPermission(2);
             Objects.requireNonNull(serverLevel.getServer()).getCommands().performPrefixedCommand(commandSourceStack, "gamerule keepInventory true");

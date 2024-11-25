@@ -1,6 +1,7 @@
 package com.p1nero.dote.entity.custom.npc;
 
 import com.p1nero.dote.archive.DOTEArchiveManager;
+import com.p1nero.dote.archive.DataManager;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.p1nero.dote.client.gui.TreeNode;
@@ -11,6 +12,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
@@ -31,6 +34,12 @@ import org.jetbrains.annotations.NotNull;
 public class KnightCommander extends DOTENpc {
     public KnightCommander(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
+    }
+
+    @Override
+    protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
+        DataManager.BarunTalked.put(player, true);
+        return super.mobInteract(player, hand);
     }
 
     @Override
@@ -120,6 +129,10 @@ public class KnightCommander extends DOTENpc {
         MerchantOffers offers = new MerchantOffers();
         ItemStack potion = new ItemStack(Items.POTION);
         PotionUtils.setPotion(potion, Potions.STRONG_HEALING);
+        offers.add(new MerchantOffer(
+                new ItemStack(Items.GOLD_BLOCK, 1),
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 2),
+                142857, 0, 0.02f));
         offers.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADGRAIN.get(), 5),
                 new ItemStack(DOTEItems.P_KEY.get(), 1),
