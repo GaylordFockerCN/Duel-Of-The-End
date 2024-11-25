@@ -30,7 +30,9 @@ public class DOTEBiomeProvider extends BiomeSource {
     public static final Codec<DOTEBiomeProvider> TCR_CODEC = RecordCodecBuilder.create((instance) -> instance.group(
             RegistryOps.retrieveElement(DOTEBiomes.AIR),
             RegistryOps.retrieveElement(DOTEBiomes.M_BIOME),
-            RegistryOps.retrieveElement(DOTEBiomes.P_BIOME)
+            RegistryOps.retrieveElement(DOTEBiomes.P_BIOME),
+            RegistryOps.retrieveElement(DOTEBiomes.M_WATER),
+            RegistryOps.retrieveElement(DOTEBiomes.P_LAVA)
     ).apply(instance, instance.stable(DOTEBiomeProvider::new)));
 
     public static final Logger LOGGER = LogUtils.getLogger();
@@ -46,6 +48,8 @@ public class DOTEBiomeProvider extends BiomeSource {
     private final Holder<Biome> biomeHolder0;
     private final Holder<Biome> biomeHolder1;
     private final Holder<Biome> biomeHolder2;
+    private final Holder<Biome> biomeHolder3;
+    private final Holder<Biome> biomeHolder4;
 
     private final List<Holder<Biome>> biomeList;
 
@@ -54,18 +58,24 @@ public class DOTEBiomeProvider extends BiomeSource {
         return new DOTEBiomeProvider(
                 pBiomeGetter.getOrThrow(DOTEBiomes.AIR),
                 pBiomeGetter.getOrThrow(DOTEBiomes.M_BIOME),
-                pBiomeGetter.getOrThrow(DOTEBiomes.P_BIOME)
+                pBiomeGetter.getOrThrow(DOTEBiomes.P_BIOME),
+                pBiomeGetter.getOrThrow(DOTEBiomes.M_WATER),
+                pBiomeGetter.getOrThrow(DOTEBiomes.P_LAVA)
                 );
     }
 
-    public DOTEBiomeProvider(Holder<Biome> biomeHolder0, Holder<Biome> biomeHolder1, Holder<Biome> biomeHolder2) {
+    public DOTEBiomeProvider(Holder<Biome> biomeHolder0, Holder<Biome> biomeHolder1, Holder<Biome> biomeHolder2, Holder<Biome> biomeHolder3, Holder<Biome> biomeHolder4) {
         this.biomeHolder0 = biomeHolder0;
         this.biomeHolder1 = biomeHolder1;
         this.biomeHolder2 = biomeHolder2;
+        this.biomeHolder3 = biomeHolder3;
+        this.biomeHolder4 = biomeHolder4;
         biomeList = new ArrayList<>();
         biomeList.add(biomeHolder0);
         biomeList.add(biomeHolder1);
         biomeList.add(biomeHolder2);
+        biomeList.add(biomeHolder3);
+        biomeList.add(biomeHolder4);
     }
 
     /**
@@ -78,7 +88,7 @@ public class DOTEBiomeProvider extends BiomeSource {
             updateBiomeMap(worldName);
         }
 
-        return Stream.of(biomeHolder0, biomeHolder1, biomeHolder2);
+        return Stream.of(biomeHolder0, biomeHolder1, biomeHolder2, biomeHolder3, biomeHolder4);
     }
 
     /**

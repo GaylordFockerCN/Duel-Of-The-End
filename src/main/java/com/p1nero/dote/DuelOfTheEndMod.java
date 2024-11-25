@@ -79,7 +79,7 @@ public class DuelOfTheEndMod {
 
             if (info != null) {
                 event.addRepositorySource((source) ->
-                        source.accept(Pack.create("animation", Component.translatable("pack.animation.title"), false, resourcesSupplier, info, PackType.CLIENT_RESOURCES, Pack.Position.TOP, false, PackSource.BUILT_IN)));
+                        source.accept(Pack.create("animation", Component.translatable("pack.dote_animation.title"), false, resourcesSupplier, info, PackType.CLIENT_RESOURCES, Pack.Position.TOP, false, PackSource.BUILT_IN)));
             }
         }
     }

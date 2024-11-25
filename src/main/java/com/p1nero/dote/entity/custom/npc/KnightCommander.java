@@ -6,6 +6,7 @@ import com.p1nero.dote.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.p1nero.dote.client.gui.TreeNode;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
 import com.p1nero.dote.item.DOTEItems;
+import com.p1nero.dote.util.ItemUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -99,7 +100,9 @@ public class KnightCommander extends DOTENpc {
         if(interactionID == 1){
             if(player instanceof ServerPlayer serverPlayer){
                 ServerLevel serverLevel = serverPlayer.serverLevel();
-                DOTEAdvancementData.getAdvancement("seed", serverPlayer);
+                DOTEAdvancementData.getAdvancement("knight", serverPlayer);
+                ItemUtil.clearItem(serverPlayer, DOTEItems.CORE_OF_HELL.get());
+                ItemUtil.clearItem(serverPlayer, DOTEItems.HOLY_RADIANCE_SEED.get());
                 DOTEArchiveManager.worldLevelUp(serverLevel, true);
             }
         }
@@ -124,6 +127,10 @@ public class KnightCommander extends DOTENpc {
         offers.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADVENTURESPAR.get(), 10),
                 potion,
+                142857, 0, 0.02f));
+        offers.add(new MerchantOffer(
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 10),
+                new ItemStack(Items.PAPER, 10),
                 142857, 0, 0.02f));
         offers.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADGRAIN.get(), 24),

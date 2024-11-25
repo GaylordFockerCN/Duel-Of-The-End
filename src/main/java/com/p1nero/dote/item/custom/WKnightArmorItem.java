@@ -20,7 +20,7 @@ import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
 import java.util.UUID;
 
-public class WKnightArmorItem extends SimpleDescriptionArmorItem implements DOTEKeepableItem{
+public class WKnightArmorItem extends SimpleDescriptionArmorItem implements IDOTEKeepableItem {
     public WKnightArmorItem(Type type) {
         super(DOTEArmorMaterials.WHITEKNIGHT, type, new Properties().fireResistant().rarity(DOTERarities.TE_PIN));
     }

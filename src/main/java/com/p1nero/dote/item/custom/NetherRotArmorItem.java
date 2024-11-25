@@ -21,7 +21,7 @@ import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
 import java.util.UUID;
 
-public class NetherRotArmorItem extends SimpleDescriptionArmorItem implements DOTEKeepableItem{
+public class NetherRotArmorItem extends SimpleDescriptionArmorItem implements IDOTEKeepableItem {
     public NetherRotArmorItem(Type type) {
         super(DOTEArmorMaterials.NETHERITEROT, type, new Item.Properties().fireResistant().rarity(DOTERarities.TE_PIN));
     }
@@ -54,6 +54,9 @@ public class NetherRotArmorItem extends SimpleDescriptionArmorItem implements DO
             }
             if(!livingEntity.hasEffect(MobEffects.DAMAGE_RESISTANCE)){
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 60, 0));
+            }
+            if(!livingEntity.hasEffect(MobEffects.DAMAGE_BOOST)){
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 60, 2));
             }
         }
     }

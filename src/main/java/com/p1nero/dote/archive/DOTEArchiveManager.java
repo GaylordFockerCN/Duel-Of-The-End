@@ -4,13 +4,15 @@ import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.capability.DOTECapabilityProvider;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
 import com.p1nero.dote.entity.LevelableEntity;
-import com.p1nero.dote.item.custom.DOTEKeepableItem;
+import com.p1nero.dote.item.custom.IDOTEKeepableItem;
 import com.p1nero.dote.network.PacketRelay;
 import com.p1nero.dote.network.DOTEPacketHandler;
 import com.p1nero.dote.network.packet.SyncArchivePacket;
 import com.p1nero.dote.network.packet.clientbound.OpenEndScreenPacket;
+import com.p1nero.dote.util.ItemUtil;
 import com.p1nero.dote.worldgen.dimension.DOTEDimension;
 import com.p1nero.dote.worldgen.portal.DOTETeleporter;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.chat.Component;
@@ -182,16 +184,13 @@ public class DOTEArchiveManager {
                 }
                 //重置能否进炼狱群系
                 player.getCapability(DOTECapabilityProvider.DOTE_PLAYER).ifPresent(dotePlayer -> dotePlayer.setCanEnterPBiome(false));
-                //清空物品栏
+                //清空物品栏中的非法物品
                 if(!player.isCreative()){
-                    for(ItemStack stack : player.getInventory().items){
-                        if(!(stack.getItem() instanceof DOTEKeepableItem doteKeepableItem && doteKeepableItem.shouldKeep())){
-                            stack.setCount(0);
-                        }
-                    }
-                    for(ItemStack stack : player.getInventory().armor){
-                        if(!(stack.getItem() instanceof DOTEKeepableItem doteKeepableItem && doteKeepableItem.shouldKeep())){
-                            stack.setCount(0);
+                    for(NonNullList<ItemStack> list :ItemUtil.getCompartments(player)){
+                        for(ItemStack stack : list){
+                            if(!(stack.getItem() instanceof IDOTEKeepableItem doteKeepableItem && doteKeepableItem.shouldKeepWhenExitDim())){
+                                stack.setCount(0);
+                            }
                         }
                     }
                 }

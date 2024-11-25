@@ -1,4 +1,5 @@
 {
+  "pack.dote_animation.title": "Better Animation Pack",
   "advancement.duel_of_the_end.book": "Duel of the End",
   "advancement.duel_of_the_end.book.desc": "Step onto the island of the end and defeat the Shadow of the End",
   "advancement.duel_of_the_end.core": "Core of Purgatory",
@@ -135,7 +136,7 @@
   "entity.duel_of_the_end.the_shadow_of_the_end.dialog5": "...Behold... The Star Breaker...",
   "entity.duel_of_the_end.zombie": "Dark Vanguard",
   "entity.duel_of_the_end.zombie_2": "Dark Vanguard",
-  "info.the_casket_of_reveries.tip0": "§4Warning! Always remember: Entering and exiting dimensions will remove all items from your person except for special items!",
+  "info.the_casket_of_reveries.tip0": "§4Warning! Illegal items detected! Unable to enter or exit the dimension!",
   "info.the_casket_of_reveries.tip1": "Use the Essence of Afterlife to right-click the altar to summon",
   "info.the_casket_of_reveries.tip10": "There is no response at all...",
   "info.the_casket_of_reveries.tip11": "It's time to go back and tell Barun...",

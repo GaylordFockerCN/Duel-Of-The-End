@@ -87,6 +87,7 @@ dependencies {
     implementation fg.deobf('libs:epicfight:20.9.5')
     implementation fg.deobf('libs:WeaponsOfMiracles:20.1.8.5.6')
     implementation fg.deobf('libs:indestructible:20.9.2')
+    implementation fg.deobf('libs:curios:5.11.0')
 }
 
 mixin {

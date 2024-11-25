@@ -42,6 +42,11 @@ public class DOTEZombie extends DOTEMonster {
         setItemInHand(InteractionHand.MAIN_HAND, WEAPONS.get(getRandom().nextInt(WEAPONS.size())).getDefaultInstance());
     }
 
+    @Override
+    public int getExperienceReward() {
+        return 3;
+    }
+
     /**
      * 调节概率
      */

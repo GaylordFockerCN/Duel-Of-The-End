@@ -12,7 +12,12 @@ public class DOTEItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, DuelOfTheEndMod.MOD_ID);
 	public static final RegistryObject<Item> M_KEY = REGISTRY.register("mkey", () -> new TeleportKeyItem(() -> BiomeMap.getInstance().getBlockPos(BiomeMap.getInstance().getCenter1(), 170).offset(0, 0, 400)){
 		@Override
-		public boolean shouldKeep() {
+		public boolean shouldKeepWhenExitDim() {
+			return true;
+		}
+
+		@Override
+		public boolean shouldKeepWhenEnterDim() {
 			return true;
 		}
 	});//圣堂

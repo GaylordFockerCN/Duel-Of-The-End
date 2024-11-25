@@ -1,19 +1,30 @@
 package com.p1nero.dote.util;
 
+import com.google.common.collect.ImmutableList;
 import com.p1nero.dote.DOTEConfig;
+import com.p1nero.dote.item.DOTEItems;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import top.theillusivec4.curios.api.CuriosApi;
+
+import java.util.List;
 
 /**
  * @author LZY
  * 做一些通用的物品栏处理
 */
 public class ItemUtil {
+
+    public static List<NonNullList<ItemStack>> getCompartments(Player player){
+        return ImmutableList.of(player.getInventory().items, player.getInventory().armor, player.getInventory().offhand);
+    };
 
     /**
      * 判断是否全穿了
@@ -144,6 +155,13 @@ public class ItemUtil {
             }
         }
         return stack;
+    }
+
+    public static void clearItem(Player player, Item item){
+        ItemStack stack;
+        while((stack = searchItemStack(player, item)) != ItemStack.EMPTY){
+            stack.setCount(0);
+        }
     }
 
 }

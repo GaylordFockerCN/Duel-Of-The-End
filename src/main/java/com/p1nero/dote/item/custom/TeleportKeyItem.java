@@ -2,37 +2,24 @@ package com.p1nero.dote.item.custom;
 
 import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.archive.DOTEArchiveManager;
-import com.p1nero.dote.client.gui.screen.EndScreen;
-import com.p1nero.dote.entity.DOTEEntities;
-import com.p1nero.dote.entity.custom.npc.GuideNpc;
 import com.p1nero.dote.item.DOTERarities;
-import com.p1nero.dote.network.DOTEPacketHandler;
-import com.p1nero.dote.network.PacketRelay;
-import com.p1nero.dote.network.packet.clientbound.OpenEndScreenPacket;
-import com.p1nero.dote.util.ItemUtil;
 import com.p1nero.dote.worldgen.dimension.DOTEDimension;
 import com.p1nero.dote.worldgen.portal.DOTETeleporter;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -64,21 +51,15 @@ public class TeleportKeyItem extends SimpleDescriptionFoilItem{
             }
             //清空物品栏
             if(!player.isCreative() && serverLevel.dimension() != DOTEDimension.P_SKY_ISLAND_LEVEL_KEY){
-                for(ItemStack stack : player.getInventory().items){
-                    if(!(stack.getItem() instanceof DOTEKeepableItem doteKeepableItem && doteKeepableItem.shouldKeep())){
-                        ItemUtil.addItemEntity(serverLevel, player.getX(), player.getY(), player.getZ(), stack);
-                        stack.setCount(0);
-                    }
-                }
-                for(ItemStack stack : player.getInventory().armor){
-                    if(!(stack.getItem() instanceof DOTEKeepableItem)){
-                        ItemUtil.addItemEntity(serverLevel, player.getX(), player.getY(), player.getZ(), stack);
-                        stack.setCount(0);
-                    }
+                if(!IDOTEKeepableItem.check(player, true)){
+                    player.displayClientMessage(DuelOfTheEndMod.getInfo("tip0"), true);
+                    return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide);
                 }
             }
             ServerLevel dim = Objects.requireNonNull(serverLevel.getServer().getLevel(DOTEDimension.P_SKY_ISLAND_LEVEL_KEY));
-            player.changeDimension(dim, new DOTETeleporter(destination.get()));
+            if(player.changeDimension(dim, new DOTETeleporter(destination.get())) == null){
+                return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide);
+            }
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS,1,1);
             ((ServerPlayer)player).setRespawnPosition(DOTEDimension.P_SKY_ISLAND_LEVEL_KEY, destination.get(), 0.0F, true, true);
             //生成向导
@@ -109,6 +90,5 @@ public class TeleportKeyItem extends SimpleDescriptionFoilItem{
     @Override
     public void appendHoverText(@NotNull ItemStack itemStack, @Nullable Level level, @NotNull List<Component> list, @NotNull TooltipFlag flag) {
         super.appendHoverText(itemStack, level, list, flag);
-        list.add(DuelOfTheEndMod.getInfo("tip0").withStyle(ChatFormatting.BOLD));
     }
 }

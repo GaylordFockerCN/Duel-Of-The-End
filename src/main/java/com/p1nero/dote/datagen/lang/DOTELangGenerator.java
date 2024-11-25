@@ -15,7 +15,9 @@ public class DOTELangGenerator extends DOTELangProvider {
 
     @Override
     protected void addTranslations() {
-        this.addInfo("tip0", "§4警告！永远记住：进出维度将移除身上除特殊物品外的所有物品！");
+        this.add("pack.dote_animation.title", "内置奇妙动画包");
+
+        this.addInfo("tip0", "§4警告！身上存在非法物品！无法进出维度！");
         this.addInfo("tip1", "使用往生精华右键祭坛以召唤 ");
         this.addInfo("tip2", "似乎有种神秘力量阻止你访问此地...");
         this.addInfo("tip3", "你现在不能召唤，周围有怪物在游荡...");

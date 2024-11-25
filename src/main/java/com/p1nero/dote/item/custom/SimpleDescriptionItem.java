@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * 带有物品说明
  */
-public class SimpleDescriptionItem extends Item implements DOTEKeepableItem{
+public class SimpleDescriptionItem extends Item implements IDOTEKeepableItem {
 
     public SimpleDescriptionItem() {
         super(new Item.Properties().setNoRepair().rarity(Rarity.COMMON));
@@ -25,7 +25,11 @@ public class SimpleDescriptionItem extends Item implements DOTEKeepableItem{
     }
 
     @Override
-    public boolean shouldKeep() {
+    public boolean shouldKeepWhenExitDim() {
+        return false;
+    }
+    @Override
+    public boolean shouldKeepWhenEnterDim() {
         return false;
     }
 

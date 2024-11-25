@@ -54,6 +54,11 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity {
     }
 
     @Override
+    public int getExperienceReward() {
+        return 1000;
+    }
+
+    @Override
     public void setRemainingFireTicks(int p_20269_) {
     }
 

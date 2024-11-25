@@ -8,11 +8,13 @@ import com.p1nero.dote.entity.MultiPlayerBoostEntity;
 import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.entity.custom.DOTEBoss;
 import com.p1nero.dote.item.DOTEItems;
+import com.p1nero.dote.item.custom.IDOTEKeepableItem;
 import com.p1nero.dote.item.custom.NetherRotArmorItem;
 import com.p1nero.dote.item.custom.TieStoneArmorItem;
 import com.p1nero.dote.item.custom.WKnightArmorItem;
 import com.p1nero.dote.util.ItemUtil;
 import com.p1nero.dote.worldgen.dimension.DOTEDimension;
+import com.p1nero.dote.worldgen.portal.DOTETeleporter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -23,13 +25,17 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import yesman.epicfight.gameasset.EpicFightSkills;
 import yesman.epicfight.world.item.EpicFightItems;
+
+import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = DuelOfTheEndMod.MOD_ID)
 public class LivingEntityListener {
@@ -82,10 +88,24 @@ public class LivingEntityListener {
         }
     }
 
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void onEntityHurt(EntityTravelToDimensionEvent event) {
+        if(event.getEntity() instanceof ServerPlayer player){
+            if(!player.isCreative() && event.getDimension() == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY && player.level().dimension() != DOTEDimension.P_SKY_ISLAND_LEVEL_KEY){
+                if(!IDOTEKeepableItem.check(player, true)){
+                    player.displayClientMessage(DuelOfTheEndMod.getInfo("tip0"), true);
+                    ServerLevel ordinalLevel = player.serverLevel();
+                    event.getEntity().changeDimension(ordinalLevel, new DOTETeleporter(ordinalLevel.getSharedSpawnPos()));
+                    event.setCanceled(true);
+                }
+            }
+        }
+    }
+
     @SubscribeEvent
     public static void onEntityHurt(LivingHurtEvent event) {
         //开发者模式方便杀boss
-        if(event.getEntity() instanceof DOTEBoss && DOTEConfig.FAST_BOSS_FIGHT.get()){
+        if(event.getEntity() instanceof DOTEBoss && DOTEConfig.FAST_BOSS_FIGHT.get() && event.getSource().isCreativePlayer()){
             event.setAmount(event.getAmount() * 100);
         }
     }

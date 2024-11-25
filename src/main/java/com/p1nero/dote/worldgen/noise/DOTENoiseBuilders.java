@@ -17,6 +17,8 @@ public class DOTENoiseBuilders {
     private static final SurfaceRules.RuleSource GRASS_BLOCK = SurfaceRules.state(Blocks.GRASS_BLOCK.defaultBlockState());
     private static final SurfaceRules.RuleSource DIRT = SurfaceRules.state(Blocks.DIRT.defaultBlockState());
     private static final SurfaceRules.RuleSource AIR = SurfaceRules.state(Blocks.AIR.defaultBlockState());
+    private static final SurfaceRules.RuleSource WATER = SurfaceRules.state(Blocks.WATER.defaultBlockState());
+    private static final SurfaceRules.RuleSource LAVA = SurfaceRules.state(Blocks.LAVA.defaultBlockState());
     private static final SurfaceRules.RuleSource STONE = SurfaceRules.state(Blocks.STONE.defaultBlockState());
     private static final SurfaceRules.RuleSource NETHERRACK = SurfaceRules.state(Blocks.NETHERRACK.defaultBlockState());
     private static final SurfaceRules.RuleSource WARPED_NYLIUM = SurfaceRules.state(Blocks.WARPED_NYLIUM.defaultBlockState());
@@ -42,6 +44,10 @@ public class DOTENoiseBuilders {
 
         //边界
         SurfaceRules.RuleSource air = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(DOTEBiomes.AIR), AIR));
+        //瀑布
+        SurfaceRules.RuleSource water = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(DOTEBiomes.M_WATER), WATER));
+        //岩浆
+        SurfaceRules.RuleSource lava = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(DOTEBiomes.P_LAVA), LAVA));
         //炼狱群系
         SurfaceRules.RuleSource pBiome = SurfaceRules.sequence(
                 SurfaceRules.ifTrue(SurfaceRules.isBiome(DOTEBiomes.P_BIOME),
@@ -82,6 +88,8 @@ public class DOTENoiseBuilders {
         ImmutableList.Builder<SurfaceRules.RuleSource> builder = ImmutableList.builder();
         builder
                 .add(air)
+                .add(water)
+                .add(lava)
                 .add(pBiome)
                 .add(overworldLike)
                 .add(SurfaceRules.ifTrue(SurfaceRules.verticalGradient("stone", VerticalAnchor.absolute(0), VerticalAnchor.absolute(8)), STONE));

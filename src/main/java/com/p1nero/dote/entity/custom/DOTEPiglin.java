@@ -33,6 +33,11 @@ public class DOTEPiglin extends DOTEMonster {
     }
 
     @Override
+    public int getExperienceReward() {
+        return 5;
+    }
+
+    @Override
     public int getMaxNeutralizeCount() {
         return 6;
     }
