@@ -7,6 +7,7 @@ import com.p1nero.dote.entity.LevelableEntity;
 import com.p1nero.dote.entity.MultiPlayerBoostEntity;
 import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.entity.custom.DOTEBoss;
+import com.p1nero.dote.entity.custom.TheShadowOfTheEnd;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.item.custom.IDOTEKeepableItem;
 import com.p1nero.dote.item.custom.NetherRotArmorItem;
@@ -55,6 +56,11 @@ public class LivingEntityListener {
     public static void onEntityDie(LivingDeathEvent event) {
         //死亡计数器
         if(event.getEntity() instanceof Player player && player.level().dimension() == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY){
+            //BOSS交流
+            if(event.getSource().getEntity() instanceof TheShadowOfTheEnd){
+
+            }
+
             player.getCapability(DOTECapabilityProvider.DOTE_PLAYER).ifPresent(dotePlayer -> {
                 dotePlayer.setDeathCount(dotePlayer.getDeathCount() + 1);
                 if(dotePlayer.getDeathCount() == 5){

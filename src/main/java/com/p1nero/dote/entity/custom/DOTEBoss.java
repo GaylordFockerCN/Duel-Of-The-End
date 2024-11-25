@@ -131,7 +131,7 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity {
         super.tick();
 
         //播放bgm
-        if(level().isClientSide){
+        if(level().isClientSide && this.isAlive()){
             BossMusicPlayer.playBossMusic(this, getFightMusic(), 32);
         } else {
             if(level().getBlockEntity(getHomePos()) instanceof BossSpawnerBlockEntity<?> bossSpawnerBlockEntity){

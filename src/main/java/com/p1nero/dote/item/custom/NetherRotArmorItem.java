@@ -56,7 +56,7 @@ public class NetherRotArmorItem extends SimpleDescriptionArmorItem implements ID
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 60, 0));
             }
             if(!livingEntity.hasEffect(MobEffects.DAMAGE_BOOST)){
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 60, 2));
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 60, 2));
             }
         }
     }

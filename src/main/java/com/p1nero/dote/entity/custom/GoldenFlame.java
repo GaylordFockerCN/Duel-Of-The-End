@@ -45,7 +45,7 @@ public class GoldenFlame extends DOTEBoss implements ModifyAttackSpeedEntity {
 
     @Override
     public float getHomeRadius() {
-        return 39;
+        return 25;
     }
 
     @Override
@@ -101,7 +101,6 @@ public class GoldenFlame extends DOTEBoss implements ModifyAttackSpeedEntity {
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-//                .add(Attributes.MAX_HEALTH, 10.0f)//测试用
                 .add(Attributes.MAX_HEALTH, 752.0f)
                 .add(Attributes.ATTACK_DAMAGE, 1.0f)
                 .add(Attributes.ATTACK_SPEED, 1.0f)
