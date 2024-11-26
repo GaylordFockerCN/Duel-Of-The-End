@@ -14,5 +14,6 @@ public class DOTECommands {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
         SetConfigCommand.register(dispatcher);
         DOTETimeCommand.register(dispatcher);
+        DOTESetWorldLevelCommand.register(dispatcher);
     }
 }

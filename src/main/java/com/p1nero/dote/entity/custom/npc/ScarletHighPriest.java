@@ -83,6 +83,10 @@ public class ScarletHighPriest extends DOTENpc{
 
         offers.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADVENTURESPAR.get(), 10),
+                new ItemStack(Items.LAPIS_LAZULI, 1),
+                142857, 0, 0.02f));
+        offers.add(new MerchantOffer(
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 10),
                 new ItemStack(DOTEItems.NETHERROT_INGOT.get(), 1),
                 142857, 0, 0.02f));
         offers.add(new MerchantOffer(

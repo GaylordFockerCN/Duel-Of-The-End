@@ -6,6 +6,7 @@ import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.effect.DOTEEffects;
 import com.p1nero.dote.entity.DOTEEntities;
 import com.p1nero.dote.entity.DOTEVillagers;
+import com.p1nero.dote.entity.ai.condition.DOTEConditions;
 import com.p1nero.dote.gameasset.DOTEAnimations;
 import com.p1nero.dote.gameasset.DOTELivingMotions;
 import com.p1nero.dote.item.DOTEItemTabs;
@@ -54,8 +55,6 @@ public class DuelOfTheEndMod {
     public DuelOfTheEndMod(){
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        LivingMotion.ENUM_MANAGER.registerEnumCls(MOD_ID, DOTELivingMotions.class);
-
         DOTESounds.REGISTRY.register(bus);
         DOTEItems.REGISTRY.register(bus);
         DOTEBlocks.REGISTRY.register(bus);
@@ -68,6 +67,8 @@ public class DuelOfTheEndMod {
         bus.addListener(this::commonSetup);
         bus.addListener(this::registerExtraStuff);
         bus.addListener(DuelOfTheEndMod::addPackFindersEvent);
+        LivingMotion.ENUM_MANAGER.registerEnumCls(MOD_ID, DOTELivingMotions.class);
+        DOTEConditions.CONDITIONS.register(bus);
         MinecraftForge.EVENT_BUS.register(this);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, DOTEConfig.SPEC);
