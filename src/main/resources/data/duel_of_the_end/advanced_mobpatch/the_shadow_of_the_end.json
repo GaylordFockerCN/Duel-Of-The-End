@@ -8,7 +8,7 @@
     "faction": "undead",
     "attributes": {
 		"impact": 0.5,              
-        "armor_negation": 10,     
+        "armor_negation": 20,     
         "max_strikes": 4,       
 		"scale": 1.05,
         "chasing_speed": 1.3,    
@@ -40,9 +40,7 @@
         {"command":"effect give @s minecraft:glowing 3", "stun_type": "neutralize","execute_at_target":false},
 		{"command":"effect give @s epicfight:stun_immunity 2 1", "stun_type": "short","execute_at_target":false},
 		{"command":"effect give @s epicfight:stun_immunity 5 3", "stun_type": "neutralize","execute_at_target":false},
-	{"command":"execute at @s as @e[distance=..3] run indestructible @s set_phase 20", "stun_type": "neutralize", "execute_at_target":false},
-	{"command":"indestructible @s set_phase 10", "stun_type": "neutralize", "execute_at_target":false},
-	{"command":"indestructible @s set_phase 10", "stun_type": "knockdown", "execute_at_target":false}
+	{"command":"indestructible @s set_phase 10", "stun_type": "neutralize", "execute_at_target":false}
 ],
 	"humanoid_weapon_motions": [  
               { 
@@ -84,7 +82,7 @@
 							"play_speed": 1.0,
 							"command_list":[
 								{"time":0.0, "command":"effect give @s instant_health 1 10", "execute_at_target":false},
-								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":false}
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":false}
 							]
 						},
 						{
@@ -95,8 +93,7 @@
 							"play_speed": 1.0,
 							"command_list":[
 								{"time":0.0, "command":"stopsound @p", "execute_at_target":false},
-								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":false},
-								{"time":0.05, "command":"playsound minecraft:shaorui1 master @p", "execute_at_target":false}
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":false}
 							]
 						}
 						
@@ -114,8 +111,8 @@
 							],
 							"animation": "epicfight:biped/skill/step_backward",
 							"command_list": [
-							{"time":0.0, "command":"enchant @e[type=duel_of_the_end:the_arbiter_of_radiance] minecraft:mending 1", "execute_at_target":false},
-								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true},
+							{"time":0.0, "command":"enchant @e[type=duel_of_the_end:the_shadow_of_the_end] minecraft:mending 1", "execute_at_target":false},
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true},
 								{"time":0.0, "command":"effect give @s epicfight:stun_immunity 5", "execute_at_target":false},
 								{"time":0.0, "command":"particle minecraft:portal ~ ~0.5 ~ 0 0.5 0 2 400 force", "execute_at_target":true},
 								{"time":0.0, "command":"playsound minecraft:entity.wither.hurt block @p ~ ~ ~ 1", "execute_at_target":false}
@@ -128,7 +125,8 @@
 							"animation": "epicfight:biped/skill/step_backward",
 							"play_speed": 1.0,
 							"command_list":[
-								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":false}
+								{"time":0.0, "command":"effect give @p minecraft:slowness 3 5", "execute_at_target":true},
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":false}
 							]
 						},
                         {
@@ -143,8 +141,9 @@
 							"animation": "duel_of_the_end:biped/hit/guard_break2",
 							"convert_time": 0.8,
                             "command_list":[
+						
                                 {"time":0.0, "command":"particle minecraft:end_rod ~ ~ ~ 0.5 0.5 0.5 1 200 force", "execute_at_target":true},
-								{"time":0.0, "command":"enchant @e[type=duel_of_the_end:the_arbiter_of_radiance] minecraft:mending 1", "execute_at_target":false}
+								{"time":0.0, "command":"enchant @e[type=duel_of_the_end:the_shadow_of_the_end] minecraft:mending 1", "execute_at_target":false}
                             ]
 						}
 					]
@@ -159,17 +158,9 @@
 							"conditions": [
 								{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 10.0}
 							],
-							"guard": 3,
-							"parry": false,
-							"counter_chance": 0
-						},
-						{
-							"conditions": [
-								{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 10.0}
-							],
 							"guard": 5,
 							"parry": true,
-							"parry_times": 2,
+							"parry_times": 3,
 							"counter_chance": 0,
 							"stun_immunity_after_parry": 0
 						},
@@ -180,7 +171,7 @@
 							"animation": "duel_of_the_end:biped/new/katana/katana_auto3",
                             "convert_time": 0.2,
                             "command_list": [
-								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true},
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true},
 								{"time":0.0, "command":"effect give @s epicfight:stun_immunity 2", "execute_at_target":false},
 								{"time":0.0, "command":"data merge entity @s {Invulnerable:0}", "execute_at_target":false}
 							],
@@ -194,7 +185,7 @@
 							],
 							"animation": "duel_of_the_end:biped/new/katana/katana_auto2",
                             "command_list": [
-								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 							],
 							"hit_command_list":[
 								{"command":"effect give @s instant_health 1 1", "execute_at_target":false}
@@ -206,7 +197,7 @@
                             ],
                             "animation": "duel_of_the_end:biped/new/katana/katana_sheath_auto",
                             "command_list": [
-								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 							],
 							"hit_command_list":[
 								{"command":"effect give @s instant_health 1 1", "execute_at_target":false}
@@ -333,7 +324,7 @@
 							],
 							"animation": "epicfight:enderman/knee",
 							"command_list": [
-								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 							
 							]
 						}
@@ -366,6 +357,41 @@
 			
                                 {"predicate":"epicfight:within_distance", "min": 0.0, "max": 5.5}, {"predicate":"indestructible:attack_level", "min": 1, "max": 3},
 								{"predicate":"indestructible:phase", "min": 10, "max": 10}
+							],
+							"guard": 8,
+							"parry": true,
+							"counter_chance": 0,
+							"parry_times": 3
+						}
+					]
+				},
+				{
+					"weight": 0.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown": 50,
+					"behaviors": [
+						{
+							"conditions": [
+                                {"predicate":"indestructible:phase", "min": 10, "max": 10}
+							],
+							"wander": 30,
+							"inaction_time": 0,
+							"x_axis": 0.0,
+							"z_axis": -1.0
+						}
+					]
+				},
+				{
+					"weight": 0.5,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown": 50,
+					"behaviors": [
+						{
+							"conditions": [
+			
+                                {"predicate":"epicfight:within_distance", "min": 0.0, "max": 5.5}, {"predicate":"indestructible:attack_level", "min": 1, "max": 3}
 							],
 							"guard": 8,
 							"parry": true,
@@ -553,7 +579,7 @@
 				"end_by_hurt_level": 1, 		
 				"play_speed": 0.90,
 				"convert_time": 0.1
-		}
+	             	}
 					]                 
 				},    
 				{
@@ -572,12 +598,21 @@
 							"counter_chance": 0,
 							"stun_immunity_after_parry": 0
 	  					},
+						  {
+							"conditions": [				
+								{"predicate":"indestructible:guard_break", "invert": true}, {"predicate":"indestructible:knock_down", "invert": true}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 5.0}
+							],
+							"animation": "epicfight:biped/skill/step_backward", 			
+							"play_speed":0.75,	
+							"convert_time": 0.35
+	
+					},
 					{
 						"conditions": [				
 							{"predicate":"indestructible:guard_break", "invert": true}, {"predicate":"indestructible:knock_down", "invert": true}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 5.0}
 						],
 						"animation": "epicfight:biped/combat/uchigatana_dash", 			
-						"play_speed":0.75,	
+						"play_speed":0.85,	
 						"convert_time": 0.35
 
 				},
@@ -621,7 +656,7 @@
 						],
 						"animation": "epicfight:biped/skill/step_forward", 		
 						"command_list":[
-							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true},
+							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true},
 		
 							{"time":0.0, "command":"data merge entity @s {Invulnerable:0}", "execute_at_target":false}
 						],	
@@ -825,7 +860,7 @@
 						],
 						"animation": "epicfight:biped/skill/step_forward",
 						"command_list":[
-							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true},
+							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true},
 							{"time":0.0, "command":"effect give @s epicfight:stun_immunity 3", "execute_at_target":false},
 							{"time":0.0, "command":"data merge entity @s {Invulnerable:0}", "execute_at_target":false}
 						]
@@ -837,7 +872,7 @@
 						"animation": "duel_of_the_end:biped/new/katana/katana_auto2",
 						"convert_time": 0.4,
 						"command_list":[
-							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
+							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 						],
 						"hit_command_list":[
 							{"command":"effect give @s instant_health 1 1", "execute_at_target":false}
@@ -851,7 +886,7 @@
 						"convert_time": 0.4,
 						"play_speed": 1.0,
 						"command_list":[
-							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
+							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 						],
 						"hit_command_list":[
 							{"command":"effect give @s instant_health 1 1", "execute_at_target":false}
@@ -864,7 +899,7 @@
 						"animation": "duel_of_the_end:biped/new/katana/katana_auto3",
 						"play_speed": 1.1,
 						"command_list":[
-							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
+							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 						],
 						"hit_command_list":[
 							{"command":"effect give @s instant_health 1 1", "execute_at_target":false}
@@ -877,7 +912,7 @@
 						"animation": "duel_of_the_end:biped/new/katana/katana_auto2",
 						"play_speed": 1.0,
 						"command_list":[
-							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
+							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 						],
 						"hit_command_list":[
 							{"command":"effect give @s instant_health 1 1", "execute_at_target":false}
@@ -891,7 +926,7 @@
 						"convert_time": 0.15,
 						"play_speed": 1.0,
 						"command_list":[
-							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
+							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 						],
 						"hit_command_list":[
 							{"command":"effect give @s instant_health 1 1", "execute_at_target":false}
@@ -945,8 +980,8 @@
 						"animation": "duel_of_the_end:biped/new/longsword/longsword_dash",
 						"convert_time": 0.15,
 						"command_list":[
-
-							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true},
+							{"time":0.0, "command":"playsound epicfight:sfx.buzz ambient @p", "execute_at_target":true},
+							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true},
 							{"time":0.0, "command":"data merge entity @s {Invulnerable:0}", "execute_at_target":false}
 						],
 						"hit_command_list":[
@@ -958,11 +993,12 @@
 							{"predicate":"indestructible:guard_break","invert":true}, {"predicate":"indestructible:knock_down","invert":true}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 10.0}, {"predicate":"indestructible:attack_level", "min": 0, "max": 0}
 						],
 						"animation": "epicfight:biped/skill/eviscerate_second",
+						"convert_time": 0.15,
 						"command_list": [
-							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
+							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 						],
 						"hit_command_list":[
-							{"command":"effect give @s instant_health 1 2", "execute_at_target":false}
+							{"command":"effect give @s instant_health 1 1", "execute_at_target":false}
 						]
 					}
 				]
@@ -975,12 +1011,17 @@
                 "behaviors": [
 						{
 							"conditions": [
-								{"predicate":"epicfight:health", "health": 0.8, "comparator": "less_ratio"},
+								{"predicate":"epicfight:health", "health": 0.4, "comparator": "less_ratio"},
 								{"predicate":"epicfight:within_distance", "min": 0.0, "max": 10.0},{"predicate":"epicfight:within_angle", "min": -10.0, "max": 10.0},
                                 {"predicate":"indestructible:guard_break","invert":true}
 							],
 							"animation": "duel_of_the_end:biped/new/katana/katana_airslash",
-							"convert_time": 0.35
+							"convert_time": 0.35,
+							"command_list":[
+								{"time":0.0, "command":"playsound epicfight:sfx.buzz ambient @p", "execute_at_target":true},
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true},
+								{"time":0.0, "command":"data merge entity @s {Invulnerable:0}", "execute_at_target":false}
+							]
 						},
 						{
 							"conditions": [
@@ -1054,7 +1095,7 @@
 						"animation": "duel_of_the_end:biped/new/katana/katana_auto3",
 						"convert_time": 0.2,
 						"command_list": [
-							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true},
+							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true},
 							{"time":0.0, "command":"effect give @s epicfight:stun_immunity 2", "execute_at_target":false},
 							{"time":0.0, "command":"data merge entity @s {Invulnerable:0}", "execute_at_target":false}
 						],
@@ -1069,7 +1110,7 @@
 						"animation": "duel_of_the_end:biped/new/katana/katana_auto2",
 						"play_speed": 0.85,
 						"command_list": [
-							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
+							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 						],
 						"hit_command_list":[
 							{"command":"effect give @s instant_health 1 1", "execute_at_target":false}
@@ -1081,7 +1122,7 @@
 						],
 						"animation": "duel_of_the_end:biped/new/katana/katana_sheath_dash",
 						"command_list": [
-							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
+							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 						],
 						"hit_command_list":[
 							{"command":"effect give @s instant_health 1 1", "execute_at_target":false}
