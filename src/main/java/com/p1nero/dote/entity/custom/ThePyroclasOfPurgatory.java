@@ -10,6 +10,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -96,6 +97,6 @@ public class ThePyroclasOfPurgatory extends DOTEBoss implements ModifyAttackSpee
 
     @Override
     public float getAttackSpeed() {
-        return 0.7F;
+        return 0.6F + level().getDifficulty().getId() * 0.1F;
     }
 }

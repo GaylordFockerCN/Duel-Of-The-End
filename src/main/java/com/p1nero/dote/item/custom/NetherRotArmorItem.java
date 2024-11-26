@@ -35,7 +35,7 @@ public class NetherRotArmorItem extends SimpleDescriptionArmorItem implements ID
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
             builder.putAll(super.getDefaultAttributeModifiers(equipmentSlot));
             builder.put(EpicFightAttributes.MAX_STAMINA.get(), new AttributeModifier(UUID.fromString("CC111E1C-4180-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", 6, AttributeModifier.Operation.ADDITION));
-            builder.put(EpicFightAttributes.STAMINA_REGEN.get(), new AttributeModifier(STAMINA_REGEN_UUID, "Item modifier", 1.2, AttributeModifier.Operation.ADDITION));
+            builder.put(EpicFightAttributes.STAMINA_REGEN.get(), new AttributeModifier(STAMINA_REGEN_UUID, "Item modifier", 1.0, AttributeModifier.Operation.ADDITION));
             return builder.build();
         }
         return super.getDefaultAttributeModifiers(equipmentSlot);
@@ -51,9 +51,6 @@ public class NetherRotArmorItem extends SimpleDescriptionArmorItem implements ID
             }
             if(!livingEntity.hasEffect(MobEffects.FIRE_RESISTANCE)){
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 60, 0));
-            }
-            if(!livingEntity.hasEffect(MobEffects.DAMAGE_RESISTANCE)){
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 60, 0));
             }
             if(!livingEntity.hasEffect(MobEffects.DAMAGE_BOOST)){
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 60, 2));

@@ -54,7 +54,7 @@ public class TheArbiterOfRadiance extends DOTEBoss implements ModifyAttackSpeedE
 
     @Override
     public float getAttackSpeed() {
-        return 0.65F;
+        return 0.65F + DOTEArchiveManager.getWorldLevel() * 0.15F;
     }
 
     /**
