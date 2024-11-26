@@ -6,6 +6,8 @@ import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.p1nero.dote.client.gui.TreeNode;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
+import com.p1nero.dote.entity.DOTEEntities;
+import com.p1nero.dote.gameasset.skill.DOTESkills;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.util.ItemUtil;
 import net.minecraft.client.Minecraft;
@@ -27,11 +29,13 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
+import yesman.epicfight.world.item.EpicFightItems;
 
 /**
  * 圣殿骑士长
  */
 public class KnightCommander extends DOTENpc {
+    DialogueComponentBuilder dBuilder = new DialogueComponentBuilder(DOTEEntities.KNIGHT_COMMANDER.get());
     public KnightCommander(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
     }
@@ -60,7 +64,7 @@ public class KnightCommander extends DOTENpc {
                                 .addChoice(0, 1)
                                 .addChoice(1, 2)
                                 .addChoice(2, 3)
-                                .addFinalChoice(-1, (byte) 3);
+                                .addFinalChoice(-1, (byte) 4);
                         break;
                     case 1:
                         builder.start(4)
@@ -76,7 +80,6 @@ public class KnightCommander extends DOTENpc {
                 }
             }
         } else {
-            DialogueComponentBuilder dBuilder = new DialogueComponentBuilder(this);
             //击败boss2后
             switch (DOTEArchiveManager.getWorldLevel()){
                 case 0:
@@ -119,6 +122,14 @@ public class KnightCommander extends DOTENpc {
         if(interactionID == 2){
             if(player instanceof ServerPlayer serverPlayer){
                 startTrade(serverPlayer);
+            }
+        }
+        if(interactionID == 4){
+            if(!DataManager.BarunGiftGot.get(player)){
+                ItemStack dodgeDisplay = new ItemStack(EpicFightItems.SKILLBOOK.get());
+                dodgeDisplay.getOrCreateTag().putString("skill", DOTESkills.BETTER_DODGE_DISPLAY.toString());
+                ItemUtil.addItem(player, dodgeDisplay);
+                DataManager.BarunGiftGot.put(player, true);
             }
         }
         super.handleNpcInteraction(player, interactionID);

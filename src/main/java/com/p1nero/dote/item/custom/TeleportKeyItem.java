@@ -4,6 +4,7 @@ import com.p1nero.dote.DOTEConfig;
 import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.archive.DataManager;
+import com.p1nero.dote.gameasset.skill.DOTESkills;
 import com.p1nero.dote.item.DOTERarities;
 import com.p1nero.dote.util.ItemUtil;
 import com.p1nero.dote.worldgen.dimension.DOTEDimension;
@@ -77,10 +78,14 @@ public class TeleportKeyItem extends SimpleDescriptionFoilItem{
                 Objects.requireNonNull(serverLevel.getServer()).getCommands().performPrefixedCommand(commandSourceStack, "summon " + DuelOfTheEndMod.MOD_ID + ":guide_npc");
                 DOTEArchiveManager.BIOME_PROGRESS_DATA.setGuideSummoned(true);
             }
+            //新手福利
             if(DOTEConfig.GIVE_M_KEY.get() && !DataManager.lootGot.get(player)){
                 ItemStack guard = new ItemStack(EpicFightItems.SKILLBOOK.get());
                 guard.getOrCreateTag().putString("skill", EpicFightSkills.GUARD.toString());
+//                ItemStack dodgeDisplay = new ItemStack(EpicFightItems.SKILLBOOK.get());
+//                dodgeDisplay.getOrCreateTag().putString("skill", DOTESkills.BETTER_DODGE_DISPLAY.toString());
                 ItemUtil.addItem(player, guard);
+//                ItemUtil.addItem(player, dodgeDisplay);
                 ItemStack sword = Items.IRON_SWORD.getDefaultInstance();
                 sword.setDamageValue(sword.getMaxDamage() - 40);
                 ItemUtil.addItem(player, sword);

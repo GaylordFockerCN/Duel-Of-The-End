@@ -29,6 +29,7 @@ public class DOTEPacketHandler {
         register(SyncUuidPacket.class, SyncUuidPacket::decode);
         register(BroadcastMessagePacket.class, BroadcastMessagePacket::decode);
         register(OpenEndScreenPacket.class, OpenEndScreenPacket::decode);
+        register(AddEntityAfterImageParticle.class, AddEntityAfterImageParticle::decode);
 
         // 发给服务端
         register(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);

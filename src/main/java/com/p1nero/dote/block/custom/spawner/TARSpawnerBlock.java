@@ -1,7 +1,6 @@
 package com.p1nero.dote.block.custom.spawner;
 
 import com.p1nero.dote.DuelOfTheEndMod;
-import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.archive.DataManager;
 import com.p1nero.dote.block.DOTEBlockEntities;
 import com.p1nero.dote.block.entity.spawner.TARSpawnerBlockEntity;

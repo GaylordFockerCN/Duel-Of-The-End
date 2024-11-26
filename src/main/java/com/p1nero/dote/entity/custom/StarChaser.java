@@ -6,6 +6,7 @@ import com.p1nero.dote.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.p1nero.dote.client.gui.TreeNode;
 import com.p1nero.dote.entity.NpcDialogue;
 import com.p1nero.dote.entity.ai.goal.NpcDialogueGoal;
+import com.p1nero.dote.gameasset.skill.DOTESkills;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.network.DOTEPacketHandler;
 import com.p1nero.dote.network.PacketRelay;
@@ -246,6 +247,9 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
         ItemStack guard = new ItemStack(EpicFightItems.SKILLBOOK.get());
         guard.getOrCreateTag().putString("skill", EpicFightSkills.GUARD.toString());
 
+        ItemStack dodgeDisplay = new ItemStack(EpicFightItems.SKILLBOOK.get());
+        dodgeDisplay.getOrCreateTag().putString("skill", DOTESkills.BETTER_DODGE_DISPLAY.toString());
+
         ItemStack parrying = new ItemStack(EpicFightItems.SKILLBOOK.get());
         parrying.getOrCreateTag().putString("skill", EpicFightSkills.PARRYING.toString());
 
@@ -303,6 +307,11 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
         skillBooks.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADGRAIN.get(), 5),
                 guard,
+                142857, 0, 0.02f));
+
+        skillBooks.add(new MerchantOffer(
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 15),
+                dodgeDisplay,
                 142857, 0, 0.02f));
 
         skillBooks.add(new MerchantOffer(

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "duel_of_the_end:adventurespar"
+    },
+    "B": {
+      "item": "minecraft:cobblestone"
+    },
+    "C": {
+      "item": "duel_of_the_end:holy_radiance_seed"
+    }
+  },
+  "pattern": [
+    "BCB",
+    "A A",
+    "B B"
+  ],
+  "result": {
+    "item": "waystones:waystone"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "duel_of_the_end:book_of_ending"
+    },
+    "B": {
+      "item": "duel_of_the_end:adventurespar"
+    }
+  },
+  "pattern": [
+    "B B",
+    " A ",
+    "B B"
+  ],
+  "result": {
+    "item": "waystones:warp_stone"
+  },
+  "show_notification": true
+}

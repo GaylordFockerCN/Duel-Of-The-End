@@ -13,6 +13,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.registries.RegistryObject;
 import org.apache.commons.lang3.text.WordUtils;
+import yesman.epicfight.skill.Skill;
 
 import java.util.function.Supplier;
 
@@ -30,80 +31,88 @@ public abstract class DOTELangProvider extends LanguageProvider {
     }
 
     public void addTask(String key, String task, String content){
-        this.add("task."+ DuelOfTheEndMod.MOD_ID+"." + key, task);
-        this.add("task_content."+ DuelOfTheEndMod.MOD_ID+"." + key, content);
+        this.add("task." + DuelOfTheEndMod.MOD_ID + "." + key, task);
+        this.add("task_content." + DuelOfTheEndMod.MOD_ID + "." + key, content);
     }
 
     public void addBiome(ResourceKey<Biome> biome, String name) {
-        this.add("biome."+ DuelOfTheEndMod.MOD_ID+"." + biome.location().getPath(), name);
+        this.add("biome." + DuelOfTheEndMod.MOD_ID + "." + biome.location().getPath(), name);
+    }
+
+    /**
+     * Skill 此时未注册不能run
+     */
+    public void addSkill(String skill, String name, String tooltip) {
+        this.add("skill." + DuelOfTheEndMod.MOD_ID + "." + skill, name);
+        this.add("skill." + DuelOfTheEndMod.MOD_ID + "." + skill + ".tooltip", tooltip);
     }
 
     public void addSapling(String woodPrefix, String saplingName) {
-        this.add("block."+ DuelOfTheEndMod.MOD_ID + woodPrefix + "_sapling", saplingName);
-        this.add("block."+ DuelOfTheEndMod.MOD_ID + "potted_" + woodPrefix + "_sapling", "Potted " + saplingName);
+        this.add("block." + DuelOfTheEndMod.MOD_ID + woodPrefix + "_sapling", saplingName);
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "potted_" + woodPrefix + "_sapling", "Potted " + saplingName);
     }
 
     public void createLogs(String woodPrefix, String woodName) {
-        this.add("block."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_log", woodName + " Log");
-        this.add("block."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_wood", woodName + " Wood");
-        this.add("block."+ DuelOfTheEndMod.MOD_ID + ".stripped_" + woodPrefix + "_log", "Stripped " + woodName + " Log");
-        this.add("block."+ DuelOfTheEndMod.MOD_ID + ".stripped_" + woodPrefix + "_wood", "Stripped " + woodName + " Wood");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_log", woodName + " Log");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_wood", woodName + " Wood");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + ".stripped_" + woodPrefix + "_log", "Stripped " + woodName + " Log");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + ".stripped_" + woodPrefix + "_wood", "Stripped " + woodName + " Wood");
         this.createHollowLogs(woodPrefix, woodName, false);
     }
 
     public void createHollowLogs(String woodPrefix, String woodName, boolean stem) {
-        this.add("block."+ DuelOfTheEndMod.MOD_ID + ".hollow_" + woodPrefix + (stem ? "_stem" : "_log") + "_horizontal", "Hollow " + woodName + (stem ? " Stem" : " Log"));
-        this.add("block."+ DuelOfTheEndMod.MOD_ID + ".hollow_" + woodPrefix + (stem ? "_stem" : "_log") + "_vertical", "Hollow " + woodName + (stem ? " Stem" : " Log"));
-        this.add("block."+ DuelOfTheEndMod.MOD_ID + ".hollow_" + woodPrefix + (stem ? "_stem" : "_log") + "_climbable", "Hollow " + woodName + (stem ? " Stem" : " Log"));
+        this.add("block." + DuelOfTheEndMod.MOD_ID + ".hollow_" + woodPrefix + (stem ? "_stem" : "_log") + "_horizontal", "Hollow " + woodName + (stem ? " Stem" : " Log"));
+        this.add("block." + DuelOfTheEndMod.MOD_ID + ".hollow_" + woodPrefix + (stem ? "_stem" : "_log") + "_vertical", "Hollow " + woodName + (stem ? " Stem" : " Log"));
+        this.add("block." + DuelOfTheEndMod.MOD_ID + ".hollow_" + woodPrefix + (stem ? "_stem" : "_log") + "_climbable", "Hollow " + woodName + (stem ? " Stem" : " Log"));
     }
 
     public void createWoodSet(String woodPrefix, String woodName) {
-        this.add("block."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_planks", woodName + " Planks");
-        this.add("block."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_slab", woodName + " Slab");
-        this.add("block."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_stairs", woodName + " Stairs");
-        this.add("block."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_button", woodName + " Button");
-        this.add("block."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_fence", woodName + " Fence");
-        this.add("block."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_fence_gate", woodName + " Fence Gate");
-        this.add("block."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_pressure_plate", woodName + " Pressure Plate");
-        this.add("block."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_trapdoor", woodName + " Trapdoor");
-        this.add("block."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_door", woodName + " Door");
-        this.add("block."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_sign", woodName + " Sign");
-        this.add("block."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_wall_sign", woodName + " Wall Sign");
-        this.add("block."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_banister", woodName + " Banister");
-        this.add("block."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_chest", woodName + " Chest");
-        this.add("item."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_boat", woodName + " Boat");
-        this.add("item."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_chest_boat", woodName + " Chest Boat");
-        this.add("block."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_hanging_sign", woodName + " Hanging Sign");
-        this.add("block."+ DuelOfTheEndMod.MOD_ID+"." + woodPrefix + "_wall_hanging_sign", woodName + " Wall Hanging Sign");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_planks", woodName + " Planks");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_slab", woodName + " Slab");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_stairs", woodName + " Stairs");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_button", woodName + " Button");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_fence", woodName + " Fence");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_fence_gate", woodName + " Fence Gate");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_pressure_plate", woodName + " Pressure Plate");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_trapdoor", woodName + " Trapdoor");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_door", woodName + " Door");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_sign", woodName + " Sign");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_wall_sign", woodName + " Wall Sign");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_banister", woodName + " Banister");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_chest", woodName + " Chest");
+        this.add("item." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_boat", woodName + " Boat");
+        this.add("item." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_chest_boat", woodName + " Chest Boat");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_hanging_sign", woodName + " Hanging Sign");
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "." + woodPrefix + "_wall_hanging_sign", woodName + " Wall Hanging Sign");
     }
 
     public void addBannerPattern(String patternPrefix, String patternName) {
-        this.add("item."+ DuelOfTheEndMod.MOD_ID+"." + patternPrefix + "_banner_pattern", "Banner Pattern");
-        this.add("item."+ DuelOfTheEndMod.MOD_ID+"." + patternPrefix + "_banner_pattern.desc", patternName);
+        this.add("item." + DuelOfTheEndMod.MOD_ID + "." + patternPrefix + "_banner_pattern", "Banner Pattern");
+        this.add("item." + DuelOfTheEndMod.MOD_ID + "." + patternPrefix + "_banner_pattern.desc", patternName);
         for (DyeColor color : DyeColor.values()) {
-            this.add("block.minecraft.banner."+ DuelOfTheEndMod.MOD_ID+"." + patternPrefix + "." + color.getName(), WordUtils.capitalize(color.getName().replace('_', ' ')) + " " + patternName);
+            this.add("block.minecraft.banner." + DuelOfTheEndMod.MOD_ID + "." + patternPrefix + "." + color.getName(), WordUtils.capitalize(color.getName().replace('_', ' ')) + " " + patternName);
         }
     }
 
     public void addStoneVariants(String blockKey, String blockName) {
-        this.add("block."+ DuelOfTheEndMod.MOD_ID+"." + blockKey, blockName);
-        this.add("block."+ DuelOfTheEndMod.MOD_ID + ".cracked_" + blockKey, "Cracked " + blockName);
-        this.add("block."+ DuelOfTheEndMod.MOD_ID + ".mossy_" + blockKey, "Mossy " + blockName);
+        this.add("block." + DuelOfTheEndMod.MOD_ID + "." + blockKey, blockName);
+        this.add("block." + DuelOfTheEndMod.MOD_ID + ".cracked_" + blockKey, "Cracked " + blockName);
+        this.add("block." + DuelOfTheEndMod.MOD_ID + ".mossy_" + blockKey, "Mossy " + blockName);
     }
 
     public void addArmor(String itemKey, String item) {
-        this.add("item."+ DuelOfTheEndMod.MOD_ID+"." + itemKey + "_helmet", item + " Helmet");
-        this.add("item."+ DuelOfTheEndMod.MOD_ID+"." + itemKey + "_chestplate", item + " Chestplate");
-        this.add("item."+ DuelOfTheEndMod.MOD_ID+"." + itemKey + "_leggings", item + " Leggings");
-        this.add("item."+ DuelOfTheEndMod.MOD_ID+"." + itemKey + "_boots", item + " Boots");
+        this.add("item." + DuelOfTheEndMod.MOD_ID + "." + itemKey + "_helmet", item + " Helmet");
+        this.add("item." + DuelOfTheEndMod.MOD_ID + "." + itemKey + "_chestplate", item + " Chestplate");
+        this.add("item." + DuelOfTheEndMod.MOD_ID + "." + itemKey + "_leggings", item + " Leggings");
+        this.add("item." + DuelOfTheEndMod.MOD_ID + "." + itemKey + "_boots", item + " Boots");
     }
 
     public void addTools(String itemKey, String item) {
-        this.add("item."+ DuelOfTheEndMod.MOD_ID+"." + itemKey + "_sword", item + " Sword");
-        this.add("item."+ DuelOfTheEndMod.MOD_ID+"." + itemKey + "_pickaxe", item + " Pickaxe");
-        this.add("item."+ DuelOfTheEndMod.MOD_ID+"." + itemKey + "_axe", item + " Axe");
-        this.add("item."+ DuelOfTheEndMod.MOD_ID+"." + itemKey + "_shovel", item + " Shovel");
-        this.add("item."+ DuelOfTheEndMod.MOD_ID+"." + itemKey + "_hoe", item + " Hoe");
+        this.add("item." + DuelOfTheEndMod.MOD_ID + "." + itemKey + "_sword", item + " Sword");
+        this.add("item." + DuelOfTheEndMod.MOD_ID + "." + itemKey + "_pickaxe", item + " Pickaxe");
+        this.add("item." + DuelOfTheEndMod.MOD_ID + "." + itemKey + "_axe", item + " Axe");
+        this.add("item." + DuelOfTheEndMod.MOD_ID + "." + itemKey + "_shovel", item + " Shovel");
+        this.add("item." + DuelOfTheEndMod.MOD_ID + "." + itemKey + "_hoe", item + " Hoe");
     }
 
     public void addMusicDisc(Supplier<Item> disc, String description) {
@@ -112,22 +121,22 @@ public abstract class DOTELangProvider extends LanguageProvider {
     }
 
     public void addStructure(ResourceKey<Structure> biome, String name) {
-        this.add("structure."+ DuelOfTheEndMod.MOD_ID+"." + biome.location().getPath(), name);
+        this.add("structure."+ DuelOfTheEndMod.MOD_ID + "." + biome.location().getPath(), name);
     }
 
     public void addAdvancement(String key, String title, String desc) {
-        this.add("advancement."+ DuelOfTheEndMod.MOD_ID+"." + key, title);
-        this.add("advancement."+ DuelOfTheEndMod.MOD_ID+"." + key + ".desc", desc);
+        this.add("advancement."+ DuelOfTheEndMod.MOD_ID + "." + key, title);
+        this.add("advancement."+ DuelOfTheEndMod.MOD_ID + "." + key + ".desc", desc);
     }
 
     public void addEnchantment(String key, String title, String desc) {
-        this.add("enchantment."+ DuelOfTheEndMod.MOD_ID+"." + key, title);
-        this.add("enchantment."+ DuelOfTheEndMod.MOD_ID+"." + key + ".desc", desc);
+        this.add("enchantment."+ DuelOfTheEndMod.MOD_ID + "." + key, title);
+        this.add("enchantment."+ DuelOfTheEndMod.MOD_ID + "." + key + ".desc", desc);
     }
 
     public void addEntityAndEgg(RegistryObject<? extends EntityType<?>> entity, String name) {
         this.addEntityType(entity, name);
-        this.add("item."+ DuelOfTheEndMod.MOD_ID+"." + entity.getId().getPath() + "_spawn_egg", name + "刷怪蛋");
+        this.add("item." + DuelOfTheEndMod.MOD_ID + "." + entity.getId().getPath() + "_spawn_egg", name + "刷怪蛋");
     }
 
     public void addEntityShaderName(RegistryObject<? extends EntityType<?>> entity, String name) {
@@ -162,19 +171,19 @@ public abstract class DOTELangProvider extends LanguageProvider {
 
     public void addSubtitle(RegistryObject<SoundEvent> sound, String name) {
         String[] splitSoundName  = sound.getId().getPath().split("\\.", 3);
-        this.add("subtitles."+ DuelOfTheEndMod.MOD_ID+"." + splitSoundName[0] + "." + splitSoundName[2], name);
+        this.add("subtitles."+ DuelOfTheEndMod.MOD_ID + "." + splitSoundName[0] + "." + splitSoundName[2], name);
     }
 
     public void addDeathMessage(String key, String name) {
-        this.add("death.attack."+ DuelOfTheEndMod.MOD_ID+"." + key, name);
+        this.add("death.attack."+ DuelOfTheEndMod.MOD_ID + "." + key, name);
     }
 
     public void addStat(String key, String name) {
-        this.add("stat."+ DuelOfTheEndMod.MOD_ID+"." + key, name);
+        this.add("stat."+ DuelOfTheEndMod.MOD_ID + "." + key, name);
     }
 
     public void addMessage(String key, String name) {
-        this.add("misc."+ DuelOfTheEndMod.MOD_ID+"." + key, name);
+        this.add("misc."+ DuelOfTheEndMod.MOD_ID + "." + key, name);
     }
 
     public void addCommand(String key, String name) {
@@ -182,7 +191,7 @@ public abstract class DOTELangProvider extends LanguageProvider {
     }
 
     public void addTrim(String key, String name) {
-        this.add("trim_material."+ DuelOfTheEndMod.MOD_ID+"." + key, name + " Material");
+        this.add("trim_material."+ DuelOfTheEndMod.MOD_ID + "." + key, name + " Material");
     }
 
     public void addBookAndContents(String bookKey, String bookTitle, String... pages) {
@@ -206,7 +215,7 @@ public abstract class DOTELangProvider extends LanguageProvider {
     }
 
     public void addScreenMessage(String key, String name) {
-        this.add("gui."+ DuelOfTheEndMod.MOD_ID+"." + key, name);
+        this.add("gui."+ DuelOfTheEndMod.MOD_ID + "." + key, name);
     }
 
     public void addConfig(String key, String name) {

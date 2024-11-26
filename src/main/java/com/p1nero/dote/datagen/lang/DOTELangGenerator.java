@@ -4,6 +4,7 @@ import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.block.DOTEBlocks;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.entity.DOTEEntities;
+import com.p1nero.dote.gameasset.skill.DOTESkills;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.worldgen.biome.DOTEBiomes;
 import net.minecraft.data.PackOutput;
@@ -16,6 +17,7 @@ public class DOTELangGenerator extends DOTELangProvider {
     @Override
     protected void addTranslations() {
         this.add("pack.dote_animation.title", "内置奇妙动画包");
+        this.addSkill("better_dodge_display", "完美闪避显示", "成功闪避将留下残影和播放音效");
 
         this.addInfo("tip0", "§4警告！身上存在非法物品！无法进出维度！");
         this.addInfo("tip1", "使用往生精华右键祭坛以召唤 ");
@@ -55,7 +57,7 @@ public class DOTELangGenerator extends DOTELangProvider {
         
         add("item_group.duel_of_the_end.all", "终焉决斗");
         add(DOTEItems.M_KEY.get(), "圣堂决斗钥匙");
-        addItemUsageInfo(DOTEItems.M_KEY.get(), "你...做好准备了吗？");
+        addItemUsageInfo(DOTEItems.M_KEY.get(), "你...做好准备了吗？§6（shift + 右键以传送至起点，可重复使用）§r");
         add(DOTEItems.P_KEY.get(), "炼狱决斗钥匙");
         addItemUsageInfo(DOTEItems.P_KEY.get(), "所谓的终焉也并非遥不可及...§6（炼狱群系怪物掉率较高）§r");
         add(DOTEItems.U_KEY.get(), "终焉决斗钥匙");
@@ -184,7 +186,7 @@ public class DOTELangGenerator extends DOTELangProvider {
         this.addDialogChoice(DOTEEntities.KNIGHT_COMMANDER, 1, "圣殿最后的试炼？");
         this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 2, "每一个跃跃欲试前往前线的战士都必须通过神圣之主的代言人：圣辉裁决者的试炼。这是对你的考验，也是对你的保护！我们需要的是强壮的战士，不是一碰就倒的懦夫！");
         this.addDialogChoice(DOTEEntities.KNIGHT_COMMANDER, 2, "我该如何武装自己？");
-        this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 3, "想必你在到达圣殿之前的路上已经碰到了那些麻烦的不死者。收集他们掉落的冒险碎片，我将为你打造远超凡人铁匠能制造的强大武备！");
+        this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 3, "想必你在到达圣殿之前的路上已经碰到了那些麻烦的不死者。收集他们掉落的冒险碎片，我将为你打造远超凡人铁匠能制造的强大武备！这本§6技能书§r是给你的礼物！");
 
         this.addDialog(DOTEEntities.KNIGHT_COMMANDER, 4, "你好，英勇的战士！看来我们的圣殿骑士团又要多出一名沐浴神圣之力的§k???§r了。愿§k???§r永远照耀在我们祖辈挥洒鲜血的神圣土壤上！");
         this.addDialogChoice(DOTEEntities.KNIGHT_COMMANDER, 3, "巴伦，我到底是第几个到达这里的“战士”？");
