@@ -18,6 +18,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import yesman.epicfight.api.client.forgeevent.PatchedRenderersEvent;
 import yesman.epicfight.api.client.model.Meshes;
+import yesman.epicfight.api.forgeevent.EntityPatchRegistryEvent;
+import yesman.epicfight.api.forgeevent.ModelBuildEvent;
 import yesman.epicfight.client.renderer.patched.entity.PHumanoidRenderer;
 
 @Mod.EventBusSubscriber(modid = DuelOfTheEndMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -49,6 +51,11 @@ public class ClientModEvents{
         event.registerLayerDefinition(GoldenDragonArmorModel.LAYER_LOCATION, GoldenDragonArmorModel::createBodyLayer);
     }
 
+    /**
+     * 需要先绑定Patch和 Armature
+     * {@link DOTEEntities#setArmature(ModelBuildEvent.ArmatureBuild)}
+     * {@link DOTEEntities#setPatch(EntityPatchRegistryEvent)}
+     */
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void onRenderPatched(PatchedRenderersEvent.Add event) {
@@ -58,6 +65,9 @@ public class ClientModEvents{
         event.addPatchedEntityRenderer(DOTEEntities.DOTE_ZOMBIE.get(), (entityType) -> new PHumanoidRenderer<>(() -> Meshes.BIPED_OLD_TEX, context, entityType).initLayerLast(context, entityType));
         event.addPatchedEntityRenderer(DOTEEntities.DOTE_PIGLIN.get(), (entityType) -> new PHumanoidRenderer<>(() -> Meshes.PIGLIN, context, entityType).initLayerLast(context, entityType));
         event.addPatchedEntityRenderer(DOTEEntities.STAR_CHASER.get(), (entityType) -> new PHumanoidRenderer<>(() -> Meshes.ALEX, context, entityType).initLayerLast(context, entityType));//懒得区分粗细手臂了
+        event.addPatchedEntityRenderer(DOTEEntities.GUIDE_NPC.get(), (entityType) -> new PHumanoidRenderer<>(() -> Meshes.ALEX, context, entityType).initLayerLast(context, entityType));
+        event.addPatchedEntityRenderer(DOTEEntities.SCARLET_HIGH_PRIEST.get(), (entityType) -> new PHumanoidRenderer<>(() -> Meshes.ALEX, context, entityType).initLayerLast(context, entityType));
+        event.addPatchedEntityRenderer(DOTEEntities.KNIGHT_COMMANDER.get(), (entityType) -> new PHumanoidRenderer<>(() -> Meshes.ALEX, context, entityType).initLayerLast(context, entityType));
     }
 
 }

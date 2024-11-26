@@ -7,6 +7,7 @@ import com.p1nero.dote.effect.DOTEEffects;
 import com.p1nero.dote.entity.DOTEEntities;
 import com.p1nero.dote.entity.DOTEVillagers;
 import com.p1nero.dote.gameasset.DOTEAnimations;
+import com.p1nero.dote.gameasset.DOTELivingMotions;
 import com.p1nero.dote.item.DOTEItemTabs;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.network.DOTEPacketHandler;
@@ -36,6 +37,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
+import yesman.epicfight.api.animation.LivingMotion;
+import yesman.epicfight.api.animation.LivingMotions;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -51,7 +54,8 @@ public class DuelOfTheEndMod {
     public DuelOfTheEndMod(){
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        bus.addListener(DOTEAnimations::registerAnimations);
+        LivingMotion.ENUM_MANAGER.registerEnumCls(MOD_ID, DOTELivingMotions.class);
+
         DOTESounds.REGISTRY.register(bus);
         DOTEItems.REGISTRY.register(bus);
         DOTEBlocks.REGISTRY.register(bus);

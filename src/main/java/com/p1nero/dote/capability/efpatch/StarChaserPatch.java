@@ -38,6 +38,9 @@ public class StarChaserPatch extends HumanoidMobPatch<StarChaser> {
 
     @Override
     public void updateMotion(boolean b) {
+        if(getOriginal().getConversingPlayer() != null){
+            //TODO
+        }
         super.commonAggressiveMobUpdateMotion(b);
     }
 

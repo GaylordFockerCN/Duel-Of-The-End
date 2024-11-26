@@ -1,11 +1,8 @@
 package com.p1nero.dote.entity;
 
 import com.p1nero.dote.DuelOfTheEndMod;
+import com.p1nero.dote.capability.efpatch.*;
 import com.p1nero.dote.entity.custom.*;
-import com.p1nero.dote.capability.efpatch.DOTEZombiePatch;
-import com.p1nero.dote.capability.efpatch.GoldenFlamePatch;
-import com.p1nero.dote.capability.efpatch.SenbaiDevilPatch;
-import com.p1nero.dote.capability.efpatch.StarChaserPatch;
 import com.p1nero.dote.entity.custom.npc.GuideNpc;
 import com.p1nero.dote.entity.custom.npc.KnightCommander;
 import com.p1nero.dote.entity.custom.npc.ScarletHighPriest;
@@ -19,8 +16,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.DeferredRegister;
+import yesman.epicfight.api.client.forgeevent.PatchedRenderersEvent;
 import yesman.epicfight.api.forgeevent.EntityPatchRegistryEvent;
 import yesman.epicfight.api.forgeevent.ModelBuildEvent;
+import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.gameasset.Armatures;
 
 
@@ -56,6 +55,9 @@ public class DOTEEntities {
 		return REGISTRY.register(name, () -> entityTypeBuilder.build(new ResourceLocation(DuelOfTheEndMod.MOD_ID, name).toString()));
 	}
 
+	/**
+	 * setPatch完还需要去绑定Renderer {@link com.p1nero.dote.event.listeners.ClientModEvents#onRenderPatched(PatchedRenderersEvent.Add)}
+	 */
 	@SubscribeEvent
 	public static void setPatch(EntityPatchRegistryEvent event) {
 		event.getTypeEntry().put(SENBAI_DEVIL.get(), (entity) -> SenbaiDevilPatch::new);
@@ -63,8 +65,14 @@ public class DOTEEntities {
 		event.getTypeEntry().put(DOTE_ZOMBIE.get(), (entity) -> DOTEZombiePatch::new);
 		event.getTypeEntry().put(DOTE_PIGLIN.get(), (entity) -> DOTEZombiePatch::new);
 		event.getTypeEntry().put(STAR_CHASER.get(), (entity) -> StarChaserPatch::new);
+		event.getTypeEntry().put(GUIDE_NPC.get(), (entity) -> ()-> new NPCPatch(()-> Animations.BIPED_IDLE, null, null, null));
+		event.getTypeEntry().put(KNIGHT_COMMANDER.get(), (entity) -> ()-> new NPCPatch(()-> Animations.BIPED_IDLE, null, null, null));
+		event.getTypeEntry().put(SCARLET_HIGH_PRIEST.get(), (entity) -> ()-> new NPCPatch(()-> Animations.BIPED_IDLE, null, null, null));
 	}
 
+	/**
+	 * setArmature完还需要去绑定Renderer {@link com.p1nero.dote.event.listeners.ClientModEvents#onRenderPatched(PatchedRenderersEvent.Add)}
+	 */
 	@SubscribeEvent
 	public static void setArmature(ModelBuildEvent.ArmatureBuild event) {
 		Armatures.registerEntityTypeArmature(SENBAI_DEVIL.get(), Armatures.SKELETON);
@@ -72,6 +80,10 @@ public class DOTEEntities {
 		Armatures.registerEntityTypeArmature(DOTE_ZOMBIE.get(), Armatures.BIPED);
 		Armatures.registerEntityTypeArmature(DOTE_PIGLIN.get(), Armatures.PIGLIN);
 		Armatures.registerEntityTypeArmature(STAR_CHASER.get(), Armatures.BIPED);
+
+		Armatures.registerEntityTypeArmature(GUIDE_NPC.get(), Armatures.BIPED);
+		Armatures.registerEntityTypeArmature(KNIGHT_COMMANDER.get(), Armatures.BIPED);
+		Armatures.registerEntityTypeArmature(SCARLET_HIGH_PRIEST.get(), Armatures.BIPED);
 	}
 
 	@SubscribeEvent
