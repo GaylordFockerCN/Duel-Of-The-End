@@ -12,14 +12,14 @@
         "max_strikes": 4,       
 		"scale": 1.05,
         "chasing_speed": 1.3,    
-        "max_stamina": 15,
-         "stamina_regan_multiply": 1.0,   
+        "max_stamina": 20,
+         "stamina_regan_multiply": 0.5,   
          "stamina_regan_delay": 30,  
          "has_stun_reduction":true, 
          "max_stun_shield": 1.0,    
          "stun_shield_regan_multiply":1, 
          "stun_shield_regan_delay": 30,   
-         "stamina_lose_multiply": 1     
+         "stamina_lose_multiply": 0.5     
     },
 	"default_livingmotions": {
         "idle": "epicfight:biped/living/idle",
@@ -102,7 +102,7 @@
 							"play_speed": 1.0, 														
 							"convert_time": 0.7,
 							"command_list": [
-								{"time":0.0, "command":"particle minecraft:portal ~ ~0.5 ~ 0 0.5 0 2 500 force", "execute_at_target":true},
+								{"time":0.0, "command":"particle minecraft:flame ~ ~0.5 ~ 0 0.5 0 2 200 force", "execute_at_target":true},
 								{"time":0.4, "command":"effect give @s minecraft:resistance 4 4", "execute_at_target":false},
 									{"time":0.2, "command":"effect give @s epicfight:stun_immunity 3 10", "execute_at_target":false},
 									{"time":0.5, "command":"/effect give @s minecraft:fire_resistance 10 1", "execute_at_target":false},
@@ -155,11 +155,11 @@
                         {
                             "conditions": [
                                 {"predicate":"indestructible:guard_break", "invert": true}, {"predicate":"indestructible:knock_down", "invert": true},
-                                {"predicate":"epicfight:within_distance", "min": 0.0, "max": 4.0}
+                                {"predicate":"epicfight:within_distance", "min": 0.0, "max": 5.0}
                             ],
                             "animation": "wom:biped/combat/torment_auto_2",
-							"convert_time": 0.3,
-							"play_speed": 0.65,
+							"convert_time": 0.2,
+							"play_speed": 0.75,
                             "command_list":[
                             ], "set_phase": 1,
                             "end_by_hurt_level": 1
@@ -170,7 +170,7 @@
                                 {"predicate":"indestructible:phase", "min": 1, "max": 2}, {"predicate":"indestructible:attack_level", "min": 0, "max": 0}
                             ],
                             "animation": "wom:biped/combat/torment_auto_3",
-							"play_speed": 0.85,
+							"play_speed": 0.75,
                             "end_by_hurt_level": 1,
                             "hit_command_list":[
 								{"command":"indestructible @s play \"epicfight:biped/combat/hit_short\" 0.8 1", "execute_at_target":true}
@@ -182,8 +182,8 @@
                                 {"predicate":"indestructible:phase", "min": 1, "max": 2}
                             ],
                             "animation": "wom:biped/combat/torment_auto_4",
-							"convert_time": 0.3,
-							"play_speed": 0.6,
+							"convert_time": 0.2,
+							"play_speed": 0.7,
 							 "damage_modifier":{"damage": 0.8, "impact": 0.1, "armor_negation": 1}
                         }
                     ]
@@ -203,7 +203,7 @@
 							"command_list": [
 								{"time":0.0, "command":"indestructible @s rotate_to_target", "execute_at_target":false},
                                 {"time":0.0, "command":"effect give @s minecraft:resistance 3 2", "execute_at_target":false},
-                                {"time":0.0, "command":"function goldenflame:charge1", "execute_at_target":false}
+                                {"time":0.0, "command":"playsound minecraft:block.anvil.place ambient @p ~ ~ ~ 1 0.5", "execute_at_target":true}
                             ]
 						},
                         {
@@ -227,8 +227,8 @@
 								{"predicate":"indestructible:guard_break", "invert": true}, {"predicate":"indestructible:knock_down", "invert": true}
 							],
                             "animation": "wom:biped/combat/torment_auto_4",
-							"convert_time": 0.5,
-							"play_speed": 0.2,
+							"convert_time": 0.2,
+							"play_speed": 0.7,
                             "damage_modifier":{"damage": 0.8, "impact": 0.1, "armor_negation": 1}
 						}
 					]
@@ -245,8 +245,8 @@
                                 {"predicate":"epicfight:within_distance", "min": 0.0, "max": 4.0}, {"predicate": "epicfight:health", "health": 0.5, "comparator": "less_ratio"}
                             ],
                             "animation": "wom:biped/combat/torment_auto_2",
-							"convert_time": 0.3,
-							"play_speed": 0.65,
+							"convert_time": 0.15,
+							"play_speed": 0.75,
                             "command_list":[
                             ], "set_phase": 1,
                             "end_by_hurt_level": 1
@@ -258,7 +258,7 @@
                             ],
                             "animation": "wom:biped/combat/torment_auto_3",
 							"convert_time": 0.1,
-							"play_speed": 0.65,
+							"play_speed": 0.75,
                             "command_list":[
                             ], "set_phase": 1,
                             "end_by_hurt_level": 1,
@@ -272,11 +272,10 @@
 							],
                             "animation": "wom:biped/combat/torment_charged_attack_3",
 							"convert_time": 0.5,
-							"play_speed": 0.7,
+							"play_speed": 0.6,
                             "command_list":[
-								{"time":0.0, "command":"playsound epicfight:sfx.buzz ambient @p", "execute_at_target":true},
-                                {"time":0.0, "command":"tag @s add orange", "execute_at_target":false},
-								{"time":0.2, "command":"schedule function danger:danger_orange 2t append", "execute_at_target":false},
+								{"time":0.1, "command":"playsound minecraft:block.end_portal.spawn block @s ~ ~ ~ 1 1.5", "execute_at_target":true},
+								{"time":0.1, "command":"particle wom:blink ~ ~ ~ 0.5 0.5 0.5 0.5 10 force", "execute_at_target":true},
                                 {"time":0.2, "command":"execute at @s run playsound minecraft:entity.firework_rocket.blast block @a[distance=..20] ~ ~ ~ 2", "execute_at_target":false},
 								{"time":0.0, "command":"indestructible @s rotate_to_target", "execute_at_target":false},
                                 {"time":0.6, "command":"indestructible @s play \"epicfight:biped/living/walk\" 0 1", "execute_at_target":false}   
@@ -315,7 +314,8 @@
 							"command_list": [
 								{"time":0.0, "command":"indestructible @s rotate_to_target", "execute_at_target":false},
                                 {"time":0.0, "command":"effect give @s minecraft:resistance 3 2", "execute_at_target":false},
-                                {"time":0.0, "command":"function goldenflame:charge2", "execute_at_target":false}
+                                {"time":0.0, "command":"function goldenflame:charge2", "execute_at_target":false},
+								{"time":0.0, "command":"playsound minecraft:block.anvil.place ambient @p ~ ~ ~ 1 0.5", "execute_at_target":false}
                             ]
 						},
                         {
@@ -348,6 +348,8 @@
 								{"predicate":"indestructible:guard_break", "invert": true}, {"predicate":"indestructible:knock_down", "invert": true}
 							],
                             "animation": "wom:biped/combat/torment_charged_attack_2",
+							"convert_time": 0.2,
+							"play_speed": 0.85,
                             "command_list":[
                                 {"time":0.0, "command":"indestructible @s set_phase 1", "execute_at_target":false},
                                 {"time":0.0, "command":"indestructible @s rotate_to_target", "execute_at_target":false}
@@ -362,7 +364,7 @@
 							],
 							"animation": "wom:biped/combat/torment_auto_4",
 							"convert_time": 0.2,
-							"play_speed": 0.6,
+							"play_speed": 0.75,
 						    "damage_modifier":{"damage": 0.8, "impact": 0.1, "armor_negation": 1}, "set_phase": 1
 						}
 					]
@@ -380,6 +382,7 @@
 							],
 							"animation": "epicfight:biped/skill/step_backward",
 							"command_list": [
+								{"time":0.0, "command":"playsound minecraft:block.anvil.place ambient @p ~ ~ ~ 1 0.5", "execute_at_target":false},
 								{"time":0.0, "command":"indestructible @s rotate_to_target", "execute_at_target":false},
                                 {"time":0.0, "command":"effect give @s minecraft:resistance 3 2", "execute_at_target":false},
                                 {"time":0.0, "command":"function goldenflame:charge2", "execute_at_target":false}
@@ -390,7 +393,7 @@
 								{"predicate":"indestructible:guard_break", "invert": true}, {"predicate":"indestructible:knock_down", "invert": true}
 							],
 							"animation": "wom:biped/living/torment_charge",
-							"convert_time": 0.3
+							"convert_time": 0.2
 						},
                         {
 							"conditions": [
@@ -406,8 +409,8 @@
 								{"predicate":"indestructible:guard_break", "invert": true}, {"predicate":"indestructible:knock_down", "invert": true}
 							],
 							"animation": "wom:biped/combat/torment_auto_4",
-							"convert_time": 0.2,
-							"play_speed": 0.6,
+							"convert_time": 0.1,
+							"play_speed": 0.7,
 						    "damage_modifier":{"damage": 0.8, "impact": 0.1, "armor_negation": 1}, "set_phase": 1
 						},
 						{
@@ -458,7 +461,7 @@
 				{"predicate":"indestructible:guard_break", "invert": true}, {"predicate":"indestructible:knock_down", "invert": true}
 			],
 			"animation": "wom:biped/combat/torment_auto_4",
-			"play_speed": 0.2,
+			"play_speed": 0.8,
 			"command_list": [
 				{"time":0.0, "command":"indestructible @s rotate_to_target", "execute_at_target":false},
 				{"time":0.45, "command":"execute at @s run playsound epicfight:sfx.ground_slam block @a[distance=..20] ~ ~ ~ 0.6", "execute_at_target":false}
@@ -633,11 +636,11 @@
 							{"predicate":"indestructible:guard_break", "invert": true}, {"predicate":"indestructible:knock_down", "invert": true}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 5.0}
 						],
 						"animation": "epicfight:biped/combat/greatsword_auto1", 
-						"command_list": [
-					
-							{"time":0.0, "command":"playsound minecraft:entity.wither.death ambient @p", "execute_at_target":true},
-							{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_pyroclas_of_purgatory] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
-						],			
+					"command_list":[
+								{"time":0.1, "command":"playsound minecraft:block.end_portal.spawn block @s ~ ~ ~ 1 1.5", "execute_at_target":true},
+								{"time":0.1, "command":"particle wom:blink ~ ~ ~ 0.5 0.5 0.5 0.5 10 force", "execute_at_target":true},
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
+							],	
 						"end_by_hurt_level": 1, 
 						"play_speed": 0.9
 				},
@@ -654,8 +657,8 @@
 					{"predicate":"epicfight:within_eye_height"}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 30.0},{"predicate":"indestructible:guard_break", "invert": true}
 				],
 				"animation": "wom:biped/skill/solar_auto_4_polvora",
-				"play_speed": 0.5,
-				"convert_time": 0.4,
+				"play_speed": 0.8,
+				"convert_time": 0.15,
 				"command_list": [
 					{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_pyroclas_of_purgatory] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 				],
@@ -711,7 +714,7 @@
 						{"predicate":"indestructible:attack_level", "min": 0, "max": 0},
 						{"predicate":"indestructible:guard_break", "invert": true}, {"predicate":"indestructible:knock_down", "invert": true}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 5.0}
 					],
-					"animation": "epicfight:biped/combat/greatsword_airslash", 		
+					"animation": "epicfight:biped/combat/greatsword_dash", 		
 					"end_by_hurt_level": 1, 	
 					"play_speed": 0.9, 									
 					"convert_time": 0.15
@@ -727,7 +730,7 @@
 							]                 
 							 },
 					 {
-						"weight": 0.5,
+						"weight": 10,
 						"canBeInterrupted": false,
 						"looping": false,
 						"cooldown": 30,
@@ -739,7 +742,7 @@
 								],
 								"animation": "wom:biped/combat/solar_auto_1",
 								"convert_time": 0.2,
-								"play_speed": 0.5,
+								"play_speed": 0.8,
 								"command_list": [
 									{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_pyroclas_of_purgatory] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true},
 									{"time":0.0, "command":"effect give @s epicfight:stun_immunity 2", "execute_at_target":false},
@@ -754,7 +757,7 @@
 									{"predicate":"indestructible:guard_break", "invert": true}, {"predicate":"indestructible:knock_down", "invert": true}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 5.0}
 								],
 								"animation": "wom:biped/combat/solar_auto_2",
-								"play_speed": 0.5,
+								"play_speed": 0.8,
 								"command_list": [
 									{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_pyroclas_of_purgatory] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 								],
@@ -768,7 +771,7 @@
 									{"predicate":"epicfight:within_eye_height"}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 30.0},{"predicate":"indestructible:guard_break", "invert": true}
 								],
 								"animation": "wom:biped/combat/solar_auto_3",
-								"play_speed": 0.5,
+								"play_speed": 0.8,
 								"command_list": [
 									{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_pyroclas_of_purgatory] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 								],
@@ -781,7 +784,7 @@
 									{"predicate":"epicfight:within_eye_height"}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 30.0},{"predicate":"indestructible:guard_break", "invert": true}
 								],
 								"animation": "wom:biped/combat/solar_auto_4",
-								"play_speed": 0.5,
+								"play_speed": 0.8,
 								"command_list": [
 									{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_pyroclas_of_purgatory] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 								],
@@ -808,7 +811,8 @@
 								"convert_time": 0,
 								"play_speed": 0.7,
 								"command_list":[
-									{"time":0.0, "command":"playsound epicfight:sfx.buzz ambient @p", "execute_at_target":true},
+									{"time":0.1, "command":"playsound minecraft:block.end_portal.spawn block @s ~ ~ ~ 1 1.5", "execute_at_target":true},
+									{"time":0.1, "command":"particle wom:blink ~ ~ ~ 0.5 0.5 0.5 0.5 10 force", "execute_at_target":true},
 									{"time":0.4, "command":"execute at @s run particle minecraft:soul ~ ~ ~ 0 1 0 0.1 200", "execute_at_target":false},
 									{"time":0.0, "command":"indestructible @s rotate_to_target", "execute_at_target":false}
 								],
@@ -821,7 +825,7 @@
 						]
 					},
 					{
-						"weight": 0.5,
+						"weight": 10,
 						"canBeInterrupted": false,
 						"looping": false,
 						"cooldown": 100,
@@ -832,7 +836,7 @@
 									{"predicate":"indestructible:guard_break", "invert": true}, {"predicate":"indestructible:knock_down", "invert": true}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 5.0}
 								],
 								"animation": "wom:biped/combat/solar_auto_1",
-								"play_speed": 0.5,
+								"play_speed": 0.8,
 								"convert_time": 0.2,
 								"command_list": [
 									{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_pyroclas_of_purgatory] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true},
@@ -851,7 +855,7 @@
 									{"predicate":"epicfight:within_eye_height"}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 30.0},{"predicate":"indestructible:guard_break", "invert": true}
 								],
 								"animation": "wom:biped/combat/solar_auto_2",
-								"play_speed": 0.5,
+								"play_speed":0.8,
 								"convert_time": 0.2,
 								"command_list": [
 									{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_pyroclas_of_purgatory] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
@@ -868,7 +872,7 @@
 									{"predicate":"epicfight:within_eye_height"}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 30.0},{"predicate":"indestructible:guard_break", "invert": true}
 								],
 								"animation": "wom:biped/combat/solar_auto_3",
-								"play_speed": 0.5,
+								"play_speed": 0.8,
 								"convert_time": 0.2,
 								"command_list": [
 									
@@ -887,10 +891,11 @@
 									{"predicate":"epicfight:within_eye_height"}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 30.0},{"predicate":"indestructible:guard_break", "invert": true}
 								],
 								"animation": "wom:biped/combat/solar_auto_4",
-								"play_speed": 0.5,
+								"play_speed": 0.8,
 								"convert_time": 0.2,
 								"command_list": [
-									{"time":0.0, "command":"playsound epicfight:sfx.buzz ambient @p", "execute_at_target":true},
+									{"time":0.1, "command":"playsound minecraft:block.end_portal.spawn block @s ~ ~ ~ 1 1.5", "execute_at_target":true},
+									{"time":0.1, "command":"particle wom:blink ~ ~ ~ 0.5 0.5 0.5 0.5 10 force", "execute_at_target":true},
 									{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_pyroclas_of_purgatory] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 								],
 								"hit_command_list":[
@@ -902,8 +907,8 @@
 									{"predicate":"epicfight:within_eye_height"}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 30.0},{"predicate":"indestructible:guard_break", "invert": true}
 								],
 								"animation": "wom:biped/skill/solar_auto_4_polvora",
-								"play_speed": 0.5,
-								"convert_time": 0.4,
+								"play_speed": 0.8,
+								"convert_time": 0.25,
 								"command_list": [
 									{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_pyroclas_of_purgatory] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 								],
@@ -914,7 +919,7 @@
 						]
 					},
 					{
-						"weight": 0.5,
+						"weight":10,
 						"canBeInterrupted": false,
 						"looping": false,
 						"cooldown": 100,
@@ -925,7 +930,7 @@
 									{"predicate":"indestructible:guard_break", "invert": true}, {"predicate":"indestructible:knock_down", "invert": true}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 5.0}
 								],
 								"animation": "wom:biped/combat/solar_auto_1",
-								"play_speed": 0.5,
+								"play_speed": 0.8,
 								"convert_time": 0.3,
 								"command_list": [
 									{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_pyroclas_of_purgatory] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true},
@@ -939,7 +944,7 @@
 								],
 								"animation": "wom:biped/combat/solar_auto_2",
 								"convert_time": 0.2,
-								"play_speed": 0.5,
+								"play_speed": 0.8,
 								"command_list": [
 									{"time":0.0, "command":"playsound epicfight:sfx.buzz ambient @p", "execute_at_target":true},
 									{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_pyroclas_of_purgatory] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
@@ -950,9 +955,11 @@
 									{"predicate":"epicfight:within_eye_height"}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 30.0},{"predicate":"indestructible:guard_break", "invert": true}
 								],
 								"animation": "wom:biped/combat/solar_auto_3",
-								"convert_time": 0.3,
-								"play_speed": 0.5,
+								"convert_time": 0.2,
+								"play_speed": 0.8,
 								"command_list": [
+									{"time":0.1, "command":"playsound minecraft:block.end_portal.spawn block @s ~ ~ ~ 1 1.5", "execute_at_target":true},
+									{"time":0.1, "command":"particle wom:blink ~ ~ ~ 0.5 0.5 0.5 0.5 10 force", "execute_at_target":true},
 									{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_pyroclas_of_purgatory] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 								],
 								"hit_command_list":[
@@ -976,7 +983,7 @@
 						]
 					},
 					{
-						"weight": 1.3,
+						"weight": 10,
 						"canBeInterrupted": false,
 						"looping": false, 
 						"cooldown": 1000, 
@@ -989,7 +996,9 @@
 								],
 								"animation": "epicfight:biped/skill/step_forward",
 								"command_list": [
-									{"time":0.0, "command":"playsound epicfight:sfx.buzz ambient @p", "execute_at_target":true},
+									{"time":0.1, "command":"playsound minecraft:block.end_portal.spawn block @s ~ ~ ~ 1 1.5", "execute_at_target":true},
+									{"time":0.1, "command":"particle wom:blink ~ ~ ~ 0.5 0.5 0.5 0.5 10 force", "execute_at_target":true},
+									{"time":0.0, "command":"playsound minecraft:block.anvil.place ambient @p ~ ~ ~ 1 0.5", "execute_at_target":true},
 									{"time":0.0, "command":"indestructible @s rotate_to_target", "execute_at_target":false},
 									{"time":0.0, "command":"effect give @s epicfight:stun_immunity 16 1", "execute_at_target":false},
 									{"time":0.0, "command":"effect give @s minecraft:resistance 8 2", "execute_at_target":false}
@@ -1052,7 +1061,8 @@
 								"play_speed": 0.7,
 								"command_list":[
 									{"time":0.2, "command":"execute at @s run playsound epicfight:sfx.ground_slam block @a[distance=..20] ~ ~ ~ 0.6", "execute_at_target":false},
-									{"time":0.0, "command":"playsound epicfight:sfx.buzz ambient @p", "execute_at_target":true},
+									{"time":0.1, "command":"playsound minecraft:block.end_portal.spawn block @s ~ ~ ~ 1 1.5", "execute_at_target":true},
+									{"time":0.1, "command":"particle wom:blink ~ ~ ~ 0.5 0.5 0.5 0.5 10 force", "execute_at_target":true},
 									{"time":0.0, "command":"indestructible @s rotate_to_target", "execute_at_target":false}
 								]
 							},
@@ -1073,9 +1083,11 @@
 									{"predicate":"indestructible:knock_down", "invert": true}, {"predicate":"indestructible:phase", "min": 1, "max": 2}
 								],
 								"animation": "wom:biped/skill/torment_berserk_airslam",
-								"convert_time": 0.5,
-								"play_speed": 0.5,
+								"convert_time": 0.4,
+								"play_speed": 0.7,
 								"command_list":[
+									{"time":0.1, "command":"playsound minecraft:block.end_portal.spawn block @s ~ ~ ~ 1 1.5", "execute_at_target":true},
+									{"time":0.1, "command":"particle wom:blink ~ ~ ~ 0.5 0.5 0.5 0.5 10 force", "execute_at_target":true},
 									{"time":0.4, "command":"execute at @s run playsound epicfight:sfx.ground_slam block @a[distance=..20] ~ ~ ~ 0.6", "execute_at_target":false},
 									
 									{"time":0.0, "command":"indestructible @s rotate_to_target", "execute_at_target":false}
@@ -1088,20 +1100,9 @@
 								"conditions": [
 									{"predicate":"indestructible:knock_down", "invert": true}, {"predicate":"indestructible:phase", "min": 1, "max": 2}
 								],
-								"animation": "wom:biped/skill/torment_berserk_auto_1",
-								"convert_time": 0.4,
-								"play_speed": 0.8,
-								"command_list":[
-									{"time":0.0, "command":"indestructible @s rotate_to_target", "execute_at_target":false}
-								]
-							},
-							{
-								"conditions": [
-									{"predicate":"indestructible:knock_down", "invert": true}, {"predicate":"indestructible:phase", "min": 1, "max": 2}
-								],
-								"animation": "wom:biped/skill/torment_berserk_auto_2",
+								"animation": "wom:biped/combat/torment_charged_attack_1",
 								"convert_time": 0.1,
-								"play_speed": 0.8,
+								"play_speed": 0.65,
 								"command_list":[
 									{"time":0.0, "command":"indestructible @s rotate_to_target", "execute_at_target":false}
 								]
@@ -1111,9 +1112,11 @@
 									{"predicate":"indestructible:knock_down", "invert": true}, {"predicate":"indestructible:phase", "min": 1, "max": 2}
 								],
 								"animation": "wom:biped/combat/torment_auto_4",
-								"convert_time": 0.3,
-								"play_speed": 0.6,
+								"convert_time": 0.2,
+								"play_speed": 0.7,
 								"command_list":[
+									{"time":0.1, "command":"playsound minecraft:block.end_portal.spawn block @s ~ ~ ~ 1 1.5", "execute_at_target":true},
+									{"time":0.1, "command":"particle wom:blink ~ ~ ~ 0.5 0.5 0.5 0.5 10 force", "execute_at_target":true},
 									{"time":0.0, "command":"indestructible @s rotate_to_target", "execute_at_target":false},
 									{"time":0.6, "command":"effect give @s epicfight:stun_immunity 3 10", "execute_at_target":false},
 									{"time":0.6, "command":"indestructible @s play \"epicfight:biped/living/walk\" 0 1", "execute_at_target":false}

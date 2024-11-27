@@ -97,6 +97,6 @@ public class ThePyroclasOfPurgatory extends DOTEBoss implements ModifyAttackSpee
 
     @Override
     public float getAttackSpeed() {
-        return 0.6F + level().getDifficulty().getId() * 0.1F;
+        return 0;
     }
 }
