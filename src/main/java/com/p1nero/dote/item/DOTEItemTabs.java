@@ -43,7 +43,7 @@ public class DOTEItemTabs {
 						tabData.accept(DOTEItems.NETHERITEROT_CHESTPLATE.get());
 						tabData.accept(DOTEItems.NETHERITEROT_LEGGINGS.get());
 						tabData.accept(DOTEItems.NETHERITEROT_BOOTS.get());
-						tabData.accept(DOTEItems.BALMUNG.get());
+//						tabData.accept(DOTEItems.BALMUNG.get());
 						tabData.accept(DOTEItems.GOLDEN_DRAGON_HELMET.get());
 						tabData.accept(DOTEItems.GOLDEN_DRAGON_CHESTPLATE.get());
 						tabData.accept(DOTEItems.GOLDEN_DRAGON_LEGGINGS.get());

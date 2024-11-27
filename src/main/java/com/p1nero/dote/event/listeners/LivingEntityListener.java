@@ -96,14 +96,18 @@ public class LivingEntityListener {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onEntityHurt(EntityTravelToDimensionEvent event) {
+    public static void onEntityDimChanged(EntityTravelToDimensionEvent event) {
         if(event.getEntity() instanceof ServerPlayer player){
             if(!player.isCreative() && event.getDimension() == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY && player.level().dimension() != DOTEDimension.P_SKY_ISLAND_LEVEL_KEY){
                 if(!IDOTEKeepableItem.check(player, true)){
                     player.displayClientMessage(DuelOfTheEndMod.getInfo("tip0"), true);
                     ServerLevel ordinalLevel = player.serverLevel();
-                    event.getEntity().changeDimension(ordinalLevel, new DOTETeleporter(ordinalLevel.getSharedSpawnPos()));
+//                    event.getEntity().changeDimension(ordinalLevel, new DOTETeleporter(ordinalLevel.getSharedSpawnPos()));
                     event.setCanceled(true);
+                }
+                if(player.getHealth() > DOTEConfig.HEALTH_CHECK.get()){
+                    event.setCanceled(true);
+                    player.displayClientMessage(DuelOfTheEndMod.getInfo("tip10"), true);
                 }
             }
         }

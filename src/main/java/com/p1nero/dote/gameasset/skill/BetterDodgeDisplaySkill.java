@@ -30,6 +30,12 @@ public class BetterDodgeDisplaySkill extends PassiveSkill {
     }
 
     @Override
+    public void onRemoved(SkillContainer container) {
+        super.onRemoved(container);
+        container.getExecuter().getEventListener().removeListener(PlayerEventListener.EventType.DODGE_SUCCESS_EVENT, EVENT_UUID);
+    }
+
+    @Override
     public void drawOnGui(BattleModeGui gui, SkillContainer container, GuiGraphics guiGraphics, float x, float y) {
     }
 }

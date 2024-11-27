@@ -1,6 +1,7 @@
 package com.p1nero.dote.entity.custom;
 
 import com.p1nero.dote.DOTEConfig;
+import com.p1nero.dote.archive.DOTEArchiveManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -53,9 +54,9 @@ public class DOTEZombie extends DOTEMonster {
      * 调节概率
      */
     public static boolean checkMobSpawnRules(@NotNull EntityType<? extends Mob> entityType, @NotNull LevelAccessor levelAccessor, MobSpawnType mobSpawnType, BlockPos pos, RandomSource randomSource) {
-        int dis = DOTEConfig.MOB_SPAWN_DISTANCE.get().intValue();
+        int dis = DOTEConfig.MOB_SPAWN_DISTANCE.get().intValue() / (DOTEArchiveManager.getWorldLevel() + 1);
         return Mob.checkMobSpawnRules(entityType, levelAccessor, mobSpawnType, pos, randomSource)
-                && randomSource.nextInt(40) == 0
+                && randomSource.nextInt(20) == 0
                 && levelAccessor.getEntitiesOfClass(DOTEMonster.class, new AABB(pos.offset(-dis, -dis, -dis), pos.offset(dis, dis, dis))).isEmpty();
     }
 

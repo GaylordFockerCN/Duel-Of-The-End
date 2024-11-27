@@ -129,6 +129,10 @@ public class DOTERecipeGenerator extends DOTERecipeProvider implements IConditio
                 .define('B', Items.COBBLESTONE)
                 .unlockedBy(getHasName(Items.LEATHER), has(Items.LEATHER))
                 .save(consumer);
+        smithing(consumer, Items.NETHERITE_INGOT, Items.DIAMOND_HELMET, DOTEItems.ADVENTURESPAR.get(), RecipeCategory.COMBAT, Items.NETHERITE_HELMET);
+        smithing(consumer, Items.NETHERITE_INGOT, Items.DIAMOND_CHESTPLATE, DOTEItems.ADVENTURESPAR.get(), RecipeCategory.COMBAT, Items.NETHERITE_CHESTPLATE);
+        smithing(consumer, Items.NETHERITE_INGOT, Items.DIAMOND_LEGGINGS, DOTEItems.ADVENTURESPAR.get(), RecipeCategory.COMBAT, Items.NETHERITE_LEGGINGS);
+        smithing(consumer, Items.NETHERITE_INGOT, Items.DIAMOND_BOOTS, DOTEItems.ADVENTURESPAR.get(), RecipeCategory.COMBAT, Items.NETHERITE_BOOTS);
         smithing(consumer, DOTEItems.WKNIGHT_INGOT.get(), Items.DIAMOND_HELMET, Items.NETHERITE_SCRAP, RecipeCategory.COMBAT, DOTEItems.WKNIGHT_HELMET.get());
         smithing(consumer, DOTEItems.WKNIGHT_INGOT.get(), Items.DIAMOND_CHESTPLATE, Items.NETHERITE_SCRAP, RecipeCategory.COMBAT, DOTEItems.WKNIGHT_CHESTPLATE.get());
         smithing(consumer, DOTEItems.WKNIGHT_INGOT.get(), Items.DIAMOND_LEGGINGS, Items.NETHERITE_SCRAP, RecipeCategory.COMBAT, DOTEItems.WKNIGHT_LEGGINGS.get());

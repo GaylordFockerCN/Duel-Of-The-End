@@ -59,11 +59,13 @@ public class DOTEArchiveManager {
         return worldLevel;
     }
 
-    public static void setWorldLevel(int worldLevel) {
+    public static boolean setWorldLevel(int worldLevel) {
         if(worldLevel >= 0 && worldLevel <= 3){
             DOTEArchiveManager.worldLevel = worldLevel;
+            return true;
         } else {
             DuelOfTheEndMod.LOGGER.info("failed to set world level. world level should between [0, 2]");
+            return false;
         }
     }
 
