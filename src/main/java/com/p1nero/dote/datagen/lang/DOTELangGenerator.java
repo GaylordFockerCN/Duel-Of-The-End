@@ -32,6 +32,7 @@ public class DOTELangGenerator extends DOTELangProvider {
         this.addInfo("tip11", "是时候回去找巴伦了...");
         this.addInfo("tip12", "终焉维度数据已清空");
         this.addInfo("tip13", "我应该先找到巴伦...");
+        this.addInfo("tip14", "盔甲附魔现在被允许了！");
 
         this.addAdvancement(DuelOfTheEndMod.MOD_ID, "光与暗与终末", "进入光与暗与终末的维度");
         this.addAdvancement("seed", "圣辉之种", "完成圣辉试炼");

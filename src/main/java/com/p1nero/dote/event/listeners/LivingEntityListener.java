@@ -20,6 +20,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.horse.SkeletonHorse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -74,7 +75,7 @@ public class LivingEntityListener {
                     ItemUtil.addItem(player, technician);
                 }
                 //死五次播报一次提示，随机送绑石套之一
-                if(dotePlayer.getDeathCount() % 5 == 1){
+                if(dotePlayer.getDeathCount() < 50 && dotePlayer.getDeathCount() % 5 == 1){
                     player.displayClientMessage(DuelOfTheEndMod.getInfo("tip" + (5 + player.getRandom().nextInt(3))).withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD), false);
                     ItemStack potion = new ItemStack(Items.POTION);
                     PotionUtils.setPotion(potion, Potions.TURTLE_MASTER);
@@ -101,8 +102,6 @@ public class LivingEntityListener {
             if(!player.isCreative() && event.getDimension() == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY && player.level().dimension() != DOTEDimension.P_SKY_ISLAND_LEVEL_KEY){
                 if(!IDOTEKeepableItem.check(player, true)){
                     player.displayClientMessage(DuelOfTheEndMod.getInfo("tip0"), true);
-                    ServerLevel ordinalLevel = player.serverLevel();
-//                    event.getEntity().changeDimension(ordinalLevel, new DOTETeleporter(ordinalLevel.getSharedSpawnPos()));
                     event.setCanceled(true);
                 }
                 if(player.getHealth() > DOTEConfig.HEALTH_CHECK.get()){
@@ -121,18 +120,24 @@ public class LivingEntityListener {
         }
     }
 
-    /**
-     * 实体加入时检查根据玩家和世界等级是否要加血
-     */
     @SubscribeEvent
     public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
-        if(event.getLevel() instanceof ServerLevel){
+        if(event.getLevel() instanceof ServerLevel serverLevel){
+            //实体加入时检查根据玩家和世界等级是否要加血
             if(event.getEntity() instanceof LevelableEntity levelableEntity){
                 levelableEntity.levelUp(DOTEArchiveManager.getWorldLevel());
             }
             if(event.getEntity() instanceof MultiPlayerBoostEntity multiPlayerBoostEntity){
                 multiPlayerBoostEntity.whenPlayerCountChange();
             }
+
+            //维度内骷髅马可骑
+            if(serverLevel.dimension() == DOTEDimension.P_SKY_ISLAND_LEVEL_KEY){
+                if(event.getEntity() instanceof SkeletonHorse horse){
+                    horse.setTamed(true);
+                }
+            }
+
         }
     }
 

@@ -29,7 +29,9 @@ public class BalmungItem extends WeaponItem {
     public void inventoryTick(@NotNull ItemStack itemStack, @NotNull Level level, @NotNull Entity entity, int p_41407_, boolean p_41408_) {
         super.inventoryTick(itemStack, level, entity, p_41407_, p_41408_);
         if(entity instanceof Player player && !player.isCreative()){
-            player.setHealth(player.getHealth() - 0.25F);
+            player.setHealth(player.getHealth() - 0.15F);
+            player.drop(itemStack, false);
+            itemStack.setCount(0);
             player.displayClientMessage(DuelOfTheEndMod.getInfo("tip9"), true);
         }
     }

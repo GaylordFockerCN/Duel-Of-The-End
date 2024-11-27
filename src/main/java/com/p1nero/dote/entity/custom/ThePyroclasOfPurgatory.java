@@ -5,12 +5,10 @@ import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
-import com.p1nero.dote.entity.ModifyAttackSpeedEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -28,7 +26,7 @@ import yesman.epicfight.world.item.EpicFightItems;
 /**
  * 炼狱炎魔
  */
-public class ThePyroclasOfPurgatory extends DOTEBoss implements ModifyAttackSpeedEntity{
+public class ThePyroclasOfPurgatory extends DOTEBoss{
 
     public ThePyroclasOfPurgatory(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -95,8 +93,4 @@ public class ThePyroclasOfPurgatory extends DOTEBoss implements ModifyAttackSpee
         return DOTESounds.GOLDEN_FLAME_BGM.get();
     }
 
-    @Override
-    public float getAttackSpeed() {
-        return 0;
-    }
 }

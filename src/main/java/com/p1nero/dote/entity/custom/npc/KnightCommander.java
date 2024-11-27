@@ -149,13 +149,19 @@ public class KnightCommander extends DOTENpc {
                 new ItemStack(DOTEItems.P_KEY.get(), 1),
                 142857, 0, 0.02f));
         offers.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 10),
-                potion,
+                new ItemStack(DOTEItems.ADGRAIN.get(), 5),
+                new ItemStack(Items.SADDLE, 1),
                 142857, 0, 0.02f));
         offers.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADVENTURESPAR.get(), 10),
-                new ItemStack(Items.PAPER, 10),
+                potion,
                 142857, 0, 0.02f));
+        if(DOTEArchiveManager.getWorldLevel() >= 1){
+            offers.add(new MerchantOffer(
+                    new ItemStack(DOTEItems.ADVENTURESPAR.get(), 10),
+                    new ItemStack(Items.PAPER, 10),
+                    142857, 0, 0.02f));
+        }
         offers.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADGRAIN.get(), 24),
                 new ItemStack(DOTEItems.WKNIGHT_INGOT.get(), 1),

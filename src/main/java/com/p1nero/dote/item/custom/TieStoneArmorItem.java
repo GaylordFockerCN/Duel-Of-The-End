@@ -1,5 +1,6 @@
 package com.p1nero.dote.item.custom;
 
+import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.item.DOTEArmorMaterials;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.item.DOTERarities;
@@ -16,6 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
@@ -34,8 +36,8 @@ public class TieStoneArmorItem extends SimpleDescriptionArmorItem {
                         || (equipmentSlot == EquipmentSlot.FEET&& this.type.equals(Type.BOOTS))) {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
             builder.putAll(super.getDefaultAttributeModifiers(equipmentSlot));
-            builder.put(EpicFightAttributes.MAX_STAMINA.get(), new AttributeModifier(UUID.fromString("CC111E1C-4180-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", 3, AttributeModifier.Operation.ADDITION));
-            builder.put(EpicFightAttributes.STAMINA_REGEN.get(), new AttributeModifier(STAMINA_REGEN_UUID, "Item modifier", 0.25, AttributeModifier.Operation.ADDITION));
+            builder.put(EpicFightAttributes.MAX_STAMINA.get(), new AttributeModifier(UUID.fromString("CC111E1C-4180-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", 4.0, AttributeModifier.Operation.ADDITION));
+            builder.put(EpicFightAttributes.STAMINA_REGEN.get(), new AttributeModifier(UUID.fromString("CC222E1C-3333-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", 0.05, AttributeModifier.Operation.ADDITION));
             return builder.build();
         }
         return super.getDefaultAttributeModifiers(equipmentSlot);
@@ -58,6 +60,16 @@ public class TieStoneArmorItem extends SimpleDescriptionArmorItem {
                 DOTEItems.TIESTONEC.get(),
                 DOTEItems.TIESTONEL.get(),
                 DOTEItems.TIESTONES.get()));
+    }
+
+    @Override
+    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+        return DOTEArchiveManager.getWorldLevel() >= 1;
+    }
+
+    @Override
+    public boolean isEnchantable(@NotNull ItemStack stack) {
+        return DOTEArchiveManager.getWorldLevel() >= 1;
     }
 
 }

@@ -58,7 +58,7 @@ public class SenbaiDevil extends DOTEBoss implements ModifyAttackSpeedEntity {
 
     @Override
     public int getMaxNeutralizeCount() {
-        return 16;
+        return 16 + DOTEArchiveManager.getWorldLevel() * 3;
     }
 
     /**

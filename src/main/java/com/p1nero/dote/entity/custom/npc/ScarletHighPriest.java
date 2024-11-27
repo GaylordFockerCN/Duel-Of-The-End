@@ -49,13 +49,13 @@ public class ScarletHighPriest extends DOTENpc{
                         .addChild(new TreeNode(D_BUILDER.buildDialogueAnswer(5), D_BUILDER.buildDialogueOption(3))
                                 .addChild(new TreeNode(D_BUILDER.buildDialogueAnswer(6), D_BUILDER.buildDialogueOption(4))
                                                 .addLeaf(D_BUILDER.buildDialogueOption(-1), (byte) 2)))
-                        .addLeaf(D_BUILDER.buildDialogueOption(-1), (byte) 1));//骸骨交易
+                        .addLeaf(D_BUILDER.buildDialogueOption(-2), (byte) 1));//骸骨交易
                 break;
             default:
                 builder.setAnswerRoot(new TreeNode(D_BUILDER.buildDialogueAnswer(7))
                         .addChild(new TreeNode(D_BUILDER.buildDialogueAnswer(8), D_BUILDER.buildDialogueOption(5))
                                                 .addLeaf(D_BUILDER.buildDialogueOption(-1), (byte) 2))
-                        .addLeaf(D_BUILDER.buildDialogueOption(-1), (byte) 1));//骸骨交易
+                        .addLeaf(D_BUILDER.buildDialogueOption(-2), (byte) 1));//骸骨交易
                 break;
         }
         if(!builder.isEmpty()){
@@ -81,10 +81,13 @@ public class ScarletHighPriest extends DOTENpc{
     public @NotNull MerchantOffers getOffers() {
         MerchantOffers offers = new MerchantOffers();
 
-        offers.add(new MerchantOffer(
-                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 10),
-                new ItemStack(Items.LAPIS_LAZULI, 1),
-                142857, 0, 0.02f));
+        if(DOTEArchiveManager.getWorldLevel() >= 1){
+            offers.add(new MerchantOffer(
+                    new ItemStack(DOTEItems.ADVENTURESPAR.get(), 10),
+                    new ItemStack(Items.LAPIS_LAZULI, 1),
+                    142857, 0, 0.02f));
+        }
+
         offers.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADVENTURESPAR.get(), 10),
                 new ItemStack(DOTEItems.NETHERROT_INGOT.get(), 1),

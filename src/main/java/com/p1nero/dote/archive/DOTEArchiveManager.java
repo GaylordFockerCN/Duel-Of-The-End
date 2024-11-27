@@ -8,6 +8,7 @@ import com.p1nero.dote.item.custom.IDOTEKeepableItem;
 import com.p1nero.dote.network.PacketRelay;
 import com.p1nero.dote.network.DOTEPacketHandler;
 import com.p1nero.dote.network.packet.SyncArchivePacket;
+import com.p1nero.dote.network.packet.clientbound.BroadcastMessagePacket;
 import com.p1nero.dote.network.packet.clientbound.OpenEndScreenPacket;
 import com.p1nero.dote.util.ItemUtil;
 import com.p1nero.dote.worldgen.dimension.DOTEDimension;
@@ -160,6 +161,8 @@ public class DOTEArchiveManager {
         switch (worldLevel){
             case 1:
                 BIOME_PROGRESS_DATA.setChoice1(chooseKnight);
+                //广播盔甲可用
+                PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new BroadcastMessagePacket(DuelOfTheEndMod.getInfo("tip14"), false));
                 break;
             case 2:
                 BIOME_PROGRESS_DATA.setChoice2(chooseKnight);
@@ -270,17 +273,17 @@ public class DOTEArchiveManager {
         }
 
         /**
-         * 结局1： 忠诚
+         * 结局1： 忠诚，全选骑士
          */
         public boolean isEnd1(){
             return isFinished() && choice1 && choice2 && choice3;
         }
 
         /**
-         * 结局3：碎星者
+         * 结局3：碎星者，最终必选final，且前面有一次选final
          */
         public boolean isEnd3(){
-            return isFinished() && !choice1 && !choice2 && !choice3;
+            return isFinished() && (!choice1 || !choice2) && !choice3;
         }
 
         public boolean isChoice1() {

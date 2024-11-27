@@ -1,11 +1,13 @@
 package com.p1nero.dote.entity.custom;
 
+import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.capability.DOTECapabilityProvider;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
 import com.p1nero.dote.entity.ModifyAttackSpeedEntity;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -26,7 +28,7 @@ import yesman.epicfight.world.item.EpicFightItems;
 /**
  * 圣辉裁决者
  */
-public class TheArbiterOfRadiance extends DOTEBoss implements ModifyAttackSpeedEntity {
+public class TheArbiterOfRadiance extends DOTEBoss {
 
     public TheArbiterOfRadiance(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -52,11 +54,6 @@ public class TheArbiterOfRadiance extends DOTEBoss implements ModifyAttackSpeedE
         return 500;
     }
 
-    @Override
-    public float getAttackSpeed() {
-        return 0.65F + DOTEArchiveManager.getWorldLevel() * 0.15F;
-    }
-
     /**
      * 播放音效，解锁玩家进入维度的权限
      */
@@ -77,6 +74,7 @@ public class TheArbiterOfRadiance extends DOTEBoss implements ModifyAttackSpeedE
                     player.displayClientMessage(builder.buildDialogue(this, builder.buildDialogueAnswer(5)), false);
             }
             DOTEAdvancementData.getAdvancement("seed", player);
+            player.displayClientMessage(DuelOfTheEndMod.getInfo("tip11").withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD), false);
         }
         DOTEArchiveManager.BIOME_PROGRESS_DATA.setBoss1fought(true);
         super.die(source);
