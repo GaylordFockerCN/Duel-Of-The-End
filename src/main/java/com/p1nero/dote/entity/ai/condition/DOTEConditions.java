@@ -11,5 +11,6 @@ import java.util.function.Supplier;
 public class DOTEConditions {
     public static final DeferredRegister<Supplier<Condition<?>>> CONDITIONS = DeferredRegister.create(new ResourceLocation("epicfight", "conditions"), DuelOfTheEndMod.MOD_ID);
     private static final RegistryObject<Supplier<Condition<?>>> WORLD_LEVEL_CHECK_CONDITION = CONDITIONS.register((new ResourceLocation(DuelOfTheEndMod.MOD_ID, "world_level_check")).getPath(), () -> WorldLevelCheckCondition::new);
+    private static final RegistryObject<Supplier<Condition<?>>> PLAYER_COUNT_CHECK_CONDITION = CONDITIONS.register((new ResourceLocation(DuelOfTheEndMod.MOD_ID, "player_count_check")).getPath(), () -> PlayerCountCheckCondition::new);
 
 }
