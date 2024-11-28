@@ -1,6 +1,7 @@
 package com.p1nero.dote.entity.custom;
 
 import com.p1nero.dote.archive.DOTEArchiveManager;
+import com.p1nero.dote.capability.efpatch.StarChaserPatch;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.client.gui.screen.LinkListStreamDialogueScreenBuilder;
 import com.p1nero.dote.client.gui.TreeNode;
@@ -48,7 +49,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import reascer.wom.gameasset.WOMAnimations;
 import yesman.epicfight.gameasset.EpicFightSkills;
+import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 import yesman.epicfight.world.item.EpicFightItems;
 
@@ -61,11 +64,13 @@ import java.util.List;
 public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
     public static final List<Item> WEAPONS = new ArrayList<>();
     private final DialogueComponentBuilder BUILDER;
+    private int sittingTick;
     @Nullable
     private Player conversingPlayer;
     private Player tradingPlayer;
     private MerchantOffers currentOffers = new MerchantOffers();
     protected static final EntityDataAccessor<Integer> SKIN_ID = SynchedEntityData.defineId(StarChaser.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<Boolean> IS_SITTING = SynchedEntityData.defineId(StarChaser.class, EntityDataSerializers.BOOLEAN);
     private static final int MAX_SKIN_ID = 13;//总人数
     public StarChaser(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
@@ -95,22 +100,33 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
     protected void defineSynchedData() {
         super.defineSynchedData();
         getEntityData().define(SKIN_ID, getRandom().nextInt(MAX_SKIN_ID));
+        getEntityData().define(IS_SITTING, false);
     }
 
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.getEntityData().set(SKIN_ID,tag.getInt("skin_id"));
+        this.getEntityData().set(SKIN_ID, tag.getInt("skin_id"));
+        this.getEntityData().set(IS_SITTING, tag.getBoolean("is_sitting"));
     }
 
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("skin_id", this.getEntityData().get(SKIN_ID));
+        tag.putBoolean("is_sitting", this.getEntityData().get(IS_SITTING));
     }
 
     public int getSkinId() {
         return getEntityData().get(SKIN_ID);
+    }
+
+    public boolean isSitting(){
+        return getEntityData().get(IS_SITTING);
+    }
+
+    public int getSittingTick() {
+        return sittingTick;
     }
 
     @Override
@@ -119,13 +135,35 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
         this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, DOTEZombie.class, false));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, false));
-        this.targetSelector.addGoal(0, new NpcDialogueGoal<>(this));
-        this.goalSelector.addGoal(1, new RandomStrollGoal(this, 1));
+        this.goalSelector.addGoal(0, new NpcDialogueGoal<>(this));
+        this.goalSelector.addGoal(1, new RandomStrollGoal(this, 1){
+            @Override
+            public boolean canUse() {
+                return super.canUse() && !isSitting();
+            }
+        });
         this.goalSelector.addGoal(2, new RandomLookAroundGoal(this));
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        if(isSitting()){
+            sittingTick++;
+            setYBodyRot(getYRot());
+            setYHeadRot(getYRot());
+            setPos(position());
+        } else {
+            sittingTick = 0;
+        }
+    }
+
+    @Override
     public boolean hurt(@NotNull DamageSource source, float p_21017_) {
+        if(isSitting()){
+            getEntityData().set(IS_SITTING, false);
+            return super.hurt(source, p_21017_);
+        }
         if(getConversingPlayer() != null || getTradingPlayer() != null){
             return false;
         }
@@ -153,7 +191,7 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
     @Nullable
     @Override
     public LivingEntity getTarget() {
-        if(getTradingPlayer() != null || getConversingPlayer() != null){
+        if(getTradingPlayer() != null || getConversingPlayer() != null || isSitting()){
             return null;
         }
         return super.getTarget();
@@ -161,9 +199,17 @@ public class StarChaser extends PathfinderMob implements NpcDialogue, Merchant {
 
     @Override
     protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
-        //shift右键换皮
-        if(player.isCreative() && player.isShiftKeyDown()){
-            getEntityData().set(SKIN_ID, (getSkinId() + 1) % MAX_SKIN_ID);
+        //shift右键换皮，单右键坐下
+        if(player.isCreative()){
+            if(player.isShiftKeyDown()){
+                getEntityData().set(SKIN_ID, (getSkinId() + 1) % MAX_SKIN_ID);
+            } else {
+                if(!level().isClientSide){
+                    StarChaserPatch patch = EpicFightCapabilities.getEntityPatch(this, StarChaserPatch.class);
+                    patch.playAnimationSynchronized(WOMAnimations.MEDITATION_BREATHING, 0.1F);
+                    getEntityData().set(IS_SITTING, !isSitting());
+                }
+            }
             return InteractionResult.sidedSuccess(isClientSide());
         }
         //打架的时候不能对话

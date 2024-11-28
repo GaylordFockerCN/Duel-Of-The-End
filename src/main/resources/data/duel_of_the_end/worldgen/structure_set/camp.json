@@ -1,0 +1,17 @@
+{
+  "structures": [
+    {
+      "structure": "duel_of_the_end:camp",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 1145141919,
+
+    "spacing": 25,
+
+    "separation": 10,
+
+    "type": "minecraft:random_spread"
+  }
+}

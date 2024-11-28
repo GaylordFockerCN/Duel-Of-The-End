@@ -4,7 +4,9 @@ import com.p1nero.dote.entity.custom.DOTEBoss;
 import com.p1nero.dote.entity.custom.StarChaser;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
+import reascer.wom.gameasset.WOMAnimations;
 import yesman.epicfight.api.animation.Animator;
+import yesman.epicfight.api.animation.LivingMotions;
 import yesman.epicfight.api.utils.AttackResult;
 import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.world.capabilities.entitypatch.Faction;
@@ -34,12 +36,18 @@ public class StarChaserPatch extends HumanoidMobPatch<StarChaser> {
     @Override
     public void initAnimator(Animator animator) {
         super.commonAggresiveMobAnimatorInit(animator);
+        animator.addLivingAnimation(LivingMotions.SIT, WOMAnimations.MEDITATION_BREATHING);
     }
 
     @Override
     public void updateMotion(boolean b) {
         if(getOriginal().getConversingPlayer() != null){
             //TODO
+        }
+        if(getOriginal().isSitting()){
+            this.currentLivingMotion = LivingMotions.SIT;
+            this.currentCompositeMotion = this.currentLivingMotion;
+            return;
         }
         super.commonAggressiveMobUpdateMotion(b);
     }
