@@ -2,6 +2,7 @@ package com.p1nero.dote.item.custom;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.p1nero.dote.DuelOfTheEndMod;
+import com.p1nero.dote.entity.custom.GoldenFlame;
 import com.p1nero.dote.item.DOTEArmorMaterials;
 import com.p1nero.dote.item.DOTERarities;
 import com.p1nero.dote.item.model.GoldenDragonArmorModel;
@@ -28,9 +29,9 @@ import java.util.function.Consumer;
 
 import static com.p1nero.dote.item.custom.SimpleDescriptionArmorItem.STAMINA_REGEN_UUID;
 
-public class GoldenDragonItem extends ArmorItem {
+public class GoldenDragonArmorItem extends ArmorItem {
 
-    public GoldenDragonItem(Type type) {
+    public GoldenDragonArmorItem(Type type) {
         super(DOTEArmorMaterials.GOLDEN_DRAGON, type, new Properties().fireResistant().rarity(DOTERarities.SHEN_ZHEN));
     }
 
@@ -61,8 +62,22 @@ public class GoldenDragonItem extends ArmorItem {
         });
     }
 
+    /**
+     * 穿金焰神王身上要变色
+     */
     @Override
     public @Nullable String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+        if(entity instanceof GoldenFlame goldenFlame){
+            if(goldenFlame.isBlue()){
+                return DuelOfTheEndMod.MOD_ID + ":textures/item/armor/golden_dragon_armor.png";
+            } else {
+                if(goldenFlame.getAntiFormCooldown() > 0){
+                    return DuelOfTheEndMod.MOD_ID + ":textures/item/armor/golden_dragon_armor_dark.png";
+                } else {
+                    return DuelOfTheEndMod.MOD_ID + ":textures/item/armor/golden_dragon_armor_blue.png";
+                }
+            }
+        }
         return DuelOfTheEndMod.MOD_ID + ":textures/item/armor/golden_dragon_armor.png";
     }
 

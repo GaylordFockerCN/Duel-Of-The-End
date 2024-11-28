@@ -1,12 +1,17 @@
 package com.p1nero.dote.entity.ai;
 
 import com.p1nero.dote.archive.DOTEArchiveManager;
+import com.p1nero.dote.capability.efpatch.GoldenFlamePatch;
 import com.p1nero.dote.entity.IModifyAttackSpeedEntity;
 import com.p1nero.dote.entity.custom.GoldenFlame;
+import com.p1nero.dote.entity.custom.SenbaiDevil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 import reascer.wom.gameasset.WOMAnimations;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.data.conditions.entity.HealthPoint;
@@ -14,6 +19,7 @@ import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.world.capabilities.entitypatch.HumanoidMobPatch;
 import yesman.epicfight.world.capabilities.entitypatch.MobPatch;
+import yesman.epicfight.world.damagesource.StunType;
 import yesman.epicfight.world.entity.ai.goal.CombatBehaviors;
 
 import java.util.ArrayList;
@@ -23,8 +29,31 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class DOTECombatBehaviors {
+    /**
+     * 调整硬直类型（用完记得设为 null）
+     */
+    private static <T extends MobPatch<?>> Consumer<T> modifyAttackStunType(@Nullable StunType stunType) {
+        return (patch) -> {
+            if(patch instanceof GoldenFlamePatch flamePatch){
+                flamePatch.setStunTypeModify(stunType);
+            }
+        };
+    }
 
-    //播放动画，带ConvertTime也带变速
+    /**
+     *调整基础伤害值（用完记得设为 0）
+     */
+    private static <T extends MobPatch<?>> Consumer<T> modifyAttackDamage(float damageModify) {
+        return (patch) -> {
+            if(patch instanceof GoldenFlamePatch flamePatch){
+                flamePatch.setDamageModify(damageModify);
+            }
+        };
+    }
+
+    /**
+     * 播放动画，带ConvertTime也带变速
+     */
     private static <T extends MobPatch<?>> Consumer<T> customAttackAnimation(StaticAnimation animation, float convertTime, float attackSpeed) {
         return (patch) -> {
             if(patch.getOriginal() instanceof IModifyAttackSpeedEntity entity){
@@ -34,19 +63,34 @@ public class DOTECombatBehaviors {
         };
     }
 
-    //播放动画，带ConvertTime不带变速
+    /**
+     * 播放动画，带ConvertTime不带变速
+     */
     private static <T extends MobPatch<?>> Consumer<T> customAttackAnimation(StaticAnimation animation, float convertTime) {
         return customAttackAnimation(animation, convertTime, 1.0F);
     }
 
-    //进入反神形态
+    /**
+     * 进入二阶段
+     */
+    public static final Consumer<HumanoidMobPatch<?>> START_BLUE = (humanoidMobPatch -> {
+        if(humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame && goldenFlame.getHealth() <= goldenFlame.getMaxHealth()){
+            goldenFlame.setIsBlue(true);
+        }
+    });
+
+    /**
+     * 进入反神形态
+     */
     public static final Consumer<HumanoidMobPatch<?>> START_ANTI_FORM = (humanoidMobPatch -> {
         if(humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame && goldenFlame.getAntiFormCooldown() == 0){
             goldenFlame.startAntiForm();
         }
     });
 
-    //判断是否反神是否在冷却，防止不会进行别的Behavior
+    /**
+     * 判断是否反神是否在冷却，防止不会进行别的Behavior
+     */
     public static final Function<HumanoidMobPatch<?>, Boolean> CAN_STAR_ANTI_FORM = humanoidMobPatch -> {
         if(humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame){
             return goldenFlame.getAntiFormCooldown() == 0;
@@ -54,14 +98,18 @@ public class DOTECombatBehaviors {
         return false;
     };
 
-    //转向目标
+    /**
+     * 转向目标
+     */
     public static final Consumer<HumanoidMobPatch<?>> ROTATE_TO_TARGET = (humanoidMobPatch -> {
         if(humanoidMobPatch.getTarget() != null){
             humanoidMobPatch.rotateTo(humanoidMobPatch.getTarget(), 30F, true);
         }
     });
 
-    //瞬移到目标边上（可能会到身后）
+    /**
+     * 瞬移到目标边上（可能会到身后）
+     */
     public static final Consumer<HumanoidMobPatch<?>> MOVE_TO_TARGET = (humanoidMobPatch -> {
         if(humanoidMobPatch.getTarget() != null){
             humanoidMobPatch.getOriginal().moveTo(humanoidMobPatch.getTarget().position());
@@ -69,7 +117,9 @@ public class DOTECombatBehaviors {
         }
     });
 
-    //随机方向跨步
+    /**
+     * 随机方向跨步
+     */
     public static final Consumer<HumanoidMobPatch<?>> RANDOM_STEP = (humanoidMobPatch -> {
         List<StaticAnimation> steps = new ArrayList<>();
         steps.add(WOMAnimations.ENDERSTEP_BACKWARD);
@@ -79,7 +129,9 @@ public class DOTECombatBehaviors {
         humanoidMobPatch.playAnimationSynchronized(steps.get(new Random().nextInt(steps.size())), 0.0F);
     });
 
-    //播放粒子和音效提示
+    /**
+     * 播放粒子和音效提示
+     */
     public static final Consumer<HumanoidMobPatch<?>> FLAME_TIP = (humanoidMobPatch -> {
         if(humanoidMobPatch.getOriginal().level() instanceof ServerLevel serverLevel){
             Vec3 pos = humanoidMobPatch.getOriginal().position();
@@ -90,7 +142,9 @@ public class DOTECombatBehaviors {
 
     public static final Consumer<HumanoidMobPatch<?>> PLAY_SLAM_SOUND = (humanoidMobPatch -> humanoidMobPatch.playSound(EpicFightSounds.GROUND_SLAM.get(), 1, 1));
 
-    //结束蓄力状态并播放粒子音效提示
+    /**
+     * 结束蓄力状态并播放粒子音效提示
+     */
     public static final Consumer<HumanoidMobPatch<?>> CLEAR_CHARGE = (humanoidMobPatch -> {
         if(humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame){
             goldenFlame.resetCharging();
@@ -101,7 +155,9 @@ public class DOTECombatBehaviors {
         humanoidMobPatch.playSound(SoundEvents.WITHER_SHOOT, 1, 1);
     });
 
-    //判断是否在蓄力中
+    /**
+     * 判断是否在蓄力中
+     */
     public static final Function<HumanoidMobPatch<?>, Boolean> IS_CHARGING = humanoidMobPatch -> {
         if(humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame){
             return goldenFlame.isCharging();
@@ -109,7 +165,9 @@ public class DOTECombatBehaviors {
         return false;
     };
 
-    //是否不在蓄力中
+    /**
+     * 是否不在蓄力中
+     */
     public static final Function<HumanoidMobPatch<?>, Boolean> IS_NOT_CHARGING = humanoidMobPatch -> {
         if(humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame){
             return !goldenFlame.isCharging();
@@ -118,6 +176,27 @@ public class DOTECombatBehaviors {
     };
 
     public static final CombatBehaviors.Builder<HumanoidMobPatch<?>> SENBAI = CombatBehaviors.<HumanoidMobPatch<?>>builder()
+            //变身
+            .newBehaviorSeries(
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(9999999).cooldown(0).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder()
+                                    .behavior((humanoidMobPatch -> {
+                                        if(humanoidMobPatch.getOriginal() instanceof SenbaiDevil senbaiDevil){
+                                            humanoidMobPatch.playAnimationSynchronized(Animations.ENDERMAN_DEATH, 0.15F);
+                                            if(senbaiDevil.level() instanceof ServerLevel serverLevel){
+                                                EntityType.LIGHTNING_BOLT.spawn(serverLevel, senbaiDevil.getOnPos(), MobSpawnType.TRIGGERED);
+                                                EntityType.LIGHTNING_BOLT.spawn(serverLevel, senbaiDevil.getOnPos(), MobSpawnType.TRIGGERED);
+                                            }
+                                            senbaiDevil.setPhase2(true);
+                                        }
+                                    }))
+                                    .custom((humanoidMobPatch -> {
+                                        if(humanoidMobPatch.getOriginal() instanceof SenbaiDevil senbaiDevil){
+                                            return !senbaiDevil.isPhase2();
+                                        }
+                                        return false;
+                                    }))
+                                    .health(0.5F, HealthPoint.Comparator.LESS_RATIO)))
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(60).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.UCHIGATANA_AUTO1).withinDistance(0, 2.5).withinEyeHeight().health(0.5F, HealthPoint.Comparator.LESS_RATIO))
@@ -164,7 +243,9 @@ public class DOTECombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(WOMAnimations.KATANA_AUTO_3).health(0.5F, HealthPoint.Comparator.LESS_RATIO))
             );
 
-    //反神形态
+    /**
+     * 反神形态
+     */
     public static final CombatBehaviors.Builder<HumanoidMobPatch<?>> GOLDEN_FLAME_FIST = CombatBehaviors.<HumanoidMobPatch<?>>builder()
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(60).canBeInterrupted(false).looping(false)
@@ -176,6 +257,9 @@ public class DOTECombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.LONGSWORD_DASH).withinDistance(0, 6)))
             ;
 
+    /**
+     * 大剑形态
+     */
     public static final CombatBehaviors.Builder<HumanoidMobPatch<?>> GOLDEN_FLAME_GREAT_SWORD = CombatBehaviors.<HumanoidMobPatch<?>>builder()
             // 1/3血以下开始会变身反神形态
             .newBehaviorSeries(

@@ -39,6 +39,7 @@ import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 public class GoldenFlame extends DOTEBoss implements IModifyAttackSpeedEntity {
     protected static final EntityDataAccessor<Integer> CHARGING_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Integer> ANTI_FORM_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<Boolean> IS_BLUE = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.BOOLEAN);
     private int antiFormCooldown = 0;
     private static final int MAX_ANTI_FORM_COOLDOWN = 2400;
     private static final int MAX_ANTI_FORM_TIMER = 800;
@@ -71,6 +72,15 @@ public class GoldenFlame extends DOTEBoss implements IModifyAttackSpeedEntity {
         getEntityData().define(CHARGING_TIMER, 0);
         getEntityData().define(ANTI_FORM_TIMER, 0);
         getEntityData().define(ATTACK_SPEED, 1.0F);
+        getEntityData().define(IS_BLUE, false);
+    }
+
+    public void setIsBlue(boolean isBlue){
+        getEntityData().set(IS_BLUE, isBlue);
+    }
+
+    public boolean isBlue(){
+        return getEntityData().get(IS_BLUE);
     }
 
     public void startCharging(){
@@ -104,6 +114,10 @@ public class GoldenFlame extends DOTEBoss implements IModifyAttackSpeedEntity {
     @Override
     public void tick() {
         super.tick();
+
+        if(getHealth() > 2 * getMaxHealth() / 3){
+            setIsBlue(false);
+        }
 
         //反神形态计时器，持续40秒用拳，时间到了再播动画变身回去
         if(getAntiFormTimer() > 0){

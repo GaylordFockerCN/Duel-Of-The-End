@@ -7,6 +7,7 @@ import com.mojang.datafixers.util.Pair;
 import com.p1nero.dote.entity.custom.GoldenFlame;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import org.jetbrains.annotations.Nullable;
 import reascer.wom.gameasset.WOMAnimations;
 import yesman.epicfight.api.animation.Animator;
 import yesman.epicfight.api.animation.LivingMotions;
@@ -21,8 +22,22 @@ import yesman.epicfight.world.damagesource.StunType;
 import java.util.Set;
 
 public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> {
+
+    @Nullable
+    private StunType stunTypeModify;
+
+    private float damageModify = 0;
+
     public GoldenFlamePatch() {
         super(Faction.UNDEAD);
+    }
+
+    public void setStunTypeModify(@Nullable StunType stunTypeModify) {
+        this.stunTypeModify = stunTypeModify;
+    }
+
+    public void setDamageModify(float damageModify) {
+        this.damageModify = damageModify;
     }
 
     @Override
@@ -31,12 +46,7 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> {
         if(epicFightDamageSource.getAnimation() == WOMAnimations.TORMENT_BERSERK_AUTO_2 && getOriginal().getHealth() < getOriginal().getMaxHealth() / 2){
             this.reserveAnimation(WOMAnimations.SOLAR_AUTO_4_POLVORA);
         }
-        //防止奇迹武器技能太超模
-        epicFightDamageSource.setStunType(StunType.NONE);
-        AttackResult attackResult = super.tryHarm(target, epicFightDamageSource, amount);
-        //火焰附加
-        target.setRemainingFireTicks(100);
-        return attackResult;
+        return super.tryHarm(target, epicFightDamageSource, amount);
     }
 
     @Override
@@ -47,6 +57,23 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> {
             return AttackResult.missed(0);
         }
         return super.tryHurt(damageSource, amount);
+    }
+
+    @Nullable
+    @Override
+    public EpicFightDamageSource getEpicFightDamageSource() {
+        if(epicFightDamageSource != null && stunTypeModify != null){
+            epicFightDamageSource.setStunType(stunTypeModify);
+        }
+        return epicFightDamageSource;
+    }
+
+    @Override
+    public float getModifiedBaseDamage(float baseDamage) {
+        if(damageModify != 0){
+            return damageModify;
+        }
+        return super.getModifiedBaseDamage(baseDamage);
     }
 
     @Override

@@ -6,6 +6,9 @@ import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
 import com.p1nero.dote.entity.IModifyAttackSpeedEntity;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -25,19 +28,10 @@ import yesman.epicfight.world.item.EpicFightItems;
 
 public class SenbaiDevil extends DOTEBoss implements IModifyAttackSpeedEntity {
 
+    protected static final EntityDataAccessor<Boolean> IS_PHASE2 = SynchedEntityData.defineId(SenbaiDevil.class, EntityDataSerializers.BOOLEAN);
     public SenbaiDevil(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         setItemInHand(InteractionHand.MAIN_HAND, EpicFightItems.UCHIGATANA.get().getDefaultInstance());
-    }
-
-    @Override
-    public float getHomeRadius() {
-        return 39;
-    }
-
-    @Override
-    public float getAttackSpeed() {
-        return 0.7F;
     }
 
     public static AttributeSupplier setAttributes() {
@@ -57,8 +51,40 @@ public class SenbaiDevil extends DOTEBoss implements IModifyAttackSpeedEntity {
     }
 
     @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        getEntityData().define(IS_PHASE2, false);
+    }
+
+    public void setPhase2(boolean isPhase2){
+        getEntityData().set(IS_PHASE2, isPhase2);
+    }
+
+    public boolean isPhase2(){
+        return getEntityData().get(IS_PHASE2);
+    }
+
+    @Override
+    public float getHomeRadius() {
+        return 39;
+    }
+
+    @Override
+    public float getAttackSpeed() {
+        return 0.7F;
+    }
+
+    @Override
     public int getMaxNeutralizeCount() {
         return 16 + DOTEArchiveManager.getWorldLevel() * 3;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if(getHealth() > getMaxHealth() / 2){
+            setPhase2(false);
+        }
     }
 
     /**

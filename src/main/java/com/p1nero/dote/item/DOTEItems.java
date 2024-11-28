@@ -60,9 +60,9 @@ public class DOTEItems {
 	public static final RegistryObject<Item> BALMUNG = REGISTRY.register("balmung", ()-> new BalmungItem(Tiers.NETHERITE, -3, -2.4F,(new Item.Properties()).defaultDurability(2777).rarity(DOTERarities.SHEN_ZHEN)));
 	public static final RegistryObject<Item> WITHERC = REGISTRY.register("witherc", () -> new SimpleKeepableFoilDescriptionItem(new Item.Properties().fireResistant().rarity(DOTERarities.XIAN_PIN)));
 	public static final RegistryObject<Item> DRAGONSTEEL_INGOT = REGISTRY.register("dragonsteel_ingot", () -> new SimpleDescriptionFoilItem(new Item.Properties().fireResistant().rarity(DOTERarities.SHEN_ZHEN)));
-	public static final RegistryObject<Item> GOLDEN_DRAGON_HELMET = REGISTRY.register("goldendragon_helmet", () -> new GoldenDragonItem(ArmorItem.Type.HELMET));
-	public static final RegistryObject<Item> GOLDEN_DRAGON_CHESTPLATE = REGISTRY.register("goldendragon_chestplate", () -> new GoldenDragonItem(ArmorItem.Type.CHESTPLATE));
-	public static final RegistryObject<Item> GOLDEN_DRAGON_LEGGINGS = REGISTRY.register("goldendragon_leggings", () -> new GoldenDragonItem(ArmorItem.Type.LEGGINGS));
-	public static final RegistryObject<Item> GOLDEN_DRAGON_BOOTS = REGISTRY.register("goldendragon_boots", () -> new GoldenDragonItem(ArmorItem.Type.BOOTS));
+	public static final RegistryObject<Item> GOLDEN_DRAGON_HELMET = REGISTRY.register("goldendragon_helmet", () -> new GoldenDragonArmorItem(ArmorItem.Type.HELMET));
+	public static final RegistryObject<Item> GOLDEN_DRAGON_CHESTPLATE = REGISTRY.register("goldendragon_chestplate", () -> new GoldenDragonArmorItem(ArmorItem.Type.CHESTPLATE));
+	public static final RegistryObject<Item> GOLDEN_DRAGON_LEGGINGS = REGISTRY.register("goldendragon_leggings", () -> new GoldenDragonArmorItem(ArmorItem.Type.LEGGINGS));
+	public static final RegistryObject<Item> GOLDEN_DRAGON_BOOTS = REGISTRY.register("goldendragon_boots", () -> new GoldenDragonArmorItem(ArmorItem.Type.BOOTS));
 
 }
