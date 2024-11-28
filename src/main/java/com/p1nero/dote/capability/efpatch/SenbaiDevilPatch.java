@@ -1,8 +1,8 @@
 package com.p1nero.dote.capability.efpatch;
 
-import com.p1nero.dote.entity.ai.DOTECombatBehaviors;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.p1nero.dote.entity.ai.ef.SenbaiDevilCombatBehaviors;
 import com.p1nero.dote.entity.custom.SenbaiDevil;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -102,7 +102,7 @@ public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> {
     protected void setWeaponMotions() {
         this.weaponLivingMotions = Maps.newHashMap();
         this.weaponAttackMotions = Maps.newHashMap();
-        this.weaponAttackMotions.put(CapabilityItem.WeaponCategories.UCHIGATANA, ImmutableMap.of(CapabilityItem.Styles.TWO_HAND, DOTECombatBehaviors.SENBAI));
+        this.weaponAttackMotions.put(CapabilityItem.WeaponCategories.UCHIGATANA, ImmutableMap.of(CapabilityItem.Styles.TWO_HAND, SenbaiDevilCombatBehaviors.SENBAI));
     }
     @Override
     public void updateMotion(boolean b) {

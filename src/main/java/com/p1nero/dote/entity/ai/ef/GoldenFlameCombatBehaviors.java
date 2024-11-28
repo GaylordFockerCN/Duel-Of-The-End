@@ -1,19 +1,14 @@
-package com.p1nero.dote.entity.ai;
+package com.p1nero.dote.entity.ai.ef;
 
 import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.capability.efpatch.GoldenFlamePatch;
-import com.p1nero.dote.entity.IModifyAttackSpeedEntity;
 import com.p1nero.dote.entity.custom.GoldenFlame;
-import com.p1nero.dote.entity.custom.SenbaiDevil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import reascer.wom.gameasset.WOMAnimations;
-import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.data.conditions.entity.HealthPoint;
 import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.gameasset.EpicFightSounds;
@@ -22,17 +17,19 @@ import yesman.epicfight.world.capabilities.entitypatch.MobPatch;
 import yesman.epicfight.world.damagesource.StunType;
 import yesman.epicfight.world.entity.ai.goal.CombatBehaviors;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class DOTECombatBehaviors {
+import static com.p1nero.dote.entity.ai.ef.DOTECombatBehaviors.*;
+
+/**
+ * 金焰神王AI
+ */
+public class GoldenFlameCombatBehaviors {
     /**
      * 调整硬直类型（用完记得设为 null）
      */
-    private static <T extends MobPatch<?>> Consumer<T> modifyAttackStunType(@Nullable StunType stunType) {
+    public static <T extends MobPatch<?>> Consumer<T> modifyAttackStunType(@Nullable StunType stunType) {
         return (patch) -> {
             if(patch instanceof GoldenFlamePatch flamePatch){
                 flamePatch.setStunTypeModify(stunType);
@@ -43,31 +40,12 @@ public class DOTECombatBehaviors {
     /**
      *调整基础伤害值（用完记得设为 0）
      */
-    private static <T extends MobPatch<?>> Consumer<T> modifyAttackDamage(float damageModify) {
+    public static <T extends MobPatch<?>> Consumer<T> modifyAttackDamage(float damageModify) {
         return (patch) -> {
             if(patch instanceof GoldenFlamePatch flamePatch){
                 flamePatch.setDamageModify(damageModify);
             }
         };
-    }
-
-    /**
-     * 播放动画，带ConvertTime也带变速
-     */
-    private static <T extends MobPatch<?>> Consumer<T> customAttackAnimation(StaticAnimation animation, float convertTime, float attackSpeed) {
-        return (patch) -> {
-            if(patch.getOriginal() instanceof IModifyAttackSpeedEntity entity){
-                entity.setAttackSpeed(attackSpeed);
-            }
-            patch.playAnimationSynchronized(animation, convertTime);
-        };
-    }
-
-    /**
-     * 播放动画，带ConvertTime不带变速
-     */
-    private static <T extends MobPatch<?>> Consumer<T> customAttackAnimation(StaticAnimation animation, float convertTime) {
-        return customAttackAnimation(animation, convertTime, 1.0F);
     }
 
     /**
@@ -97,37 +75,6 @@ public class DOTECombatBehaviors {
         }
         return false;
     };
-
-    /**
-     * 转向目标
-     */
-    public static final Consumer<HumanoidMobPatch<?>> ROTATE_TO_TARGET = (humanoidMobPatch -> {
-        if(humanoidMobPatch.getTarget() != null){
-            humanoidMobPatch.rotateTo(humanoidMobPatch.getTarget(), 30F, true);
-        }
-    });
-
-    /**
-     * 瞬移到目标边上（可能会到身后）
-     */
-    public static final Consumer<HumanoidMobPatch<?>> MOVE_TO_TARGET = (humanoidMobPatch -> {
-        if(humanoidMobPatch.getTarget() != null){
-            humanoidMobPatch.getOriginal().moveTo(humanoidMobPatch.getTarget().position());
-            humanoidMobPatch.rotateTo(humanoidMobPatch.getTarget(), 30F, true);
-        }
-    });
-
-    /**
-     * 随机方向跨步
-     */
-    public static final Consumer<HumanoidMobPatch<?>> RANDOM_STEP = (humanoidMobPatch -> {
-        List<StaticAnimation> steps = new ArrayList<>();
-        steps.add(WOMAnimations.ENDERSTEP_BACKWARD);
-        steps.add(WOMAnimations.ENDERSTEP_FORWARD);
-        steps.add(WOMAnimations.ENDERSTEP_LEFT);
-        steps.add(WOMAnimations.ENDERSTEP_RIGHT);
-        humanoidMobPatch.playAnimationSynchronized(steps.get(new Random().nextInt(steps.size())), 0.0F);
-    });
 
     /**
      * 播放粒子和音效提示
@@ -174,74 +121,6 @@ public class DOTECombatBehaviors {
         }
         return false;
     };
-
-    public static final CombatBehaviors.Builder<HumanoidMobPatch<?>> SENBAI = CombatBehaviors.<HumanoidMobPatch<?>>builder()
-            //变身
-            .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(9999999).cooldown(0).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder()
-                                    .behavior((humanoidMobPatch -> {
-                                        if(humanoidMobPatch.getOriginal() instanceof SenbaiDevil senbaiDevil){
-                                            humanoidMobPatch.playAnimationSynchronized(Animations.ENDERMAN_DEATH, 0.15F);
-                                            if(senbaiDevil.level() instanceof ServerLevel serverLevel){
-                                                EntityType.LIGHTNING_BOLT.spawn(serverLevel, senbaiDevil.getOnPos(), MobSpawnType.TRIGGERED);
-                                                EntityType.LIGHTNING_BOLT.spawn(serverLevel, senbaiDevil.getOnPos(), MobSpawnType.TRIGGERED);
-                                            }
-                                            senbaiDevil.setPhase2(true);
-                                        }
-                                    }))
-                                    .custom((humanoidMobPatch -> {
-                                        if(humanoidMobPatch.getOriginal() instanceof SenbaiDevil senbaiDevil){
-                                            return !senbaiDevil.isPhase2();
-                                        }
-                                        return false;
-                                    }))
-                                    .health(0.5F, HealthPoint.Comparator.LESS_RATIO)))
-            .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(60).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.UCHIGATANA_AUTO1).withinDistance(0, 2.5).withinEyeHeight().health(0.5F, HealthPoint.Comparator.LESS_RATIO))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.UCHIGATANA_AUTO2))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.UCHIGATANA_AUTO3))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.SWEEPING_EDGE).randomChance(0.6F))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(ROTATE_TO_TARGET))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.LONGSWORD_DASH).withinDistance(0, 6)))
-            .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(60).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.UCHIGATANA_AUTO1).withinDistance(0, 2.5).withinEyeHeight().withinEyeHeight().health(0.5F, HealthPoint.Comparator.LESS_RATIO))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.UCHIGATANA_AUTO2).withinDistance(0, 2.5))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.TACHI_AUTO1).withinDistance(0, 2.5))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.TACHI_AUTO2).withinDistance(0, 2.5))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(ROTATE_TO_TARGET))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.TACHI_DASH).withinDistance(0, 6))
-            )
-            .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(50.0F).cooldown(60).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_KICK_COMBO).withinDistance(0, 2.5))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.BIPED_ROLL_BACKWARD))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.BIPED_HOLD_UCHIGATANA_SHEATHING))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(MOVE_TO_TARGET))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior((humanoidMobPatch -> humanoidMobPatch.playAnimationSynchronized(Animations.UCHIGATANA_AIR_SLASH, 0.15F))))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(MOVE_TO_TARGET))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.RUSHING_TEMPO3))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.UCHIGATANA_AUTO1).custom(humanoidMobPatch -> DOTEArchiveManager.getWorldLevel() >= 1).withinDistance(0, 2.5).withinEyeHeight().health(0.5F, HealthPoint.Comparator.LESS_RATIO))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.UCHIGATANA_AUTO2))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.UCHIGATANA_AUTO3).custom(humanoidMobPatch -> DOTEArchiveManager.getWorldLevel() >= 2).withinDistance(0, 2.5).withinEyeHeight().health(0.5F, HealthPoint.Comparator.LESS_RATIO))
-            )
-            .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(50.0F).cooldown(60).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_KICK_COMBO).withinDistance(0, 2.5))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(WOMAnimations.ENDERSTEP_BACKWARD))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(ROTATE_TO_TARGET))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(RANDOM_STEP))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(ROTATE_TO_TARGET))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(RANDOM_STEP))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.BIPED_HOLD_UCHIGATANA_SHEATHING))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(MOVE_TO_TARGET))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior((humanoidMobPatch -> humanoidMobPatch.playAnimationSynchronized(Animations.UCHIGATANA_AIR_SLASH, 0.15F))))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.UCHIGATANA_AUTO2))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(MOVE_TO_TARGET))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(WOMAnimations.KATANA_AUTO_3).health(0.5F, HealthPoint.Comparator.LESS_RATIO))
-            );
 
     /**
      * 反神形态

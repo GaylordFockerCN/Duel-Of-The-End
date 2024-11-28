@@ -1,4 +1,4 @@
-package com.p1nero.dote.entity.ai;
+package com.p1nero.dote.entity.ai.ef;
 
 import com.p1nero.dote.capability.efpatch.DOTEAdvancedCustomHumanoidMobPatchProvider;
 

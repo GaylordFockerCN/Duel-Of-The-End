@@ -6,14 +6,8 @@ import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.util.ItemUtil;
-import com.p1nero.dote.worldgen.biome.BiomeMap;
-import com.p1nero.dote.worldgen.portal.DOTETeleporter;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -22,13 +16,11 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
@@ -37,8 +29,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import reascer.wom.world.item.WOMItems;
-
-import java.util.Objects;
 
 /**
  * 终末之影
@@ -87,6 +77,7 @@ public class TheShadowOfTheEnd extends DOTEBoss {
             if(this.deathTick == 100 && getLastAttacker() instanceof ServerPlayer player){
                 DOTEAdvancementData.getAdvancement("book", player);
                 DOTEArchiveManager.worldLevelUp(player.serverLevel(), false);
+                ItemUtil.addItem(player, DOTEItems.BOOK_OF_ENDING.get(), 1);
                 setHealth(0);
                 this.remove(RemovalReason.KILLED);
                 this.gameEvent(GameEvent.ENTITY_DIE);

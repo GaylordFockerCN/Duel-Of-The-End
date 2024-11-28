@@ -1,6 +1,6 @@
 package com.p1nero.dote.capability.efpatch;
 
-import com.p1nero.dote.entity.ai.DOTECombatBehaviors;
+import com.p1nero.dote.entity.ai.ef.GoldenFlameCombatBehaviors;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
@@ -99,8 +99,8 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> {
                                 Pair.of(LivingMotions.RUN, WOMAnimations.ANTITHEUS_ASCENDED_RUN),
                                 Pair.of(LivingMotions.CHASE, WOMAnimations.ANTITHEUS_ASCENDED_RUN))));
         this.weaponAttackMotions = Maps.newHashMap();
-        this.weaponAttackMotions.put(CapabilityItem.WeaponCategories.GREATSWORD, ImmutableMap.of(CapabilityItem.Styles.TWO_HAND, DOTECombatBehaviors.GOLDEN_FLAME_GREAT_SWORD));
-        this.weaponAttackMotions.put(CapabilityItem.WeaponCategories.FIST, ImmutableMap.of(CapabilityItem.Styles.ONE_HAND, DOTECombatBehaviors.GOLDEN_FLAME_FIST));
+        this.weaponAttackMotions.put(CapabilityItem.WeaponCategories.GREATSWORD, ImmutableMap.of(CapabilityItem.Styles.TWO_HAND, GoldenFlameCombatBehaviors.GOLDEN_FLAME_GREAT_SWORD));
+        this.weaponAttackMotions.put(CapabilityItem.WeaponCategories.FIST, ImmutableMap.of(CapabilityItem.Styles.ONE_HAND, GoldenFlameCombatBehaviors.GOLDEN_FLAME_FIST));
     }
     @Override
     public void updateMotion(boolean b) {
