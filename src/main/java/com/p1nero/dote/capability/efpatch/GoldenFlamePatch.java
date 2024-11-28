@@ -61,9 +61,19 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> {
     @Override
     protected void setWeaponMotions() {
         this.weaponLivingMotions = Maps.newHashMap();
-        this.weaponLivingMotions.put(CapabilityItem.WeaponCategories.GREATSWORD, ImmutableMap.of(CapabilityItem.Styles.TWO_HAND, Set.of(Pair.of(LivingMotions.WALK, Animations.BIPED_WALK_TWOHAND), Pair.of(LivingMotions.CHASE, Animations.BIPED_WALK_TWOHAND))));
+        this.weaponLivingMotions.put(CapabilityItem.WeaponCategories.GREATSWORD,
+                ImmutableMap.of(CapabilityItem.Styles.TWO_HAND,
+                        Set.of(Pair.of(LivingMotions.WALK, Animations.BIPED_WALK_TWOHAND),
+                                Pair.of(LivingMotions.CHASE, Animations.BIPED_WALK_TWOHAND))));
+        this.weaponLivingMotions.put(CapabilityItem.WeaponCategories.FIST,
+                ImmutableMap.of(CapabilityItem.Styles.ONE_HAND,
+                        Set.of(Pair.of(LivingMotions.IDLE, WOMAnimations.ANTITHEUS_ASCENDED_RUN),
+                                Pair.of(LivingMotions.WALK, WOMAnimations.ANTITHEUS_ASCENDED_RUN),
+                                Pair.of(LivingMotions.RUN, WOMAnimations.ANTITHEUS_ASCENDED_RUN),
+                                Pair.of(LivingMotions.CHASE, WOMAnimations.ANTITHEUS_ASCENDED_RUN))));
         this.weaponAttackMotions = Maps.newHashMap();
-        this.weaponAttackMotions.put(CapabilityItem.WeaponCategories.GREATSWORD, ImmutableMap.of(CapabilityItem.Styles.TWO_HAND, DOTECombatBehaviors.GOLDEN_FLAME));
+        this.weaponAttackMotions.put(CapabilityItem.WeaponCategories.GREATSWORD, ImmutableMap.of(CapabilityItem.Styles.TWO_HAND, DOTECombatBehaviors.GOLDEN_FLAME_GREAT_SWORD));
+        this.weaponAttackMotions.put(CapabilityItem.WeaponCategories.FIST, ImmutableMap.of(CapabilityItem.Styles.ONE_HAND, DOTECombatBehaviors.GOLDEN_FLAME_FIST));
     }
     @Override
     public void updateMotion(boolean b) {

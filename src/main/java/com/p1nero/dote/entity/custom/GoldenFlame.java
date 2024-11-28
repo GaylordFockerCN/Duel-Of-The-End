@@ -1,10 +1,11 @@
 package com.p1nero.dote.entity.custom;
 
 import com.p1nero.dote.archive.DOTEArchiveManager;
+import com.p1nero.dote.capability.efpatch.GoldenFlamePatch;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
-import com.p1nero.dote.entity.ModifyAttackSpeedEntity;
+import com.p1nero.dote.entity.IModifyAttackSpeedEntity;
 import com.p1nero.dote.item.DOTEItems;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -27,13 +28,21 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import reascer.wom.gameasset.WOMAnimations;
+import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
-public class GoldenFlame extends DOTEBoss implements ModifyAttackSpeedEntity {
+public class GoldenFlame extends DOTEBoss implements IModifyAttackSpeedEntity {
     protected static final EntityDataAccessor<Integer> CHARGING_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<Integer> ANTI_FORM_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
+    private int antiFormCooldown = 0;
+    private static final int MAX_ANTI_FORM_COOLDOWN = 2400;
+    private static final int MAX_ANTI_FORM_TIMER = 800;
+    protected static final EntityDataAccessor<Float> ATTACK_SPEED = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.FLOAT);
     public GoldenFlame(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         setItemInHand(InteractionHand.MAIN_HAND, DOTEItems.BALMUNG.get().getDefaultInstance());
@@ -48,15 +57,20 @@ public class GoldenFlame extends DOTEBoss implements ModifyAttackSpeedEntity {
         return 25;
     }
 
-    @Override
     public float getAttackSpeed() {
-        return 0.5F;
+        return getEntityData().get(ATTACK_SPEED);
+    }
+
+    public void setAttackSpeed(float speed){
+        getEntityData().set(ATTACK_SPEED, speed);
     }
 
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         getEntityData().define(CHARGING_TIMER, 0);
+        getEntityData().define(ANTI_FORM_TIMER, 0);
+        getEntityData().define(ATTACK_SPEED, 1.0F);
     }
 
     public void startCharging(){
@@ -75,9 +89,43 @@ public class GoldenFlame extends DOTEBoss implements ModifyAttackSpeedEntity {
         return getEntityData().get(CHARGING_TIMER);
     }
 
+    public void startAntiForm(){
+        getEntityData().set(ANTI_FORM_TIMER, MAX_ANTI_FORM_TIMER);
+    }
+
+    public int getAntiFormTimer(){
+        return getEntityData().get(ANTI_FORM_TIMER);
+    }
+
+    public int getAntiFormCooldown(){
+        return antiFormCooldown;
+    }
+
     @Override
     public void tick() {
         super.tick();
+
+        //反神形态计时器，持续40秒用拳，时间到了再播动画变身回去
+        if(getAntiFormTimer() > 0){
+            getEntityData().set(ANTI_FORM_TIMER, Math.max(0, getAntiFormTimer() - 1));
+            if(getAntiFormTimer() == MAX_ANTI_FORM_COOLDOWN - 20){
+                setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+                resetCharging();
+            }
+            if(getAntiFormTimer() == 1){
+                setItemInHand(InteractionHand.MAIN_HAND, DOTEItems.BALMUNG.get().getDefaultInstance());
+                if(!level().isClientSide){
+                    GoldenFlamePatch patch = EpicFightCapabilities.getEntityPatch(this, GoldenFlamePatch.class);
+                    patch.playAnimationSynchronized(WOMAnimations.ANTITHEUS_LAPSE, 0.3F);
+                }
+                antiFormCooldown = MAX_ANTI_FORM_COOLDOWN;
+            }
+        }
+
+        if(antiFormCooldown > 0){
+            antiFormCooldown--;
+        }
+
         if(getChargingTimer() > 0){
             getEntityData().set(CHARGING_TIMER, Math.max(0, getChargingTimer() - 1));
         }

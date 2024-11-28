@@ -82,10 +82,8 @@ public class TeleportKeyItem extends SimpleDescriptionFoilItem{
             if(DOTEConfig.GIVE_M_KEY.get() && !DataManager.lootGot.get(player)){
                 ItemStack guard = new ItemStack(EpicFightItems.SKILLBOOK.get());
                 guard.getOrCreateTag().putString("skill", EpicFightSkills.GUARD.toString());
-//                ItemStack dodgeDisplay = new ItemStack(EpicFightItems.SKILLBOOK.get());
-//                dodgeDisplay.getOrCreateTag().putString("skill", DOTESkills.BETTER_DODGE_DISPLAY.toString());
                 ItemUtil.addItem(player, guard);
-//                ItemUtil.addItem(player, dodgeDisplay);
+                ItemUtil.addItem(player, Items.BREAD, 10);
                 ItemStack sword = Items.IRON_SWORD.getDefaultInstance();
                 sword.setDamageValue(sword.getMaxDamage() - 40);
                 ItemUtil.addItem(player, sword);
