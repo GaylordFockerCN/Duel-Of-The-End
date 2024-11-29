@@ -5,7 +5,6 @@ import com.p1nero.dote.capability.efpatch.GoldenFlamePatch;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
-import com.p1nero.dote.entity.IModifyAttackSpeedEntity;
 import com.p1nero.dote.item.DOTEItems;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -36,14 +35,13 @@ import reascer.wom.gameasset.WOMAnimations;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
-public class GoldenFlame extends DOTEBoss implements IModifyAttackSpeedEntity {
+public class GoldenFlame extends DOTEBoss{
     protected static final EntityDataAccessor<Integer> CHARGING_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Integer> ANTI_FORM_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Boolean> IS_BLUE = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.BOOLEAN);
     private int antiFormCooldown = 0;
     private static final int MAX_ANTI_FORM_COOLDOWN = 2400;
     private static final int MAX_ANTI_FORM_TIMER = 800;
-    protected static final EntityDataAccessor<Float> ATTACK_SPEED = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.FLOAT);
     public GoldenFlame(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         setItemInHand(InteractionHand.MAIN_HAND, DOTEItems.BALMUNG.get().getDefaultInstance());
@@ -58,20 +56,11 @@ public class GoldenFlame extends DOTEBoss implements IModifyAttackSpeedEntity {
         return 25;
     }
 
-    public float getAttackSpeed() {
-        return getEntityData().get(ATTACK_SPEED);
-    }
-
-    public void setAttackSpeed(float speed){
-        getEntityData().set(ATTACK_SPEED, speed);
-    }
-
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         getEntityData().define(CHARGING_TIMER, 0);
         getEntityData().define(ANTI_FORM_TIMER, 0);
-        getEntityData().define(ATTACK_SPEED, 1.0F);
         getEntityData().define(IS_BLUE, false);
     }
 

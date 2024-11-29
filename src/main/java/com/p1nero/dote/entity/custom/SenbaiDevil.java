@@ -5,7 +5,6 @@ import com.p1nero.dote.capability.DOTECapabilityProvider;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
-import com.p1nero.dote.entity.IModifyAttackSpeedEntity;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -26,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 import yesman.epicfight.world.item.EpicFightItems;
 
-public class SenbaiDevil extends DOTEBoss implements IModifyAttackSpeedEntity {
+public class SenbaiDevil extends DOTEBoss{
 
     protected static final EntityDataAccessor<Boolean> IS_PHASE2 = SynchedEntityData.defineId(SenbaiDevil.class, EntityDataSerializers.BOOLEAN);
     public SenbaiDevil(EntityType<? extends PathfinderMob> type, Level level) {
@@ -69,10 +68,6 @@ public class SenbaiDevil extends DOTEBoss implements IModifyAttackSpeedEntity {
         return 39;
     }
 
-    @Override
-    public float getAttackSpeed() {
-        return 0.7F;
-    }
 
     @Override
     public int getMaxNeutralizeCount() {

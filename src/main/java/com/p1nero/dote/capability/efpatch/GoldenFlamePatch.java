@@ -1,5 +1,6 @@
 package com.p1nero.dote.capability.efpatch;
 
+import com.p1nero.dote.entity.ai.ef.api.*;
 import com.p1nero.dote.entity.ai.ef.GoldenFlameCombatBehaviors;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -19,14 +20,18 @@ import yesman.epicfight.world.capabilities.item.CapabilityItem;
 import yesman.epicfight.world.damagesource.EpicFightDamageSource;
 import yesman.epicfight.world.damagesource.StunType;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
-public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> {
+public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements IModifyStunTypeEntity, IModifyAttackDamageEntity, ITimeEventListEntity, IModifyAttackSpeedEntity {
 
     @Nullable
     private StunType stunTypeModify;
 
     private float damageModify = 0;
+    private final List<TimeStampedEvent> list = new ArrayList<>();
+    private float speedModify = 0;
 
     public GoldenFlamePatch() {
         super(Faction.UNDEAD);
@@ -113,5 +118,35 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> {
     @Override
     public boolean applyStun(StunType stunType, float stunTime) {
         return false;
+    }
+
+    @Override
+    public void setStunType(StunType stunType) {
+        stunTypeModify = stunType;
+    }
+
+    @Override
+    public void setNewDamage(float damage) {
+        damageModify = damage;
+    }
+
+    @Override
+    public List<TimeStampedEvent> getTimeEventList() {
+        return list;
+    }
+
+    @Override
+    public void addEvent(TimeStampedEvent event) {
+        list.add(event);
+    }
+
+    @Override
+    public float getAttackSpeed() {
+        return speedModify;
+    }
+
+    @Override
+    public void setAttackSpeed(float speed) {
+        speedModify = speed;
     }
 }

@@ -5,6 +5,7 @@
   "mixins": [
     "AttackAnimationMixin",
     "AttributesMixin",
+    "MainFrameAnimationMixin",
     "ServerGamePacketListenerImplMixin",
     "WorldOptionsMixin"
   ],

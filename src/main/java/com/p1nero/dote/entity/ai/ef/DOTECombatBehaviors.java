@@ -1,10 +1,12 @@
 package com.p1nero.dote.entity.ai.ef;
 
-import com.p1nero.dote.entity.IModifyAttackSpeedEntity;
+import com.p1nero.dote.entity.ai.ef.api.*;
+import org.jetbrains.annotations.Nullable;
 import reascer.wom.gameasset.WOMAnimations;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.world.capabilities.entitypatch.HumanoidMobPatch;
 import yesman.epicfight.world.capabilities.entitypatch.MobPatch;
+import yesman.epicfight.world.damagesource.StunType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +21,57 @@ public class DOTECombatBehaviors {
     /**
      * 播放动画，带ConvertTime也带变速
      */
-    public static <T extends MobPatch<?>> Consumer<T> customAttackAnimation(StaticAnimation animation, float convertTime, float attackSpeed) {
+    public static <T extends MobPatch<?>> Consumer<T> customAttackAnimation(StaticAnimation animation, float convertTime, float attackSpeed, @Nullable StunType stunType, float damage, TimeStampedEvent... events) {
         return (patch) -> {
             if(patch.getOriginal() instanceof IModifyAttackSpeedEntity entity){
                 entity.setAttackSpeed(attackSpeed);
             }
+            if(patch instanceof IModifyStunTypeEntity entity){
+                entity.setStunType(stunType);
+            }
+            if(patch instanceof IModifyAttackDamageEntity entity){
+                entity.setNewDamage(damage);
+            }
+            if(patch instanceof ITimeEventListEntity entity){
+                entity.clearEvents();
+                for(TimeStampedEvent event : events){
+                    entity.addEvent(event);
+                }
+            }
             patch.playAnimationSynchronized(animation, convertTime);
         };
+    }
+
+    /**
+     * 播放动画，带ConvertTime也带变速
+     */
+    public static <T extends MobPatch<?>> Consumer<T> customAttackAnimation(StaticAnimation animation, float convertTime, float attackSpeed, @Nullable StunType stunType, float damage) {
+        return (patch) -> {
+            if(patch.getOriginal() instanceof IModifyAttackSpeedEntity entity){
+                entity.setAttackSpeed(attackSpeed);
+            }
+            if(patch.getOriginal() instanceof IModifyStunTypeEntity entity){
+                entity.setStunType(stunType);
+            }
+            if(patch.getOriginal() instanceof IModifyAttackDamageEntity entity){
+                entity.setNewDamage(damage);
+            }
+            patch.playAnimationSynchronized(animation, convertTime);
+        };
+    }
+
+    /**
+     * 播放动画，带ConvertTime也带变速
+     */
+    public static <T extends MobPatch<?>> Consumer<T> customAttackAnimation(StaticAnimation animation, float convertTime, float attackSpeed, @Nullable StunType stunType) {
+        return customAttackAnimation(animation, convertTime, attackSpeed, stunType, 0);
+    }
+
+    /**
+     * 播放动画，带ConvertTime也带变速
+     */
+    public static <T extends MobPatch<?>> Consumer<T> customAttackAnimation(StaticAnimation animation, float convertTime, float attackSpeed) {
+        return customAttackAnimation(animation, convertTime, attackSpeed, null, 0);
     }
 
     /**
