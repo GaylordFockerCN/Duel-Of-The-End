@@ -47,13 +47,13 @@ public class DOTECombatBehaviors {
      */
     public static <T extends MobPatch<?>> Consumer<T> customAttackAnimation(StaticAnimation animation, float convertTime, float attackSpeed, @Nullable StunType stunType, float damage) {
         return (patch) -> {
-            if(patch.getOriginal() instanceof IModifyAttackSpeedEntity entity){
+            if(patch instanceof IModifyAttackSpeedEntity entity){
                 entity.setAttackSpeed(attackSpeed);
             }
-            if(patch.getOriginal() instanceof IModifyStunTypeEntity entity){
+            if(patch instanceof IModifyStunTypeEntity entity){
                 entity.setStunType(stunType);
             }
-            if(patch.getOriginal() instanceof IModifyAttackDamageEntity entity){
+            if(patch instanceof IModifyAttackDamageEntity entity){
                 entity.setNewDamage(damage);
             }
             patch.playAnimationSynchronized(animation, convertTime);
