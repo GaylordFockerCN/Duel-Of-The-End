@@ -14,6 +14,9 @@ public class AttackAnimationMixin {
     @Inject(method = "getPlaySpeed", at = @At("HEAD"), cancellable = true, remap = false)
     private void onGetPlaySpeed(LivingEntityPatch<?> entityPatch, DynamicAnimation animation, CallbackInfoReturnable<Float> cir) {
         if(entityPatch instanceof IModifyAttackSpeedEntity entity){
+            if(entity.getAttackSpeed() == 0){
+                cir.setReturnValue(1.0F);
+            }
             cir.setReturnValue(entity.getAttackSpeed());
         }
     }

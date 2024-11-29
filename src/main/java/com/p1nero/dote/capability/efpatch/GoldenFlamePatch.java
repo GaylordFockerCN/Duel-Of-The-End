@@ -6,6 +6,9 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
 import com.p1nero.dote.entity.custom.GoldenFlame;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.Nullable;
@@ -31,10 +34,16 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
 
     private float damageModify = 0;
     private final List<TimeStampedEvent> list = new ArrayList<>();
-    private float speedModify = 0;
+    private static final EntityDataAccessor<Float> ATTACK_SPEED = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.FLOAT);
 
     public GoldenFlamePatch() {
         super(Faction.UNDEAD);
+    }
+
+    @Override
+    public void onConstructed(GoldenFlame entityIn) {
+        super.onConstructed(entityIn);
+        entityIn.getEntityData().define(ATTACK_SPEED, 1.0F);
     }
 
     public void setStunTypeModify(@Nullable StunType stunTypeModify) {
@@ -142,11 +151,12 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
 
     @Override
     public float getAttackSpeed() {
-        return speedModify;
+        return this.original.getEntityData().get(ATTACK_SPEED);
     }
 
     @Override
-    public void setAttackSpeed(float speed) {
-        speedModify = speed;
+    public void setAttackSpeed(float value) {
+        this.original.getEntityData().set(ATTACK_SPEED, Math.abs(value));
     }
+
 }
