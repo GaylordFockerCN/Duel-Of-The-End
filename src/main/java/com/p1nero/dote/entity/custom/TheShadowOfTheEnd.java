@@ -28,7 +28,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import reascer.wom.gameasset.WOMAnimations;
 import reascer.wom.world.item.WOMItems;
+import yesman.epicfight.world.capabilities.EpicFightCapabilities;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 /**
  * 终末之影
@@ -64,12 +67,18 @@ public class TheShadowOfTheEnd extends DOTEBoss {
         if(deathTick > 0){
             setTarget(null);
             deathTick++;
-            this.move(MoverType.SELF, new Vec3(0.0, 0.10000000149011612, 0.0));
-            if (this.deathTick >= 70 && this.deathTick <= 100) {
-                float f = (this.random.nextFloat() - 0.5F) * 8.0F;
-                float f1 = (this.random.nextFloat() - 0.5F) * 4.0F;
-                float f2 = (this.random.nextFloat() - 0.5F) * 8.0F;
-                if(level() instanceof ServerLevel serverLevel){
+            if(level() instanceof ServerLevel serverLevel){
+                LivingEntityPatch<?> patch = EpicFightCapabilities.getEntityPatch(this, LivingEntityPatch.class);
+                if(patch != null){
+                    patch.playAnimationSynchronized(WOMAnimations.ANTITHEUS_ASCENDED_IDLE, 0.0F);
+                    serverLevel.sendParticles(ParticleTypes.ASH, this.getX(), this.getY(), this.getZ(), 10, 0.0, 0.0, 0.0, 0.01);
+
+                }
+                this.move(MoverType.SELF, new Vec3(0.0, 0.10000000149011612, 0.0));
+                if (this.deathTick >= 70 && this.deathTick <= 100) {
+                    float f = (this.random.nextFloat() - 0.5F) * 8.0F;
+                    float f1 = (this.random.nextFloat() - 0.5F) * 4.0F;
+                    float f2 = (this.random.nextFloat() - 0.5F) * 8.0F;
                     serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, this.getX() + (double)f, this.getY() + 2.0 + (double)f1, this.getZ() + (double)f2, 1, 0.0, 0.0, 0.0, 0.01);
                     serverLevel.playSound(null, getX(), getY(), getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 1, 1);
                 }
