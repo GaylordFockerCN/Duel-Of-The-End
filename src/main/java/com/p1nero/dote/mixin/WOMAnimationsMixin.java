@@ -9,8 +9,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import reascer.wom.animation.attacks.BasicAttackNoRotAnimation;
 import reascer.wom.animation.attacks.BasicAttackNoRotNoASAnimation;
 import reascer.wom.animation.attacks.BasicMultipleAttackAnimation;
 import reascer.wom.gameasset.WOMAnimations;
@@ -23,15 +23,12 @@ import yesman.epicfight.api.animation.property.AnimationEvent;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.types.AttackAnimation;
 import yesman.epicfight.api.animation.types.StaticAnimation;
-import yesman.epicfight.api.collider.Collider;
-import yesman.epicfight.api.utils.TimePairList;
 import yesman.epicfight.api.utils.math.OpenMatrix4f;
 import yesman.epicfight.api.utils.math.ValueModifier;
 import yesman.epicfight.api.utils.math.Vec3f;
 import yesman.epicfight.gameasset.Armatures;
 import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.model.armature.HumanoidArmature;
-import yesman.epicfight.particle.EpicFightParticles;
 import yesman.epicfight.skill.SkillSlots;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import yesman.epicfight.world.capabilities.entitypatch.player.ServerPlayerPatch;
@@ -44,29 +41,26 @@ import java.util.Set;
 @Mixin(value = WOMAnimations.class, remap = false)
 public class WOMAnimationsMixin {
 
-    /**
-     * 补玩家判定防崩溃
-     */
     @Shadow public static StaticAnimation SOLAR_BRASERO;
 
     /**
-     * 调antic
+     * antic为0会导致出伤异常
      */
-    @Shadow public static StaticAnimation TORMENT_AUTO_2;
+    @ModifyArg(method = "build", at = @At(value = "INVOKE", target = "Lreascer/wom/animation/attacks/BasicMultipleAttackAnimation;<init>(FFFFLyesman/epicfight/api/collider/Collider;Lyesman/epicfight/api/animation/Joint;Ljava/lang/String;Lyesman/epicfight/api/model/Armature;)V"), index = 1)
+    private static float modify(float antic){
+        if(antic == 0){
+            return 0.10F;
+        }
+        return antic;
+    }
 
     /**
-     * 调ConvertTime
+     * 补玩家判定防崩溃
      */
-    @Shadow public static StaticAnimation TORMENT_CHARGED_ATTACK_2;
-
-    @Shadow public static StaticAnimation TORMENT_AUTO_3;
-
-    @Shadow public static StaticAnimation KATANA_AUTO_1;
-
     @Inject(method = "build", at = @At("TAIL"))
     private static void inject(CallbackInfo ci){
         HumanoidArmature biped = Armatures.BIPED;
-        SOLAR_BRASERO = (new BasicAttackNoRotNoASAnimation(0.3F, "biped/skill/solar_brasero", biped, new AttackAnimation.Phase(0.0F, 0.45F, 0.65F, 1.0F, Float.MAX_VALUE, biped.rootJoint, WOMWeaponColliders.SOLAR_INFIERNO))).addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(1.0F)).addProperty(AnimationProperty.AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.multiplier(4.0F)).addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.multiplier(4.0F)).addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD).addProperty(AnimationProperty.AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageType.WEAPON_INNATE)).addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, WOMParticles.SOLAR_OBSCURIDAD_POLVORA_HIT).addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, (SoundEvent) EpicFightSounds.BLUNT_HIT_HARD.get()).addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.2F).addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true).addEvents(new AnimationEvent.TimePeriodEvent[]{AnimationEvent.TimePeriodEvent.create(0.0F, Float.MAX_VALUE, (entitypatch, self, params) -> {
+        SOLAR_BRASERO = new BasicAttackNoRotNoASAnimation(0.3F, "biped/skill/solar_brasero", biped, new AttackAnimation.Phase(0.0F, 0.45F, 0.65F, 1.0F, Float.MAX_VALUE, biped.rootJoint, WOMWeaponColliders.SOLAR_INFIERNO)).addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(1.0F)).addProperty(AnimationProperty.AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.multiplier(4.0F)).addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.multiplier(4.0F)).addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD).addProperty(AnimationProperty.AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageType.WEAPON_INNATE)).addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, WOMParticles.SOLAR_OBSCURIDAD_POLVORA_HIT).addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, (SoundEvent) EpicFightSounds.BLUNT_HIT_HARD.get()).addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.2F).addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true).addEvents(new AnimationEvent.TimePeriodEvent[]{AnimationEvent.TimePeriodEvent.create(0.0F, Float.MAX_VALUE, (entitypatch, self, params) -> {
             if (entitypatch instanceof ServerPlayerPatch spp) {
                 if (spp.getSkill(SkillSlots.WEAPON_INNATE).getSkill() == WOMSkills.SOLAR_ARCANO) {
                     spp.getSkill(SkillSlots.WEAPON_INNATE).getDataManager().setDataSync(WOMSkillDataKeys.CHARGING.get(), false, (ServerPlayer)entitypatch.getOriginal());
@@ -87,7 +81,7 @@ public class WOMAnimationsMixin {
             }
 
         }, AnimationEvent.Side.SERVER), AnimationEvent.TimeStampedEvent.create(0.5F, (entityPatch, self, params) -> {
-            if (entityPatch instanceof ServerPlayerPatch spp) {
+            if (entityPatch instanceof ServerPlayerPatch spp) {//多加了这一行
                 if (spp.getSkill(SkillSlots.WEAPON_PASSIVE).getSkill() == WOMSkills.SOLAR_PASSIVE) {
                     boolean zero_sauce = spp.getSkill(SkillSlots.WEAPON_PASSIVE).getDataManager().getDataValue(WOMSkillDataKeys.HEAT_LEVEL.get()) == 0.0F;
                     OpenMatrix4f transformMatrix = entityPatch.getArmature().getBindedTransformFor(entityPatch.getAnimator().getPose(0.0F), Armatures.BIPED.toolL);
@@ -110,10 +104,6 @@ public class WOMAnimationsMixin {
                 }
             }
         }, AnimationEvent.Side.CLIENT));
-
-        KATANA_AUTO_1 = (new BasicMultipleAttackAnimation(0.15F, 0.1F, 0.2F, 0.2F, null, biped.toolR, "biped/combat/katana_auto_1", biped)).addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.8F)).addProperty(AnimationProperty.AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.multiplier(2.0F)).addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD).addProperty(AnimationProperty.AttackAnimationProperty.EXTRA_COLLIDERS, 2).addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.8F);
-
-        TORMENT_AUTO_3 = (new BasicMultipleAttackAnimation(0.25F, 0.15F, 0.3F, 0.3F, null, biped.toolR, "biped/combat/torment_auto_3", biped)).addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD).addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.2F)).addProperty(AnimationProperty.AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.multiplier(2.0F)).addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD.get()).addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT).addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.2F);
 
     }
 }
