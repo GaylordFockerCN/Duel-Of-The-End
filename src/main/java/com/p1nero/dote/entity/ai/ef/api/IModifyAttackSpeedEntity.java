@@ -5,5 +5,5 @@ package com.p1nero.dote.entity.ai.ef.api;
  */
 public interface IModifyAttackSpeedEntity {
     float getAttackSpeed();
-    void setAttackSpeed(float speed);
+    default void setAttackSpeed(float speed){};
 }

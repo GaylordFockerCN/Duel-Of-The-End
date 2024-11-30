@@ -36,8 +36,8 @@ public class WKnightArmorItem extends SimpleDescriptionArmorItem implements IDOT
                         || (equipmentSlot == EquipmentSlot.FEET&& this.type.equals(Type.BOOTS))) {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
             builder.putAll(super.getDefaultAttributeModifiers(equipmentSlot));
-            builder.put(EpicFightAttributes.MAX_STAMINA.get(), new AttributeModifier(UUID.fromString("CC111E1C-4180-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", 4, AttributeModifier.Operation.ADDITION));
-            builder.put(EpicFightAttributes.STAMINA_REGEN.get(), new AttributeModifier(UUID.fromString("CC222E1C-3333-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", 0.10, AttributeModifier.Operation.ADDITION));
+            builder.put(EpicFightAttributes.MAX_STAMINA.get(), new AttributeModifier(UUID.fromString("CC111E1C-4180-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", 3, AttributeModifier.Operation.ADDITION));
+            builder.put(EpicFightAttributes.STAMINA_REGEN.get(), new AttributeModifier(UUID.fromString("CC222E1C-3333-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", 0.2, AttributeModifier.Operation.ADDITION));
             builder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(UUID.fromString("CC222E1C-2222-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", -0.004, AttributeModifier.Operation.ADDITION));
             return builder.build();
         }

@@ -29,6 +29,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import reascer.wom.gameasset.WOMAnimations;
@@ -129,8 +130,14 @@ public class GoldenFlame extends DOTEBoss{
             antiFormCooldown--;
         }
 
-        if(getChargingTimer() > 0){
+        if(getChargingTimer() > 0 && !level().isClientSide){
             getEntityData().set(CHARGING_TIMER, Math.max(0, getChargingTimer() - 1));
+            if(getTarget() != null){
+                getLookControl().setLookAt(getTarget(), 30, 30);
+            }
+            getNavigation().stop();
+            getMoveControl().strafe(getChargingTimer() < 65 ? 0.8F + getChargingTimer() / 100.0F : -0.8F + getChargingTimer() / 100.0F, getChargingTimer() < 65 ? 0.8F + getChargingTimer() / 100.0F : -0.8F + getChargingTimer() / 100.0F);
+
         }
         if(getChargingTimer() == 115){
             level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.6F);

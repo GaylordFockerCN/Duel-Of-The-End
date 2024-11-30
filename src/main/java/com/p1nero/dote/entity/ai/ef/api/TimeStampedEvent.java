@@ -19,7 +19,7 @@ public class TimeStampedEvent implements Comparable<TimeStampedEvent> {
         return executed;
     }
 
-    private TimeStampedEvent(float time, Consumer<LivingEntityPatch<?>> event) {
+    public TimeStampedEvent(float time, Consumer<LivingEntityPatch<?>> event) {
         this.time = time;
         this.event = event;
     }

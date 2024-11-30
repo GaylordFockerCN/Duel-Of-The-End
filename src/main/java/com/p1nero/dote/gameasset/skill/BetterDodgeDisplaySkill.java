@@ -25,7 +25,7 @@ public class BetterDodgeDisplaySkill extends PassiveSkill {
     public void onInitiate(SkillContainer container) {
         super.onInitiate(container);
         container.getExecuter().getEventListener().addEventListener(PlayerEventListener.EventType.DODGE_SUCCESS_EVENT, EVENT_UUID, (event -> {
-            event.getPlayerPatch().playSound(DOTESounds.DODGE.get(), 0.8F, 1.2F);
+            event.getPlayerPatch().playSound(EpicFightSounds.ENTITY_MOVE.get(), 0.8F, 1.2F);
             PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new AddEntityAfterImageParticle(event.getPlayerPatch().getOriginal().getId()));
         }));
     }

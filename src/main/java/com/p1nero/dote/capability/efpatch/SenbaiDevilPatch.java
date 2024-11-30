@@ -2,6 +2,7 @@ package com.p1nero.dote.capability.efpatch;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.entity.ai.ef.api.IModifyAttackSpeedEntity;
 import com.p1nero.dote.entity.ai.ef.SenbaiDevilCombatBehaviors;
 import com.p1nero.dote.entity.custom.SenbaiDevil;
@@ -68,18 +69,18 @@ public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> implements I
             if(source.getStunType() == StunType.SHORT){
                 source.setStunType(StunType.NONE);
             }
-            if(getOriginal().getNeutralizeCount() == 0){
-                source.setStunType(StunType.NEUTRALIZE);
-                getOriginal().setHealth(Math.max(getOriginal().getHealth() - getOriginal().getMaxHealth() / 12, 1));
-                applyStun(StunType.NEUTRALIZE, 5);
-                getOriginal().setNeutralizeCount(getOriginal().getMaxNeutralizeCount());
-            }
+//            if(getOriginal().getNeutralizeCount() == 0){
+//                source.setStunType(StunType.NEUTRALIZE);
+//                getOriginal().setHealth(Math.max(getOriginal().getHealth() - getOriginal().getMaxHealth() / 12, 1));
+//                applyStun(StunType.NEUTRALIZE, 5);
+//                getOriginal().setNeutralizeCount(getOriginal().getMaxNeutralizeCount());
+//            }
         }
         AttackResult result = super.tryHurt(damageSource, amount);
         if(result.resultType.equals(AttackResult.ResultType.SUCCESS)){
             //小概率格挡
-            if(!this.getEntityState().attacking() && this.getOriginal().getBlockCount() == 0 && this.getOriginal().getRandom().nextInt(4) == 1){
-                this.getOriginal().setBlockCount(2 + this.getOriginal().getRandom().nextInt(3));
+            if(!this.getEntityState().attacking() && this.getOriginal().getBlockCount() == 0 && this.getOriginal().getRandom().nextInt(8) == 1){
+                this.getOriginal().setBlockCount(2 + this.getOriginal().getRandom().nextInt(2));
             }
             if(!this.getEntityState().attacking() && this.getOriginal().getBlockCount() > 0){
                 this.getOriginal().setBlockCount(this.getOriginal().getBlockCount() - 1);
@@ -112,11 +113,7 @@ public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> implements I
 
     @Override
     public float getAttackSpeed() {
-        return 0.7F;
+        return 0.65F + DOTEArchiveManager.getWorldLevel() * 0.07F;
     }
 
-    @Override
-    public void setAttackSpeed(float speed) {
-
-    }
 }

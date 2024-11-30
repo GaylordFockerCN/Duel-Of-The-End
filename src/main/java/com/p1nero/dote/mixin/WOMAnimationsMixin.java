@@ -31,6 +31,7 @@ import yesman.epicfight.api.utils.math.Vec3f;
 import yesman.epicfight.gameasset.Armatures;
 import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.model.armature.HumanoidArmature;
+import yesman.epicfight.particle.EpicFightParticles;
 import yesman.epicfight.skill.SkillSlots;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import yesman.epicfight.world.capabilities.entitypatch.player.ServerPlayerPatch;
@@ -57,6 +58,10 @@ public class WOMAnimationsMixin {
      * 调ConvertTime
      */
     @Shadow public static StaticAnimation TORMENT_CHARGED_ATTACK_2;
+
+    @Shadow public static StaticAnimation TORMENT_AUTO_3;
+
+    @Shadow public static StaticAnimation KATANA_AUTO_1;
 
     @Inject(method = "build", at = @At("TAIL"))
     private static void inject(CallbackInfo ci){
@@ -106,19 +111,9 @@ public class WOMAnimationsMixin {
             }
         }, AnimationEvent.Side.CLIENT));
 
-        TORMENT_AUTO_2 = (new BasicMultipleAttackAnimation(0.2F, 0.4F, 0.5F, 0.6F, null, biped.toolR, "biped/combat/torment_auto_2", biped))
-                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
-                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.multiplier(0.4F))
-                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.1F);
+        KATANA_AUTO_1 = (new BasicMultipleAttackAnimation(0.15F, 0.1F, 0.2F, 0.2F, null, biped.toolR, "biped/combat/katana_auto_1", biped)).addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.8F)).addProperty(AnimationProperty.AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.multiplier(2.0F)).addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD).addProperty(AnimationProperty.AttackAnimationProperty.EXTRA_COLLIDERS, 2).addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.8F);
 
-        TORMENT_CHARGED_ATTACK_2 = (new BasicAttackNoRotAnimation(0.15F, 0.25F, 0.4F, 1.0F, null, biped.toolR, "biped/combat/torment_charged_attack_2", biped))
-                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(2.0F))
-                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.multiplier(1.2F))
-                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.FALL)
-                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.0F)
-                .addProperty(AnimationProperty.ActionAnimationProperty.MOVE_VERTICAL, true)
-                .addProperty(AnimationProperty.ActionAnimationProperty.NO_GRAVITY_TIME, TimePairList.create(0.15F, 0.65F))
-                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false);
+        TORMENT_AUTO_3 = (new BasicMultipleAttackAnimation(0.25F, 0.15F, 0.3F, 0.3F, null, biped.toolR, "biped/combat/torment_auto_3", biped)).addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD).addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.2F)).addProperty(AnimationProperty.AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.multiplier(2.0F)).addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD.get()).addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT).addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.2F);
 
     }
 }
