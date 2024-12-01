@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 public class GoldenFlameSpawnerBlockEntity extends BossSpawnerBlockEntity<GoldenFlame>{
     public GoldenFlameSpawnerBlockEntity(BlockPos pos, BlockState state) {
@@ -15,6 +16,11 @@ public class GoldenFlameSpawnerBlockEntity extends BossSpawnerBlockEntity<Golden
 
     @Override
     public ParticleOptions getSpawnerParticle() {
+        return ParticleTypes.FLAME;
+    }
+
+    @Override
+    public @Nullable ParticleOptions getBorderParticle() {
         return ParticleTypes.FLAME;
     }
 }

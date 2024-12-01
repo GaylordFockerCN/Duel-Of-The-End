@@ -65,7 +65,8 @@ public class LivingEntityListener {
 
             player.getCapability(DOTECapabilityProvider.DOTE_PLAYER).ifPresent(dotePlayer -> {
                 dotePlayer.setDeathCount(dotePlayer.getDeathCount() + 1);
-                if(dotePlayer.getDeathCount() == 5){
+                if(dotePlayer.getDeathCount() == 6){
+                    //死六次送技能书
                     player.displayClientMessage(DuelOfTheEndMod.getInfo("tip5").withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD), false);
                     ItemStack parrying = new ItemStack(EpicFightItems.SKILLBOOK.get());
                     parrying.getOrCreateTag().putString("skill", EpicFightSkills.PARRYING.toString());
@@ -73,14 +74,17 @@ public class LivingEntityListener {
                     technician.getOrCreateTag().putString("skill", EpicFightSkills.TECHNICIAN.toString());
                     ItemUtil.addItem(player, parrying);
                     ItemUtil.addItem(player, technician);
-                }
-                //死五次播报一次提示，随机送绑石套之一
-                if(dotePlayer.getDeathCount() < 50 && dotePlayer.getDeathCount() % 5 == 1){
+                } else if(dotePlayer.getDeathCount() < 50 && dotePlayer.getDeathCount() % 5 == 1){
+                    //死五次播报一次提示，随机送绑石套之一
                     player.displayClientMessage(DuelOfTheEndMod.getInfo("tip" + (5 + player.getRandom().nextInt(3))).withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD), false);
                     ItemStack potion = new ItemStack(Items.POTION);
                     PotionUtils.setPotion(potion, Potions.TURTLE_MASTER);
                     ItemUtil.addItem(player, List.of(DOTEItems.TIESTONEH.get(), DOTEItems.TIESTONEC.get(), DOTEItems.TIESTONEL.get(), DOTEItems.TIESTONES.get()).get(player.getRandom().nextInt(4)), 1);
                     ItemUtil.addItem(player, potion);
+                } else if(dotePlayer.getDeathCount() % 10 == 1){
+                    //每死十次送图腾
+                    player.displayClientMessage(DuelOfTheEndMod.getInfo("tip" + (5 + player.getRandom().nextInt(3))).withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD), false);
+                    ItemUtil.addItem(player, Items.TOTEM_OF_UNDYING, 1);
                 }
 
             });

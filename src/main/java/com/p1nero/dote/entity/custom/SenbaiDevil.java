@@ -64,7 +64,7 @@ public class SenbaiDevil extends DOTEBoss{
 
     @Override
     public float getHomeRadius() {
-        return 39;
+        return 37;
     }
 
 

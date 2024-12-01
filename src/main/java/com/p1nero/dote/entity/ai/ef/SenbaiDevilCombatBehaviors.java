@@ -3,6 +3,7 @@ package com.p1nero.dote.entity.ai.ef;
 import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.entity.custom.SenbaiDevil;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import reascer.wom.gameasset.WOMAnimations;
@@ -34,6 +35,7 @@ public class SenbaiDevilCombatBehaviors {
                                     .behavior((humanoidMobPatch -> {
                                         if(humanoidMobPatch.getOriginal() instanceof SenbaiDevil senbaiDevil){
                                             humanoidMobPatch.playAnimationSynchronized(Animations.ENDERMAN_DEATH, 0.15F);
+                                            humanoidMobPatch.playSound(SoundEvents.ENDERMAN_DEATH, 0.5F, 0.6F);
                                             if(senbaiDevil.level() instanceof ServerLevel serverLevel){
                                                 EntityType.LIGHTNING_BOLT.spawn(serverLevel, senbaiDevil.getOnPos(), MobSpawnType.TRIGGERED);
                                                 EntityType.LIGHTNING_BOLT.spawn(serverLevel, senbaiDevil.getOnPos(), MobSpawnType.TRIGGERED);
@@ -49,14 +51,14 @@ public class SenbaiDevilCombatBehaviors {
                                     }))
                                     .health(0.5F, HealthPoint.Comparator.LESS_RATIO)))
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(50.0F).cooldown(60).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(50.0F).cooldown(30).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.KATANA_AUTO_1, 0.25F)).withinDistance(0, 2.5).withinEyeHeight().custom(humanoidMobPatch -> DOTEArchiveManager.getWorldLevel() >= 1))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.KATANA_AUTO_2, 0.15F)).withinDistance(0, 2.5))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.KATANA_AUTO_3, 0.15F)).withinDistance(0, 2.5))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SUMMON_LIGHTNING))
             )
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(50.0F).cooldown(60).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(50.0F).cooldown(30).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.KATANA_AUTO_1, 0.25F)).withinDistance(0, 2.5).withinEyeHeight().custom(humanoidMobPatch -> DOTEArchiveManager.getWorldLevel() >= 2))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.KATANA_AUTO_2, 0.15F)).withinDistance(0, 2.5))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.KATANA_AUTO_1, 0.15F)).withinDistance(0, 2.5))
@@ -65,7 +67,7 @@ public class SenbaiDevilCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SUMMON_LIGHTNING))
             )
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(60).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(30).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(Animations.UCHIGATANA_AUTO1, 0.15F)).withinDistance(0, 2.5).withinEyeHeight())
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.UCHIGATANA_AUTO2))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.UCHIGATANA_AUTO3))
@@ -73,7 +75,7 @@ public class SenbaiDevilCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(ROTATE_TO_TARGET))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.LONGSWORD_DASH).withinDistance(0, 6)))
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(60).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(30).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(Animations.UCHIGATANA_AUTO1, 0.15F)).withinDistance(0, 2.5).withinEyeHeight())
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.UCHIGATANA_AUTO2).withinDistance(0, 2.5))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.TACHI_AUTO1).withinDistance(0, 2.5))
@@ -83,7 +85,7 @@ public class SenbaiDevilCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SUMMON_LIGHTNING).custom(humanoidMobPatch -> DOTEArchiveManager.getWorldLevel() >= 1))
             )
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(50.0F).cooldown(60).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(50.0F).cooldown(30).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(Animations.ENDERMAN_KICK_COMBO, 0.15F)).withinDistance(0, 2.5))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.BIPED_ROLL_BACKWARD))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.BIPED_HOLD_UCHIGATANA_SHEATHING))
@@ -97,7 +99,7 @@ public class SenbaiDevilCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(WOMAnimations.KATANA_AUTO_3))
             )
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(50.0F).cooldown(60).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(50.0F).cooldown(30).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(Animations.ENDERMAN_KICK_COMBO, 0.15F)).withinDistance(0, 2.5))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(WOMAnimations.ENDERSTEP_BACKWARD))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(ROTATE_TO_TARGET))

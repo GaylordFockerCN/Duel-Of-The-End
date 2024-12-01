@@ -37,7 +37,7 @@ public class NetherRotArmorItem extends SimpleDescriptionArmorItem implements ID
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
             builder.putAll(super.getDefaultAttributeModifiers(equipmentSlot));
             builder.put(EpicFightAttributes.MAX_STAMINA.get(), new AttributeModifier(UUID.fromString("CC111E1C-4180-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", 6, AttributeModifier.Operation.ADDITION));
-            builder.put(EpicFightAttributes.STAMINA_REGEN.get(), new AttributeModifier(UUID.fromString("CC222E1C-3333-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", 0.15, AttributeModifier.Operation.ADDITION));
+            builder.put(EpicFightAttributes.STAMINA_REGEN.get(), new AttributeModifier(UUID.fromString("CC222E1C-3333-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", 0.18, AttributeModifier.Operation.ADDITION));
             return builder.build();
         }
         return super.getDefaultAttributeModifiers(equipmentSlot);
@@ -49,13 +49,13 @@ public class NetherRotArmorItem extends SimpleDescriptionArmorItem implements ID
         }
         if(livingEntity.level() instanceof ServerLevel){
             if(!livingEntity.hasEffect(MobEffects.REGENERATION)){
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 60, 1));
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1));
             }
             if(!livingEntity.hasEffect(MobEffects.FIRE_RESISTANCE)){
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 60, 0));
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 100, 0));
             }
             if(!livingEntity.hasEffect(MobEffects.DAMAGE_BOOST)){
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 60, 3));
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 100, 4));
             }
         }
     }

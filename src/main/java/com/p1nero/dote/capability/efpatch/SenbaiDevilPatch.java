@@ -25,6 +25,7 @@ import java.util.List;
 
 public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> implements IModifyAttackSpeedEntity {
     public List<StaticAnimation> guardAnim = new ArrayList<>();
+    public List<StaticAnimation> anticAttack = new ArrayList<>();
     public SenbaiDevilPatch() {
         super(Faction.UNDEAD);
         guardAnim.add(Animations.SWORD_GUARD_HIT);
@@ -32,6 +33,10 @@ public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> implements I
         guardAnim.add(Animations.SWORD_GUARD_ACTIVE_HIT2);
         guardAnim.add(Animations.LONGSWORD_GUARD_ACTIVE_HIT1);
         guardAnim.add(Animations.LONGSWORD_GUARD_ACTIVE_HIT2);
+        anticAttack.add(Animations.LONGSWORD_AUTO1);
+        anticAttack.add(Animations.LONGSWORD_AUTO2);
+        anticAttack.add(Animations.LONGSWORD_AUTO3);
+        anticAttack.add(Animations.UCHIGATANA_SHEATHING_DASH);
     }
 
     @Override
@@ -85,7 +90,7 @@ public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> implements I
             if(!this.getEntityState().attacking() && this.getOriginal().getBlockCount() > 0){
                 this.getOriginal().setBlockCount(this.getOriginal().getBlockCount() - 1);
                 if(this.getOriginal().getBlockCount() == 0){
-                    this.playAnimationSynchronized(Animations.LONGSWORD_AUTO1, 0.15F);
+                    this.playAnimationSynchronized(anticAttack.get(this.getOriginal().getRandom().nextInt(anticAttack.size())), 0.15F);
                     return super.tryHurt(damageSource, amount);
                 }
                 this.playAnimationSynchronized(guardAnim.get(this.getOriginal().getRandom().nextInt(guardAnim.size())), 0.0F);
