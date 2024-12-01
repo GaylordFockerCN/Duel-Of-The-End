@@ -6,6 +6,7 @@ import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
 import com.p1nero.dote.item.DOTEItems;
+import com.p1nero.dote.util.ItemUtil;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -197,6 +198,9 @@ public class GoldenFlame extends DOTEBoss{
             DOTEArchiveManager.BIOME_PROGRESS_DATA.setGoldenFlameFought(true);
             if(DOTEArchiveManager.BIOME_PROGRESS_DATA.isSenbaiFought()){
                 DOTEAdvancementData.getAdvancement("golden_flame", player);
+            }
+            if(!DOTEArchiveManager.BIOME_PROGRESS_DATA.isBoss2fought()){
+                ItemUtil.addItem(player, DOTEItems.ADVENTURESPAR.get(), 25 * (DOTEArchiveManager.getWorldLevel() + 1));
             }
         }
         super.die(source);

@@ -6,6 +6,8 @@ import com.p1nero.dote.capability.DOTECapabilityProvider;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
+import com.p1nero.dote.item.DOTEItems;
+import com.p1nero.dote.util.ItemUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
@@ -74,6 +76,9 @@ public class TheArbiterOfRadiance extends DOTEBoss {
             }
             DOTEAdvancementData.getAdvancement("seed", player);
             player.displayClientMessage(DuelOfTheEndMod.getInfo("tip11").withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD), false);
+            if(!DOTEArchiveManager.BIOME_PROGRESS_DATA.isBoss1fought()){
+                ItemUtil.addItem(player, DOTEItems.ADVENTURESPAR.get(), 10 * (DOTEArchiveManager.getWorldLevel() + 1));
+            }
         }
         DOTEArchiveManager.BIOME_PROGRESS_DATA.setBoss1fought(true);
         super.die(source);

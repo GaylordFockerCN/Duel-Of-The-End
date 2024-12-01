@@ -19,10 +19,13 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
@@ -161,9 +164,23 @@ public class KnightCommander extends DOTENpc {
                 potion,
                 142857, 0, 0.02f));
         if(DOTEArchiveManager.getWorldLevel() >= 1){
+            ItemStack sharp = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(Enchantments.SHARPNESS, 2));
+            ItemStack protect = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(Enchantments.ALL_DAMAGE_PROTECTION, 2));
             offers.add(new MerchantOffer(
-                    new ItemStack(DOTEItems.ADVENTURESPAR.get(), 10),
+                    new ItemStack(DOTEItems.ADGRAIN.get(), 10),
                     new ItemStack(Items.PAPER, 10),
+                    142857, 0, 0.02f));
+            offers.add(new MerchantOffer(
+                    new ItemStack(DOTEItems.ADVENTURESPAR.get(), 15),
+                    new ItemStack(Items.LAPIS_LAZULI, 1),
+                    142857, 0, 0.02f));
+            offers.add(new MerchantOffer(
+                    new ItemStack(DOTEItems.ADVENTURESPAR.get(), 15),
+                    sharp,
+                    142857, 0, 0.02f));
+            offers.add(new MerchantOffer(
+                    new ItemStack(DOTEItems.ADVENTURESPAR.get(), 15),
+                    protect,
                     142857, 0, 0.02f));
         }
         offers.add(new MerchantOffer(

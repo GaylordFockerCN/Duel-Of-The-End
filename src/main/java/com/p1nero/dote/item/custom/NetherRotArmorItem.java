@@ -1,6 +1,7 @@
 package com.p1nero.dote.item.custom;
 
 import com.p1nero.dote.archive.DOTEArchiveManager;
+import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.item.DOTEArmorMaterials;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.item.DOTERarities;
@@ -9,6 +10,8 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -19,6 +22,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
 import java.util.UUID;
@@ -55,7 +59,18 @@ public class NetherRotArmorItem extends SimpleDescriptionArmorItem implements ID
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 100, 0));
             }
             if(!livingEntity.hasEffect(MobEffects.DAMAGE_BOOST)){
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 100, 4));
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 100, 2 + DOTEArchiveManager.getWorldLevel()));
+            }
+        }
+    }
+
+    public static void onEntityHurt(LivingEntity livingEntity, DamageSource damageSource){
+        if(isFullSet(livingEntity) && damageSource.getEntity() != null){
+            if(livingEntity.level() instanceof ServerLevel serverLevel){
+                if(!livingEntity.hasEffect(MobEffects.WEAKNESS)){
+                    livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 40, 2 + DOTEArchiveManager.getWorldLevel()));
+                    serverLevel.playSound(null, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), EpicFightSounds.CLASH.get(), SoundSource.BLOCKS, 0.5F, 0.5F);
+                }
             }
         }
     }

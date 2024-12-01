@@ -5,6 +5,8 @@ import com.p1nero.dote.capability.DOTECapabilityProvider;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
+import com.p1nero.dote.item.DOTEItems;
+import com.p1nero.dote.util.ItemUtil;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -103,6 +105,9 @@ public class SenbaiDevil extends DOTEBoss{
             DOTEArchiveManager.BIOME_PROGRESS_DATA.setSenbaiFought(true);
             if(DOTEArchiveManager.BIOME_PROGRESS_DATA.isGoldenFlameFought()){
                 DOTEAdvancementData.getAdvancement("golden_flame", player);
+            }
+            if(!DOTEArchiveManager.BIOME_PROGRESS_DATA.isSenbaiFought()){
+                ItemUtil.addItem(player, DOTEItems.ADVENTURESPAR.get(), 20 * (DOTEArchiveManager.getWorldLevel() + 1));
             }
         }
         super.die(source);

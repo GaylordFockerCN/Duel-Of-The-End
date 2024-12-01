@@ -9,17 +9,28 @@ import com.p1nero.dote.item.DOTEItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
+import yesman.epicfight.world.effect.EpicFightMobEffects;
+
+import java.util.List;
 
 /**
  * 猩红大祭司
@@ -82,15 +93,38 @@ public class ScarletHighPriest extends DOTENpc{
         MerchantOffers offers = new MerchantOffers();
 
         if(DOTEArchiveManager.getWorldLevel() >= 1){
+            ItemStack sharp = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(Enchantments.SHARPNESS, 2));
+            ItemStack protect = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(Enchantments.ALL_DAMAGE_PROTECTION, 2));
+            ItemStack stunImmunity = PotionUtils.setCustomEffects(Items.POTION.getDefaultInstance(), List.of(new MobEffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 300, 0)));
+            offers.add(new MerchantOffer(
+                    new ItemStack(DOTEItems.ADGRAIN.get(), 10),
+                    new ItemStack(Items.PAPER, 10),
+                    142857, 0, 0.02f));
             offers.add(new MerchantOffer(
                     new ItemStack(DOTEItems.ADVENTURESPAR.get(), 10),
                     new ItemStack(Items.LAPIS_LAZULI, 1),
+                    142857, 0, 0.02f));
+            offers.add(new MerchantOffer(
+                    new ItemStack(DOTEItems.ADVENTURESPAR.get(), 10),
+                    sharp,
+                    142857, 0, 0.02f));
+            offers.add(new MerchantOffer(
+                    new ItemStack(DOTEItems.ADVENTURESPAR.get(), 10),
+                    protect,
+                    142857, 0, 0.02f));
+            offers.add(new MerchantOffer(
+                    new ItemStack(DOTEItems.ADVENTURESPAR.get(), 10),
+                    stunImmunity,
                     142857, 0, 0.02f));
         }
 
         offers.add(new MerchantOffer(
                 new ItemStack(DOTEItems.ADVENTURESPAR.get(), 10),
                 new ItemStack(DOTEItems.NETHERROT_INGOT.get(), 1),
+                142857, 0, 0.02f));
+        offers.add(new MerchantOffer(
+                new ItemStack(DOTEItems.ADVENTURESPAR.get(), 10),
+                new ItemStack(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, 4),
                 142857, 0, 0.02f));
         offers.add(new MerchantOffer(
                 new ItemStack(DOTEItems.NETHERROT_INGOT.get(), 1),

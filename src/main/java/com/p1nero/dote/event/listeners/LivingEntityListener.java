@@ -122,6 +122,9 @@ public class LivingEntityListener {
         if(event.getEntity() instanceof DOTEBoss && DOTEConfig.FAST_BOSS_FIGHT.get() && event.getSource().isCreativePlayer()){
             event.setAmount(event.getAmount() * 100);
         }
+
+        NetherRotArmorItem.onEntityHurt(event.getEntity(), event.getSource());
+
     }
 
     @SubscribeEvent
