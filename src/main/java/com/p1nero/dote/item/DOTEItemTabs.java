@@ -53,6 +53,9 @@ public class DOTEItemTabs {
 						tabData.accept(DOTEBlocks.TAR_SPAWNER.get());
 						tabData.accept(DOTEBlocks.TPP_SPAWNER.get());
 						tabData.accept(DOTEBlocks.TSE_SPAWNER.get());
+						tabData.accept(DOTEItems.DOTE_ZOMBIE_SPAWN_EGG.get());
+						tabData.accept(DOTEItems.DOTE_ZOMBIE2_SPAWN_EGG.get());
+						tabData.accept(DOTEItems.DOTE_PIGLIN_SPAWN_EGG.get());
 					}).build());
 
 }

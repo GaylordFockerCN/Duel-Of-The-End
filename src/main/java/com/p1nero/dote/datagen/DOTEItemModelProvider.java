@@ -70,6 +70,10 @@ public class DOTEItemModelProvider extends ItemModelProvider {
         simpleItem(DOTEItems.GOLDEN_DRAGON_CHESTPLATE);
         simpleItem(DOTEItems.GOLDEN_DRAGON_LEGGINGS);
         simpleItem(DOTEItems.GOLDEN_DRAGON_BOOTS);
+
+        eggItem(DOTEItems.DOTE_ZOMBIE_SPAWN_EGG);
+        eggItem(DOTEItems.DOTE_ZOMBIE2_SPAWN_EGG);
+        eggItem(DOTEItems.DOTE_PIGLIN_SPAWN_EGG);
     }
 
     //Thank you kaupenjoe & El_Redstoniano!

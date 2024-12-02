@@ -128,9 +128,9 @@ public class DOTELangGenerator extends DOTELangProvider {
         add(DOTEBlocks.TPP_SPAWNER.get(), "炼狱炎魔召唤祭坛");
         add(DOTEBlocks.TSE_SPAWNER.get(), "终末之影召唤祭坛");
 
-        add(DOTEEntities.DOTE_ZOMBIE.get(), "黑暗先遣");
-        add(DOTEEntities.DOTE_ZOMBIE_2.get(), "黑暗先遣");
-        add(DOTEEntities.DOTE_PIGLIN.get(), "猪灵");
+        addEntityAndEgg(DOTEEntities.DOTE_ZOMBIE, "黑暗先遣");
+        addEntityAndEgg(DOTEEntities.DOTE_ZOMBIE_2, "黑暗先遣Ⅱ");
+        addEntityAndEgg(DOTEEntities.DOTE_PIGLIN, "猪灵");
         add(DOTEEntities.STAR_CHASER.get(), "追星者");
         add(DOTEEntities.SENBAI_DEVIL.get(), "森白影魔（？）");
         add(DOTEEntities.GOLDEN_FLAME.get(), "金焰神王（？）");

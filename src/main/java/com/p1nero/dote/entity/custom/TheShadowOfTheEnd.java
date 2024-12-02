@@ -8,6 +8,9 @@ import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.util.ItemUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -37,10 +40,16 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
  * 终末之影
  */
 public class TheShadowOfTheEnd extends DOTEBoss {
-    private int deathTick;
+    protected static final EntityDataAccessor<Integer> DEATH_TICK = SynchedEntityData.defineId(TheShadowOfTheEnd.class, EntityDataSerializers.INT);
     public TheShadowOfTheEnd(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SATSUJIN.get().getDefaultInstance());
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        getEntityData().define(DEATH_TICK, 0);
     }
 
     @Override
@@ -57,16 +66,20 @@ public class TheShadowOfTheEnd extends DOTEBoss {
                 .build();
     }
 
+    public void increaseDeathTick(){
+        getEntityData().set(DEATH_TICK, getDeathTick() + 1);
+    }
+
     public int getDeathTick() {
-        return deathTick;
+        return getEntityData().get(DEATH_TICK);
     }
 
     @Override
     public void tick() {
         super.tick();
-        if(deathTick > 0){
+        if(getDeathTick() > 0){
             setTarget(null);
-            deathTick++;
+            increaseDeathTick();
             if(level() instanceof ServerLevel serverLevel){
                 LivingEntityPatch<?> patch = EpicFightCapabilities.getEntityPatch(this, LivingEntityPatch.class);
                 if(patch != null){
@@ -75,7 +88,7 @@ public class TheShadowOfTheEnd extends DOTEBoss {
 
                 }
                 this.move(MoverType.SELF, new Vec3(0.0, 0.10000000149011612, 0.0));
-                if (this.deathTick >= 70 && this.deathTick <= 100) {
+                if (this.getDeathTick() >= 70 && this.getDeathTick() <= 100) {
                     float f = (this.random.nextFloat() - 0.5F) * 8.0F;
                     float f1 = (this.random.nextFloat() - 0.5F) * 4.0F;
                     float f2 = (this.random.nextFloat() - 0.5F) * 8.0F;
@@ -83,20 +96,23 @@ public class TheShadowOfTheEnd extends DOTEBoss {
                     serverLevel.playSound(null, getX(), getY(), getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 1, 1);
                 }
             }
-            if(this.deathTick == 100 && getLastAttacker() instanceof ServerPlayer player){
-                DOTEAdvancementData.getAdvancement("book", player);
-                DOTEArchiveManager.worldLevelUp(player.serverLevel(), false);
-                ItemUtil.addItem(player, DOTEItems.BOOK_OF_ENDING.get(), 1);
-                setHealth(0);
-                this.remove(RemovalReason.KILLED);
-                this.gameEvent(GameEvent.ENTITY_DIE);
+            if(this.getDeathTick() == 100){
+                if(getLastAttacker() instanceof ServerPlayer player){
+                    DOTEAdvancementData.getAdvancement("book", player);
+                    DOTEArchiveManager.worldLevelUp(player.serverLevel(), false);
+                    ItemUtil.addItem(player, DOTEItems.BOOK_OF_ENDING.get(), 1);
+                    setHealth(0);
+                    super.die(damageSources().playerAttack(player));
+                } else {
+                    super.die(damageSources().magic());
+                }
             }
         }
     }
 
     @Override
     public boolean hurt(@NotNull DamageSource source, float p_21017_) {
-        if(deathTick > 0){
+        if(getDeathTick() > 0){
             return false;
         }
         return super.hurt(source, p_21017_);
@@ -104,16 +120,16 @@ public class TheShadowOfTheEnd extends DOTEBoss {
 
     @Override
     public void die(@NotNull DamageSource source) {
-        if(deathTick >= 200){
+        if(getDeathTick() >= 200){
             super.die(source);
             return;
         }
-        if(deathTick != 0){
+        if(getDeathTick() != 0){
             return;
         }
         setHealth(1);
         setNoGravity(true);
-        deathTick = 1;
+        increaseDeathTick();
         //保险
         if(source.getEntity() instanceof ServerPlayer player){
             setLastHurtByMob(player);

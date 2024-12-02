@@ -1,0 +1,17 @@
+{
+  "structures": [
+    {
+      "structure": "duel_of_the_end:watchtower",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 1919114514,
+
+    "spacing": 15,
+
+    "separation": 7,
+
+    "type": "minecraft:random_spread"
+  }
+}

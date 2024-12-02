@@ -1,9 +1,11 @@
 package com.p1nero.dote.item;
 
 import com.p1nero.dote.DuelOfTheEndMod;
+import com.p1nero.dote.entity.DOTEEntities;
 import com.p1nero.dote.item.custom.*;
 import com.p1nero.dote.worldgen.biome.BiomeMap;
 import net.minecraft.world.item.*;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -64,5 +66,16 @@ public class DOTEItems {
 	public static final RegistryObject<Item> GOLDEN_DRAGON_CHESTPLATE = REGISTRY.register("goldendragon_chestplate", () -> new GoldenDragonArmorItem(ArmorItem.Type.CHESTPLATE));
 	public static final RegistryObject<Item> GOLDEN_DRAGON_LEGGINGS = REGISTRY.register("goldendragon_leggings", () -> new GoldenDragonArmorItem(ArmorItem.Type.LEGGINGS));
 	public static final RegistryObject<Item> GOLDEN_DRAGON_BOOTS = REGISTRY.register("goldendragon_boots", () -> new GoldenDragonArmorItem(ArmorItem.Type.BOOTS));
+	public static final RegistryObject<Item> DOTE_ZOMBIE_SPAWN_EGG = REGISTRY.register("dote_zombie_spawn_egg",
+			() -> new ForgeSpawnEggItem(DOTEEntities.DOTE_ZOMBIE, 0x761611, 0x167611,
+					new Item.Properties()));
+
+	public static final RegistryObject<Item> DOTE_PIGLIN_SPAWN_EGG = REGISTRY.register("dote_piglin_spawn_egg",
+			() -> new ForgeSpawnEggItem(DOTEEntities.DOTE_PIGLIN, 0x167611, 0x767611,
+					new Item.Properties()));
+
+	public static final RegistryObject<Item> DOTE_ZOMBIE2_SPAWN_EGG = REGISTRY.register("dote_zombie2_spawn_egg",
+			() -> new ForgeSpawnEggItem(DOTEEntities.DOTE_ZOMBIE_2, 0x167611, 0x567611,
+					new Item.Properties()));
 
 }
