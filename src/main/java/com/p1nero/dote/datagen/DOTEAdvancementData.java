@@ -53,7 +53,7 @@ public class DOTEAdvancementData extends ForgeAdvancementProvider {
             Advancement end = registerAdvancement(goldenFlame, "book", FrameType.TASK, DOTEItems.BOOK_OF_ENDING.get());
 
             //骑士线
-            Advancement knight = registerAdvancement(core, "knight", FrameType.TASK, DOTEItems.BALMUNG.get());
+            Advancement knight = registerAdvancement(core, "knight", FrameType.TASK, DOTEItems.ROT_GREATSWORD.get());
             Advancement loyal = registerAdvancement(knight, "loyal", FrameType.TASK, DOTEItems.WKNIGHT_CHESTPLATE.get());
 
             //一般结局

@@ -63,7 +63,7 @@ public class DOTEChestLootTables implements LootTableSubProvider {
         );
         builder.accept(DOTELoot.CHURCH_RARE, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .add(LootItem.lootTableItem(DOTEItems.BALMUNG.get())).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+                        .add(LootItem.lootTableItem(DOTEItems.ROT_GREATSWORD.get())).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 2.0F))
                         .add(LootItem.lootTableItem(DOTEItems.NETHERROT_INGOT.get())).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))

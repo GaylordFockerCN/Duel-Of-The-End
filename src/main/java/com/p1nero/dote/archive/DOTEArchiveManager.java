@@ -189,16 +189,16 @@ public class DOTEArchiveManager {
                 }
                 //重置能否进炼狱群系
                 player.getCapability(DOTECapabilityProvider.DOTE_PLAYER).ifPresent(dotePlayer -> dotePlayer.setCanEnterPBiome(false));
-                //清空物品栏中的非法物品
-                if(!player.isCreative()){
-                    for(NonNullList<ItemStack> list :ItemUtil.getCompartments(player)){
-                        for(ItemStack stack : list){
-                            if(!(stack.getItem() instanceof IDOTEKeepableItem doteKeepableItem && doteKeepableItem.shouldKeepWhenExitDim())){
-                                stack.setCount(0);
-                            }
-                        }
-                    }
-                }
+//                //清空物品栏中的非法物品
+//                if(!player.isCreative()){
+//                    for(NonNullList<ItemStack> list :ItemUtil.getCompartments(player)){
+//                        for(ItemStack stack : list){
+//                            if(!(stack.getItem() instanceof IDOTEKeepableItem doteKeepableItem && doteKeepableItem.shouldKeepWhenExitDim())){
+//                                stack.setCount(0);
+//                            }
+//                        }
+//                    }
+//                }
             }
             if(isFinished()){
                 if(BIOME_PROGRESS_DATA.isEnd1()){

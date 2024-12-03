@@ -4,7 +4,6 @@ import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.block.DOTEBlocks;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.entity.DOTEEntities;
-import com.p1nero.dote.gameasset.skill.DOTESkills;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.worldgen.biome.DOTEBiomes;
 import net.minecraft.data.PackOutput;
@@ -111,8 +110,8 @@ public class DOTELangGenerator extends DOTELangProvider {
         addItemUsageInfo(DOTEItems.NETHERITEROT_LEGGINGS.get(), "套装效果：§4§l炎甲");
         add(DOTEItems.NETHERITEROT_BOOTS.get(), "腐金靴子");
         addItemUsageInfo(DOTEItems.NETHERITEROT_BOOTS.get(), "套装效果：§4§l炎甲");
-        add(DOTEItems.BALMUNG.get(), "幻想大剑：天魔失坠");
-        addItemUsageInfo(DOTEItems.BALMUNG.get(), "赞助者：§2<xyz>");
+        add(DOTEItems.ROT_GREATSWORD.get(), "腐金大剑");
+        addItemUsageInfo(DOTEItems.ROT_GREATSWORD.get(), "");
         add(DOTEItems.GOLDEN_DRAGON_HELMET.get(), "赤焰金龙战盔");
         addItemUsageInfo(DOTEItems.GOLDEN_DRAGON_HELMET.get(), "赞助者：§2<雨落风情>");
         add(DOTEItems.GOLDEN_DRAGON_CHESTPLATE.get(), "赤焰金龙战甲");

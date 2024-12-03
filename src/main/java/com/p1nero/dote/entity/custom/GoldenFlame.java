@@ -30,7 +30,6 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import reascer.wom.gameasset.WOMAnimations;
@@ -47,7 +46,8 @@ public class GoldenFlame extends DOTEBoss{
     private static final int MAX_ANTI_FORM_TIMER = 800;
     public GoldenFlame(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
-        setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SOLAR.get().getDefaultInstance());
+//        setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SOLAR.get().getDefaultInstance());
+        setItemInHand(InteractionHand.MAIN_HAND, DOTEItems.ROT_GREATSWORD.get().getDefaultInstance());
         setItemSlot(EquipmentSlot.HEAD, DOTEItems.GOLDEN_DRAGON_HELMET.get().getDefaultInstance());
         setItemSlot(EquipmentSlot.CHEST, DOTEItems.GOLDEN_DRAGON_CHESTPLATE.get().getDefaultInstance());
         setItemSlot(EquipmentSlot.LEGS, DOTEItems.GOLDEN_DRAGON_LEGGINGS.get().getDefaultInstance());
@@ -72,7 +72,8 @@ public class GoldenFlame extends DOTEBoss{
         if(isBlue){
             setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SOLAR_OBSCURIDAD.get().getDefaultInstance());
         } else {
-            setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SOLAR.get().getDefaultInstance());
+            setItemInHand(InteractionHand.MAIN_HAND, DOTEItems.ROT_GREATSWORD.get().getDefaultInstance());
+//            setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SOLAR.get().getDefaultInstance());
         }
     }
 
@@ -124,7 +125,7 @@ public class GoldenFlame extends DOTEBoss{
                 resetCharging();
             }
             if(getAntiFormTimer() == 1){
-                setItemInHand(InteractionHand.MAIN_HAND, DOTEItems.BALMUNG.get().getDefaultInstance());
+                setItemInHand(InteractionHand.MAIN_HAND, DOTEItems.ROT_GREATSWORD.get().getDefaultInstance());
                 if(!level().isClientSide){
                     GoldenFlamePatch patch = EpicFightCapabilities.getEntityPatch(this, GoldenFlamePatch.class);
                     patch.playAnimationSynchronized(WOMAnimations.ANTITHEUS_LAPSE, 0.3F);

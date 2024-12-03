@@ -14,8 +14,8 @@ import yesman.epicfight.world.item.WeaponItem;
 
 import java.util.List;
 
-public class BalmungItem extends WeaponItem {
-    public BalmungItem(Tier tier, int damageIn, float speedIn, Properties builder) {
+public class RotGreatswordItem extends WeaponItem {
+    public RotGreatswordItem(Tier tier, int damageIn, float speedIn, Properties builder) {
         super(tier, damageIn, speedIn, builder);
     }
 

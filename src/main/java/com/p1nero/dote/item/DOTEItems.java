@@ -59,7 +59,7 @@ public class DOTEItems {
 			() -> new NetherRotArmorItem(ArmorItem.Type.LEGGINGS));
 	public static final RegistryObject<Item> NETHERITEROT_BOOTS = REGISTRY.register("netheriterot_boots",
 			() -> new NetherRotArmorItem(ArmorItem.Type.BOOTS));
-	public static final RegistryObject<Item> BALMUNG = REGISTRY.register("balmung", ()-> new BalmungItem(Tiers.NETHERITE, -3, -2.4F,(new Item.Properties()).defaultDurability(2777).rarity(DOTERarities.SHEN_ZHEN)));
+	public static final RegistryObject<Item> ROT_GREATSWORD = REGISTRY.register("rotgreatsword", ()-> new RotGreatswordItem(Tiers.NETHERITE, -3, -2.4F,(new Item.Properties()).defaultDurability(2777).rarity(DOTERarities.SHEN_ZHEN)));
 	public static final RegistryObject<Item> WITHERC = REGISTRY.register("witherc", () -> new SimpleKeepableFoilDescriptionItem(new Item.Properties().fireResistant().rarity(DOTERarities.XIAN_PIN)));
 	public static final RegistryObject<Item> DRAGONSTEEL_INGOT = REGISTRY.register("dragonsteel_ingot", () -> new SimpleDescriptionFoilItem(new Item.Properties().fireResistant().rarity(DOTERarities.SHEN_ZHEN)));
 	public static final RegistryObject<Item> GOLDEN_DRAGON_HELMET = REGISTRY.register("goldendragon_helmet", () -> new GoldenDragonArmorItem(ArmorItem.Type.HELMET));

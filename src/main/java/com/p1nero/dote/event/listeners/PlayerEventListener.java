@@ -102,7 +102,13 @@ public class PlayerEventListener {
                 if(player.isSprinting()){
                     playerPatch.setStamina(playerPatch.getStamina() - 0.025F);
                     playerPatch.resetActionTick();
+                }
 
+                //禁用奇迹武器
+                if(player.getMainHandItem().getDescriptionId().contains("wom")){
+                    player.drop(player.getMainHandItem(), false);
+                    player.getMainHandItem().setCount(0);
+                    player.displayClientMessage(DuelOfTheEndMod.getInfo("tip9"), true);
                 }
             }
         }
