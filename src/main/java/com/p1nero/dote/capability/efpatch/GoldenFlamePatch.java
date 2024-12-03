@@ -36,6 +36,25 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
     private final List<TimeStampedEvent> list = new ArrayList<>();
     private static final EntityDataAccessor<Float> ATTACK_SPEED = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.FLOAT);
 
+    private boolean onCharged2Hit;
+    private boolean onDash;
+
+    public boolean isOnCharged2Hit() {
+        return onCharged2Hit;
+    }
+
+    public void resetOnCharged2Hit(){
+        onCharged2Hit = false;
+    }
+
+    public boolean isOnDash() {
+        return onDash;
+    }
+
+    public void setOnDash(boolean onDash){
+        this.onDash = onDash;
+    }
+
     public GoldenFlamePatch() {
         super(Faction.UNDEAD);
     }
@@ -56,9 +75,9 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
 
     @Override
     public AttackResult tryHarm(Entity target, EpicFightDamageSource epicFightDamageSource, float amount) {
-        //击中补刀
-        if(epicFightDamageSource.getAnimation() == WOMAnimations.TORMENT_BERSERK_AUTO_2 && getOriginal().getHealth() < getOriginal().getMaxHealth() / 2){
-            this.reserveAnimation(WOMAnimations.SOLAR_AUTO_4_POLVORA);
+        //击中就变招
+        if(epicFightDamageSource.getAnimation() == WOMAnimations.TORMENT_CHARGED_ATTACK_2){
+            onCharged2Hit = true;
         }
         return super.tryHarm(target, epicFightDamageSource, amount);
     }

@@ -8,6 +8,8 @@
     "AttributesMixin",
     "MainFrameAnimationMixin",
     "ServerGamePacketListenerImplMixin",
+    "ThirdPersonStatusMixin",
+    "ThirdPersonEventsMixin",
     "WOMAnimationsMixin",
     "WorldOptionsMixin"
   ],

@@ -2,12 +2,17 @@ package com.p1nero.dote.entity.ai.ef;
 
 import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.capability.efpatch.GoldenFlamePatch;
+import com.p1nero.dote.entity.ai.ef.api.IModifyAttackSpeedEntity;
 import com.p1nero.dote.entity.ai.ef.api.TimeStampedEvent;
 import com.p1nero.dote.entity.custom.GoldenFlame;
 import com.p1nero.dote.gameasset.DOTEAnimations;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import reascer.wom.gameasset.WOMAnimations;
@@ -17,6 +22,7 @@ import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.world.capabilities.entitypatch.HumanoidMobPatch;
 import yesman.epicfight.world.capabilities.entitypatch.MobPatch;
+import yesman.epicfight.world.capabilities.entitypatch.player.ServerPlayerPatch;
 import yesman.epicfight.world.damagesource.StunType;
 import yesman.epicfight.world.entity.ai.goal.CombatBehaviors;
 
@@ -98,6 +104,14 @@ public class GoldenFlameCombatBehaviors {
     public static final Consumer<HumanoidMobPatch<?>> PLAY_ENDER_TELEPORT_SOUND = (humanoidMobPatch -> humanoidMobPatch.playSound(SoundEvents.ENDERMAN_TELEPORT, 1f, 1f));
     public static final Consumer<HumanoidMobPatch<?>> PLAY_HIT_BLUNT_HARD_SOUND = (humanoidMobPatch -> humanoidMobPatch.playSound(EpicFightSounds.BLUNT_HIT_HARD.get(), 1f, 1f));
 
+    public static final Consumer<HumanoidMobPatch<?>> PLAY_SOLAR_BRASERO_CREMATORIO = customAttackAnimation(WOMAnimations.SOLAR_BRASERO_CREMATORIO, 0.3F, 0.8f, null, 0, new TimeStampedEvent(0.3F, (entityPatch -> {
+        LivingEntity entity = entityPatch.getOriginal();
+        if(entityPatch.getOriginal().level() instanceof ServerLevel serverLevel){
+            serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, entity.getX(), entity.getY() + 1.0, entity.getZ(), 10, 0.0, 0.0, 0.0, 0.1);
+            serverLevel.playSound(null, entity.getX(), entity.getY() + 0.75, entity.getZ(), SoundEvents.PLAYER_HURT_ON_FIRE, SoundSource.BLOCKS, 1.0F, 0.5F);
+        }
+    })));
+
     /**
      * 结束蓄力状态并播放粒子音效提示
      */
@@ -171,7 +185,10 @@ public class GoldenFlameCombatBehaviors {
                                     .custom(IS_NOT_CHARGING)
                                     .health(0.6F, HealthPoint.Comparator.LESS_RATIO))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder()
-                                    .behavior(customAttackAnimation(WOMAnimations.SOLAR_BRASERO_CREMATORIO, 0.3F, 0.8f))))
+                                    .behavior(PLAY_SOLAR_BRASERO_CREMATORIO))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder()
+                                    .behavior(PLAY_SOLAR_BRASERO_CREMATORIO))
+            )
             // 2/5血下——solar大招三段（烈阳形态）
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(200).cooldown(600).canBeInterrupted(false).looping(false)
@@ -193,7 +210,7 @@ public class GoldenFlameCombatBehaviors {
 
             //一阶段——平a
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10.0F).cooldown(100).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(100).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_AUTO_1, 0.3f, 0.8f))
                                     .custom(IS_NOT_CHARGING)
                                     .withinDistance(0, 4)
@@ -203,7 +220,7 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_CHARGED_ATTACK_3, 0.2f, 0.6f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_SLAM_SOUND)))
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(12.0F).cooldown(150).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(150).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_AUTO_2, 0.3f, 0.8f))
                                     .custom(IS_NOT_CHARGING)
                                     .withinDistance(0, 4)
@@ -212,7 +229,7 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_CHARGED_ATTACK_1, 0.2f, 0.65f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_SLAM_SOUND)))
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10.0F).cooldown(100).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(100).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_AUTO_1, 0.3f, 0.8f))
                                     .custom(IS_NOT_CHARGING)
                                     .withinDistance(0, 4)
@@ -222,7 +239,7 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_AUTO_4, 0.2f, 0.6f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_SLAM_SOUND)))
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10.0F).cooldown(100).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(100).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_1, 0.2f))
                                     .custom(IS_NOT_CHARGING)
                                     .withinDistance(0, 4)
@@ -246,7 +263,7 @@ public class GoldenFlameCombatBehaviors {
 
             //一阶段——一蓄
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(0F).cooldown(100).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(100).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(CLEAR_CHARGE).withinDistance(0, 4).withinEyeHeight().custom(humanoidMobPatch -> {
                                 if(humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame){
                                     return goldenFlame.getChargingTimer() <= 110;
@@ -257,17 +274,21 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(humanoidMobPatch -> {
                                     if(humanoidMobPatch.getOriginal().getRandom().nextBoolean()){
                                         humanoidMobPatch.playAnimationSynchronized(WOMAnimations.TORMENT_AUTO_4, 0.2F);
-                                        //TORMENT_AUTO_4写0.6倍速
+                                        if(humanoidMobPatch instanceof IModifyAttackSpeedEntity entity){
+                                            entity.setAttackSpeed(0.6F);
+                                        }
                                     } else {
                                         humanoidMobPatch.playAnimationSynchronized(WOMAnimations.TORMENT_BERSERK_AIRSLAM, 0.2F);
-                                        //BERSERK_AIRSLAM写0.7倍速
+                                        if(humanoidMobPatch instanceof IModifyAttackSpeedEntity entity){
+                                            entity.setAttackSpeed(0.7F);
+                                        }
                                     }
                                 humanoidMobPatch.playSound(EpicFightSounds.GROUND_SLAM.get(), 1, 1);
                             })))
 
             //二阶段——平a
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(0F).cooldown(10).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(10).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_1, 0.2f))
                                     .custom(IS_NOT_CHARGING)
                                     .withinDistance(0, 4)
@@ -279,7 +300,7 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_SLAM_SOUND)))
             //二阶段——二蓄
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(0.015F).cooldown(200).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(200).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(CLEAR_CHARGE).withinDistance(0, 4).health(0.8f, HealthPoint.Comparator.LESS_RATIO).withinEyeHeight().custom(humanoidMobPatch -> {
                                 if(humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame){
                                     return goldenFlame.getChargingTimer() <= 80;
@@ -287,29 +308,46 @@ public class GoldenFlameCombatBehaviors {
                                 return false;
                             }))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_CHARGED_ATTACK_2, 0.5f)))
+                            //没击中二选一，击中在下面判断
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(humanoidMobPatch -> {
-                                if(humanoidMobPatch.getOriginal().getHealth() < humanoidMobPatch.getOriginal().getMaxHealth() / 2){
-                                    humanoidMobPatch.playAnimationSynchronized(WOMAnimations.TORMENT_AUTO_4, 0.5F);
-                                    humanoidMobPatch.playSound(EpicFightSounds.GROUND_SLAM.get(), 1, 1);
-                                    humanoidMobPatch.playAnimationSynchronized(WOMAnimations.SOLAR_AUTO_3, 0.2F);
-                                    humanoidMobPatch.playAnimationSynchronized(WOMAnimations.TORMENT_CHARGED_ATTACK_3, 0.3F);
-                                    //TORMENT_AUTO_4写0.6倍速，SOLAR_AUTO_3写0.9速，TORMENT_CHARGED_ATTACK_3写0.6速；前摇不变动
-                                    //连招：2蓄力击中必定播巨斧4a+太阳3a+巨斧3蓄力；非击中出巨斧蓄力3或狮子斩（二选一）
-                                } else {
-                                    if(humanoidMobPatch.getOriginal().getRandom().nextBoolean()){
-                                        humanoidMobPatch.playAnimationSynchronized(WOMAnimations.TORMENT_CHARGED_ATTACK_3, 0.2F);
-                                        //TORMENT_CHARGED_ATTACK_3写0.6倍速
-                                    } else {
-                                        humanoidMobPatch.playAnimationSynchronized(WOMAnimations.TORMENT_CHARGED_ATTACK_1, 0.2F);
-                                        //狮子斩等腐犬补充
+                                if(humanoidMobPatch.getOriginal().getRandom().nextBoolean()){
+                                    humanoidMobPatch.playAnimationSynchronized(WOMAnimations.TORMENT_CHARGED_ATTACK_3, 0.2F);
+                                    if(humanoidMobPatch instanceof IModifyAttackSpeedEntity entity){
+                                        entity.setAttackSpeed(0.6F);
                                     }
+                                } else {
+                                    humanoidMobPatch.playAnimationSynchronized(WOMAnimations.TORMENT_CHARGED_ATTACK_3, 0.2F);
+                                    if(humanoidMobPatch instanceof IModifyAttackSpeedEntity entity){
+                                        entity.setAttackSpeed(0.6F);
+                                    }
+                                    //TODO 狮子斩等腐犬补充
                                 }
                                 humanoidMobPatch.playSound(EpicFightSounds.GROUND_SLAM.get(), 1, 1);
-                            })))
-
+                            }).custom((humanoidMobPatch -> {
+                                if(humanoidMobPatch instanceof GoldenFlamePatch goldenFlamePatch){
+                                    return !goldenFlamePatch.isOnCharged2Hit();
+                                }
+                                return true;
+                            }))))
+            .newBehaviorSeries(
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(999999).cooldown(1200).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_AUTO_4, 0.5f, 0.6f)).custom(humanoidMobPatch -> {
+                                if(humanoidMobPatch instanceof GoldenFlamePatch goldenFlame){
+                                    //击中后的变招
+                                    if(goldenFlame.isOnCharged2Hit()){
+                                        goldenFlame.resetOnCharged2Hit();
+                                        return true;
+                                    }
+                                }
+                                return false;
+                            }))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_SLAM_SOUND))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_3, 0.2f, 0.9f)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_CHARGED_ATTACK_3, 0.3f, 0.6f)))
+            )
             //三阶段——三蓄
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(0.0F).cooldown(300).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(300).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(CLEAR_CHARGE).withinDistance(0, 12).health(0.99f, HealthPoint.Comparator.LESS_RATIO).withinEyeHeight().custom(humanoidMobPatch -> {
                                 if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame) {
                                     return goldenFlame.getChargingTimer() <= 50;
@@ -320,35 +358,42 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_SLAM_SOUND))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(Animations.GREATSWORD_AUTO2, 0.3f, 0.9f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(humanoidMobPatch -> {
-                                if(humanoidMobPatch.getOriginal().getRandom().nextBoolean()){
-                                    humanoidMobPatch.playAnimationSynchronized(WOMAnimations.TORMENT_AUTO_4, 0.2F);
-                                    //TORMENT_AUTO_4写0.6倍速
-                                } else {
-                                    humanoidMobPatch.playAnimationSynchronized(WOMAnimations.SOLAR_AUTO_2, 0.2F);
-                                    humanoidMobPatch.playAnimationSynchronized(WOMAnimations.SOLAR_AUTO_3, 0.2F);
-                                    //SOLAR俩动作都写0.9倍速，
-                                    if(humanoidMobPatch.getOriginal().getRandom().nextBoolean()){
-                                        humanoidMobPatch.playAnimationSynchronized(WOMAnimations.TORMENT_AUTO_4, 0.2F);
-                                        humanoidMobPatch.playSound(EpicFightSounds.GROUND_SLAM.get(), 1, 1);
-                                        humanoidMobPatch.playAnimationSynchronized(WOMAnimations.TORMENT_CHARGED_ATTACK_3, 0.2F);
-                                        humanoidMobPatch.playSound(EpicFightSounds.GROUND_SLAM.get(), 1, 1);
-                                        //torment俩动作都写0.6倍速
-                                    } else {
-                                        humanoidMobPatch.playAnimationSynchronized(WOMAnimations.SOLAR_AUTO_3_POLVORA, 0.2F);
-                                        humanoidMobPatch.playSound(WOMSounds.SOLAR_HIT.get(), 1, 1);
-                                        humanoidMobPatch.playAnimationSynchronized(WOMAnimations.SOLAR_AUTO_3_POLVORA, 0.2F);
-                                        humanoidMobPatch.playSound(WOMSounds.SOLAR_HIT.get(), 1, 1);
-                                        humanoidMobPatch.playAnimationSynchronized(WOMAnimations.SOLAR_AUTO_3_POLVORA, 0.0F);
-                                        humanoidMobPatch.playSound(WOMSounds.SOLAR_HIT.get(), 1, 1);
-                                        humanoidMobPatch.playAnimationSynchronized(WOMAnimations.SOLAR_AUTO_3_POLVORA, 0.0F);
-                                        humanoidMobPatch.playSound(WOMSounds.SOLAR_HIT.get(), 1, 1);
-                                        humanoidMobPatch.playAnimationSynchronized(WOMAnimations.TORMENT_AUTO_4, 0.2F);
-                                        humanoidMobPatch.playAnimationSynchronized(WOMAnimations.SOLAR_AUTO_2_POLVORA, 0.2F);
-                                        //SOLAR_AUTO_3_POLVORA前两个写0.6速，后两个0.9倍速；TORMENT_AUTO_4写0.6速，SOLAR_AUTO_2_POLVORA写0.8速
+                                if(humanoidMobPatch instanceof GoldenFlamePatch goldenFlamePatch){
+                                    goldenFlamePatch.setOnDash(true);
+                                }
+                            }))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_AUTO_4, 0.2f, 0.6f)).randomChance(0.5F))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(humanoidMobPatch -> {
+                                if(humanoidMobPatch instanceof GoldenFlamePatch goldenFlamePatch){
+                                    goldenFlamePatch.setOnDash(false);
+                                }
+                            }))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_CHARGED_ATTACK_3, 0.3f, 0.9f)))
+            )
+            .newBehaviorSeries(
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(999999).cooldown(1200).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_2, 0.2f, 0.9f)).custom(humanoidMobPatch -> {
+                                if(humanoidMobPatch instanceof GoldenFlamePatch goldenFlame){
+                                    if(goldenFlame.isOnDash()){
+                                        goldenFlame.setOnDash(false);
+                                        return true;
                                     }
                                 }
-                                humanoidMobPatch.playSound(WOMSounds.SOLAR_HIT.get(), 1, 1);
-                            })))
+                                return false;
+                            }))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_3, 0.2f, 0.9f)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_3_POLVORA, 0.2F, 0.6f)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_SOLAR_SOUND))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_3_POLVORA, 0.2F, 0.6f)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_SOLAR_SOUND))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_3_POLVORA, 0.2F, 0.6f)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_SOLAR_SOUND))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_3_POLVORA, 0.2F, 0.6f)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_SOLAR_SOUND))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_AUTO_4, 0.2F, 0.6f)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_2_POLVORA, 0.2F, 0.8f)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_SOLAR_SOUND))
+            )
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(20000.0F).cooldown(3).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(CLEAR_CHARGE).withinDistance(0, 12).health(0.99f, HealthPoint.Comparator.LESS_RATIO).withinEyeHeight().custom(humanoidMobPatch -> {
@@ -357,11 +402,10 @@ public class GoldenFlameCombatBehaviors {
                                 }
                                 return false;
                             }))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_DINAMITA, 0.3f, 0.6f, StunType.SHORT, 1f
-                                    //new TimeStampedEvent(0.1f, (livingEntityPatch -> {livingEntityPatch.playSound(WOMSounds.SOLAR_HIT.get(), 1, 1);})),
-                                    //new TimeStampedEvent(0.2f, (livingEntityPatch -> {livingEntityPatch.playSound(EpicFightSounds.GROUND_SLAM.get(), 1, 1);}))
-                                    //崩溃
-                            )))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_DINAMITA, 0.3f, 0.6f, StunType.SHORT, 1f,
+                                    new TimeStampedEvent(0.1f, (livingEntityPatch -> {livingEntityPatch.playSound(WOMSounds.SOLAR_HIT.get(), 1, 1);})),
+                                    new TimeStampedEvent(0.2f, (livingEntityPatch -> {livingEntityPatch.playSound(EpicFightSounds.GROUND_SLAM.get(), 1, 1);})
+                            ))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_1, 0.1f, 0.7f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_2, 0.2f, 0.7f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0.2f, 0.6f)))
@@ -374,9 +418,9 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_SOLAR_SOUND))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_BRASERO, 0.4f, 0.8f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_HIT_BLUNT_HARD_SOUND))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_BRASERO_CREMATORIO, 0.3f, 0.8f))))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_SOLAR_BRASERO_CREMATORIO)))
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(20.0F).cooldown(300).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(300).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(CLEAR_CHARGE).withinDistance(0, 12).health(0.99f, HealthPoint.Comparator.LESS_RATIO).withinEyeHeight().custom(humanoidMobPatch -> {
                                 if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame) {
                                     return goldenFlame.getChargingTimer() <= 50;
@@ -393,7 +437,7 @@ public class GoldenFlameCombatBehaviors {
 
             //三阶段——平a——瞬闪1
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(20.0F).cooldown(400).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(400).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(CLEAR_CHARGE).withinDistance(0, 12).health(0.99f, HealthPoint.Comparator.LESS_RATIO).withinEyeHeight().custom(humanoidMobPatch -> {
                                 if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame) {
                                     return goldenFlame.getChargingTimer() <= 50;
@@ -446,7 +490,7 @@ public class GoldenFlameCombatBehaviors {
             )
             //四阶段——平a
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10.0F).cooldown(60).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100.0F).cooldown(60).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_1, 0.2f))
                                     .custom(IS_NOT_CHARGING)
                                     .withinDistance(0, 4)

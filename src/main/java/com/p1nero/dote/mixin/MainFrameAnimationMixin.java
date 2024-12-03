@@ -12,6 +12,9 @@ import yesman.epicfight.api.animation.types.MainFrameAnimation;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Mixin(MainFrameAnimation.class)
 public class MainFrameAnimationMixin extends StaticAnimation {
     @Inject(method = "begin(Lyesman/epicfight/world/capabilities/entitypatch/LivingEntityPatch;)V",at = @At("TAIL"), remap = false)
@@ -29,14 +32,20 @@ public class MainFrameAnimationMixin extends StaticAnimation {
                 float prevElapsed = player.getPrevElapsedTime();
                 float elapsed = player.getElapsedTime();
 
-                for(TimeStampedEvent event: timeEventListEntity.getTimeEventList()){
+                List<Integer> toRemove = new ArrayList<>();
+                List<TimeStampedEvent> eventList = timeEventListEntity.getTimeEventList();
+                for(int i  = 0; i < eventList.size(); i++){
+                    TimeStampedEvent event = eventList.get(i);
                     if(!entityPatch.getOriginal().isAlive()){
                         break;
                     }
                     event.testAndExecute(entityPatch, prevElapsed, elapsed);
                     if(event.isExecuted()){
-                        timeEventListEntity.getTimeEventList().remove(event);
+                        toRemove.add(i);
                     }
+                }
+                for (int i = toRemove.size() - 1; i >= 0; i--) {
+                    eventList.remove((int) toRemove.get(i));
                 }
             }
         }
