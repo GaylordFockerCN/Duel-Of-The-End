@@ -26,7 +26,7 @@ public class TSESpawnerBlock extends BossSpawnerBlock{
      */
     @Override
     public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
-        if(DOTEArchiveManager.BIOME_PROGRESS_DATA.isSenbaiFought() && DOTEArchiveManager.BIOME_PROGRESS_DATA.isGoldenFlameFought() && DOTEArchiveManager.BIOME_PROGRESS_DATA.isBoss2fought()){
+        if(pPlayer.isCreative() || DOTEArchiveManager.BIOME_PROGRESS_DATA.isSenbaiFought() && DOTEArchiveManager.BIOME_PROGRESS_DATA.isGoldenFlameFought() && DOTEArchiveManager.BIOME_PROGRESS_DATA.isBoss2fought()){
             return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
         } else {
             pPlayer.displayClientMessage(DuelOfTheEndMod.getInfo("tip10"), true);

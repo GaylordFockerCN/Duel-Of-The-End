@@ -170,6 +170,9 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity {
     @Override
     public void die(@NotNull DamageSource source) {
         level().playSound(null , getX(), getY(), getZ(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.BLOCKS,1,1);
+        if(level().isClientSide){
+            BossMusicPlayer.stopBossMusic(this);
+        }
         super.die(source);
     }
 

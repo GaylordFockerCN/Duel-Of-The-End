@@ -1,6 +1,7 @@
 package com.p1nero.dote.entity.custom;
 
 import com.p1nero.dote.archive.DOTEArchiveManager;
+import com.p1nero.dote.client.BossMusicPlayer;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
@@ -99,12 +100,10 @@ public class TheShadowOfTheEnd extends DOTEBoss {
             if(this.getDeathTick() == 100){
                 if(getLastAttacker() instanceof ServerPlayer player){
                     DOTEAdvancementData.getAdvancement("book", player);
-                    DOTEArchiveManager.worldLevelUp(player.serverLevel(), false);
                     ItemUtil.addItem(player, DOTEItems.BOOK_OF_ENDING.get(), 1);
                     setHealth(0);
                     super.die(damageSources().playerAttack(player));
-                } else {
-                    super.die(damageSources().magic());
+                    DOTEArchiveManager.worldLevelUp(player.serverLevel(), false);
                 }
             }
         }
@@ -120,7 +119,7 @@ public class TheShadowOfTheEnd extends DOTEBoss {
 
     @Override
     public void die(@NotNull DamageSource source) {
-        if(getDeathTick() >= 200){
+        if(getDeathTick() >= 100){
             super.die(source);
             return;
         }
