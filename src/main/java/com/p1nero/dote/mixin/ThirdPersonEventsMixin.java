@@ -1,7 +1,7 @@
 package com.p1nero.dote.mixin;
 
-import com.github.leawind.api.client.event.CalculateMoveImpulseEvent;
 import com.github.leawind.thirdperson.ThirdPersonEvents;
+import com.github.leawind.thirdperson.api.client.event.CalculateMoveImpulseEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import org.spongepowered.asm.mixin.Mixin;
