@@ -27,6 +27,7 @@ public class DOTEPacketHandler {
         register(PersistentDoubleDataSyncPacket.class, PersistentDoubleDataSyncPacket::decode);
         register(PersistentStringDataSyncPacket.class, PersistentStringDataSyncPacket::decode);
         register(SyncUuidPacket.class, SyncUuidPacket::decode);
+        register(SyncPos0Packet.class, SyncPos0Packet::decode);
         register(BroadcastMessagePacket.class, BroadcastMessagePacket::decode);
         register(OpenEndScreenPacket.class, OpenEndScreenPacket::decode);
         register(AddEntityAfterImageParticle.class, AddEntityAfterImageParticle::decode);

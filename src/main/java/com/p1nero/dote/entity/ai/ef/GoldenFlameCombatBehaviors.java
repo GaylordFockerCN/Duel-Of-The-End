@@ -5,6 +5,9 @@ import com.p1nero.dote.entity.ai.ef.api.IModifyAttackSpeedEntityPatch;
 import com.p1nero.dote.entity.ai.ef.api.TimeStampedEvent;
 import com.p1nero.dote.entity.custom.GoldenFlame;
 import com.p1nero.dote.gameasset.DOTEAnimations;
+import com.p1nero.dote.network.DOTEPacketHandler;
+import com.p1nero.dote.network.PacketRelay;
+import com.p1nero.dote.network.packet.clientbound.SyncPos0Packet;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.server.level.ServerLevel;
@@ -110,6 +113,9 @@ public class GoldenFlameCombatBehaviors {
             LivingEntity target = humanoidMobPatch.getTarget();
             Vec3 targetPos = target.position();
             Vec3 view = target.getViewVector(1.0F);
+            if(target.getRandom().nextBoolean()){
+                view = view.scale(-1);
+            }
             Vec3 dir = new Vec3(view.x, 0, view.z);
             Vec3 toTeleport = targetPos.add(dir.normalize().scale(target.getRandom().nextInt(2, 5)));
             humanoidMobPatch.getOriginal().xo = toTeleport.x;
@@ -118,7 +124,8 @@ public class GoldenFlameCombatBehaviors {
             humanoidMobPatch.getOriginal().yOld = toTeleport.y;
             humanoidMobPatch.getOriginal().zo = toTeleport.z;
             humanoidMobPatch.getOriginal().zOld = toTeleport.z;
-            humanoidMobPatch.getOriginal().setPos(toTeleport);
+            PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new SyncPos0Packet(humanoidMobPatch.getOriginal().getId(), toTeleport.x, toTeleport.y, toTeleport.z));
+            humanoidMobPatch.getOriginal().randomTeleport(toTeleport.x, toTeleport.y, toTeleport.z, true);
             humanoidMobPatch.getOriginal().getLookControl().setLookAt(humanoidMobPatch.getTarget());
             if(humanoidMobPatch.getOriginal().level() instanceof ServerLevel serverLevel){
                 serverLevel.sendParticles(WOMParticles.TELEPORT.get(), humanoidMobPatch.getOriginal().position().x, humanoidMobPatch.getOriginal().position().y + 1.0, humanoidMobPatch.getOriginal().position().z, 1, 0.0, 0.0, 0.0, 0.0);
@@ -134,14 +141,19 @@ public class GoldenFlameCombatBehaviors {
         if(humanoidMobPatch.getTarget() != null){
             LivingEntity target = humanoidMobPatch.getTarget();
             Vec3 targetPos = target.position();
-            Vec3 toTeleport = new Vec3(targetPos.x + target.getRandom().nextInt(-7, 7), targetPos.y, targetPos.z + target.getRandom().nextInt(-7, 7));
+            double angle = target.getRandom().nextDouble() * 2 * Math.PI;
+            double dis = 7.0;
+            double newX = targetPos.x + dis * Math.cos(angle);
+            double newZ = targetPos.z + dis * Math.sin(angle);
+            Vec3 toTeleport = new Vec3(newX, targetPos.y, newZ);
             humanoidMobPatch.getOriginal().xo = toTeleport.x;
             humanoidMobPatch.getOriginal().xOld = toTeleport.x;
             humanoidMobPatch.getOriginal().yo = toTeleport.y;
             humanoidMobPatch.getOriginal().yOld = toTeleport.y;
             humanoidMobPatch.getOriginal().zo = toTeleport.z;
             humanoidMobPatch.getOriginal().zOld = toTeleport.z;
-            humanoidMobPatch.getOriginal().setPos(toTeleport);
+            PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new SyncPos0Packet(humanoidMobPatch.getOriginal().getId(), toTeleport.x, toTeleport.y, toTeleport.z));
+            humanoidMobPatch.getOriginal().randomTeleport(toTeleport.x, toTeleport.y, toTeleport.z, true);
             humanoidMobPatch.getOriginal().getLookControl().setLookAt(humanoidMobPatch.getTarget());
             if(humanoidMobPatch.getOriginal().level() instanceof ServerLevel serverLevel){
                 serverLevel.sendParticles(WOMParticles.TELEPORT.get(), humanoidMobPatch.getOriginal().position().x, humanoidMobPatch.getOriginal().position().y + 1.0, humanoidMobPatch.getOriginal().position().z, 1, 0.0, 0.0, 0.0, 0.0);
