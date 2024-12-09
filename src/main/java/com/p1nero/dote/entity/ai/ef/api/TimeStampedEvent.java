@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 public class TimeStampedEvent implements Comparable<TimeStampedEvent> {
     private final float time;
     private final Consumer<LivingEntityPatch<?>> event;
-    private boolean executed;
+    private boolean executed = false;
 
     public boolean isExecuted() {
         return executed;

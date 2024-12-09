@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements IModifyStunTypeEntity, IModifyAttackDamageEntity, ITimeEventListEntity, IModifyAttackSpeedEntity {
+public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements IModifyStunTypeEntityPatch, IModifyAttackDamageEntityPatch, ITimeEventListEntityPatch, IModifyAttackSpeedEntityPatch {
 
     @Nullable
     private StunType stunTypeModify;
@@ -166,8 +166,8 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
     }
 
     @Override
-    public void addEvent(TimeStampedEvent event) {
-        list.add(event);
+    public boolean addEvent(TimeStampedEvent event) {
+        return list.add(event);
     }
 
     @Override

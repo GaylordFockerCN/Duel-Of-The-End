@@ -5,11 +5,11 @@ import java.util.List;
 /**
  * 用于在升级的时候加血量
  */
-public interface ITimeEventListEntity {
+public interface ITimeEventListEntityPatch {
 
     List<TimeStampedEvent> getTimeEventList();
 
-    void addEvent(TimeStampedEvent event);
+    boolean addEvent(TimeStampedEvent event);
     default void clearEvents(){
         getTimeEventList().clear();
     };

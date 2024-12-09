@@ -112,6 +112,7 @@ public class GoldenFlame extends DOTEBoss{
     @Override
     public void tick() {
         super.tick();
+        setInvisible(true);//不画血条
 
         if(getHealth() > 2 * getMaxHealth() / 3){
             setIsBlue(false);

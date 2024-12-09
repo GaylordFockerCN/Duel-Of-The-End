@@ -3,7 +3,7 @@ package com.p1nero.dote.capability.efpatch;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.p1nero.dote.archive.DOTEArchiveManager;
-import com.p1nero.dote.entity.ai.ef.api.IModifyAttackSpeedEntity;
+import com.p1nero.dote.entity.ai.ef.api.IModifyAttackSpeedEntityPatch;
 import com.p1nero.dote.entity.ai.ef.SenbaiDevilCombatBehaviors;
 import com.p1nero.dote.entity.custom.SenbaiDevil;
 import net.minecraft.world.damagesource.DamageSource;
@@ -23,7 +23,7 @@ import yesman.epicfight.world.damagesource.StunType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> implements IModifyAttackSpeedEntity {
+public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> implements IModifyAttackSpeedEntityPatch {
     public List<StaticAnimation> guardAnim = new ArrayList<>();
     public List<StaticAnimation> anticAttack = new ArrayList<>();
     public SenbaiDevilPatch() {

@@ -1,5 +1,6 @@
 package com.p1nero.dote.entity.ai.ef;
 
+import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.entity.ai.ef.api.*;
 import org.jetbrains.annotations.Nullable;
 import reascer.wom.gameasset.WOMAnimations;
@@ -23,19 +24,21 @@ public class DOTECombatBehaviors {
      */
     public static <T extends MobPatch<?>> Consumer<T> customAttackAnimation(StaticAnimation animation, float convertTime, float attackSpeed, @Nullable StunType stunType, float damage, TimeStampedEvent... events) {
         return (patch) -> {
-            if(patch.getOriginal() instanceof IModifyAttackSpeedEntity entity){
+            if(patch.getOriginal() instanceof IModifyAttackSpeedEntityPatch entity){
                 entity.setAttackSpeed(attackSpeed);
             }
-            if(patch instanceof IModifyStunTypeEntity entity){
+            if(patch instanceof IModifyStunTypeEntityPatch entity){
                 entity.setStunType(stunType);
             }
-            if(patch instanceof IModifyAttackDamageEntity entity){
+            if(patch instanceof IModifyAttackDamageEntityPatch entity){
                 entity.setNewDamage(damage);
             }
-            if(patch instanceof ITimeEventListEntity entity){
+            if(patch instanceof ITimeEventListEntityPatch entity){
                 entity.clearEvents();
                 for(TimeStampedEvent event : events){
-                    entity.addEvent(event);
+                    if(entity.addEvent(event)){
+                        DuelOfTheEndMod.LOGGER.info("add new time event");
+                    }
                 }
             }
             patch.playAnimationSynchronized(animation, convertTime);
@@ -47,13 +50,13 @@ public class DOTECombatBehaviors {
      */
     public static <T extends MobPatch<?>> Consumer<T> customAttackAnimation(StaticAnimation animation, float convertTime, float attackSpeed, @Nullable StunType stunType, float damage) {
         return (patch) -> {
-            if(patch instanceof IModifyAttackSpeedEntity entity){
+            if(patch instanceof IModifyAttackSpeedEntityPatch entity){
                 entity.setAttackSpeed(attackSpeed);
             }
-            if(patch instanceof IModifyStunTypeEntity entity){
+            if(patch instanceof IModifyStunTypeEntityPatch entity){
                 entity.setStunType(stunType);
             }
-            if(patch instanceof IModifyAttackDamageEntity entity){
+            if(patch instanceof IModifyAttackDamageEntityPatch entity){
                 entity.setNewDamage(damage);
             }
             patch.playAnimationSynchronized(animation, convertTime);

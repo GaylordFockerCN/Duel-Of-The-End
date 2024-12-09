@@ -1,6 +1,6 @@
 package com.p1nero.dote.mixin;
 
-import com.p1nero.dote.entity.ai.ef.api.IModifyAttackSpeedEntity;
+import com.p1nero.dote.entity.ai.ef.api.IModifyAttackSpeedEntityPatch;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -13,7 +13,7 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 public class AttackAnimationMixin {
     @Inject(method = "getPlaySpeed", at = @At("HEAD"), cancellable = true, remap = false)
     private void onGetPlaySpeed(LivingEntityPatch<?> entityPatch, DynamicAnimation animation, CallbackInfoReturnable<Float> cir) {
-        if(entityPatch instanceof IModifyAttackSpeedEntity entity){
+        if(entityPatch instanceof IModifyAttackSpeedEntityPatch entity){
             if(entity.getAttackSpeed() == 0){
                 cir.setReturnValue(1.0F);
             }

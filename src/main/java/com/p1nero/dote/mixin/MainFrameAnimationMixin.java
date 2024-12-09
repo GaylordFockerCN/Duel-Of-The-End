@@ -1,7 +1,6 @@
 package com.p1nero.dote.mixin;
 
-import com.nameless.indestructible.world.capability.AdvancedCustomHumanoidMobPatch;
-import com.p1nero.dote.entity.ai.ef.api.ITimeEventListEntity;
+import com.p1nero.dote.entity.ai.ef.api.ITimeEventListEntityPatch;
 import com.p1nero.dote.entity.ai.ef.api.TimeStampedEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,18 +14,12 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mixin(MainFrameAnimation.class)
+@Mixin(value = MainFrameAnimation.class, remap = false)
 public class MainFrameAnimationMixin extends StaticAnimation {
-    @Inject(method = "begin(Lyesman/epicfight/world/capabilities/entitypatch/LivingEntityPatch;)V",at = @At("TAIL"), remap = false)
-    public void onBegin(LivingEntityPatch<?> entitypatch, CallbackInfo ci){
-        if(entitypatch instanceof AdvancedCustomHumanoidMobPatch<?> advancedCustomHumanoidMobPatch){
-            advancedCustomHumanoidMobPatch.resetActionTick();
-        }
-    }
 
-    @Inject(method = "tick(Lyesman/epicfight/world/capabilities/entitypatch/LivingEntityPatch;)V",at = @At("TAIL"), remap = false)
+    @Inject(method = "tick(Lyesman/epicfight/world/capabilities/entitypatch/LivingEntityPatch;)V",at = @At("HEAD"))
     public void onTick(LivingEntityPatch<?> entityPatch, CallbackInfo ci){
-        if(!entityPatch.isLogicalClient() && entityPatch instanceof ITimeEventListEntity timeEventListEntity && timeEventListEntity.getTimeEventList() != null){
+        if(!entityPatch.isLogicalClient() && entityPatch instanceof ITimeEventListEntityPatch timeEventListEntity && timeEventListEntity.getTimeEventList() != null){
             AnimationPlayer player = entityPatch.getAnimator().getPlayerFor(this);
             if (player != null) {
                 float prevElapsed = player.getPrevElapsedTime();
@@ -47,9 +40,9 @@ public class MainFrameAnimationMixin extends StaticAnimation {
                 for (int i = toRemove.size() - 1; i >= 0; i--) {
                     eventList.remove((int) toRemove.get(i));
                 }
+                toRemove.clear();
             }
         }
     }
-
 
 }
