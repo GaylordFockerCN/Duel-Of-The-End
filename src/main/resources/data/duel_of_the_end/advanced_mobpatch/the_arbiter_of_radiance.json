@@ -13,8 +13,8 @@
 		"scale": 1.0,
 		"chasing_speed": 1.2,    
         "max_stamina": 20,    
-         "stamina_regan_multiply": 1.0,    
-        "stamina_regan_delay": 10,  
+         "stamina_regan_multiply": 0,
+        "stamina_regan_delay": 45,  
          "has_stun_reduction":true, 
          "max_stun_shield": 0,    
          "stun_shield_regan_multiply":0, 
@@ -78,12 +78,35 @@
 							"conditions": [
 								{"predicate":"epicfight:within_distance", "min": 0.0, "max": 200.0}
 							],
-							"animation": "wom:biped/skill/roll_backward",
+							"animation": "epicfight:biped/skill/step_backward",
 							"play_speed": 1.0,
 							"command_list":[
+								{"time":0.2, "command":"effect give @p minecraft:slowness 3 5", "execute_at_target":true},
+								{"time":0.2, "command":"effect give @p minecraft:slowness 3 5", "execute_at_target":false},
+								{"time":0.0, "command":"indestructible @s set_phase 2", "execute_at_target":false},
 								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":false},
 								{"time":0.5, "command":"effect give @s instant_health 1 10", "execute_at_target":false}
 							]
+						},
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 2, "max": 2}
+							],
+							"animation": "epicfight:biped/skill/step_backward",
+							"play_speed": 1.0,
+							"command_list":[
+	
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":false}
+							]
+						},
+						{
+							"conditions": [
+                                {"predicate":"indestructible:phase", "min": 2, "max": 2}
+							],
+							"wander": 45,
+							"inaction_time": 30,
+							"x_axis": 0.0,
+							"z_axis": -0.5
 						}
 						
 				   ]                 
@@ -96,7 +119,7 @@
 					"behaviors": [
 						{
 							"conditions": [
-								{"predicate":"epicfight:health", "health": 0.55, "comparator": "less_ratio"}
+								{"predicate":"epicfight:health", "health": 0.7, "comparator": "less_ratio"}
 							],
 							"animation": "epicfight:biped/skill/step_backward",
 							"command_list": [
@@ -112,6 +135,7 @@
 							"animation": "epicfight:biped/skill/step_backward",
 							"play_speed": 1.0,
 							"command_list":[
+	
 								{"time":0.0, "command":"effect give @p minecraft:slowness 3 5", "execute_at_target":true},
 								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":false}
 							]
@@ -122,7 +146,8 @@
 							"animation": "epicfight:biped/skill/guard_greatsword",
                             "convert_time": 1.0,
 							"command_list":[
-								{"time":0.0, "command":"effect give @p minecraft:slowness 3 5", "execute_at_target":true},
+			
+								{"time":0.2, "command":"effect give @p minecraft:slowness 3 5", "execute_at_target":true},
                                 {"time":0.2, "command":"effect give @s minecraft:resistance 5 3", "execute_at_target":false}
                             ]
 						},
@@ -133,14 +158,211 @@
 							
 							"convert_time": 0.8,
                             "command_list":[
-					
 								{"time":0.0, "command":"particle minecraft:glow ~ ~ ~ 0.5 0.5 0.5 0.5 500 force", "execute_at_target":true},
 								{"time":0.2, "command":"summon minecraft:lightning_bolt ~ ~ ~", "execute_at_target":false},
                                 {"time":0.2, "command":"effect give @s epicfight:stun_immunity 3", "execute_at_target":false},
-                                {"time":0.0, "command":"effect give @s minecraft:resistance 5 3", "execute_at_target":false}
+                                {"time":0.0, "command":"effect give @s minecraft:resistance 5 3", "execute_at_target":false},
+								{"time":0.0, "command":"indestructible @s set_phase 7", "execute_at_target":false}
                             ]
 						}
 					]
+				},
+				{
+					"weight": 999,
+					"canBeInterrupted": false,
+					"looping": false,
+					"cooldown": 99999,
+					"behaviors": [
+						{
+							"conditions": [
+								{"predicate":"epicfight:health", "health": 0.3, "comparator": "less_ratio"}
+							],
+							"animation": "epicfight:biped/skill/step_backward",
+							"command_list": [
+
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true},
+								{"time":0.0, "command":"effect give @s epicfight:stun_immunity 5", "execute_at_target":false}		
+                            ]
+						},
+						{
+							"conditions": [
+							],
+							"animation": "epicfight:biped/skill/roll_backward",
+							"play_speed": 1.0,
+							"command_list":[
+	
+								{"time":0.0, "command":"effect give @p minecraft:slowness 3 5", "execute_at_target":true},
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":false}
+							]
+						},
+                        {
+							"conditions": [
+							],
+							"animation": "epicfight:biped/skill/guard_greatsword",
+                            "convert_time": 1.0,
+							"command_list":[
+			
+								{"time":0.2, "command":"effect give @p minecraft:slowness 3 5", "execute_at_target":true},
+                                {"time":0.2, "command":"effect give @s minecraft:resistance 5 3", "execute_at_target":false}
+                            ]
+						},
+                        {
+							"conditions": [
+							],
+							"animation": "wom:biped/combat/solar_horno",
+							"convert_time": 0.5,
+							"play_speed": 0.5,
+                            "command_list":[
+								{"time":0.1, "command":"playsound minecraft:block.end_portal.spawn ambient @s ~ ~ ~ 1 1.5", "execute_at_target":true},
+								{"time":0.1, "command":"particle wom:blink ~ ~ ~ 0.5 0.5 0.5 0.5 10 force", "execute_at_target":true},
+								{"time":0.0, "command":"particle minecraft:glow ~ ~ ~ 0.5 0.5 0.5 0.5 500 force", "execute_at_target":true},
+								{"time":0.2, "command":"summon minecraft:lightning_bolt ~ ~ ~", "execute_at_target":false},
+                                {"time":0.2, "command":"effect give @s epicfight:stun_immunity 3", "execute_at_target":false},
+                                {"time":0.2, "command":"effect give @s minecraft:resistance 10 3", "execute_at_target":false}
+                            ]
+						},
+						{
+							"conditions": [
+							],
+							"animation": "epicfight:enderman/convert_rage",
+							"convert_time": 1.0,
+							"command_list": [
+								{"time":0.2, "command":"effect give @p minecraft:slowness 3 5", "execute_at_target":true},
+								{"time":0.2, "command":"playsound minecraft:item.totem.use master @a", "execute_at_target":false},
+								{"time":0.0, "command":"effect give @s epicfight:stun_immunity 2", "execute_at_target":false},
+								{"time":0.0, "command":"effect give @s minecraft:resistance 2 4", "execute_at_target":false},					
+								{"time":0.0, "command":"particle minecraft:soul ~ ~0.5 ~ 1 1 1 0.1 600", "execute_at_target":false},
+								{"time":0.2, "command":"summon minecraft:lightning_bolt ~ ~ ~", "execute_at_target":false},
+								{"time":0.5, "command":"summon minecraft:lightning_bolt ~ ~ ~", "execute_at_target":false}
+
+							]
+						},
+						{
+							"conditions": [
+							],
+							"animation": "epicfight:enderman/convert_rage",
+							"command_list": [
+								{"time":0.2, "command":"playsound minecraft:item.totem.use master @a", "execute_at_target":false},
+								{"time":0.0, "command":"effect give @s epicfight:stun_immunity 2", "execute_at_target":false},
+								{"time":0.0, "command":"effect give @s minecraft:resistance 2 4", "execute_at_target":false},					
+								{"time":0.0, "command":"particle epicfight:blood ~ ~0.5 ~ 1 1 1 0.1 1000", "execute_at_target":false},
+								{"time":0.2, "command":"summon minecraft:lightning_bolt ~ ~ ~", "execute_at_target":false},
+								{"time":0.5, "command":"summon minecraft:lightning_bolt ~ ~ ~", "execute_at_target":false}
+
+							]
+						}
+					]
+				},
+				{
+					"weight": 99999,
+					"cooldown": 999999,
+					"canBeInterrupted": false,
+					"looping": false,
+					"behaviors": [
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 7, "max": 7}
+							],
+							"animation": "epicfight:biped/skill/step_backward",
+							"play_speed": 1.0,
+							"command_list":[
+								{"time":0.2, "command":"effect give @p minecraft:slowness 3 5", "execute_at_target":true},
+								{"time":0.5, "command":"effect give @s minecraft:resistance 8 4", "execute_at_target":false},
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":false}
+							]
+						},
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 7, "max": 7}
+							],
+							"animation": "wom:biped/combat/herrscher_ausrottung",
+							"convert_time": 0.4,
+							"play_speed": 0.5,
+							"command_list":[
+	
+								{"time":0.0, "command":"particle minecraft:portal ~ ~0.5 ~ 0 0.5 0 2 400 force", "execute_at_target":true}			,
+								{"time":0.5, "command":"/effect give @s minecraft:fire_resistance 10 1", "execute_at_target":false},
+								{"time":0.2, "command":"effect give @s epicfight:stun_immunity 5 1", "execute_at_target":false},
+								{"time":0.8, "command":"summon minecraft:lightning_bolt ~ ~ ~", "execute_at_target":false},
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":false},
+								{"time":0.8, "command":"particle wom:katana_sheathed_cut ~ ~ ~ 0.5 0.5 0.5 1 10 force", "execute_at_target":false}
+							]
+						},
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 7, "max": 7}
+							],
+							"animation": "wom:biped/combat/katana_auto_2",
+							"convert_time": 0.5,
+							"play_speed": 0.2,
+							"command_list":[
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":false}
+							]
+						},
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 7, "max": 7}
+							],
+							"animation": "duel_of_the_end:biped/new/blade_rush_finisher",
+							"convert_time": 0.5,
+							"play_speed": 1.1,
+							"command_list":[
+								{"time":0.1, "command":"playsound minecraft:block.end_portal.spawn ambient @s ~ ~ ~ 1 1.5", "execute_at_target":true},
+								{"time":0.1, "command":"particle wom:blink ~ ~ ~ 0.5 0.5 0.5 0.5 10 force", "execute_at_target":true},
+								{"time":0.1, "command":"indestructible @s set_phase 9", "execute_at_target":false},
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":false}
+							]
+						},
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 9, "max": 9}
+							],
+							"animation": "epicfight:biped/combat/tachi_dash",
+							"convert_time": 0.2,
+							"play_speed": 0.8,
+							"command_list":[
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":false}
+							]
+						},
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 9, "max": 9}
+							],
+							"animation": "wom:biped/combat/ruine_auto_1",
+							"convert_time": 0.2,
+							"play_speed": 0.6,
+							"command_list":[
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":false}
+							]
+						},
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 9, "max": 9}
+							],
+							"animation": "wom:biped/combat/ruine_auto_2",
+							"convert_time": 0.2,
+							"play_speed": 0.6,
+							"command_list":[
+								{"time":0.1, "command":"playsound minecraft:block.end_portal.spawn ambient @s ~ ~ ~ 1 1.5", "execute_at_target":true},
+								{"time":0.1, "command":"particle wom:blink ~ ~ ~ 0.5 0.5 0.5 0.5 10 force", "execute_at_target":true},
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":false}
+							]
+						},
+						{
+							"conditions": [
+								{"predicate":"indestructible:phase", "min": 9, "max": 9}
+							],
+							"animation": "wom:biped/combat/ruine_auto_3",
+							"convert_time": 0.2,
+							"play_speed": 0.8,
+							"command_list":[
+								{"time":0.1, "command":"playsound minecraft:block.end_portal.spawn ambient @s ~ ~ ~ 1 1.5", "execute_at_target":true},
+								{"time":0.1, "command":"particle wom:blink ~ ~ ~ 0.5 0.5 0.5 0.5 10 force", "execute_at_target":true},
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":false}
+							]
+						}
+						
+				   ]                 
 				},
 				{
 					"weight": 1000,
@@ -168,8 +390,7 @@
 							"conditions": [
 			
                                 {"predicate":"epicfight:within_distance", "min": 0.0, "max": 2.5}, {"predicate":"indestructible:attack_level", "min": 1, "max": 1},
-								{"predicate":"indestructible:phase", "min": 10, "max": 10},
-								{"predicate":"duel_of_the_end:world_level_check", "world_level": 1}
+								{"predicate":"indestructible:phase", "min": 10, "max": 10}
 							],
 							"guard": 8,
 							"parry": true,
@@ -228,7 +449,7 @@
 							"command_list":[
 								{"time":0.1, "command":"playsound minecraft:block.end_portal.spawn ambient @s ~ ~ ~ 1 1.5", "execute_at_target":true},
 								{"time":0.1, "command":"particle wom:blink ~ ~ ~ 0.5 0.5 0.5 0.5 10 force", "execute_at_target":true},
-								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_shadow_of_the_end] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
+								{"time":0.0, "command":"execute as @e[type=duel_of_the_end:the_arbiter_of_radiance] at @s facing entity @s feet run tp @s ~ ~ ~ facing entity @p", "execute_at_target":true}
 							]
 						},
                         {
@@ -479,7 +700,8 @@
 							 {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
 							],
 							"animation": "duel_of_the_end:biped/new/lethal_slicing_twice",
-							"convert_time": 0.2
+							"convert_time": 0.35,
+							"play_speed":0.7 		
 						}
 					]
 				},
@@ -507,7 +729,7 @@
 							"conditions": [
 							 {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
 							],
-							"animation": "duel_of_the_end:biped/new/katana/katana_sheath_airslash",
+							"animation": "duel_of_the_end:biped/new/sword_slash",
 							"convert_time": 0.3
 						}
 					]
@@ -632,15 +854,7 @@
 			"end_by_hurt_level": 1, 		
 			"play_speed":  0.7,
 				"convert_time": 0.1
-	},
-		{
-		"conditions": [
-			{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, 
-			{"predicate":"indestructible:guard_break", "invert": true}, {"predicate":"indestructible:knock_down", "invert": true}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 20.0}
-		],
-		"animation": "epicfight:biped/skill/step_left", 			
-		"play_speed": 1.1												
-		}
+	}
 					]                 
 				},
 				{
@@ -900,7 +1114,7 @@
 					 {"predicate":"epicfight:within_distance", "min": 0.0, "max": 3.0}
 							],
 							"animation": "epicfight:biped/combat/tachi_auto1", 			
-							"play_speed": 0.9,
+							"play_speed": 0.8,
 							"command_list":[
 								{"time":0.1, "command":"playsound minecraft:block.end_portal.spawn block @s ~ ~ ~ 1 1.5", "execute_at_target":true},
 								{"time":0.1, "command":"particle wom:blink ~ ~ ~ 0.5 0.5 0.5 0.5 10 force", "execute_at_target":true},
@@ -913,7 +1127,7 @@
 						 {"predicate":"epicfight:within_distance", "min": 0.0, "max": 3.0}
 						],
 						"animation": "epicfight:biped/combat/tachi_auto2", 			
-						"play_speed": 1.0
+					"play_speed": 0.8
 				},
 				{
 					"conditions": [	{"predicate":"indestructible:guard_break","invert":true}, {"predicate":"indestructible:knock_down","invert":true},
@@ -972,36 +1186,6 @@
 					]                 
 				},
 				{
-					"weight": 2.0,
-					"canBeInterrupted": false,
-					"looping": false,
-					"cooldown": 150,
-					"behaviors": [
-						{
-							"conditions": [
-								{"predicate":"indestructible:attack_level", "min": 1, "max": 1}, {"predicate":"epicfight:within_distance", "min": 0.0, "max": 5.0}
-							],
-							"guard": 1,
-							"counter_chance": 0,
-							"parry": false
-						},
-						{
-							"conditions": [
-						{"predicate":"epicfight:within_distance", "min": 0.0, "max": 20.0}
-							],
-							"animation": "epicfight:biped/skill/step_backward"
-						},
-						{
-							"conditions": [
-							 {"predicate":"epicfight:within_distance", "min": 0.0, "max": 100.0}
-							],
-							"animation": "duel_of_the_end:biped/new/katana/katana_sheath_airslash",
-							"convert_time": 0.3
-						}
-					]
-				},
-			
-				{
 					"weight": 1.0,
 					"cooldown": 50,
 					"canBeInterrupted": false,
@@ -1035,38 +1219,6 @@
 				"animation": "epicfight:biped/combat/tachi_auto3", 			
 				"play_speed":  0.8
 		}
-					]                 
-				},
-				{
-					"weight": 8,
-					"canBeInterrupted": true,
-					"looping": false,
-					"cooldown": 100,
-					"behaviors": [
-						{
-							"conditions": [
-								{"predicate":"indestructible:attack_level", "min": 1, "max": 1},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 3.0}
-							],
-							"animation": "epicfight:biped/skill/step_left",				
-							"play_speed": 0.9, 									 										
-							"convert_time": 0
-					}
-					]                 
-				},
-				{
-					"weight": 8,
-					"cooldown": 100,
-					"canBeInterrupted": true,
-					"looping": false,
-					"behaviors": [
-						{
-							"conditions": [
-								{"predicate":"indestructible:attack_level", "min": 1, "max": 1},  {"predicate":"epicfight:within_distance", "min": 0.0, "max": 3.0}
-							],
-							"animation": "epicfight:biped/skill/step_right", 			
-							"play_speed": 0.7, 																			
-							"convert_time": 0
-						 }
 					]                 
 				}
     	]

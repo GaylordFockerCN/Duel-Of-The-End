@@ -19,8 +19,12 @@ import yesman.epicfight.gameasset.ColliderPreset;
 import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.model.armature.HumanoidArmature;
 import yesman.epicfight.particle.EpicFightParticles;
+import yesman.epicfight.skill.BasicAttack;
+import yesman.epicfight.skill.SkillSlots;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
+import yesman.epicfight.world.capabilities.entitypatch.player.ServerPlayerPatch;
 import yesman.epicfight.world.damagesource.StunType;
+import yesman.epicfight.world.entity.eventlistener.ComboCounterHandleEvent;
 
 
 @Mod.EventBusSubscriber(modid = DuelOfTheEndMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -99,7 +103,7 @@ public class DOTEAnimations {
 
     public static StaticAnimation KATANA_SKILL2;
     public static StaticAnimation KATANA_SKILL3;
-
+    public static StaticAnimation LION_CLAW;
 
     @SubscribeEvent
     public static void registerAnimations(AnimationRegistryEvent event){
@@ -313,6 +317,12 @@ public class DOTEAnimations {
         SWORD_ONEHAND_DASH = (new DashAttackAnimation(0.12F, 0.1F, 0.25F, 0.4F, 0.65F, null, biped.toolR, "biped/new/sword/sword_onehand_dash", biped))
                 .addProperty(AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.6F);
+
+        LION_CLAW = new AttackAnimation(0.08F, 1.54F, 1.55F, 1.6F, 3.0F, null, biped.toolR, "biped/new/lion_claw", biped)
+                .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.EVISCERATE.get()).addProperty(AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.2F)
+                .addEvents(
+                        AnimationEvent.TimeStampedEvent.create(0.2F, Animations.ReusableSources.PLAY_SOUND, AnimationEvent.Side.SERVER).params(EpicFightSounds.WHOOSH_BIG.get()));
     }
 
 
