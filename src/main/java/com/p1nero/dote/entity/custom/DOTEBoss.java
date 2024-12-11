@@ -3,11 +3,10 @@ package com.p1nero.dote.entity.custom;
 import com.p1nero.dote.DOTEConfig;
 import com.p1nero.dote.block.entity.spawner.BossSpawnerBlockEntity;
 import com.p1nero.dote.client.BossMusicPlayer;
-import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.entity.HomePointEntity;
 import com.p1nero.dote.entity.ai.goal.AttemptToGoHomeGoal;
-import com.p1nero.dote.network.PacketRelay;
 import com.p1nero.dote.network.DOTEPacketHandler;
+import com.p1nero.dote.network.PacketRelay;
 import com.p1nero.dote.network.packet.clientbound.SyncUuidPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -161,6 +160,11 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity {
      */
     @Override
     public boolean hurt(@NotNull DamageSource source, float p_21017_) {
+        //为了bvb
+        if(source.getEntity() instanceof DOTEBoss){
+            return super.hurt(source, p_21017_);
+        }
+        //防止雷劈火烧等bug，以及免疫所有远程，别想逃课！
         if(!(source.getEntity() instanceof Player) || source.isIndirect()){
             return false;
         }

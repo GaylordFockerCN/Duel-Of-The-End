@@ -9,7 +9,6 @@ import com.p1nero.dote.network.DOTEPacketHandler;
 import com.p1nero.dote.network.PacketRelay;
 import com.p1nero.dote.network.packet.clientbound.SyncPos0Packet;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -23,7 +22,6 @@ import yesman.epicfight.data.conditions.entity.HealthPoint;
 import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.world.capabilities.entitypatch.HumanoidMobPatch;
-import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.capabilities.entitypatch.MobPatch;
 import yesman.epicfight.world.damagesource.StunType;
 import yesman.epicfight.world.entity.ai.goal.CombatBehaviors;
@@ -31,7 +29,8 @@ import yesman.epicfight.world.entity.ai.goal.CombatBehaviors;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static com.p1nero.dote.entity.ai.ef.DOTECombatBehaviors.*;
+import static com.p1nero.dote.entity.ai.ef.DOTECombatBehaviors.ROTATE_TO_TARGET;
+import static com.p1nero.dote.entity.ai.ef.DOTECombatBehaviors.customAttackAnimation;
 
 /**
  * 金焰神王AI
@@ -381,11 +380,10 @@ public class GoldenFlameCombatBehaviors {
                                         entity.setAttackSpeed(0.6F);
                                     }
                                 } else {
-                                    humanoidMobPatch.playAnimationSynchronized(WOMAnimations.TORMENT_CHARGED_ATTACK_3, 0.2F);
+                                    humanoidMobPatch.playAnimationSynchronized(DOTEAnimations.LION_CLAW, 0.2F);
                                     if(humanoidMobPatch instanceof IModifyAttackSpeedEntityPatch entity){
                                         entity.setAttackSpeed(0.6F);
                                     }
-                                    //TODO 狮子斩等腐犬补充
                                 }
                                 humanoidMobPatch.playSound(EpicFightSounds.GROUND_SLAM.get(), 1, 1);
                             }).custom((humanoidMobPatch -> {
