@@ -30,7 +30,7 @@ public class WorldLevelCheckCondition implements Condition<LivingEntityPatch<?>>
 
     @Override
     public boolean predicate(LivingEntityPatch<?> entityPatch) {
-        return DOTEArchiveManager.getWorldLevel() == worldLevel;
+        return DOTEArchiveManager.getWorldLevel() >= worldLevel;
     }
 
     @Override
