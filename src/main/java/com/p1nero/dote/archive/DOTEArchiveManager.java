@@ -4,27 +4,25 @@ import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.capability.DOTECapabilityProvider;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
 import com.p1nero.dote.entity.LevelableEntity;
-import com.p1nero.dote.item.custom.IDOTEKeepableItem;
-import com.p1nero.dote.network.PacketRelay;
 import com.p1nero.dote.network.DOTEPacketHandler;
+import com.p1nero.dote.network.PacketRelay;
 import com.p1nero.dote.network.packet.SyncArchivePacket;
 import com.p1nero.dote.network.packet.clientbound.BroadcastMessagePacket;
 import com.p1nero.dote.network.packet.clientbound.OpenEndScreenPacket;
-import com.p1nero.dote.util.ItemUtil;
 import com.p1nero.dote.worldgen.dimension.DOTEDimension;
 import com.p1nero.dote.worldgen.portal.DOTETeleporter;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * 保存游戏进度，这玩意儿应该所有人统一，所以用了自己的数据管理。

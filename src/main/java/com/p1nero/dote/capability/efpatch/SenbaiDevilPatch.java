@@ -66,21 +66,6 @@ public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> implements I
             return AttackResult.missed(0);
         }
         getOriginal().setNeutralizeCount(getOriginal().getNeutralizeCount() - 1);
-        //免疫小硬直，破防值满了就破防
-        if(damageSource instanceof EpicFightDamageSource source){
-            if(getAnimator().getPlayerFor(null).getAnimation() == Animations.BIPED_COMMON_NEUTRALIZED){
-                source.setStunType(StunType.NONE);
-            }
-            if(source.getStunType() == StunType.SHORT){
-                source.setStunType(StunType.NONE);
-            }
-//            if(getOriginal().getNeutralizeCount() == 0){
-//                source.setStunType(StunType.NEUTRALIZE);
-//                getOriginal().setHealth(Math.max(getOriginal().getHealth() - getOriginal().getMaxHealth() / 12, 1));
-//                applyStun(StunType.NEUTRALIZE, 5);
-//                getOriginal().setNeutralizeCount(getOriginal().getMaxNeutralizeCount());
-//            }
-        }
         AttackResult result = super.tryHurt(damageSource, amount);
         if(result.resultType.equals(AttackResult.ResultType.SUCCESS)){
             //小概率格挡
@@ -99,6 +84,11 @@ public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> implements I
             }
         }
         return result;
+    }
+
+    @Override
+    public boolean applyStun(StunType stunType, float stunTime) {
+        return false;
     }
 
     @Override

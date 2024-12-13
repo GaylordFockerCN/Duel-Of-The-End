@@ -17,7 +17,9 @@ public class StarCoreItem extends SimpleKeepableFoilDescriptionItem{
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
         if(player.isShiftKeyDown() && !level.isClientSide){
+            boolean old = DOTEArchiveManager.BIOME_PROGRESS_DATA.isGuideSummoned();
             DOTEArchiveManager.clear();
+            DOTEArchiveManager.BIOME_PROGRESS_DATA.setGuideSummoned(old);
             player.displayClientMessage(DuelOfTheEndMod.getInfo("tip12"), false);
             if(!player.isCreative()){
                 player.getItemInHand(hand).shrink(1);

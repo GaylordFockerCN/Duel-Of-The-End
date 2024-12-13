@@ -6,11 +6,11 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import reascer.wom.animation.attacks.BasicMultipleAttackAnimation;
 import yesman.epicfight.api.animation.property.AnimationEvent;
 import yesman.epicfight.api.animation.property.AnimationProperty;
-import yesman.epicfight.api.animation.types.*;
-import yesman.epicfight.api.animation.types.AttackAnimation;
 import yesman.epicfight.api.animation.property.AnimationProperty.AttackAnimationProperty;
+import yesman.epicfight.api.animation.types.*;
 import yesman.epicfight.api.forgeevent.AnimationRegistryEvent;
 import yesman.epicfight.api.utils.math.ValueModifier;
 import yesman.epicfight.gameasset.Animations;
@@ -19,13 +19,8 @@ import yesman.epicfight.gameasset.ColliderPreset;
 import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.model.armature.HumanoidArmature;
 import yesman.epicfight.particle.EpicFightParticles;
-import yesman.epicfight.skill.BasicAttack;
-import yesman.epicfight.skill.SkillSlots;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
-import yesman.epicfight.world.capabilities.entitypatch.player.ServerPlayerPatch;
 import yesman.epicfight.world.damagesource.StunType;
-import yesman.epicfight.world.entity.eventlistener.ComboCounterHandleEvent;
-
 
 @Mod.EventBusSubscriber(modid = DuelOfTheEndMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DOTEAnimations {
@@ -105,8 +100,30 @@ public class DOTEAnimations {
     public static StaticAnimation KATANA_SKILL3;
     public static StaticAnimation LION_CLAW;
 
+    public static StaticAnimation YULLIAN_IDLE;
+    public static StaticAnimation YULLIAN_WALK;
+    public static StaticAnimation YULLIAN_RUN;
+    public static StaticAnimation YULLIAN_COMBOA1;
+    public static StaticAnimation YULLIAN_COMBOA2;
+    public static StaticAnimation YULLIAN_COMBOA3;
+    public static StaticAnimation YULLIAN_COMBOB1;
+    public static StaticAnimation YULLIAN_COMBOC1;
+    public static StaticAnimation YULLIAN_COMBOC2;
+    public static StaticAnimation YULLIAN_DODGEATTACK;
+    public static StaticAnimation YULLIAN_JUMP_HEAVYATTACK;
+    public static StaticAnimation YULLIAN_JUMPPATTACK;
+    public static StaticAnimation YULLIAN_SPECIALATTACK1;
+    public static StaticAnimation YULLIAN_SPECIALATTACK2;
+    public static StaticAnimation YULLIAN_SPECIALATTACK3;
+    public static StaticAnimation YULLIAN_DASHAHATTCK;
+    public static StaticAnimation SAKURA_DANCE;
+    public static StaticAnimation WATERBIRDS_DANCE_WILDLY_A1;
+    public static StaticAnimation WATERBIRDS_DANCE_WILDLY_A2;
+    public static StaticAnimation WATERBIRDS_DANCE_WILDLY_A3;
+
+
     @SubscribeEvent
-    public static void registerAnimations(AnimationRegistryEvent event){
+    public static void registerAnimations(AnimationRegistryEvent event) {
         event.getRegistryMap().put(DuelOfTheEndMod.MOD_ID, DOTEAnimations::build);
     }
 
@@ -284,7 +301,6 @@ public class DOTEAnimations {
         LONGSWORD_OLD_AIRSLASH = new AirSlashAnimation(0.1F, 0.3F, 0.41F, 0.5F, null, biped.toolR, "biped/new/longsword/longsword_airslash", biped);
 
 
-
         TACHI_TWOHAND_AUTO_1 = new BasicAttackAnimation(0.1F, 0.1F, 0.2F, 0.3F, null, biped.toolR, "biped/new/longsword/tachi_twohand_auto_1", biped)
                 .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.5F);
         TACHI_TWOHAND_AUTO_2 = new BasicAttackAnimation(0.1F, 0.1F, 0.2F, 0.3F, null, biped.toolR, "biped/new/longsword/tachi_twohand_auto_2", biped)
@@ -323,6 +339,94 @@ public class DOTEAnimations {
                 .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.2F)
                 .addEvents(
                         AnimationEvent.TimeStampedEvent.create(0.2F, Animations.ReusableSources.PLAY_SOUND, AnimationEvent.Side.SERVER).params(EpicFightSounds.WHOOSH_BIG.get()));
+
+        YULLIAN_WALK = new StaticAnimation(true, "biped/yullian/yullian_walk", biped);
+
+        YULLIAN_RUN = new StaticAnimation(true, "biped/yullian/yullian_run", biped);
+
+        YULLIAN_IDLE = new StaticAnimation(true, "biped/yullian/yullian_idle", biped);
+
+        YULLIAN_COMBOA1 = new BasicAttackAnimation(0.1F, 0.8F, 0.93F, 1F, null, biped.toolR,
+                "biped/yullian/yullian_comboa1", biped)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 0.9F));
+
+        YULLIAN_COMBOA2 = new BasicAttackAnimation(0.1F, 0.7F, 0.8F, 0.85F, null, biped.toolR,
+                "biped/yullian/yullian_comboa2", biped)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 0.9F));
+
+        YULLIAN_COMBOA3 = new BasicAttackAnimation(0.1F, 0.467F, 0.6F, 2.43F, null, biped.toolR,
+                "biped/yullian/yullian_comboa3", biped);
+
+        YULLIAN_COMBOB1 = new BasicMultipleAttackAnimation(0.1F, "biped/yullian/yullian_combob1", biped,
+                new AttackAnimation.Phase(0F, 0.63F, 0.76F, 3.23F, 0.76F, InteractionHand.MAIN_HAND,
+                        biped.toolR, null),
+                new AttackAnimation.Phase(0.76F, 1.36F, 1.53F, 3.23F, 3.23F, InteractionHand.MAIN_HAND,
+                        biped.toolR, null));
+
+        YULLIAN_COMBOC1 = new BasicAttackAnimation(0.1F, 0.4F, 0.5F, 0.73F, null, biped.toolR,
+                "biped/yullian/yullian_comboc1", biped)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 0.9F));
+
+        YULLIAN_COMBOC2 = new BasicMultipleAttackAnimation(0.05F, "biped/yullian/yullian_comboc2", biped,
+                new AttackAnimation.Phase(0F, 0.5F, 0.9F, 0F, 0.9F, InteractionHand.MAIN_HAND,
+                        biped.toolR, null),
+                new AttackAnimation.Phase(0.9F, 0.9F, 1.1F, 1F, 233F, InteractionHand.MAIN_HAND,
+                        biped.toolR, null))
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 0.9F));
+
+        YULLIAN_DODGEATTACK = new BasicAttackAnimation(0.1F, 0.26F, 0.83F, 2.667F, null, biped.toolR,
+                "biped/yullian/yullian_dodgeattack", biped);
+
+        YULLIAN_JUMP_HEAVYATTACK = new BasicAttackAnimation(0.1F, 0.967F, 1.06F, 4.267F, null, biped.toolR,
+                "biped/yullian/yullian_jump_heavyattack", biped);
+
+        YULLIAN_JUMPPATTACK = new BasicAttackAnimation(0.1F, 0.67F, 0.76F, 2.83F, null, biped.toolR,
+                "biped/yullian/yullian_jumpattack", biped);
+
+        YULLIAN_DASHAHATTCK = new BasicAttackAnimation(0.1F, 1.5F, 1.9F, 2.83F, null, biped.toolR,
+                "biped/yullian/yullian_dashattack", biped);
+
+        YULLIAN_SPECIALATTACK1 = new BasicAttackAnimation(0.1F, 1.43F, 1.8F, 4.2F, null, biped.toolR,
+                "biped/yullian/yullian_specialattack1", biped);
+
+        YULLIAN_SPECIALATTACK2 = new BasicAttackAnimation(0.1F, 1.23F, 1.56F, 4.167F, null, biped.toolR,
+                "biped/yullian/yullian_specialattack2", biped);
+
+        YULLIAN_SPECIALATTACK3 = new BasicAttackAnimation(0.1F, 1.567F, 2.0F, 3.8F, null, biped.toolR,
+                "biped/yullian/yullian_specialattack3", biped);
+
+        SAKURA_DANCE = new BasicMultipleAttackAnimation(0.2F, "biped/sakura_dance/sakura_dance", biped,
+                new AttackAnimation.Phase(0F, 0.1F, 0.167F, 0.333F, 0.333F, InteractionHand.MAIN_HAND, biped.toolR, null),
+                new AttackAnimation.Phase(0.333F, 0.333F, 0.5F, 0.5F, 0.9F, InteractionHand.MAIN_HAND, biped.toolR, null),
+                new AttackAnimation.Phase(0.9F, 0.9F, 1.067F, 1.067F, 1.067F, InteractionHand.MAIN_HAND, biped.toolR, null))
+                .addProperty(AnimationProperty.ActionAnimationProperty.MOVE_VERTICAL, true)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 0.99F));
+
+        WATERBIRDS_DANCE_WILDLY_A1 = new BasicMultipleAttackAnimation(0.15F, "biped/waterbirds/waterbirds_dance_wildly_a1", biped,
+                new AttackAnimation.Phase(0F, 1.533F, 1.6333F, 2.73F, 1.6333F, InteractionHand.MAIN_HAND, biped.toolR, null),
+                new AttackAnimation.Phase(1.6333F, 1.9F, 1.966F, 2.73F, 1.966F, InteractionHand.MAIN_HAND, biped.toolR, null),
+                new AttackAnimation.Phase(1.966F, 2.133F, 2.2F, 2.73F, 2.2F, InteractionHand.MAIN_HAND, biped.toolR, null),
+                new AttackAnimation.Phase(2.2F, 2.4F, 2.466F, 2.73F, 4.5F, InteractionHand.MAIN_HAND, biped.toolR, null))
+                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
+                .addState(EntityState.MOVEMENT_LOCKED, true)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 1.3F));
+
+        WATERBIRDS_DANCE_WILDLY_A2 = new BasicMultipleAttackAnimation(0.15F, "biped/waterbirds/waterbirds_dance_wildly_a2", biped,
+                new AttackAnimation.Phase(0F, 0.8F, 0.9F, 1F, 2.833F, InteractionHand.MAIN_HAND, biped.toolR, null))
+                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
+                .addState(EntityState.MOVEMENT_LOCKED, true)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 1.3F));
+
+        WATERBIRDS_DANCE_WILDLY_A3 = new BasicMultipleAttackAnimation(0.15F, "biped/waterbirds/waterbirds_dance_wildly_a3", biped,
+                new AttackAnimation.Phase(0F, 0.933F, 0.9666F, 3.0F, 0.9666F, InteractionHand.MAIN_HAND, biped.toolR, null),
+                new AttackAnimation.Phase(0.9666F, 1.166F, 1.266F, 3.0F, 1.266F, InteractionHand.MAIN_HAND, biped.toolR, null),
+                new AttackAnimation.Phase(1.266F, 1.5333F, 1.6333F, 3.0F, 1.6333F, InteractionHand.MAIN_HAND, biped.toolR, null),
+                new AttackAnimation.Phase(1.6333F, 1.9F, 1.966F, 3.0F, 1.966F, InteractionHand.MAIN_HAND, biped.toolR, null),
+                new AttackAnimation.Phase(1.966F, 1.9F, 1.966F, 3.0F, 4.4333F, InteractionHand.MAIN_HAND, biped.toolR, null))
+                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
+                .addState(EntityState.MOVEMENT_LOCKED, true)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 1.3F));
+
     }
 
 

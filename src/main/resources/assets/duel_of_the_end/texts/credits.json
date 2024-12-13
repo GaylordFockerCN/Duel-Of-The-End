@@ -6,16 +6,11 @@
         "discipline": "Textures & Model",
         "titles": [
           {
-            "title": "Item",
+            "title": "",
             "names": [
               "Jobin Ghy",
               "Ink Hiro",
-              "NHblock (白露)"
-            ]
-          },
-          {
-            "title": "Boss Bar",
-            "names": [
+              "NHblock (白露)",
               "RSGed"
             ]
           }
@@ -25,10 +20,13 @@
         "discipline": "Programming",
         "titles": [
           {
-            "title": "",
+            "title": "World",
             "names": [
               "P1nero",
-              "Corrupt_Dog (腐犬)"
+              "Corrupt_Dog (腐犬)",
+              "太阳照常升起",
+              "ShelMarow",
+              "修缘哉"
             ]
           }
         ]
@@ -74,6 +72,7 @@
             "title": "",
             "names": [
               "Asanginxst",
+              "MoGlasses",
               "Corrupt_Dog (腐犬)"
             ]
           }
