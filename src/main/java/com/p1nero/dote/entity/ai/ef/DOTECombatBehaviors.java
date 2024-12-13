@@ -2,6 +2,7 @@ package com.p1nero.dote.entity.ai.ef;
 
 import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.entity.ai.ef.api.*;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import reascer.wom.gameasset.WOMAnimations;
 import yesman.epicfight.api.animation.types.StaticAnimation;
@@ -36,6 +37,7 @@ public class DOTECombatBehaviors {
             if(patch instanceof ITimeEventListEntityPatch entity){
                 entity.clearEvents();
                 for(TimeStampedEvent event : events){
+                    event.resetExecuted();
                     if(entity.addEvent(event)){
                         DuelOfTheEndMod.LOGGER.info("add new time event");
                     }
@@ -98,7 +100,9 @@ public class DOTECombatBehaviors {
      */
     public static final Consumer<HumanoidMobPatch<?>> MOVE_TO_TARGET = (humanoidMobPatch -> {
         if(humanoidMobPatch.getTarget() != null){
-            humanoidMobPatch.getOriginal().moveTo(humanoidMobPatch.getTarget().position());
+            Vec3 view = humanoidMobPatch.getTarget().getViewVector(1.0F);
+            Vec3 dir = new Vec3(view.x, 0, view.z);
+            humanoidMobPatch.getOriginal().moveTo(humanoidMobPatch.getTarget().position().add(dir.normalize().scale(2)));
             humanoidMobPatch.rotateTo(humanoidMobPatch.getTarget(), 30F, true);
         }
     });

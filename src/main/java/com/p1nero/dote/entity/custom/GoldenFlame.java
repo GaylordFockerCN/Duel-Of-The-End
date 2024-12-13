@@ -41,6 +41,7 @@ public class GoldenFlame extends DOTEBoss{
     protected static final EntityDataAccessor<Integer> CHARGING_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Integer> ANTI_FORM_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Boolean> IS_BLUE = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.BOOLEAN);
+    protected static final EntityDataAccessor<Boolean> SHOULD_RENDER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.BOOLEAN);
     private int antiFormCooldown = 0;
     private static final int MAX_ANTI_FORM_COOLDOWN = 2400;
     private static final int MAX_ANTI_FORM_TIMER = 800;
@@ -65,6 +66,7 @@ public class GoldenFlame extends DOTEBoss{
         getEntityData().define(CHARGING_TIMER, 0);
         getEntityData().define(ANTI_FORM_TIMER, 0);
         getEntityData().define(IS_BLUE, false);
+        getEntityData().define(SHOULD_RENDER, true);
     }
 
     public void setIsBlue(boolean isBlue){
@@ -79,6 +81,14 @@ public class GoldenFlame extends DOTEBoss{
 
     public boolean isBlue(){
         return getEntityData().get(IS_BLUE);
+    }
+
+    public void setShouldRender(boolean shouldRender){
+        getEntityData().set(SHOULD_RENDER, shouldRender);
+    }
+
+    public boolean shouldRender() {
+        return getEntityData().get(SHOULD_RENDER);
     }
 
     public void startCharging(){

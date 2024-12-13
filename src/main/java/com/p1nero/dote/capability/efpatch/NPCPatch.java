@@ -1,15 +1,21 @@
 package com.p1nero.dote.capability.efpatch;
 
+import com.google.common.collect.ImmutableMap;
+import com.mojang.datafixers.util.Pair;
 import com.p1nero.dote.entity.custom.npc.DOTENpc;
-import com.p1nero.dote.gameasset.DOTELivingMotions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import reascer.wom.gameasset.WOMAnimations;
+import reascer.wom.world.capabilities.item.WOMWeaponCategories;
 import yesman.epicfight.api.animation.AnimationProvider;
 import yesman.epicfight.api.animation.Animator;
 import yesman.epicfight.api.animation.LivingMotions;
 import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.world.capabilities.entitypatch.Faction;
 import yesman.epicfight.world.capabilities.entitypatch.HumanoidMobPatch;
+import yesman.epicfight.world.capabilities.item.CapabilityItem;
+
+import java.util.Set;
 
 public class NPCPatch extends HumanoidMobPatch<DOTENpc> {
     @NotNull
@@ -31,18 +37,28 @@ public class NPCPatch extends HumanoidMobPatch<DOTENpc> {
 
     public NPCPatch() {
         super(Faction.VILLAGER);
-        this.idle = ()-> Animations.BIPED_IDLE;
+        this.idle = () -> Animations.BIPED_IDLE;
         this.talking = null;
         this.idle2talking = null;
         this.endTalking = null;
     }
 
     @Override
+    protected void setWeaponMotions() {
+        super.setWeaponMotions();
+        this.weaponLivingMotions.put(
+                CapabilityItem.WeaponCategories.LONGSWORD, ImmutableMap.of(CapabilityItem.Styles.TWO_HAND, Set.of(Pair.of(LivingMotions.IDLE, WOMAnimations.RUINE_IDLE), Pair.of(LivingMotions.WALK, WOMAnimations.RUINE_WALK), Pair.of(LivingMotions.CHASE, WOMAnimations.RUINE_RUN))));
+        this.weaponLivingMotions.put(
+                WOMWeaponCategories.RUINE, ImmutableMap.of(CapabilityItem.Styles.TWO_HAND, Set.of(Pair.of(LivingMotions.IDLE, WOMAnimations.RUINE_IDLE), Pair.of(LivingMotions.WALK, WOMAnimations.RUINE_WALK), Pair.of(LivingMotions.CHASE, WOMAnimations.RUINE_RUN))));
+    }
+
+    @Override
     public void initAnimator(Animator animator) {
-        animator.addLivingAnimation(LivingMotions.IDLE, idle.get());
-        if(talking != null){
-            animator.addLivingAnimation(DOTELivingMotions.TALKING, talking.get());
-        }
+        super.commonAggresiveMobAnimatorInit(animator);
+//        animator.addLivingAnimation(LivingMotions.IDLE, idle.get());
+//        if(talking != null){
+//            animator.addLivingAnimation(DOTELivingMotions.TALKING, talking.get());
+//        }
     }
 
     public void playIdleToTalking(){
@@ -59,10 +75,11 @@ public class NPCPatch extends HumanoidMobPatch<DOTENpc> {
 
     @Override
     public void updateMotion(boolean b) {
-        if(getOriginal().getConversingPlayer() != null && talking != null){
-            this.currentLivingMotion = DOTELivingMotions.TALKING;
-        } else {
-            this.currentLivingMotion = LivingMotions.IDLE;
-        }
+        super.commonAggressiveMobUpdateMotion(b);
+//        if(getOriginal().getConversingPlayer() != null && talking != null){
+//            this.currentLivingMotion = DOTELivingMotions.TALKING;
+//        } else {
+//            this.currentLivingMotion = LivingMotions.IDLE;
+//        }
     }
 }

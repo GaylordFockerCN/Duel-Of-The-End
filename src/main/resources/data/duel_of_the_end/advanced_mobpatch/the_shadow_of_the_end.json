@@ -14,7 +14,7 @@
     "chasing_speed": 1.3,
     "max_stamina": 15,
     "stamina_regan_multiply": 1.0,
-    "stamina_regan_delay": 30,
+    "stamina_regan_delay": 60,
     "has_stun_reduction": true,
     "max_stun_shield": 1.0,
     "stun_shield_regan_multiply": 1,
@@ -277,7 +277,7 @@
           ]
         },
         {
-          "weight": 1.0,
+          "weight": 2.0,
           "canBeInterrupted": false,
           "looping": false,
           "cooldown": 300,
@@ -598,7 +598,7 @@
           ]
         },
         {
-          "weight": 0.5,
+          "weight": 2,
           "canBeInterrupted": false,
           "looping": false,
           "cooldown": 50,
@@ -658,7 +658,7 @@
           ]
         },
         {
-          "weight": 0.5,
+          "weight": 1,
           "canBeInterrupted": false,
           "looping": false,
           "cooldown": 50,
@@ -760,7 +760,7 @@
           ]
         },
         {
-          "weight": 5.0,
+          "weight": 10.0,
           "cooldown": 30,
           "canBeInterrupted": false,
           "looping": false,
@@ -869,7 +869,7 @@
           ]
         },
         {
-          "weight": 5.0,
+          "weight": 2.0,
           "cooldown": 30,
           "canBeInterrupted": false,
           "looping": false,
@@ -1048,7 +1048,7 @@
           ]
         },
         {
-          "weight": 5.0,
+          "weight": 10.0,
           "cooldown": 50,
           "canBeInterrupted": false,
           "looping": false,
@@ -1562,7 +1562,7 @@
           ]
         },
         {
-          "weight": 1.0,
+          "weight": 2.0,
           "canBeInterrupted": false,
           "looping": false,
           "cooldown": 200,
@@ -1802,7 +1802,7 @@
           ]
         },
         {
-          "weight": 1.0,
+          "weight": 2.0,
           "canBeInterrupted": false,
           "looping": false,
           "cooldown": 400,
@@ -2227,7 +2227,7 @@
           ]
         },
         {
-          "weight": 10.0,
+          "weight": 20.0,
           "cooldown": 100,
           "canBeInterrupted": false,
           "looping": false,
@@ -2251,7 +2251,7 @@
           ]
         },
         {
-          "weight": 10.0,
+          "weight": 20.0,
           "cooldown": 100,
           "canBeInterrupted": false,
           "looping": false,
@@ -2278,6 +2278,7 @@
           "weight": 1,
           "canBeInterrupted": false,
           "looping": false,
+          "cooldown": 100,
           "behaviors": [
             {
               "conditions": [
@@ -2332,6 +2333,7 @@
           "weight": 1,
           "canBeInterrupted": false,
           "looping": false,
+          "cooldown": 100,
           "behaviors": [
             {
               "conditions": [
@@ -2393,6 +2395,7 @@
           "weight": 1,
           "canBeInterrupted": false,
           "looping": false,
+          "cooldown": 100,
           "behaviors": [
             {
               "conditions": [
@@ -2440,6 +2443,7 @@
           "weight": 1,
           "canBeInterrupted": false,
           "looping": false,
+          "cooldown": 100,
           "behaviors": [
             {
               "conditions": [
@@ -2487,6 +2491,7 @@
           "weight": 1,
           "canBeInterrupted": false,
           "looping": false,
+          "cooldown": 100,
           "behaviors": [
             {
               "conditions": [
@@ -2538,7 +2543,7 @@
           ]
         },
         {
-          "weight": 10,
+          "weight": 1,
           "canBeInterrupted": false,
           "looping": false,
           "cooldown": 100,
@@ -2560,7 +2565,7 @@
               ],
               "animation": "wom:biped/skill/enderstep_backward",
               "play_speed": 0.8,
-              "convert_time": 0,
+              "convert_time": 0.15,
               "command_list": [
                 {
                   "time": 0,
@@ -2597,7 +2602,7 @@
               ],
               "animation": "wom:biped/combat/moonless_reversed_bypass",
               "play_speed": 0.8,
-              "convert_time": 0,
+              "convert_time": 0.15,
               "damage_modifier": {
                 "damage": 0.5
               }
@@ -2610,7 +2615,7 @@
               ],
               "animation": "wom:biped/combat/moonless_bypass",
               "play_speed": 0.8,
-              "convert_time": 0,
+              "convert_time": 0.15,
               "damage_modifier": {
                 "damage": 0.5
               }
@@ -2623,7 +2628,7 @@
               ],
               "animation": "wom:biped/combat/moonless_reversed_bypass",
               "play_speed": 0.8,
-              "convert_time": 0,
+              "convert_time": 0.15,
               "damage_modifier": {
                 "damage": 0.5
               }
@@ -2641,7 +2646,7 @@
               ],
               "animation": "wom:biped/combat/moonless_bypass",
               "play_speed": 0.8,
-              "convert_time": 0,
+              "convert_time": 0.15,
               "damage_modifier": {
                 "damage": 2
               }
@@ -2654,7 +2659,7 @@
               ],
               "animation": "wom:biped/skill/katana_fatal_draw_dash",
               "play_speed": 0.8,
-              "convert_time": 0,
+              "convert_time": 0.15,
               "damage_modifier": {
                 "damage": 2
               }
@@ -2667,7 +2672,7 @@
               ],
               "animation": "wom:biped/skill/katana_fatal_draw_dash",
               "play_speed": 1.0,
-              "convert_time": 0,
+              "convert_time": 0.15,
               "damage_modifier": {
                 "damage": 2
               }
@@ -2685,7 +2690,7 @@
               ],
               "animation": "wom:biped/skill/katana_fatal_draw_dash",
               "play_speed": 1.2,
-              "convert_time": 0,
+              "convert_time": 0.15,
               "damage_modifier": {
                 "damage": 2
               }
@@ -2706,6 +2711,7 @@
           "weight": 2,
           "canBeInterrupted": false,
           "looping": false,
+          "cooldown": 100,
           "behaviors": [
             {
               "conditions": [
@@ -2789,6 +2795,7 @@
           "weight": 1,
           "canBeInterrupted": false,
           "looping": false,
+          "cooldown": 100,
           "behaviors": [
             {
               "conditions": [
@@ -2866,6 +2873,7 @@
           "weight": 1,
           "canBeInterrupted": false,
           "looping": false,
+          "cooldown": 100,
           "behaviors": [
             {
               "conditions": [
@@ -2976,6 +2984,7 @@
           "weight": 1,
           "canBeInterrupted": false,
           "looping": false,
+          "cooldown": 100,
           "behaviors": [
             {
               "conditions": [
@@ -3064,6 +3073,7 @@
           "weight": 1,
           "canBeInterrupted": false,
           "looping": false,
+          "cooldown": 100,
           "behaviors": [
             {
               "conditions": [
@@ -3086,7 +3096,7 @@
                 }
               ],
               "animation": "duel_of_the_end:biped/yullian/yullian_comboa1",
-              "play_speed": 0.8,
+              "play_speed": 1.0,
               "convert_time": 0.25
             },
             {
@@ -3096,7 +3106,7 @@
                 }
               ],
               "animation": "duel_of_the_end:biped/yullian/yullian_comboa2",
-              "play_speed": 0.8,
+              "play_speed": 1.0,
               "convert_time": 0.15
             },
             {
@@ -3106,7 +3116,7 @@
                 }
               ],
               "animation": "duel_of_the_end:biped/yullian/yullian_comboa3",
-              "play_speed": 0.8,
+              "play_speed": 1.0,
               "convert_time": 0.1
             },
             {
@@ -3120,6 +3130,173 @@
                 }
               ],
               "animation": "duel_of_the_end:biped/yullian/yullian_combob1",
+              "play_speed": 1.0,
+              "convert_time": 0.25
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_comboa1",
+              "play_speed": 1.0,
+              "convert_time": 0.15
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_comboa2",
+              "play_speed": 1.0,
+              "convert_time": 0.25
+            },
+            {
+              "conditions": [
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_comboc1",
+              "play_speed": 1.0,
+              "convert_time": 0.5
+            },
+            {
+              "conditions": [
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_comboc2",
+              "play_speed": 1.0,
+              "convert_time": 0.5
+            }
+          ]
+        },
+        {
+          "weight": 100,
+          "canBeInterrupted": false,
+          "looping": false,
+          "cooldown": 800,
+          "behaviors": [
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                },
+                {
+                  "predicate": "within_distance",
+                  "min": 0.0,
+                  "max": 4.0
+                },
+                {
+                  "predicate": "duel_of_the_end:world_level_check",
+                  "world_level": 1
+                },
+                {
+                  "predicate": "epicfight:health",
+                  "health": 0.67,
+                  "comparator": "less_ratio"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_jumpattack",
+              "play_speed": 0.8,
+              "convert_time": 0.25
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_comboa2",
+              "play_speed": 1.0,
+              "convert_time": 0.15
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_comboa3",
+              "play_speed": 1.0,
+              "convert_time": 0.1
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                },
+                {
+                  "predicate": "epicfight:health",
+                  "health": 0.33,
+                  "comparator": "less_ratio"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_jump_heavyattack",
+              "play_speed": 1.0,
+              "convert_time": 0.25
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_specialattack1",
+              "play_speed": 1.0,
+              "convert_time": 0.15
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_specialattack2",
+              "play_speed": 1.0,
+              "convert_time": 0.25
+            },
+            {
+              "conditions": [
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_specialattack3",
+              "play_speed": 1.0,
+              "convert_time": 0.5
+            },
+            {
+              "conditions": [
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_dodgeattack",
+              "play_speed": 1.0,
+              "convert_time": 0.5
+            }
+          ]
+        },
+        {
+          "weight": 100,
+          "canBeInterrupted": false,
+          "looping": false,
+          "cooldown": 800,
+          "behaviors": [
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                },
+                {
+                  "predicate": "within_distance",
+                  "min": 0.0,
+                  "max": 4.0
+                },
+                {
+                  "predicate": "duel_of_the_end:world_level_check",
+                  "world_level": 1
+                },
+                {
+                  "predicate": "epicfight:health",
+                  "health": 0.33,
+                  "comparator": "less_ratio"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_jumpattack",
               "play_speed": 0.8,
               "convert_time": 0.25
             },
@@ -3130,7 +3307,7 @@
                 }
               ],
               "animation": "duel_of_the_end:biped/yullian/yullian_comboa1",
-              "play_speed": 0.8,
+              "play_speed": 1.0,
               "convert_time": 0.15
             },
             {
@@ -3140,87 +3317,37 @@
                 }
               ],
               "animation": "duel_of_the_end:biped/yullian/yullian_comboa2",
-              "play_speed": 0.8,
-              "convert_time": 0.25
-            },
-            {
-              "conditions": [
-              ],
-              "animation": "duel_of_the_end:biped/yullian/yullian_comboc1",
-              "play_speed": 0.85,
-              "convert_time": 0.5
-            },
-            {
-              "conditions": [
-              ],
-              "animation": "duel_of_the_end:biped/yullian/yullian_comboc2",
-              "play_speed": 0.85,
-              "convert_time": 0.5
-            }
-          ]
-        },
-        {
-          "weight": 1,
-          "canBeInterrupted": false,
-          "looping": false,
-          "behaviors": [
-            {
-              "conditions": [
-                {
-                  "predicate": "within_eye_height"
-                },
-                {
-                  "predicate": "within_distance",
-                  "min": 0.0,
-                  "max": 4.0
-                },
-                {
-                  "predicate": "duel_of_the_end:world_level_check",
-                  "world_level": 1
-                },
-                {
-                  "predicate": "epicfight:health",
-                  "health": 0.67,
-                  "comparator": "less_ratio"
-                }
-              ],
-              "animation": "duel_of_the_end:biped/yullian/yullian_jumpattack",
-              "play_speed": 0.8,
-              "convert_time": 0.25
-            },
-            {
-              "conditions": [
-                {
-                  "predicate": "within_eye_height"
-                }
-              ],
-              "animation": "duel_of_the_end:biped/yullian/yullian_comboa2",
-              "play_speed": 0.8,
-              "convert_time": 0.15
-            },
-            {
-              "conditions": [
-                {
-                  "predicate": "within_eye_height"
-                }
-              ],
-              "animation": "duel_of_the_end:biped/yullian/yullian_comboa3",
-              "play_speed": 0.8,
+              "play_speed": 1.0,
               "convert_time": 0.1
             },
             {
               "conditions": [
                 {
                   "predicate": "within_eye_height"
-                },
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_comboc1",
+              "play_speed": 1.0,
+              "convert_time": 0.1
+            },
+            {
+              "conditions": [
                 {
-                  "predicate": "epicfight:health",
-                  "health": 0.33,
-                  "comparator": "less_ratio"
+                  "predicate": "within_eye_height"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_comboc2",
+              "play_speed": 1.0,
+              "convert_time": 0.1
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
                 }
               ],
               "animation": "duel_of_the_end:biped/yullian/yullian_jump_heavyattack",
-              "play_speed": 0.8,
+              "play_speed": 1.0,
               "convert_time": 0.25
             },
             {
@@ -3230,6 +3357,16 @@
                 }
               ],
               "animation": "duel_of_the_end:biped/yullian/yullian_specialattack1",
+              "play_speed": 1.0,
+              "convert_time": 0.15
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                }
+              ],
+              "animation": "wom:biped/skill/katana_fatal_draw_dash",
               "play_speed": 0.8,
               "convert_time": 0.15
             },
@@ -3240,21 +3377,41 @@
                 }
               ],
               "animation": "duel_of_the_end:biped/yullian/yullian_specialattack2",
-              "play_speed": 0.8,
+              "play_speed": 1.0,
               "convert_time": 0.25
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                }
+              ],
+              "animation": "wom:biped/skill/katana_fatal_draw_dash",
+              "play_speed": 1.0,
+              "convert_time": 0.15
             },
             {
               "conditions": [
               ],
               "animation": "duel_of_the_end:biped/yullian/yullian_specialattack3",
-              "play_speed": 0.85,
+              "play_speed": 1.0,
               "convert_time": 0.5
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                }
+              ],
+              "animation": "wom:biped/skill/katana_fatal_draw_dash",
+              "play_speed": 1.2,
+              "convert_time": 0.15
             },
             {
               "conditions": [
               ],
               "animation": "duel_of_the_end:biped/yullian/yullian_dodgeattack",
-              "play_speed": 0.85,
+              "play_speed": 1.0,
               "convert_time": 0.5
             }
           ]
@@ -3263,6 +3420,7 @@
           "weight": 1,
           "canBeInterrupted": false,
           "looping": false,
+          "cooldown": 100,
           "behaviors": [
             {
               "conditions": [
@@ -3285,7 +3443,7 @@
                 }
               ],
               "animation": "duel_of_the_end:biped/yullian/yullian_jumpattack",
-              "play_speed": 0.8,
+              "play_speed": 1.0,
               "convert_time": 0.25
             },
             {
@@ -3295,7 +3453,7 @@
                 }
               ],
               "animation": "duel_of_the_end:biped/yullian/yullian_comboa2",
-              "play_speed": 0.8,
+              "play_speed": 1.0,
               "convert_time": 0.15
             },
             {
@@ -3305,7 +3463,7 @@
                 }
               ],
               "animation": "duel_of_the_end:biped/yullian/yullian_comboa3",
-              "play_speed": 0.8,
+              "play_speed": 1.0,
               "convert_time": 0.1
             },
             {
@@ -3330,7 +3488,7 @@
                 }
               ],
               "animation": "duel_of_the_end:biped/yullian/yullian_specialattack1",
-              "play_speed": 0.8,
+              "play_speed": 1.0,
               "convert_time": 0.15,
               "command_list": [
                 {
@@ -3367,7 +3525,7 @@
                 }
               ],
               "animation": "duel_of_the_end:biped/yullian/yullian_specialattack2",
-              "play_speed": 0.8,
+              "play_speed": 1.0,
               "convert_time": 0.25
             },
             {
@@ -3384,7 +3542,7 @@
               "conditions": [
               ],
               "animation": "duel_of_the_end:biped/yullian/yullian_specialattack3",
-              "play_speed": 0.85,
+              "play_speed": 1.0,
               "convert_time": 0.5
             },
             {
@@ -3395,6 +3553,191 @@
               ],
               "animation": "wom:biped/skill/katana_fatal_draw_dash",
               "play_speed": 1.2,
+              "convert_time": 0.15
+            }
+          ]
+        },
+        {
+          "weight": 1,
+          "canBeInterrupted": false,
+          "looping": false,
+          "cooldown": 100,
+          "behaviors": [
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                },
+                {
+                  "predicate": "within_distance",
+                  "min": 0.0,
+                  "max": 4.0
+                },
+                {
+                  "predicate": "duel_of_the_end:world_level_check",
+                  "world_level": 1
+                },
+                {
+                  "predicate": "epicfight:health",
+                  "health": 0.67,
+                  "comparator": "less_ratio"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_jumpattack",
+              "play_speed": 1.0,
+              "convert_time": 0.25
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_specialattack1",
+              "play_speed": 1.0,
+              "convert_time": 0.15,
+              "command_list": [
+                {
+                  "time": 0,
+                  "command": "playsound minecraft:block.anvil.place player @a ~ ~ ~ 100 1 1",
+                  "execute_at_target": false
+                },
+                {
+                  "time": 0,
+                  "command": "effect give @s minecraft:glowing 1 0 true",
+                  "execute_at_target": false
+                },
+                {
+                  "time": 0,
+                  "command": "particle epicfight:force_field_end ~ ~ ~ 0.5 0.5 10 0.1 1 force",
+                  "execute_at_target": false
+                }
+              ]
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_comboa1",
+              "play_speed": 1.0,
+              "convert_time": 0.15
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_specialattack2",
+              "play_speed": 1.0,
+              "convert_time": 0.25
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_comboa2",
+              "play_speed": 1.0,
+              "convert_time": 0.15
+            },
+            {
+              "conditions": [
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_specialattack3",
+              "play_speed": 1.0,
+              "convert_time": 0.5
+            }
+          ]
+        },
+        {
+          "weight": 1,
+          "canBeInterrupted": false,
+          "looping": false,
+          "cooldown": 100,
+          "behaviors": [
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                },
+                {
+                  "predicate": "within_distance",
+                  "min": 0.0,
+                  "max": 4.0
+                },
+                {
+                  "predicate": "duel_of_the_end:world_level_check",
+                  "world_level": 1
+                },
+                {
+                  "predicate": "epicfight:health",
+                  "health": 0.67,
+                  "comparator": "less_ratio"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_comboa1",
+              "play_speed": 1.0,
+              "convert_time": 0.25
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_specialattack1",
+              "play_speed": 1.0,
+              "convert_time": 0.15,
+              "command_list": [
+                {
+                  "time": 0,
+                  "command": "playsound minecraft:block.anvil.place player @a ~ ~ ~ 100 1 1",
+                  "execute_at_target": false
+                },
+                {
+                  "time": 0,
+                  "command": "effect give @s minecraft:glowing 1 0 true",
+                  "execute_at_target": false
+                },
+                {
+                  "time": 0,
+                  "command": "particle epicfight:force_field_end ~ ~ ~ 0.5 0.5 10 0.1 1 force",
+                  "execute_at_target": false
+                }
+              ]
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_comboa2",
+              "play_speed": 1.0,
+              "convert_time": 0.15
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_comboc1",
+              "play_speed": 1.0,
+              "convert_time": 0.25
+            },
+            {
+              "conditions": [
+                {
+                  "predicate": "within_eye_height"
+                }
+              ],
+              "animation": "duel_of_the_end:biped/yullian/yullian_comboc2",
+              "play_speed": 1.0,
               "convert_time": 0.15
             }
           ]

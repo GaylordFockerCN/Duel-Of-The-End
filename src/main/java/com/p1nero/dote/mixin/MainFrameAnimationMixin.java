@@ -22,6 +22,10 @@ public class MainFrameAnimationMixin extends StaticAnimation {
         if(!entityPatch.isLogicalClient() && entityPatch instanceof ITimeEventListEntityPatch timeEventListEntity && timeEventListEntity.getTimeEventList() != null){
             AnimationPlayer player = entityPatch.getAnimator().getPlayerFor(this);
             if (player != null) {
+                if(player.isEnd()){
+                    timeEventListEntity.clearEvents();
+                    return;
+                }
                 float prevElapsed = player.getPrevElapsedTime();
                 float elapsed = player.getElapsedTime();
 

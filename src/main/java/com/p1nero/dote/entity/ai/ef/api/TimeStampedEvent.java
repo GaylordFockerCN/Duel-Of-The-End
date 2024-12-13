@@ -18,6 +18,9 @@ public class TimeStampedEvent implements Comparable<TimeStampedEvent> {
     public boolean isExecuted() {
         return executed;
     }
+    public void resetExecuted(){
+        executed = false;
+    }
 
     public TimeStampedEvent(float time, Consumer<LivingEntityPatch<?>> event) {
         this.time = time;

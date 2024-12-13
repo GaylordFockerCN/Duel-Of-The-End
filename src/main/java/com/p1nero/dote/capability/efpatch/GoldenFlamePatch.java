@@ -75,11 +75,11 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
 
     @Override
     public AttackResult tryHarm(Entity target, EpicFightDamageSource epicFightDamageSource, float amount) {
-        //击中就变招
-        if(epicFightDamageSource.getAnimation() == WOMAnimations.TORMENT_CHARGED_ATTACK_2){
-            onCharged2Hit = true;
+        AttackResult result = super.tryHarm(target, epicFightDamageSource, amount);
+        if(result.resultType.equals(AttackResult.ResultType.SUCCESS)){
+            this.getOriginal().setHealth(this.getOriginal().getHealth() + amount * 10);
         }
-        return super.tryHarm(target, epicFightDamageSource, amount);
+        return result;
     }
 
     @Override
@@ -104,7 +104,7 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
     @Override
     public float getModifiedBaseDamage(float baseDamage) {
         if(damageModify != 0){
-            return damageModify;
+            return damageModify * baseDamage;
         }
         return super.getModifiedBaseDamage(baseDamage);
     }

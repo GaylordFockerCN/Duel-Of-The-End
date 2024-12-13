@@ -17,6 +17,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -32,6 +33,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
+import reascer.wom.world.item.WOMItems;
 import yesman.epicfight.world.item.EpicFightItems;
 
 /**
@@ -41,6 +43,11 @@ public class KnightCommander extends DOTENpc {
     DialogueComponentBuilder dBuilder = new DialogueComponentBuilder(DOTEEntities.KNIGHT_COMMANDER.get());
     public KnightCommander(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
+        setItemSlot(EquipmentSlot.MAINHAND, WOMItems.RUINE.get().getDefaultInstance());
+        setItemSlot(EquipmentSlot.HEAD, DOTEItems.WKNIGHT_HELMET.get().getDefaultInstance());
+        setItemSlot(EquipmentSlot.CHEST, DOTEItems.WKNIGHT_CHESTPLATE.get().getDefaultInstance());
+        setItemSlot(EquipmentSlot.LEGS, DOTEItems.WKNIGHT_LEGGINGS.get().getDefaultInstance());
+        setItemSlot(EquipmentSlot.FEET, DOTEItems.WKNIGHT_BOOTS.get().getDefaultInstance());
     }
 
     @Override

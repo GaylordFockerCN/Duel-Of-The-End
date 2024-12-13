@@ -7,15 +7,19 @@ import com.p1nero.dote.entity.custom.npc.GuideNpc;
 import com.p1nero.dote.entity.custom.npc.KnightCommander;
 import com.p1nero.dote.entity.custom.npc.ScarletHighPriest;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+import reascer.wom.gameasset.WOMAnimations;
 import yesman.epicfight.api.client.forgeevent.PatchedRenderersEvent;
 import yesman.epicfight.api.forgeevent.EntityPatchRegistryEvent;
 import yesman.epicfight.api.forgeevent.ModelBuildEvent;
@@ -66,7 +70,7 @@ public class DOTEEntities {
 		event.getTypeEntry().put(DOTE_PIGLIN.get(), (entity) -> DOTEZombiePatch::new);
 		event.getTypeEntry().put(STAR_CHASER.get(), (entity) -> StarChaserPatch::new);
 		event.getTypeEntry().put(GUIDE_NPC.get(), (entity) -> ()-> new NPCPatch(()-> Animations.BIPED_IDLE, null, null, null));
-		event.getTypeEntry().put(KNIGHT_COMMANDER.get(), (entity) -> ()-> new NPCPatch(()-> Animations.BIPED_IDLE, null, null, null));
+		event.getTypeEntry().put(KNIGHT_COMMANDER.get(), (entity) -> ()-> new NPCPatch(()-> WOMAnimations.RUINE_IDLE, null, null, null));
 		event.getTypeEntry().put(SCARLET_HIGH_PRIEST.get(), (entity) -> ()-> new NPCPatch(()-> Animations.BIPED_IDLE, null, null, null));
 	}
 

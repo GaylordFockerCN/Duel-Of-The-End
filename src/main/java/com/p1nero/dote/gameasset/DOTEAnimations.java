@@ -387,13 +387,16 @@ public class DOTEAnimations {
                 "biped/yullian/yullian_dashattack", biped);
 
         YULLIAN_SPECIALATTACK1 = new BasicAttackAnimation(0.1F, 1.43F, 1.8F, 4.2F, null, biped.toolR,
-                "biped/yullian/yullian_specialattack1", biped);
+                "biped/yullian/yullian_specialattack1", biped)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 2F));
 
         YULLIAN_SPECIALATTACK2 = new BasicAttackAnimation(0.1F, 1.23F, 1.56F, 4.167F, null, biped.toolR,
-                "biped/yullian/yullian_specialattack2", biped);
+                "biped/yullian/yullian_specialattack2", biped)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 2F));
 
         YULLIAN_SPECIALATTACK3 = new BasicAttackAnimation(0.1F, 1.567F, 2.0F, 3.8F, null, biped.toolR,
-                "biped/yullian/yullian_specialattack3", biped);
+                "biped/yullian/yullian_specialattack3", biped)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 2F));
 
         SAKURA_DANCE = new BasicMultipleAttackAnimation(0.2F, "biped/sakura_dance/sakura_dance", biped,
                 new AttackAnimation.Phase(0F, 0.1F, 0.167F, 0.333F, 0.333F, InteractionHand.MAIN_HAND, biped.toolR, null),

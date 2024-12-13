@@ -1,7 +1,6 @@
 package com.p1nero.dote.entity.custom;
 
 import com.p1nero.dote.archive.DOTEArchiveManager;
-import com.p1nero.dote.client.BossMusicPlayer;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
@@ -19,6 +18,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.PathfinderMob;
@@ -26,7 +26,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -36,6 +35,7 @@ import reascer.wom.gameasset.WOMAnimations;
 import reascer.wom.world.item.WOMItems;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
+import yesman.epicfight.world.effect.EpicFightMobEffects;
 
 /**
  * 终末之影
@@ -78,6 +78,12 @@ public class TheShadowOfTheEnd extends DOTEBoss {
     @Override
     public void tick() {
         super.tick();
+
+        // 2/3血以下强制硬直免疫
+        if(this.getHealth() < this.getMaxHealth() * 2.0 / 3.0 && !this.hasEffect(EpicFightMobEffects.STUN_IMMUNITY.get())){
+            this.addEffect(new MobEffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 100));
+        }
+
         if(getDeathTick() > 0){
             setTarget(null);
             increaseDeathTick();

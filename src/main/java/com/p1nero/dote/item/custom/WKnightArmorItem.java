@@ -3,6 +3,7 @@ package com.p1nero.dote.item.custom;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.p1nero.dote.archive.DOTEArchiveManager;
+import com.p1nero.dote.entity.custom.npc.DOTENpc;
 import com.p1nero.dote.item.DOTEArmorMaterials;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.item.DOTERarities;
@@ -45,7 +46,7 @@ public class WKnightArmorItem extends SimpleDescriptionArmorItem implements IDOT
     }
 
     public static void onFullSet(LivingEntity livingEntity){
-        if(!isFullSet(livingEntity)){
+        if(!isFullSet(livingEntity) || livingEntity instanceof DOTENpc){
             return;
         }
         if(livingEntity.level() instanceof ServerLevel){
