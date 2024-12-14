@@ -2,11 +2,14 @@ package com.p1nero.dote.gameasset;
 
 import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.client.DOTESounds;
+import com.p1nero.dote.entity.ai.ef.api.IModifyAttackSpeedEntityPatch;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import reascer.wom.animation.attacks.BasicMultipleAttackAnimation;
+import reascer.wom.gameasset.WOMAnimations;
 import yesman.epicfight.api.animation.property.AnimationEvent;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.property.AnimationProperty.AttackAnimationProperty;
@@ -122,7 +125,7 @@ public class DOTEAnimations {
     public static StaticAnimation WATERBIRDS_DANCE_WILDLY_A3;
 
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void registerAnimations(AnimationRegistryEvent event) {
         event.getRegistryMap().put(DuelOfTheEndMod.MOD_ID, DOTEAnimations::build);
     }
@@ -429,6 +432,13 @@ public class DOTEAnimations {
                 .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
                 .addState(EntityState.MOVEMENT_LOCKED, true)
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 1.3F));
+
+        WOMAnimations.TIME_TRAVEL.addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> {
+            if(livingEntityPatch instanceof IModifyAttackSpeedEntityPatch patch){
+                return patch.getAttackSpeed();
+            }
+            return 1.0F;
+        }));
 
     }
 

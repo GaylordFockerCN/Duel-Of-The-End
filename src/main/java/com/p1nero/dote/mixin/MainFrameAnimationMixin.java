@@ -1,7 +1,6 @@
 package com.p1nero.dote.mixin;
 
-import com.p1nero.dote.entity.ai.ef.api.ITimeEventListEntityPatch;
-import com.p1nero.dote.entity.ai.ef.api.TimeStampedEvent;
+import com.p1nero.dote.entity.ai.ef.api.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,8 +18,22 @@ public class MainFrameAnimationMixin extends StaticAnimation {
 
     @Inject(method = "tick(Lyesman/epicfight/world/capabilities/entitypatch/LivingEntityPatch;)V",at = @At("HEAD"))
     public void onTick(LivingEntityPatch<?> entityPatch, CallbackInfo ci){
+
+        AnimationPlayer player = entityPatch.getAnimator().getPlayerFor(this);
+        if(!entityPatch.isLogicalClient()){
+            if(player.isEnd()){
+                if(entityPatch instanceof IModifyAttackSpeedEntityPatch modifyAttackSpeedEntityPatch){
+                    modifyAttackSpeedEntityPatch.setAttackSpeed(0F);
+                }
+                if(entityPatch instanceof IModifyStunTypeEntityPatch modifyStunTypeEntityPatch){
+                    modifyStunTypeEntityPatch.setStunType(null);
+                }
+                if(entityPatch instanceof IModifyAttackDamageEntityPatch damageEntityPatch){
+                    damageEntityPatch.setNewDamage(0);
+                }
+            }
+        }
         if(!entityPatch.isLogicalClient() && entityPatch instanceof ITimeEventListEntityPatch timeEventListEntity && timeEventListEntity.getTimeEventList() != null){
-            AnimationPlayer player = entityPatch.getAnimator().getPlayerFor(this);
             if (player != null) {
                 if(player.isEnd()){
                     timeEventListEntity.clearEvents();

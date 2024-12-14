@@ -1,6 +1,5 @@
 package com.p1nero.dote.entity.ai.ef;
 
-import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.entity.ai.ef.api.*;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -25,7 +24,7 @@ public class DOTECombatBehaviors {
      */
     public static <T extends MobPatch<?>> Consumer<T> customAttackAnimation(StaticAnimation animation, float convertTime, float attackSpeed, @Nullable StunType stunType, float damage, TimeStampedEvent... events) {
         return (patch) -> {
-            if(patch.getOriginal() instanceof IModifyAttackSpeedEntityPatch entity){
+            if(patch instanceof IModifyAttackSpeedEntityPatch entity){
                 entity.setAttackSpeed(attackSpeed);
             }
             if(patch instanceof IModifyStunTypeEntityPatch entity){
@@ -38,9 +37,7 @@ public class DOTECombatBehaviors {
                 entity.clearEvents();
                 for(TimeStampedEvent event : events){
                     event.resetExecuted();
-                    if(entity.addEvent(event)){
-                        DuelOfTheEndMod.LOGGER.info("add new time event");
-                    }
+                    entity.addEvent(event);
                 }
             }
             patch.playAnimationSynchronized(animation, convertTime);
@@ -94,7 +91,6 @@ public class DOTECombatBehaviors {
             humanoidMobPatch.rotateTo(humanoidMobPatch.getTarget(), 30F, true);
         }
     });
-
     /**
      * 瞬移到目标边上（可能会到身后）
      */

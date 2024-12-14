@@ -199,6 +199,14 @@ public class GoldenFlame extends DOTEBoss{
     }
 
     @Override
+    public boolean hurt(@NotNull DamageSource source, float p_21017_) {
+        if(!shouldRender()){
+            return false;
+        }
+        return super.hurt(source, p_21017_);
+    }
+
+    @Override
     public void die(@NotNull DamageSource source) {
         level().playSound(null , getX(), getY(), getZ(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.BLOCKS,1,1);
         if(source.getEntity() instanceof ServerPlayer player){
