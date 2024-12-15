@@ -148,7 +148,7 @@ public class GoldenFlameCombatBehaviors {
                 } else {
                     toTeleport = targetPos.add(dir.normalize().scale(target.getRandom().nextInt(minDis, maxDis)));//传送范围
                 }
-                humanoidMobPatch.getOriginal().randomTeleport(toTeleport.x, toTeleport.y, toTeleport.z, true);
+                humanoidMobPatch.getOriginal().teleportTo(toTeleport.x, toTeleport.y, toTeleport.z);
                 humanoidMobPatch.getOriginal().getLookControl().setLookAt(humanoidMobPatch.getTarget());
             }
         });
@@ -171,7 +171,25 @@ public class GoldenFlameCombatBehaviors {
                 } else {
                     toTeleport = targetPos.add(dir.normalize().scale(target.getRandom().nextInt(minDis, maxDis)));//传送范围
                 }
-                humanoidMobPatch.getOriginal().randomTeleport(toTeleport.x, toTeleport.y, toTeleport.z, true);
+                humanoidMobPatch.getOriginal().teleportTo(toTeleport.x, toTeleport.y, toTeleport.z);
+                humanoidMobPatch.getOriginal().getLookControl().setLookAt(humanoidMobPatch.getTarget());
+            }
+        });
+    }
+
+
+
+    /**
+     * 追击玩家
+     * @param dis 追击到距离玩家多远的距离
+     */
+    public static <T extends MobPatch<?>> Consumer<T> chaseTarget(float dis) {
+        return (humanoidMobPatch -> {
+            if(humanoidMobPatch.getTarget() != null){
+                LivingEntity target = humanoidMobPatch.getTarget();
+                LivingEntity self = humanoidMobPatch.getOriginal();
+                Vec3 toTeleport = target.position().add(self.position().subtract(target.position()).normalize().scale(dis));
+                humanoidMobPatch.getOriginal().moveTo(toTeleport.x, toTeleport.y, toTeleport.z);
                 humanoidMobPatch.getOriginal().getLookControl().setLookAt(humanoidMobPatch.getTarget());
             }
         });
@@ -592,8 +610,9 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_TIME_TRAVEL_SOUND))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_NOT_HIDE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(teleportToUp(false, 6, 6)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.BIPED_HIT_SHORT))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_NOT_HIDE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_HORNO, 0.1f, 0.8f, StunType.HOLD, 1f,
                                     new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.playSound(SoundEvents.TOTEM_USE, 1, 1)))
                             )))
