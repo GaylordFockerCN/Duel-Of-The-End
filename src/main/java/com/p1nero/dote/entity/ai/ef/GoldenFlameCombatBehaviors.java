@@ -75,6 +75,7 @@ public class GoldenFlameCombatBehaviors {
             goldenFlame.setShouldRender(false);
             if(goldenFlame.level() instanceof ServerLevel serverLevel){
                 serverLevel.sendParticles(WOMParticles.TELEPORT.get(), humanoidMobPatch.getOriginal().position().x, humanoidMobPatch.getOriginal().position().y + 1.0, humanoidMobPatch.getOriginal().position().z, 1, 0.0, 0.0, 0.0, 0.0);
+                humanoidMobPatch.playSound(SoundEvents.ENDERMAN_TELEPORT, 1, 1);
             }
         }
     });
@@ -86,7 +87,7 @@ public class GoldenFlameCombatBehaviors {
         if(humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame){
             goldenFlame.setShouldRender(true);
             if(goldenFlame.level() instanceof ServerLevel serverLevel){
-                serverLevel.sendParticles(WOMParticles.TELEPORT.get(), humanoidMobPatch.getOriginal().position().x, humanoidMobPatch.getOriginal().position().y + 1.0, humanoidMobPatch.getOriginal().position().z, 1, 0.0, 0.0, 0.0, 0.0);
+                serverLevel.sendParticles(WOMParticles.TELEPORT_REVERSE.get(), humanoidMobPatch.getOriginal().position().x, humanoidMobPatch.getOriginal().position().y + 1.0, humanoidMobPatch.getOriginal().position().z, 1, 0.0, 0.0, 0.0, 0.0);
             }
         }
     });
@@ -125,43 +126,56 @@ public class GoldenFlameCombatBehaviors {
     public static final Consumer<HumanoidMobPatch<?>> PLAY_SLAM_SOUND = (humanoidMobPatch -> humanoidMobPatch.playSound(EpicFightSounds.GROUND_SLAM.get(), 1, 1));
     public static final Consumer<HumanoidMobPatch<?>> PLAY_SOLAR_SOUND = (humanoidMobPatch -> humanoidMobPatch.playSound(WOMSounds.SOLAR_HIT.get(), 1, 1));
     public static final Consumer<HumanoidMobPatch<?>> PLAY_TIME_TRAVEL_SOUND = (humanoidMobPatch -> humanoidMobPatch.playSound(WOMSounds.TIME_TRAVEL.get(), 1f, 1f));
-    public static final Consumer<HumanoidMobPatch<?>> PLAY_ENDERMAN_TELEPORT_SOUND = (humanoidMobPatch -> humanoidMobPatch.playSound(SoundEvents.ENDERMAN_TELEPORT, 1f, 1f));
     public static final Consumer<HumanoidMobPatch<?>> PLAY_HIT_BLUNT_HARD_SOUND = (humanoidMobPatch -> humanoidMobPatch.playSound(EpicFightSounds.BLUNT_HIT_HARD.get(), 1f, 1f));
 
     /**
-     * 传送到玩家面前
+     * 传送到玩家前面
+     * @param invert invert为true则传背后
      */
-    public static final Consumer<HumanoidMobPatch<?>> TELEPORT_TO_FRONT = (humanoidMobPatch -> {
-        if(humanoidMobPatch.getTarget() != null){
-            LivingEntity target = humanoidMobPatch.getTarget();
-            Vec3 targetPos = target.position();
-            Vec3 view = target.getViewVector(1.0F);
-            if(target.getRandom().nextBoolean()){
-                view = view.scale(-1);
+    public static <T extends MobPatch<?>> Consumer<T> teleportToFront(boolean invert, int minDis, int maxDis) {
+        return (humanoidMobPatch -> {
+            if(humanoidMobPatch.getTarget() != null){
+                LivingEntity target = humanoidMobPatch.getTarget();
+                Vec3 targetPos = target.position();
+                Vec3 view = target.getViewVector(1.0F);
+                if(invert){
+                    view = view.scale(-1);
+                }
+                Vec3 dir = new Vec3(view.x, 0, view.z);
+                Vec3 toTeleport;
+                if(minDis == maxDis){
+                    toTeleport = targetPos.add(dir.normalize().scale(minDis));//传送范围
+                } else {
+                    toTeleport = targetPos.add(dir.normalize().scale(target.getRandom().nextInt(minDis, maxDis)));//传送范围
+                }
+                humanoidMobPatch.getOriginal().randomTeleport(toTeleport.x, toTeleport.y, toTeleport.z, true);
+                humanoidMobPatch.getOriginal().getLookControl().setLookAt(humanoidMobPatch.getTarget());
             }
-            Vec3 dir = new Vec3(view.x, 0, view.z);
-            Vec3 toTeleport = targetPos.add(dir.normalize().scale(target.getRandom().nextInt(2, 5)));
-            humanoidMobPatch.getOriginal().xo = toTeleport.x;
-            humanoidMobPatch.getOriginal().xOld = toTeleport.x;
-            humanoidMobPatch.getOriginal().yo = toTeleport.y;
-            humanoidMobPatch.getOriginal().yOld = toTeleport.y;
-            humanoidMobPatch.getOriginal().zo = toTeleport.z;
-            humanoidMobPatch.getOriginal().zOld = toTeleport.z;
-//            if(humanoidMobPatch.getOriginal() instanceof GoldenFlame flame){
-//                flame.setShouldRender(false);
-//            }
-            PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new SyncPos0Packet(humanoidMobPatch.getOriginal().getId(), toTeleport.x, toTeleport.y, toTeleport.z));
-            humanoidMobPatch.getOriginal().randomTeleport(toTeleport.x, toTeleport.y, toTeleport.z, true);
-            humanoidMobPatch.getOriginal().getLookControl().setLookAt(humanoidMobPatch.getTarget());
-//            if(humanoidMobPatch.getOriginal() instanceof GoldenFlame flame){
-//                flame.setShouldRender(true);
-//            }
-//            if(humanoidMobPatch.getOriginal().level() instanceof ServerLevel serverLevel){
-//                serverLevel.sendParticles(WOMParticles.TELEPORT.get(), humanoidMobPatch.getOriginal().position().x, humanoidMobPatch.getOriginal().position().y + 1.0, humanoidMobPatch.getOriginal().position().z, 1, 0.0, 0.0, 0.0, 0.0);
-//            }
+        });
+    }
 
-        }
-    });
+
+    /**
+     * 传送到玩家头上
+     * @param invert invert为true则传底下
+     */
+    public static <T extends MobPatch<?>> Consumer<T> teleportToUp(boolean invert, int minDis, int maxDis) {
+        return (humanoidMobPatch -> {
+            if(humanoidMobPatch.getTarget() != null){
+                LivingEntity target = humanoidMobPatch.getTarget();
+                Vec3 targetPos = target.position();
+                Vec3 dir = new Vec3(0, invert ? -1 : 1, 0);
+                Vec3 toTeleport;
+                if(minDis == maxDis){
+                    toTeleport = targetPos.add(dir.normalize().scale(minDis));//传送范围
+                } else {
+                    toTeleport = targetPos.add(dir.normalize().scale(target.getRandom().nextInt(minDis, maxDis)));//传送范围
+                }
+                humanoidMobPatch.getOriginal().randomTeleport(toTeleport.x, toTeleport.y, toTeleport.z, true);
+                humanoidMobPatch.getOriginal().getLookControl().setLookAt(humanoidMobPatch.getTarget());
+            }
+        });
+    }
 
     /**
      * 随机传送到玩家边上
@@ -385,7 +399,7 @@ public class GoldenFlameCombatBehaviors {
 
             //二阶段——平a
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10.0F).cooldown(10).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10.0F).cooldown(100).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_1, 0.2f))
                                     .custom(IS_NOT_CHARGING)
                                     .withinDistance(0, 4)
@@ -562,51 +576,47 @@ public class GoldenFlameCombatBehaviors {
                             }))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ENDERSTEP_BACKWARD, 0.2f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ENDERSTEP_BACKWARD, 0.2f)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_TIME_TRAVEL_SOUND))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_ENDERMAN_TELEPORT_SOUND))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_HIDE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(RANDOM_TELEPORT))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TIME_TRAVEL, 1f, 1f, StunType.SHORT, 1f, new TimeStampedEvent(0.5F, (entityPatch -> {
-                                System.out.println("test!!");
-                            })))))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(TELEPORT_TO_FRONT))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_SOLAR_SOUND))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(teleportToFront(false, 6, 10)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_TIME_TRAVEL_SOUND))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_NOT_HIDE))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_DINAMITA, 0.0f, 0.9f, StunType.SHORT, 1f)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_SLAM_SOUND))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_TIME_TRAVEL_SOUND))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_ENDERMAN_TELEPORT_SOUND))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_DINAMITA, 0.2f, 0.7f, StunType.HOLD, 1f,
+                                    new TimeStampedEvent(0.1F, (livingEntityPatch ->{livingEntityPatch.playSound(WOMSounds.SOLAR_HIT.get(), 1, 1);})),
+                                    new TimeStampedEvent(0.6f, (livingEntityPatch -> livingEntityPatch.playSound(EpicFightSounds.GROUND_SLAM.get(), 1, 1)))
+                            )))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_HIDE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(RANDOM_TELEPORT))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TIME_TRAVEL, 1f, 1f, StunType.SHORT, 1f)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(TELEPORT_TO_FRONT))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_TIME_TRAVEL_SOUND))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_NOT_HIDE))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_DASH, 0.0f, 0.9f, StunType.SHORT, 1f,
-                                    new TimeStampedEvent(0.5f, (livingEntityPatch -> livingEntityPatch.playSound(EpicFightSounds.GROUND_SLAM.get(), 1, 1))))))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_TIME_TRAVEL_SOUND))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_ENDERMAN_TELEPORT_SOUND))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(teleportToUp(false, 6, 6)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_HORNO, 0.1f, 0.8f, StunType.HOLD, 1f,
+                                    new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.playSound(SoundEvents.TOTEM_USE, 1, 1)))
+                            )))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_HIDE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(RANDOM_TELEPORT))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TIME_TRAVEL, 1f, 1f, StunType.SHORT, 1f)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(TELEPORT_TO_FRONT))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.RUINE_AUTO_1, 0.15f, 0.9f, StunType.SHORT, 1f)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(teleportToFront(false, 1, 3)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_TIME_TRAVEL_SOUND))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_NOT_HIDE))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.RUINE_AUTO_2, 0.1f, 0.6f)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_TIME_TRAVEL_SOUND))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_ENDERMAN_TELEPORT_SOUND))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.RUINE_AUTO_1, 0.3f, 0.8f, StunType.SHORT, 1f)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.RUINE_AUTO_2, 0.1f, 0.6f,StunType.SHORT,0.7f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_HIDE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(RANDOM_TELEPORT))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TIME_TRAVEL, 1f, 1f, StunType.SHORT, 1f)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(TELEPORT_TO_FRONT))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(teleportToFront(false, 1, 3)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_TIME_TRAVEL_SOUND))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_NOT_HIDE))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_2, 0.0f, 0.9f, StunType.SHORT, 1f,
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_2, 0.2f, 0.9f, StunType.HOLD, 1f,
                                     new TimeStampedEvent(0.6f, (livingEntityPatch -> livingEntityPatch.playSound(EpicFightSounds.GROUND_SLAM.get(), 1, 1))))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_3, 0.2f, 0.9f)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_CHARGED_ATTACK_3, 0.3f, 0.6f, StunType.KNOCKDOWN, 1f,
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_CHARGED_ATTACK_3, 0.1f, 0.6f, StunType.KNOCKDOWN, 1f,
                                     new TimeStampedEvent(0.15f, (livingEntityPatch -> livingEntityPatch.playSound(SoundEvents.FIREWORK_ROCKET_BLAST, 0.5f, 0.5f))),
                                     new TimeStampedEvent(1.1f, (livingEntityPatch -> livingEntityPatch.playSound(EpicFightSounds.GROUND_SLAM.get(), 1, 1))))))
             )
