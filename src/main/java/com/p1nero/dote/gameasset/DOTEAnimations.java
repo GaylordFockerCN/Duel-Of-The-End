@@ -3,8 +3,10 @@ package com.p1nero.dote.gameasset;
 import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.entity.ai.ef.api.IModifyAttackSpeedEntityPatch;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -15,6 +17,7 @@ import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.property.AnimationProperty.AttackAnimationProperty;
 import yesman.epicfight.api.animation.types.*;
 import yesman.epicfight.api.forgeevent.AnimationRegistryEvent;
+import yesman.epicfight.api.utils.TimePairList;
 import yesman.epicfight.api.utils.math.ValueModifier;
 import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.gameasset.Armatures;
@@ -39,6 +42,10 @@ public class DOTEAnimations {
     public static StaticAnimation SSTEP_LEFT;
     public static StaticAnimation SSTEP_RIGHT;
 
+    //黑猴后滚
+    public static StaticAnimation WK_DODGE_B1;
+    public static StaticAnimation WK_DODGE_B2;
+    public static StaticAnimation WK_DODGE_B3;
 
     public static StaticAnimation BIPED_HOLD_KATANA_SHEATHING;
     public static StaticAnimation BIPED_KATANA_SCRAP;
@@ -204,7 +211,7 @@ public class DOTEAnimations {
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH_SHARP.get())
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, Animations.ReusableSources.CONSTANT_ONE)
                 .addEvents(AnimationEvent.TimeStampedEvent.create(0.15F, Animations.ReusableSources.PLAY_SOUND, AnimationEvent.Side.CLIENT).params(EpicFightSounds.SWORD_IN.get()));
-        FATAL_DRAW_DASH = (new AttackAnimation(0.15F, 0.43F, 0.85F, 0.851F, 1.4F, DOTECollider.FATAL_DRAW_DASH, biped.rootJoint, "biped/new/katana/skill/fatal_draw_dash", biped))
+        FATAL_DRAW_DASH = (new AttackAnimation(0.15F, 0.43F, 0.85F, 0.851F, 1.4F, DOTEColliders.FATAL_DRAW_DASH, biped.rootJoint, "biped/new/katana/skill/fatal_draw_dash", biped))
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH_SHARP.get())
                 .addProperty(AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.KNOCKDOWN)
@@ -217,7 +224,7 @@ public class DOTEAnimations {
                         }, AnimationEvent.Side.CLIENT)
                 );
 
-        BLADE_RUSH_FINISHER = new AttackAnimation(0.15F, 0.0F, 0.1F, 0.26F, 0.75F, DOTECollider.BLADE_RUSH_FINISHER, biped.rootJoint, "biped/new/blade_rush_finisher", biped)
+        BLADE_RUSH_FINISHER = new AttackAnimation(0.15F, 0.0F, 0.1F, 0.26F, 0.75F, DOTEColliders.BLADE_RUSH_FINISHER, biped.rootJoint, "biped/new/blade_rush_finisher", biped)
                 .addProperty(AttackAnimationProperty.FIXED_MOVE_DISTANCE, true).addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLADE_RUSH_FINISHER.get())
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.LONG)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.BLADE_RUSH_SKILL).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, Animations.ReusableSources.CONSTANT_ONE);
@@ -252,13 +259,13 @@ public class DOTEAnimations {
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
                 .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT_MODIFIER, ValueModifier.setter(2.0F))
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT).addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.setter(1.0F)).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, Animations.ReusableSources.CONSTANT_ONE);
-        LETHAL_SLICING_ONCE = new AttackAnimation(0.15F, 0.06F, 0.10F, 0.25F, 0.6F, DOTECollider.LETHAL_SLICING, biped.rootJoint, "biped/new/lethal_slicing_once", biped)
+        LETHAL_SLICING_ONCE = new AttackAnimation(0.15F, 0.06F, 0.10F, 0.25F, 0.6F, DOTEColliders.LETHAL_SLICING, biped.rootJoint, "biped/new/lethal_slicing_once", biped)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH_SHARP.get()).addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(1.25F))
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, Animations.ReusableSources.CONSTANT_ONE);
-        LETHAL_SLICING_TWICE = new AttackAnimation(0.015F, 0.06F, 0.10F, 0.35F, 0.6F, DOTECollider.LETHAL_SLICING, biped.rootJoint, "biped/new/lethal_slicing_twice", biped)
+        LETHAL_SLICING_TWICE = new AttackAnimation(0.015F, 0.06F, 0.10F, 0.35F, 0.6F, DOTEColliders.LETHAL_SLICING, biped.rootJoint, "biped/new/lethal_slicing_twice", biped)
                 .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(50.0F)).addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(1.75F))
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH_SHARP.get()).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, Animations.ReusableSources.CONSTANT_ONE);
-        LETHAL_SLICING_ONCE1 = new AttackAnimation(0.015F, 0.06F, 0.10F, 0.15F, 0.85F, DOTECollider.LETHAL_SLICING1, biped.rootJoint, "biped/new/lethal_slicing_once1", biped)
+        LETHAL_SLICING_ONCE1 = new AttackAnimation(0.015F, 0.06F, 0.10F, 0.15F, 0.85F, DOTEColliders.LETHAL_SLICING1, biped.rootJoint, "biped/new/lethal_slicing_once1", biped)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH_SHARP.get()).addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(50.0F))
                 .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(1.5F)).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, Animations.ReusableSources.CONSTANT_ONE);
 
@@ -314,10 +321,10 @@ public class DOTEAnimations {
         TACHI_TWOHAND_AUTO_4 = new BasicAttackAnimation(0.1F, 0.2F, 0.3F, 0.65F, null, biped.toolR, "biped/new/longsword/tachi_twohand_auto_4", biped)
                 .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.5F);
 
-        KATANA_SKILL2 = new AttackAnimation(0.0F, 0.65F, 0.70F, 0.73F, 1.05F, DOTECollider.YAMATO_P, biped.toolR, "biped/new/longsword/skill/katana_skill2", biped)
+        KATANA_SKILL2 = new AttackAnimation(0.0F, 0.65F, 0.70F, 0.73F, 1.05F, DOTEColliders.YAMATO_P, biped.toolR, "biped/new/longsword/skill/katana_skill2", biped)
                 .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.setter(1.0F))
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.HOLD);
-        KATANA_SKILL3 = new AttackAnimation(0.05F, 0.06F, 0.10F, 0.35F, 0.6F, DOTECollider.LETHAL_SLICING, biped.rootJoint, "biped/new/longsword/skill/katana_skill3", biped)
+        KATANA_SKILL3 = new AttackAnimation(0.05F, 0.06F, 0.10F, 0.35F, 0.6F, DOTEColliders.LETHAL_SLICING, biped.rootJoint, "biped/new/longsword/skill/katana_skill3", biped)
                 .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION_MODIFIER, ValueModifier.setter(15.0F))
                 .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(1.25F))
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.EVISCERATE)
@@ -351,14 +358,17 @@ public class DOTEAnimations {
 
         YULLIAN_COMBOA1 = new BasicAttackAnimation(0.1F, 0.8F, 0.93F, 1F, null, biped.toolR,
                 "biped/yullian/yullian_comboa1", biped)
+                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, (ValueModifier.multiplier(0.7F)))
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 0.9F));
 
         YULLIAN_COMBOA2 = new BasicAttackAnimation(0.1F, 0.7F, 0.8F, 0.85F, null, biped.toolR,
                 "biped/yullian/yullian_comboa2", biped)
+                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, (ValueModifier.multiplier(1.2F)))
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 0.9F));
 
         YULLIAN_COMBOA3 = new BasicAttackAnimation(0.1F, 0.467F, 0.6F, 2.43F, null, biped.toolR,
-                "biped/yullian/yullian_comboa3", biped);
+                "biped/yullian/yullian_comboa3", biped)
+                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, (ValueModifier.multiplier(1.5F)));
 
         YULLIAN_COMBOB1 = new BasicMultipleAttackAnimation(0.1F, "biped/yullian/yullian_combob1", biped,
                 new AttackAnimation.Phase(0F, 0.63F, 0.76F, 3.23F, 0.76F, InteractionHand.MAIN_HAND,
@@ -371,10 +381,12 @@ public class DOTEAnimations {
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 0.9F));
 
         YULLIAN_COMBOC2 = new BasicMultipleAttackAnimation(0.05F, "biped/yullian/yullian_comboc2", biped,
-                new AttackAnimation.Phase(0F, 0.5F, 0.9F, 0F, 0.9F, InteractionHand.MAIN_HAND,
-                        biped.toolR, null),
-                new AttackAnimation.Phase(0.9F, 0.9F, 1.1F, 1F, 233F, InteractionHand.MAIN_HAND,
-                        biped.toolR, null))
+                new AttackAnimation.Phase(0F, 0.5F, 0.9F, 0.9F, 0.9F, InteractionHand.MAIN_HAND,
+                        biped.toolR, null)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, (ValueModifier.multiplier(0.8F))),
+                new AttackAnimation.Phase(0.9F, 0.9F, 1.1F, 1.5F, 1.5F, InteractionHand.MAIN_HAND,
+                        biped.toolR, null)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, (ValueModifier.multiplier(0.8F))))
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 0.9F));
 
         YULLIAN_DODGEATTACK = new BasicAttackAnimation(0.1F, 0.26F, 0.83F, 2.667F, null, biped.toolR,
@@ -393,52 +405,73 @@ public class DOTEAnimations {
                 "biped/yullian/yullian_specialattack1", biped)
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 2F));
 
-        YULLIAN_SPECIALATTACK2 = new BasicAttackAnimation(0.1F, 1.23F, 1.56F, 4.167F, null, biped.toolR,
+        YULLIAN_SPECIALATTACK2 = new BasicAttackAnimation(0.1F, 1.23F, 1.8F, 4.167F, null, biped.toolR,
                 "biped/yullian/yullian_specialattack2", biped)
-                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 2F));
+                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, (ValueModifier.multiplier(2.5F)))
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 2F))
+                .addEvents(AnimationProperty.StaticAnimationProperty.ON_BEGIN_EVENTS, AnimationEvent.TimeStampedEvent.create((livingEntityPatch, staticAnimation, objects) -> {
+                    if(livingEntityPatch.getOriginal() instanceof Player player && player.getHealth() > 1){
+                        player.setHealth(player.getHealth() / 2.0F);
+                        livingEntityPatch.playSound(SoundEvents.PLAYER_HURT, 1, 1);
+                    } else {
+                        livingEntityPatch.playSound(SoundEvents.END_PORTAL_SPAWN, 0.8F, 0.8F);
+                    }
+                }, AnimationEvent.Side.SERVER));
 
-        YULLIAN_SPECIALATTACK3 = new BasicAttackAnimation(0.1F, 1.567F, 2.0F, 3.8F, null, biped.toolR,
-                "biped/yullian/yullian_specialattack3", biped)
+        YULLIAN_SPECIALATTACK3 = new BasicAttackAnimation(0.1F, 1.567F, 2.0F, 3.8F, null, biped.toolR, "biped/yullian/yullian_specialattack3", biped)
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 2F));
 
         SAKURA_DANCE = new BasicMultipleAttackAnimation(0.2F, "biped/sakura_dance/sakura_dance", biped,
                 new AttackAnimation.Phase(0F, 0.1F, 0.167F, 0.333F, 0.333F, InteractionHand.MAIN_HAND, biped.toolR, null),
-                new AttackAnimation.Phase(0.333F, 0.333F, 0.5F, 0.5F, 0.9F, InteractionHand.MAIN_HAND, biped.toolR, null),
-                new AttackAnimation.Phase(0.9F, 0.9F, 1.067F, 1.067F, 1.067F, InteractionHand.MAIN_HAND, biped.toolR, null))
+                new AttackAnimation.Phase(0.333F, 0.333F, 0.5F, 0.5F, 0.5F, InteractionHand.MAIN_HAND, biped.toolR, null),
+                new AttackAnimation.Phase(0.5F, 0.9F, 1.067F, 1.067F, 1.067F, InteractionHand.MAIN_HAND, biped.toolR, null))
                 .addProperty(AnimationProperty.ActionAnimationProperty.MOVE_VERTICAL, true)
+                .addProperty(AnimationProperty.ActionAnimationProperty.NO_GRAVITY_TIME, TimePairList.create(0.0F, 1.067F))
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 0.99F));
 
         WATERBIRDS_DANCE_WILDLY_A1 = new BasicMultipleAttackAnimation(0.15F, "biped/waterbirds/waterbirds_dance_wildly_a1", biped,
-                new AttackAnimation.Phase(0F, 1.533F, 1.6333F, 2.73F, 1.6333F, InteractionHand.MAIN_HAND, biped.toolR, null),
-                new AttackAnimation.Phase(1.6333F, 1.9F, 1.966F, 2.73F, 1.966F, InteractionHand.MAIN_HAND, biped.toolR, null),
-                new AttackAnimation.Phase(1.966F, 2.133F, 2.2F, 2.73F, 2.2F, InteractionHand.MAIN_HAND, biped.toolR, null),
-                new AttackAnimation.Phase(2.2F, 2.4F, 2.466F, 2.73F, 4.5F, InteractionHand.MAIN_HAND, biped.toolR, null))
+                new AttackAnimation.Phase(0F, 1.533F, 1.6333F, 1.6333F, 1.6333F, InteractionHand.MAIN_HAND, biped.toolR, null)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.8F)),
+                new AttackAnimation.Phase(1.6333F, 1.9F, 1.966F, 1.966F, 1.966F, InteractionHand.MAIN_HAND, biped.toolR, null)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(1.1F)),
+                new AttackAnimation.Phase(1.966F, 2.133F, 2.2F, 2.2F, 2.2F, InteractionHand.MAIN_HAND, biped.toolR, null)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(1.3F)),
+                new AttackAnimation.Phase(2.2F, 2.4F, 2.466F, 2.73F, 4.5F, InteractionHand.MAIN_HAND, biped.toolR, null)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(1.4F)))
                 .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
-                .addState(EntityState.MOVEMENT_LOCKED, true)
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 1.3F));
 
-        WATERBIRDS_DANCE_WILDLY_A2 = new BasicMultipleAttackAnimation(0.15F, "biped/waterbirds/waterbirds_dance_wildly_a2", biped,
-                new AttackAnimation.Phase(0F, 0.8F, 0.9F, 1F, 2.833F, InteractionHand.MAIN_HAND, biped.toolR, null))
+        WATERBIRDS_DANCE_WILDLY_A2 = new BasicAttackAnimation(0.15F, 0.8F, 0.9F, 2.5F, null, biped.toolR, "biped/waterbirds/waterbirds_dance_wildly_a2", biped)
+                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(3.5F))
                 .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
-                .addState(EntityState.MOVEMENT_LOCKED, true)
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 1.3F));
 
         WATERBIRDS_DANCE_WILDLY_A3 = new BasicMultipleAttackAnimation(0.15F, "biped/waterbirds/waterbirds_dance_wildly_a3", biped,
-                new AttackAnimation.Phase(0F, 0.933F, 0.9666F, 3.0F, 0.9666F, InteractionHand.MAIN_HAND, biped.toolR, null),
-                new AttackAnimation.Phase(0.9666F, 1.166F, 1.266F, 3.0F, 1.266F, InteractionHand.MAIN_HAND, biped.toolR, null),
-                new AttackAnimation.Phase(1.266F, 1.5333F, 1.6333F, 3.0F, 1.6333F, InteractionHand.MAIN_HAND, biped.toolR, null),
-                new AttackAnimation.Phase(1.6333F, 1.9F, 1.966F, 3.0F, 1.966F, InteractionHand.MAIN_HAND, biped.toolR, null),
-                new AttackAnimation.Phase(1.966F, 1.9F, 1.966F, 3.0F, 4.4333F, InteractionHand.MAIN_HAND, biped.toolR, null))
+                new AttackAnimation.Phase(0.0F, 0.933F, 0.9666F, 0.9666F, 0.9666F, InteractionHand.MAIN_HAND, biped.toolR, null)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.8F)),
+                new AttackAnimation.Phase(0.9666F, 1.166F, 1.266F, 1.266F, 1.266F, InteractionHand.MAIN_HAND, biped.toolR, null)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.8F)),
+                new AttackAnimation.Phase(1.266F, 1.5333F, 1.6333F, 1.6333F, 1.6333F, InteractionHand.MAIN_HAND, biped.toolR, null)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.8F)),
+                new AttackAnimation.Phase(1.6333F, 1.9F, 1.966F, 1.966F, 1.966F, InteractionHand.MAIN_HAND, biped.toolR, null)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(0.8F)),
+                new AttackAnimation.Phase(1.966F, 1.9F, 1.966F, 3.0F, 4.4333F, InteractionHand.MAIN_HAND, biped.toolR, null)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(1.4F)))
                 .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
-                .addState(EntityState.MOVEMENT_LOCKED, true)
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 1.3F));
 
         WOMAnimations.TIME_TRAVEL.addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> {
-            if(livingEntityPatch instanceof IModifyAttackSpeedEntityPatch patch){
+            if (livingEntityPatch instanceof IModifyAttackSpeedEntityPatch patch) {
                 return patch.getAttackSpeed();
             }
             return 1.0F;
         }));
+
+        WK_DODGE_B1 = new DodgeAnimation(0.1F, 0.4F, "biped/new/dodge/wkdodge_b1", 0.6F, 0.8F, biped);
+
+        WK_DODGE_B2 = new DodgeAnimation(0.1F, 0.4F, "biped/new/dodge/wkdodge_b2", 0.6F, 0.8F, biped);
+
+        WK_DODGE_B3 = new DodgeAnimation(0.1F, 0.6F, "biped/new/dodge/wkdodge_b3", 0.6F, 1.35F, biped).addProperty(AnimationProperty.ActionAnimationProperty.MOVE_VERTICAL, true);
 
     }
 

@@ -56,6 +56,7 @@ public class DOTELangGenerator extends DOTELangProvider {
         addBiome(DOTEBiomes.P_BIOME, "炼狱");
         
         add("item_group.duel_of_the_end.all", "终焉决斗");
+        add(DOTEItems.BALMUNG.get(), "终焉之剑");
         add(DOTEItems.M_KEY.get(), "圣堂决斗钥匙");
         addItemUsageInfo(DOTEItems.M_KEY.get(), "你...做好准备了吗？§6（潜行 + 右键以传送至起点，可重复使用）§r");
         add(DOTEItems.P_KEY.get(), "炼狱决斗钥匙");

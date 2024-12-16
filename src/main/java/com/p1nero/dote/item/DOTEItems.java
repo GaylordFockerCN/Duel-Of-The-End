@@ -5,13 +5,21 @@ import com.p1nero.dote.entity.DOTEEntities;
 import com.p1nero.dote.item.custom.*;
 import com.p1nero.dote.worldgen.biome.BiomeMap;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import yesman.epicfight.world.item.WeaponItem;
 
 public class DOTEItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, DuelOfTheEndMod.MOD_ID);
+	public static final RegistryObject<Item> BALMUNG = REGISTRY.register("balmung", ()-> new WeaponItem(Tiers.NETHERITE, 7, -2.4F, (new Item.Properties()).defaultDurability(12777).rarity(DOTERarities.SHEN_ZHEN)) {
+		@Override
+		public boolean isCorrectToolForDrops(BlockState blockIn) {
+			return super.isCorrectToolForDrops(blockIn);
+		}
+	});
 	public static final RegistryObject<Item> M_KEY = REGISTRY.register("mkey", () -> new TeleportKeyItem(() -> BiomeMap.getInstance().getBlockPos(BiomeMap.getInstance().getCenter1(), 170).offset(0, 0, 400)){
 		@Override
 		public boolean shouldKeepWhenExitDim() {

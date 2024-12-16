@@ -4,7 +4,7 @@ import yesman.epicfight.api.collider.Collider;
 import yesman.epicfight.api.collider.MultiOBBCollider;
 import yesman.epicfight.api.collider.OBBCollider;
 
-public class DOTECollider {
+public class DOTEColliders {
     public static final Collider GREATSWORD = new MultiOBBCollider(3, 0.2, 0.8, 1.0, 0.0, 0.0, -1.2);
     public static final Collider GREATSWORD_DOUBLESWING = new MultiOBBCollider(3, 0.6, 0.8, 1.0, -0.4, 0.0, -1.2);
     public static final Collider GREATSWORD_DUAL = new OBBCollider(2.4000000953674316, 0.699999988079071, 2.0999999046325684, 0.0, 1.0, -0.75);
@@ -22,6 +22,6 @@ public class DOTECollider {
     public static final Collider YAMATO_DASH_FINISH = new OBBCollider(1.7D, 1.0D, 3.5D, 0.0D, 1.0D, 1.0D);
     public static final Collider EXECUTE = new MultiOBBCollider(2, 0.8, 0.8, 1.383, 0.0, 0.0, -0.66);
 
-    public DOTECollider() {
+    public DOTEColliders() {
     }
 }
