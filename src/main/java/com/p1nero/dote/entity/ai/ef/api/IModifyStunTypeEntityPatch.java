@@ -4,9 +4,10 @@ import org.jetbrains.annotations.Nullable;
 import yesman.epicfight.world.damagesource.StunType;
 
 /**
- * 用于在升级的时候加血量
+ * 用于修改硬直类型
  */
 public interface IModifyStunTypeEntityPatch {
-
     void setStunType(@Nullable StunType stunType);
+    @Nullable
+    StunType getStunType();
 }

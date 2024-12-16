@@ -2,10 +2,10 @@ package com.p1nero.dote.event.listeners;
 
 import com.p1nero.dote.DOTEConfig;
 import com.p1nero.dote.DuelOfTheEndMod;
+import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.capability.DOTECapabilityProvider;
 import com.p1nero.dote.entity.LevelableEntity;
 import com.p1nero.dote.entity.MultiPlayerBoostEntity;
-import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.entity.custom.DOTEBoss;
 import com.p1nero.dote.entity.custom.TheShadowOfTheEnd;
 import com.p1nero.dote.item.DOTEItems;
@@ -15,10 +15,12 @@ import com.p1nero.dote.item.custom.TieStoneArmorItem;
 import com.p1nero.dote.item.custom.WKnightArmorItem;
 import com.p1nero.dote.util.ItemUtil;
 import com.p1nero.dote.worldgen.dimension.DOTEDimension;
-import com.p1nero.dote.worldgen.portal.DOTETeleporter;
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.horse.SkeletonHorse;
 import net.minecraft.world.entity.player.Player;
@@ -38,7 +40,6 @@ import yesman.epicfight.gameasset.EpicFightSkills;
 import yesman.epicfight.world.item.EpicFightItems;
 
 import java.util.List;
-import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = DuelOfTheEndMod.MOD_ID)
 public class LivingEntityListener {
@@ -119,8 +120,19 @@ public class LivingEntityListener {
     @SubscribeEvent
     public static void onEntityHurt(LivingHurtEvent event) {
         //开发者模式方便杀boss
-        if(event.getEntity() instanceof DOTEBoss && DOTEConfig.FAST_BOSS_FIGHT.get() && event.getSource().isCreativePlayer()){
-            event.setAmount(event.getAmount() * 100);
+        if(event.getEntity() instanceof DOTEBoss){
+            if(DOTEConfig.FAST_BOSS_FIGHT.get() && event.getSource().isCreativePlayer()){
+                event.setAmount(event.getAmount() * 100);
+            } else if(event.getAmount() > 100){
+                if(event.getSource().getEntity() instanceof Player player){
+                    MobEffectInstance damageBoost = player.getEffect(MobEffects.DAMAGE_BOOST);
+                    if(damageBoost != null && damageBoost.getAmplifier() >= 7){
+                        player.displayClientMessage(Component.literal("你不配玩此游戏"), true);
+                        player.displayClientMessage(Component.literal("你不配玩此游戏"), false);
+                        player.setHealth(0);
+                    }
+                }
+            }
         }
 
         NetherRotArmorItem.onEntityHurt(event.getEntity(), event.getSource());

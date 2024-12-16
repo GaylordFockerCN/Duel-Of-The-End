@@ -1,7 +1,7 @@
 package com.p1nero.dote.entity.ai.ef.api;
 
 /**
- * 用于在升级的时候加血量
+ * 用于修改攻速
  */
 public interface IModifyAttackSpeedEntityPatch {
     float getAttackSpeed();

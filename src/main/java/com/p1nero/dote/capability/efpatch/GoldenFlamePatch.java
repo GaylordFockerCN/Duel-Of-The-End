@@ -156,8 +156,19 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
     }
 
     @Override
+    @Nullable
+    public StunType getStunType() {
+        return stunTypeModify;
+    }
+
+    @Override
     public void setNewDamage(float damage) {
         damageModify = damage;
+    }
+
+    @Override
+    public float getNewDamage() {
+        return damageModify;
     }
 
     @Override
