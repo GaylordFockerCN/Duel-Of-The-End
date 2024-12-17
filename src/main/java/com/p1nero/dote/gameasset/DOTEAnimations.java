@@ -408,6 +408,8 @@ public class DOTEAnimations {
         YULLIAN_SPECIALATTACK2 = new BasicAttackAnimation(0.1F, 1.23F, 1.8F, 4.167F, null, biped.toolR,
                 "biped/yullian/yullian_specialattack2", biped)
                 .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, (ValueModifier.multiplier(2.5F)))
+                .newTimePair(0.1F, 1.0F)//无敌帧
+                .addStateRemoveOld(EntityState.ATTACK_RESULT, DodgeAnimation.DODGEABLE_SOURCE_VALIDATOR)
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 2F))
                 .addEvents(AnimationProperty.StaticAnimationProperty.ON_BEGIN_EVENTS, AnimationEvent.TimeStampedEvent.create((livingEntityPatch, staticAnimation, objects) -> {
                     if(livingEntityPatch.getOriginal() instanceof Player player && player.getHealth() > 1){

@@ -1,5 +1,6 @@
 package com.p1nero.dote.entity.ai.ef;
 
+import com.p1nero.dote.entity.IWanderableEntity;
 import com.p1nero.dote.entity.ai.ef.api.*;
 import com.p1nero.dote.network.DOTEPacketHandler;
 import com.p1nero.dote.network.PacketRelay;
@@ -27,6 +28,16 @@ import java.util.function.Function;
  * 提供一些通用预设
  */
 public class DOTECombatBehaviors {
+
+    public static <T extends MobPatch<?>> Consumer<T> wander(int strafingTime, float forward, float clockwise){
+        return (patch) -> {
+            if(patch.getOriginal() instanceof IWanderableEntity wanderableEntity){
+                wanderableEntity.setStrafingTime(strafingTime);
+                wanderableEntity.setStrafingForward(forward);
+                wanderableEntity.setStrafingClockwise(clockwise);
+            }
+        };
+    }
 
     /**
      * 播放动画，带ConvertTime也带变速

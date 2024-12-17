@@ -5,6 +5,8 @@ import com.p1nero.dote.capability.efpatch.GoldenFlamePatch;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
+import com.p1nero.dote.entity.IWanderableEntity;
+import com.p1nero.dote.entity.ai.goal.CustomWanderGoal;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.util.ItemUtil;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -21,7 +23,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
@@ -37,7 +38,7 @@ import reascer.wom.world.item.WOMItems;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
-public class GoldenFlame extends DOTEBoss{
+public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
     protected static final EntityDataAccessor<Integer> CHARGING_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Integer> ANTI_FORM_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Boolean> IS_BLUE = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.BOOLEAN);
@@ -45,6 +46,9 @@ public class GoldenFlame extends DOTEBoss{
     private int antiFormCooldown = 0;
     private static final int MAX_ANTI_FORM_COOLDOWN = 2400;
     private static final int MAX_ANTI_FORM_TIMER = 800;
+    private int strafingTime;
+    private float strafingForward;
+    private float strafingClockwise;
     public GoldenFlame(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
 //        setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SOLAR.get().getDefaultInstance());
@@ -193,7 +197,7 @@ public class GoldenFlame extends DOTEBoss{
         super.registerGoals();
         this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, false));
-        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(0, new CustomWanderGoal<>(this, 1.0, true, 64));
         this.goalSelector.addGoal(1, new RandomStrollGoal(this, 1));
         this.goalSelector.addGoal(2, new RandomLookAroundGoal(this));
     }
@@ -235,6 +239,36 @@ public class GoldenFlame extends DOTEBoss{
     @Override
     public @Nullable SoundEvent getFightMusic() {
         return DOTESounds.GOLDEN_FLAME_BGM.get();
+    }
+
+    @Override
+    public int getStrafingTime() {
+        return strafingTime;
+    }
+
+    @Override
+    public void setStrafingTime(int strafingTime) {
+        this.strafingTime = strafingTime;
+    }
+
+    @Override
+    public float getStrafingForward() {
+        return strafingForward;
+    }
+
+    @Override
+    public void setStrafingForward(float strafingForward) {
+        this.strafingForward = strafingForward;
+    }
+
+    @Override
+    public float getStrafingClockwise() {
+        return strafingClockwise;
+    }
+
+    @Override
+    public void setStrafingClockwise(float strafingClockwise) {
+        this.strafingClockwise = strafingClockwise;
     }
 
 }

@@ -9,6 +9,7 @@ import com.p1nero.dote.entity.custom.GoldenFlame;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.Nullable;
@@ -36,22 +37,22 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
     private final List<TimeStampedEvent> list = new ArrayList<>();
     private static final EntityDataAccessor<Float> ATTACK_SPEED = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.FLOAT);
 
-    private boolean onCharged2Hit;
+    private boolean onTormentAuto4Hit;
     private boolean onDash;
 
-    public boolean isOnCharged2Hit() {
-        return onCharged2Hit;
+    public boolean isOnTormentAuto4Hit() {
+        return onTormentAuto4Hit;
     }
 
-    public void resetOnCharged2Hit(){
-        onCharged2Hit = false;
+    public void resetOnCharged2Hit() {
+        onTormentAuto4Hit = false;
     }
 
     public boolean isOnDash() {
         return onDash;
     }
 
-    public void setOnDash(boolean onDash){
+    public void setOnDash(boolean onDash) {
         this.onDash = onDash;
     }
 
@@ -74,10 +75,13 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
     }
 
     @Override
-    public AttackResult tryHarm(Entity target, EpicFightDamageSource epicFightDamageSource, float amount) {
-        AttackResult result = super.tryHarm(target, epicFightDamageSource, amount);
-        if(result.resultType.equals(AttackResult.ResultType.SUCCESS)){
-            this.getOriginal().setHealth(this.getOriginal().getHealth() + amount * 10);
+    public AttackResult attack(EpicFightDamageSource damageSource, Entity target, InteractionHand hand) {
+        AttackResult result = super.attack(damageSource, target, hand);
+        if(result.resultType.dealtDamage()){
+            this.getOriginal().setHealth((float) (this.getOriginal().getHealth() + Math.max(this.getOriginal().getMaxHealth() * 0.005, result.damage * 3)));
+            if(damageSource.getAnimation().equals(WOMAnimations.TORMENT_AUTO_4)){
+                onTormentAuto4Hit = true;
+            }
         }
         return result;
     }
@@ -85,7 +89,7 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
     @Override
     public AttackResult tryHurt(DamageSource damageSource, float amount) {
         //免疫远程
-        if(damageSource.isIndirect()){
+        if (damageSource.isIndirect()) {
             this.playAnimationSynchronized(Animations.BIPED_STEP_BACKWARD, 0.0F);
             return AttackResult.missed(0);
         }
@@ -95,7 +99,7 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
     @Nullable
     @Override
     public EpicFightDamageSource getEpicFightDamageSource() {
-        if(epicFightDamageSource != null && stunTypeModify != null){
+        if (epicFightDamageSource != null && stunTypeModify != null) {
             epicFightDamageSource.setStunType(stunTypeModify);
         }
         return epicFightDamageSource;
@@ -103,7 +107,7 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
 
     @Override
     public float getModifiedBaseDamage(float baseDamage) {
-        if(damageModify != 0){
+        if (damageModify != 0) {
             return damageModify * baseDamage;
         }
         return super.getModifiedBaseDamage(baseDamage);
@@ -118,6 +122,7 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
         animator.addLivingAnimation(LivingMotions.MOUNT, Animations.BIPED_MOUNT);
         animator.addLivingAnimation(LivingMotions.DEATH, Animations.BIPED_COMMON_NEUTRALIZED);
     }
+
     @Override
     protected void setWeaponMotions() {
         this.weaponLivingMotions = Maps.newHashMap();
@@ -137,6 +142,7 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
         this.weaponAttackMotions.put(CapabilityItem.WeaponCategories.GREATSWORD, ImmutableMap.of(CapabilityItem.Styles.TWO_HAND, GoldenFlameCombatBehaviors.GOLDEN_FLAME_GREAT_SWORD));
         this.weaponAttackMotions.put(CapabilityItem.WeaponCategories.FIST, ImmutableMap.of(CapabilityItem.Styles.ONE_HAND, GoldenFlameCombatBehaviors.GOLDEN_FLAME_FIST));
     }
+
     @Override
     public void updateMotion(boolean b) {
         super.commonAggressiveMobUpdateMotion(b);
