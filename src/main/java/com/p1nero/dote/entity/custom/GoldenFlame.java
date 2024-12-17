@@ -35,7 +35,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import reascer.wom.gameasset.WOMAnimations;
 import reascer.wom.world.item.WOMItems;
+import yesman.epicfight.api.animation.types.EntityState;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
 public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
@@ -153,6 +155,19 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
             antiFormCooldown--;
         }
 
+        LivingEntityPatch<?> patch = EpicFightCapabilities.getEntityPatch(this, LivingEntityPatch.class);
+        //wander控制
+        if(getStrafingTime() > 0){
+            patch.getEntityState().setState(EntityState.INACTION, true);
+            this.setStrafingTime(this.getStrafingTime() - 1);
+            this.getNavigation().stop();
+            if(getTarget() != null){
+                this.lookAt(getTarget(), 30.0F, 30.0F);
+            }
+            this.getMoveControl().strafe(this.getStrafingForward() > 0.0F ? 0.0F : this.getStrafingForward(), this.getStrafingClockwise());
+        }
+
+
         if(getChargingTimer() > 0 && !level().isClientSide){
             getEntityData().set(CHARGING_TIMER, Math.max(0, getChargingTimer() - 1));
             if(getTarget() != null){
@@ -160,8 +175,8 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
             }
             getNavigation().stop();
             getMoveControl().strafe(getChargingTimer() < 65 ? 0.8F + getChargingTimer() / 100.0F : -0.8F + getChargingTimer() / 100.0F, getChargingTimer() < 65 ? 0.8F + getChargingTimer() / 100.0F : -0.8F + getChargingTimer() / 100.0F);
-
         }
+
         if(getChargingTimer() == 115){
             level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.6F);
         }
@@ -197,9 +212,9 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
         super.registerGoals();
         this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, false));
-        this.goalSelector.addGoal(0, new CustomWanderGoal<>(this, 1.0, true, 64));
-        this.goalSelector.addGoal(1, new RandomStrollGoal(this, 1));
-        this.goalSelector.addGoal(2, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(1, new CustomWanderGoal<>(this, 1.0, true, 64));//无效
+        this.goalSelector.addGoal(2, new RandomStrollGoal(this, 1));
+        this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
     }
 
     @Override

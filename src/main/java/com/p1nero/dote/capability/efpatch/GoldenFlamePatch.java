@@ -1,10 +1,10 @@
 package com.p1nero.dote.capability.efpatch;
 
-import com.p1nero.dote.entity.ai.ef.api.*;
-import com.p1nero.dote.entity.ai.ef.GoldenFlameCombatBehaviors;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
+import com.p1nero.dote.entity.ai.ef.GoldenFlameCombatBehaviors;
+import com.p1nero.dote.entity.ai.ef.api.*;
 import com.p1nero.dote.entity.custom.GoldenFlame;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;

@@ -31,6 +31,7 @@ public class DOTECombatBehaviors {
 
     public static <T extends MobPatch<?>> Consumer<T> wander(int strafingTime, float forward, float clockwise){
         return (patch) -> {
+            System.out.println("do wander");
             if(patch.getOriginal() instanceof IWanderableEntity wanderableEntity){
                 wanderableEntity.setStrafingTime(strafingTime);
                 wanderableEntity.setStrafingForward(forward);

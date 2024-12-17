@@ -4,8 +4,8 @@ import com.p1nero.dote.entity.IWanderableEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import yesman.epicfight.api.animation.types.EntityState;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
@@ -29,7 +29,15 @@ public class CustomWanderGoal<T extends PathfinderMob & IWanderableEntity> exten
         if(patch == null){
             return false;
         }
-        return !patch.getEntityState().movementLocked() && (wanderMob.getStrafingTime() > 0 || super.canUse());
+        System.out.println(wanderMob.getStrafingTime());
+        return wanderMob.getStrafingTime() > 0 || super.canUse();
+    }
+
+    @Override
+    public void start() {
+        if(patch != null){
+            patch.getEntityState().setState(EntityState.INACTION, true);
+        }
     }
 
     public void tick() {
@@ -52,7 +60,13 @@ public class CustomWanderGoal<T extends PathfinderMob & IWanderableEntity> exten
                     this.mob.getMoveControl().strafe(withDistance && this.wanderMob.getStrafingForward() > 0.0F ? 0.0F : this.wanderMob.getStrafingForward(), this.wanderMob.getStrafingClockwise());
                 } else if (withDistance) {
                     this.mob.getNavigation().stop();
+                    if(patch != null){
+                        patch.getEntityState().setState(EntityState.INACTION, false);
+                    }
                 } else {
+                    if(patch != null){
+                        patch.getEntityState().setState(EntityState.INACTION, false);
+                    }
                     super.tick();
                 }
 
@@ -61,8 +75,10 @@ public class CustomWanderGoal<T extends PathfinderMob & IWanderableEntity> exten
     }
 
     @Override
-    protected double getAttackReachSqr(@NotNull LivingEntity p_25556_) {
-        return attackRadiusSqr;
+    public void stop() {
+        if(patch != null){
+            patch.getEntityState().setState(EntityState.INACTION, false);
+        }
     }
 
 }
