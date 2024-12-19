@@ -44,7 +44,7 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
         return onTormentAuto4Hit;
     }
 
-    public void resetOnCharged2Hit() {
+    public void resetOnTormentAuto4Hit() {
         onTormentAuto4Hit = false;
     }
 
@@ -78,7 +78,7 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
     public AttackResult attack(EpicFightDamageSource damageSource, Entity target, InteractionHand hand) {
         AttackResult result = super.attack(damageSource, target, hand);
         if(result.resultType.dealtDamage()){
-            this.getOriginal().setHealth((float) (this.getOriginal().getHealth() + Math.max(this.getOriginal().getMaxHealth() * 0.005, result.damage * 3)));
+            this.getOriginal().setHealth((float) (this.getOriginal().getHealth() + Math.max(this.getOriginal().getMaxHealth() * 0.005, result.damage * 1.5)));
             if(damageSource.getAnimation().equals(WOMAnimations.TORMENT_AUTO_4)){
                 onTormentAuto4Hit = true;
             }

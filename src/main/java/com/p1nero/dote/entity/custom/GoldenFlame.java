@@ -34,7 +34,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import reascer.wom.gameasset.WOMAnimations;
-import reascer.wom.world.item.WOMItems;
 import yesman.epicfight.api.animation.types.EntityState;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
@@ -77,12 +76,6 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
 
     public void setIsBlue(boolean isBlue){
         getEntityData().set(IS_BLUE, isBlue);
-        if(isBlue){
-            setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SOLAR_OBSCURIDAD.get().getDefaultInstance());
-        } else {
-            setItemInHand(InteractionHand.MAIN_HAND, DOTEItems.ROT_GREATSWORD.get().getDefaultInstance());
-//            setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SOLAR.get().getDefaultInstance());
-        }
     }
 
     public boolean isBlue(){
@@ -115,6 +108,7 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
 
     public void startAntiForm(){
         getEntityData().set(ANTI_FORM_TIMER, MAX_ANTI_FORM_TIMER);
+        antiFormCooldown = 1;
     }
 
     public int getAntiFormTimer(){
@@ -130,14 +124,14 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
         super.tick();
         setInvisible(true);//不画血条
 
-        if(getHealth() > 2 * getMaxHealth() / 3){
+        if(getHealth() > 0.8 * getMaxHealth() && isBlue()){
             setIsBlue(false);
         }
 
         //反神形态计时器，持续40秒用拳，时间到了再播动画变身回去
         if(getAntiFormTimer() > 0){
             getEntityData().set(ANTI_FORM_TIMER, Math.max(0, getAntiFormTimer() - 1));
-            if(getAntiFormTimer() == MAX_ANTI_FORM_COOLDOWN - 20){
+            if(getAntiFormTimer() == MAX_ANTI_FORM_TIMER - 10){
                 setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
                 resetCharging();
             }

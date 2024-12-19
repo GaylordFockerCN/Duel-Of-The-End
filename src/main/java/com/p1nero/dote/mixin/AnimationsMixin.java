@@ -13,7 +13,7 @@ public class AnimationsMixin {
     @ModifyArg(method = "build", at = @At(value = "INVOKE", target = "Lyesman/epicfight/api/animation/types/BasicAttackAnimation;<init>(FFFFLyesman/epicfight/api/collider/Collider;Lyesman/epicfight/api/animation/Joint;Ljava/lang/String;Lyesman/epicfight/api/model/Armature;)V"), index = 1)
     private static float modify(float antic){
         if(antic == 0){
-            return 0.10F;
+            return 0.01F;
         }
         return antic;
     }
@@ -21,7 +21,7 @@ public class AnimationsMixin {
     @ModifyArg(method = "build", at = @At(value = "INVOKE", target = "Lyesman/epicfight/api/animation/types/BasicAttackAnimation;<init>(FFFFLnet/minecraft/world/InteractionHand;Lyesman/epicfight/api/collider/Collider;Lyesman/epicfight/api/animation/Joint;Ljava/lang/String;Lyesman/epicfight/api/model/Armature;)V"), index = 1)
     private static float modify2(float antic){
         if(antic == 0){
-            return 0.10F;
+            return 0.01F;
         }
         return antic;
     }

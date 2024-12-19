@@ -2,9 +2,6 @@ package com.p1nero.dote.entity.ai.ef;
 
 import com.p1nero.dote.entity.IWanderableEntity;
 import com.p1nero.dote.entity.ai.ef.api.*;
-import com.p1nero.dote.network.DOTEPacketHandler;
-import com.p1nero.dote.network.PacketRelay;
-import com.p1nero.dote.network.packet.clientbound.SyncPos0Packet;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PotionItem;
@@ -220,18 +217,28 @@ public class DOTECombatBehaviors {
                 double newX = targetPos.x + dis * Math.cos(angle);
                 double newZ = targetPos.z + dis * Math.sin(angle);
                 Vec3 toTeleport = new Vec3(newX, targetPos.y, newZ);
-                humanoidMobPatch.getOriginal().xo = toTeleport.x;
-                humanoidMobPatch.getOriginal().xOld = toTeleport.x;
-                humanoidMobPatch.getOriginal().yo = toTeleport.y;
-                humanoidMobPatch.getOriginal().yOld = toTeleport.y;
-                humanoidMobPatch.getOriginal().zo = toTeleport.z;
-                humanoidMobPatch.getOriginal().zOld = toTeleport.z;
-                PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new SyncPos0Packet(humanoidMobPatch.getOriginal().getId(), toTeleport.x, toTeleport.y, toTeleport.z));
                 humanoidMobPatch.getOriginal().setPos(toTeleport);
                 humanoidMobPatch.getOriginal().getLookControl().setLookAt(humanoidMobPatch.getTarget());
             }
         };
     }
+
+    /**
+     * 随机传送到玩家边上
+     */
+    public static final Consumer<HumanoidMobPatch<?>> RANDOM_TELEPORT = (humanoidMobPatch -> {
+        if (humanoidMobPatch.getTarget() != null) {
+            LivingEntity target = humanoidMobPatch.getTarget();
+            Vec3 targetPos = target.position();
+            double angle = target.getRandom().nextDouble() * 2 * Math.PI;
+            double dis = 5.0;
+            double newX = targetPos.x + dis * Math.cos(angle);
+            double newZ = targetPos.z + dis * Math.sin(angle);
+            Vec3 toTeleport = new Vec3(newX, targetPos.y, newZ);
+            humanoidMobPatch.getOriginal().setPos(toTeleport);
+            humanoidMobPatch.getOriginal().getLookControl().setLookAt(humanoidMobPatch.getTarget());
+        }
+    });
 
     public static Function<HumanoidMobPatch<?>, Boolean> attackLevelCheck(int min, int max) {
         return (patch) -> {
