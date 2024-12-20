@@ -44,9 +44,9 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
     protected static final EntityDataAccessor<Integer> ANTI_FORM_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Boolean> IS_BLUE = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.BOOLEAN);
     protected static final EntityDataAccessor<Boolean> SHOULD_RENDER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.BOOLEAN);
-    private int antiFormCooldown = 0;
+    private int antiFormCooldown = 0;//FIXME 反神形态无法受伤？？
     private static final int MAX_ANTI_FORM_COOLDOWN = 2400;
-    private static final int MAX_ANTI_FORM_TIMER = 800;
+    private static final int MAX_ANTI_FORM_TIMER = 1200;
     private int strafingTime;
     private float strafingForward;
     private float strafingClockwise;
@@ -122,11 +122,10 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
     @Override
     public void tick() {
         super.tick();
-        setInvisible(true);//不画血条
 
-        if(getHealth() > 0.8 * getMaxHealth() && isBlue()){
-            setIsBlue(false);
-        }
+//        if(getHealth() > 0.8 * getMaxHealth() && isBlue()){
+//            setIsBlue(false);
+//        }
 
         //反神形态计时器，持续40秒用拳，时间到了再播动画变身回去
         if(getAntiFormTimer() > 0){

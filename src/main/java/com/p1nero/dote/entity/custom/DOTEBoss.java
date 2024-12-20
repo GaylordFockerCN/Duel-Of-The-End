@@ -52,6 +52,10 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity {
         }
     }
 
+    public float getHealthRatio(){
+        return getHealth() / getMaxHealth();
+    }
+
     @Override
     public int getExperienceReward() {
         return 1000;

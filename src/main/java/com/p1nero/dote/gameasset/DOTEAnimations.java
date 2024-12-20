@@ -462,12 +462,14 @@ public class DOTEAnimations {
                 .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> 1.3F));
 
-        WOMAnimations.TIME_TRAVEL.addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> {
-            if (livingEntityPatch instanceof IModifyAttackSpeedEntityPatch patch) {
-                return patch.getAttackSpeed();
-            }
-            return 1.0F;
-        }));
+        if(WOMAnimations.TIME_TRAVEL != null){
+            WOMAnimations.TIME_TRAVEL.addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED_MODIFIER, ((dynamicAnimation, livingEntityPatch, v, v1, v2) -> {
+                if (livingEntityPatch instanceof IModifyAttackSpeedEntityPatch patch) {
+                    return patch.getAttackSpeed();
+                }
+                return 1.0F;
+            }));
+        }
 
         WK_DODGE_B1 = new DodgeAnimation(0.1F, 0.4F, "biped/new/dodge/wkdodge_b1", 0.6F, 0.8F, biped);
 

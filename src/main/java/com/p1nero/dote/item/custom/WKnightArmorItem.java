@@ -50,6 +50,9 @@ public class WKnightArmorItem extends SimpleDescriptionArmorItem implements IDOT
             return;
         }
         if(livingEntity.level() instanceof ServerLevel){
+            if(livingEntity.getRemainingFireTicks() > 0){
+                livingEntity.setRemainingFireTicks(0);
+            }
             if(!livingEntity.hasEffect(MobEffects.DAMAGE_RESISTANCE)){
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 60, 1));
             }

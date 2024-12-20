@@ -10,7 +10,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.Nullable;
 import reascer.wom.gameasset.WOMAnimations;
@@ -38,7 +37,6 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
     private static final EntityDataAccessor<Float> ATTACK_SPEED = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.FLOAT);
 
     private boolean onTormentAuto4Hit;
-    private boolean onDash;
 
     public boolean isOnTormentAuto4Hit() {
         return onTormentAuto4Hit;
@@ -46,14 +44,6 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
 
     public void resetOnTormentAuto4Hit() {
         onTormentAuto4Hit = false;
-    }
-
-    public boolean isOnDash() {
-        return onDash;
-    }
-
-    public void setOnDash(boolean onDash) {
-        this.onDash = onDash;
     }
 
     public GoldenFlamePatch() {
@@ -66,34 +56,17 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
         entityIn.getEntityData().define(ATTACK_SPEED, 1.0F);
     }
 
-    public void setStunTypeModify(@Nullable StunType stunTypeModify) {
-        this.stunTypeModify = stunTypeModify;
-    }
-
-    public void setDamageModify(float damageModify) {
-        this.damageModify = damageModify;
-    }
-
     @Override
     public AttackResult attack(EpicFightDamageSource damageSource, Entity target, InteractionHand hand) {
         AttackResult result = super.attack(damageSource, target, hand);
         if(result.resultType.dealtDamage()){
-            this.getOriginal().setHealth((float) (this.getOriginal().getHealth() + Math.max(this.getOriginal().getMaxHealth() * 0.005, result.damage * 1.5)));
+            this.getOriginal().setHealth((float) (this.getOriginal().getHealth() + Math.max(this.getOriginal().getMaxHealth() * 0.005, result.damage * (2.5 - this.getOriginal().getHealthRatio()))));
+            target.setSecondsOnFire(10);
             if(damageSource.getAnimation().equals(WOMAnimations.TORMENT_AUTO_4)){
                 onTormentAuto4Hit = true;
             }
         }
         return result;
-    }
-
-    @Override
-    public AttackResult tryHurt(DamageSource damageSource, float amount) {
-        //免疫远程
-        if (damageSource.isIndirect()) {
-            this.playAnimationSynchronized(Animations.BIPED_STEP_BACKWARD, 0.0F);
-            return AttackResult.missed(0);
-        }
-        return super.tryHurt(damageSource, amount);
     }
 
     @Nullable

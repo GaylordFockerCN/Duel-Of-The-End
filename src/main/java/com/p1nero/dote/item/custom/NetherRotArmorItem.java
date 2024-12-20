@@ -1,13 +1,12 @@
 package com.p1nero.dote.item.custom;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import com.p1nero.dote.archive.DOTEArchiveManager;
-import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.item.DOTEArmorMaterials;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.item.DOTERarities;
 import com.p1nero.dote.util.ItemUtil;
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -52,6 +51,9 @@ public class NetherRotArmorItem extends SimpleDescriptionArmorItem implements ID
             return;
         }
         if(livingEntity.level() instanceof ServerLevel){
+            if(livingEntity.getRemainingFireTicks() > 0){
+                livingEntity.setRemainingFireTicks(0);
+            }
             if(!livingEntity.hasEffect(MobEffects.REGENERATION)){
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1));
             }

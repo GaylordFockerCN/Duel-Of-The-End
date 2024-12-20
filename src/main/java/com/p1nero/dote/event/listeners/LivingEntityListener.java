@@ -36,7 +36,11 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.gameasset.EpicFightSkills;
+import yesman.epicfight.world.damagesource.EpicFightDamageSource;
+import yesman.epicfight.world.damagesource.StunType;
+import yesman.epicfight.world.entity.WitherGhostClone;
 import yesman.epicfight.world.item.EpicFightItems;
 
 import java.util.List;
@@ -117,20 +121,31 @@ public class LivingEntityListener {
         }
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onEntityHurt(LivingHurtEvent event) {
         //开发者模式方便杀boss
         if(event.getEntity() instanceof DOTEBoss){
             if(DOTEConfig.FAST_BOSS_FIGHT.get() && event.getSource().isCreativePlayer()){
                 event.setAmount(event.getAmount() * 100);
             } else if(event.getAmount() > 100){
-                if(event.getSource().getEntity() instanceof Player player){
+                if(event.getSource().getEntity() instanceof Player player && !player.isCreative()){
                     MobEffectInstance damageBoost = player.getEffect(MobEffects.DAMAGE_BOOST);
                     if(damageBoost != null && damageBoost.getAmplifier() >= 7){
                         player.displayClientMessage(Component.literal("你不配玩此游戏"), true);
                         player.displayClientMessage(Component.literal("你不配玩此游戏"), false);
                         player.setHealth(0);
                     }
+                }
+            }
+        }
+
+        //创出无敌就不好玩了 FIXME
+        if(event.getEntity() instanceof Player){
+            if(event.getSource() instanceof EpicFightDamageSource epicFightDamageSource){
+//                System.out.println("hurt");
+                if(event.getSource().getEntity() instanceof WitherGhostClone || event.getSource().getDirectEntity() instanceof WitherGhostClone || epicFightDamageSource.getAnimation().equals(Animations.WITHER_CHARGE)){
+                    epicFightDamageSource.setStunType(StunType.HOLD);
+                    System.out.println("modify");
                 }
             }
         }
