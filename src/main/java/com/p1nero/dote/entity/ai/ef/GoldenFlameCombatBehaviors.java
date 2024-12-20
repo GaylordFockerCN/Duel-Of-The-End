@@ -119,7 +119,7 @@ public class GoldenFlameCombatBehaviors {
                 serverLevel.sendParticles(ParticleTypes.FLAME, goldenFlame.getX(), goldenFlame.getY(), goldenFlame.getZ(), 200, 0, 1, 0, 0.1);
             }
         }
-        humanoidMobPatch.playSound(SoundEvents.WITHER_SHOOT, 1, 1);
+        humanoidMobPatch.playSound(SoundEvents.BLAZE_SHOOT, 1, 1);
     });
 
     /**
@@ -148,42 +148,47 @@ public class GoldenFlameCombatBehaviors {
     public static final CombatBehaviors.Builder<HumanoidMobPatch<?>> GOLDEN_FLAME_FIST = CombatBehaviors.<HumanoidMobPatch<?>>builder()
             //常规出拳2种4套
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10F).cooldown(600).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_2, 0.3f, 0.5f))
-                                    .withinDistance(0, 3.0).withinEyeHeight()
-                                    .health(0.99F, HealthPoint.Comparator.LESS_RATIO))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_3, 0.1f, 0.5f)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ENDERBLASTER_ONEHAND_AUTO_4, 0.2f, 0.6f))))
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10F).cooldown(800).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_2, 0.3f, 0.5f, StunType.SHORT))
+                                    .withinDistance(0, 2.5).withinEyeHeight().custom(IS_NOT_CHARGING)
+                                    .health(0.2F, HealthPoint.Comparator.LESS_RATIO))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 4.0).behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_3, 0.1f, 0.5f, StunType.SHORT)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ENDERBLASTER_ONEHAND_AUTO_4, 0.2f, 0.6f, StunType.LONG))))
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(0.1F).cooldown(60).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_2, 0.3f, 0.5f))
-                                    .withinDistance(0, 3.0).withinEyeHeight()
-                                    .health(0.99F, HealthPoint.Comparator.LESS_RATIO))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_3, 0.1f, 0.5f)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ENDERBLASTER_ONEHAND_AUTO_4, 0.2f, 0.6f))))
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(0.001F).cooldown(60).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_2, 0.3f, 0.5f, StunType.SHORT))
+                                    .withinDistance(0, 2.5).withinEyeHeight().custom(IS_NOT_CHARGING)
+                                    .health(0.2F, HealthPoint.Comparator.LESS_RATIO))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 4.0).behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_3, 0.1f, 0.5f, StunType.SHORT)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ENDERBLASTER_ONEHAND_AUTO_4, 0.2f, 0.6f, StunType.LONG))))
 
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10F).cooldown(600).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_2, 0.3f, 0.5f))
-                                    .withinDistance(0, 3.0).withinEyeHeight()
-                                    .health(0.99F, HealthPoint.Comparator.LESS_RATIO))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_3, 0.1f, 0.5f)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_DEATHFALL, 0.3f, 0.6f))))
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10F).cooldown(800).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_2, 0.3f, 0.5f, StunType.SHORT))
+                                    .withinDistance(0, 3.0).withinEyeHeight().custom(IS_NOT_CHARGING)
+                                    .health(0.2F, HealthPoint.Comparator.LESS_RATIO))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 4.0).behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_3, 0.1f, 0.5f, StunType.SHORT)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_DEATHFALL, 0.3f, 0.6f, StunType.LONG, 1.3f,
+                                    new TimeStampedEvent(0.01f, (livingEntityPatch -> {livingEntityPatch.playSound(SoundEvents.WITHER_SHOOT, 0.5f, 0.5f);})),
+                                    new TimeStampedEvent(0.3f, PLAY_GROUND_SLAM))))
+            )
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(0.1F).cooldown(60).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_2, 0.3f, 0.5f))
-                                    .withinDistance(0, 3.0).withinEyeHeight()
-                                    .health(0.99F, HealthPoint.Comparator.LESS_RATIO))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_3, 0.1f, 0.5f)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_DEATHFALL, 0.3f, 0.6f))))
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(0.001F).cooldown(60).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_2, 0.3f, 0.5f, StunType.SHORT))
+                                    .withinDistance(0, 3.0).withinEyeHeight().custom(IS_NOT_CHARGING)
+                                    .health(0.2F, HealthPoint.Comparator.LESS_RATIO))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 4.0).behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_3, 0.1f, 0.5f, StunType.SHORT)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_DEATHFALL, 0.3f, 0.6f, StunType.LONG, 1.3f,
+                                    new TimeStampedEvent(0.01f, (livingEntityPatch -> {livingEntityPatch.playSound(SoundEvents.WITHER_SHOOT, 0.5f, 0.5f);})),
+                                    new TimeStampedEvent(0.3f, PLAY_GROUND_SLAM))))
+            )
             //黄火拳+蓝火拳
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(6F).cooldown(400).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_2, 0.3f, 0.5f))
-                                    .withinDistance(0, 3.0).withinEyeHeight()
-                                    .health(0.99F, HealthPoint.Comparator.LESS_RATIO))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_3, 0.1f, 0.5f)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_1_POLVORA, 0.3f, 0.8f, StunType.LONG, 1f,
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(5F).cooldown(500).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_2, 0.3f, 0.5f, StunType.SHORT))
+                                    .withinDistance(0, 2.5).withinEyeHeight().custom(IS_NOT_CHARGING)
+                                    .health(0.2F, HealthPoint.Comparator.LESS_RATIO))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 5.0).behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_1_POLVORA, 0.3f, 0.8f, StunType.LONG, 1f,
                                     new TimeStampedEvent(0.2f, PLAY_SOLAR_HIT))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_3_POLVORA, 0.7f, 1, StunType.HOLD, 1f,
                                     new TimeStampedEvent(0.2f, PLAY_SOLAR_HIT),
@@ -195,32 +200,150 @@ public class GoldenFlameCombatBehaviors {
                                     new TimeStampedEvent(0.2f, PLAY_SOLAR_HIT),
                                     new TimeStampedEvent(0.6f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.SOLAR_AUTO_3_POLVORA.getTotalTime()))))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_DEATHFALL, 0.3f, 0.6f, StunType.LONG, 1.3f,
-                                    new TimeStampedEvent(0.35f, PLAY_GROUND_SLAM))))
+                                    new TimeStampedEvent(0.01f, (livingEntityPatch -> {livingEntityPatch.playSound(SoundEvents.WITHER_SHOOT, 0.5f, 0.5f);})),
+                                    new TimeStampedEvent(0.3f, PLAY_GROUND_SLAM))))
             )
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(6F).cooldown(400).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_2, 0.3f, 0.5f))
-                                    .withinDistance(0, 3.0)
-                                    .withinEyeHeight()
-                                    .health(0.99F, HealthPoint.Comparator.LESS_RATIO))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_3, 0.1f, 0.5f)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_IMPACTO, 0.2f, 0.5f, StunType.LONG, 1f,
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(5F).cooldown(500).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_2, 0.3f, 0.5f, StunType.SHORT))
+                                    .withinDistance(0, 2.5).withinEyeHeight()
+                                    .health(0.2F, HealthPoint.Comparator.LESS_RATIO))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 6.0).behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_IMPACTO, 0.1f, 0.5f, StunType.LONG, 1f,
                                     new TimeStampedEvent(0.4f, (livingEntityPatch -> {
                                         livingEntityPatch.playSound(SoundEvents.FIREWORK_ROCKET_BLAST, 0.5f, 0.5f);
                                         livingEntityPatch.playSound(WOMSounds.SOLAR_HIT.get(), 1, 1);
                                     })))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0.4f, 0.9f, StunType.HOLD, 1f,
                                     new TimeStampedEvent(0.2f, PLAY_SOLAR_HIT))))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0f, 0.9f, StunType.HOLD, 1f,
-                                    new TimeStampedEvent(0.4f, PLAY_SOLAR_HIT))))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0f, 0.9f, StunType.LONG, 1f,
-                                    new TimeStampedEvent(0.4f, PLAY_SOLAR_HIT))))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.KATANA_FATAL_DRAW_DASH, 0.5f, 0.8f, null, 1f,
-                                    new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.KATANA_FATAL_DRAW_DASH.getTotalTime(), 0))))))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0.1f, 0.9f, StunType.HOLD, 1f,
+                                    new TimeStampedEvent(0.2f, PLAY_SOLAR_HIT))))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0.1f, 0.9f, StunType.LONG, 1f,
+                                    new TimeStampedEvent(0.2f, PLAY_SOLAR_HIT))))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.KATANA_FATAL_DRAW_DASH, 0.3f, 0.8f, null, 1f,
+                                    new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.KATANA_FATAL_DRAW_DASH.getTotalTime()))))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_BLINK, 0f, 0.8f, StunType.HOLD, 1.3f,
                                     new TimeStampedEvent(0.0f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_ASCENDED_BLINK.getTotalTime(), 0.1f))))))
-            );
-
+            )
+            //近距跳劈+中距跑居
+            .newBehaviorSeries(
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(1F).cooldown(240).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 2.5).withinEyeHeight()
+                                    .health(0.2F, HealthPoint.Comparator.LESS_RATIO)
+                            .behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_DEATHFALL, 0.3f, 0.6f, StunType.LONG, 1.3f,
+                                    new TimeStampedEvent(0.01f, (livingEntityPatch -> {livingEntityPatch.playSound(SoundEvents.WITHER_SHOOT, 0.5f, 0.5f);})),
+                                    new TimeStampedEvent(0.3f, PLAY_GROUND_SLAM))))
+            )
+            .newBehaviorSeries(
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(3F).cooldown(360).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 2.5).withinEyeHeight()
+                                    .health(0.2F, HealthPoint.Comparator.LESS_RATIO)
+                                    .behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_DEATHFALL, 0.3f, 0.6f, StunType.LONG, 1.3f,
+                                            new TimeStampedEvent(0.01f, (livingEntityPatch -> {livingEntityPatch.playSound(SoundEvents.WITHER_SHOOT, 0.5f, 0.5f);})),
+                                            new TimeStampedEvent(0.3f, PLAY_GROUND_SLAM))))
+            )
+            .newBehaviorSeries(
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10F).cooldown(240).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(3, 6).withinEyeHeight()
+                                    .health(0.2F, HealthPoint.Comparator.LESS_RATIO)
+                                    .behavior(customAttackAnimation(WOMAnimations.KATANA_FATAL_DRAW_DASH, 0.3f, 0.8f, null, 1f,
+                                            new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.KATANA_FATAL_DRAW_DASH.getTotalTime()))))))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_BLINK, 0f, 0.8f, StunType.HOLD, 1.3f,
+                                            new TimeStampedEvent(0.0f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_ASCENDED_BLINK.getTotalTime(), 0.1f))))))
+            )
+            .newBehaviorSeries(
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(20F).cooldown(400).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(3, 6).withinEyeHeight()
+                                    .health(0.2F, HealthPoint.Comparator.LESS_RATIO)
+                                    .behavior(customAttackAnimation(WOMAnimations.KATANA_FATAL_DRAW_DASH, 0.3f, 0.8f, null, 1f,
+                                            new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.KATANA_FATAL_DRAW_DASH.getTotalTime()))))))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_BLINK, 0f, 0.8f, StunType.HOLD, 1.3f,
+                                    new TimeStampedEvent(0.0f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_ASCENDED_BLINK.getTotalTime(), 0.1f))))))
+            )
+            //常态黑洞
+            .newBehaviorSeries(
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(3F).cooldown(1000).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_2, 0.3f, 0.5f, StunType.SHORT))
+                                    .withinDistance(0, 2.5).withinEyeHeight().custom(IS_NOT_CHARGING)
+                                    .health(0.2F, HealthPoint.Comparator.LESS_RATIO))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_3, 0.1f, 0.5f, StunType.SHORT)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_BLACKHOLE, 0.2f, 0.8f, StunType.HOLD, 1f,
+                                    new TimeStampedEvent(1.75f, (livingEntityPatch -> {livingEntityPatch.playSound(WOMSounds.ANTITHEUS_BLACKKHOLE.get(), 0.8f, 0.81f);})),
+                                    new TimeStampedEvent(1.75f, TIME_STAMPED_SUMMON_BLACK_HOLE),
+                                    TimeStampedEvent.createTimeCommandEvent(1.75f, "summon minecraft:area_effect_cloud ~ ~ ~ {Duration:100,ReapplicationDelay:2,Radius:3,RadiusPerTick:0.03,WaitTime:10,Effects:[{Id: 20,Amplifier: 5,Duration: 120},{Id: 7,Amplifier: 0,Duration: 120},{Id: 2,Amplifier: 0,Duration: 120}],Color:16777215}", false)
+                            )))
+            )
+            //远距-1-3*3凋零头
+            .newBehaviorSeries(
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(2000F).cooldown(600).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(5, 50).withinEyeHeight().custom(IS_NOT_CHARGING)
+                                    .health(0.2F, HealthPoint.Comparator.LESS_RATIO).behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_SHOOT, 0.7f, 0.8f, null, 1f,
+                                    new TimeStampedEvent(0.3f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))),
+                                    new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))))))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(5, 50).behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_SHOOT, 0.7f, 0.8f, null, 1f,
+                                    new TimeStampedEvent(0.3f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))),
+                                    new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))))))
+            )
+            //远距-2-3*2凋零头+跑居
+            .newBehaviorSeries(
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(20F).cooldown(400).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(5, 50).withinEyeHeight().custom(IS_NOT_CHARGING)
+                                    .health(0.2F, HealthPoint.Comparator.LESS_RATIO).behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_SHOOT, 0.7f, 0.8f, null, 1f,
+                                            new TimeStampedEvent(0.3f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))),
+                                            new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))))))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ENDERSTEP_FORWARD, 0.2f)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_HIDE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_TIME_TRAVEL_SOUND))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(RANDOM_TELEPORT))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(teleportToFront(true, 1, 1)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_NOT_HIDE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinEyeHeight().behavior(customAttackAnimation(WOMAnimations.KATANA_FATAL_DRAW_DASH, 0.3f, 0.8f, null, 1f,
+                                    new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.KATANA_FATAL_DRAW_DASH.getTotalTime()))))))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_BLINK, 0f, 0.8f, StunType.HOLD, 1.3f,
+                                    new TimeStampedEvent(0.0f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_ASCENDED_BLINK.getTotalTime(), 0.1f))))))
+            )
+            //远距-2-3*1凋零头+踢腿+黑洞+3*2凋零头
+            .newBehaviorSeries(
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10F).cooldown(1200).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(5, 50).withinEyeHeight().custom(IS_NOT_CHARGING)
+                                    .health(0.2F, HealthPoint.Comparator.LESS_RATIO)
+                                    .behavior(customAttackAnimation(WOMAnimations.ENDERSTEP_FORWARD, 0.2f)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_HIDE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(RANDOM_TELEPORT))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_TIME_TRAVEL_SOUND))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(teleportToFront(false, 5, 5)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SHOOT_WITHER_GHOST))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_NOT_HIDE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinEyeHeight().behavior(customAttackAnimation(WOMAnimations.ENDERBLASTER_TWOHAND_TISHNAW, 0.2f, 0.5f, StunType.LONG, 1.3f,
+                                    new TimeStampedEvent(0.45f, PLAY_GROUND_SLAM),
+                                    new TimeStampedEvent(0.65f, TIME_STAMPED_SHOOT_WITHER_GHOST))))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_HIDE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_TIME_TRAVEL_SOUND))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(RANDOM_TELEPORT))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(teleportToFront(true, 4, 4)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(ROTATE_TO_TARGET))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_NOT_HIDE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.AGONY_CLAWSTRIKE, 0f, 0.6f, null, 1f,
+                                    new TimeStampedEvent(0.65f, TIME_STAMPED_SHOOT_WITHER_GHOST))))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_BLACKHOLE, 0f, 0.8f, StunType.HOLD, 1f,
+                                    //FIXME
+                                    new TimeStampedEvent(1.76f, (livingEntityPatch -> {livingEntityPatch.playSound(WOMSounds.ANTITHEUS_BLACKKHOLE.get(), 0.8f, 0.81f);})),
+                                    new TimeStampedEvent(1.76f, TIME_STAMPED_SUMMON_BLACK_HOLE),
+                                    TimeStampedEvent.createTimeCommandEvent(1.76f, "summon minecraft:area_effect_cloud ~ ~ ~ {Duration:100,ReapplicationDelay:2,Radius:3,RadiusPerTick:0.03,WaitTime:10,Effects:[{Id: 20,Amplifier: 5,Duration: 120},{Id: 7,Amplifier: 1,Duration: 120},{Id: 2,Amplifier: 1,Duration: 120}],Color:16731212}", false)
+                            )))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_SHOOT, 0.7f, 0.8f, null, 1f,
+                                    new TimeStampedEvent(0.3f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))),
+                                    new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))))))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_SHOOT, 0.7f, 0.8f, null, 1f,
+                                    new TimeStampedEvent(0.3f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))),
+                                    new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))),
+                                    new TimeStampedEvent(0.6f, TIME_STAMPED_SHOOT_WITHER_GHOST))))
+            )
+;
     /**
      * 大剑形态
      */
@@ -292,8 +415,8 @@ public class GoldenFlameCombatBehaviors {
                                     .custom(IS_NOT_CHARGING).withinDistance(0, 3).withinEyeHeight())
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_AUTO_2, 0.1f, 0.8f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_AUTO_3, 0.0f, 0.7f)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_AUTO_4, 0.1f, 0.7f, StunType.LONG, 1f,
-                                    new TimeStampedEvent(0.5f, PLAY_GROUND_SLAM))))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_CHARGED_ATTACK_1, 0.3f, 0.65f, StunType.SHORT, 1.3f,
+                                    new TimeStampedEvent(1.15f, PLAY_GROUND_SLAM))))
             )
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(1F).cooldown(80).canBeInterrupted(false).looping(false)
@@ -517,7 +640,7 @@ public class GoldenFlameCombatBehaviors {
                                     new TimeStampedEvent(0.15f, (livingEntityPatch -> livingEntityPatch.playSound(SoundEvents.FIREWORK_ROCKET_BLAST, 0.5f, 0.5f))),
                                     new TimeStampedEvent(0.6f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.TORMENT_CHARGED_ATTACK_3.getTotalTime()))))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_BERSERK_AIRSLAM, 0.2f, 0.7f, StunType.KNOCKDOWN, 1.3f,
-                                    new TimeStampedEvent(0.2f, (livingEntityPatch -> livingEntityPatch.playSound(EpicFightSounds.ENTITY_MOVE.get(), 0.8f, 0.8f))),
+                                    new TimeStampedEvent(0.1f, (livingEntityPatch -> livingEntityPatch.playSound(EpicFightSounds.ENTITY_MOVE.get(), 0.8f, 0.8f))),
                                     new TimeStampedEvent(0.6f, PLAY_GROUND_SLAM)
                             )))
             )
@@ -546,17 +669,17 @@ public class GoldenFlameCombatBehaviors {
                                     new TimeStampedEvent(0, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.SOLAR_HORNO.getTotalTime(), 0.2f))),
                                     new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.playSound(SoundEvents.TOTEM_USE, 1, 1))))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_1, 0.2f, 0.6f)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_IMPACTO, 0.2f, 0.5f, null, 1f,
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_IMPACTO, 0.2f, 0.5f, StunType.LONG, 1f,
                                     new TimeStampedEvent(0.4f, (livingEntityPatch -> {
                                         livingEntityPatch.playSound(SoundEvents.FIREWORK_ROCKET_BLAST, 0.5f, 0.5f);
                                         livingEntityPatch.playSound(WOMSounds.SOLAR_HIT.get(), 1, 1);
                                     })))))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0.4f, 0.9f, null, 1f,
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0.4f, 0.9f, StunType.HOLD, 1f,
                                     new TimeStampedEvent(0.2f, PLAY_SOLAR_HIT))))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0f, 0.9f, StunType.HOLD, 1f,
-                                    new TimeStampedEvent(0.4f, PLAY_SOLAR_HIT))))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0f, 0.9f, StunType.LONG, 1f,
-                                    new TimeStampedEvent(0.4f, PLAY_SOLAR_HIT))))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0.1f, 0.9f, StunType.HOLD, 1f,
+                                    new TimeStampedEvent(0.2f, PLAY_SOLAR_HIT))))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0.1f, 0.9f, StunType.LONG, 1f,
+                                    new TimeStampedEvent(0.2f, PLAY_SOLAR_HIT))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_BRASERO, 0.2f, 0.8f, StunType.HOLD, 1f,
                                     new TimeStampedEvent(0.4f, (livingEntityPatch -> {
                                         livingEntityPatch.playSound(WOMSounds.SOLAR_HIT.get(), 0.8f, 0.8f);
@@ -613,8 +736,12 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_DASH, 0.1f, 0.7f, StunType.HOLD, 1f,
                                     new TimeStampedEvent(0.3f, PLAY_GROUND_SLAM))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_1, 0.2f, 0.7f)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_CHARGED_ATTACK_1, 0.3f, 0.65f, StunType.SHORT, 1.3f,
-                                    new TimeStampedEvent(1.15f, PLAY_GROUND_SLAM))))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_CHARGED_ATTACK_1, 0.2f, 0.65f, StunType.LONG, 1f,
+                                    new TimeStampedEvent(1.0f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.TORMENT_CHARGED_ATTACK_1.getTotalTime()))))))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_BERSERK_AIRSLAM, 0.2f, 0.7f, StunType.KNOCKDOWN, 1.3f,
+                                    new TimeStampedEvent(0.1f, (livingEntityPatch -> livingEntityPatch.playSound(EpicFightSounds.ENTITY_MOVE.get(), 0.8f, 0.8f))),
+                                    new TimeStampedEvent(0.6f, PLAY_GROUND_SLAM)
+                            )))
             )
             //四阶段-瞬闪3
             .newBehaviorSeries(
@@ -644,17 +771,17 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(teleportToFront(true, 3, 3)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_NOT_HIDE))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_IMPACTO, 0.2f, 0.5f, null, 1f,
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_IMPACTO, 0.2f, 0.5f, StunType.LONG, 1f,
                                     new TimeStampedEvent(0.4f, (livingEntityPatch -> {
                                         livingEntityPatch.playSound(SoundEvents.FIREWORK_ROCKET_BLAST, 0.5f, 0.5f);
                                         livingEntityPatch.playSound(WOMSounds.SOLAR_HIT.get(), 1, 1);
                                     })))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(chaseTarget(1)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0.4f, 0.9f, null, 1f,
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0.4f, 0.9f, StunType.HOLD, 1f,
                                     new TimeStampedEvent(0.2f, PLAY_SOLAR_HIT))))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0, 0.9f, null, 1f,
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0.1f, 0.9f, StunType.HOLD, 1f,
                                     new TimeStampedEvent(0.2f, PLAY_SOLAR_HIT))))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0, 0.9f, null, 1f,
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0.1f, 0.9f, StunType.LONG, 1f,
                                     new TimeStampedEvent(0.2f, PLAY_SOLAR_HIT))))
 
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_HIDE))
@@ -678,8 +805,7 @@ public class GoldenFlameCombatBehaviors {
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(20F).cooldown(480).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(CLEAR_CHARGE)
                                     .withinDistance(0, 12).health(0.4f, HealthPoint.Comparator.LESS_RATIO)
-                                    .withinEyeHeight()
-                                    .custom(humanoidMobPatch -> {
+                                    .withinEyeHeight().custom(humanoidMobPatch -> {
                                         if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame) {
                                             return goldenFlame.getChargingTimer() <= 50;
                                         }
@@ -688,7 +814,7 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_DASH, 0.1f, 0.7f, StunType.LONG, 1f,
                                     new TimeStampedEvent(0.3f, PLAY_GROUND_SLAM))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(Animations.GREATSWORD_AUTO2, 0.3f, 0.9f)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_BERSERK_DASH, 0.4f, 0.6f, StunType.HOLD, 1f,
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_BERSERK_DASH, 0.3f, 0.6f, StunType.HOLD, 1f,
                                     new TimeStampedEvent(0.3f, PLAY_GROUND_SLAM),
                                     new TimeStampedEvent(0.6f, PLAY_GROUND_SLAM),
                                     new TimeStampedEvent(1.15f, PLAY_GROUND_SLAM))))
