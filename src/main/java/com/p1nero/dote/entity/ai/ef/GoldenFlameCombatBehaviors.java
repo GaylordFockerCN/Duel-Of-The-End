@@ -350,7 +350,7 @@ public class GoldenFlameCombatBehaviors {
     public static final CombatBehaviors.Builder<HumanoidMobPatch<?>> GOLDEN_FLAME_GREAT_SWORD = CombatBehaviors.<HumanoidMobPatch<?>>builder()
             // 4/5血下——solar大招三段
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(9999999).cooldown(60).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(9999999).cooldown(800).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder()
                                     .behavior(customAttackAnimation(WOMAnimations.SOLAR_BRASERO, 0.4F, 0.8f, StunType.HOLD, 1f,
                                             new TimeStampedEvent(0.4f, (livingEntityPatch -> {
@@ -376,7 +376,7 @@ public class GoldenFlameCombatBehaviors {
             )
             // 1/5血下——反神形态
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(9999999).cooldown(60).canBeInterrupted(false).looping(false)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(9999999).cooldown(800).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder()
                                     .behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENSION, 0.5f, 0.8f, null, 1f,
                                             new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.playSound(SoundEvents.WITHER_SHOOT, 0.5f, 0.5f))),
@@ -473,8 +473,29 @@ public class GoldenFlameCombatBehaviors {
             )
             //所有蓄力连招起点——开始蓄力
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(3F).cooldown(120).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(Animations.BIPED_STEP_BACKWARD, 0.1f)).withinDistance(0, 3))
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(3F).cooldown(160).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder()
+                                    .behavior(customAttackAnimation(DOTEAnimations.SSTEP_BACKWARD, 0.1f)).withinDistance(0, 3))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(WOMAnimations.TORMENT_CHARGE).custom(IS_NOT_CHARGING).withinEyeHeight())
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(humanoidMobPatch -> {
+                                if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame) {
+                                    goldenFlame.startCharging();
+                                }
+                            })))
+            .newBehaviorSeries(
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(6F).cooldown(200).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().health(0.8f, HealthPoint.Comparator.LESS_RATIO)
+                                    .behavior(customAttackAnimation(DOTEAnimations.SSTEP_LEFT, 0.1f)).withinDistance(0, 3))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(WOMAnimations.TORMENT_CHARGE).custom(IS_NOT_CHARGING).withinEyeHeight())
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(humanoidMobPatch -> {
+                                if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame) {
+                                    goldenFlame.startCharging();
+                                }
+                            })))
+            .newBehaviorSeries(
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(9F).cooldown(240).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().health(0.6f, HealthPoint.Comparator.LESS_RATIO)
+                                    .behavior(customAttackAnimation(DOTEAnimations.SSTEP_RIGHT, 0.1f)).withinDistance(0, 3))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(WOMAnimations.TORMENT_CHARGE).custom(IS_NOT_CHARGING).withinEyeHeight())
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(humanoidMobPatch -> {
                                 if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame) {
@@ -484,8 +505,8 @@ public class GoldenFlameCombatBehaviors {
 
             //一阶段-一蓄-1
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10F).cooldown(80).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(CLEAR_CHARGE).withinDistance(0, 4).withinEyeHeight().custom(humanoidMobPatch -> {
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(5F).cooldown(120).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().custom(IS_CHARGING).behavior(CLEAR_CHARGE).withinDistance(0, 4).withinEyeHeight().custom(humanoidMobPatch -> {
                                 if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame) {
                                     return goldenFlame.getChargingTimer() <= 110;
                                 }
@@ -497,8 +518,8 @@ public class GoldenFlameCombatBehaviors {
             )
             //一阶段-一蓄-2
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10F).cooldown(80).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(CLEAR_CHARGE).withinDistance(0, 4).withinEyeHeight().custom(humanoidMobPatch -> {
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(5F).cooldown(120).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().custom(IS_CHARGING).behavior(CLEAR_CHARGE).withinDistance(0, 4).withinEyeHeight().custom(humanoidMobPatch -> {
                                 if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame) {
                                     return goldenFlame.getChargingTimer() <= 110;
                                 }
@@ -510,8 +531,8 @@ public class GoldenFlameCombatBehaviors {
             )
             //二阶段-二蓄-1
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(12F).cooldown(160).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(CLEAR_CHARGE).withinDistance(0, 6).health(0.8f, HealthPoint.Comparator.LESS_RATIO).withinEyeHeight().custom(humanoidMobPatch -> {
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10F).cooldown(160).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().custom(IS_CHARGING).behavior(CLEAR_CHARGE).withinDistance(0, 6).health(0.8f, HealthPoint.Comparator.LESS_RATIO).withinEyeHeight().custom(humanoidMobPatch -> {
                                 if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame) {
                                     return goldenFlame.getChargingTimer() <= 80;
                                 }
@@ -543,8 +564,8 @@ public class GoldenFlameCombatBehaviors {
             )
             //二阶段-二蓄-2
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(12F).cooldown(240).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(CLEAR_CHARGE).withinDistance(0, 6).health(0.8f, HealthPoint.Comparator.LESS_RATIO).withinEyeHeight().custom(humanoidMobPatch -> {
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10F).cooldown(240).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().custom(IS_CHARGING).behavior(CLEAR_CHARGE).withinDistance(0, 6).health(0.8f, HealthPoint.Comparator.LESS_RATIO).withinEyeHeight().custom(humanoidMobPatch -> {
                                 if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame) {
                                     return goldenFlame.getChargingTimer() <= 80;
                                 }
@@ -603,7 +624,7 @@ public class GoldenFlameCombatBehaviors {
             //三阶段——三蓄-1
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(15F).cooldown(360).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(CLEAR_CHARGE).withinDistance(0, 12).health(0.6f, HealthPoint.Comparator.LESS_RATIO)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().custom(IS_CHARGING).behavior(CLEAR_CHARGE).withinDistance(0, 12).health(0.6f, HealthPoint.Comparator.LESS_RATIO)
                                     .withinEyeHeight().custom(humanoidMobPatch -> {
                                         if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame) {
                                             return goldenFlame.getChargingTimer() <= 50;
@@ -623,7 +644,7 @@ public class GoldenFlameCombatBehaviors {
             //三阶段——三蓄-2
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(15).cooldown(360).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(CLEAR_CHARGE).withinDistance(0, 12).health(0.6f, HealthPoint.Comparator.LESS_RATIO).withinEyeHeight().custom(humanoidMobPatch -> {
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().custom(IS_CHARGING).behavior(CLEAR_CHARGE).withinDistance(0, 12).health(0.6f, HealthPoint.Comparator.LESS_RATIO).withinEyeHeight().custom(humanoidMobPatch -> {
                                 if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame) {
                                     return goldenFlame.getChargingTimer() <= 50;
                                 }
@@ -803,7 +824,7 @@ public class GoldenFlameCombatBehaviors {
             //四阶段-四蓄力
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(20F).cooldown(480).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(CLEAR_CHARGE)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().custom(IS_CHARGING).behavior(CLEAR_CHARGE)
                                     .withinDistance(0, 12).health(0.4f, HealthPoint.Comparator.LESS_RATIO)
                                     .withinEyeHeight().custom(humanoidMobPatch -> {
                                         if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame) {
