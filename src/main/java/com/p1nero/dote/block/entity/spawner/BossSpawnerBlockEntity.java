@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import yesman.epicfight.world.entity.WitherGhostClone;
 
 public abstract class BossSpawnerBlockEntity<T extends DOTEBoss> extends EntitySpawnerBlockEntity<T> {
 	protected BossSpawnerBlockEntity(BlockEntityType<?> type, EntityType<T> entityType, BlockPos pos, BlockState state) {
@@ -43,6 +44,10 @@ public abstract class BossSpawnerBlockEntity<T extends DOTEBoss> extends EntityS
 					//弹开怪物和多余玩家
 					for(LivingEntity livingEntity : pLevel.getEntitiesOfClass(LivingEntity.class, new AABB(pPos.offset(-r, -r, -r), pPos.offset(r, r, r)))){
 						if(spawnerBlockEntity.currentPlayer != null && livingEntity.getUUID().equals(spawnerBlockEntity.currentPlayer)){
+							continue;
+						}
+						//跳过神王远程攻击物
+						if(livingEntity instanceof WitherGhostClone){
 							continue;
 						}
 						//同步boss，以防死后boss对象丢失

@@ -26,6 +26,7 @@ public class ClientModEvents{
     public static void onClientSetup(FMLClientSetupEvent event){
         EntityRenderers.register(DOTEEntities.SENBAI_DEVIL.get(), SenbaiRenderer::new);
         EntityRenderers.register(DOTEEntities.GOLDEN_FLAME.get(), GoldenFlameRenderer::new);
+        EntityRenderers.register(DOTEEntities.BLACK_HOLE.get(), BlackHoleRenderer::new);
         EntityRenderers.register(DOTEEntities.DOTE_PIGLIN.get(), DOTEPiglinRenderer::new);
         EntityRenderers.register(DOTEEntities.DOTE_ZOMBIE.get(), DOTEZombieRenderer::new);
         EntityRenderers.register(DOTEEntities.DOTE_ZOMBIE_2.get(), DOTEZombieRenderer::new);

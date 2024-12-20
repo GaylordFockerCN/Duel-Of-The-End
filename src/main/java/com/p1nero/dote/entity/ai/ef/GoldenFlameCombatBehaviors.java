@@ -2,9 +2,12 @@ package com.p1nero.dote.entity.ai.ef;
 
 import com.p1nero.dote.capability.efpatch.GoldenFlamePatch;
 import com.p1nero.dote.client.DOTESounds;
+import com.p1nero.dote.entity.DOTEEntities;
 import com.p1nero.dote.entity.ai.ef.api.TimeStampedEvent;
+import com.p1nero.dote.entity.custom.BlackHoleEntity;
 import com.p1nero.dote.entity.custom.GoldenFlame;
 import com.p1nero.dote.gameasset.DOTEAnimations;
+import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -21,6 +24,7 @@ import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.world.capabilities.entitypatch.HumanoidMobPatch;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.damagesource.StunType;
+import yesman.epicfight.world.entity.WitherGhostClone;
 import yesman.epicfight.world.entity.ai.goal.CombatBehaviors;
 
 import java.util.function.Consumer;
@@ -36,9 +40,40 @@ public class GoldenFlameCombatBehaviors {
     public static final Consumer<LivingEntityPatch<?>> PLAY_GROUND_SLAM = livingEntityPatch -> {
         livingEntityPatch.playSound(EpicFightSounds.GROUND_SLAM.get(), 1, 1);
     };
+
     public static final Consumer<LivingEntityPatch<?>> PLAY_SOLAR_HIT = livingEntityPatch -> {
         livingEntityPatch.playSound(WOMSounds.SOLAR_HIT.get(), 1, 1);
     };
+
+    /**
+     * 射
+     */
+    public static final Consumer<HumanoidMobPatch<?>> SHOOT_WITHER_GHOST = (humanoidMobPatch -> {
+        if (humanoidMobPatch.getTarget() != null && humanoidMobPatch.getOriginal().level() instanceof ServerLevel serverLevel) {
+            humanoidMobPatch.getOriginal().getLookControl().setLookAt(humanoidMobPatch.getTarget());
+            WitherGhostClone ghostClone = new WitherGhostClone(serverLevel, humanoidMobPatch.getOriginal().position(), humanoidMobPatch.getTarget());
+            serverLevel.addFreshEntity(ghostClone);
+        }
+    });
+
+    public static final Consumer<LivingEntityPatch<?>> TIME_STAMPED_SHOOT_WITHER_GHOST = (entityPatch -> {
+        if (entityPatch.getTarget() != null && entityPatch.getOriginal().level() instanceof ServerLevel serverLevel) {
+            entityPatch.getOriginal().lookAt(EntityAnchorArgument.Anchor.EYES, entityPatch.getTarget().position());
+            WitherGhostClone ghostClone = new WitherGhostClone(serverLevel, entityPatch.getOriginal().position(), entityPatch.getTarget());
+            serverLevel.addFreshEntity(ghostClone);
+        }
+    });
+
+    public static final Consumer<LivingEntityPatch<?>> TIME_STAMPED_SUMMON_BLACK_HOLE = (entityPatch -> {
+        if (entityPatch.getOriginal().level() instanceof ServerLevel serverLevel) {
+            BlackHoleEntity blackHoleEntity = DOTEEntities.BLACK_HOLE.get().create(serverLevel);
+            if(blackHoleEntity != null){
+                blackHoleEntity.setPos(entityPatch.getOriginal().position());
+                serverLevel.addFreshEntity(blackHoleEntity);
+            }
+        }
+    });
+
     /**
      * 开始隐身
      */
@@ -240,7 +275,6 @@ public class GoldenFlameCombatBehaviors {
                                             humanoidMobPatch.playSound(SoundEvents.WITHER_SHOOT, 0.5f, 0.5f);
                                         }
                                     }))))
-
             //一阶段——平a
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(1F).cooldown(80).canBeInterrupted(false).looping(false)

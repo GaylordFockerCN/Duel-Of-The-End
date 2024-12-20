@@ -16,7 +16,7 @@ public class DOTELangGenerator extends DOTELangProvider {
     @Override
     protected void addTranslations() {
         this.add("pack.dote_animation.title", "内置奇妙动画包");
-        this.addSkill("better_dodge_display", "完美闪避显示", "成功闪避将留下残影和播放音效");
+        this.addSkill("better_dodge_display", "完美闪避显示", "成功闪避将留下残影和播放音效，并额外恢复一点耐力");
 
         this.addInfo("tip0", "§4警告！身上存在非法物品！无法进出维度！");
         this.addInfo("tip1", "使用往生精华右键祭坛以召唤 ");

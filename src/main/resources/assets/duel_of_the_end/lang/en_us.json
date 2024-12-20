@@ -1,7 +1,7 @@
 {
   "pack.dote_animation.title": "Better Animation Pack",
   "skill.duel_of_the_end.better_dodge_display": "Better Dodge Display",
-  "skill.duel_of_the_end.better_dodge_display.tooltip": "Dodge success will left entity after image and play sound.",
+  "skill.duel_of_the_end.better_dodge_display.tooltip": "Dodge success will left entity after image and play sound, and recover another one stamina.",
   "advancement.duel_of_the_end.book": "Duel of the End",
   "advancement.duel_of_the_end.book.desc": "Step onto the island of the end and defeat the Shadow of the End",
   "advancement.duel_of_the_end.core": "Core of Purgatory",

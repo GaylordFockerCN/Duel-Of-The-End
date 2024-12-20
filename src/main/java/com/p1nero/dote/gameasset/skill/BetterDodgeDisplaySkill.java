@@ -1,6 +1,5 @@
 package com.p1nero.dote.gameasset.skill;
 
-import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.network.DOTEPacketHandler;
 import com.p1nero.dote.network.PacketRelay;
 import com.p1nero.dote.network.packet.clientbound.AddEntityAfterImageParticle;
@@ -27,6 +26,7 @@ public class BetterDodgeDisplaySkill extends PassiveSkill {
         container.getExecuter().getEventListener().addEventListener(PlayerEventListener.EventType.DODGE_SUCCESS_EVENT, EVENT_UUID, (event -> {
             event.getPlayerPatch().playSound(EpicFightSounds.ENTITY_MOVE.get(), 0.8F, 1.2F);
             PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new AddEntityAfterImageParticle(event.getPlayerPatch().getOriginal().getId()));
+            event.getPlayerPatch().setStamina(event.getPlayerPatch().getStamina() + 1);
         }));
     }
 
