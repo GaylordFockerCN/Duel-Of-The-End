@@ -3,6 +3,7 @@ package com.p1nero.dote.capability.efpatch;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
+import com.p1nero.dote.entity.ai.ef.GoldenFlameAnimatedAttackGoal;
 import com.p1nero.dote.entity.ai.ef.GoldenFlameCombatBehaviors;
 import com.p1nero.dote.entity.ai.ef.api.*;
 import com.p1nero.dote.entity.custom.GoldenFlame;
@@ -22,6 +23,8 @@ import yesman.epicfight.world.capabilities.entitypatch.HumanoidMobPatch;
 import yesman.epicfight.world.capabilities.item.CapabilityItem;
 import yesman.epicfight.world.damagesource.EpicFightDamageSource;
 import yesman.epicfight.world.damagesource.StunType;
+import yesman.epicfight.world.entity.ai.goal.CombatBehaviors;
+import yesman.epicfight.world.entity.ai.goal.TargetChasingGoal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +57,15 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
     public void onConstructed(GoldenFlame entityIn) {
         super.onConstructed(entityIn);
         entityIn.getEntityData().define(ATTACK_SPEED, 1.0F);
+    }
+
+    @Override
+    public void setAIAsInfantry(boolean holdingRangedWeapon) {
+        CombatBehaviors.Builder<HumanoidMobPatch<?>> builder = this.getHoldingItemWeaponMotionBuilder();
+        if (builder != null) {
+            this.original.goalSelector.addGoal(0, new GoldenFlameAnimatedAttackGoal<>(this, builder.build(this)));
+            this.original.goalSelector.addGoal(1, new TargetChasingGoal(this, this.getOriginal(), 1.0, true));
+        }
     }
 
     @Override

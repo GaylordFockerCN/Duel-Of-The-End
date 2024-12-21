@@ -34,14 +34,13 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import reascer.wom.gameasset.WOMAnimations;
-import yesman.epicfight.api.animation.types.EntityState;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
-import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
 public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
     protected static final EntityDataAccessor<Integer> CHARGING_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Integer> ANTI_FORM_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<Integer> INACTION_TIME = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Boolean> IS_BLUE = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.BOOLEAN);
     protected static final EntityDataAccessor<Boolean> SHOULD_RENDER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.BOOLEAN);
     private int antiFormCooldown = 0;//FIXME 反神形态无法受伤？？
@@ -70,6 +69,7 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
         super.defineSynchedData();
         getEntityData().define(CHARGING_TIMER, 0);
         getEntityData().define(ANTI_FORM_TIMER, 0);
+        getEntityData().define(INACTION_TIME, 0);
         getEntityData().define(IS_BLUE, false);
         getEntityData().define(SHOULD_RENDER, true);
     }
@@ -119,13 +119,21 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
         return antiFormCooldown;
     }
 
+    public void setInactionTime(int inactionTime){
+        getEntityData().set(INACTION_TIME, inactionTime);
+    }
+
+    public int getInactionTime(){
+        return getEntityData().get(INACTION_TIME);
+    }
+
     @Override
     public void tick() {
         super.tick();
 
-//        if(getHealth() > 0.8 * getMaxHealth() && isBlue()){
-//            setIsBlue(false);
-//        }
+        if(getInactionTime() > 0){
+            setInactionTime(getInactionTime() -1);
+        }
 
         //反神形态计时器，持续40秒用拳，时间到了再播动画变身回去
         if(getAntiFormTimer() > 0){
@@ -148,10 +156,8 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
             antiFormCooldown--;
         }
 
-        LivingEntityPatch<?> patch = EpicFightCapabilities.getEntityPatch(this, LivingEntityPatch.class);
         //wander控制
         if(getStrafingTime() > 0){
-            patch.getEntityState().setState(EntityState.INACTION, true);
             this.setStrafingTime(this.getStrafingTime() - 1);
             this.getNavigation().stop();
             if(getTarget() != null){
@@ -160,14 +166,12 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
             this.getMoveControl().strafe(this.getStrafingForward() > 0.0F ? 0.0F : this.getStrafingForward(), this.getStrafingClockwise());
         }
 
-
+        //蓄力播音效
         if(getChargingTimer() > 0 && !level().isClientSide){
             getEntityData().set(CHARGING_TIMER, Math.max(0, getChargingTimer() - 1));
             if(getTarget() != null){
                 getLookControl().setLookAt(getTarget(), 30, 30);
             }
-            getNavigation().stop();
-            getMoveControl().strafe(getChargingTimer() < 65 ? 0.8F + getChargingTimer() / 100.0F : -0.8F + getChargingTimer() / 100.0F, getChargingTimer() < 65 ? 0.8F + getChargingTimer() / 100.0F : -0.8F + getChargingTimer() / 100.0F);
         }
 
         if(getChargingTimer() == 115){
@@ -186,6 +190,7 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
             level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.5F);
             level().playSound(null, getX(), getY(), getZ(), SoundEvents.BELL_BLOCK, SoundSource.BLOCKS, 2.5F, 0.5F);
         }
+
     }
 
     public static AttributeSupplier setAttributes() {
@@ -257,6 +262,7 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
     @Override
     public void setStrafingTime(int strafingTime) {
         this.strafingTime = strafingTime;
+        setInactionTime(strafingTime);
     }
 
     @Override

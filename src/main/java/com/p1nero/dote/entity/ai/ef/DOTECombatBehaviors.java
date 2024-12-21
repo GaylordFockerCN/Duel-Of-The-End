@@ -2,6 +2,8 @@ package com.p1nero.dote.entity.ai.ef;
 
 import com.p1nero.dote.entity.IWanderableEntity;
 import com.p1nero.dote.entity.ai.ef.api.*;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PotionItem;
@@ -28,12 +30,31 @@ public class DOTECombatBehaviors {
 
     public static <T extends MobPatch<?>> Consumer<T> wander(int strafingTime, float forward, float clockwise){
         return (patch) -> {
-            System.out.println("do wander");
             if(patch.getOriginal() instanceof IWanderableEntity wanderableEntity){
                 wanderableEntity.setStrafingTime(strafingTime);
                 wanderableEntity.setStrafingForward(forward);
                 wanderableEntity.setStrafingClockwise(clockwise);
             }
+        };
+    }
+
+    /**
+     * entityPatch的playSound似乎不能修改音调
+     */
+    public static <T extends MobPatch<?>> Consumer<T> playSound(SoundEvent sound, float volume, float pitch){
+        return (patch) -> {
+            LivingEntity entity = patch.getOriginal();
+            entity.level().playSound(null, entity.getX(), entity.getY(), entity.getZ(), sound, SoundSource.BLOCKS, volume, pitch);
+        };
+    }
+
+    /**
+     * entityPatch的playSound似乎不能修改音调
+     */
+    public static <T extends LivingEntityPatch<?>> Consumer<T> timeStampedPlaySound(SoundEvent sound, float volume, float pitch){
+        return (patch) -> {
+            LivingEntity entity = patch.getOriginal();
+            entity.level().playSound(null, entity.getX(), entity.getY(), entity.getZ(), sound, SoundSource.BLOCKS, volume, pitch);
         };
     }
 
