@@ -209,9 +209,9 @@ public class GoldenFlameCombatBehaviors {
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(1F).cooldown(240).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 2.5).withinEyeHeight()
-                            .behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_DEATHFALL, 0.3f, 0.6f, StunType.LONG, 1.3f,
-                                    new TimeStampedEvent(0.01f, timeStampedPlaySound(SoundEvents.WITHER_SHOOT, 1, 0.5F)),
-                                    new TimeStampedEvent(0.3f, PLAY_GROUND_SLAM))))
+                                    .behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_DEATHFALL, 0.3f, 0.6f, StunType.LONG, 1.3f,
+                                            new TimeStampedEvent(0.01f, timeStampedPlaySound(SoundEvents.WITHER_SHOOT, 1, 0.5F)),
+                                            new TimeStampedEvent(0.3f, PLAY_GROUND_SLAM))))
             )
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(3F).cooldown(360).canBeInterrupted(false).looping(false)
@@ -226,7 +226,7 @@ public class GoldenFlameCombatBehaviors {
                                     .behavior(customAttackAnimation(WOMAnimations.KATANA_FATAL_DRAW_DASH, 0.3f, 0.8f, null, 1f,
                                             new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.KATANA_FATAL_DRAW_DASH.getTotalTime()))))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_BLINK, 0f, 0.8f, StunType.HOLD, 1.3f,
-                                            new TimeStampedEvent(0.0f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_ASCENDED_BLINK.getTotalTime(), 0.1f))))))
+                                    new TimeStampedEvent(0.0f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_ASCENDED_BLINK.getTotalTime(), 0.1f))))))
             )
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(20F).cooldown(400).canBeInterrupted(false).looping(false)
@@ -253,8 +253,8 @@ public class GoldenFlameCombatBehaviors {
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(2000F).cooldown(600).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(5, 50).withinEyeHeight()
                                     .behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_SHOOT, 0.7f, 0.8f, null, 1f,
-                                    new TimeStampedEvent(0.3f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))),
-                                    new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))))))
+                                            new TimeStampedEvent(0.3f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))),
+                                            new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(5, 50).behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_SHOOT, 0.7f, 0.8f, null, 1f,
                                     new TimeStampedEvent(0.3f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))),
                                     new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))))))
@@ -326,7 +326,7 @@ public class GoldenFlameCombatBehaviors {
                                     new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))),
                                     new TimeStampedEvent(0.6f, TIME_STAMPED_SHOOT_WITHER_GHOST))))
             )
-;
+            ;
     /**
      * 大剑形态
      */
@@ -336,7 +336,7 @@ public class GoldenFlameCombatBehaviors {
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(9999999).cooldown(1200).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder()
                                     .behavior(customAttackAnimation(WOMAnimations.SOLAR_BRASERO, 0.4F, 0.8f, StunType.HOLD, 1f,
-                                            new TimeStampedEvent(0.4f, timeStampedPlaySound(WOMSounds.SOLAR_HIT.get(), 1, 0.8F))))
+                                            new TimeStampedEvent(0.4f, timeStampedPlaySound(WOMSounds.SOLAR_HIT.get(), 1, 0.9F))))
                                     .health(0.85F, HealthPoint.Comparator.LESS_RATIO)
                                     .custom((humanoidMobPatch -> {
                                         if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame) {
@@ -380,7 +380,7 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_AUTO_2, 0.1f, 0.8f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_AUTO_3, 0.0f, 0.7f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_CHARGED_ATTACK_3, 0.3f, 0.6f, StunType.KNOCKDOWN, 1f,
-                                    new TimeStampedEvent(0.15f, timeStampedPlaySound(SoundEvents.FIREWORK_ROCKET_BLAST, 1, 0.5F)),
+                                    new TimeStampedEvent(0.15f, timeStampedPlaySound(SoundEvents.FIREWORK_ROCKET_BLAST, 1, 1)),
                                     new TimeStampedEvent(1.1f, PLAY_GROUND_SLAM))))
             )
             .newBehaviorSeries(
@@ -412,7 +412,7 @@ public class GoldenFlameCombatBehaviors {
                                     new TimeStampedEvent(0.6f, PLAY_GROUND_SLAM))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_AUTO_3, 0.2f, 0.9f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_CHARGED_ATTACK_3, 0.3f, 0.6f, StunType.KNOCKDOWN, 1f,
-                                    new TimeStampedEvent(0.15f, timeStampedPlaySound(SoundEvents.FIREWORK_ROCKET_BLAST, 1, 0.5F)),
+                                    new TimeStampedEvent(0.15f, timeStampedPlaySound(SoundEvents.FIREWORK_ROCKET_BLAST, 1, 1)),
                                     new TimeStampedEvent(1.1f, PLAY_GROUND_SLAM))))
             )
             //三阶段——平a
@@ -435,38 +435,44 @@ public class GoldenFlameCombatBehaviors {
                                     new TimeStampedEvent(0.2f, PLAY_SOLAR_HIT),
                                     new TimeStampedEvent(0.6f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.SOLAR_AUTO_3_POLVORA.getTotalTime()))))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_BRASERO, 0.4F, 0.8f, StunType.HOLD, 1f,
-                                    new TimeStampedEvent(0.4f, timeStampedPlaySound(WOMSounds.SOLAR_HIT.get(), 1, 0.8F)))))
+                                    new TimeStampedEvent(0.4f, timeStampedPlaySound(WOMSounds.SOLAR_HIT.get(), 1, 0.9F)))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_BRASERO_OBSCURIDAD, 0.3F, 0.8f, StunType.LONG, 1f,
                                     new TimeStampedEvent(0.4f, timeStampedPlaySound(WOMSounds.SOLAR_HIT.get(), 1, 0.5F)))))
             )
-            //一阶段-一蓄-1 TODO 调wander
+            //一阶段-一蓄-1 FIXME
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(0.1F).cooldown(100).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(START_CHARGE).withinDistance(0, 4).withinEyeHeight())
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, 0.5F, 0.5F)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(70, -0.5F, 0.5F)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 4).withinEyeHeight()
+                                    .behavior(customAttackAnimation(DOTEAnimations.SSTEP_BACKWARD, 0.1f)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(START_CHARGE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(15, 0.2F, 0.5F)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(STOP_CHARGE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(DOTEAnimations.WIND_SLASH, 0.3f, 1.2f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_AUTO_4, 0.1f, 0.7f, StunType.LONG, 1f,
                                     new TimeStampedEvent(0.5f, PLAY_GROUND_SLAM))))
             )
-            //一阶段-一蓄-2 TODO 调wander
+            //一阶段-一蓄-2 FIXME
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(0.1F).cooldown(100).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(START_CHARGE).withinDistance(0, 4).withinEyeHeight())
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, 0.5F, 0.5F)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(70, -0.5F, 0.5F)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 4).withinEyeHeight()
+                                    .behavior(customAttackAnimation(DOTEAnimations.SSTEP_BACKWARD, 0.1f)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(START_CHARGE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(15, 0.2F, -0.5F)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(STOP_CHARGE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(DOTEAnimations.WIND_SLASH, 0.3f, 1.2f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_BERSERK_AIRSLAM, 0.2f, 0.7f, StunType.KNOCKDOWN, 1.3f,
                                     new TimeStampedEvent(0.6f, PLAY_GROUND_SLAM))))
             )
-            //二阶段-二蓄-1 TODO 调wander
+            //二阶段-二蓄-1 FIXME
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10F).cooldown(160).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(START_CHARGE).withinDistance(0, 4).withinEyeHeight().health(0.8F, HealthPoint.Comparator.LESS_RATIO))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, 0.5F, 0.5F)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(70, -0.5F, 0.5F)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 6).withinEyeHeight()
+                                    .behavior(customAttackAnimation(DOTEAnimations.SSTEP_BACKWARD, 0.1f, 1, null, 1,
+                                            new TimeStampedEvent(0, (livingEntityPatch -> livingEntityPatch.getOriginal().addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 40, 0))))
+                                    )))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(START_CHARGE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(15, -0.4F, 0.8F)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(15, 0.6F, -0.6F)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(STOP_CHARGE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_CHARGED_ATTACK_2, 0.4f, 0.8f, StunType.LONG, 1f)))
                             //重置状态，防止其他地方的TormentAuto4击中后影响变招
@@ -489,16 +495,21 @@ public class GoldenFlameCombatBehaviors {
                                         return false;
                                     }))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_CHARGED_ATTACK_3, 0.3f, 0.6f, StunType.KNOCKDOWN, 1f,
-                                    new TimeStampedEvent(0.15f, timeStampedPlaySound(SoundEvents.FIREWORK_ROCKET_BLAST, 1, 0.5F)),
+                                    new TimeStampedEvent(0.15f, timeStampedPlaySound(SoundEvents.FIREWORK_ROCKET_BLAST, 1, 1)),
                                     new TimeStampedEvent(1.1f, PLAY_GROUND_SLAM))))
             )
-            //二阶段-二蓄-2 TODO 调wander
+            //二阶段-二蓄-2 FIXME
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10F).cooldown(240).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(START_CHARGE).withinDistance(0, 4).withinEyeHeight().health(0.8F, HealthPoint.Comparator.LESS_RATIO))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, 0.5F, 0.5F)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(70, -0.5F, 0.5F)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 6).withinEyeHeight().health(0.8F, HealthPoint.Comparator.LESS_RATIO)
+                                    .behavior(customAttackAnimation(DOTEAnimations.SSTEP_BACKWARD, 0.1f, 1, null, 1,
+                                            new TimeStampedEvent(0, (livingEntityPatch -> livingEntityPatch.getOriginal().addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 40, 0))))
+                                    )))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(START_CHARGE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(15, 0.6F, -0.8F)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(15, -0.4F, 0.6F)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(STOP_CHARGE))
+
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_CHARGED_ATTACK_2, 0.5f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_AUTO_4, 0.1f, 0.7f, StunType.LONG, 1f,
                                     new TimeStampedEvent(0.5f, PLAY_GROUND_SLAM))))
@@ -541,17 +552,23 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_NOT_HIDE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_BRASERO, 0.4F, 0.8f, StunType.HOLD, 1f,
-                                    new TimeStampedEvent(0.4f, timeStampedPlaySound(WOMSounds.SOLAR_HIT.get(), 1, 0.8F)))))
+                                    new TimeStampedEvent(0.4f, timeStampedPlaySound(WOMSounds.SOLAR_HIT.get(), 1, 0.9F)))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_BRASERO_OBSCURIDAD, 0.3F, 0.8f, StunType.LONG, 1f,
                                     new TimeStampedEvent(0.4f, timeStampedPlaySound(WOMSounds.SOLAR_HIT.get(), 1, 0.5F)))))
             )
-            //三阶段——三蓄-1 TODO 调wander
+            //三阶段——三蓄-1 FIXME
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(15F).cooldown(360).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(START_CHARGE).withinDistance(0, 4).withinEyeHeight().health(0.6F, HealthPoint.Comparator.LESS_RATIO))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, 0.5F, 0.5F)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(70, -0.5F, 0.5F)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 8).withinEyeHeight().health(0.6F, HealthPoint.Comparator.LESS_RATIO)
+                                    .behavior(customAttackAnimation(DOTEAnimations.SSTEP_BACKWARD, 0.1f, 1, null, 1,
+                                            new TimeStampedEvent(0, (livingEntityPatch -> livingEntityPatch.getOriginal().addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 100, 1))))
+                                    )))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(START_CHARGE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, 0.6F, 0.8F)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, -0.4F, -0.4F)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, 0.2F, -0.2F)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(STOP_CHARGE))
+
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_DASH, 0.1f, 0.7f, StunType.SHORT, 1f,
                                     new TimeStampedEvent(0.3f, PLAY_GROUND_SLAM))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(Animations.GREATSWORD_AUTO2, 0.2f, 0.9f)))
@@ -562,13 +579,19 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(DOTEAnimations.LION_CLAW, 0.2F, 1, StunType.KNOCKDOWN, 1,
                                     new TimeStampedEvent(1.6f, PLAY_GROUND_SLAM))))
             )
-            //三阶段——三蓄-2 TODO 调wander
+            //三阶段——三蓄-2 FIXME
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(15).cooldown(360).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(START_CHARGE).withinDistance(0, 4).withinEyeHeight().health(0.6F, HealthPoint.Comparator.LESS_RATIO))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, 0.5F, 0.5F)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(70, -0.5F, 0.5F)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 8).withinEyeHeight().health(0.6F, HealthPoint.Comparator.LESS_RATIO)
+                                    .behavior(customAttackAnimation(DOTEAnimations.SSTEP_BACKWARD, 0.1f, 1, null, 1,
+                                            new TimeStampedEvent(0, (livingEntityPatch -> livingEntityPatch.getOriginal().addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 100, 1))))
+                                    )))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(START_CHARGE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, -0.6F, -0.8F)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, 0.4F, 0.4F)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, 0.2F, 0.2F)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(STOP_CHARGE))
+
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_DASH, 0.1f, 0.7f, StunType.LONG, 1f,
                                     new TimeStampedEvent(0.3f, PLAY_GROUND_SLAM))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_BERSERK_AUTO_2, 0.2f, 0.8f)))
@@ -577,7 +600,7 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_BERSERK_AUTO_2, 0f, 0.8f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(chaseTarget(2.5f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_CHARGED_ATTACK_3, 0.3f, 0.6f, null, 1f,
-                                    new TimeStampedEvent(0.15f, timeStampedPlaySound(SoundEvents.FIREWORK_ROCKET_BLAST, 1, 0.5F)),
+                                    new TimeStampedEvent(0.15f, timeStampedPlaySound(SoundEvents.FIREWORK_ROCKET_BLAST, 1, 1)),
                                     new TimeStampedEvent(0.6f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.TORMENT_CHARGED_ATTACK_3.getTotalTime()))))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_BERSERK_AIRSLAM, 0.05f, 0.7f, StunType.KNOCKDOWN, 1.3f,
                                     new TimeStampedEvent(0.1f, timeStampedPlaySound(EpicFightSounds.ENTITY_MOVE.get(), 1, 0.8F)),
@@ -621,7 +644,7 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_OBSCURIDAD_AUTO_3, 0.1f, 0.9f, StunType.LONG, 1f,
                                     new TimeStampedEvent(0.2f, PLAY_SOLAR_HIT))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_BRASERO, 0.2f, 0.8f, StunType.HOLD, 1f,
-                                    new TimeStampedEvent(0.4f, timeStampedPlaySound(WOMSounds.SOLAR_HIT.get(), 1, 0.8F)))))
+                                    new TimeStampedEvent(0.4f, timeStampedPlaySound(WOMSounds.SOLAR_HIT.get(), 1, 0.9F)))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_SOLAR_BRASERO_CREMATORIO))
             )
             //三阶段——瞬闪2
@@ -738,13 +761,21 @@ public class GoldenFlameCombatBehaviors {
                             )))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_BRASERO_INFIERNO, 0.4f, 0.8f, StunType.HOLD, 2f)))
             )
-            //四阶段-四蓄力 TODO 调wander
+            //四阶段-四蓄力 FIXME
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(20F).cooldown(40).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(START_CHARGE).withinDistance(0, 4).withinEyeHeight().health(0.4F, HealthPoint.Comparator.LESS_RATIO))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, 0.5F, 0.5F)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(70, -0.5F, 0.5F)))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(STOP_CHARGE)).nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_DASH, 0.1f, 0.7f, StunType.LONG, 1f,
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 8).withinEyeHeight().health(0.4F, HealthPoint.Comparator.LESS_RATIO)
+                                    .behavior(customAttackAnimation(DOTEAnimations.SSTEP_BACKWARD, 0.1f, 1, null, 1,
+                                            new TimeStampedEvent(0, (livingEntityPatch -> livingEntityPatch.getOriginal().addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 130, 2))))
+                                    )))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(START_CHARGE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, -0.6F, 0.8F)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, 0.4F, -0.6F)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, -0.2F, -0.4F)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, 0.1F, 0.2F)))
+
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(STOP_CHARGE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_DASH, 0.1f, 0.7f, StunType.LONG, 1f,
                                     new TimeStampedEvent(0.3f, PLAY_GROUND_SLAM))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(Animations.GREATSWORD_AUTO2, 0.3f, 0.9f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_BERSERK_DASH, 0.3f, 0.6f, StunType.HOLD, 1f,
@@ -754,7 +785,7 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_CHARGED_ATTACK_1, 0.2f, 0.65f, StunType.LONG, 1f,
                                     new TimeStampedEvent(1.0f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.TORMENT_CHARGED_ATTACK_1.getTotalTime()))))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.TORMENT_CHARGED_ATTACK_3, 0.3f, 0.6f, StunType.KNOCKDOWN, 1f,
-                                    new TimeStampedEvent(0.15f, timeStampedPlaySound(SoundEvents.FIREWORK_ROCKET_BLAST, 1, 0.5F)),
+                                    new TimeStampedEvent(0.15f, timeStampedPlaySound(SoundEvents.FIREWORK_ROCKET_BLAST, 1, 1)),
                                     new TimeStampedEvent(1.1f, PLAY_GROUND_SLAM))))
             );
 }
