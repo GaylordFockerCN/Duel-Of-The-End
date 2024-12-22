@@ -25,7 +25,7 @@ public class WOMAnimationsMixin {
     @ModifyArg(method = "build", at = @At(value = "INVOKE", target = "Lreascer/wom/animation/attacks/BasicMultipleAttackAnimation;<init>(FFFFLyesman/epicfight/api/collider/Collider;Lyesman/epicfight/api/animation/Joint;Ljava/lang/String;Lyesman/epicfight/api/model/Armature;)V"), index = 1)
     private static float modify(float antic){
         if(antic == 0){
-            return 0.01F;
+            return 0.1F;
         }
         return antic;
     }

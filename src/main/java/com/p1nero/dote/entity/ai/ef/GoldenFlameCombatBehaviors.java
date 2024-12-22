@@ -39,6 +39,7 @@ import static com.p1nero.dote.entity.ai.ef.DOTECombatBehaviors.*;
 public class GoldenFlameCombatBehaviors {
 
     public static final Function<HumanoidMobPatch<?>, Boolean> CAN_CHARGING = (humanoidMobPatch -> humanoidMobPatch instanceof GoldenFlamePatch goldenFlamePatch
+            && !goldenFlamePatch.getOriginal().getMainHandItem().isEmpty()
             && (!goldenFlamePatch.getOriginal().isCharging()
             && goldenFlamePatch.getOriginal().shouldRender()
             && goldenFlamePatch.getOriginal().getAntiFormCooldown() <= 0)
@@ -774,9 +775,8 @@ public class GoldenFlameCombatBehaviors {
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(20F).cooldown(240).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 8).withinEyeHeight().health(0.4F, HealthPoint.Comparator.LESS_RATIO).custom(CAN_CHARGING)
-                                    .behavior(customAttackAnimation(DOTEAnimations.SSTEP_BACKWARD, 0.1f, 1, null, 1,
-                                            new TimeStampedEvent(0, (livingEntityPatch -> livingEntityPatch.getOriginal().addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 130, 2))))
-                                    )))
+                                    .behavior(customAttackAnimation(DOTEAnimations.SSTEP_BACKWARD, 0.1f, 1, null, 1)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(humanoidMobPatch -> humanoidMobPatch.getOriginal().addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 130, 2))))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(START_CHARGE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, -0.6F, 0.8F)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(30, 0.4F, -0.6F)))

@@ -3,7 +3,7 @@ package com.p1nero.dote.capability.efpatch;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
-import com.p1nero.dote.entity.ai.ef.GoldenFlameAnimatedAttackGoal;
+import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.entity.ai.ef.GoldenFlameCombatBehaviors;
 import com.p1nero.dote.entity.ai.ef.GoldenFlameTargetChasingGoal;
 import com.p1nero.dote.entity.ai.ef.api.*;
@@ -17,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import reascer.wom.gameasset.WOMAnimations;
 import yesman.epicfight.api.animation.Animator;
 import yesman.epicfight.api.animation.LivingMotions;
+import yesman.epicfight.api.animation.types.EntityState;
 import yesman.epicfight.api.utils.AttackResult;
 import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.world.capabilities.entitypatch.Faction;
@@ -24,6 +25,7 @@ import yesman.epicfight.world.capabilities.entitypatch.HumanoidMobPatch;
 import yesman.epicfight.world.capabilities.item.CapabilityItem;
 import yesman.epicfight.world.damagesource.EpicFightDamageSource;
 import yesman.epicfight.world.damagesource.StunType;
+import yesman.epicfight.world.entity.ai.goal.AnimatedAttackGoal;
 import yesman.epicfight.world.entity.ai.goal.CombatBehaviors;
 
 import java.util.ArrayList;
@@ -63,8 +65,18 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
     public void setAIAsInfantry(boolean holdingRangedWeapon) {
         CombatBehaviors.Builder<HumanoidMobPatch<?>> builder = this.getHoldingItemWeaponMotionBuilder();
         if (builder != null) {
-            this.original.goalSelector.addGoal(0, new GoldenFlameAnimatedAttackGoal<>(this, builder.build(this)));
+//            this.original.goalSelector.addGoal(0, new GoldenFlameAnimatedAttackGoal<>(this, builder.build(this)));
+            this.original.goalSelector.addGoal(0, new AnimatedAttackGoal<>(this, builder.build(this)));
             this.original.goalSelector.addGoal(1, new GoldenFlameTargetChasingGoal(this, this.getOriginal(), 1.0, true));
+        }
+    }
+
+    @Override
+    public void updateEntityState() {
+        super.updateEntityState();
+        if(this.getOriginal().getInactionTime() > 0){
+            state.setState(EntityState.INACTION, true);
+            state.setState(EntityState.CAN_BASIC_ATTACK, false);
         }
     }
 
@@ -72,7 +84,7 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
     public AttackResult attack(EpicFightDamageSource damageSource, Entity target, InteractionHand hand) {
         AttackResult result = super.attack(damageSource, target, hand);
         if(result.resultType.dealtDamage()){
-            this.getOriginal().setHealth((float) (this.getOriginal().getHealth() + Math.max(this.getOriginal().getMaxHealth() * 0.005, result.damage * (2.5 - this.getOriginal().getHealthRatio()))));
+            this.getOriginal().setHealth((float) (this.getOriginal().getHealth() + Math.max(this.getOriginal().getMaxHealth() * 0.005, result.damage * (DOTEArchiveManager.getWorldLevel() + 1.1 - this.getOriginal().getHealthRatio()))));
             target.setSecondsOnFire(10);
             if(damageSource.getAnimation().equals(WOMAnimations.TORMENT_AUTO_4)){
                 onTormentAuto4Hit = true;

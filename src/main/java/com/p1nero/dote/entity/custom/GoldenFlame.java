@@ -127,9 +127,17 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
         return getEntityData().get(INACTION_TIME);
     }
 
+    @Nullable
+    public GoldenFlamePatch getPatch(){
+        return EpicFightCapabilities.getEntityPatch(this, GoldenFlamePatch.class);
+    }
+
     @Override
     public void tick() {
         super.tick();
+
+//        System.out.println("goals: " + this.goalSelector.getAvailableGoals().size());
+//        System.out.println("running goals: " + this.goalSelector.getAvailableGoals().size());
 
         if(getInactionTime() > 0){
             setInactionTime(getInactionTime() -1);
@@ -140,10 +148,16 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
             getEntityData().set(ANTI_FORM_TIMER, Math.max(0, getAntiFormTimer() - 1));
             if(getAntiFormTimer() == MAX_ANTI_FORM_TIMER - 10){
                 setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+                if(getPatch() != null){
+                    getPatch().setAIAsInfantry(false);
+                }
                 resetCharging();
             }
             if(getAntiFormTimer() == 1){
                 setItemInHand(InteractionHand.MAIN_HAND, DOTEItems.ROT_GREATSWORD.get().getDefaultInstance());
+                if(getPatch() != null){
+                    getPatch().setAIAsInfantry(false);
+                }
                 if(!level().isClientSide){
                     GoldenFlamePatch patch = EpicFightCapabilities.getEntityPatch(this, GoldenFlamePatch.class);
                     patch.playAnimationSynchronized(WOMAnimations.ANTITHEUS_LAPSE, 0.3F);
