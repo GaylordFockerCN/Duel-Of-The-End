@@ -156,39 +156,30 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
             antiFormCooldown--;
         }
 
-        //wander控制
-        if(getStrafingTime() > 0){
-            this.setStrafingTime(this.getStrafingTime() - 1);
-            this.getNavigation().stop();
-            if(getTarget() != null){
-                this.lookAt(getTarget(), 30.0F, 30.0F);
-            }
-            this.getMoveControl().strafe(this.getStrafingForward() > 0.0F ? 0.0F : this.getStrafingForward(), this.getStrafingClockwise());
-        }
-
         //蓄力播音效
         if(getChargingTimer() > 0 && !level().isClientSide){
             getEntityData().set(CHARGING_TIMER, Math.max(0, getChargingTimer() - 1));
             if(getTarget() != null){
                 getLookControl().setLookAt(getTarget(), 30, 30);
             }
-        }
 
-        if(getChargingTimer() == 115){
-            level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.6F);
-        }
+            if(getChargingTimer() == 115){
+                level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.6F);
+            }
 
-        if(getChargingTimer() == 95){
-            level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.65F);
-        }
+            if(getChargingTimer() == 95){
+                level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.65F);
+            }
 
-        if(getChargingTimer() == 65){
-            level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.7F);
-        }
+            if(getChargingTimer() == 65){
+                level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.7F);
+            }
 
-        if(getChargingTimer() == 35){
-            level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.5F);
-            level().playSound(null, getX(), getY(), getZ(), SoundEvents.BELL_BLOCK, SoundSource.BLOCKS, 2.5F, 0.5F);
+            if(getChargingTimer() == 35){
+                level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.5F);
+                level().playSound(null, getX(), getY(), getZ(), SoundEvents.BELL_BLOCK, SoundSource.BLOCKS, 2.5F, 0.5F);
+            }
+
         }
 
     }

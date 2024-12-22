@@ -29,6 +29,7 @@ import yesman.epicfight.world.entity.WitherGhostClone;
 import yesman.epicfight.world.entity.ai.goal.CombatBehaviors;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static com.p1nero.dote.entity.ai.ef.DOTECombatBehaviors.*;
 
@@ -37,11 +38,13 @@ import static com.p1nero.dote.entity.ai.ef.DOTECombatBehaviors.*;
  */
 public class GoldenFlameCombatBehaviors {
 
+    public static final Function<HumanoidMobPatch<?>, Boolean> CAN_CHARGING = (humanoidMobPatch -> humanoidMobPatch instanceof GoldenFlamePatch goldenFlamePatch && (!goldenFlamePatch.getOriginal().isCharging() && goldenFlamePatch.getOriginal().getAntiFormCooldown() <= 0));
+
     /**
      * 开始蓄力并播放音效
      */
     public static final Consumer<HumanoidMobPatch<?>> START_CHARGE = (humanoidMobPatch -> {
-        if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame) {
+        if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame && !humanoidMobPatch.isLogicalClient() && !humanoidMobPatch.getEntityState().inaction()) {
             humanoidMobPatch.playAnimationSynchronized(WOMAnimations.TORMENT_CHARGE, 0.0F);
             goldenFlame.startCharging();
         }
@@ -53,6 +56,8 @@ public class GoldenFlameCombatBehaviors {
     public static final Consumer<HumanoidMobPatch<?>> STOP_CHARGE = (humanoidMobPatch -> {
         if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame) {
             goldenFlame.resetCharging();
+            goldenFlame.setStrafingTime(0);
+            goldenFlame.setInactionTime(0);
             if (goldenFlame.level() instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(ParticleTypes.FLAME, goldenFlame.getX(), goldenFlame.getY(), goldenFlame.getZ(), 200, 0, 1, 0, 0.1);
             }
@@ -442,7 +447,7 @@ public class GoldenFlameCombatBehaviors {
             //一阶段-一蓄-1 FIXME
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(0.1F).cooldown(100).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 4).withinEyeHeight()
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 4).withinEyeHeight().custom(CAN_CHARGING)
                                     .behavior(customAttackAnimation(DOTEAnimations.SSTEP_BACKWARD, 0.1f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(START_CHARGE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(15, 0.2F, 0.5F)))
@@ -454,7 +459,7 @@ public class GoldenFlameCombatBehaviors {
             //一阶段-一蓄-2 FIXME
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(0.1F).cooldown(100).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 4).withinEyeHeight()
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 4).withinEyeHeight().custom(CAN_CHARGING)
                                     .behavior(customAttackAnimation(DOTEAnimations.SSTEP_BACKWARD, 0.1f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(START_CHARGE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(wander(15, 0.2F, -0.5F)))
@@ -466,7 +471,7 @@ public class GoldenFlameCombatBehaviors {
             //二阶段-二蓄-1 FIXME
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10F).cooldown(160).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 6).withinEyeHeight()
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 6).withinEyeHeight().custom(CAN_CHARGING)
                                     .behavior(customAttackAnimation(DOTEAnimations.SSTEP_BACKWARD, 0.1f, 1, null, 1,
                                             new TimeStampedEvent(0, (livingEntityPatch -> livingEntityPatch.getOriginal().addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 40, 0))))
                                     )))
@@ -501,7 +506,7 @@ public class GoldenFlameCombatBehaviors {
             //二阶段-二蓄-2 FIXME
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10F).cooldown(240).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 6).withinEyeHeight().health(0.8F, HealthPoint.Comparator.LESS_RATIO)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 6).withinEyeHeight().health(0.8F, HealthPoint.Comparator.LESS_RATIO).custom(CAN_CHARGING)
                                     .behavior(customAttackAnimation(DOTEAnimations.SSTEP_BACKWARD, 0.1f, 1, null, 1,
                                             new TimeStampedEvent(0, (livingEntityPatch -> livingEntityPatch.getOriginal().addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 40, 0))))
                                     )))
@@ -559,7 +564,7 @@ public class GoldenFlameCombatBehaviors {
             //三阶段——三蓄-1 FIXME
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(15F).cooldown(360).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 8).withinEyeHeight().health(0.6F, HealthPoint.Comparator.LESS_RATIO)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 8).withinEyeHeight().health(0.6F, HealthPoint.Comparator.LESS_RATIO).custom(CAN_CHARGING)
                                     .behavior(customAttackAnimation(DOTEAnimations.SSTEP_BACKWARD, 0.1f, 1, null, 1,
                                             new TimeStampedEvent(0, (livingEntityPatch -> livingEntityPatch.getOriginal().addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 100, 1))))
                                     )))
@@ -582,7 +587,7 @@ public class GoldenFlameCombatBehaviors {
             //三阶段——三蓄-2 FIXME
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(15).cooldown(360).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 8).withinEyeHeight().health(0.6F, HealthPoint.Comparator.LESS_RATIO)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 8).withinEyeHeight().health(0.6F, HealthPoint.Comparator.LESS_RATIO).custom(CAN_CHARGING)
                                     .behavior(customAttackAnimation(DOTEAnimations.SSTEP_BACKWARD, 0.1f, 1, null, 1,
                                             new TimeStampedEvent(0, (livingEntityPatch -> livingEntityPatch.getOriginal().addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 100, 1))))
                                     )))
@@ -763,8 +768,8 @@ public class GoldenFlameCombatBehaviors {
             )
             //四阶段-四蓄力 FIXME
             .newBehaviorSeries(
-                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(20F).cooldown(40).canBeInterrupted(false).looping(false)
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 8).withinEyeHeight().health(0.4F, HealthPoint.Comparator.LESS_RATIO)
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(20F).cooldown(240).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 8).withinEyeHeight().health(0.4F, HealthPoint.Comparator.LESS_RATIO).custom(CAN_CHARGING)
                                     .behavior(customAttackAnimation(DOTEAnimations.SSTEP_BACKWARD, 0.1f, 1, null, 1,
                                             new TimeStampedEvent(0, (livingEntityPatch -> livingEntityPatch.getOriginal().addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 130, 2))))
                                     )))
