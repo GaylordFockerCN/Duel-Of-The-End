@@ -29,16 +29,18 @@ public class GoldenFlameAnimatedAttackGoal<T extends MobPatch<?>> extends Goal {
             if (mobpatch instanceof GoldenFlamePatch goldenFlamePatch) {
                 CombatBehaviors.Behavior<T> result;
                 if (this.combatBehaviors.hasActivatedMove()) {
-                    if (state.canBasicAttack() && goldenFlamePatch.getOriginal().getStrafingTime() <= 0) {
+                    if (state.canBasicAttack() && goldenFlamePatch.getOriginal().getStrafingTime() <= 0) {//漫游中则暂停当前序列
                         result = this.combatBehaviors.tryProceed();
                         if (result != null) {
                             result.execute(this.mobpatch);
                         }
                     }
+                    //当前无序列则选新序列执行
                 } else if (!state.inaction()
                         && !goldenFlamePatch.getOriginal().isCharging()
                         && goldenFlamePatch.getOriginal().getInactionTime() <= 0
                         && goldenFlamePatch.getOriginal().getStrafingTime() <= 0
+                        && goldenFlamePatch.getOriginal().shouldRender()
                         && !goldenFlamePatch.getAnimator().getPlayerFor(null).getAnimation().equals(WOMAnimations.TORMENT_CHARGE)) {
                     result = this.combatBehaviors.selectRandomBehaviorSeries();
                     if (result != null) {

@@ -38,7 +38,11 @@ import static com.p1nero.dote.entity.ai.ef.DOTECombatBehaviors.*;
  */
 public class GoldenFlameCombatBehaviors {
 
-    public static final Function<HumanoidMobPatch<?>, Boolean> CAN_CHARGING = (humanoidMobPatch -> humanoidMobPatch instanceof GoldenFlamePatch goldenFlamePatch && (!goldenFlamePatch.getOriginal().isCharging() && goldenFlamePatch.getOriginal().getAntiFormCooldown() <= 0));
+    public static final Function<HumanoidMobPatch<?>, Boolean> CAN_CHARGING = (humanoidMobPatch -> humanoidMobPatch instanceof GoldenFlamePatch goldenFlamePatch
+            && (!goldenFlamePatch.getOriginal().isCharging()
+            && goldenFlamePatch.getOriginal().shouldRender()
+            && goldenFlamePatch.getOriginal().getAntiFormCooldown() <= 0)
+            && !goldenFlamePatch.getAnimator().getPlayerFor(null).getAnimation().equals(WOMAnimations.TORMENT_CHARGE));
 
     /**
      * 开始蓄力并播放音效
