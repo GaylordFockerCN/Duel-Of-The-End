@@ -32,6 +32,8 @@ public class DOTEEntities {
 	public static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, DuelOfTheEndMod.MOD_ID);
 	public static final RegistryObject<EntityType<BlackHoleEntity>> BLACK_HOLE = register("black_hole",
 			EntityType.Builder.of(BlackHoleEntity::new, MobCategory.AMBIENT).sized(1.0f, 1.0f));
+	public static final RegistryObject<EntityType<FlameCircleEntity>> FLAME_CIRCLE = register("flame_circle",
+			EntityType.Builder.<FlameCircleEntity>of(FlameCircleEntity::new, MobCategory.AMBIENT).sized(1.0f, 1.0f));
 	public static final RegistryObject<EntityType<DOTEZombie>> DOTE_ZOMBIE = register("zombie",
 			EntityType.Builder.of(DOTEZombie::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
 	public static final RegistryObject<EntityType<DOTEZombie>> DOTE_ZOMBIE_2 = register("zombie_2",

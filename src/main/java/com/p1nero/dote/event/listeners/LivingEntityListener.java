@@ -102,6 +102,12 @@ public class LivingEntityListener {
             if(event.getSource().getDirectEntity() instanceof LivingEntity livingEntity){
                 livingEntity.setHealth(livingEntity.getMaxHealth());
             }
+//            //附近有玩家似也回血
+//            for(Entity entity : EntityUtil.getNearByEntities(event.getEntity(), 72)){
+//                if(entity instanceof DOTEBoss doteBoss){
+//                    doteBoss.setHealth(doteBoss.getMaxHealth());
+//                }
+//            }
         }
     }
 

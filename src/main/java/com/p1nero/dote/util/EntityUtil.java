@@ -63,7 +63,7 @@ public class EntityUtil {
     /**
      * 啥比Mojang获取附近实体非要视线对着才算
      */
-    public static List<Entity> getNearByEntities(LivingEntity self, int offset){
+    public static List<Entity> getNearByEntities(Entity self, int offset){
         return self.level().getEntities(self, getPlayerAABB(self.getOnPos(), offset), entity -> entity.distanceTo(self) < offset);
     }
 

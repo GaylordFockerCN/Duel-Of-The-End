@@ -7,9 +7,6 @@ import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.util.ItemUtil;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -24,21 +21,20 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import reascer.wom.world.item.WOMItems;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
-import yesman.epicfight.world.item.EpicFightItems;
 
 public class SenbaiDevil extends DOTEBoss{
 
-    protected static final EntityDataAccessor<Boolean> IS_PHASE2 = SynchedEntityData.defineId(SenbaiDevil.class, EntityDataSerializers.BOOLEAN);
     public SenbaiDevil(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
-        setItemInHand(InteractionHand.MAIN_HAND, EpicFightItems.UCHIGATANA.get().getDefaultInstance());
+        setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SATSUJIN.get().getDefaultInstance());
     }
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 573.03f)
-                .add(Attributes.ATTACK_DAMAGE, 6.0f)
+                .add(Attributes.ATTACK_DAMAGE, 4.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 114514f)
@@ -53,15 +49,6 @@ public class SenbaiDevil extends DOTEBoss{
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        getEntityData().define(IS_PHASE2, false);
-    }
-
-    public void setPhase2(boolean isPhase2){
-        getEntityData().set(IS_PHASE2, isPhase2);
-    }
-
-    public boolean isPhase2(){
-        return getEntityData().get(IS_PHASE2);
     }
 
     @Override
@@ -69,18 +56,9 @@ public class SenbaiDevil extends DOTEBoss{
         return 37;
     }
 
-
     @Override
     public int getMaxNeutralizeCount() {
         return 16 + DOTEArchiveManager.getWorldLevel() * 3;
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-        if(getHealth() > getMaxHealth() / 2){
-            setPhase2(false);
-        }
     }
 
     /**

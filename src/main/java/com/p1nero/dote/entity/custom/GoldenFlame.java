@@ -156,7 +156,9 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
 
         //反神形态计时器，持续40秒用拳，时间到了再播动画变身回去
         if (getAntiFormTimer() > 0) {
-            getEntityData().set(ANTI_FORM_TIMER, Math.max(0, getAntiFormTimer() - 1));
+            if(!level().isClientSide){
+                getEntityData().set(ANTI_FORM_TIMER, Math.max(0, getAntiFormTimer() - 1));
+            }
             if (getAntiFormTimer() == MAX_ANTI_FORM_TIMER - 10) {
                 setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
                 if (getPatch() != null) {

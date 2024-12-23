@@ -38,6 +38,7 @@ import java.util.UUID;
  */
 public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity {
     protected static final EntityDataAccessor<BlockPos> HOME_POS = SynchedEntityData.defineId(DOTEBoss.class, EntityDataSerializers.BLOCK_POS);
+    protected static final EntityDataAccessor<Integer> PHASE = SynchedEntityData.defineId(DOTEBoss.class, EntityDataSerializers.INT);//Boss的阶段，备用
     public static final Map<UUID, Integer> SERVER_BOSSES = new HashMap<>();//用于客户端渲染bossBar
     protected final ServerBossEvent bossInfo;
     protected DOTEBoss(EntityType<? extends PathfinderMob> type, Level level) {

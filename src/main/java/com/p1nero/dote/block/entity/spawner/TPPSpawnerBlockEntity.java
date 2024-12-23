@@ -5,7 +5,9 @@ import com.p1nero.dote.entity.DOTEEntities;
 import com.p1nero.dote.entity.custom.ThePyroclasOfPurgatory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 public class TPPSpawnerBlockEntity extends BossSpawnerBlockEntity<ThePyroclasOfPurgatory>{
     public TPPSpawnerBlockEntity(BlockPos pos, BlockState state) {
@@ -16,4 +18,10 @@ public class TPPSpawnerBlockEntity extends BossSpawnerBlockEntity<ThePyroclasOfP
     public ParticleOptions getSpawnerParticle() {
         return null;
     }
+
+    @Nullable
+    public ParticleOptions getBorderParticle(){
+        return ParticleTypes.FLAME;
+    };
+
 }

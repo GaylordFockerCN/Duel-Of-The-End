@@ -130,14 +130,13 @@ public class DOTECombatBehaviors {
             humanoidMobPatch.rotateTo(humanoidMobPatch.getTarget(), 30F, true);
         }
     });
+
     /**
      * 瞬移到目标边上（可能会到身后）
      */
     public static final Consumer<HumanoidMobPatch<?>> MOVE_TO_TARGET = (humanoidMobPatch -> {
         if (humanoidMobPatch.getTarget() != null) {
-            Vec3 view = humanoidMobPatch.getTarget().getViewVector(1.0F);
-            Vec3 dir = new Vec3(view.x, 0, view.z);
-            humanoidMobPatch.getOriginal().moveTo(humanoidMobPatch.getTarget().position().add(dir.normalize().scale(2)));
+            humanoidMobPatch.getOriginal().moveTo(humanoidMobPatch.getTarget().position());
             humanoidMobPatch.rotateTo(humanoidMobPatch.getTarget(), 30F, true);
         }
     });
