@@ -21,11 +21,11 @@ public class BlackHoleEntity extends Entity {
     @Override
     public void tick() {
         super.tick();
-        double range = 6 + tickCount * 0.06; // 有效范围
+        double range = 10 + tickCount * 0.2; // 有效范围
         Player player = level().getNearestPlayer(this, range);
         if(player != null){
             double dis = player.position().subtract(this.position()).length();
-            Vec3 dir = this.position().subtract(player.position()).normalize().scale(0.05);//吸力
+            Vec3 dir = this.position().subtract(player.position()).normalize().scale(0.04);//吸力
             if(dis < range){
                 player.push(dir.x, dir.y, dir.z);
             }

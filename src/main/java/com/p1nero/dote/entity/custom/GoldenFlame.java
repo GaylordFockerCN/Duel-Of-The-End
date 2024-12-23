@@ -46,8 +46,8 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
     protected static final EntityDataAccessor<Boolean> IS_BLUE = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.BOOLEAN);
     protected static final EntityDataAccessor<Boolean> SHOULD_RENDER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.BOOLEAN);
     private int antiFormCooldown = 0;//FIXME 反神形态无法受伤？？
-    private static final int MAX_ANTI_FORM_COOLDOWN = 2400;
-    private static final int MAX_ANTI_FORM_TIMER = 900;
+    private static final int MAX_ANTI_FORM_COOLDOWN = 2000;
+    private static final int MAX_ANTI_FORM_TIMER = 1000;
     private int strafingTime;
     private float strafingForward;
     private float strafingClockwise;
