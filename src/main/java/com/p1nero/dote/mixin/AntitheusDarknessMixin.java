@@ -9,6 +9,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -47,6 +48,11 @@ public abstract class AntitheusDarknessMixin extends AbstractHurtingProjectile {
                     EpicFightDamageSource damage = livingEntityPatch.getDamageSource(WOMAnimations.ANTITHEUS_SHOOT, InteractionHand.MAIN_HAND);
                     damage.setImpact(2.0F);
                     damage.setStunType(StunType.LONG);
+                    if(entity1 instanceof GoldenFlame goldenFlame && entity instanceof Player){
+                        if(livingEntityPatch.getEntityState().attackResult(damage).dealtDamage()){
+                            goldenFlame.setHealth(goldenFlame.getHealth() + goldenFlame.getMaxHealth() / 20);
+                        }
+                    }
                     int prevInvulTime = entity.invulnerableTime;
                     entity.invulnerableTime = 0;
                     float entity1damage = 4.0F;

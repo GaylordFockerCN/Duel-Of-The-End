@@ -34,6 +34,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import reascer.wom.gameasset.WOMAnimations;
+import reascer.wom.world.item.WOMItems;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
@@ -49,10 +50,11 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
     private int strafingTime;
     private float strafingForward;
     private float strafingClockwise;
+
     public GoldenFlame(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
-//        setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SOLAR.get().getDefaultInstance());
-        setItemInHand(InteractionHand.MAIN_HAND, DOTEItems.ROT_GREATSWORD.get().getDefaultInstance());
+        setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SOLAR.get().getDefaultInstance());
+//        setItemInHand(InteractionHand.MAIN_HAND, DOTEItems.ROT_GREATSWORD.get().getDefaultInstance());
         setItemSlot(EquipmentSlot.HEAD, DOTEItems.GOLDEN_DRAGON_HELMET.get().getDefaultInstance());
         setItemSlot(EquipmentSlot.CHEST, DOTEItems.GOLDEN_DRAGON_CHESTPLATE.get().getDefaultInstance());
         setItemSlot(EquipmentSlot.LEGS, DOTEItems.GOLDEN_DRAGON_LEGGINGS.get().getDefaultInstance());
@@ -74,15 +76,15 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
         getEntityData().define(SHOULD_RENDER, true);
     }
 
-    public void setIsBlue(boolean isBlue){
+    public void setIsBlue(boolean isBlue) {
         getEntityData().set(IS_BLUE, isBlue);
     }
 
-    public boolean isBlue(){
+    public boolean isBlue() {
         return getEntityData().get(IS_BLUE);
     }
 
-    public void setShouldRender(boolean shouldRender){
+    public void setShouldRender(boolean shouldRender) {
         getEntityData().set(SHOULD_RENDER, shouldRender);
     }
 
@@ -90,45 +92,45 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
         return getEntityData().get(SHOULD_RENDER);
     }
 
-    public void startCharging(){
+    public void startCharging() {
         getEntityData().set(CHARGING_TIMER, 135);
     }
 
-    public void resetCharging(){
+    public void resetCharging() {
         getEntityData().set(CHARGING_TIMER, 0);
     }
 
-    public boolean isCharging(){
+    public boolean isCharging() {
         return getEntityData().get(CHARGING_TIMER) > 0;
     }
 
-    public int getChargingTimer(){
+    public int getChargingTimer() {
         return getEntityData().get(CHARGING_TIMER);
     }
 
-    public void startAntiForm(){
+    public void startAntiForm() {
         getEntityData().set(ANTI_FORM_TIMER, MAX_ANTI_FORM_TIMER);
         antiFormCooldown = 1;
     }
 
-    public int getAntiFormTimer(){
+    public int getAntiFormTimer() {
         return getEntityData().get(ANTI_FORM_TIMER);
     }
 
-    public int getAntiFormCooldown(){
+    public int getAntiFormCooldown() {
         return antiFormCooldown;
     }
 
-    public void setInactionTime(int inactionTime){
+    public void setInactionTime(int inactionTime) {
         getEntityData().set(INACTION_TIME, inactionTime);
     }
 
-    public int getInactionTime(){
+    public int getInactionTime() {
         return getEntityData().get(INACTION_TIME);
     }
 
     @Nullable
-    public GoldenFlamePatch getPatch(){
+    public GoldenFlamePatch getPatch() {
         return EpicFightCapabilities.getEntityPatch(this, GoldenFlamePatch.class);
     }
 
@@ -139,57 +141,72 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
 //        System.out.println("goals: " + this.goalSelector.getAvailableGoals().size());
 //        System.out.println("running goals: " + this.goalSelector.getAvailableGoals().size());
 
-        if(getInactionTime() > 0){
-            setInactionTime(getInactionTime() -1);
+        if (getInactionTime() > 0) {
+            setInactionTime(getInactionTime() - 1);
         }
 
         //反神形态计时器，持续40秒用拳，时间到了再播动画变身回去
-        if(getAntiFormTimer() > 0){
+        if (getAntiFormTimer() > 0) {
             getEntityData().set(ANTI_FORM_TIMER, Math.max(0, getAntiFormTimer() - 1));
-            if(getAntiFormTimer() == MAX_ANTI_FORM_TIMER - 10){
+            if (getAntiFormTimer() == MAX_ANTI_FORM_TIMER - 10) {
                 setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
-                if(getPatch() != null){
+                if (getPatch() != null) {
                     getPatch().setAIAsInfantry(false);
                 }
                 resetCharging();
             }
-            if(getAntiFormTimer() == 1){
-                setItemInHand(InteractionHand.MAIN_HAND, DOTEItems.ROT_GREATSWORD.get().getDefaultInstance());
-                if(getPatch() != null){
+            if (getAntiFormTimer() == 1) {
+//                setItemInHand(InteractionHand.MAIN_HAND, DOTEItems.ROT_GREATSWORD.get().getDefaultInstance());
+                if (getHealthRatio() < 0.8) {
+                    setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SOLAR_OBSCURIDAD.get().getDefaultInstance());
+                } else {
+                    setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SOLAR.get().getDefaultInstance());
+                }
+                if (getPatch() != null) {
                     getPatch().setAIAsInfantry(false);
                 }
-                if(!level().isClientSide){
+                if (!level().isClientSide) {
                     GoldenFlamePatch patch = EpicFightCapabilities.getEntityPatch(this, GoldenFlamePatch.class);
                     patch.playAnimationSynchronized(WOMAnimations.ANTITHEUS_LAPSE, 0.3F);
                 }
                 antiFormCooldown = MAX_ANTI_FORM_COOLDOWN;
             }
+        } else {
+            if (isBlue()) {
+                if (getMainHandItem().is(WOMItems.SOLAR.get())) {
+                    setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SOLAR_OBSCURIDAD.get().getDefaultInstance());
+                }
+            } else {
+                if (getMainHandItem().is(WOMItems.SOLAR_OBSCURIDAD.get())) {
+                    setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SOLAR.get().getDefaultInstance());
+                }
+            }
         }
 
-        if(antiFormCooldown > 0){
+        if (antiFormCooldown > 0) {
             antiFormCooldown--;
         }
 
         //蓄力播音效
-        if(getChargingTimer() > 0 && !level().isClientSide){
+        if (getChargingTimer() > 0 && !level().isClientSide) {
             getEntityData().set(CHARGING_TIMER, Math.max(0, getChargingTimer() - 1));
-            if(getTarget() != null){
+            if (getTarget() != null) {
                 getLookControl().setLookAt(getTarget(), 30, 30);
             }
 
-            if(getChargingTimer() == 115){
+            if (getChargingTimer() == 115) {
                 level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.6F);
             }
 
-            if(getChargingTimer() == 95){
+            if (getChargingTimer() == 95) {
                 level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.65F);
             }
 
-            if(getChargingTimer() == 65){
+            if (getChargingTimer() == 65) {
                 level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.7F);
             }
 
-            if(getChargingTimer() == 35){
+            if (getChargingTimer() == 35) {
                 level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.5F);
                 level().playSound(null, getX(), getY(), getZ(), SoundEvents.BELL_BLOCK, SoundSource.BLOCKS, 2.5F, 0.5F);
             }
@@ -222,7 +239,7 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
 
     @Override
     public boolean hurt(@NotNull DamageSource source, float p_21017_) {
-        if(!shouldRender()){
+        if (!shouldRender()) {
             return false;
         }
         return super.hurt(source, p_21017_);
@@ -230,10 +247,10 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
 
     @Override
     public void die(@NotNull DamageSource source) {
-        level().playSound(null , getX(), getY(), getZ(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.BLOCKS,1,1);
-        if(source.getEntity() instanceof ServerPlayer player){
+        level().playSound(null, getX(), getY(), getZ(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.BLOCKS, 1, 1);
+        if (source.getEntity() instanceof ServerPlayer player) {
             DialogueComponentBuilder builder = new DialogueComponentBuilder(this);
-            switch (DOTEArchiveManager.getWorldLevel()){
+            switch (DOTEArchiveManager.getWorldLevel()) {
                 case 0:
                     player.displayClientMessage(builder.buildDialogue(this, builder.buildDialogueAnswer(0)), false);
                     break;
@@ -244,10 +261,10 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
                     player.displayClientMessage(builder.buildDialogue(this, builder.buildDialogueAnswer(2)), false);
             }
             DOTEArchiveManager.BIOME_PROGRESS_DATA.setGoldenFlameFought(true);
-            if(DOTEArchiveManager.BIOME_PROGRESS_DATA.isSenbaiFought()){
+            if (DOTEArchiveManager.BIOME_PROGRESS_DATA.isSenbaiFought()) {
                 DOTEAdvancementData.getAdvancement("golden_flame", player);
             }
-            if(!DOTEArchiveManager.BIOME_PROGRESS_DATA.isBoss2fought()){
+            if (!DOTEArchiveManager.BIOME_PROGRESS_DATA.isBoss2fought()) {
                 ItemUtil.addItem(player, DOTEItems.ADVENTURESPAR.get(), 25 * (DOTEArchiveManager.getWorldLevel() + 1));
             }
         }
