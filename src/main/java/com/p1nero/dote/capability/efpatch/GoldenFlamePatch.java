@@ -74,10 +74,17 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
     @Override
     public void updateEntityState() {
         super.updateEntityState();
+        //用于蓄力的时候暂停序列，可看AnimatedAttackGoal
         if(this.getOriginal().getInactionTime() > 0){
             state.setState(EntityState.INACTION, true);
             state.setState(EntityState.CAN_BASIC_ATTACK, false);
         }
+
+        //尝试修复反神无伤
+        if(this.getOriginal().getAntiFormTimer() > 0){
+            state.setState(EntityState.ATTACK_RESULT, (damage) -> AttackResult.ResultType.SUCCESS);
+        }
+
     }
 
     @Override

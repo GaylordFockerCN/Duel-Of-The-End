@@ -18,6 +18,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.PathfinderMob;
@@ -50,6 +51,8 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
     private int strafingTime;
     private float strafingForward;
     private float strafingClockwise;
+
+    private boolean healthLock = true;
 
     public GoldenFlame(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -111,6 +114,7 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
     public void startAntiForm() {
         getEntityData().set(ANTI_FORM_TIMER, MAX_ANTI_FORM_TIMER);
         antiFormCooldown = 1;
+        healthLock = false;
     }
 
     public int getAntiFormTimer() {
@@ -138,8 +142,13 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
     public void tick() {
         super.tick();
 
-//        System.out.println("goals: " + this.goalSelector.getAvailableGoals().size());
-//        System.out.println("running goals: " + this.goalSelector.getAvailableGoals().size());
+        if(hasEffect(MobEffects.WITHER)){
+            removeEffect(MobEffects.WITHER);
+        }
+
+        if(hasEffect(MobEffects.MOVEMENT_SLOWDOWN)){
+            removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
+        }
 
         if (getInactionTime() > 0) {
             setInactionTime(getInactionTime() - 1);
@@ -238,11 +247,14 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
     }
 
     @Override
-    public boolean hurt(@NotNull DamageSource source, float p_21017_) {
+    public boolean hurt(@NotNull DamageSource source, float damageValue) {
         if (!shouldRender()) {
             return false;
         }
-        return super.hurt(source, p_21017_);
+        if(getHealthRatio() <= 0.2 && healthLock){
+            damageValue = Math.min(damageValue, getMaxHealth() * 0.01F);
+        }
+        return super.hurt(source, damageValue);
     }
 
     @Override

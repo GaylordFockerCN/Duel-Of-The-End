@@ -1,25 +1,16 @@
 package com.p1nero.dote.entity.ai.ef;
 
 import com.p1nero.dote.capability.efpatch.GoldenFlamePatch;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.player.Player;
 import reascer.wom.gameasset.WOMAnimations;
 import yesman.epicfight.api.animation.types.EntityState;
 import yesman.epicfight.world.capabilities.entitypatch.MobPatch;
+import yesman.epicfight.world.entity.ai.goal.AnimatedAttackGoal;
 import yesman.epicfight.world.entity.ai.goal.CombatBehaviors;
 
-public class GoldenFlameAnimatedAttackGoal<T extends MobPatch<?>> extends Goal {
-    protected final T mobpatch;
-    protected final CombatBehaviors<T> combatBehaviors;
+public class GoldenFlameAnimatedAttackGoal<T extends MobPatch<?>> extends AnimatedAttackGoal<T> {
 
     public GoldenFlameAnimatedAttackGoal(T mobpatch, CombatBehaviors<T> combatBehaviors) {
-        this.mobpatch = mobpatch;
-        this.combatBehaviors = combatBehaviors;
-    }
-
-    public boolean canUse() {
-        return this.checkTargetValid();
+        super(mobpatch, combatBehaviors);
     }
 
     public void tick() {
@@ -52,14 +43,4 @@ public class GoldenFlameAnimatedAttackGoal<T extends MobPatch<?>> extends Goal {
 
     }
 
-    protected boolean checkTargetValid() {
-        LivingEntity livingentity = this.mobpatch.getTarget();
-        if (livingentity == null) {
-            return false;
-        } else if (!livingentity.isAlive()) {
-            return false;
-        } else {
-            return !(livingentity instanceof Player) || !livingentity.isSpectator() && !((Player) livingentity).isCreative();
-        }
-    }
 }

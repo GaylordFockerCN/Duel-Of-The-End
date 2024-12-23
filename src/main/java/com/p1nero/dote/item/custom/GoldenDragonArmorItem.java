@@ -68,14 +68,13 @@ public class GoldenDragonArmorItem extends ArmorItem {
     @Override
     public @Nullable String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
         if(entity instanceof GoldenFlame goldenFlame){
-            if(!goldenFlame.isBlue()){
-                return DuelOfTheEndMod.MOD_ID + ":textures/item/armor/golden_dragon_armor.png";
+            if(goldenFlame.getAntiFormTimer() > 0){
+                return DuelOfTheEndMod.MOD_ID + ":textures/item/armor/golden_dragon_armor_dark.png";
+            }
+            if(goldenFlame.isBlue()){
+                return DuelOfTheEndMod.MOD_ID + ":textures/item/armor/golden_dragon_armor_blue.png";
             } else {
-                if(goldenFlame.getAntiFormCooldown() > 0){
-                    return DuelOfTheEndMod.MOD_ID + ":textures/item/armor/golden_dragon_armor_dark.png";
-                } else {
-                    return DuelOfTheEndMod.MOD_ID + ":textures/item/armor/golden_dragon_armor_blue.png";
-                }
+                return DuelOfTheEndMod.MOD_ID + ":textures/item/armor/golden_dragon_armor.png";
             }
         }
         return DuelOfTheEndMod.MOD_ID + ":textures/item/armor/golden_dragon_armor.png";
