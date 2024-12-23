@@ -46,7 +46,7 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
     protected static final EntityDataAccessor<Boolean> SHOULD_RENDER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.BOOLEAN);
     private int antiFormCooldown = 0;//FIXME 反神形态无法受伤？？
     private static final int MAX_ANTI_FORM_COOLDOWN = 2400;
-    private static final int MAX_ANTI_FORM_TIMER = 1200;
+    private static final int MAX_ANTI_FORM_TIMER = 900;
     private int strafingTime;
     private float strafingForward;
     private float strafingClockwise;
@@ -194,19 +194,19 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
                 getLookControl().setLookAt(getTarget(), 30, 30);
             }
 
-            if (getChargingTimer() == 115) {
+            if (getChargingTimer() == 120) {
                 level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.6F);
             }
 
-            if (getChargingTimer() == 95) {
+            if (getChargingTimer() == 100) {
                 level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.65F);
             }
 
-            if (getChargingTimer() == 65) {
+            if (getChargingTimer() == 70) {
                 level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.7F);
             }
 
-            if (getChargingTimer() == 35) {
+            if (getChargingTimer() == 40) {
                 level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.5F);
                 level().playSound(null, getX(), getY(), getZ(), SoundEvents.BELL_BLOCK, SoundSource.BLOCKS, 2.5F, 0.5F);
             }
@@ -217,7 +217,7 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 752.0f)
+                .add(Attributes.MAX_HEALTH, 1500.0f)
                 .add(Attributes.ATTACK_DAMAGE, 1.0f)
                 .add(Attributes.ATTACK_SPEED, 1.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
