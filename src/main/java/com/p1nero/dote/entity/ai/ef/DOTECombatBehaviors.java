@@ -5,6 +5,7 @@ import com.p1nero.dote.entity.ai.ef.api.*;
 import com.p1nero.dote.network.DOTEPacketHandler;
 import com.p1nero.dote.network.PacketRelay;
 import com.p1nero.dote.network.packet.clientbound.AddEntityAfterImageParticle;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -17,6 +18,9 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import reascer.wom.gameasset.WOMAnimations;
 import yesman.epicfight.api.animation.types.StaticAnimation;
+import yesman.epicfight.api.utils.math.OpenMatrix4f;
+import yesman.epicfight.api.utils.math.Vec3f;
+import yesman.epicfight.gameasset.Armatures;
 import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.HumanoidMobPatch;
@@ -54,6 +58,34 @@ public class DOTECombatBehaviors {
     public static final Consumer<HumanoidMobPatch<?>> SUMMON_LIGHTNING = (humanoidMobPatch -> {
         if (humanoidMobPatch.getOriginal().level() instanceof ServerLevel serverLevel) {
             EntityType.LIGHTNING_BOLT.spawn(serverLevel, humanoidMobPatch.getOriginal().getOnPos(), MobSpawnType.MOB_SUMMONED);
+        }
+    });
+
+    public static final Consumer<LivingEntityPatch<?>> PLAY_SOLAR_BRASERO_CREMATORIO_PARTICLE = (entityPatch -> {
+        OpenMatrix4f transformMatrix = entityPatch.getArmature().getBindedTransformFor(entityPatch.getAnimator().getPose(0.0F), Armatures.BIPED.toolL);
+        transformMatrix.translate(new Vec3f(0.0F, 0.0F, 0.0F));
+        OpenMatrix4f CORRECTION = (new OpenMatrix4f()).rotate(-((float)Math.toRadians((entityPatch.getOriginal().yRotO - 180.0F))), new Vec3f(0.0F, 1.0F, 0.0F));
+        OpenMatrix4f.mul(CORRECTION, transformMatrix, transformMatrix);
+        int n = 12;
+        float t = 0.1F;
+
+        for(int i = 0; i < n; ++i) {
+            double theta = 6.283185 * (new Random()).nextDouble();
+            double phi = Math.acos((new Random()).nextDouble());
+            double x = t * Math.sin(phi) * Math.cos(theta);
+            double y = t * Math.sin(phi) * Math.sin(theta);
+            double z = t * Math.cos(phi);
+            Vec3f direction = new Vec3f((float)x, (float)y, (float)z);
+            OpenMatrix4f rotation = (new OpenMatrix4f()).rotate(-((float)Math.toRadians((entityPatch.getOriginal()).yBodyRotO)), new Vec3f(0.0F, 1.0F, 0.0F));
+            rotation.translate(new Vec3f(0.0F, 0.0F, 0.2F));
+            OpenMatrix4f.transform3v(rotation, direction, direction);
+            if(entityPatch.getOriginal().level() instanceof ServerLevel serverLevel){
+                serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, transformMatrix.m30 + entityPatch.getOriginal().getX(), transformMatrix.m31 + entityPatch.getOriginal().getY(), transformMatrix.m32 + entityPatch.getOriginal().getZ(), 0, direction.x, direction.y, direction.z, 1);
+                if ((new Random()).nextBoolean()) {
+                    serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, transformMatrix.m30 + entityPatch.getOriginal().getX(), transformMatrix.m31 + entityPatch.getOriginal().getY(), transformMatrix.m32 + entityPatch.getOriginal().getZ(), 0, (((new Random()).nextFloat() - 0.5F) * 0.05F), (((new Random()).nextFloat() - 0.5F) * 0.05F), (((new Random()).nextFloat() - 0.5F) * 0.05F), 1);
+                    serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, transformMatrix.m30 + entityPatch.getOriginal().getX(), transformMatrix.m31 + entityPatch.getOriginal().getY(), transformMatrix.m32 + (entityPatch.getOriginal()).getZ(), 0, 0.0, ((new Random()).nextFloat() * 0.05F), 0.0, 1);
+                }
+            }
         }
     });
 
