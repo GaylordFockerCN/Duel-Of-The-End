@@ -5,10 +5,13 @@ import com.p1nero.dote.capability.efpatch.GoldenFlamePatch;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
+import com.p1nero.dote.effect.DOTEEffects;
 import com.p1nero.dote.entity.IWanderableEntity;
 import com.p1nero.dote.entity.ai.goal.CustomWanderGoal;
 import com.p1nero.dote.item.DOTEItems;
+import com.p1nero.dote.util.EntityUtil;
 import com.p1nero.dote.util.ItemUtil;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -18,10 +21,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
@@ -36,21 +38,23 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import reascer.wom.gameasset.WOMAnimations;
 import reascer.wom.world.item.WOMItems;
+import yesman.epicfight.api.utils.math.OpenMatrix4f;
+import yesman.epicfight.api.utils.math.Vec3f;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
+import java.util.Random;
+
 public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
     protected static final EntityDataAccessor<Integer> CHARGING_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<Integer> FLAME_CIRCLE_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Integer> ANTI_FORM_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
-    protected static final EntityDataAccessor<Integer> INACTION_TIME = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Boolean> IS_BLUE = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.BOOLEAN);
     protected static final EntityDataAccessor<Boolean> SHOULD_RENDER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.BOOLEAN);
     private int antiFormCooldown = 0;//FIXME 反神形态无法受伤？？
     private static final int MAX_ANTI_FORM_COOLDOWN = 2000;
     private static final int MAX_ANTI_FORM_TIMER = 1000;
-    private int strafingTime;
-    private float strafingForward;
-    private float strafingClockwise;
+    private static final int MAX_FLAME_CIRCLE_TIME = 400;
 
     private boolean healthLock = true;
 
@@ -73,8 +77,8 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         getEntityData().define(CHARGING_TIMER, 0);
+        getEntityData().define(FLAME_CIRCLE_TIMER, 0);
         getEntityData().define(ANTI_FORM_TIMER, 0);
-        getEntityData().define(INACTION_TIME, 0);
         getEntityData().define(IS_BLUE, false);
         getEntityData().define(SHOULD_RENDER, true);
     }
@@ -111,6 +115,14 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
         return getEntityData().get(CHARGING_TIMER);
     }
 
+    public int getFlameCircleTimer(){
+        return getEntityData().get(FLAME_CIRCLE_TIMER);
+    }
+
+    public void setFlameCircleTimer(int time){
+        getEntityData().set(FLAME_CIRCLE_TIMER, time);
+    }
+
     public void startAntiForm() {
         getEntityData().set(ANTI_FORM_TIMER, MAX_ANTI_FORM_TIMER);
         antiFormCooldown = 1;
@@ -123,14 +135,6 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
 
     public int getAntiFormCooldown() {
         return antiFormCooldown;
-    }
-
-    public void setInactionTime(int inactionTime) {
-        getEntityData().set(INACTION_TIME, inactionTime);
-    }
-
-    public int getInactionTime() {
-        return getEntityData().get(INACTION_TIME);
     }
 
     @Nullable
@@ -148,10 +152,6 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
 
         if(hasEffect(MobEffects.MOVEMENT_SLOWDOWN)){
             removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
-        }
-
-        if (getInactionTime() > 0) {
-            setInactionTime(getInactionTime() - 1);
         }
 
         //反神形态计时器，持续40秒用拳，时间到了再播动画变身回去
@@ -221,7 +221,51 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
                 level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.5F);
                 level().playSound(null, getX(), getY(), getZ(), SoundEvents.BELL_BLOCK, SoundSource.BLOCKS, 2.5F, 0.5F);
             }
+        }
 
+        //copy from SolarPassive
+        if(getFlameCircleTimer() > 0){
+            setFlameCircleTimer(getFlameCircleTimer() - 1);
+            int numberOf = 2;
+            double r = 0.7;
+            double t = 0.01;
+            float power = 1.0F + (float) (MAX_FLAME_CIRCLE_TIME - getFlameCircleTimer()) / 200.0F * 7.0F;
+            if(!level().isClientSide){
+                for (Entity entity : EntityUtil.getNearByEntities(this, (int) (r * power))) {
+                    entity.setSecondsOnFire(5);
+                    if(entity instanceof LivingEntity livingEntity){
+                        livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 10));
+                        livingEntity.addEffect(new MobEffectInstance(DOTEEffects.ARMOR_DEBUFF.get(), 10));
+                    }
+                }
+            } else {
+                for (int i = 0; i < numberOf; ++i) {
+                    double theta = 6.283185 * (new Random()).nextDouble();
+                    double phi = ((new Random()).nextDouble() - 0.5) * Math.PI * t / r;
+                    double x = r * Math.cos(phi) * Math.cos(theta);
+                    double y = r * Math.cos(phi) * Math.sin(theta);
+                    double z = r * Math.sin(phi);
+                    Vec3f direction = new Vec3f((float) x, (float) y, (float) z);
+                    OpenMatrix4f rotation = (new OpenMatrix4f()).rotate(-((float) Math.toRadians(this.yBodyRotO)), new Vec3f(0.0F, 1.0F, 0.0F));
+                    rotation.rotate((float) Math.toRadians(90.0), new Vec3f(1.0F, 0.0F, 0.0F));
+                    OpenMatrix4f.transform3v(rotation, direction, direction);
+                    level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) direction.x, this.getY() + 0.1, this.getZ() + (double) direction.z, 0.0, 0.0099, 0.0);
+                    level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) (direction.x * (1.0F + (new Random()).nextFloat() * power)), this.getY() + 0.1, this.getZ() + (double) (direction.z * (1.0F + (new Random()).nextFloat() * power)), 0.0, (double) (0.1F + (new Random()).nextFloat() * 0.2F), 0.0);
+
+                    for (int j = 0; j < 3; ++j) {
+                        theta = 6.283185 * (new Random()).nextDouble();
+                        phi = ((new Random()).nextDouble() - 0.5) * Math.PI * t / r;
+                        x = r * Math.cos(phi) * Math.cos(theta);
+                        y = r * Math.cos(phi) * Math.sin(theta);
+                        z = r * Math.sin(phi);
+                        direction = new Vec3f((float) x, (float) y, (float) z);
+                        rotation = (new OpenMatrix4f()).rotate(-((float) Math.toRadians(this.yBodyRotO)), new Vec3f(0.0F, 1.0F, 0.0F));
+                        rotation.rotate((float) Math.toRadians(90.0), new Vec3f(1.0F, 0.0F, 0.0F));
+                        OpenMatrix4f.transform3v(rotation, direction, direction);
+                        level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) (direction.x * power), this.getY() + 0.1, this.getZ() + (double) (direction.z * power), 0.0, 0.0099, 0.0);
+                    }
+                }
+            }
         }
 
     }
@@ -288,37 +332,6 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
     @Override
     public @Nullable SoundEvent getFightMusic() {
         return DOTESounds.GOLDEN_FLAME_BGM.get();
-    }
-
-    @Override
-    public int getStrafingTime() {
-        return strafingTime;
-    }
-
-    @Override
-    public void setStrafingTime(int strafingTime) {
-        this.strafingTime = strafingTime;
-        setInactionTime(strafingTime);
-    }
-
-    @Override
-    public float getStrafingForward() {
-        return strafingForward;
-    }
-
-    @Override
-    public void setStrafingForward(float strafingForward) {
-        this.strafingForward = strafingForward;
-    }
-
-    @Override
-    public float getStrafingClockwise() {
-        return strafingClockwise;
-    }
-
-    @Override
-    public void setStrafingClockwise(float strafingClockwise) {
-        this.strafingClockwise = strafingClockwise;
     }
 
 }

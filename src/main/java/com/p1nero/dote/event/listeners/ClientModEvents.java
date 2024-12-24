@@ -27,6 +27,7 @@ public class ClientModEvents{
         EntityRenderers.register(DOTEEntities.SENBAI_DEVIL.get(), SenbaiRenderer::new);
         EntityRenderers.register(DOTEEntities.GOLDEN_FLAME.get(), GoldenFlameRenderer::new);
         EntityRenderers.register(DOTEEntities.BLACK_HOLE.get(), BlackHoleRenderer::new);
+        EntityRenderers.register(DOTEEntities.FLAME_CIRCLE.get(), FlameCircleRenderer::new);
         EntityRenderers.register(DOTEEntities.DOTE_PIGLIN.get(), DOTEPiglinRenderer::new);
         EntityRenderers.register(DOTEEntities.DOTE_ZOMBIE.get(), DOTEZombieRenderer::new);
         EntityRenderers.register(DOTEEntities.DOTE_ZOMBIE_2.get(), DOTEZombieRenderer::new);
@@ -59,7 +60,7 @@ public class ClientModEvents{
     @OnlyIn(Dist.CLIENT)
     public static void onRenderPatched(PatchedRenderersEvent.Add event) {
         EntityRendererProvider.Context context = event.getContext();
-        event.addPatchedEntityRenderer(DOTEEntities.SENBAI_DEVIL.get(), (entityType) -> new SenbaiPatchedRenderer(() -> Meshes.SKELETON, context, entityType).initLayerLast(context, entityType));
+        event.addPatchedEntityRenderer(DOTEEntities.SENBAI_DEVIL.get(), (entityType) -> new PHumanoidRenderer<>(() -> Meshes.SKELETON, context, entityType).initLayerLast(context, entityType));
         event.addPatchedEntityRenderer(DOTEEntities.GOLDEN_FLAME.get(), (entityType) -> new GoldenFlamePatchedRenderer(() -> Meshes.SKELETON, context, entityType).initLayerLast(context, entityType));
         event.addPatchedEntityRenderer(DOTEEntities.DOTE_ZOMBIE.get(), (entityType) -> new PHumanoidRenderer<>(() -> Meshes.BIPED_OLD_TEX, context, entityType).initLayerLast(context, entityType));
         event.addPatchedEntityRenderer(DOTEEntities.DOTE_PIGLIN.get(), (entityType) -> new PHumanoidRenderer<>(() -> Meshes.PIGLIN, context, entityType).initLayerLast(context, entityType));

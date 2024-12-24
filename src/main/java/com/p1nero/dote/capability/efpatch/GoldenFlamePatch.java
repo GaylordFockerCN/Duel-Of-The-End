@@ -5,12 +5,7 @@ import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
 import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.entity.ai.ef.GoldenFlameCombatBehaviors;
-import com.p1nero.dote.entity.ai.ef.GoldenFlameTargetChasingGoal;
-import com.p1nero.dote.entity.ai.ef.api.*;
 import com.p1nero.dote.entity.custom.GoldenFlame;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.Nullable;
@@ -19,27 +14,16 @@ import yesman.epicfight.api.animation.Animator;
 import yesman.epicfight.api.animation.LivingMotions;
 import yesman.epicfight.api.animation.types.EntityState;
 import yesman.epicfight.api.utils.AttackResult;
+import yesman.epicfight.api.utils.math.OpenMatrix4f;
 import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.world.capabilities.entitypatch.Faction;
-import yesman.epicfight.world.capabilities.entitypatch.HumanoidMobPatch;
 import yesman.epicfight.world.capabilities.item.CapabilityItem;
 import yesman.epicfight.world.damagesource.EpicFightDamageSource;
 import yesman.epicfight.world.damagesource.StunType;
-import yesman.epicfight.world.entity.ai.goal.AnimatedAttackGoal;
-import yesman.epicfight.world.entity.ai.goal.CombatBehaviors;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
-public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements IModifyStunTypeEntityPatch, IModifyAttackDamageEntityPatch, ITimeEventListEntityPatch, IModifyAttackSpeedEntityPatch {
-
-    @Nullable
-    private StunType stunTypeModify;
-
-    private float damageModify = 0;
-    private final List<TimeStampedEvent> list = new ArrayList<>();
-    private static final EntityDataAccessor<Float> ATTACK_SPEED = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.FLOAT);
+public class GoldenFlamePatch extends DOTEBossPatch<GoldenFlame> {
 
     private boolean onTormentAuto4Hit;
 
@@ -56,44 +40,28 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
     }
 
     @Override
-    public void onConstructed(GoldenFlame entityIn) {
-        super.onConstructed(entityIn);
-        entityIn.getEntityData().define(ATTACK_SPEED, 1.0F);
-    }
-
-    @Override
-    public void setAIAsInfantry(boolean holdingRangedWeapon) {
-        CombatBehaviors.Builder<HumanoidMobPatch<?>> builder = this.getHoldingItemWeaponMotionBuilder();
-        if (builder != null) {
-//            this.original.goalSelector.addGoal(0, new GoldenFlameAnimatedAttackGoal<>(this, builder.build(this)));
-            this.original.goalSelector.addGoal(0, new AnimatedAttackGoal<>(this, builder.build(this)));
-            this.original.goalSelector.addGoal(1, new GoldenFlameTargetChasingGoal(this, this.getOriginal(), 1.0, true));
-        }
-    }
-
-    @Override
     public void updateEntityState() {
         super.updateEntityState();
-        //用于蓄力的时候暂停序列，可看AnimatedAttackGoal
-        if(this.getOriginal().getInactionTime() > 0){
-            state.setState(EntityState.INACTION, true);
-            state.setState(EntityState.CAN_BASIC_ATTACK, false);
-        }
-
         //尝试修复反神无伤
-        if(this.getOriginal().getAntiFormTimer() > 0){
+        if (this.getOriginal().getAntiFormTimer() > 0) {
             state.setState(EntityState.ATTACK_RESULT, (damage) -> AttackResult.ResultType.SUCCESS);
         }
 
     }
 
     @Override
+    public OpenMatrix4f getModelMatrix(float partialTicks) {
+        float scale = 1.2F;
+        return super.getModelMatrix(partialTicks).scale(scale, scale, scale);
+    }
+
+    @Override
     public AttackResult attack(EpicFightDamageSource damageSource, Entity target, InteractionHand hand) {
         AttackResult result = super.attack(damageSource, target, hand);
-        if(result.resultType.dealtDamage()){
+        if (result.resultType.dealtDamage()) {
             this.getOriginal().setHealth((float) (this.getOriginal().getHealth() + Math.max(this.getOriginal().getMaxHealth() * 0.005, result.damage * (DOTEArchiveManager.getWorldLevel() + 1.1 - this.getOriginal().getHealthRatio()))));
             target.setSecondsOnFire(10);
-            if(damageSource.getAnimation().equals(WOMAnimations.TORMENT_AUTO_4)){
+            if (damageSource.getAnimation().equals(WOMAnimations.TORMENT_AUTO_4)) {
                 onTormentAuto4Hit = true;
             }
         }
@@ -158,47 +126,6 @@ public class GoldenFlamePatch extends HumanoidMobPatch<GoldenFlame> implements I
     @Override
     public boolean applyStun(StunType stunType, float stunTime) {
         return false;
-    }
-
-    @Override
-    public void setStunType(StunType stunType) {
-        stunTypeModify = stunType;
-    }
-
-    @Override
-    @Nullable
-    public StunType getStunType() {
-        return stunTypeModify;
-    }
-
-    @Override
-    public void setNewDamage(float damage) {
-        damageModify = damage;
-    }
-
-    @Override
-    public float getNewDamage() {
-        return damageModify;
-    }
-
-    @Override
-    public List<TimeStampedEvent> getTimeEventList() {
-        return list;
-    }
-
-    @Override
-    public boolean addEvent(TimeStampedEvent event) {
-        return list.add(event);
-    }
-
-    @Override
-    public float getAttackSpeed() {
-        return this.original.getEntityData().get(ATTACK_SPEED);
-    }
-
-    @Override
-    public void setAttackSpeed(float value) {
-        this.original.getEntityData().set(ATTACK_SPEED, Math.abs(value));
     }
 
 }

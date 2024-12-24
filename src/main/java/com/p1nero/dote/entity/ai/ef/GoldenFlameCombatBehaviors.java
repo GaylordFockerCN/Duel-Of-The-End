@@ -15,12 +15,17 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import reascer.wom.gameasset.WOMAnimations;
 import reascer.wom.gameasset.WOMSounds;
 import reascer.wom.particle.WOMParticles;
+import yesman.epicfight.api.utils.math.OpenMatrix4f;
+import yesman.epicfight.api.utils.math.Vec3f;
 import yesman.epicfight.data.conditions.entity.HealthPoint;
 import yesman.epicfight.gameasset.Animations;
+import yesman.epicfight.gameasset.Armatures;
 import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.world.capabilities.entitypatch.HumanoidMobPatch;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
@@ -28,6 +33,7 @@ import yesman.epicfight.world.damagesource.StunType;
 import yesman.epicfight.world.entity.WitherGhostClone;
 import yesman.epicfight.world.entity.ai.goal.CombatBehaviors;
 
+import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -122,7 +128,7 @@ public class GoldenFlameCombatBehaviors {
     public static final Consumer<LivingEntityPatch<?>> TIME_STAMPED_SUMMON_BLACK_HOLE = (entityPatch -> {
         if (entityPatch.getOriginal().level() instanceof ServerLevel serverLevel) {
             BlackHoleEntity blackHoleEntity = DOTEEntities.BLACK_HOLE.get().create(serverLevel);
-            if(blackHoleEntity != null){
+            if (blackHoleEntity != null) {
                 blackHoleEntity.setPos(entityPatch.getOriginal().position());
                 serverLevel.addFreshEntity(blackHoleEntity);
             }
@@ -131,13 +137,39 @@ public class GoldenFlameCombatBehaviors {
 
     public static final Consumer<HumanoidMobPatch<?>> PLAY_TIME_TRAVEL_SOUND = (humanoidMobPatch -> humanoidMobPatch.playSound(WOMSounds.TIME_TRAVEL.get(), 1f, 1f));
 
-    public static final Consumer<HumanoidMobPatch<?>> PLAY_SOLAR_BRASERO_CREMATORIO = customAttackAnimation(WOMAnimations.SOLAR_BRASERO_CREMATORIO, 0.3F, 0.8f, null, 0, new TimeStampedEvent(0.3F, (entityPatch -> {
-        LivingEntity entity = entityPatch.getOriginal();
-        if (entityPatch.getOriginal().level() instanceof ServerLevel serverLevel) {
-            serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, entity.getX(), entity.getY() + 1.0, entity.getZ(), 10, 0.0, 0.0, 0.0, 0.1);
-            serverLevel.playSound(null, entity.getX(), entity.getY() + 0.75, entity.getZ(), SoundEvents.PLAYER_HURT_ON_FIRE, SoundSource.BLOCKS, 1.0F, 0.5F);
-        }
-    })));
+    public static final Consumer<HumanoidMobPatch<?>> PLAY_SOLAR_BRASERO_CREMATORIO = customAttackAnimation(WOMAnimations.SOLAR_BRASERO_CREMATORIO, 0.3F, 0.8f, null, 0,
+            new TimeStampedEvent(0.3F, (entityPatch -> {
+                LivingEntity entity = entityPatch.getOriginal();
+                if (entityPatch.getOriginal().level() instanceof ServerLevel serverLevel) {
+                    serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, entity.getX(), entity.getY() + 1.0, entity.getZ(), 10, 0.0, 0.0, 0.0, 0.1);
+                    serverLevel.playSound(null, entity.getX(), entity.getY() + 0.75, entity.getZ(), SoundEvents.PLAYER_HURT_ON_FIRE, SoundSource.BLOCKS, 1.0F, 0.5F);
+                }
+            })),
+            new TimeStampedEvent(1.0F, (entityPatch -> {
+                OpenMatrix4f transformMatrix = entityPatch.getArmature().getBindedTransformFor(entityPatch.getAnimator().getPose(0.0F), Armatures.BIPED.toolL);
+                transformMatrix.translate(new Vec3f(0.0F, 0.0F, 0.0F));
+                OpenMatrix4f CORRECTION = (new OpenMatrix4f()).rotate(-((float)Math.toRadians((entityPatch.getOriginal().yRotO - 180.0F))), new Vec3f(0.0F, 1.0F, 0.0F));
+                OpenMatrix4f.mul(CORRECTION, transformMatrix, transformMatrix);
+                int n = 12;
+                float t = 0.1F;
+
+                for(int i = 0; i < n; ++i) {
+                    double theta = 6.283185 * (new Random()).nextDouble();
+                    double phi = Math.acos((new Random()).nextDouble());
+                    double x = t * Math.sin(phi) * Math.cos(theta);
+                    double y = t * Math.sin(phi) * Math.sin(theta);
+                    double z = t * Math.cos(phi);
+                    Vec3f direction = new Vec3f((float)x, (float)y, (float)z);
+                    OpenMatrix4f rotation = (new OpenMatrix4f()).rotate(-((float)Math.toRadians((entityPatch.getOriginal()).yBodyRotO)), new Vec3f(0.0F, 1.0F, 0.0F));
+                    rotation.translate(new Vec3f(0.0F, 0.0F, 0.2F));
+                    OpenMatrix4f.transform3v(rotation, direction, direction);
+                    entityPatch.getOriginal().level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, transformMatrix.m30 + entityPatch.getOriginal().getX(), transformMatrix.m31 + entityPatch.getOriginal().getY(), transformMatrix.m32 + entityPatch.getOriginal().getZ(), direction.x, direction.y, direction.z);
+                    if ((new Random()).nextBoolean()) {
+                        entityPatch.getOriginal().level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, transformMatrix.m30 + entityPatch.getOriginal().getX(), transformMatrix.m31 + entityPatch.getOriginal().getY(), transformMatrix.m32 + entityPatch.getOriginal().getZ(), (((new Random()).nextFloat() - 0.5F) * 0.05F), (((new Random()).nextFloat() - 0.5F) * 0.05F), (((new Random()).nextFloat() - 0.5F) * 0.05F));
+                        entityPatch.getOriginal().level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, transformMatrix.m30 + entityPatch.getOriginal().getX(), transformMatrix.m31 + entityPatch.getOriginal().getY(), transformMatrix.m32 + (entityPatch.getOriginal()).getZ(), 0.0, ((new Random()).nextFloat() * 0.05F), 0.0);
+                    }
+                }
+            })));
 
     /**
      * 反神形态
@@ -344,7 +376,7 @@ public class GoldenFlameCombatBehaviors {
                                 if (entityPatch.getOriginal().level() instanceof ServerLevel serverLevel) {
                                     BlackHoleEntity blackHoleEntity = DOTEEntities.BLACK_HOLE.get().create(serverLevel);
                                     entityPatch.playSound(WOMSounds.ANTITHEUS_BLACKKHOLE.get(), 0.9f, 0.9f);
-                                    if(blackHoleEntity != null){
+                                    if (blackHoleEntity != null) {
                                         blackHoleEntity.setPos(entityPatch.getOriginal().position());
                                         serverLevel.addFreshEntity(blackHoleEntity);
                                     }
@@ -359,8 +391,7 @@ public class GoldenFlameCombatBehaviors {
                                     new TimeStampedEvent(0.3f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))),
                                     new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.ANTITHEUS_SHOOT.getTotalTime(), 0.01f))),
                                     new TimeStampedEvent(0.6f, TIME_STAMPED_SHOOT_WITHER_GHOST))))
-            )
-            ;
+            );
     /**
      * 大剑形态
      */
@@ -386,6 +417,7 @@ public class GoldenFlameCombatBehaviors {
                                 if (humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame) {
                                     goldenFlame.setIsBlue(true);
                                 }
+
                             })))
             )
             // 1/5血下——反神形态
@@ -394,7 +426,15 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder()
                                     .behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENSION, 0.5f, 0.8f, null, 1f,
                                             new TimeStampedEvent(0.4f, timeStampedPlaySound(SoundEvents.WITHER_SHOOT, 1, 0.5F)),
-                                            new TimeStampedEvent(0.17f, (livingEntityPatch -> livingEntityPatch.getOriginal().addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 30, 9))))))
+                                            new TimeStampedEvent(0.17f, (livingEntityPatch -> livingEntityPatch.getOriginal().addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 30, 9)))),
+                                            //五雷轰顶
+                                            new TimeStampedEvent(1.7f, (livingEntityPatch) -> {
+                                                if (livingEntityPatch.getOriginal().level() instanceof ServerLevel serverLevel) {
+                                                    for (int i = 0; i < 5; i++) {
+                                                        EntityType.LIGHTNING_BOLT.spawn(serverLevel, livingEntityPatch.getOriginal().getOnPos(), MobSpawnType.MOB_SUMMONED);
+                                                    }
+                                                }
+                                            })))
                                     //判断能否进入反神形态
                                     .custom(humanoidMobPatch -> humanoidMobPatch.getOriginal() instanceof GoldenFlame goldenFlame && goldenFlame.getAntiFormCooldown() == 0)
                                     .health(0.15F, HealthPoint.Comparator.LESS_RATIO))
@@ -838,9 +878,13 @@ public class GoldenFlameCombatBehaviors {
                                     new TimeStampedEvent(0.4f, (livingEntityPatch -> livingEntityPatch.playSound(SoundEvents.TOTEM_USE, 1, 1))),
                                     new TimeStampedEvent(0.7f, (livingEntityPatch -> livingEntityPatch.getAnimator().getPlayerFor(null).setElapsedTime(WOMAnimations.SOLAR_HORNO.getTotalTime())))
                             )))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_BRASERO_INFIERNO, 0.4f, 0.8f, StunType.HOLD, 2f)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_BRASERO_INFIERNO, 0.4f, 0.8f, StunType.HOLD, 2f, new TimeStampedEvent(0.65F, (livingEntityPatch) -> {
+                                if(livingEntityPatch.getOriginal() instanceof GoldenFlame goldenFlame){
+                                    goldenFlame.setFlameCircleTimer(200);
+                                }
+                            }))))
             )
-            //四阶段-四蓄力 FIXME
+            //四阶段-四蓄力
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(20F).cooldown(240).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(0, 8).withinEyeHeight().health(0.4F, HealthPoint.Comparator.LESS_RATIO).custom(CAN_CHARGING)

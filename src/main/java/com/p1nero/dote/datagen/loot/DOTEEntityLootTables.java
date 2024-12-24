@@ -67,6 +67,7 @@ public class DOTEEntityLootTables extends EntityLootSubProvider {
         add(DOTEEntities.KNIGHT_COMMANDER.get(), emptyLootTable());
         add(DOTEEntities.SCARLET_HIGH_PRIEST.get(), emptyLootTable());
         add(DOTEEntities.BLACK_HOLE.get(), emptyLootTable());
+        add(DOTEEntities.FLAME_CIRCLE.get(), emptyLootTable());
     }
 
     public LootTable.Builder emptyLootTable() {

@@ -2,15 +2,22 @@ package com.p1nero.dote.entity.ai.ef;
 
 import com.p1nero.dote.entity.IWanderableEntity;
 import com.p1nero.dote.entity.ai.ef.api.*;
+import com.p1nero.dote.network.DOTEPacketHandler;
+import com.p1nero.dote.network.PacketRelay;
+import com.p1nero.dote.network.packet.clientbound.AddEntityAfterImageParticle;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import reascer.wom.gameasset.WOMAnimations;
 import yesman.epicfight.api.animation.types.StaticAnimation;
+import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.HumanoidMobPatch;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
@@ -28,9 +35,31 @@ import java.util.function.Function;
  */
 public class DOTECombatBehaviors {
 
-    public static <T extends MobPatch<?>> Consumer<T> wander(int strafingTime, float forward, float clockwise){
+    /**
+     * 设置自定义阶段
+     */
+    public static <T extends MobPatch<?>> Consumer<T> setPhase(int phase) {
         return (patch) -> {
-            if(patch.getOriginal() instanceof IWanderableEntity wanderableEntity && !patch.isLogicalClient()){
+            if (patch instanceof IMultiPhaseEntityPatch phaseEntityPatch) {
+                phaseEntityPatch.setPhase(phase);
+            }
+        };
+    }
+
+    public static final Consumer<HumanoidMobPatch<?>> LEFT_ENTITY_AFTER_IMAGE = (humanoidMobPatch -> {
+        PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new AddEntityAfterImageParticle(humanoidMobPatch.getOriginal().getId()));
+        humanoidMobPatch.playSound(EpicFightSounds.ENTITY_MOVE.get(), 0.5F, 1, 1);
+    });
+
+    public static final Consumer<HumanoidMobPatch<?>> SUMMON_LIGHTNING = (humanoidMobPatch -> {
+        if (humanoidMobPatch.getOriginal().level() instanceof ServerLevel serverLevel) {
+            EntityType.LIGHTNING_BOLT.spawn(serverLevel, humanoidMobPatch.getOriginal().getOnPos(), MobSpawnType.MOB_SUMMONED);
+        }
+    });
+
+    public static <T extends MobPatch<?>> Consumer<T> wander(int strafingTime, float forward, float clockwise) {
+        return (patch) -> {
+            if (patch.getOriginal() instanceof IWanderableEntity wanderableEntity && !patch.isLogicalClient()) {
                 wanderableEntity.setStrafingTime(strafingTime);
                 wanderableEntity.setStrafingForward(forward);
                 wanderableEntity.setStrafingClockwise(clockwise);
@@ -41,7 +70,7 @@ public class DOTECombatBehaviors {
     /**
      * entityPatch的playSound似乎不能修改音调
      */
-    public static <T extends MobPatch<?>> Consumer<T> playSound(SoundEvent sound, float volume, float pitch){
+    public static <T extends MobPatch<?>> Consumer<T> playSound(SoundEvent sound, float volume, float pitch) {
         return (patch) -> {
             LivingEntity entity = patch.getOriginal();
             entity.level().playSound(null, entity.getX(), entity.getY(), entity.getZ(), sound, SoundSource.BLOCKS, volume, pitch);
@@ -51,7 +80,7 @@ public class DOTECombatBehaviors {
     /**
      * entityPatch的playSound似乎不能修改音调
      */
-    public static <T extends LivingEntityPatch<?>> Consumer<T> timeStampedPlaySound(SoundEvent sound, float volume, float pitch){
+    public static <T extends LivingEntityPatch<?>> Consumer<T> timeStampedPlaySound(SoundEvent sound, float volume, float pitch) {
         return (patch) -> {
             LivingEntity entity = patch.getOriginal();
             entity.level().playSound(null, entity.getX(), entity.getY(), entity.getZ(), sound, SoundSource.BLOCKS, volume, pitch);
@@ -259,6 +288,13 @@ public class DOTECombatBehaviors {
             humanoidMobPatch.getOriginal().getLookControl().setLookAt(humanoidMobPatch.getTarget());
         }
     });
+
+    /**
+     * boss阶段检测
+     */
+    public static Function<HumanoidMobPatch<?>, Boolean> phaseCheck(int min, int max) {
+        return (patch) -> patch instanceof IMultiPhaseEntityPatch phaseEntityPatch && phaseEntityPatch.checkPhase(min, max);
+    }
 
     public static Function<HumanoidMobPatch<?>, Boolean> attackLevelCheck(int min, int max) {
         return (patch) -> {

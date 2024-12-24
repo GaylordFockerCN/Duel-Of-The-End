@@ -19,8 +19,6 @@ public class GoldenFlamePatchedRenderer extends PHumanoidRenderer {
     @Override
     public void render(LivingEntity entity, LivingEntityPatch entitypatch, LivingEntityRenderer renderer, MultiBufferSource buffer, PoseStack poseStack, int packedLight, float partialTicks) {
         if(entity instanceof GoldenFlame goldenFlame && goldenFlame.shouldRender()){
-            poseStack.scale(1.2F, 1.2F, 1.2F);
-            poseStack.translate(0, 0.2F, 0);
             super.render(entity, entitypatch, renderer, buffer, poseStack, packedLight, partialTicks);
         }
     }

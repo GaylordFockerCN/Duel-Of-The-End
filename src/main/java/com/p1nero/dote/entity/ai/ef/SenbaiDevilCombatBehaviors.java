@@ -3,9 +3,6 @@ package com.p1nero.dote.entity.ai.ef;
 import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.entity.custom.SenbaiDevil;
 import com.p1nero.dote.gameasset.DOTEAnimations;
-import com.p1nero.dote.network.DOTEPacketHandler;
-import com.p1nero.dote.network.PacketRelay;
-import com.p1nero.dote.network.packet.clientbound.AddEntityAfterImageParticle;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
@@ -13,11 +10,8 @@ import net.minecraft.world.entity.MobSpawnType;
 import reascer.wom.gameasset.WOMAnimations;
 import yesman.epicfight.data.conditions.entity.HealthPoint;
 import yesman.epicfight.gameasset.Animations;
-import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.world.capabilities.entitypatch.HumanoidMobPatch;
 import yesman.epicfight.world.entity.ai.goal.CombatBehaviors;
-
-import java.util.function.Consumer;
 
 import static com.p1nero.dote.entity.ai.ef.DOTECombatBehaviors.*;
 
@@ -25,17 +19,6 @@ import static com.p1nero.dote.entity.ai.ef.DOTECombatBehaviors.*;
  * 森白影魔AI
  */
 public class SenbaiDevilCombatBehaviors {
-
-    public static final Consumer<HumanoidMobPatch<?>> SUMMON_LIGHTNING = (humanoidMobPatch -> {
-        if (humanoidMobPatch.getOriginal().level() instanceof ServerLevel serverLevel) {
-            EntityType.LIGHTNING_BOLT.spawn(serverLevel, humanoidMobPatch.getOriginal().getOnPos(), MobSpawnType.MOB_SUMMONED);
-        }
-    });
-
-    public static final Consumer<HumanoidMobPatch<?>> LEFT_ENTITY_AFTER_IMAGE = (humanoidMobPatch -> {
-        PacketRelay.sendToAll(DOTEPacketHandler.INSTANCE, new AddEntityAfterImageParticle(humanoidMobPatch.getOriginal().getId()));
-        humanoidMobPatch.playSound(EpicFightSounds.ENTITY_MOVE.get(), 0.5F, 1, 1);
-    });
 
     public static final CombatBehaviors.Builder<HumanoidMobPatch<?>> SENBAI = CombatBehaviors.<HumanoidMobPatch<?>>builder()
             //变身

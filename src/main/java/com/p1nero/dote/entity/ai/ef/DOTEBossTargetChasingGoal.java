@@ -1,21 +1,21 @@
 package com.p1nero.dote.entity.ai.ef;
 
-import com.p1nero.dote.entity.custom.GoldenFlame;
+import com.p1nero.dote.entity.custom.DOTEBoss;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import org.jetbrains.annotations.NotNull;
 import yesman.epicfight.world.capabilities.entitypatch.MobPatch;
 
-public class GoldenFlameTargetChasingGoal extends MeleeAttackGoal {
-    protected final MobPatch<? extends GoldenFlame> mobpatch;
+public class DOTEBossTargetChasingGoal extends MeleeAttackGoal {
+    protected final MobPatch<? extends DOTEBoss> mobpatch;
     protected final double attackRadiusSqr;
 
-    public GoldenFlameTargetChasingGoal(MobPatch<? extends GoldenFlame> mobpatch, PathfinderMob pathfinderMob, double speedModifier, boolean longMemory) {
+    public DOTEBossTargetChasingGoal(MobPatch<? extends DOTEBoss> mobpatch, PathfinderMob pathfinderMob, double speedModifier, boolean longMemory) {
         this(mobpatch, pathfinderMob, speedModifier, longMemory, 0.0);
     }
 
-    public GoldenFlameTargetChasingGoal(MobPatch<? extends GoldenFlame> mobpatch, PathfinderMob pathfinderMob, double speedModifier, boolean longMemory, double attackRadius) {
+    public DOTEBossTargetChasingGoal(MobPatch<? extends DOTEBoss> mobpatch, PathfinderMob pathfinderMob, double speedModifier, boolean longMemory, double attackRadius) {
         super(pathfinderMob, speedModifier, longMemory);
         this.mobpatch = mobpatch;
         this.attackRadiusSqr = attackRadius * attackRadius;

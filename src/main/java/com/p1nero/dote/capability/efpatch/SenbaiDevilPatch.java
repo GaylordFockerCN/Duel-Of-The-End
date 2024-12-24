@@ -3,9 +3,7 @@ package com.p1nero.dote.capability.efpatch;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
-import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.entity.ai.ef.SenbaiDevilCombatBehaviors;
-import com.p1nero.dote.entity.ai.ef.api.IModifyAttackSpeedEntityPatch;
 import com.p1nero.dote.entity.custom.SenbaiDevil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -15,10 +13,10 @@ import yesman.epicfight.api.animation.Animator;
 import yesman.epicfight.api.animation.LivingMotions;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.api.utils.AttackResult;
+import yesman.epicfight.api.utils.math.OpenMatrix4f;
 import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.world.capabilities.entitypatch.Faction;
-import yesman.epicfight.world.capabilities.entitypatch.HumanoidMobPatch;
 import yesman.epicfight.world.capabilities.item.CapabilityItem;
 import yesman.epicfight.world.damagesource.EpicFightDamageSource;
 import yesman.epicfight.world.damagesource.StunType;
@@ -27,11 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> implements IModifyAttackSpeedEntityPatch {
+public class SenbaiDevilPatch extends DOTEBossPatch<SenbaiDevil> {
     public List<StaticAnimation> guardAnim = new ArrayList<>();
     public List<StaticAnimation> antiAttack = new ArrayList<>();
-
-    private float attackSpeed;
 
     public SenbaiDevilPatch() {
         super(Faction.UNDEAD);
@@ -65,6 +61,12 @@ public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> implements I
             this.getOriginal().setBlockCount(this.getOriginal().getBlockCount() + 1);
         }
         return result;
+    }
+
+    @Override
+    public OpenMatrix4f getModelMatrix(float partialTicks) {
+        float scale = 1.2F;
+        return super.getModelMatrix(partialTicks).scale(scale, scale, scale);
     }
 
     @Override
@@ -123,19 +125,6 @@ public class SenbaiDevilPatch extends HumanoidMobPatch<SenbaiDevil> implements I
     @Override
     public void updateMotion(boolean b) {
         super.commonAggressiveMobUpdateMotion(b);
-    }
-
-    @Override
-    public void setAttackSpeed(float speed) {
-        attackSpeed = speed;
-    }
-
-    @Override
-    public float getAttackSpeed() {
-        if(attackSpeed == 1.0 || attackSpeed == 0){
-            return 0.65F + DOTEArchiveManager.getWorldLevel() * 0.07F;
-        }
-        return attackSpeed;
     }
 
 }

@@ -4,6 +4,7 @@ import com.p1nero.dote.DOTEConfig;
 import com.p1nero.dote.block.entity.spawner.BossSpawnerBlockEntity;
 import com.p1nero.dote.client.BossMusicPlayer;
 import com.p1nero.dote.entity.HomePointEntity;
+import com.p1nero.dote.entity.IWanderableEntity;
 import com.p1nero.dote.entity.ai.goal.AttemptToGoHomeGoal;
 import com.p1nero.dote.network.DOTEPacketHandler;
 import com.p1nero.dote.network.PacketRelay;
@@ -36,11 +37,16 @@ import java.util.UUID;
 /**
  * 方便统一调难度
  */
-public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity {
+public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity, IWanderableEntity {
+    public static final EntityDataAccessor<Float> ATTACK_SPEED = SynchedEntityData.defineId(DOTEBoss.class, EntityDataSerializers.FLOAT);
     protected static final EntityDataAccessor<BlockPos> HOME_POS = SynchedEntityData.defineId(DOTEBoss.class, EntityDataSerializers.BLOCK_POS);
     protected static final EntityDataAccessor<Integer> PHASE = SynchedEntityData.defineId(DOTEBoss.class, EntityDataSerializers.INT);//Boss的阶段，备用
+    protected static final EntityDataAccessor<Integer> INACTION_TIME = SynchedEntityData.defineId(DOTEBoss.class, EntityDataSerializers.INT);
     public static final Map<UUID, Integer> SERVER_BOSSES = new HashMap<>();//用于客户端渲染bossBar
     protected final ServerBossEvent bossInfo;
+    private int strafingTime;
+    private float strafingForward;
+    private float strafingClockwise;
     protected DOTEBoss(EntityType<? extends PathfinderMob> type, Level level) {
         this(type, level, BossEvent.BossBarColor.PURPLE);
     }
@@ -81,10 +87,29 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity {
         return DOTEConfig.SPAWNER_BLOCK_PROTECT_RADIUS.get();
     }
 
+    public void setPhase(int phase){
+        getEntityData().set(PHASE, phase);
+    }
+
+    public int getPhase(){
+        return getEntityData().get(PHASE);
+    }
+
+    public void setInactionTime(int inactionTime) {
+        getEntityData().set(INACTION_TIME, inactionTime);
+    }
+
+    public int getInactionTime() {
+        return getEntityData().get(INACTION_TIME);
+    }
+
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         getEntityData().define(HOME_POS, getOnPos());
+        getEntityData().define(PHASE, 0);
+        getEntityData().define(INACTION_TIME, 0);
+        getEntityData().define(ATTACK_SPEED, 1.0F);
     }
 
     public int getMaxNeutralizeCount(){
@@ -134,6 +159,10 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity {
     public void tick() {
         super.tick();
 
+        if (getInactionTime() > 0) {
+            setInactionTime(getInactionTime() - 1);
+        }
+
         //播放bgm
         if(level().isClientSide && this.isAlive()){
             BossMusicPlayer.playBossMusic(this, getFightMusic(), 32);
@@ -150,7 +179,7 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity {
     }
 
     /**
-     * 演出效果而已不能炸死玩家qwq
+     * 演出效果而已不能炸死玩家
      */
     public void explodeAndDiscard(){
         if(level() instanceof ServerLevel serverLevel){
@@ -198,4 +227,36 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity {
         super.registerGoals();
         this.goalSelector.addGoal(0, new AttemptToGoHomeGoal<>(this, 1.0));
     }
+
+    @Override
+    public int getStrafingTime() {
+        return strafingTime;
+    }
+
+    @Override
+    public void setStrafingTime(int strafingTime) {
+        this.strafingTime = strafingTime;
+        setInactionTime(strafingTime);
+    }
+
+    @Override
+    public float getStrafingForward() {
+        return strafingForward;
+    }
+
+    @Override
+    public void setStrafingForward(float strafingForward) {
+        this.strafingForward = strafingForward;
+    }
+
+    @Override
+    public float getStrafingClockwise() {
+        return strafingClockwise;
+    }
+
+    @Override
+    public void setStrafingClockwise(float strafingClockwise) {
+        this.strafingClockwise = strafingClockwise;
+    }
+
 }
