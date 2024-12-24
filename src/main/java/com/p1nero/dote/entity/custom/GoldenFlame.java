@@ -47,15 +47,15 @@ import java.util.Random;
 
 public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
     protected static final EntityDataAccessor<Integer> CHARGING_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
-    protected static final EntityDataAccessor<Integer> FLAME_CIRCLE_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<Integer> FLAME_CIRCLE_LIFETIME = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<Integer> CURRENT_FLAME_CIRCLE_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Integer> ANTI_FORM_TIMER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Boolean> IS_BLUE = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.BOOLEAN);
     protected static final EntityDataAccessor<Boolean> SHOULD_RENDER = SynchedEntityData.defineId(GoldenFlame.class, EntityDataSerializers.BOOLEAN);
     private int antiFormCooldown = 0;//FIXME 反神形态无法受伤？？
     private static final int MAX_ANTI_FORM_COOLDOWN = 2000;
     private static final int MAX_ANTI_FORM_TIMER = 1000;
-    private static final int MAX_FLAME_CIRCLE_TIME = 400;
-
+    private static final int MAX_FLAME_CIRCLE_TIME = 200;
     private boolean healthLock = true;
 
     public GoldenFlame(EntityType<? extends PathfinderMob> type, Level level) {
@@ -77,7 +77,8 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         getEntityData().define(CHARGING_TIMER, 0);
-        getEntityData().define(FLAME_CIRCLE_TIMER, 0);
+        getEntityData().define(FLAME_CIRCLE_LIFETIME, 0);
+        getEntityData().define(CURRENT_FLAME_CIRCLE_TIMER, 0);
         getEntityData().define(ANTI_FORM_TIMER, 0);
         getEntityData().define(IS_BLUE, false);
         getEntityData().define(SHOULD_RENDER, true);
@@ -115,12 +116,21 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
         return getEntityData().get(CHARGING_TIMER);
     }
 
-    public int getFlameCircleTimer(){
-        return getEntityData().get(FLAME_CIRCLE_TIMER);
+    public int getFlameCircleLifetime(){
+        return getEntityData().get(FLAME_CIRCLE_LIFETIME);
     }
 
-    public void setFlameCircleTimer(int time){
-        getEntityData().set(FLAME_CIRCLE_TIMER, time);
+    public int getCurrentFlameCircleTimer(){
+        return getEntityData().get(CURRENT_FLAME_CIRCLE_TIMER);
+    }
+
+    public void setCurrentFlameCircleTimer(int time){
+        getEntityData().set(CURRENT_FLAME_CIRCLE_TIMER, time);
+    }
+
+    public void setFlameCircleLifeTimeAndStart(int time){
+        getEntityData().set(FLAME_CIRCLE_LIFETIME, time);
+        getEntityData().set(CURRENT_FLAME_CIRCLE_TIMER, 1);
     }
 
     public void startAntiForm() {
@@ -224,12 +234,15 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
         }
 
         //copy from SolarPassive
-        if(getFlameCircleTimer() > 0){
-            setFlameCircleTimer(getFlameCircleTimer() - 1);
+        if(getCurrentFlameCircleTimer() > 0){
+            setCurrentFlameCircleTimer(getCurrentFlameCircleTimer() + 1);
+            if(getCurrentFlameCircleTimer() >= getFlameCircleLifetime()){
+                setCurrentFlameCircleTimer(0);
+            }
             int numberOf = 2;
             double r = 0.7;
             double t = 0.01;
-            float power = 1.0F + (float) (MAX_FLAME_CIRCLE_TIME - getFlameCircleTimer()) / 200.0F * 7.0F;
+            float power = 1.0F + (float) Math.max(MAX_FLAME_CIRCLE_TIME, getCurrentFlameCircleTimer()) / 200.0F * 7.0F;
             if(!level().isClientSide){
                 for (Entity entity : EntityUtil.getNearByEntities(this, (int) (r * power))) {
                     entity.setSecondsOnFire(5);

@@ -140,7 +140,7 @@ public class GoldenFlameCombatBehaviors {
     public static final Consumer<HumanoidMobPatch<?>> PLAY_SOLAR_BRASERO_CREMATORIO = customAttackAnimation(WOMAnimations.SOLAR_BRASERO_CREMATORIO, 0.3F, 0.8f, null, 0,
             new TimeStampedEvent(0.8F, (livingEntityPatch)  ->  {
                 if(livingEntityPatch.getOriginal() instanceof GoldenFlame goldenFlame){
-                    goldenFlame.setFlameCircleTimer(400);
+                    goldenFlame.setFlameCircleLifeTimeAndStart(400);
                 }
             }),
             new TimeStampedEvent(0.3F, (entityPatch -> {
@@ -168,10 +168,12 @@ public class GoldenFlameCombatBehaviors {
                     OpenMatrix4f rotation = (new OpenMatrix4f()).rotate(-((float)Math.toRadians((entityPatch.getOriginal()).yBodyRotO)), new Vec3f(0.0F, 1.0F, 0.0F));
                     rotation.translate(new Vec3f(0.0F, 0.0F, 0.2F));
                     OpenMatrix4f.transform3v(rotation, direction, direction);
-                    entityPatch.getOriginal().level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, transformMatrix.m30 + entityPatch.getOriginal().getX(), transformMatrix.m31 + entityPatch.getOriginal().getY(), transformMatrix.m32 + entityPatch.getOriginal().getZ(), direction.x, direction.y, direction.z);
-                    if ((new Random()).nextBoolean()) {
-                        entityPatch.getOriginal().level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, transformMatrix.m30 + entityPatch.getOriginal().getX(), transformMatrix.m31 + entityPatch.getOriginal().getY(), transformMatrix.m32 + entityPatch.getOriginal().getZ(), (((new Random()).nextFloat() - 0.5F) * 0.05F), (((new Random()).nextFloat() - 0.5F) * 0.05F), (((new Random()).nextFloat() - 0.5F) * 0.05F));
-                        entityPatch.getOriginal().level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, transformMatrix.m30 + entityPatch.getOriginal().getX(), transformMatrix.m31 + entityPatch.getOriginal().getY(), transformMatrix.m32 + (entityPatch.getOriginal()).getZ(), 0.0, ((new Random()).nextFloat() * 0.05F), 0.0);
+                    if(entityPatch.getOriginal().level() instanceof ServerLevel serverLevel){
+                        serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, transformMatrix.m30 + entityPatch.getOriginal().getX(), transformMatrix.m31 + entityPatch.getOriginal().getY(), transformMatrix.m32 + entityPatch.getOriginal().getZ(), 0, direction.x, direction.y, direction.z, 1);
+                        if ((new Random()).nextBoolean()) {
+                            serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, transformMatrix.m30 + entityPatch.getOriginal().getX(), transformMatrix.m31 + entityPatch.getOriginal().getY(), transformMatrix.m32 + entityPatch.getOriginal().getZ(), 0, (((new Random()).nextFloat() - 0.5F) * 0.05F), (((new Random()).nextFloat() - 0.5F) * 0.05F), (((new Random()).nextFloat() - 0.5F) * 0.05F), 1);
+                            serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, transformMatrix.m30 + entityPatch.getOriginal().getX(), transformMatrix.m31 + entityPatch.getOriginal().getY(), transformMatrix.m32 + (entityPatch.getOriginal()).getZ(), 0, 0.0, ((new Random()).nextFloat() * 0.05F), 0.0, 1);
+                        }
                     }
                 }
             })));
@@ -547,7 +549,7 @@ public class GoldenFlameCombatBehaviors {
                                     new TimeStampedEvent(0.4f, timeStampedPlaySound(WOMSounds.SOLAR_HIT.get(), 1, 0.5F)),
                                     new TimeStampedEvent(0.4F, (livingEntityPatch)  ->  {
                                         if(livingEntityPatch.getOriginal() instanceof GoldenFlame goldenFlame){
-                                            goldenFlame.setFlameCircleTimer(200);
+                                            goldenFlame.setFlameCircleLifeTimeAndStart(200);
                                         }
                                     }))))
             )
@@ -669,7 +671,7 @@ public class GoldenFlameCombatBehaviors {
                                     new TimeStampedEvent(0.4f, timeStampedPlaySound(WOMSounds.SOLAR_HIT.get(), 1, 0.5F)),
                                     new TimeStampedEvent(0.4F, (livingEntityPatch)  ->  {
                                         if(livingEntityPatch.getOriginal() instanceof GoldenFlame goldenFlame){
-                                            goldenFlame.setFlameCircleTimer(200);
+                                            goldenFlame.setFlameCircleLifeTimeAndStart(200);
                                         }
                                     }))))
             )
@@ -903,7 +905,7 @@ public class GoldenFlameCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.SOLAR_BRASERO_INFIERNO, 0.4f, 0.8f, StunType.HOLD, 2f,
                                     new TimeStampedEvent(0.65F, (livingEntityPatch)  ->  {
                                         if(livingEntityPatch.getOriginal() instanceof GoldenFlame goldenFlame){
-                                            goldenFlame.setFlameCircleTimer(600);
+                                            goldenFlame.setFlameCircleLifeTimeAndStart(600);
                                         }
                             }))))
             )
