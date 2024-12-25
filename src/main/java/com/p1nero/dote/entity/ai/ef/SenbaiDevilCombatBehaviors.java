@@ -151,6 +151,26 @@ public class SenbaiDevilCombatBehaviors {
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(Animations.UCHIGATANA_SHEATHING_DASH, 0.25F, 1.1F)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(ROTATE_TO_TARGET))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(Animations.RUSHING_TEMPO3, 0.0F, 1.1F)))
+            )
+            //3级 概率十字斩
+            .newBehaviorSeries(
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100).cooldown(200).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(DOTEAnimations.SSTEP_BACKWARD).custom(attackLevelCheck(1, 2)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior((humanoidMobPatch -> humanoidMobPatch.playSound(SoundEvents.ENDERMAN_DEATH, 0.2F, 0.8F))))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.BIPED_HOLD_UCHIGATANA_SHEATHING))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(Animations.UCHIGATANA_SHEATHING_DASH, 0.25F, 1.1F)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(ROTATE_TO_TARGET))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(Animations.RUSHING_TEMPO3, 0.0F, 1.1F)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(Animations.TACHI_DASH, 0.0F, 1.1F)).health(0.5F, HealthPoint.Comparator.LESS_RATIO))
+            )
+            //3级 概率躲避
+            .newBehaviorSeries(
+                    CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100).cooldown(200).canBeInterrupted(false).looping(false)
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior((humanoidMobPatch -> humanoidMobPatch.playSound(SoundEvents.ENDERMAN_DEATH, 0.2F, 0.8F))).custom(attackLevelCheck(1, 2)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(WOMAnimations.ENDERSTEP_FORWARD))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(teleportToFront(true, 2, 2)))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(ROTATE_TO_TARGET))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(Animations.TACHI_DASH, 0.0F, 1.1F)).health(0.5F, HealthPoint.Comparator.LESS_RATIO))
             );
 
 }

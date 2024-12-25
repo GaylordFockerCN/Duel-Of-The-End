@@ -252,42 +252,45 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
             double r = 0.7;
             double t = 0.01;
             float power = 1.0F + (float) Math.max(MAX_FLAME_CIRCLE_TIME, getCurrentFlameCircleTimer()) / 200.0F * 7.0F;
-            if(!level().isClientSide){
-                for (Entity entity : EntityUtil.getNearByEntities(this, (int) (r * power))) {
-                    entity.setSecondsOnFire(5);
-                    if(entity instanceof LivingEntity livingEntity){
-                        livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100));
-                        livingEntity.addEffect(new MobEffectInstance(DOTEEffects.ARMOR_DEBUFF.get(), 100, 1));
+            if(shouldRender()){
+                if(!level().isClientSide){
+                    for (Entity entity : EntityUtil.getNearByEntities(this, (int) (r * power))) {
+                        entity.setSecondsOnFire(5);
+                        if(entity instanceof LivingEntity livingEntity){
+                            livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100));
+                            livingEntity.addEffect(new MobEffectInstance(DOTEEffects.BURNT.get(), 100, 1));
+                        }
                     }
-                }
-            } else {
-                for (int i = 0; i < numberOf; ++i) {
-                    double theta = 6.283185 * (new Random()).nextDouble();
-                    double phi = ((new Random()).nextDouble() - 0.5) * Math.PI * t / r;
-                    double x = r * Math.cos(phi) * Math.cos(theta);
-                    double y = r * Math.cos(phi) * Math.sin(theta);
-                    double z = r * Math.sin(phi);
-                    Vec3f direction = new Vec3f((float) x, (float) y, (float) z);
-                    OpenMatrix4f rotation = (new OpenMatrix4f()).rotate(-((float) Math.toRadians(this.yBodyRotO)), new Vec3f(0.0F, 1.0F, 0.0F));
-                    rotation.rotate((float) Math.toRadians(90.0), new Vec3f(1.0F, 0.0F, 0.0F));
-                    OpenMatrix4f.transform3v(rotation, direction, direction);
-                    level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) direction.x, this.getY() + 0.1, this.getZ() + (double) direction.z, 0.0, 0.0099, 0.0);
-                    level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) (direction.x * (1.0F + (new Random()).nextFloat() * power)), this.getY() + 0.1, this.getZ() + (double) (direction.z * (1.0F + (new Random()).nextFloat() * power)), 0.0, (double) (0.1F + (new Random()).nextFloat() * 0.2F), 0.0);
-
-                    for (int j = 0; j < 3; ++j) {
-                        theta = 6.283185 * (new Random()).nextDouble();
-                        phi = ((new Random()).nextDouble() - 0.5) * Math.PI * t / r;
-                        x = r * Math.cos(phi) * Math.cos(theta);
-                        y = r * Math.cos(phi) * Math.sin(theta);
-                        z = r * Math.sin(phi);
-                        direction = new Vec3f((float) x, (float) y, (float) z);
-                        rotation = (new OpenMatrix4f()).rotate(-((float) Math.toRadians(this.yBodyRotO)), new Vec3f(0.0F, 1.0F, 0.0F));
+                } else {
+                    for (int i = 0; i < numberOf; ++i) {
+                        double theta = 6.283185 * (new Random()).nextDouble();
+                        double phi = ((new Random()).nextDouble() - 0.5) * Math.PI * t / r;
+                        double x = r * Math.cos(phi) * Math.cos(theta);
+                        double y = r * Math.cos(phi) * Math.sin(theta);
+                        double z = r * Math.sin(phi);
+                        Vec3f direction = new Vec3f((float) x, (float) y, (float) z);
+                        OpenMatrix4f rotation = (new OpenMatrix4f()).rotate(-((float) Math.toRadians(this.yBodyRotO)), new Vec3f(0.0F, 1.0F, 0.0F));
                         rotation.rotate((float) Math.toRadians(90.0), new Vec3f(1.0F, 0.0F, 0.0F));
                         OpenMatrix4f.transform3v(rotation, direction, direction);
-                        level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) (direction.x * power), this.getY() + 0.1, this.getZ() + (double) (direction.z * power), 0.0, 0.0099, 0.0);
+                        level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) direction.x, this.getY() + 0.1, this.getZ() + (double) direction.z, 0.0, 0.0099, 0.0);
+                        level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) (direction.x * (1.0F + (new Random()).nextFloat() * power)), this.getY() + 0.1, this.getZ() + (double) (direction.z * (1.0F + (new Random()).nextFloat() * power)), 0.0, (double) (0.1F + (new Random()).nextFloat() * 0.2F), 0.0);
+
+                        for (int j = 0; j < 3; ++j) {
+                            theta = 6.283185 * (new Random()).nextDouble();
+                            phi = ((new Random()).nextDouble() - 0.5) * Math.PI * t / r;
+                            x = r * Math.cos(phi) * Math.cos(theta);
+                            y = r * Math.cos(phi) * Math.sin(theta);
+                            z = r * Math.sin(phi);
+                            direction = new Vec3f((float) x, (float) y, (float) z);
+                            rotation = (new OpenMatrix4f()).rotate(-((float) Math.toRadians(this.yBodyRotO)), new Vec3f(0.0F, 1.0F, 0.0F));
+                            rotation.rotate((float) Math.toRadians(90.0), new Vec3f(1.0F, 0.0F, 0.0F));
+                            OpenMatrix4f.transform3v(rotation, direction, direction);
+                            level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getX() + (double) (direction.x * power), this.getY() + 0.1, this.getZ() + (double) (direction.z * power), 0.0, 0.0099, 0.0);
+                        }
                     }
                 }
             }
+
         }
 
     }
@@ -295,7 +298,7 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 1500.0f)
-                .add(Attributes.ATTACK_DAMAGE, 1.0f)
+                .add(Attributes.ATTACK_DAMAGE, 2.0f)
                 .add(Attributes.ATTACK_SPEED, 1.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 114514f)

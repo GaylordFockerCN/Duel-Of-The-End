@@ -13,6 +13,8 @@ import reascer.wom.gameasset.WOMAnimations;
 import yesman.epicfight.api.animation.Animator;
 import yesman.epicfight.api.animation.LivingMotions;
 import yesman.epicfight.api.animation.types.EntityState;
+import yesman.epicfight.api.animation.types.HitAnimation;
+import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.api.utils.AttackResult;
 import yesman.epicfight.api.utils.math.OpenMatrix4f;
 import yesman.epicfight.gameasset.Animations;
@@ -101,9 +103,9 @@ public class GoldenFlamePatch extends DOTEBossPatch<GoldenFlame> {
         this.weaponLivingMotions.put(CapabilityItem.WeaponCategories.GREATSWORD,
                 ImmutableMap.of(CapabilityItem.Styles.TWO_HAND,
                         Set.of(Pair.of(LivingMotions.IDLE, Animations.WITHER_SKELETON_IDLE),
-                                Pair.of(LivingMotions.WALK, Animations.WITHER_SKELETON_IDLE),
-                                Pair.of(LivingMotions.RUN, Animations.WITHER_SKELETON_IDLE),
-                                Pair.of(LivingMotions.CHASE, Animations.WITHER_SKELETON_IDLE))));
+                                Pair.of(LivingMotions.WALK, Animations.WITHER_SKELETON_WALK),
+                                Pair.of(LivingMotions.RUN, Animations.WITHER_SKELETON_WALK),
+                                Pair.of(LivingMotions.CHASE, Animations.WITHER_SKELETON_WALK))));
         this.weaponLivingMotions.put(CapabilityItem.WeaponCategories.FIST,
                 ImmutableMap.of(CapabilityItem.Styles.ONE_HAND,
                         Set.of(Pair.of(LivingMotions.IDLE, WOMAnimations.ANTITHEUS_ASCENDED_RUN),
@@ -128,4 +130,25 @@ public class GoldenFlamePatch extends DOTEBossPatch<GoldenFlame> {
         return false;
     }
 
+    /**
+     * 免疫硬直
+     */
+    @Override
+    public void playAnimationSynchronized(StaticAnimation animation, float convertTimeModifier) {
+        if(animation instanceof HitAnimation){
+            return;
+        }
+        super.playAnimationSynchronized(animation, convertTimeModifier);
+    }
+
+    /**
+     * 免疫硬直
+     */
+    @Override
+    public void playAnimationSynchronized(StaticAnimation animation, float convertTimeModifier, AnimationPacketProvider packetProvider) {
+        if(animation instanceof HitAnimation){
+            return;
+        }
+        super.playAnimationSynchronized(animation, convertTimeModifier, packetProvider);
+    }
 }

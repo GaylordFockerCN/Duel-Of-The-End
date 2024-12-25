@@ -28,6 +28,7 @@
   "block.duel_of_the_end.tar_spawner": "Summoning Altar of the Holy Radiance Executor",
   "block.duel_of_the_end.tpp_spawner": "Summoning Altar of the Flame Demon of Purgatory",
   "block.duel_of_the_end.tse_spawner": "Summoning Altar of the Shadow of the End",
+  "effect.duel_of_the_end.burnt": "Burnt",
   "entity.duel_of_the_end.golden_flame": "Golden Flame King (?)",
   "entity.duel_of_the_end.golden_flame.dialog0": "Seeds... Core... Keys to the End...",
   "entity.duel_of_the_end.golden_flame.dialog1": "Again... Pass... Also...",

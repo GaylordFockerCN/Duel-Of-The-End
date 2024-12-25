@@ -21,20 +21,21 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import reascer.wom.world.item.WOMItems;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
+import yesman.epicfight.world.item.EpicFightItems;
 
 public class SenbaiDevil extends DOTEBoss{
 
     public SenbaiDevil(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
-        setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SATSUJIN.get().getDefaultInstance());
+//        setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SATSUJIN.get().getDefaultInstance());
+        setItemInHand(InteractionHand.MAIN_HAND, EpicFightItems.UCHIGATANA.get().getDefaultInstance());
     }
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 573.03f)
-                .add(Attributes.ATTACK_DAMAGE, 4.0f)
+                .add(Attributes.ATTACK_DAMAGE, 6.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 114514f)

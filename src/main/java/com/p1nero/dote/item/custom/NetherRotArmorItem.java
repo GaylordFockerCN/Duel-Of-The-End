@@ -61,7 +61,7 @@ public class NetherRotArmorItem extends SimpleDescriptionArmorItem implements ID
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 100, 0));
             }
             if(!livingEntity.hasEffect(MobEffects.DAMAGE_BOOST)){
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 100, 2 + DOTEArchiveManager.getWorldLevel()));
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 100, 1 + DOTEArchiveManager.getWorldLevel()));
             }
         }
     }

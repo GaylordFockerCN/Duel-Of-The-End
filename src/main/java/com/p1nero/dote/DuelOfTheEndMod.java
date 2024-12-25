@@ -1,5 +1,6 @@
 package com.p1nero.dote;
 
+import com.mojang.logging.LogUtils;
 import com.p1nero.dote.block.DOTEBlockEntities;
 import com.p1nero.dote.block.DOTEBlocks;
 import com.p1nero.dote.client.DOTESounds;
@@ -7,7 +8,6 @@ import com.p1nero.dote.effect.DOTEEffects;
 import com.p1nero.dote.entity.DOTEEntities;
 import com.p1nero.dote.entity.DOTEVillagers;
 import com.p1nero.dote.entity.ai.condition.DOTEConditions;
-import com.p1nero.dote.gameasset.DOTEAnimations;
 import com.p1nero.dote.gameasset.DOTELivingMotions;
 import com.p1nero.dote.item.DOTEItemTabs;
 import com.p1nero.dote.item.DOTEItems;
@@ -15,7 +15,6 @@ import com.p1nero.dote.network.DOTEPacketHandler;
 import com.p1nero.dote.worldgen.biome.DOTEBiomeProvider;
 import com.p1nero.dote.worldgen.dimension.DOTEChunkGenerator;
 import com.p1nero.dote.worldgen.structure.DOTEStructurePlacementTypes;
-import com.mojang.logging.LogUtils;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -39,7 +38,6 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
 import yesman.epicfight.api.animation.LivingMotion;
-import yesman.epicfight.api.animation.LivingMotions;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -78,13 +76,13 @@ public class DuelOfTheEndMod {
     public static void addPackFindersEvent(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             Path resourcePath = ModList.get().getModFileById(DuelOfTheEndMod.MOD_ID).getFile().findResource("packs/animation");
-            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(DuelOfTheEndMod.MOD_ID).getFile().getFileName() + ":" + resourcePath, resourcePath, false);
-            Pack.ResourcesSupplier resourcesSupplier = (string) -> pack;
-            Pack.Info info = Pack.readPackInfo("animation", resourcesSupplier);
-
-            if (info != null) {
-                event.addRepositorySource((source) ->
-                        source.accept(Pack.create("animation", Component.translatable("pack.dote_animation.title"), false, resourcesSupplier, info, PackType.CLIENT_RESOURCES, Pack.Position.TOP, false, PackSource.BUILT_IN)));
+            try (PathPackResources pack = new PathPackResources(ModList.get().getModFileById(DuelOfTheEndMod.MOD_ID).getFile().getFileName() + ":" + resourcePath, resourcePath, false)){
+                Pack.ResourcesSupplier resourcesSupplier = (string) -> pack;
+                Pack.Info info = Pack.readPackInfo("animation", resourcesSupplier);
+                if (info != null) {
+                    event.addRepositorySource((source) ->
+                            source.accept(Pack.create("animation", Component.translatable("pack.dote_animation.title"), false, resourcesSupplier, info, PackType.CLIENT_RESOURCES, Pack.Position.TOP, false, PackSource.BUILT_IN)));
+                }
             }
         }
     }

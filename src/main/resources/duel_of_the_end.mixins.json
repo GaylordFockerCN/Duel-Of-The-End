@@ -10,8 +10,6 @@
     "BasicMultipleAttackAnimationMixin",
     "MainFrameAnimationMixin",
     "ServerGamePacketListenerImplMixin",
-    "ThirdPersonEventsMixin",
-    "ThirdPersonStatusMixin",
     "WOMAnimationsMixin",
     "WorldOptionsMixin"
   ],

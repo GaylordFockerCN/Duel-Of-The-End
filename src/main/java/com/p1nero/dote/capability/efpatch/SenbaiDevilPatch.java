@@ -127,4 +127,10 @@ public class SenbaiDevilPatch extends DOTEBossPatch<SenbaiDevil> {
         super.commonAggressiveMobUpdateMotion(b);
     }
 
+//    @Override
+//    public float getAttackSpeed() {
+//        float speed = super.getAttackSpeed();
+//        return speed == 1.0 ? 0.65F + DOTEArchiveManager.getWorldLevel() * 0.07F : speed;
+//    }
+
 }

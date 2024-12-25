@@ -10,7 +10,7 @@
     "impact": 1.0,
     "armor_negation": 0,
     "max_strikes": 4,
-    "scale": 1.05,
+    "scale": 1.2,
     "chasing_speed": 1.3,
     "max_stamina": 20,
     "stamina_regan_multiply": 0.5,

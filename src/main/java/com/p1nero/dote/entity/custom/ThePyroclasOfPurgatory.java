@@ -42,7 +42,7 @@ public class ThePyroclasOfPurgatory extends DOTEBoss{
 
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 273.79f)
+                .add(Attributes.MAX_HEALTH, 373.79f)
                 .add(Attributes.ATTACK_DAMAGE, 2.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
