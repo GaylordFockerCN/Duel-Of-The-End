@@ -215,7 +215,7 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
                 getLookControl().setLookAt(getTarget(), 30, 30);
             }
 
-            if (getChargingTimer() == 120) {
+            if (getChargingTimer() == 130) {
                 level().playSound(null, getX(), getY(), getZ(), SoundEvents.ANVIL_LAND, SoundSource.BLOCKS, 1, 0.6F);
             }
 
@@ -247,8 +247,8 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
                 for (Entity entity : EntityUtil.getNearByEntities(this, (int) (r * power))) {
                     entity.setSecondsOnFire(5);
                     if(entity instanceof LivingEntity livingEntity){
-                        livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 10));
-                        livingEntity.addEffect(new MobEffectInstance(DOTEEffects.ARMOR_DEBUFF.get(), 10));
+                        livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100));
+                        livingEntity.addEffect(new MobEffectInstance(DOTEEffects.ARMOR_DEBUFF.get(), 100, 1));
                     }
                 }
             } else {

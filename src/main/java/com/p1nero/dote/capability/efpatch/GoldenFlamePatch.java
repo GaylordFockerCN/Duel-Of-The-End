@@ -88,8 +88,8 @@ public class GoldenFlamePatch extends DOTEBossPatch<GoldenFlame> {
     @Override
     public void initAnimator(Animator animator) {
         animator.addLivingAnimation(LivingMotions.IDLE, Animations.WITHER_SKELETON_IDLE);
-        animator.addLivingAnimation(LivingMotions.WALK, Animations.WITHER_SKELETON_WALK);
-        animator.addLivingAnimation(LivingMotions.CHASE, Animations.WITHER_SKELETON_CHASE);
+        animator.addLivingAnimation(LivingMotions.WALK, Animations.WITHER_SKELETON_IDLE);
+        animator.addLivingAnimation(LivingMotions.CHASE, Animations.WITHER_SKELETON_IDLE);
         animator.addLivingAnimation(LivingMotions.FALL, Animations.BIPED_FALL);
         animator.addLivingAnimation(LivingMotions.MOUNT, Animations.BIPED_MOUNT);
         animator.addLivingAnimation(LivingMotions.DEATH, Animations.BIPED_COMMON_NEUTRALIZED);
