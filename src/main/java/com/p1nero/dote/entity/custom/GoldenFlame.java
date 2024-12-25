@@ -7,6 +7,7 @@ import com.p1nero.dote.client.gui.DialogueComponentBuilder;
 import com.p1nero.dote.datagen.DOTEAdvancementData;
 import com.p1nero.dote.effect.DOTEEffects;
 import com.p1nero.dote.entity.IWanderableEntity;
+import com.p1nero.dote.entity.ai.ef.api.TimeStampedEvent;
 import com.p1nero.dote.entity.ai.goal.CustomWanderGoal;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.util.EntityUtil;
@@ -15,6 +16,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -189,6 +191,13 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
                 if (!level().isClientSide) {
                     GoldenFlamePatch patch = EpicFightCapabilities.getEntityPatch(this, GoldenFlamePatch.class);
                     patch.playAnimationSynchronized(WOMAnimations.ANTITHEUS_LAPSE, 0.3F);
+                    this.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 30, 99));
+                    patch.clearEvents();
+                    patch.addEvent(new TimeStampedEvent(1.7F, (livingEntityPatch) -> {
+                        for (int i = 0; i < 5; i++) {
+                            EntityType.LIGHTNING_BOLT.spawn(((ServerLevel) level()), livingEntityPatch.getOriginal().getOnPos(), MobSpawnType.MOB_SUMMONED);
+                        }
+                    }));
                 }
                 antiFormCooldown = MAX_ANTI_FORM_COOLDOWN;
             }

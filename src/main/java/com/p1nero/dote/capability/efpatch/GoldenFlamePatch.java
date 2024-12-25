@@ -101,9 +101,9 @@ public class GoldenFlamePatch extends DOTEBossPatch<GoldenFlame> {
         this.weaponLivingMotions.put(CapabilityItem.WeaponCategories.GREATSWORD,
                 ImmutableMap.of(CapabilityItem.Styles.TWO_HAND,
                         Set.of(Pair.of(LivingMotions.IDLE, Animations.WITHER_SKELETON_IDLE),
-                                Pair.of(LivingMotions.WALK, Animations.WITHER_SKELETON_WALK),
-                                Pair.of(LivingMotions.RUN, Animations.WITHER_SKELETON_CHASE),
-                                Pair.of(LivingMotions.CHASE, Animations.WITHER_SKELETON_CHASE))));
+                                Pair.of(LivingMotions.WALK, Animations.WITHER_SKELETON_IDLE),
+                                Pair.of(LivingMotions.RUN, Animations.WITHER_SKELETON_IDLE),
+                                Pair.of(LivingMotions.CHASE, Animations.WITHER_SKELETON_IDLE))));
         this.weaponLivingMotions.put(CapabilityItem.WeaponCategories.FIST,
                 ImmutableMap.of(CapabilityItem.Styles.ONE_HAND,
                         Set.of(Pair.of(LivingMotions.IDLE, WOMAnimations.ANTITHEUS_ASCENDED_RUN),

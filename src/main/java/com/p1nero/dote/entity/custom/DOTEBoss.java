@@ -24,6 +24,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -197,7 +198,7 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity, I
     @Override
     public boolean hurt(@NotNull DamageSource source, float p_21017_) {
         //为了bvb
-        if(DOTEConfig.ALLOW_BVB.get() && !source.isIndirect()){
+        if(DOTEConfig.ALLOW_BVB.get() && (source.getEntity() instanceof LivingEntity) && !source.isIndirect()){
             return super.hurt(source, p_21017_);
         }
         //防止雷劈火烧等bug，以及免疫所有远程，别想逃课！

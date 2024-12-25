@@ -1,5 +1,6 @@
 package com.p1nero.dote.entity.custom;
 
+import com.p1nero.dote.DOTEConfig;
 import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.client.DOTESounds;
 import com.p1nero.dote.client.gui.DialogueComponentBuilder;
@@ -110,6 +111,9 @@ public class TheShadowOfTheEnd extends DOTEBoss {
                     setHealth(0);
                     super.die(damageSources().playerAttack(player));
                     DOTEArchiveManager.worldLevelUp(player.serverLevel(), false);
+                }
+                if(DOTEConfig.ALLOW_BVB.get() && getLastAttacker() != null){
+                    super.die(damageSources().mobAttack(getLastAttacker()));
                 }
             }
         }
