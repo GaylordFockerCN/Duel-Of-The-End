@@ -190,8 +190,9 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
                 }
                 if (!level().isClientSide) {
                     GoldenFlamePatch patch = EpicFightCapabilities.getEntityPatch(this, GoldenFlamePatch.class);
+                    patch.setAttackSpeed(0.8f);
                     patch.playAnimationSynchronized(WOMAnimations.ANTITHEUS_LAPSE, 0.3F);
-                    this.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 30, 99));
+                    this.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 31, 99));
                     patch.clearEvents();
                     patch.addEvent(new TimeStampedEvent(1.7F, (livingEntityPatch) -> {
                         for (int i = 0; i < 5; i++) {
