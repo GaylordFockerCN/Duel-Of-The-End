@@ -5,6 +5,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 public class DOTEConfig {
     public static final ForgeConfigSpec.IntValue MIN_CHUNK_BETWEEN_STRUCTURE;
 //    public static final ForgeConfigSpec.BooleanValue NO_PLOT_MODE;
+    public static final ForgeConfigSpec.BooleanValue ALLOW_BVB;
     public static final ForgeConfigSpec.DoubleValue HEALTH_CHECK;
     public static final ForgeConfigSpec.BooleanValue GIVE_M_KEY;
     public static final ForgeConfigSpec.BooleanValue BROADCAST_DIALOG;
@@ -37,6 +38,7 @@ public class DOTEConfig {
         MIN_CHUNK_BETWEEN_STRUCTURE = createInt(builder, "min_chunk_between_structure", 3, 0, "小建筑和主建筑的最小区块间距");
         GIVE_M_KEY = createBool(builder, "give_m_key", true, "是否在进入游戏时直接给予玩家维度传送钥匙以及进入维度后给新手奖励");
         HEALTH_CHECK = createDouble(builder, "health_check", 25, 1, "允许进入维度的玩家血量范围");
+        ALLOW_BVB = createBool(builder, "allow_bvb", false,  "是否允许bvb 开启后boss可离开祭坛活动");
 //        NO_PLOT_MODE = createBool(builder, "no_plot_mode", false, "！！在此config下启动的存档将无法重新开启主线剧情！！", "无剧情模式：设为true后将简化流程，没有剧情及任务。但仍可获得任务奖励。");
         BROADCAST_DIALOG = createBool(builder, "broadcast_dialog", true, "是否全局广播剧情对话");
         BROADCAST_DISTANCE = createDouble(builder, "broadcast_distance", 50, 1, "广播范围");
