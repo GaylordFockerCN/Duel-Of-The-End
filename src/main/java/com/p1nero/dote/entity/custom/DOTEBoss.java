@@ -167,12 +167,14 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity, I
         if(level().isClientSide && this.isAlive()){
             BossMusicPlayer.playBossMusic(this, getFightMusic(), 32);
         } else {
-            if(level().getBlockEntity(getHomePos()) instanceof BossSpawnerBlockEntity<?> bossSpawnerBlockEntity){
-                if(bossSpawnerBlockEntity.getMyEntity() == null || !bossSpawnerBlockEntity.getMyEntity().getType().equals(this.getType())){
+            if(!DOTEConfig.ALLOW_BVB.get()){
+                if(level().getBlockEntity(getHomePos()) instanceof BossSpawnerBlockEntity<?> bossSpawnerBlockEntity){
+                    if(bossSpawnerBlockEntity.getMyEntity() == null || !bossSpawnerBlockEntity.getMyEntity().getType().equals(this.getType())){
+                        explodeAndDiscard();
+                    }
+                } else {
                     explodeAndDiscard();
                 }
-            } else {
-                explodeAndDiscard();
             }
         }
 
@@ -195,7 +197,7 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity, I
     @Override
     public boolean hurt(@NotNull DamageSource source, float p_21017_) {
         //为了bvb
-        if(source.getEntity() instanceof DOTEBoss){
+        if(DOTEConfig.ALLOW_BVB.get() && !source.isIndirect()){
             return super.hurt(source, p_21017_);
         }
         //防止雷劈火烧等bug，以及免疫所有远程，别想逃课！
