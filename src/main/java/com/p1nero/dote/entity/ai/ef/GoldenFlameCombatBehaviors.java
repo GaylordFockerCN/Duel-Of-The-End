@@ -332,8 +332,9 @@ public class GoldenFlameCombatBehaviors {
                                     .behavior(customAttackAnimation(WOMAnimations.ENDERSTEP_FORWARD, 0.2f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_HIDE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(RANDOM_TELEPORT))
-                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_TIME_TRAVEL_SOUND))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SHOOT_WITHER_GHOST))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
+                            .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(PLAY_TIME_TRAVEL_SOUND))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(teleportToFront(false, 4, 4)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().animationBehavior(Animations.ENDERMAN_TP_EMERGENCE))
@@ -414,7 +415,7 @@ public class GoldenFlameCombatBehaviors {
                                             new TimeStampedEvent(0.4f, timeStampedPlaySound(SoundEvents.WITHER_SHOOT, 1, 0.5F)),
                                             new TimeStampedEvent(0.17f, (livingEntityPatch -> {
                                                 livingEntityPatch.getOriginal().addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 30, 9));
-                                                livingEntityPatch.getOriginal().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1000, 1));
+                                                livingEntityPatch.getOriginal().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1100, 1));
                                             })),
                                             //五雷轰顶
                                             new TimeStampedEvent(1.7f, (livingEntityPatch) -> {
