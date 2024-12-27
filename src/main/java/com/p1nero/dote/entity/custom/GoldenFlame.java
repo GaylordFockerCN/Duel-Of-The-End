@@ -173,22 +173,12 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
             }
             if (getAntiFormTimer() == MAX_ANTI_FORM_TIMER - 10) {
                 setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
-                if (getPatch() != null) {
-                    getPatch().setAIAsInfantry(false);
-                }
                 resetCharging();
             }
-            if (getAntiFormTimer() == 1) {
-//                setItemInHand(InteractionHand.MAIN_HAND, DOTEItems.ROT_GREATSWORD.get().getDefaultInstance());
-                if (getHealthRatio() < 0.8) {
-                    setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SOLAR_OBSCURIDAD.get().getDefaultInstance());
-                } else {
-                    setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SOLAR.get().getDefaultInstance());
-                }
-                if (getPatch() != null) {
-                    getPatch().setAIAsInfantry(false);
-                }
+            if (getAntiFormTimer() <= 1) {
                 if (!level().isClientSide) {
+                    getEntityData().set(ANTI_FORM_TIMER, 0);
+                    setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SOLAR_OBSCURIDAD.get().getDefaultInstance());
                     GoldenFlamePatch patch = EpicFightCapabilities.getEntityPatch(this, GoldenFlamePatch.class);
                     patch.setAttackSpeed(0.8f);
                     patch.playAnimationSynchronized(WOMAnimations.ANTITHEUS_LAPSE, 0.3F);
@@ -204,7 +194,7 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
             }
         } else {
             if (isBlue()) {
-                if (getMainHandItem().is(WOMItems.SOLAR.get())) {
+                if (getMainHandItem().is(WOMItems.SOLAR.get()) || getMainHandItem().isEmpty()) {
                     setItemInHand(InteractionHand.MAIN_HAND, WOMItems.SOLAR_OBSCURIDAD.get().getDefaultInstance());
                 }
             } else {
@@ -303,6 +293,7 @@ public class GoldenFlame extends DOTEBoss implements IWanderableEntity {
                 .add(Attributes.ATTACK_SPEED, 1.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 114514f)
+                .add(Attributes.ARMOR, 10.0f)
                 .add(EpicFightAttributes.MAX_STRIKES.get(), 3)
                 .add(EpicFightAttributes.WEIGHT.get(), 3)
                 .build();

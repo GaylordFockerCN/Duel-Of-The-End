@@ -46,6 +46,7 @@ public class ThePyroclasOfPurgatory extends DOTEBoss{
                 .add(Attributes.ATTACK_DAMAGE, 2.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
+                .add(Attributes.ARMOR, 5.0f)
                 .build();
     }
 

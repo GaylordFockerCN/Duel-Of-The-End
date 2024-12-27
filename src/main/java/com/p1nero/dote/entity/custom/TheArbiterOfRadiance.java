@@ -47,6 +47,7 @@ public class TheArbiterOfRadiance extends DOTEBoss {
                 .add(Attributes.ATTACK_DAMAGE, 2.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
+                .add(Attributes.ARMOR, 2.0f)
                 .build();
     }
 

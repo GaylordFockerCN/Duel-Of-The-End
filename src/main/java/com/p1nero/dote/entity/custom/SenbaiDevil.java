@@ -37,6 +37,7 @@ public class SenbaiDevil extends DOTEBoss{
                 .add(Attributes.MAX_HEALTH, 573.03f)
                 .add(Attributes.ATTACK_DAMAGE, 6.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
+                .add(Attributes.ARMOR, 15.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 114514f)
                 .add(EpicFightAttributes.IMPACT.get(), 1.1f)

@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 public enum DOTEArmorMaterials implements ArmorMaterial {
     TIESTONE("tiestone", 15, new int[]{ 2, 4, 4, 3}, 10,
             SoundEvents.ARMOR_EQUIP_CHAIN, 1f, 0.3f, () -> Ingredient.of(Blocks.COBBLESTONE)),
-    WHITEKNIGHT("whiteknight", 37, new int[]{ 3, 6, 8, 3}, 15,
+    WHITEKNIGHT("whiteknight", 67, new int[]{ 3, 6, 8, 3}, 15,
             SoundEvents.ARMOR_EQUIP_DIAMOND, 3.0f, 0.3f, () -> Ingredient.of(DOTEItems.WKNIGHT_INGOT.get())),
     NETHERITEROT("netheriterot", 128, new int[]{ 2, 5, 6, 3}, 22,
         SoundEvents.ARMOR_EQUIP_NETHERITE, 4.0f, 0.3f, () -> Ingredient.of(DOTEItems.NETHERROT_INGOT.get())),

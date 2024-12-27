@@ -65,6 +65,7 @@ public class TheShadowOfTheEnd extends DOTEBoss {
                 .add(Attributes.ATTACK_DAMAGE, 2.0f + DOTEArchiveManager.getWorldLevel() * 2)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
+                .add(Attributes.ARMOR, 20.0f)
                 .build();
     }
 

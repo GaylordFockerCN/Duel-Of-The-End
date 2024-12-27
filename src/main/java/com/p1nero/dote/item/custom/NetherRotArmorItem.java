@@ -3,6 +3,7 @@ package com.p1nero.dote.item.custom;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.p1nero.dote.archive.DOTEArchiveManager;
+import com.p1nero.dote.effect.DOTEEffects;
 import com.p1nero.dote.item.DOTEArmorMaterials;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.item.DOTERarities;
@@ -40,7 +41,8 @@ public class NetherRotArmorItem extends SimpleDescriptionArmorItem implements ID
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
             builder.putAll(super.getDefaultAttributeModifiers(equipmentSlot));
             builder.put(EpicFightAttributes.MAX_STAMINA.get(), new AttributeModifier(UUID.fromString("CC111E1C-4180-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", 6, AttributeModifier.Operation.ADDITION));
-            builder.put(EpicFightAttributes.STAMINA_REGEN.get(), new AttributeModifier(UUID.fromString("CC222E1C-3333-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", 0.18, AttributeModifier.Operation.ADDITION));
+            builder.put(EpicFightAttributes.STAMINA_REGEN.get(), new AttributeModifier(UUID.fromString("CC222E1C-3333-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", 0.13, AttributeModifier.Operation.ADDITION));
+            builder.put(EpicFightAttributes.ARMOR_NEGATION.get(), new AttributeModifier(UUID.fromString("CC333E1C-3333-4820-B01B-BCCE1234ACA" + equipmentSlot.getIndex()), "Item modifier", 0.15, AttributeModifier.Operation.ADDITION));
             return builder.build();
         }
         return super.getDefaultAttributeModifiers(equipmentSlot);
@@ -51,9 +53,7 @@ public class NetherRotArmorItem extends SimpleDescriptionArmorItem implements ID
             return;
         }
         if(livingEntity.level() instanceof ServerLevel){
-            if(livingEntity.getRemainingFireTicks() > 0){
-                livingEntity.setRemainingFireTicks(0);
-            }
+            livingEntity.clearFire();
             if(!livingEntity.hasEffect(MobEffects.REGENERATION)){
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1));
             }
@@ -61,7 +61,7 @@ public class NetherRotArmorItem extends SimpleDescriptionArmorItem implements ID
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 100, 0));
             }
             if(!livingEntity.hasEffect(MobEffects.DAMAGE_BOOST)){
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 100, 1 + DOTEArchiveManager.getWorldLevel()));
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 100));
             }
         }
     }
@@ -73,6 +73,11 @@ public class NetherRotArmorItem extends SimpleDescriptionArmorItem implements ID
                     livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 40, 2 + DOTEArchiveManager.getWorldLevel()));
                     serverLevel.playSound(null, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), EpicFightSounds.CLASH.get(), SoundSource.BLOCKS, 0.5F, 0.5F);
                 }
+            }
+        }
+        if(damageSource.getEntity() instanceof LivingEntity target){
+            if(isFullSet(target) && DOTEArchiveManager.getWorldLevel() >= 2){
+                livingEntity.addEffect(new MobEffectInstance(DOTEEffects.BURNT.get(), 10, DOTEArchiveManager.getWorldLevel() - 2));
             }
         }
     }

@@ -1,13 +1,18 @@
 package com.p1nero.dote.block.custom;
 
+import com.p1nero.dote.DOTEConfig;
 import com.p1nero.dote.block.entity.BetterStructureBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.StructureBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -30,4 +35,17 @@ public class BetterStructureBlock extends StructureBlock {
         components.add(Component.literal("（感觉...不如Mixin）"));
         super.appendHoverText(p_49816_, p_49817_, components, p_49819_);
     }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
+        return ((level1, blockPos, blockState, t) -> {
+            if(level1 instanceof ServerLevel serverLevel && DOTEConfig.ENABLE_BETTER_STRUCTURE_BLOCK_LOAD.get()){
+                if(t instanceof BetterStructureBlockEntity blockEntity){
+                    blockEntity.loadStructure(serverLevel);
+                }
+            }
+        });
+    }
+
 }

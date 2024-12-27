@@ -108,13 +108,13 @@ public class DOTELangGenerator extends DOTELangProvider {
         add(DOTEItems.WKNIGHT_BOOTS.get(), "白泣靴子");
         addItemUsageInfo(DOTEItems.WKNIGHT_BOOTS.get(), "套装效果：§l白泣");
         add(DOTEItems.NETHERITEROT_HELMET.get(), "腐金头盔");
-        addItemUsageInfo(DOTEItems.NETHERITEROT_HELMET.get(), "套装效果：§4§l炎甲");
+        addItemUsageInfo(DOTEItems.NETHERITEROT_HELMET.get(), "套装效果：§4§l炎甲 （会随世界等级增加而强化！）");
         add(DOTEItems.NETHERITEROT_CHESTPLATE.get(), "腐金胸甲");
-        addItemUsageInfo(DOTEItems.NETHERITEROT_CHESTPLATE.get(), "套装效果：§4§l炎甲");
+        addItemUsageInfo(DOTEItems.NETHERITEROT_CHESTPLATE.get(), "套装效果：§4§l炎甲 （会随世界等级增加而强化！）");
         add(DOTEItems.NETHERITEROT_LEGGINGS.get(), "腐金护腿");
-        addItemUsageInfo(DOTEItems.NETHERITEROT_LEGGINGS.get(), "套装效果：§4§l炎甲");
+        addItemUsageInfo(DOTEItems.NETHERITEROT_LEGGINGS.get(), "套装效果：§4§l炎甲 （会随世界等级增加而强化！）");
         add(DOTEItems.NETHERITEROT_BOOTS.get(), "腐金靴子");
-        addItemUsageInfo(DOTEItems.NETHERITEROT_BOOTS.get(), "套装效果：§4§l炎甲");
+        addItemUsageInfo(DOTEItems.NETHERITEROT_BOOTS.get(), "套装效果：§4§l炎甲 （会随世界等级增加而强化！）");
         add(DOTEItems.ROT_GREATSWORD.get(), "腐金大剑");
         addItemUsageInfo(DOTEItems.ROT_GREATSWORD.get(), "");
         add(DOTEItems.GOLDEN_DRAGON_HELMET.get(), "赤焰金龙战盔");
