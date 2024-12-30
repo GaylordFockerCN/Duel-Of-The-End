@@ -53,7 +53,7 @@ public class GoldenFlamePatch extends DOTEBossPatch<GoldenFlame> {
 
     @Override
     public OpenMatrix4f getModelMatrix(float partialTicks) {
-        float scale = 1.2F;
+        float scale = 1.35F;
         return super.getModelMatrix(partialTicks).scale(scale, scale, scale);
     }
 

@@ -432,10 +432,10 @@ public class DOTEArchiveManager {
         CompoundTag serverData = new CompoundTag();
         serverData.putInt("worldLevel", worldLevel);
         serverData.putBoolean("noPlotMode", noPlotMode);
-        serverData.putInt("dialogLength", DIALOG_LIST.size());
-        serverData.put("dialogList", getDialogListNbt());
-        serverData.putInt("taskLength", TASK_SET.size());
-        serverData.put("taskList", getTaskListNbt());
+//        serverData.putInt("dialogLength", DIALOG_LIST.size());
+//        serverData.put("dialogList", getDialogListNbt());
+//        serverData.putInt("taskLength", TASK_SET.size());
+//        serverData.put("taskList", getTaskListNbt());
         serverData.put("biome_progress_data", BIOME_PROGRESS_DATA.toNbt(new CompoundTag()));
         return serverData;
     }
@@ -449,8 +449,8 @@ public class DOTEArchiveManager {
         alreadyInit = true;
         worldLevel = serverData.getInt("worldLevel");
         noPlotMode = serverData.getBoolean("noPlotMode");
-        setDialogListFromNbt(serverData.getCompound("dialogList"), serverData.getInt("dialogLength"));
-        setTaskListFromNbt(serverData.getCompound("taskList"), serverData.getInt("taskLength"));
+//        setDialogListFromNbt(serverData.getCompound("dialogList"), serverData.getInt("dialogLength"));
+//        setTaskListFromNbt(serverData.getCompound("taskList"), serverData.getInt("taskLength"));
         BIOME_PROGRESS_DATA.fromNbt(serverData.getCompound("biome_progress_data"));
     }
 

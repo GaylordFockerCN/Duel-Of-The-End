@@ -45,7 +45,7 @@ public class DOTEEntities {
 	public static final RegistryObject<EntityType<SenbaiDevil>> SENBAI_DEVIL = register("senbai_devil",
 			EntityType.Builder.of(SenbaiDevil::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
 	public static final RegistryObject<EntityType<GoldenFlame>> GOLDEN_FLAME = register("golden_flame",
-			EntityType.Builder.of(GoldenFlame::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
+			EntityType.Builder.of(GoldenFlame::new, MobCategory.MONSTER).sized(0.8f, 2.5f));
 	public static final RegistryObject<EntityType<TheArbiterOfRadiance>> THE_ARBITER_OF_RADIANCE = register("the_arbiter_of_radiance",
 			EntityType.Builder.of(TheArbiterOfRadiance::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
 	public static final RegistryObject<EntityType<ThePyroclasOfPurgatory>> THE_PYROCLAS_OF_PURGATORY = register("the_pyroclas_of_purgatory",
