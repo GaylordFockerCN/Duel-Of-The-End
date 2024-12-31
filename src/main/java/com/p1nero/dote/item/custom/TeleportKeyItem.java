@@ -4,7 +4,6 @@ import com.p1nero.dote.DOTEConfig;
 import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.archive.DataManager;
-import com.p1nero.dote.gameasset.skill.DOTESkills;
 import com.p1nero.dote.item.DOTERarities;
 import com.p1nero.dote.util.ItemUtil;
 import com.p1nero.dote.worldgen.dimension.DOTEDimension;

@@ -21,14 +21,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.PathPackResources;
-import net.minecraft.server.packs.repository.Pack;
-import net.minecraft.server.packs.repository.PackSource;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -40,7 +34,6 @@ import org.slf4j.Logger;
 import yesman.epicfight.api.animation.LivingMotion;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.Locale;
 
 @Mod(DuelOfTheEndMod.MOD_ID)
@@ -64,27 +57,12 @@ public class DuelOfTheEndMod {
         DOTEVillagers.register(bus);
         bus.addListener(this::commonSetup);
         bus.addListener(this::registerExtraStuff);
-        bus.addListener(DuelOfTheEndMod::addPackFindersEvent);
         LivingMotion.ENUM_MANAGER.registerEnumCls(MOD_ID, DOTELivingMotions.class);
         DOTEConditions.CONDITIONS.register(bus);
         MinecraftForge.EVENT_BUS.register(this);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, DOTEConfig.SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, DOTEConfig.CLIENT_SPEC);
-    }
-
-    public static void addPackFindersEvent(AddPackFindersEvent event) {
-        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
-            Path resourcePath = ModList.get().getModFileById(DuelOfTheEndMod.MOD_ID).getFile().findResource("packs/animation");
-            try (PathPackResources pack = new PathPackResources(ModList.get().getModFileById(DuelOfTheEndMod.MOD_ID).getFile().getFileName() + ":" + resourcePath, resourcePath, false)){
-                Pack.ResourcesSupplier resourcesSupplier = (string) -> pack;
-                Pack.Info info = Pack.readPackInfo("animation", resourcesSupplier);
-                if (info != null) {
-                    event.addRepositorySource((source) ->
-                            source.accept(Pack.create("animation", Component.translatable("pack.dote_animation.title"), false, resourcesSupplier, info, PackType.CLIENT_RESOURCES, Pack.Position.TOP, false, PackSource.BUILT_IN)));
-                }
-            }
-        }
     }
 
     public static MutableComponent getInfo(String key){
@@ -113,7 +91,6 @@ public class DuelOfTheEndMod {
 
     public void registerExtraStuff(RegisterEvent evt) {
         if (evt.getRegistryKey().equals(Registries.BIOME_SOURCE)) {
-//            Registry.register(BuiltInRegistries.BIOME_SOURCE, TheCasketOfReveriesMod.prefix("tcr_biomes"), ModBiomeProvider.TCR_CODEC);
             Registry.register(BuiltInRegistries.BIOME_SOURCE, DuelOfTheEndMod.prefix("dote_biomes"), DOTEBiomeProvider.TCR_CODEC);
 
         }else if (evt.getRegistryKey().equals(Registries.CHUNK_GENERATOR)) {

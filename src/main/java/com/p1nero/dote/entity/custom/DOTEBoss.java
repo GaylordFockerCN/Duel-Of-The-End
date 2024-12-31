@@ -24,6 +24,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
@@ -223,6 +224,11 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity, I
     @Override
     public boolean removeWhenFarAway(double p_21542_) {
         return false;
+    }
+
+    @Override
+    protected float getEquipmentDropChance(@NotNull EquipmentSlot slot) {
+        return 0;
     }
 
     @Override

@@ -1,24 +1,21 @@
 package com.p1nero.dote.event.listeners;
 
-import com.p1nero.dote.DuelOfTheEndMod;
 import com.p1nero.dote.DOTEConfig;
+import com.p1nero.dote.DuelOfTheEndMod;
+import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.archive.DataManager;
 import com.p1nero.dote.capability.DOTECapabilityProvider;
 import com.p1nero.dote.entity.MultiPlayerBoostEntity;
 import com.p1nero.dote.entity.custom.DOTEBoss;
 import com.p1nero.dote.item.DOTEItems;
-import com.p1nero.dote.item.custom.IDOTEKeepableItem;
-import com.p1nero.dote.network.PacketRelay;
 import com.p1nero.dote.network.DOTEPacketHandler;
+import com.p1nero.dote.network.PacketRelay;
 import com.p1nero.dote.network.packet.SyncArchivePacket;
 import com.p1nero.dote.network.packet.clientbound.SyncUuidPacket;
-import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.util.ItemUtil;
 import com.p1nero.dote.worldgen.biome.DOTEBiomes;
 import com.p1nero.dote.worldgen.dimension.DOTEDimension;
-import com.p1nero.dote.worldgen.portal.DOTETeleporter;
 import net.minecraft.core.Holder;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -29,16 +26,20 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 
-import java.util.Objects;
-
 @Mod.EventBusSubscriber(modid = DuelOfTheEndMod.MOD_ID)
 public class PlayerEventListener {
+
+    @SubscribeEvent
+    public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event){
+        if(event.getEntity().level().dimension().equals(DOTEDimension.P_SKY_ISLAND_LEVEL_KEY)){
+            event.getEntity().addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 100, 4));
+        }
+    }
 
     @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
