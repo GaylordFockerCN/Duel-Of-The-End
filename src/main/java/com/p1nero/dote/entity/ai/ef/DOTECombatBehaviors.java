@@ -1,5 +1,6 @@
 package com.p1nero.dote.entity.ai.ef;
 
+import com.p1nero.dote.archive.DOTEArchiveManager;
 import com.p1nero.dote.entity.IWanderableEntity;
 import com.p1nero.dote.entity.ai.ef.api.*;
 import com.p1nero.dote.network.DOTEPacketHandler;
@@ -320,6 +321,20 @@ public class DOTECombatBehaviors {
             humanoidMobPatch.getOriginal().getLookControl().setLookAt(humanoidMobPatch.getTarget());
         }
     });
+
+    /**
+     * 世界等级检测
+     */
+    public static Function<HumanoidMobPatch<?>, Boolean> worldLevelCheck(int min, int max) {
+        return humanoidMobPatch -> DOTEArchiveManager.getWorldLevel() >= min && DOTEArchiveManager.getWorldLevel() <= max;
+    }
+
+    /**
+     * 世界等级检测
+     */
+    public static Function<HumanoidMobPatch<?>, Boolean> worldLevelCheck(int min) {
+        return humanoidMobPatch -> DOTEArchiveManager.getWorldLevel() >= min;
+    }
 
     /**
      * boss阶段检测

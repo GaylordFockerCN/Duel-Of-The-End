@@ -278,6 +278,7 @@ public class GoldenFlameCombatBehaviors {
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(3F).cooldown(1000).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_2, 0.3f, 0.5f, StunType.SHORT))
+                                    .custom(worldLevelCheck(1))//第二轮回解锁
                                     .withinDistance(0, 2.5).withinEyeHeight())
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(chaseTarget(1)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ANTITHEUS_ASCENDED_AUTO_3, 0.1f, 0.5f, StunType.SHORT)))
@@ -328,6 +329,7 @@ public class GoldenFlameCombatBehaviors {
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(10F).cooldown(1200).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().withinDistance(5, 50).withinEyeHeight()
+                                    .custom(worldLevelCheck(2))//第三轮回解锁
                                     .health(0.2F, HealthPoint.Comparator.LESS_RATIO)
                                     .behavior(customAttackAnimation(WOMAnimations.ENDERSTEP_FORWARD, 0.2f)))
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(SET_HIDE))
@@ -698,6 +700,7 @@ public class GoldenFlameCombatBehaviors {
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(100F).cooldown(700).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(WOMAnimations.ENDERSTEP_BACKWARD, 0.1f))
+                                    .custom(worldLevelCheck(2))//第三轮回解锁
                                     .health(0.85f, HealthPoint.Comparator.LESS_RATIO)
                                     .withinDistance(0, 3).withinEyeHeight().custom(phaseCheck(0, 0))
                                     .custom(attackLevelCheck(1, 2)))
@@ -790,6 +793,7 @@ public class GoldenFlameCombatBehaviors {
                                             new TimeStampedEvent(0.2f, (livingEntityPatch -> {
                                                 livingEntityPatch.playSound(DOTESounds.DODGE.get(), 1f, 1f);
                                             }))))
+                                    .custom(worldLevelCheck(2))//第三轮回解锁
                                     .health(0.64f, HealthPoint.Comparator.LESS_RATIO)
                                     .withinDistance(0, 3).withinEyeHeight().custom(phaseCheck(0, 0))
                                     .custom(attackLevelCheck(1, 2)))
@@ -897,6 +901,7 @@ public class GoldenFlameCombatBehaviors {
             .newBehaviorSeries(
                     CombatBehaviors.BehaviorSeries.<HumanoidMobPatch<?>>builder().weight(500F).cooldown(1400).canBeInterrupted(false).looping(false)
                             .nextBehavior(CombatBehaviors.Behavior.<HumanoidMobPatch<?>>builder().behavior(customAttackAnimation(DOTEAnimations.SSTEP_BACKWARD, 0.1f))
+                                    .custom(worldLevelCheck(2))//第三轮回解锁
                                     .health(0.36f, HealthPoint.Comparator.LESS_RATIO)
                                     .withinDistance(0, 3).withinEyeHeight().custom(phaseCheck(0, 0))
                                     .custom(attackLevelCheck(1, 3)))

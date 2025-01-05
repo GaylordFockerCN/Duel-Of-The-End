@@ -50,7 +50,7 @@ public class DOTERecipeProvider extends RecipeProvider {
     }
 
     protected static void smithing(Consumer<FinishedRecipe> consumer, ItemLike ingredient1, ItemLike ingredient2, ItemLike ingredient3, RecipeCategory category, Item output) {
-        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ingredient1), Ingredient.of(ingredient2), Ingredient.of(ingredient3), category, output).unlocks(getHasName(ingredient1), has(ingredient1)).save(consumer, getItemName(output) + "_smithing");
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ingredient1), Ingredient.of(ingredient2), Ingredient.of(ingredient3), category, output).unlocks(getHasName(ingredient1), has(ingredient1)).save(consumer, "dote_" + getItemName(output) + "_smithing");
     }
 
 }

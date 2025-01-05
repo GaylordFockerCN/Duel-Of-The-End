@@ -25,10 +25,10 @@ public class DOTEPiglin extends DOTEMonster {
     public DOTEPiglin(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         WEAPONS.add(Items.GOLDEN_AXE);
-        WEAPONS.add(EpicFightItems.IRON_GREATSWORD.get());
-        WEAPONS.add(EpicFightItems.IRON_LONGSWORD.get());
-        WEAPONS.add(EpicFightItems.IRON_SPEAR.get());
-        WEAPONS.add(EpicFightItems.IRON_TACHI.get());
+        WEAPONS.add(EpicFightItems.GOLDEN_GREATSWORD.get());
+        WEAPONS.add(EpicFightItems.GOLDEN_LONGSWORD.get());
+        WEAPONS.add(EpicFightItems.GOLDEN_SPEAR.get());
+        WEAPONS.add(EpicFightItems.GOLDEN_TACHI.get());
         setItemInHand(InteractionHand.MAIN_HAND, WEAPONS.get(getRandom().nextInt(WEAPONS.size())).getDefaultInstance());
     }
 
@@ -63,7 +63,7 @@ public class DOTEPiglin extends DOTEMonster {
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 50.0f)
-                .add(Attributes.ATTACK_DAMAGE, 2.0f)
+                .add(Attributes.ATTACK_DAMAGE, 5.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 114514f)
                 .add(EpicFightAttributes.MAX_STRIKES.get(), 3)
