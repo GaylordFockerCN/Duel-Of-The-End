@@ -14,6 +14,7 @@ import yesman.epicfight.api.animation.Animator;
 import yesman.epicfight.api.animation.LivingMotions;
 import yesman.epicfight.api.animation.types.EntityState;
 import yesman.epicfight.api.animation.types.HitAnimation;
+import yesman.epicfight.api.animation.types.LongHitAnimation;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.api.utils.AttackResult;
 import yesman.epicfight.api.utils.math.OpenMatrix4f;
@@ -135,7 +136,7 @@ public class GoldenFlamePatch extends DOTEBossPatch<GoldenFlame> {
      */
     @Override
     public void playAnimationSynchronized(StaticAnimation animation, float convertTimeModifier) {
-        if(animation instanceof HitAnimation){
+        if(animation instanceof HitAnimation || animation instanceof LongHitAnimation){
             return;
         }
         super.playAnimationSynchronized(animation, convertTimeModifier);
@@ -146,7 +147,7 @@ public class GoldenFlamePatch extends DOTEBossPatch<GoldenFlame> {
      */
     @Override
     public void playAnimationSynchronized(StaticAnimation animation, float convertTimeModifier, AnimationPacketProvider packetProvider) {
-        if(animation instanceof HitAnimation){
+        if(animation instanceof HitAnimation || animation instanceof LongHitAnimation){
             return;
         }
         super.playAnimationSynchronized(animation, convertTimeModifier, packetProvider);
