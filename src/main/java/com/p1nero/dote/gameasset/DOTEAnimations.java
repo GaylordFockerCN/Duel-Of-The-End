@@ -34,7 +34,6 @@ public class DOTEAnimations {
     public static StaticAnimation BIPED_HIT_LONG2;
     public static StaticAnimation GUARD_BREAK1;
     public static StaticAnimation GUARD_BREAK2;
-    public static StaticAnimation KNOCKDOWN;
     //旧版本闪避动作
 
     public static StaticAnimation SSTEP_FORWARD;
@@ -178,7 +177,6 @@ public class DOTEAnimations {
 
 
         BIPED_HIT_LONG2 = new LongHitAnimation(0.08F, "biped/hit/hit_long", biped);
-        KNOCKDOWN = new KnockdownAnimation(0.08F, "biped/hit/knockdown", biped);
         GUARD_BREAK1 = new LongHitAnimation(0.05F, "biped/hit/guard_break1", biped);
         GUARD_BREAK2 = new LongHitAnimation(0.05F, "biped/hit/guard_break2", biped);
 
