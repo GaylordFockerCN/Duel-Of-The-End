@@ -39,6 +39,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -93,6 +94,10 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity, I
     @Override
     public BlockPos getHomePos() {
         return getEntityData().get(HOME_POS);
+    }
+
+    public Optional<BossSpawnerBlockEntity<?>> getBossSpawnerBlockEntity() {
+        return level().getBlockEntity(this.getHomePos()) instanceof BossSpawnerBlockEntity<?> bossSpawnerBlockEntity ? Optional.of(bossSpawnerBlockEntity) : Optional.empty();
     }
 
     @Override
@@ -186,7 +191,7 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity, I
         } else {
             if(!DOTEConfig.ALLOW_BVB.get()){
                 if(level().getBlockEntity(getHomePos()) instanceof BossSpawnerBlockEntity<?> bossSpawnerBlockEntity){
-                    if(bossSpawnerBlockEntity.getMyEntity() == null || !bossSpawnerBlockEntity.getMyEntity().getType().equals(this.getType())){
+                    if(bossSpawnerBlockEntity.getMyBoss() == null || !bossSpawnerBlockEntity.getMyBoss().getType().equals(this.getType())){
                         explodeAndDiscard();
                     }
                 } else {
@@ -212,6 +217,8 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity, I
     public void die(@NotNull DamageSource source) {
         if(level().isClientSide){
             BossMusicPlayer.stopBossMusic(this);
+        } else {
+            this.getBossSpawnerBlockEntity().ifPresent(BossSpawnerBlockEntity::endBossFight);
         }
         super.die(source);
     }

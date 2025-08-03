@@ -117,8 +117,6 @@ dependencies {
     }
 
     implementation fg.deobf('libs:XaerosWorldMap:1.38.8')
-    implementation fg.deobf('libs:epicfight:20.9.6')
-    implementation fg.deobf('libs:WeaponsOfMiracles:20.1.8.5.6')
     implementation fg.deobf('libs:curios:5.11.0')
 
     implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_version}")

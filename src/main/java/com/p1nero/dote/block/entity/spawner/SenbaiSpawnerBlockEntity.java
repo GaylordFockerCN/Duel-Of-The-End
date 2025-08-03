@@ -4,10 +4,7 @@ import com.p1nero.dote.block.DOTEBlockEntities;
 import com.p1nero.dote.entity.DOTEEntities;
 import com.p1nero.dote.entity.custom.boss.senbai.SenbaiDevil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
 
 public class SenbaiSpawnerBlockEntity extends BossSpawnerBlockEntity<SenbaiDevil>{
     public SenbaiSpawnerBlockEntity(BlockPos pos, BlockState state) {
@@ -15,13 +12,7 @@ public class SenbaiSpawnerBlockEntity extends BossSpawnerBlockEntity<SenbaiDevil
     }
 
     @Override
-    public ParticleOptions getSpawnerParticle() {
-        return ParticleTypes.SOUL_FIRE_FLAME;
+    public float getArenaRadius() {
+        return 30;
     }
-
-    @Override
-    public @Nullable ParticleOptions getBorderParticle() {
-        return ParticleTypes.SOUL_FIRE_FLAME;
-    }
-
 }

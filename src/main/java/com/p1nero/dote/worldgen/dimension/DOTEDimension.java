@@ -56,9 +56,7 @@ public class DOTEDimension {
         HolderGetter<DimensionType> dimTypes = context.lookup(Registries.DIMENSION_TYPE);
         HolderGetter<NoiseGeneratorSettings> noiseGenSettings = context.lookup(Registries.NOISE_SETTINGS);
 
-        NoiseBasedChunkGenerator wrappedChunkGenerator = new NoiseBasedChunkGenerator(DOTEBiomeProvider.create(biomeRegistry), noiseGenSettings.getOrThrow(DOTENoiseSettings.PLAIN));
-
-        DOTEChunkGenerator chunkGenerator = new DOTEChunkGenerator(wrappedChunkGenerator, noiseGenSettings.getOrThrow(DOTENoiseSettings.PLAIN));
+        NoiseBasedChunkGenerator chunkGenerator = new NoiseBasedChunkGenerator(new FixedBiomeSource(biomeRegistry.getOrThrow(DOTEBiomes.AIR)), noiseGenSettings.getOrThrow(DOTENoiseSettings.PLAIN));
         LevelStem stem = new LevelStem(dimTypes.getOrThrow(DOTEDimension.P_SKY_ISLAND_TYPE), chunkGenerator);
         context.register(P_SKY_ISLAND_KEY, stem);
     }

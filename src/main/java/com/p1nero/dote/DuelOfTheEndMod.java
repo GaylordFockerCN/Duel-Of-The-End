@@ -4,21 +4,13 @@ import com.mojang.logging.LogUtils;
 import com.p1nero.dote.block.DOTEBlockEntities;
 import com.p1nero.dote.block.DOTEBlocks;
 import com.p1nero.dote.client.DOTESounds;
-import com.p1nero.dote.condition.DOTEConditions;
 import com.p1nero.dote.effect.DOTEEffects;
 import com.p1nero.dote.entity.DOTEEntities;
 import com.p1nero.dote.entity.DOTEVillagers;
-import com.p1nero.dote.gameasset.DOTELivingMotions;
 import com.p1nero.dote.item.DOTEItemTabs;
 import com.p1nero.dote.item.DOTEItems;
 import com.p1nero.dote.network.DOTEPacketHandler;
-import com.p1nero.dote.worldgen.biome.DOTEBiomeProvider;
-import com.p1nero.dote.worldgen.dimension.DOTEChunkGenerator;
-import com.p1nero.dote.worldgen.structure.DOTEStructurePlacementTypes;
 import dev.xkmc.l2library.base.L2Registrate;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -30,9 +22,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
-import yesman.epicfight.api.animation.LivingMotion;
 
 import java.io.File;
 import java.util.Locale;
@@ -56,12 +46,8 @@ public class DuelOfTheEndMod {
         DOTEEntities.REGISTRY.register(bus);
         DOTEItemTabs.REGISTRY.register(bus);
         DOTEEffects.REGISTRY.register(bus);
-        DOTEStructurePlacementTypes.STRUCTURE_PLACEMENT_TYPES.register(bus);
         DOTEVillagers.register(bus);
         bus.addListener(this::commonSetup);
-        bus.addListener(this::registerExtraStuff);
-        LivingMotion.ENUM_MANAGER.registerEnumCls(MOD_ID, DOTELivingMotions.class);
-        DOTEConditions.CONDITIONS.register(bus);
         MinecraftForge.EVENT_BUS.register(this);
 
         DOTEBlocks.register();
@@ -89,17 +75,6 @@ public class DuelOfTheEndMod {
             }
         }catch (Exception e){
             DuelOfTheEndMod.LOGGER.error("Failed to read map！",e);
-        }
-
-
-    }
-
-    public void registerExtraStuff(RegisterEvent evt) {
-        if (evt.getRegistryKey().equals(Registries.BIOME_SOURCE)) {
-            Registry.register(BuiltInRegistries.BIOME_SOURCE, DuelOfTheEndMod.prefix("dote_biomes"), DOTEBiomeProvider.DOTE_BIOME_CODEC);
-
-        }else if (evt.getRegistryKey().equals(Registries.CHUNK_GENERATOR)) {
-            Registry.register(BuiltInRegistries.CHUNK_GENERATOR, DuelOfTheEndMod.prefix("structure_locating_wrapper"), DOTEChunkGenerator.CODEC);
         }
     }
 

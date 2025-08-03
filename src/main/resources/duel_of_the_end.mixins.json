@@ -3,19 +3,8 @@
   "package": "com.p1nero.dote.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "AnimationsMixin",
-    "AntitheusDarknessMixin",
-    "AttackAnimationMixin",
     "AttributesMixin",
-    "BasicMultipleAttackAnimationMixin",
-    "MainFrameAnimationMixin",
-    "ServerGamePacketListenerImplMixin",
-    "WOMAnimationsMixin",
-    "WorldOptionsMixin"
-  ],
-  "client": [
-    "CreateWorldScreenMixin",
-    "WorldListEntryMixin"
+    "ServerGamePacketListenerImplMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -14,7 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 /**
- * 用于单一玩家数据，而不是全体数据，SaveUtil用于全体数据{@link DOTEArchiveManager}
+ * 用于单一玩家数据，而不是全体数据
  *
  * 别骂了，后来才知道可以用Capability，不过我发现这个就相当于是封装过的Capability哈哈
  *

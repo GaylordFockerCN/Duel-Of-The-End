@@ -54,7 +54,7 @@ public class DOTEBlocks {
             .register();
 
 
-    public static final BlockEntityEntry<SandCaptainSpawnerBlockEntity> SAND_CAPTAIN_SPAWNER_ENTITY = DuelOfTheEndMod.REGISTRATE.<SandCaptainSpawnerBlockEntity>blockEntity("ms_abyss_spawner_entity",
+    public static final BlockEntityEntry<SandCaptainSpawnerBlockEntity> SAND_CAPTAIN_SPAWNER_ENTITY = DuelOfTheEndMod.REGISTRATE.<SandCaptainSpawnerBlockEntity>blockEntity("sand_captain_spawner_entity",
                     ((blockEntityType, blockPos, blockState) -> new SandCaptainSpawnerBlockEntity(blockEntityType, DOTEEntities.SAND_CAPTAIN.get(), blockPos, blockState)))
             .validBlock(SAND_CAPTAIN_SPAWNER).renderer(() -> SandCaptainSpawnerBlockRenderer::new).register();
 

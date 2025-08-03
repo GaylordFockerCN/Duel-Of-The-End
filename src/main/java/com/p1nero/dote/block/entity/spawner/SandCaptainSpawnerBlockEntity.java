@@ -2,20 +2,19 @@ package com.p1nero.dote.block.entity.spawner;
 
 import com.p1nero.dote.entity.custom.boss.sand_captain.SandCaptainEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class SandCaptainSpawnerBlockEntity extends BossSpawnerBlockEntity<SandCaptainEntity>{
 
-
     public SandCaptainSpawnerBlockEntity(BlockEntityType<?> type, EntityType<SandCaptainEntity> entityType, BlockPos pos, BlockState state) {
         super(type, entityType, pos, state);
     }
 
     @Override
-    public ParticleOptions getSpawnerParticle() {
-        return null;
+    public float getArenaRadius() {
+        return 30;
     }
+
 }

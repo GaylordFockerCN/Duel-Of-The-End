@@ -9,7 +9,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
-import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
 public class SenbaiDevil extends DOTEBoss {
 
@@ -25,11 +24,6 @@ public class SenbaiDevil extends DOTEBoss {
                 .add(Attributes.ARMOR, 15.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 114514f)
-                .add(EpicFightAttributes.IMPACT.get(), 1.1f)
-                .add(EpicFightAttributes.ARMOR_NEGATION.get(), 10)
-                .add(EpicFightAttributes.MAX_STRIKES.get(), 3)
-                .add(EpicFightAttributes.MAX_STAMINA.get(), 80)
-                .add(EpicFightAttributes.WEIGHT.get(), 3)
                 .build();
     }
 

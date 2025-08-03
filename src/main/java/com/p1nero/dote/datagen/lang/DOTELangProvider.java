@@ -13,7 +13,6 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.registries.RegistryObject;
 import org.apache.commons.lang3.text.WordUtils;
-import yesman.epicfight.skill.Skill;
 
 import java.util.function.Supplier;
 

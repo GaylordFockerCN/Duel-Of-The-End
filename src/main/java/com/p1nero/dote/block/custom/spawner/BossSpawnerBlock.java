@@ -1,11 +1,8 @@
 package com.p1nero.dote.block.custom.spawner;
 
 import com.p1nero.dote.block.entity.spawner.BossSpawnerBlockEntity;
-import com.p1nero.dote.client.DOTESounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -62,16 +59,8 @@ public abstract class BossSpawnerBlock extends BaseEntityBlock {
     @SuppressWarnings("deprecation")
     public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
         BlockEntity entity = pLevel.getBlockEntity(pPos);
-        if(entity instanceof BossSpawnerBlockEntity<?> bossSpawnerBlockEntity && pLevel instanceof ServerLevel serverLevel){
-            if(bossSpawnerBlockEntity.canSummon(pPos, pPlayer, pHand, pHit)){
-                pPlayer.getItemInHand(pHand).shrink(1);
-                bossSpawnerBlockEntity.spawnMyBoss(serverLevel);
-                serverLevel.playSound(null, pPos.getX(), pPos.getY(), pPos.getZ(), DOTESounds.LOTUSHEAL.get(), SoundSource.BLOCKS, 1, 1);
-                bossSpawnerBlockEntity.summonParticles(serverLevel, pPlayer, pPos);
-            } else {
-                bossSpawnerBlockEntity.onSummonFail(serverLevel, pPlayer, pPos);
-            }
-
+        if(entity instanceof BossSpawnerBlockEntity<?> blockEntity){
+            blockEntity.onPlayerInteract(pState, pLevel, pPos, pPlayer, pHand, pHit);
         }
         return InteractionResult.sidedSuccess(pLevel.isClientSide);
     }
@@ -82,7 +71,12 @@ public abstract class BossSpawnerBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
-        return BossSpawnerBlockEntity::tick;
+        return ((pLevel, pPos, pState, blockEntity) -> {
+            if(blockEntity instanceof BossSpawnerBlockEntity<?> bossSpawnerBlockEntity) {
+                bossSpawnerBlockEntity.tickCount++;
+                bossSpawnerBlockEntity.tick(pLevel, pPos, pState);
+            }
+        });
     }
 
 }

@@ -31,7 +31,6 @@ public class DOTEEntityLootTables extends EntityLootSubProvider {
         add(DOTEEntities.SLAUGHTER_GENERAL.get(), emptyLootTable());
 
         add(DOTEEntities.GOLDEN_FLAME.get(), emptyLootTable());
-        add(DOTEEntities.FLAME_CIRCLE.get(), emptyLootTable());
 
         add(DOTEEntities.MS_ABYSS.get(), emptyLootTable());
         add(DOTEEntities.LIU_GUANG.get(), emptyLootTable());

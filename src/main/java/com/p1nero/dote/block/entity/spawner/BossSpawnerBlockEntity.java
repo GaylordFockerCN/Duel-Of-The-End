@@ -1,113 +1,200 @@
 package com.p1nero.dote.block.entity.spawner;
 
-import com.p1nero.dote.DuelOfTheEndMod;
-import com.p1nero.dote.entity.api.HomePointEntity;
 import com.p1nero.dote.entity.custom.boss.DOTEBoss;
-import com.p1nero.dote.item.DOTEItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.event.ForgeEventFactory;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
-import yesman.epicfight.world.entity.WitherGhostClone;
 
-public abstract class BossSpawnerBlockEntity<T extends DOTEBoss> extends EntitySpawnerBlockEntity<T> implements GeoBlockEntity {
-	protected static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
+import java.util.List;
+import java.util.Objects;
 
-	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+public abstract class BossSpawnerBlockEntity<T extends DOTEBoss> extends BlockEntity implements GeoBlockEntity {
 
-	protected BossSpawnerBlockEntity(BlockEntityType<?> type, EntityType<T> entityType, BlockPos pos, BlockState state) {
-		super(type, entityType, pos, state);
-	}
+    protected final EntityType<T> entityType;
+    @Nullable
+    protected DOTEBoss myBoss;
+    public int tickCount;
+    private boolean inBossFight;
+    protected static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
+    protected static final RawAnimation IN_FIGHT = RawAnimation.begin().thenLoop("in_fight");
+    protected static final RawAnimation START = RawAnimation.begin().then("start", Animation.LoopType.PLAY_ONCE);
+    protected static final RawAnimation END = RawAnimation.begin().then("end", Animation.LoopType.PLAY_ONCE);
 
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-	public boolean canSummon(BlockPos pos, Player player, InteractionHand hand, BlockHitResult pHit) {
-		return this.getMyEntity() == null && player.getItemInHand(hand).is(DOTEItems.IMMORTALESSENCE.get());
-	}
+    protected BossSpawnerBlockEntity(BlockEntityType<?> type, EntityType<T> entityType, BlockPos pos, BlockState state) {
+        super(type, pos, state);
+        this.entityType = entityType;
+    }
 
-	public void summonParticles(ServerLevel serverLevel, Player player, BlockPos pos){
-		for (int i = 0; i < 10; i++) {
-			double rx = pos.getX() + serverLevel.getRandom().nextFloat();
-			double ry = pos.getY() + serverLevel.getRandom().nextFloat();
-			double rz = pos.getZ() + serverLevel.getRandom().nextFloat();
-			serverLevel.sendParticles(ParticleTypes.SOUL, rx, ry + 2.0F, rz, 1, 0.0D, 0.01D, 0.0D, 0.01);
-		}
-	}
+    public EntityType<T> getEntityType() {
+        return entityType;
+    }
 
-	public void onSummonFail(ServerLevel serverLevel, Player pPlayer, BlockPos pos){
-		pPlayer.displayClientMessage(DuelOfTheEndMod.getInfo("tip1").append(this.getEntityType().getDescription()), true);
-	}
+    public void setMyBoss(@Nullable DOTEBoss myBoss) {
+        this.myBoss = myBoss;
+    }
 
-	public static void tick(Level pLevel, BlockPos pPos, BlockState state, BlockEntity blockEntity) {
-		if(blockEntity instanceof BossSpawnerBlockEntity<?> spawnerBlockEntity){
-			if(pLevel instanceof ServerLevel serverLevel){
-				if(spawnerBlockEntity.getSpawnerParticle() != null){
-					double rx = pPos.getX() + pLevel.getRandom().nextFloat();
-					double ry = pPos.getY() + 1 + pLevel.getRandom().nextFloat();
-					double rz = pPos.getZ() + pLevel.getRandom().nextFloat();
-					serverLevel.sendParticles(spawnerBlockEntity.getSpawnerParticle(), rx, ry, rz ,1, 0.0D, 0.0D, 0.0D, 0);
-				}
-				if(spawnerBlockEntity.myEntity instanceof HomePointEntity homePointEntity){
-					if(spawnerBlockEntity.getBorderParticle() != null && spawnerBlockEntity.myEntity != null){
-						for (int angle = 0; angle < 360; angle += 2) {
-							double radians = Math.toRadians(angle);
-							int xOffset = (int) Math.round(homePointEntity.getHomeRadius() * Math.cos(radians));
-							int zOffset = (int) Math.round(homePointEntity.getHomeRadius() * Math.sin(radians));
-							serverLevel.sendParticles(spawnerBlockEntity.getBorderParticle(), pPos.getX() + xOffset, pPos.getY() + 1, pPos.getZ() + zOffset, 1, 0.0D, 0.1D, 0.0D, 0.01);
-						}
-					}
+    public @Nullable DOTEBoss getMyBoss() {
+        return myBoss;
+    }
 
-					int r = (int) (homePointEntity.getHomeRadius() + 3);//要比实际的大一点点，防止在边缘偷刀
-					for(LivingEntity livingEntity : pLevel.getEntitiesOfClass(LivingEntity.class, new AABB(pPos.offset(-r, -r, -r), pPos.offset(r, r, r)))){
+    public void startBossFight() {
+        inBossFight = true;
+        playStartAnimation();
+        syncAndSave();
+    }
 
-						//跳过神王远程攻击物
-						if(livingEntity instanceof WitherGhostClone){
-							continue;
-						}
-						//同步boss，以防死后boss对象丢失
-						if((spawnerBlockEntity.entityType.equals(livingEntity.getType())) && livingEntity instanceof DOTEBoss){
-							spawnerBlockEntity.myEntity = livingEntity;
-						}
-					}
-				}
+    public void endBossFight() {
+        this.inBossFight = false;
+        playEndAnimation();
+        this.syncAndSave();
+    }
 
-				//击败boss清空状态
-				if(spawnerBlockEntity.myEntity == null || !spawnerBlockEntity.myEntity.isAlive()){
-					spawnerBlockEntity.myEntity = null;
-                }
-			}
-		}
+    public boolean isInBossFight() {
+        return inBossFight;
+    }
 
-	}
+    public void onPlayerInteract(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
+        if (checkItem(pPlayer, pPlayer.getItemInHand(pHand), pPos, pHit)) {
+            if (pLevel instanceof ServerLevel serverLevel) {
+                this.spawnMyBoss(serverLevel);
+            }
+        }
+    }
 
-	@Override
-	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-		controllers.add(new AnimationController<>(this, this::deployAnimController));
-	}
+    /**
+     * 检查手上物品是否合法
+     */
+    protected boolean checkItem(Player player, ItemStack itemStack, BlockPos pos, BlockHitResult hitResult) {
+        return true;
+    }
 
-	protected <E extends BossSpawnerBlockEntity<?>> PlayState deployAnimController(final AnimationState<E> state) {
-		return state.setAndContinue(IDLE);
-	}
+    public void tick(Level pLevel, BlockPos pPos, BlockState state) {
+        searchBoss();
+    }
 
-	@Override
-	public AnimatableInstanceCache getAnimatableInstanceCache() {
-		return this.cache;
-	}
+    /**
+     * 当重进游戏或某种原因导致处于boss战而没boss时，尝试搜索boss
+     */
+    protected void searchBoss() {
+        if (this.inBossFight && (this.myBoss == null || this.myBoss.isRemoved()) && level instanceof ServerLevel serverLevel) {
+            List<? extends DOTEBoss> entities = serverLevel.getEntities(entityType, LivingEntity::isAlive);
+            if(!entities.isEmpty()) {
+                myBoss = entities.get(0);
+            } else {
+                inBossFight = false;
+                myBoss = null;
+                syncAndSave();
+            }
+        }
+    }
+
+    public boolean spawnMyBoss(ServerLevelAccessor accessor) {
+        if (inBossFight) {
+            return false;
+        }
+        myBoss = this.makeMyCreature();
+        myBoss.setHomePos(getBlockPos());
+        BlockPos spawnPos = accessor.getBlockState(this.getBlockPos().above()).getCollisionShape(accessor, this.getBlockPos().above()).isEmpty() ? this.getBlockPos().above() : this.getBlockPos();
+        myBoss.moveTo(spawnPos, accessor.getLevel().getRandom().nextFloat() * 360F, 0.0F);
+        ForgeEventFactory.onFinalizeSpawn(myBoss, accessor, accessor.getCurrentDifficultyAt(spawnPos), MobSpawnType.SPAWNER, null, null);
+        boolean success = accessor.addFreshEntity(myBoss);
+        if (success) {
+            startBossFight();
+        }
+        return success;
+    }
+
+    @NotNull
+    protected T makeMyCreature() {
+        return Objects.requireNonNull(this.entityType.create(Objects.requireNonNull(this.getLevel())));
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, this::deployAnimController));
+        controllers.add(new AnimationController<>(this, "Transition", 5, state -> PlayState.CONTINUE)
+                .triggerableAnim("start", START)
+                .triggerableAnim("end", END));
+    }
+
+    public void playStartAnimation() {
+        triggerAnim("Transition", "start");
+    }
+
+    public void playEndAnimation() {
+        triggerAnim("Transition", "end");
+    }
+
+    protected <E extends BossSpawnerBlockEntity<?>> PlayState deployAnimController(final AnimationState<E> state) {
+        return inBossFight ? state.setAndContinue(IN_FIGHT) : state.setAndContinue(IDLE);
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.cache;
+    }
+
+    public void sync() {
+        if (this.level != null) {
+            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+        }
+    }
+
+    public void syncAndSave() {
+        this.sync();
+        setChanged();
+    }
+
+    @Override
+    protected void saveAdditional(@NotNull CompoundTag tag) {
+        tag.putBoolean("inBossFight", inBossFight);
+        super.saveAdditional(tag);
+    }
+
+    @Override
+    public void load(@NotNull CompoundTag tag) {
+        inBossFight = tag.getBoolean("inBossFight");
+        super.load(tag);
+    }
+
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public @NotNull CompoundTag getUpdateTag() {
+        CompoundTag compoundTag = super.getUpdateTag();
+        saveAdditional(compoundTag);
+        return compoundTag;
+    }
+
+    /**
+     * 获取角斗场的半径，限制玩家离开，同时也是boss的搜索范围
+     */
+    public abstract float getArenaRadius();
 
 }

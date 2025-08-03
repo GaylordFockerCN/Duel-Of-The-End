@@ -1,13 +1,10 @@
 package com.p1nero.dote.entity;
 
 import com.p1nero.dote.DuelOfTheEndMod;
-import com.p1nero.dote.capability.epicfight.NPCPatch;
 import com.p1nero.dote.entity.custom.boss.SimpleBoss;
 import com.p1nero.dote.entity.custom.boss.dark_advance.DarkAdvance;
 import com.p1nero.dote.entity.custom.boss.goldenflame.BlackHoleEntity;
-import com.p1nero.dote.entity.custom.boss.goldenflame.FlameCircleEntity;
 import com.p1nero.dote.entity.custom.boss.goldenflame.GoldenFlame;
-import com.p1nero.dote.entity.custom.boss.goldenflame.GoldenFlamePatch;
 import com.p1nero.dote.entity.custom.boss.liu_guang.LiuGuangEntity;
 import com.p1nero.dote.entity.custom.boss.ms_abyss.MsAbyssEntity;
 import com.p1nero.dote.entity.custom.boss.reaper.ReaperEntity;
@@ -15,7 +12,6 @@ import com.p1nero.dote.entity.custom.boss.sand_captain.SandCaptainEntity;
 import com.p1nero.dote.entity.custom.boss.senbai.SenbaiDevil;
 import com.p1nero.dote.entity.custom.boss.slaughter_general.SlaughterGeneralEntity;
 import com.p1nero.dote.entity.custom.npc.abyss_dweller.AbyssDwellerEntity;
-import com.p1nero.dote.event.ClientModEvents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -29,11 +25,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import yesman.epicfight.api.client.forgeevent.PatchedRenderersEvent;
-import yesman.epicfight.api.forgeevent.EntityPatchRegistryEvent;
-import yesman.epicfight.api.forgeevent.ModelBuildEvent;
-import yesman.epicfight.gameasset.Animations;
-import yesman.epicfight.gameasset.Armatures;
 
 
 @Mod.EventBusSubscriber(modid = DuelOfTheEndMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -55,8 +46,6 @@ public class DOTEEntities {
 			EntityType.Builder.of(SlaughterGeneralEntity::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
 	public static final RegistryObject<EntityType<BlackHoleEntity>> BLACK_HOLE = register("black_hole",
 			EntityType.Builder.of(BlackHoleEntity::new, MobCategory.MISC).sized(1.0f, 1.0f));
-	public static final RegistryObject<EntityType<FlameCircleEntity>> FLAME_CIRCLE = register("flame_circle",
-			EntityType.Builder.<FlameCircleEntity>of(FlameCircleEntity::new, MobCategory.AMBIENT).sized(1.0f, 1.0f));
 	public static final RegistryObject<EntityType<GoldenFlame>> GOLDEN_FLAME = register("golden_flame",
 			EntityType.Builder.of(GoldenFlame::new, MobCategory.MONSTER).sized(0.8f, 2.5f));
 	public static final RegistryObject<EntityType<MsAbyssEntity>> MS_ABYSS = register("ms_abyss",
@@ -87,29 +76,6 @@ public class DOTEEntities {
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String name, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(name, () -> entityTypeBuilder.build(new ResourceLocation(DuelOfTheEndMod.MOD_ID, name).toString()));
-	}
-
-	/**
-	 * setPatch完还需要去绑定Renderer {@link ClientModEvents#onRenderPatched(PatchedRenderersEvent.Add)}
-	 */
-	@SubscribeEvent
-	public static void setPatch(EntityPatchRegistryEvent event) {
-		//BOSS
-		event.getTypeEntry().put(GOLDEN_FLAME.get(), (entity) -> GoldenFlamePatch::new);
-		//NPC
-		event.getTypeEntry().put(ABYSS_DWELLER.get(), (entity) -> ()-> new NPCPatch(()-> Animations.BIPED_IDLE, null, null, null));
-	}
-
-	/**
-	 * setArmature完还需要去绑定Renderer {@link ClientModEvents#onRenderPatched(PatchedRenderersEvent.Add)}
-	 */
-	@SubscribeEvent
-	public static void setArmature(ModelBuildEvent.ArmatureBuild event) {
-		//Boss
-		Armatures.registerEntityTypeArmature(GOLDEN_FLAME.get(), Armatures.SKELETON);
-
-		//NPC
-		Armatures.registerEntityTypeArmature(ABYSS_DWELLER.get(), Armatures.BIPED);
 	}
 
 	@SubscribeEvent
