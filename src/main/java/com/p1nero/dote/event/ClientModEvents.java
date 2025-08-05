@@ -11,6 +11,7 @@ import com.p1nero.dote.entity.custom.boss.goldenflame.client.GoldenFlameRenderer
 import com.p1nero.dote.entity.custom.boss.liu_guang.client.LiuGuangRenderer;
 import com.p1nero.dote.entity.custom.boss.ms_abyss.client.MsAbyssRenderer;
 import com.p1nero.dote.entity.custom.boss.reaper.client.ReaperRenderer;
+import com.p1nero.dote.entity.custom.boss.sand_captain.client.SandCaptainCoffinRenderer;
 import com.p1nero.dote.entity.custom.boss.sand_captain.client.SandCaptainRenderer;
 import com.p1nero.dote.entity.custom.boss.senbai.client.SenbaiRenderer;
 import com.p1nero.dote.entity.custom.boss.slaughter_general.client.SlaughterGeneralRenderer;
@@ -32,6 +33,7 @@ public class ClientModEvents{
         //BOSS
         EntityRenderers.register(DOTEEntities.REAPER.get(), ReaperRenderer::new);
         EntityRenderers.register(DOTEEntities.DARK_ADVANCE.get(), DarkAdvanceRenderer::new);
+        EntityRenderers.register(DOTEEntities.SAND_CAPTAIN_COFFIN.get(), SandCaptainCoffinRenderer::new);
         EntityRenderers.register(DOTEEntities.SAND_CAPTAIN.get(), SandCaptainRenderer::new);
         EntityRenderers.register(DOTEEntities.SENBAI_DEVIL.get(), SenbaiRenderer::new);
         EntityRenderers.register(DOTEEntities.SLAUGHTER_GENERAL.get(), SlaughterGeneralRenderer::new);

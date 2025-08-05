@@ -180,6 +180,10 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity, I
     @Override
     public void tick() {
         super.tick();
+        bossTick();
+    }
+
+    protected void bossTick() {
 
         if (getInactionTime() > 0) {
             setInactionTime(getInactionTime() - 1);
@@ -188,18 +192,7 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity, I
         //播放bgm
         if(level().isClientSide && this.isAlive()){
             BossMusicPlayer.playBossMusic(this, getFightMusic(), 32);
-        } else {
-            if(!DOTEConfig.ALLOW_BVB.get()){
-                if(level().getBlockEntity(getHomePos()) instanceof BossSpawnerBlockEntity<?> bossSpawnerBlockEntity){
-                    if(bossSpawnerBlockEntity.getMyBoss() == null || !bossSpawnerBlockEntity.getMyBoss().getType().equals(this.getType())){
-                        explodeAndDiscard();
-                    }
-                } else {
-                    explodeAndDiscard();
-                }
-            }
         }
-
     }
 
     /**
@@ -208,6 +201,7 @@ public abstract class DOTEBoss extends DOTEMonster implements HomePointEntity, I
     public void explodeAndDiscard(){
         if(level() instanceof ServerLevel serverLevel){
             serverLevel.sendParticles(ParticleTypes.EXPLOSION, getX(), getY(), getZ(), 10, 0.0D, 0.1D, 0.0D, 0.01);
+            serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, getX(), getY(), getZ(), 10, 0.0D, 0.1D, 0.0D, 0.01);
             serverLevel.playSound(null, getX(), getY(), getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 1, 1);
         }
         discard();

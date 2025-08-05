@@ -26,6 +26,7 @@ public class DOTEEntityLootTables extends EntityLootSubProvider {
 
         add(DOTEEntities.REAPER.get(), emptyLootTable());
         add(DOTEEntities.DARK_ADVANCE.get(), emptyLootTable());
+        add(DOTEEntities.SAND_CAPTAIN_COFFIN.get(), emptyLootTable());
         add(DOTEEntities.SAND_CAPTAIN.get(), emptyLootTable());
         add(DOTEEntities.SENBAI_DEVIL.get(), emptyLootTable());
         add(DOTEEntities.SLAUGHTER_GENERAL.get(), emptyLootTable());

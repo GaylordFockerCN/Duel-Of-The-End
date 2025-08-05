@@ -8,6 +8,7 @@ import com.p1nero.dote.entity.custom.boss.goldenflame.GoldenFlame;
 import com.p1nero.dote.entity.custom.boss.liu_guang.LiuGuangEntity;
 import com.p1nero.dote.entity.custom.boss.ms_abyss.MsAbyssEntity;
 import com.p1nero.dote.entity.custom.boss.reaper.ReaperEntity;
+import com.p1nero.dote.entity.custom.boss.sand_captain.SandCaptainCoffin;
 import com.p1nero.dote.entity.custom.boss.sand_captain.SandCaptainEntity;
 import com.p1nero.dote.entity.custom.boss.senbai.SenbaiDevil;
 import com.p1nero.dote.entity.custom.boss.slaughter_general.SlaughterGeneralEntity;
@@ -38,6 +39,8 @@ public class DOTEEntities {
 			EntityType.Builder.of(ReaperEntity::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
 	public static final RegistryObject<EntityType<DarkAdvance>> DARK_ADVANCE = register("dark_advance",
 			EntityType.Builder.of(DarkAdvance::new, MobCategory.MONSTER).sized(0.6f, 1.8f));
+	public static final RegistryObject<EntityType<SandCaptainCoffin>> SAND_CAPTAIN_COFFIN = register("sand_captain_coffin",
+			EntityType.Builder.of(SandCaptainCoffin::new, MobCategory.MONSTER).sized(0.8F, 2.5F));
 	public static final RegistryObject<EntityType<SandCaptainEntity>> SAND_CAPTAIN = register("sand_captain",
 			EntityType.Builder.of(SandCaptainEntity::new, MobCategory.MONSTER).sized(0.8F, 2.5F));
 	public static final RegistryObject<EntityType<SenbaiDevil>> SENBAI_DEVIL = register("senbai_devil",
@@ -83,6 +86,7 @@ public class DOTEEntities {
 		//BOSS
 		event.put(REAPER.get(), ReaperEntity.setAttributes());
 		event.put(DARK_ADVANCE.get(), DarkAdvance.setAttributes());
+		event.put(SAND_CAPTAIN_COFFIN.get(), SandCaptainEntity.setAttributes());
 		event.put(SAND_CAPTAIN.get(), SandCaptainEntity.setAttributes());
 		event.put(SENBAI_DEVIL.get(), SenbaiDevil.setAttributes());
 		event.put(SLAUGHTER_GENERAL.get(), SlaughterGeneralEntity.setAttributes());

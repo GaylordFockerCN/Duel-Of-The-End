@@ -35,7 +35,7 @@ public abstract class BossSpawnerBlockEntity<T extends DOTEBoss> extends BlockEn
     @Nullable
     protected DOTEBoss myBoss;
     public int tickCount;
-    private boolean inBossFight;
+    protected boolean inBossFight;
     protected static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     protected static final RawAnimation IN_FIGHT = RawAnimation.begin().thenLoop("in_fight");
     protected static final RawAnimation START = RawAnimation.begin().then("start", Animation.LoopType.PLAY_ONCE);
@@ -117,7 +117,7 @@ public abstract class BossSpawnerBlockEntity<T extends DOTEBoss> extends BlockEn
         }
         myBoss = this.makeMyCreature();
         myBoss.setHomePos(getBlockPos());
-        BlockPos spawnPos = accessor.getBlockState(this.getBlockPos().above()).getCollisionShape(accessor, this.getBlockPos().above()).isEmpty() ? this.getBlockPos().above() : this.getBlockPos();
+        BlockPos spawnPos = getSpawnPos(accessor);
         myBoss.moveTo(spawnPos, accessor.getLevel().getRandom().nextFloat() * 360F, 0.0F);
         ForgeEventFactory.onFinalizeSpawn(myBoss, accessor, accessor.getCurrentDifficultyAt(spawnPos), MobSpawnType.SPAWNER, null, null);
         boolean success = accessor.addFreshEntity(myBoss);
@@ -125,6 +125,10 @@ public abstract class BossSpawnerBlockEntity<T extends DOTEBoss> extends BlockEn
             startBossFight();
         }
         return success;
+    }
+
+    public BlockPos getSpawnPos(ServerLevelAccessor accessor) {
+        return accessor.getBlockState(this.getBlockPos().above()).getCollisionShape(accessor, this.getBlockPos().above()).isEmpty() ? this.getBlockPos().above() : this.getBlockPos();
     }
 
     @NotNull
