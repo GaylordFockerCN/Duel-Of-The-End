@@ -1,0 +1,32 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.sand_sarcophagus",
+				"texture_width": 256,
+				"texture_height": 256,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 6,
+				"visible_bounds_offset": [0, 2, 0]
+			},
+			"bones": [
+				{
+					"name": "bone",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-8, 3, -10], "size": [16, 44, 20], "uv": [0, 0]},
+						{"origin": [-5.5, 44, -12], "size": [11, 14, 22], "inflate": -0.01, "uv": [72, 0]},
+						{"origin": [-1.96804, 47.61424, -11], "size": [7.075, 11, 21], "inflate": -0.02, "pivot": [2.60696, 44.11424, -0.5], "rotation": [0, 0, 7.5], "uv": [0, 104]},
+						{"origin": [4.28389, 46.30231, 0], "size": [2, 12, 10], "inflate": -0.02, "pivot": [3.78389, 43.80231, -0.5], "rotation": [0, 0, 2.75], "uv": [72, 36]},
+						{"origin": [1.31115, 35.44946, -10.64257], "size": [5.075, 23, 11], "inflate": -0.02, "pivot": [-0.00034, 44.78141, -0.14257], "rotation": [1.5, 0, 2.5], "uv": [96, 88]},
+						{"origin": [-5.10696, 47.61424, -11], "size": [7.075, 11, 21], "inflate": -0.02, "pivot": [-2.60696, 44.11424, -0.5], "rotation": [0, 0, -7.5], "uv": [0, 104], "mirror": true},
+						{"origin": [-6.28389, 46.30231, 0], "size": [2, 12, 10], "inflate": -0.02, "pivot": [-3.78389, 43.80231, -0.5], "rotation": [0, 0, -2.75], "uv": [72, 36], "mirror": true},
+						{"origin": [-6.38615, 35.44946, -10.64257], "size": [5.075, 23, 11], "inflate": -0.02, "pivot": [0.00034, 44.78141, -0.14257], "rotation": [1.5, 0, -2.5], "uv": [96, 88], "mirror": true},
+						{"origin": [-8, 0, -10], "size": [16, 8, 20], "uv": [12, 76]}
+					]
+				}
+			]
+		}
+	]
+}
