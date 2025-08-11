@@ -48,7 +48,7 @@ public abstract class BossSpawnerBlockEntity<T extends DOTEBoss> extends BlockEn
         this.entityType = entityType;
     }
 
-    public EntityType<T> getEntityType() {
+    public EntityType<? extends DOTEBoss> getEntityType() {
         return entityType;
     }
 
@@ -100,7 +100,7 @@ public abstract class BossSpawnerBlockEntity<T extends DOTEBoss> extends BlockEn
      */
     protected void searchBoss() {
         if (this.inBossFight && (this.myBoss == null || this.myBoss.isRemoved()) && level instanceof ServerLevel serverLevel) {
-            List<? extends DOTEBoss> entities = serverLevel.getEntities(entityType, LivingEntity::isAlive);
+            List<? extends DOTEBoss> entities = serverLevel.getEntities(this.getEntityType(), LivingEntity::isAlive);
             if(!entities.isEmpty()) {
                 myBoss = entities.get(0);
             } else {
@@ -132,8 +132,8 @@ public abstract class BossSpawnerBlockEntity<T extends DOTEBoss> extends BlockEn
     }
 
     @NotNull
-    protected T makeMyCreature() {
-        return Objects.requireNonNull(this.entityType.create(Objects.requireNonNull(this.getLevel())));
+    protected DOTEBoss makeMyCreature() {
+        return Objects.requireNonNull(this.getEntityType().create(Objects.requireNonNull(this.getLevel())));
     }
 
     @Override
