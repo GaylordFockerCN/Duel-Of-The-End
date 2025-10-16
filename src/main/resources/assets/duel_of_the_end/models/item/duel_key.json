@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "duel_of_the_end:item/duel_key"
+  }
+}
